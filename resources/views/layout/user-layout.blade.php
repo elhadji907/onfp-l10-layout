@@ -52,14 +52,17 @@
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
-
+        <div class="d-flex align-items-center justify-content-between">
+            <a @click.prevent="changeTheme" class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-gear"></i>
+            </a>
+        </div>
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->
-
         @include('layout.page-navbar')
         <!-- End Icons Navigation -->
 
@@ -76,7 +79,7 @@
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
- @include('layout.page-footer')
+    @include('layout.page-footer')
     <!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -94,13 +97,14 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+        crossorigin="anonymous"></script>
     <script>
         setTimeout(function() {
-         $('.alert-success').remove();
+            $('.alert-success').remove();
         }, 3000);
     </script>
-    
+
 </body>
 
 </html>
