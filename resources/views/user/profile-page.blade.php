@@ -37,26 +37,12 @@
 
             <div class="col-xl-8">
                 <div class="flex items-center gap-4">
-                    {{-- <x-primary-button>{{ __('Sauvegarder') }}</x-primary-button> --}}
-
-                    @if (session('status') === 'profile-updated')
-                        <p data="{ show: true }" show="show" transition init="setTimeout(() => show = false, 2000)"
-                            class="text-sm text-gray-600 dark:text-gray-400">{{ __('Enregistré.') }}</p>
-                    @endif
-                </div>
-                <div class="flex items-center gap-4">
-                    {{-- <x-primary-button>{{ __('Save') }}</x-primary-button> --}}
-        
-                    @if (session('status') === 'password-updated')
-                        <p
-                            x-data="{ show: true }"
-                            x-show="show"
-                            x-transition
-                            x-init="setTimeout(() => show = false, 2000)"
-                            class="text-sm text-gray-600 dark:text-gray-400"
-                        >{{ __('Enregistré.') }}</p>
-                    @endif
-                </div>
+                @if ($message = Session::get('status'))
+                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
@@ -71,7 +57,7 @@
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editer</button>
                             </li>
 
-                           {{--  <li class="nav-item">
+                            {{--  <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab"
                                     data-bs-target="#profile-settings">Paramètres</button>
                             </li> --}}
@@ -81,7 +67,7 @@
                                     data-bs-target="#profile-change-password">Changer le mot de passe</button>
                             </li>
 
-                          {{--   <li class="nav-item">
+                            {{--   <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#compte-deleted">Supprimer
                                     compte</button>
                             </li> --}}
@@ -334,24 +320,28 @@
                                     @csrf
                                     @method('put')
                                     <div class="row mb-3">
-                                        <label for="update_password_current_password" class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel</label>
+                                        <label for="update_password_current_password"
+                                            class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="current_password" type="password" class="form-control"
-                                                id="update_password_current_password" required placeholder="Votre mot de passe actuel" autocomplete="current-password">
-                                                <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+                                                id="update_password_current_password" required
+                                                placeholder="Votre mot de passe actuel" autocomplete="current-password">
+                                            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="update_password_password" class="col-md-4 col-lg-3 col-form-label">Nouveau</label>
+                                        <label for="update_password_password"
+                                            class="col-md-4 col-lg-3 col-form-label">Nouveau</label>
                                         <div class="col-md-8 col-lg-9">
-                                           {{--  <input name="newpassword" type="password" class="form-control"
+                                            {{--  <input name="newpassword" type="password" class="form-control"
                                                 id="newPassword"> --}}
 
-                                                <input type="password" name="password"
+                                            <input type="password" name="password"
                                                 class="form-control @error('password') is-invalid @enderror"
-                                                id="update_password_password" required placeholder="Votre nouveau mot de passe"
-                                                value="{{ old('password') }}" autocomplete="password">
+                                                id="update_password_password" required
+                                                placeholder="Votre nouveau mot de passe" value="{{ old('password') }}"
+                                                autocomplete="password">
                                             <div class="invalid-feedback">
                                                 @error('password')
                                                     {{ $message }}
@@ -361,23 +351,24 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="update_password_password_confirmation" class="col-md-4 col-lg-3 col-form-label">Confirmez</label>
+                                        <label for="update_password_password_confirmation"
+                                            class="col-md-4 col-lg-3 col-form-label">Confirmez</label>
                                         <div class="col-md-8 col-lg-9">
                                             {{-- <input name="renewpassword" type="password" class="form-control"
                                                 id="renewPassword"> --}}
 
-                                                
+
                                             <input type="password" name="password_confirmation"
-                                            class="form-control @error('password_confirmation') is-invalid @enderror"
-                                            id="update_password_password_confirmation" required
-                                            placeholder="Confimez votre nouveau mot de passe"
-                                            value="{{ old('password_confirmation') }}"
-                                            autocomplete="password_confirmation">
-                                        <div class="invalid-feedback">
-                                            @error('password_confirmation')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
+                                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                id="update_password_password_confirmation" required
+                                                placeholder="Confimez votre nouveau mot de passe"
+                                                value="{{ old('password_confirmation') }}"
+                                                autocomplete="password_confirmation">
+                                            <div class="invalid-feedback">
+                                                @error('password_confirmation')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
 
@@ -395,49 +386,43 @@
                                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                                             {{ __('Delete Account') }}
                                         </h2>
-                                
+
                                         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                                             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
                                         </p>
                                     </header>
-                                
-                                    <x-danger-button
-                                        x-data=""
-                                        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-                                    >{{ __('Delete Account') }}</x-danger-button>
-                                
+
+                                    <x-danger-button x-data=""
+                                        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">{{ __('Delete Account') }}</x-danger-button>
+
                                     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
                                         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
                                             @csrf
                                             @method('delete')
-                                
+
                                             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                                                 {{ __('Are you sure you want to delete your account?') }}
                                             </h2>
-                                
+
                                             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                                                 {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
                                             </p>
-                                
+
                                             <div class="mt-6">
-                                                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-                                
-                                                <x-text-input
-                                                    id="password"
-                                                    name="password"
-                                                    type="password"
-                                                    class="mt-1 block w-3/4"
-                                                    placeholder="{{ __('Password') }}"
-                                                />
-                                
+                                                <x-input-label for="password" value="{{ __('Password') }}"
+                                                    class="sr-only" />
+
+                                                <x-text-input id="password" name="password" type="password"
+                                                    class="mt-1 block w-3/4" placeholder="{{ __('Password') }}" />
+
                                                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
                                             </div>
-                                
+
                                             <div class="mt-6 flex justify-end">
                                                 <x-secondary-button x-on:click="$dispatch('close')">
                                                     {{ __('Cancel') }}
                                                 </x-secondary-button>
-                                
+
                                                 <x-danger-button class="ms-3">
                                                     {{ __('Delete Account') }}
                                                 </x-danger-button>
@@ -445,7 +430,7 @@
                                         </form>
                                     </x-modal>
                                 </section>
-                                
+
                             </div>
 
                         </div><!-- End Bordered Tabs -->
