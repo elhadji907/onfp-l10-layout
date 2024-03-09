@@ -44,7 +44,10 @@
 
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
-
+        <div class="form-check form-switch mx-4">
+            <input class="form-check-input p-2" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked
+                onclick="myFunction()" />
+        </div>
         <div class="d-flex align-items-center justify-content-between">
             <a href="{{ url('/home') }}" class="logo d-flex align-items-center">
                 {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
@@ -52,11 +55,6 @@
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
-        <div class="d-flex align-items-center justify-content-between">
-            <a @click.prevent="changeTheme" class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-gear"></i>
-            </a>
-        </div>
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
@@ -105,6 +103,26 @@
         }, 3000);
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous">
+    </script>
+    <script>
+        function myFunction() {
+            var element = document.body;
+            element.dataset.bsTheme =
+                element.dataset.bsTheme == "light" ? "dark" : "light";
+        }
+
+        function stepFunction(event) {
+            debugger;
+            var element = document.getElementsByClassName(("html")[0].innerHTML);
+            for (var i = 0; i < element.length; i++) {
+                if (element[i] !== event.target.ariaControls) {
+                    element[i].classList.remove("show");
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
