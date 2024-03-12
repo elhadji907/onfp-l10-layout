@@ -34,7 +34,6 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/myStyle.css') }}" rel="stylesheet">
 
     <!-- =======================================================
   * Template Name: NiceAdmin
@@ -96,7 +95,7 @@
     <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
     <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/quill/quill.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script> --}}
+    <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
@@ -112,9 +111,6 @@
         }, 3000);
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous">
-    </script>
     <script>
         function myFunction() {
             var element = document.body;
@@ -132,8 +128,6 @@
             }
         }
     </script>
-
-    {{--  <script src="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.js"></script> --}}
 
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
