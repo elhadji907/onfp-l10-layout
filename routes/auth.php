@@ -22,6 +22,18 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
+    //début changement pages de connexion et d'inscription
+    Route::get('register-page', [RegisteredUserController::class, 'create'])
+                ->name('register-page');
+
+    Route::post('register-page', [RegisteredUserController::class, 'store']);
+
+    Route::get('login-page', [AuthenticatedSessionController::class, 'create'])
+                ->name('login-page');
+
+    Route::post('login-page', [AuthenticatedSessionController::class, 'store']);
+    //finchangement pages de connexion et d'inscription
+
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
 
