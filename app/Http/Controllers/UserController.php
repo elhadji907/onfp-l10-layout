@@ -10,7 +10,7 @@ class UserController extends Controller
     public function homePage()
     {
         $total_user = User::count();
-        return view("user.home-page", compact("total_user"));
+        return view("home-page", compact("total_user"));
     }
 
     public function index()
