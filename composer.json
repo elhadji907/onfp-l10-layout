@@ -12,7 +12,8 @@
         "laravel/tinker": "^2.8",
         "spatie/laravel-backup": "*",
         "synergitech/laravel-alert": "^2.0",
-        "yajra/laravel-datatables": "^10.0"
+        "yajra/laravel-datatables": "^10",
+        "yajra/laravel-datatables-oracle": "^10.11"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.11",

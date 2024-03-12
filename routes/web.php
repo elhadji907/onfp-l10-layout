@@ -40,6 +40,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/user', [UserController::class, 'userListe'])->middleware(['auth', 'verified'])->name('user');
+Route::get('/user', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('user.index');
 
 require __DIR__.'/auth.php';
