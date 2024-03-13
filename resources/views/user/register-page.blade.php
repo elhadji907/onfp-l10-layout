@@ -71,16 +71,15 @@
                                     <form class="row g-3 needs-validation" novalidate method="POST"
                                         action="{{ route('register') }}">
                                         @csrf
-
-                                        <!-- Prenom -->
+                                        <!-- Prénom -->
                                         <div class="col-12">
-                                            <label for="name" class="form-label">Votre prénom</label>
-                                            <input type="text" name="name"
-                                                class="form-control @error('name') is-invalid @enderror" id="name"
-                                                required placeholder="Votre prénom" value="{{ old('name') }}"
-                                                autocomplete="name">
+                                            <label for="prenom" class="form-label">Prénom</label>
+                                            <input type="text" name="prenom"
+                                                class="form-control @error('prenom') is-invalid @enderror"
+                                                id="prenom" required placeholder="Votre prenom"
+                                                value="{{ old('prenom') }}" autocomplete="prenom">
                                             <div class="invalid-feedback">
-                                                @error('name')
+                                                @error('prenom')
                                                     {{ $message }}
                                                 @enderror
                                             </div>
@@ -88,13 +87,13 @@
 
                                         <!-- Nom -->
                                         <div class="col-12">
-                                            <label for="nom" class="form-label">Votre nom</label>
-                                            <input type="text" name="nom"
-                                                class="form-control @error('nom') is-invalid @enderror" id="nom"
-                                                required placeholder="Votre nom" value="{{ old('nom') }}"
-                                                autocomplete="nom">
+                                            <label for="name" class="form-label">Nom</label>
+                                            <input type="text" name="name"
+                                                class="form-control @error('name') is-invalid @enderror" id="name"
+                                                required placeholder="Votre Nom" value="{{ old('name') }}"
+                                                autocomplete="name">
                                             <div class="invalid-feedback">
-                                                @error('nom')
+                                                @error('name')
                                                     {{ $message }}
                                                 @enderror
                                             </div>
@@ -111,6 +110,38 @@
                                                     value="{{ old('email') }}" autocomplete="email">
                                                 <div class="invalid-feedback">
                                                     @error('email')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Phone -->
+                                        <div class="col-12">
+                                            <label for="phone" class="form-label">Téléphone</label>
+                                            <div class="input-group has-validation">
+                                                <input type="name" name="phone"
+                                                    class="form-control @error('phone') is-invalid @enderror"
+                                                    id="phone" required placeholder="Votre n° de téléphone"
+                                                    value="{{ old('phone') }}" autocomplete="phone">
+                                                <div class="invalid-feedback">
+                                                    @error('phone')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Adresse -->
+                                        <div class="col-12">
+                                            <label for="adresse" class="form-label">Adresse de résidence</label>
+                                            <div class="input-group has-validation">
+                                                <input type="name" name="adresse"
+                                                    class="form-control @error('adresse') is-invalid @enderror"
+                                                    id="adresse" required placeholder="Votre adresse de résidence"
+                                                    value="{{ old('adresse') }}" autocomplete="adresse">
+                                                <div class="invalid-feedback">
+                                                    @error('adresse')
                                                         {{ $message }}
                                                     @enderror
                                                 </div>
