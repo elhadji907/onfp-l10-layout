@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('user.login-page');
 });
+Route::get('/', [UserController::class, 'homePage'])->name('home');
 
 
 Route::get('/login-page', [ProfileController::class, 'loginPage'])->name('login-page');
