@@ -44,13 +44,13 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    @if ($message = Session::get('status'))
+                    {{-- @if ($message = Session::get('status'))
                         <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
                             role="alert">
                             <strong>{{ $message }}</strong>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    @endif
+                    @endif --}}
                     <div class="card">
                         <div class="card-body pt-3">
                             <!-- Bordered Tabs -->
@@ -129,6 +129,14 @@
                                         <div class="col-lg-3 col-md-4 label">Email</div>
                                         <div style="color: blue" class="col-lg-9 col-md-8">{{ Auth::user()->email }}</div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Téléphone</div>
+                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->telephone }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Adresse</div>
+                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->adresse }}</div>
+                                    </div>
 
                                 </div>
 
@@ -156,6 +164,7 @@
                                             </div>
                                         </div>
 
+                                        {{-- Prénom --}}
                                         <div class="row mb-3">
                                             <label for="firstname" class="col-md-4 col-lg-3 col-form-label">Prénom
                                             </label>
@@ -163,7 +172,7 @@
                                                 <input name="firstname" type="text"
                                                     class="form-control @error('firstname') is-invalid @enderror"
                                                     id="firstname" value="{{ $user->firstname ?? old('firstname') }}"
-                                                    autofocus autocomplete="firstname">
+                                                    autofocus autocomplete="firstname" placeholder="Votre prénom">
                                             </div>
                                             @error('firstname')
                                                 <span class="invalid-feedback" role="alert">
@@ -171,13 +180,15 @@
                                                 </span>
                                             @enderror
                                         </div>
+
+                                        {{-- Nom --}}
                                         <div class="row mb-3">
                                             <label for="name" class="col-md-4 col-lg-3 col-form-label">Nom</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="name" type="text"
                                                     class="form-control @error('name') is-invalid @enderror"
                                                     id="name" value="{{ $user->name ?? old('name') }}" autofocus
-                                                    autocomplete="name">
+                                                    autocomplete="name" placeholder="Votre Nom">
                                                 @error('name')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -186,14 +197,47 @@
                                             </div>
                                         </div>
 
+                                        {{-- Email --}}
                                         <div class="row mb-3">
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="email" type="email"
                                                     class="form-control @error('email') is-invalid @enderror"
                                                     id="Email" value="{{ $user->email ?? old('email') }}" autofocus
-                                                    autocomplete="email">
+                                                    autocomplete="email" placeholder="Votre adresse e-mail">
                                                 @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- Telephone --}}
+                                        <div class="row mb-3">
+                                            <label for="telephone" class="col-md-4 col-lg-3 col-form-label">Téléphone</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="telephone" type="telephone"
+                                                    class="form-control @error('telephone') is-invalid @enderror"
+                                                    id="telephone" value="{{ $user->telephone ?? old('telephone') }}" autofocus
+                                                    autocomplete="telephone" placeholder="Votre n° de téléphone">
+                                                @error('telephone')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- Email --}}
+                                        <div class="row mb-3">
+                                            <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Adresse</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="adresse" type="adresse"
+                                                    class="form-control @error('adresse') is-invalid @enderror"
+                                                    id="adresse" value="{{ $user->adresse ?? old('adresse') }}" autofocus
+                                                    autocomplete="adresse" placeholder="Votre adresse de résidence">
+                                                @error('adresse')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>

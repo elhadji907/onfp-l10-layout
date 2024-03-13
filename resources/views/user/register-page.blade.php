@@ -116,19 +116,17 @@
                                             </div>
                                         </div>
 
-                                        <!-- Phone -->
+                                        <!-- Telephone -->
                                         <div class="col-12">
-                                            <label for="phone" class="form-label">Téléphone</label>
-                                            <div class="input-group has-validation">
-                                                <input type="name" name="phone"
-                                                    class="form-control @error('phone') is-invalid @enderror"
-                                                    id="phone" required placeholder="Votre n° de téléphone"
-                                                    value="{{ old('phone') }}" autocomplete="phone">
-                                                <div class="invalid-feedback">
-                                                    @error('phone')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </div>
+                                            <label for="telephone" class="form-label">Téléphone</label>
+                                            <input type="text" name="telephone"
+                                                class="form-control @error('telephone') is-invalid @enderror"
+                                                id="telephone" required placeholder="Votre n° de téléphone"
+                                                value="{{ old('telephone') }}" autocomplete="telephone">
+                                            <div class="invalid-feedback">
+                                                @error('telephone')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
 
