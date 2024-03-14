@@ -24,6 +24,6 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back()->with('status', 'Votre mot de passe a été modifié avec succès');
+        return back()->with('message', 'Votre mot de passe a été modifié avec succès');
     }
 }

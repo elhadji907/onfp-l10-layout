@@ -35,6 +35,9 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
+    <!-- Scripts -->
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+
     <!-- =======================================================
   * Template Name: NiceAdmin
   * Updated: Jan 29 2024 with Bootstrap v5.3.2
@@ -108,7 +111,7 @@
     <script>
         setTimeout(function() {
             $('.alert-success').remove();
-        }, 3000);
+        }, 5000);
     </script>
 
     <script>
