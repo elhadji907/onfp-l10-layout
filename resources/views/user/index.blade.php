@@ -30,8 +30,9 @@
                                     </th>
                                     <th>Prénom & Nom</th>
                                     <th>E-mail</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>Téléphone</th>
+                                    <th>Adresse</th>
+                                    <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,9 +40,10 @@
                                 @foreach ($user_liste as $user)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->firstname }} {{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td></td>
+                                        <td>{{ $user->telephone }}</td>
+                                        <td>{{ $user->adresse }}</td>
                                         <td></td>
                                     </tr>
                                 @endforeach
