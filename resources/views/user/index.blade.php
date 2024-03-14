@@ -17,6 +17,12 @@
         <div class="row">
             <div class="col-lg-12">
 
+                @if ($message = Session::get('success'))
+                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Utilisateurs</h5>
@@ -44,7 +50,16 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->telephone }}</td>
                                         <td>{{ $user->adresse }}</td>
-                                        <td></td>
+                                        <td class="d-flex align-items-baseline align-middle"><a
+                                                href="{{ route('user.edit', $user->id) }}" class="btn btn-success btn-sm"
+                                                title="Supprimer"><i class="bi bi-pencil-square"></i></a>&nbsp;
+                                            <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm show_confirm" title="Supprimer"><i
+                                                        class="bi bi-trash"></i></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
 

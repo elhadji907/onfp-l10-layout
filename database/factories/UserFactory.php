@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'firstname' => fake()->name(),
             'name' => fake()->name(),
-            'telephone' => fake()->phoneNumber(),
+            'telephone' => $this->faker->unique(true)->numberBetween(70, 79).rand(10, 99).rand(10, 99).rand(0, 9).rand(0, 9).rand(0, 9),
             'adresse' => fake()->address(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

@@ -39,6 +39,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [UserController::class, 'homePage'])->name('home');
     Route::get('/profil', [ProfileController::class, 'profilePage'])->name('profil');
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
+
+
+    /* Vues ressouces */
+    Route::resource('/user', UserController::class);
 });
 
 

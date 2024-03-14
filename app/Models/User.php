@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'telephone',
         'adresse',
+        'image',
         'password',
     ];
 
@@ -48,4 +49,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+	public function getImage(){
+		$imagePath = $this->image ?? 'avatars/default.png';
+		return "/storage/" . $imagePath;
+	}
 }

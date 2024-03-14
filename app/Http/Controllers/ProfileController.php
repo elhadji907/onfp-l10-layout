@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -56,6 +57,30 @@ class ProfileController extends Controller
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
+        }
+
+        if (request('image')) {
+            $imagePath = request('image')->store('avatars', 'public');
+            $file = $request->file('image');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'avatars/' . $filename . '' . time() . '.' . $extension;
+
+            //dd($fileNameToStore);
+
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
+            $image->save();
+
+            $request->user()->update([
+                'image' => $imagePath
+            ]);
         }
 
         $request->user()->save();
