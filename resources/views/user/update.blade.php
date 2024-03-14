@@ -48,7 +48,7 @@
                                     @enderror
                                 </div>
 
-                               {{--  <div class="col-6">
+                                <div class="col-6">
                                     <label for="email" class="form-label">email</label>
                                     <div class="input-group has-validation">
                                         <span class="input-group-text" id="email">@</span>
@@ -61,7 +61,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div> --}}
+                                </div>
 
                                 <div class="col-6">
                                     <label for="telephone" class="form-label">Téléphone</label>

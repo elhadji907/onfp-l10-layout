@@ -35,15 +35,16 @@ class UserController extends Controller
         return view("user.update", compact("user"));
     }
 
-    public function update(StoreUserRequest $request): RedirectResponse
+    public function update(StoreUserRequest $request, $id): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = User::find($id);
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
         
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('user.index')->with('status', 'Mise à jour effectuée avec succès');
     }
