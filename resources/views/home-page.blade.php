@@ -22,7 +22,7 @@
                                 </ul>
                             </div>
 
-                            <a href="{{ url('/user') }}" target="_blank">
+                            <a href="{{ url('/user') }}">
                                 <div class="card-body">
                                     <h5 class="card-title">Utilisateurs <span>| Tous</span></h5>
 

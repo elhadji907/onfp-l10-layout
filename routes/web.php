@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'profilePage'])->name('profil');
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::get('/user/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+
 
     /* Vues ressouces */
     Route::resource('/user', UserController::class);
@@ -47,4 +51,4 @@ Route::middleware('auth')->group(function () {
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

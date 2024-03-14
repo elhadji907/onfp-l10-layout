@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 
 class UserController extends Controller
@@ -15,7 +18,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $user_liste = User::get();
+        $user_liste = User::orderBy('created_at', 'desc')->get();
+        /* dd($user_liste); */
         return view("user.index", compact("user_liste"));
     }
 
@@ -28,14 +32,20 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        dd($user);
-        return view("user.edit", compact("user"));
+        return view("user.update", compact("user"));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreUserRequest $request): RedirectResponse
     {
-        $user = User::find($id);
-        $user->update($request->all());
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+        
+        $request->user()->save();
+
+        return Redirect::route('user.index')->with('status', 'Mise à jour effectuée avec succès');
     }
 
     public function show($id)
@@ -48,7 +58,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        $mesage = $user->firstname.' '.$user->name.' a été supprimé(e)';
+        $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
         return redirect()->back()->with("success", $mesage);
     }
 }

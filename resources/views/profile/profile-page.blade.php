@@ -1,8 +1,5 @@
 @extends('layout.user-layout')
 @section('space-work')
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
     <div class="pagetitle">
         <h1>Profil</h1>
         <nav>
@@ -34,7 +31,10 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
+                        <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}" width="50"
+                            height="auto">
+
                         <h2>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h2>
                         <h3>Développeur web</h3>
                         <div class="social-links mt-2">
@@ -129,10 +129,6 @@
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
 
                                     <h5 class="card-title">Modification du profil</h5>
-
-                                    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-                                        @csrf
-                                    </form>
                                     <!-- Profile Edit Form -->
 
                                     <form method="post" action="{{ route('profile.update') }}"
@@ -144,7 +140,7 @@
                                                 profil</label>
                                             <div class="col-md-8 col-lg-9">
                                                 {{-- <img src="assets/img/profile-img.jpg" alt="Profile"> --}}
-                                                <img class="rounded-circle w-25"
+                                                <img class="rounded-circle w-25" alt="Profil"
                                                     src="{{ asset(Auth::user()->getImage()) }}" width="50"
                                                     height="auto">
 

@@ -18,22 +18,22 @@
             <div class="col-lg-12">
 
                 @if ($message = Session::get('success'))
-                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Utilisateurs</h5>
                         <p>Le tableau de tous les utilisateurs du système.</p>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables" id="table-users">
+                        <table class="table datatables align-middle" id="table-users">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <b>N°</b>
-                                    </th>
+                                    <th></th>
+                                    {{-- <th>N°</th> --}}
                                     <th>Prénom & Nom</th>
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
@@ -45,20 +45,24 @@
                                 <?php $i = 1; ?>
                                 @foreach ($user_liste as $user)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <th scope="row"><img class="rounded-circle w-20" alt="Profil"
+                                                src="{{ asset($user->getImage()) }}" width="40" height="auto"></th>
+                                        {{-- <td>{{ $i++ }}</td> --}}
                                         <td>{{ $user->firstname }} {{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->telephone }}</td>
                                         <td>{{ $user->adresse }}</td>
-                                        <td class="d-flex align-items-baseline align-middle"><a
+                                        <td>
+                                        <span class="d-flex mt-2 align-items-baseline"><a
                                                 href="{{ route('user.edit', $user->id) }}" class="btn btn-success btn-sm"
                                                 title="Supprimer"><i class="bi bi-pencil-square"></i></a>&nbsp;
                                             <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm show_confirm" title="Supprimer"><i
-                                                        class="bi bi-trash"></i></button>
+                                                <button type="submit" class="btn btn-danger btn-sm show_confirm"
+                                                    title="Supprimer"><i class="bi bi-trash"></i></button>
                                             </form>
+                                        </span>
                                         </td>
                                     </tr>
                                 @endforeach
