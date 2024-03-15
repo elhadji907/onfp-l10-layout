@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Modification utilisateur')
+@section('title', 'Enregistrement utilisateur')
 @section('space-work')
     <section class="section min-vh-0 d-flex flex-column align-items-center justify-content-center py-0">
         <div class="container">
@@ -15,18 +15,34 @@
                     <div class="card mb-3">
 
                         <div class="card-body">
-
-                            <div class="pt-4 pb-2">
-                                <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
-                                <p class="text-center small">Introduire les nouvelles données pour modifier</p>
+                            {{-- <div class="row">
+                                <div class="col-sm-12 pt-5">
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a class="btn btn-outline-primary float-start btn-sm"
+                                            href="{{ route('user.index') }}"><i class="bi bi-arrow-counterclockwise"></i></a></li>
+                                            <li class="breadcrumb-item active">Liste des utilisateurs</li>
+                                    </ul>
+                                </div>
+                            </div> --}}
+                            <div class="row">
+                                <div class="col-sm-12 pt-5">
+                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('user.index') }}"
+                                            class="btn btn-success btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                        <p> | Liste des utilisateurs</p>
+                                    </span>
+                                </div>
                             </div>
-                            <form method="post" action="{{ route('user.update', $user->id) }}"
-                                enctype="multipart/form-data" class="row g-3">
+                            <div class="pt-0 pb-2">
+                                <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
+                                <p class="text-center small">Ajouter un nouveau utilisateur</p>
+                            </div>
+                            <form method="post" action="{{ route('user.store') }}" enctype="multipart/form-data"
+                                class="row g-3">
                                 @csrf
-                                @method('patch')
                                 <div class="col-6">
                                     <label for="firstname" class="form-label">Prénom</label>
-                                    <input type="text" name="firstname" value="{{ $user->firstname }}"
+                                    <input type="text" name="firstname" value="{{ old('firstname') }}"
                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
                                         id="firstname" placeholder="prénom">
                                     @error('firstname')
@@ -38,7 +54,7 @@
 
                                 <div class="col-6">
                                     <label for="name" class="form-label">Nom</label>
-                                    <input type="text" name="name" value="{{ $user->name }}"
+                                    <input type="text" name="name" value="{{ old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         id="name" placeholder="nom">
                                     @error('name')
@@ -52,7 +68,7 @@
                                     <label for="email" class="form-label">email</label>
                                     <div class="input-group has-validation">
                                         <span class="input-group-text" id="email">@</span>
-                                        <input type="email" name="email" value="{{ $user->email }}"
+                                        <input type="email" name="email" value="{{ old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
                                         @error('email')
@@ -65,7 +81,7 @@
 
                                 <div class="col-6">
                                     <label for="telephone" class="form-label">Téléphone</label>
-                                    <input type="text" name="telephone" value="{{ $user->telephone }}"
+                                    <input type="text" name="telephone" value="{{ old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="téléphone">
                                     @error('telephone')
@@ -77,7 +93,7 @@
 
                                 <div class="col-6">
                                     <label for="adresse" class="form-label">Adresse</label>
-                                    <input type="text" name="adresse" value="{{ $user->adresse }}"
+                                    <input type="text" name="adresse" value="{{ old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
                                     @error('adresse')
@@ -90,20 +106,16 @@
                                 <div class="col-6">
                                     <label for="profil" class="form-label">Image de profil</label>
                                     <input type="file" name="image" id="image" multiple
+                                        value="{{ old('image') }}"
                                         class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
                                     @error('image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="col-xl-4">
-                                        <div class="profile-card pt-4 d-flex flex-column">
-                                            <img class="rounded-sm w-25" alt="Profil"
-                                                src="{{ asset($user->getImage()) }}" width="20" height="auto">
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Sauvegarder les
-                                        modifications</button>
+                                    <button type="submit" class="btn btn-primary">Ajouter</button>
                                 </div>
                             </form>
 

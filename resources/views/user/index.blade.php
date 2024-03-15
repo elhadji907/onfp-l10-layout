@@ -12,12 +12,10 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
-
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
-                @if ($message = Session::get('success'))
+                @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
                         <strong>{{ $message }}</strong>
@@ -26,6 +24,11 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
+                        <div class="pt-5">
+                            <a href="{{ route('user.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                                    class="fas fa-plus"></i>
+                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                        </div>
                         <h5 class="card-title">Utilisateurs</h5>
                         <p>Le tableau de tous les utilisateurs du système.</p>
                         <!-- Table with stripped rows -->
@@ -53,16 +56,17 @@
                                         <td>{{ $user->telephone }}</td>
                                         <td>{{ $user->adresse }}</td>
                                         <td>
-                                        <span class="d-flex mt-2 align-items-baseline"><a
-                                                href="{{ route('user.edit', $user->id) }}" class="btn btn-success btn-sm"
-                                                title="Supprimer"><i class="bi bi-pencil-square"></i></a>&nbsp;
-                                            <form action="{{ route('user.destroy', $user->id) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm show_confirm"
-                                                    title="Supprimer"><i class="bi bi-trash"></i></button>
-                                            </form>
-                                        </span>
+                                            <span class="d-flex mt-2 align-items-baseline"><a
+                                                    href="{{ route('user.edit', $user->id) }}"
+                                                    class="btn btn-success btn-sm" title="Modifier"><i
+                                                        class="bi bi-pencil-square"></i></a>&nbsp;
+                                                <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm show_confirm"
+                                                        title="Supprimer"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            </span>
                                         </td>
                                     </tr>
                                 @endforeach
