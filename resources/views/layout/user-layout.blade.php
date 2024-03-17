@@ -69,10 +69,11 @@
         </div> --}}
         <!-- End Search Bar -->
 
-        <div class="form-check form-switch mx-4">
+        {{-- Mode sombre --}}
+        {{-- <div class="form-check form-switch mx-4">
             <input class="form-check-input p-2" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked
                 onclick="myFunction()" />
-        </div>
+        </div> --}}
         @include('layout.page-navbar')
         <!-- End Icons Navigation -->
 
@@ -169,7 +170,12 @@
                 });
         });
     </script>
+<script>
+    $("#checkAll").click(function () {
+    $(".form-check-input").prop('checked', $(this).prop('checked'));
+});
 
+</script>
     @stack('scripts')
 </body>
 

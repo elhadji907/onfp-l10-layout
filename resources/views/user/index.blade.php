@@ -32,7 +32,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-5">
-                            <a href="{{ route('user.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <a href="{{ route('users.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
@@ -64,10 +64,10 @@
                                         <td>{{ $user->adresse }}</td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('user.edit', $user->id) }}"
+                                                    href="{{ route('users.edit', $user->id) }}"
                                                     class="btn btn-success btn-sm" title="Modifier"><i
                                                         class="bi bi-pencil-square"></i></a>&nbsp;
-                                                <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm show_confirm"

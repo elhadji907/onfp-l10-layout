@@ -42,14 +42,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'profilePage'])->name('profil');
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
-    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-    Route::post('/user/create', [UserController::class, 'store'])->name('user.store');
-    Route::get('/user/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/users/create', [UserController::class, 'store'])->name('user.store');
+    Route::get('/users/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update');
+
+    
+    Route::get('/roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionsToRole']);
+    Route::put('/roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionsToRole']);
 
 
     /* Vues ressouces */
-    Route::resource('/user', UserController::class);
+    Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
     Route::resource('/roles', RoleController::class);
 

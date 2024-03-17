@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Spatie\Permission\Models\Role;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $roles = Role::orderBy('created_at', 'desc')->get();
         return view("role-permission.role.index", compact('roles'));
     }
@@ -56,5 +60,31 @@ class RoleController extends Controller
         $role->delete();
         $mesage = 'Le role ' . $role->name . ' a été supprimé';
         return redirect()->back()->with("danger", $mesage);
+    }
+
+    public function addPermissionsToRole($roleId)
+    {
+
+        $permissions = Permission::orderBy('created_at', 'desc')->get();
+        $role = Role::findOrFail($roleId);
+        $rolePermissions = DB::table('role_has_permissions')
+            ->where('role_has_permissions.role_id', $roleId)
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+            ->all();
+
+        return view("role-permission.role.add-permissions", compact('role', 'permissions', 'rolePermissions'));
+    }
+
+    public function givePermissionsToRole($roleId, Request $request)
+    {
+        $request->validate([
+            'permissions' => ['required']
+        ]);
+
+        $role = Role::findOrFail($roleId);
+        $role->syncPermissions($request->permissions);
+
+        $messages = "Permissions accordée(s)";
+        return redirect()->route('roles.index', compact('role'))->with('status', $messages);
     }
 }

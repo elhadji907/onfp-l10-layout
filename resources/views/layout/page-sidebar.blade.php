@@ -11,17 +11,24 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ url('permissions') }}">
-                <i class="bi bi-person"></i>
+                <i class="bi bi-key"></i>
                 <span>Permissions</span>
             </a>
         </li><!-- End Permissions Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ url('roles') }}">
-                <i class="bi bi-person"></i>
+                <i class="bi bi-file-lock2-fill"></i>
                 <span>Roles</span>
             </a>
         </li><!-- End roles Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url('users') }}">
+                <i class="bi bi-person"></i>
+                <span>Users</span>
+            </a>
+        </li><!-- End utilisateurs Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
