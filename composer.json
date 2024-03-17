@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "spatie/laravel-backup": "*",
+        "spatie/laravel-permission": "^6.4",
         "synergitech/laravel-alert": "^2.0",
         "yajra/laravel-datatables": "^10",
         "yajra/laravel-datatables-oracle": "^10.11"

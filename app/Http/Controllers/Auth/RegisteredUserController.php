@@ -51,8 +51,15 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        /* Se connecter automatiquement après inscription */
+        /* Auth::login($user); */
 
-        return redirect(RouteServiceProvider::HOME);
+        /* Redirection vers le home directement après incrption */
+        /* return redirect(RouteServiceProvider::HOME); */
+
+        
+        /* Redirection vers le connexion après incrption */
+        $status = "Votre compte vient d'être créé, merci d'introduire vos informations d'identification pour vous connecter";
+        return redirect(RouteServiceProvider::LOGIN)->with('status',$status);
     }
 }

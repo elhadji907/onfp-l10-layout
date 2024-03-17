@@ -61,7 +61,14 @@
                             <div class="card mb-3">
 
                                 <div class="card-body">
-
+                                    @if ($message = Session::get('status'))
+                                        <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                                            role="alert">
+                                            <strong>{{ $message }}</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    @endif
                                     <div class="pt-4 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Connectez-vous à votre compte</h5>
                                         <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de

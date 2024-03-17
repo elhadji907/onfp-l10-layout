@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des users')
+@section('title', 'ONFP - Liste des roles')
 @section('space-work')
 
     <div class="pagetitle">
@@ -13,8 +13,8 @@
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -32,42 +32,32 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-5">
-                            <a href="{{ route('user.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <a href="{{ route('roles.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
-                        <h5 class="card-title">Utilisateurs</h5>
-                        <p>Le tableau de tous les utilisateurs du système.</p>
+                        <h5 class="card-title">roles</h5>
+                        <p>Le tableau de tous les roles du système.</p>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-users">
+                        <table class="table datatables align-middle" id="table-roles">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    {{-- <th>N°</th> --}}
-                                    <th>Prénom & Nom</th>
-                                    <th>E-mail</th>
-                                    <th>Téléphone</th>
-                                    <th>Adresse</th>
+                                    <th>N°</th>
+                                    <th>Roles</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($user_liste as $user)
+                                @foreach ($roles as $role)
                                     <tr>
-                                        <th scope="row"><img class="rounded-circle w-20" alt="Profil"
-                                                src="{{ asset($user->getImage()) }}" width="40" height="auto"></th>
-                                        {{-- <td>{{ $i++ }}</td> --}}
-                                        <td>{{ $user->firstname }} {{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->telephone }}</td>
-                                        <td>{{ $user->adresse }}</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $role->name }}</td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('user.edit', $user->id) }}"
+                                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('roles/'.$role->id.'/edit') }}"
                                                     class="btn btn-success btn-sm" title="Modifier"><i
                                                         class="bi bi-pencil-square"></i></a>&nbsp;
-                                                <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                                                <form action="{{ url('roles', $role->id) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm show_confirm"
@@ -92,7 +82,7 @@
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-users', {
+        new DataTable('#table-roles', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

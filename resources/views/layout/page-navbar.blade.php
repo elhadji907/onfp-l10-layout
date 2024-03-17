@@ -151,8 +151,7 @@
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                 {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
-                <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}" width="50"
-                    height="auto">
+                <img class="rounded-circle" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}">
 
                 <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->firstname }}
                     {{ Auth::user()->name }}</span>

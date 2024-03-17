@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use Intervention\Image\Facades\Image;
@@ -75,7 +74,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view("user.update", compact("user"));
+        return view("user.update", compact('user'));
     }
 
     public function update(StoreUserRequest $request, $id): RedirectResponse
@@ -110,6 +109,7 @@ class UserController extends Controller
                 'image' => $imagePath
             ]);
         }
+
         $user->save();
 
         $status = 'Mise à jour effectuée avec succès';
@@ -128,6 +128,6 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
         $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
-        return redirect()->back()->with("success", $mesage);
+        return redirect()->back()->with("danger", $mesage);
     }
 }

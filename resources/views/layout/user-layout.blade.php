@@ -116,7 +116,11 @@
             $('.alert-success').remove();
         }, 5000);
     </script>
-
+    <script>
+        setTimeout(function() {
+            $('.alert-danger').remove();
+        }, 5000);
+    </script>
     <script>
         function myFunction() {
             var element = document.body;
