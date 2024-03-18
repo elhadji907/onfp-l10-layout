@@ -56,7 +56,7 @@
                                     <label for="name" class="form-label">Nom</label>
                                     <input type="text" name="name" value="{{ old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                        id="name" placeholder="name">
+                                        id="name" placeholder="nom">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -65,9 +65,9 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <label for="email" class="form-label">email</label>
+                                    <label for="email" class="form-label">Email</label>
                                     <div class="input-group has-validation">
-                                        <span class="input-group-text" id="email">@</span>
+                                        {{-- <span class="input-group-text" id="email">@</span> --}}
                                         <input type="email" name="email" value="{{ old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
@@ -97,6 +97,42 @@
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
                                     @error('adresse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-6">
+
+                                    <label for="roles" class="form-label">Role</label>
+                                    <select name="roles[]" class="form-select" aria-label="Select"
+                                        id="multiple-select-field" multiple data-placeholder="Choisir roles"> 
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role }}">{{ $role ?? old('role') }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('role'))
+                                            @foreach ($errors->get('role') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+
+                                    {{-- <label for="roles" class="form-label">Role</label>
+                                    <option value="#">Sélect.</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role }}">{{ $role }}</option>
+                                    @endforeach --}}
+                                </div>
+
+                                <div class="col-6">
+                                    <label for="password" class="form-label">Mot de passe</label>
+                                    <input type="password" name="password" value="{{ old('password') }}"
+                                        class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                        id="password" placeholder="mot de passe">
+                                    @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>

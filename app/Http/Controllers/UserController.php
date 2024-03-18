@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
-use Intervention\Image\Facades\Image;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Intervention\Image\Facades\Image;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -19,7 +20,9 @@ class UserController extends Controller
 
     public function create()
     {
-        return view("user.create");
+        $roles = Role::pluck('name', 'name')->all();
+
+        return view("user.create", compact("roles"));
     }
 
     public function index()
@@ -31,13 +34,19 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
+        if ($request->password) {
+            $password = Hash::make($request->password);
+        } else {
+            $password = Hash::make($request->email);
+        }
+
         $user = User::create([
             'firstname' => $request->firstname,
             'name' => $request->name,
             'email' => $request->email,
             'telephone' => $request->telephone,
             'adresse' => $request->adresse,
-            'password' => Hash::make($request->email),
+            'password' => $password,
         ]);
 
         if (request('image')) {
@@ -64,6 +73,8 @@ class UserController extends Controller
                 'image' => $imagePath
             ]);
         }
+
+        $user->syncRoles($request->roles);
 
         /* $user = User::create($request->all()); */
 

@@ -23,8 +23,7 @@ class StoreUserRequest extends FormRequest
     /* Cette fonction nous permet de récupérer l'id de l'utilisateur qu'on et entrain de modifier */
     public function __construct(Request $request)
     {
-        $this->id = (integer) $request->route()->user;
-
+        $this->id = (int) $request->route()->user;
     }
 
     /**
@@ -37,10 +36,12 @@ class StoreUserRequest extends FormRequest
         return [
             'firstname' => ['required', 'string', 'max:50'],
             'name' => ['required', 'string', 'max:25'],
-            'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'email' => ['sometimes', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->id)->whereNull('deleted_at')],
+            'image' => ['string', 'max:255', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->id)->whereNull('deleted_at')],
             'telephone' => ['required', 'string', 'max:25', 'min:9'],
             'adresse' => ['required', 'string', 'max:255'],
+            'password' => ['string', 'max:255', 'nullable'],
+            'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
         ];
     }
 }
