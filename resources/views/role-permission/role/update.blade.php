@@ -24,7 +24,7 @@
                         </div>
                         <h5 class="card-title">Modification role</h5>
                         <!-- role -->
-                        <form method="post" action="{{ url('roles/'. $role->id) }}" enctype="multipart/form-data"
+                        <form method="post" action="{{ url('roles/' . $role->id) }}" enctype="multipart/form-data"
                             class="row g-3">
                             @csrf
                             @method('PUT')
@@ -43,6 +43,22 @@
                                 <button type="submit" class="btn btn-primary">Modifier</button>
                             </div>
                         </form><!-- End role -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="card border-info mb-3">
+                    <div class="card-header text-center">
+                        AUDIT
+                    </div>
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-left">
+                        <h5 class="card-title">Informations complémentaires</h5>
+                        <span><b>Création</b> : {{ $role->created_at->format('d, M Y à H:i') }}, par <label
+                                class="badge bg-success mx-1">{{ $user_create->firstname }} {{ $user_create->name }}</label
+                                class="btn btn-success btn-sm"></span>
+                        <span><b>Modification</b> : {{ $role->updated_at->format('d, M Y à H:i') }}, par <label
+                                class="badge bg-info mx-1">{{ $user_update->firstname }} {{ $user_create->name }}</label
+                                class="btn btn-success btn-sm"></span>
                     </div>
                 </div>
             </div>

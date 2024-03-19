@@ -121,6 +121,8 @@
                                     </div>
                                 </div>
 
+                                <input type="hidden" name="newPassword" value="{{ $user->password }}">
+
                                 <div class="col-6">
                                     <label for="profil" class="form-label">Image de profil</label>
                                     <input type="file" name="image" id="image" multiple

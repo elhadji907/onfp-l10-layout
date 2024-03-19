@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -19,6 +22,7 @@ class RoleController extends Controller
         $this->middleware("permission:role-update", ["only"=> ["update", "edit"]]);
         $this->middleware("permission:role-show", ["only"=> ["show"]]);
         $this->middleware("permission:role-delete", ["only"=> ["destroy"]]);
+        $this->middleware("permission:give-role-permissions", ["only"=> ["givePermissionsToRole"]]);
     }
 
     public function index()
@@ -39,7 +43,10 @@ class RoleController extends Controller
             "name" => ["required", "string", "unique:roles,name"]
         ]);
         Role::create([
-            "name" => $request->name
+            "name" => $request->name,
+            "user_create_id" => Auth::user()->id,
+            "user_update_id" => Auth::user()->id,
+            "user_delete_id" => ''
         ]);
         return redirect()->route("roles.create")->with("status", "Role créé avec succès");
     }
@@ -47,7 +54,9 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        return view("role-permission.role.update", compact('role'));
+        $user_create = User::find($role->user_create_id);
+        $user_update = User::find($role->user_update_id);
+        return view("role-permission.role.update", compact('role', 'user_create', 'user_update'));
     }
 
     public function update(Request $request, $id)
@@ -57,7 +66,8 @@ class RoleController extends Controller
         ]);
 
         Role::find($id)->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'user_update_id' => Auth::user()->id
         ]);
 
         $roles = Role::get();

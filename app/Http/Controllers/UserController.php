@@ -134,21 +134,23 @@ class UserController extends Controller
                 'image' => $imagePath
             ]);
         }
-
         if ($request->password) {
             $password = Hash::make($request->password);
+            $user->update([
+                'password'      => $password,
+            ]);
         } else {
-            $password = Hash::make($request->email);
+            $user->update([
+                'firstname'     =>  $request->firstname,
+                'name'          =>  $request->name,
+                'email'         =>  $request->email,
+                'telephone'     =>  $request->telephone,
+                'adresse'       =>  $request->adresse,
+                'password'      =>  $request->newPassword,
+            ]);
         }
 
-        $user->firstname  =  $request->firstname;
-        $user->name       =  $request->name;
-        $user->email      =  $request->email;
-        $user->telephone  =  $request->telephone;
-        $user->adresse    =  $request->adresse;
-        $user->password   =  $password;
-
-        $user->save();
+        /* $user->save(); */
 
         $user->syncRoles($request->roles);
 

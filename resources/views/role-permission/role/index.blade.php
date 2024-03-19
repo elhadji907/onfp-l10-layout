@@ -54,26 +54,32 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('roles/'.$role->id.'/give-permissions') }}"
-                                                class="btn btn-warning btn-sm" title="Donner permission"><i
-                                                    class="bi bi-file-lock"></i></a>&nbsp;<a href="{{ url('roles/'.$role->id.'/edit') }}"
+                                            <span class="d-flex mt-2 align-items-baseline">
+                                                @can('give-role-permissions')
+                                                    <a href="{{ url('roles/' . $role->id . '/give-permissions') }}"
+                                                        class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
+                                                            class="bi bi-file-lock"></i></a>
+                                                @endcan
+                                                @can('role-update')
+                                                    <a href="{{ url('roles/' . $role->id . '/edit') }}"
                                                         class="btn btn-success btn-sm" title="Modifier"><i
-                                                            class="bi bi-pencil-square"></i></a>&nbsp;
-                                                <form action="{{ url('roles', $role->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm show_confirm"
-                                                        title="Supprimer"><i class="bi bi-trash"></i></button>
-                                                </form>
+                                                            class="bi bi-pencil-square"></i></a>
+                                                @endcan
+                                                @can('role-delete')
+                                                    <form action="{{ url('roles', $role->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm show_confirm mx-1"
+                                                            title="Supprimer"><i class="bi bi-trash"></i></button>
+                                                    </form>
+                                                @endcan
                                             </span>
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
 
