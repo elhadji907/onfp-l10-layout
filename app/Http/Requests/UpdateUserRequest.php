@@ -2,22 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class StoreUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,7 +20,7 @@ class StoreUserRequest extends FormRequest
         return [
             'firstname' => ['required', 'string', 'max:50'],
             'name' => ['required', 'string', 'max:25'],
-            'image' => ['string', 'max:255', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image' => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'telephone' => ['required', 'string', 'max:25', 'min:9'],
             'adresse' => ['required', 'string', 'max:255'],
             'password' => ['string', 'max:255', 'nullable'],

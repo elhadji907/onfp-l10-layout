@@ -160,7 +160,9 @@
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
                     <h6>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h6>
-                    <span>Développeur web</span>
+                    @foreach (Auth::user()->roles as $role)
+                        <span>{{ $role->name }}</span>
+                    @endforeach
                 </li>
                 <li>
                     <hr class="dropdown-divider">

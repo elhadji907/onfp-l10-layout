@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image;
 use Spatie\Permission\Models\Role;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -34,6 +37,10 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
+        $this->validate($request, [
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
+        ]);
+
         if ($request->password) {
             $password = Hash::make($request->password);
         } else {
@@ -82,15 +89,22 @@ class UserController extends Controller
         return redirect()->back()->with("status", $status);
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
-        return view("user.update", compact('user'));
+        $roles = Role::pluck('name', 'name')->all();
+
+        $userRoles = $user->roles->pluck('name', 'name')->all();
+
+        return view("user.update", compact('user', 'roles', 'userRoles'));
     }
 
-    public function update(StoreUserRequest $request, $id): RedirectResponse
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        $user = User::find($id);
+
+        /* $this->validate($request, [
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+        ]); */
+
         $user->fill($request->validated());
 
         if ($user->isDirty('email')) {
@@ -121,7 +135,22 @@ class UserController extends Controller
             ]);
         }
 
+        if ($request->password) {
+            $password = Hash::make($request->password);
+        } else {
+            $password = Hash::make($request->email);
+        }
+
+        $user->firstname  =  $request->firstname;
+        $user->name       =  $request->name;
+        $user->email      =  $request->email;
+        $user->telephone  =  $request->telephone;
+        $user->adresse    =  $request->adresse;
+        $user->password   =  $password;
+
         $user->save();
+
+        $user->syncRoles($request->roles);
 
         $status = 'Mise à jour effectuée avec succès';
 
@@ -134,9 +163,10 @@ class UserController extends Controller
         return view("user.show", compact("user"));
     }
 
-    public function destroy($id)
+    public function destroy($userId)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($userId);
+        $user->roles()->detach();
         $user->delete();
         $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
         return redirect()->back()->with("danger", $mesage);

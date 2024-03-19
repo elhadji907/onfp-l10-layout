@@ -10,6 +10,17 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+
+    public function __construct()
+    {
+        /* $this->middleware("auth");
+        $this->middleware("permission:role-view", ["only"=> ["index"]]);
+        $this->middleware("permission:role-create", ["only"=> ["create","store"]]);
+        $this->middleware("permission:role-update", ["only"=> ["update", "edit"]]);
+        $this->middleware("permission:role-show", ["only"=> ["show"]]);
+        $this->middleware("permission:role-delete", ["only"=> ["destroy"]]); */
+    }
+
     public function index()
     {
         $roles = Role::orderBy('created_at', 'desc')->get();

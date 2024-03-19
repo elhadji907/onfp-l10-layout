@@ -27,11 +27,11 @@
                         <form method="post" action="{{ url('permissions') }}" enctype="multipart/form-data"
                             class="row g-3">
                             @csrf
-                            <div class="row mb-3">
+                            {{--  <div class="row mb-3">
                                 <label for="name" class="form-label"></label>
                                 <input type="text" name="name" value="{{ old('name') }}"
                                     class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                    placeholder="Nom permission">
+                                    placeholder="Nom permission" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -40,7 +40,27 @@
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Ajouter</button>
+                            </div> --}}
+
+
+                            <table class="table table-bordered" id="dynamicAddRemove">
+                                <tr>
+                                    <th>Permissions</th>
+                                    <th width="15%">Action</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="permissions[0][name]" placeholder="Entrer une permission"
+                                            class="form-control" autofocus/></td>
+                                    <td><button type="button" name="add" id="add-btn" class="btn btn-success"
+                                            title="Ajouter une ligne">Ajouter</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
+                                <button type="submit" class="btn btn-outline-success"><i
+                                        class="far fa-save"></i>&nbsp;Sauvegarder</button>
                             </div>
+
                         </form><!-- End Permission -->
                     </div>
                 </div>
@@ -48,3 +68,18 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        var i = 0;
+        $("#add-btn").click(function() {
+            ++i;
+            $("#dynamicAddRemove").append('<tr><td><input type="text" name="permissions[' + i +
+                '][name]" placeholder="Entrer une autre catégorie" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Supprimer</button></td></tr>'
+            );
+        });
+        $(document).on('click', '.remove-tr', function() {
+            $(this).parents('tr').remove();
+        });
+    </script>
+@endpush

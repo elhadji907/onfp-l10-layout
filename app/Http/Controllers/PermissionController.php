@@ -24,12 +24,20 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            "name" => ["required", "string", "unique:permissions,name"]
+        $this->validate($request, [         
+            'permissions.*.name' => 'required|unique:permissions,name'
         ]);
-        Permission::create([
+
+        /* dd($request->permissions); */
+        
+        foreach ($request->permissions as $key => $value) {
+            Permission::create($value);
+        }
+
+        /* Permission::create([
             "name" => $request->name
-        ]);
+        ]); */
+
         return redirect()->route("permissions.create")->with("status", "Permission créée avec succès");
     }
 

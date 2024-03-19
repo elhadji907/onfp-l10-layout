@@ -60,7 +60,7 @@
                                 <div class="col-6">
                                     <label for="email" class="form-label">email</label>
                                     <div class="input-group has-validation">
-                                        <span class="input-group-text" id="email">@</span>
+                                        {{-- <span class="input-group-text" id="email">@</span> --}}
                                         <input type="email" name="email" value="{{ $user->email }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
@@ -84,7 +84,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="adresse" class="form-label">Adresse</label>
                                     <input type="text" name="adresse" value="{{ $user->adresse }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
@@ -94,6 +94,31 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="roles" class="form-label">Roles</label>
+                                    <select name="roles[]" class="form-select" aria-label="Select"
+                                        id="multiple-select-field" multiple data-placeholder="Choisir roles">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role }}"
+                                                {{ in_array($role, $userRoles) ? 'selected' : '' }}>
+                                                {{ $role ?? old('role') }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-6">
+                                    <label for="password" class="form-label">Mot de passe</label>
+                                    <input type="password" name="password"
+                                        class="form-control  @error('password') is-invalid @enderror" id="password"
+                                        placeholder="Votre mot de passe">
+                                    <div class="invalid-feedback">
+                                        @error('password')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="col-6">

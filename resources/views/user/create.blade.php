@@ -105,7 +105,7 @@
 
                                 <div class="col-6">
 
-                                    <label for="roles" class="form-label">Role</label>
+                                    <label for="roles" class="form-label">Roles</label>
                                     <select name="roles[]" class="form-select" aria-label="Select"
                                         id="multiple-select-field" multiple data-placeholder="Choisir roles"> 
                                         @foreach ($roles as $role)
@@ -119,12 +119,6 @@
                                             @endforeach
                                         @endif
                                     </small>
-
-                                    {{-- <label for="roles" class="form-label">Role</label>
-                                    <option value="#">Sélect.</option>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role }}">{{ $role }}</option>
-                                    @endforeach --}}
                                 </div>
 
                                 <div class="col-6">

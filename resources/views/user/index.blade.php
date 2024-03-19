@@ -47,7 +47,7 @@
                                     <th>Prénom & Nom</th>
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
-                                    <th>Adresse</th>
+                                    <th>Roles</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -61,12 +61,19 @@
                                         <td>{{ $user->firstname }} {{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->telephone }}</td>
-                                        <td>{{ $user->adresse }}</td>
+                                        <td>
+                                            @if (!empty($user->getRoleNames()))
+                                            @foreach ($user->getRoleNames() as $roleName)
+                                                <label for="label" class="badge bg-primary mx-1">{{ $roleName }}</label>
+                                            @endforeach
+                                                
+                                            @endif
+                                        </td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
                                                     href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-success btn-sm" title="Modifier"><i
-                                                        class="bi bi-pencil-square"></i></a>&nbsp;
+                                                    class="btn btn-success btn-sm mx-1" title="Modifier"><i
+                                                        class="bi bi-pencil-square"></i></a>
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')

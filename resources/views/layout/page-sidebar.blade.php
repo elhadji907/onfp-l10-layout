@@ -10,27 +10,15 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('permissions') }}">
-                <i class="bi bi-key"></i>
-                <span>Permissions</span>
-            </a>
-        </li><!-- End Permissions Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('roles') }}">
-                <i class="bi bi-file-lock2-fill"></i>
-                <span>Roles</span>
-            </a>
-        </li><!-- End roles Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('users') }}">
+            <a class="nav-link collapsed" href="{{ url('user') }}">
                 <i class="bi bi-person"></i>
                 <span>Users</span>
             </a>
         </li><!-- End utilisateurs Nav -->
 
-        <li class="nav-item">
+        <li class="nav-heading">Autorisations</li>
+
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
@@ -106,9 +94,10 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Components Nav -->
+        </li> --}}
+        <!-- End Components Nav -->
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
@@ -134,9 +123,10 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Forms Nav -->
+        </li> --}}
+        <!-- End Forms Nav -->
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
                     class="bi bi-chevron-down ms-auto"></i>
@@ -153,9 +143,10 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Tables Nav -->
+        </li> --}}
+        <!-- End Tables Nav -->
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
@@ -176,37 +167,36 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Charts Nav -->
+        </li> --}}
+        <!-- End Charts Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-key"></i><span>Autorisations</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="icons-bootstrap.html">
-                        <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('roles') }}">
+                        <i class="bi bi-file-lock2-fill"></i>
+                        <span>Roles</span>
                     </a>
-                </li>
-                <li>
-                    <a href="icons-remix.html">
-                        <i class="bi bi-circle"></i><span>Remix Icons</span>
+                </li><!-- End roles Nav -->
+        
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                        <i class="bi bi-key"></i>
+                        <span>Permissions</span>
                     </a>
-                </li>
-                <li>
-                    <a href="icons-boxicons.html">
-                        <i class="bi bi-circle"></i><span>Boxicons</span>
-                    </a>
-                </li>
+                </li><!-- End Permissions Nav -->
             </ul>
-        </li><!-- End Icons Nav -->
+        </li><!-- End Autorisations Nav -->
 
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="users-profile.html">
+            <a class="nav-link collapsed" href="{{ url('/profil') }}">
                 <i class="bi bi-person"></i>
-                <span>Profile</span>
+                <span>Profil</span>
             </a>
         </li><!-- End Profile Page Nav -->
 

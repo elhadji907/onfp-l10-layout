@@ -32,11 +32,15 @@
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                         {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
-                        <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}" width="50"
-                            height="auto">
+                        <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}"
+                            width="50" height="auto">
 
                         <h2>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h2>
-                        <h3>Développeur web</h3>
+                        <h3>
+                            @foreach (Auth::user()->roles as $role)
+                                <span>{{ $role->name }}</span>
+                            @endforeach
+                        </h3>
                         <div class="social-links mt-2">
                             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -144,7 +148,7 @@
                                                     src="{{ asset(Auth::user()->getImage()) }}" width="50"
                                                     height="auto">
 
-                                                <div class="pt-2">
+                                                <div class="pt-2 col-md-4 col-lg-6">
                                                     <input type="file" name="image" id="image" multiple
                                                         class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
                                                     @error('image')
@@ -306,7 +310,7 @@
                                                 class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="current_password" type="password"
-                                                    class="form-control @error('firstname') is-invalid @enderror"
+                                                    class="form-control @error('current_password') is-invalid @enderror"
                                                     id="update_password_current_password"
                                                     placeholder="Votre mot de passe actuel"
                                                     autocomplete="current-password">

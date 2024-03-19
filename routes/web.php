@@ -34,7 +34,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -47,16 +47,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update');
 
-    
+
     Route::get('/roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionsToRole']);
     Route::put('/roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionsToRole']);
 
+    Route::put('/users/{userId}/delete', [UserController::class, 'destroy']);
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
     Route::resource('/roles', RoleController::class);
-
 });
 
 
