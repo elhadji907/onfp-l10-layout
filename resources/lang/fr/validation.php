@@ -112,6 +112,9 @@ return [
     'uploaded'             => "Le fichier du champ :attribute n'a pu être téléversé.",
     'url'                  => "Le format de l'URL de :attribute n'est pas valide.",
 
+    
+    'lowercase'             => 'Le champ :attribute doit être en miniscule.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

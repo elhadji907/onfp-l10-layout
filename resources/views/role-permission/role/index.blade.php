@@ -31,11 +31,13 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-5">
-                            <a href="{{ route('roles.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                        </div>
+                        @can('role-create')
+                            <div class="pt-5">
+                                <a href="{{ route('roles.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                                        class="fas fa-plus"></i>
+                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            </div>
+                        @endcan
                         <h5 class="card-title">roles</h5>
                         <p>Le tableau de tous les roles du système.</p>
                         <!-- Table with stripped rows -->

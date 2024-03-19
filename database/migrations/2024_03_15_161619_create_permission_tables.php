@@ -43,7 +43,6 @@ return new class extends Migration
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->string('user_create_id'); // For l'utilisateur qui a créé le role;
             $table->string('user_update_id'); // For l'utilisateur qui a modifié le role;
-            $table->string('user_delete_id')->nullable; // For l'utilisateur qui a modifié le role;
             $table->timestamps();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);

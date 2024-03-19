@@ -38,7 +38,7 @@
                         <h2>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h2>
                         <h3>
                             @foreach (Auth::user()->roles as $role)
-                                <span>{{ $role->name }}</span>
+                                <span>{{ $role->name }} |</span>
                             @endforeach
                         </h3>
                         <div class="social-links mt-2">
@@ -67,8 +67,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-autre">Autres
-                                        info.
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-autre">Info.
                                     </button>
                                 </li>
                             </ul>
@@ -78,31 +77,27 @@
                                     <h5 class="card-title">Détail du profils</h5>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">Prénom</div>
+                                        <div class="col-lg-3 col-md-4 label ">Prénom & Nom</div>
                                         <div class="col-lg-9 col-md-8">{{ Auth::user()->firstname }}
+                                            {{ Auth::user()->name }}
                                         </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">Nom</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->name }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div style="color: blue" class="col-lg-9 col-md-8">{{ Auth::user()->email }}</div>
+                                        <div class="col-lg-3 col-md-4 label ">Email</div>
+                                        <div style="color: blue" class="col-lg-9 col-md-8">{{ Auth::user()->email }}
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 label">Téléphone</div>
+                                        <div class="col-lg-6 col-md-6">{{ Auth::user()->telephone }}</div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade profile-overview" id="profile-autre">
 
-                                    <h5 class="card-title">Autres info. du profils</h5>
+                                    <h5 class="card-title">Audit</h5>
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->telephone }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Adresse</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->adresse }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Création</div>
+                                        <div class="col-lg-9 col-md-8">créé le
+                                            {{ Auth::user()->created_at->format('d/m/Y à H:m:s') }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Modification</div>
+                                        <div class="col-lg-9 col-md-8">Modifié le
+                                            {{ Auth::user()->updated_at->format('d/m/Y à H:m:s') }}</div>
                                     </div>
 
                                 </div>
@@ -120,16 +115,16 @@
             <div class="col-xl-8">
                 <div class="flex items-center gap-4">
                     <div class="card">
-                        <div class="card-body pt-3">
+                        <div class="card-body pt-">
                             <!-- Bordered Tabs -->
-                            <ul class="nav nav-tabs nav-tabs-bordered">
+                            {{-- <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Profil</button>
                                 </li>
-                            </ul>
-                            <div class="tab-content pt-2">
+                            </ul> --}}
+                            <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
 
                                     <h5 class="card-title">Modification du profil</h5>

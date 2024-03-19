@@ -171,10 +171,10 @@
         <!-- End Charts Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-key"></i><span>Autorisations</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('roles') }}">
                         <i class="bi bi-file-lock2-fill"></i>
@@ -189,7 +189,37 @@
                     </a>
                 </li><!-- End Permissions Nav -->
             </ul>
-        </li><!-- End Autorisations Nav -->
+        </li><!-- End Courriers Nav -->
+        
+        <li class="nav-heading">CURRIERS</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-envelope"></i><span>Courriers</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('roles') }}">
+                        <i class="bi bi-envelope-open"></i>
+                        <span>Reçus</span>
+                    </a>
+                </li><!-- End roles Nav -->
+        
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>Départs</span>
+                    </a>
+                </li><!-- End Permissions Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                        <i class="bi bi-envelope-open-fill"></i>
+                        <span>Internes</span>
+                    </a>
+                </li><!-- End Permissions Nav -->
+            </ul>
+        </li><!-- End Courriers Nav -->
 
         <li class="nav-heading">Pages</li>
 
