@@ -1,10 +1,18 @@
 <?php
 
+use App\Http\Controllers\CourrierController;
+use App\Http\Controllers\DepartController;
+use App\Http\Controllers\InterneController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArriveController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,16 +55,24 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/users/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update');
 
+    Route::get('/arrives/create', [ArriveController::class, 'create'])->name('arrive.create');
+    Route::post('/arrives/create', [ArriveController::class, 'store'])->name('arrive.store');
+    Route::get('/arrives/{id}', [ArriveController::class, 'edit'])->name('arrive.edit');
+    Route::put('/arrives/{id}', [ArriveController::class, 'update'])->name('arrive.update');
+    Route::put('/arrives/{arriveId}/delete', [ArriveController::class, 'destroy']);
+
 
     Route::get('/roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionsToRole']);
     Route::put('/roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionsToRole']);
-
-    Route::put('/users/{userId}/delete', [UserController::class, 'destroy']);
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
     Route::resource('/roles', RoleController::class);
+    Route::resource('/courriers', CourrierController::class);
+    Route::resource('/arrives', ArriveController::class);
+    Route::resource('/departs', DepartController::class);
+    Route::resource('/internes', InterneController::class);
 });
 
 

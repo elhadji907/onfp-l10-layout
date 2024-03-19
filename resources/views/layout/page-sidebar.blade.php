@@ -199,25 +199,25 @@
             </a>
             <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('roles') }}">
+                    <a class="nav-link collapsed" href="{{ url('arrives') }}">
                         <i class="bi bi-envelope-open"></i>
-                        <span>Reçus</span>
+                        <span>Arrivé</span>
                     </a>
-                </li><!-- End roles Nav -->
+                </li><!-- End arrives Nav -->
         
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                    <a class="nav-link collapsed" href="{{ url('departs') }}">
                         <i class="bi bi-envelope-fill"></i>
-                        <span>Départs</span>
+                        <span>Départ</span>
                     </a>
-                </li><!-- End Permissions Nav -->
+                </li><!-- End departs Nav -->
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                    <a class="nav-link collapsed" href="{{ url('internes') }}">
                         <i class="bi bi-envelope-open-fill"></i>
-                        <span>Internes</span>
+                        <span>Interne</span>
                     </a>
-                </li><!-- End Permissions Nav -->
+                </li><!-- End internes Nav -->
             </ul>
         </li><!-- End Courriers Nav -->
 

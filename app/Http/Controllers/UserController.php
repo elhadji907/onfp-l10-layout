@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image;
 use Spatie\Permission\Models\Role;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -31,7 +30,6 @@ class UserController extends Controller
     public function index()
     {
         $user_liste = User::orderBy('created_at', 'desc')->get();
-        /* dd($user_liste); */
         return view("user.index", compact("user_liste"));
     }
 

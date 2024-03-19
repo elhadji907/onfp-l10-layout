@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecuesTable extends Migration
+class CreateArrivesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'recues';
+    public $tableName = 'arrives';
 
     /**
      * Run the migrations.
-     * @table recues
+     * @table arrives
      *
      * @return void
      */
@@ -27,12 +27,12 @@ class CreateRecuesTable extends Migration
             $table->char('uuid', 36);
             $table->unsignedInteger('courriers_id');
 
-            $table->index(["courriers_id"], 'fk_recues_courriers1_idx');
+            $table->index(["courriers_id"], 'fk_arrives_courriers1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('courriers_id', 'fk_recues_courriers1_idx')
+            $table->foreign('courriers_id', 'fk_arrives_courriers1_idx')
                 ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');
