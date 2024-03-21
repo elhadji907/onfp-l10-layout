@@ -13,8 +13,8 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-	use SoftDeletes;
-	use \App\Helpers\UuidForKey;
+    use SoftDeletes;
+    use \App\Helpers\UuidForKey;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +29,11 @@ class User extends Authenticatable
         'adresse',
         'image',
         'password',
+
+        'twitter',
+        'facebook',
+        'instagram',
+        'linkedin',
     ];
 
     /**
@@ -51,8 +56,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-	public function getImage(){
-		$imagePath = $this->image ?? 'avatars/default.png';
-		return "/storage/" . $imagePath;
-	}
+    public function getImage()
+    {
+        $imagePath = $this->image ?? 'avatars/default.png';
+        return "/storage/" . $imagePath;
+    }
 }

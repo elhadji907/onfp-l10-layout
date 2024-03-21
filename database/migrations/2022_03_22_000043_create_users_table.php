@@ -43,6 +43,11 @@ class CreateUsersTable extends Migration
             $table->string('created_by', 200)->nullable();
             $table->string('updated_by', 200)->nullable();
             $table->string('deleted_by', 200)->nullable();
+            
+            $table->string('twitter', 200)->nullable();
+            $table->string('facebook', 200)->nullable();
+            $table->string('instagram', 200)->nullable();
+            $table->string('linkedin', 200)->nullable();
             $table->unsignedInteger('professionnelles_id')->nullable();
             $table->unsignedInteger('familiales_id')->nullable();
             $table->rememberToken();
