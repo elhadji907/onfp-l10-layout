@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use Spatie\Permission\Models\Role;
-use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -96,18 +96,21 @@ class UserController extends Controller
         return view("user.update", compact('user', 'roles', 'userRoles'));
     }
 
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(Request $request, $id)
     {
+        $user = User::findOrFail($id);
 
-        /* $this->validate($request, [
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-        ]); */
+        $this->validate($request, [
+            'firstname' => ['required', 'string', 'max:50'],
+            'name' => ['required', 'string', 'max:25'],
+            'image' => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'telephone' => ['required', 'string', 'max:25', 'min:9'],
+            'adresse' => ['required', 'string', 'max:255'],
+            'password' => ['string', 'max:255', 'nullable'],
+            'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
+            "email" => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id),],
+        ]);
 
-        $user->fill($request->validated());
-
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
         if (request('image')) {
             $imagePath = request('image')->store('avatars', 'public');
             $file = $request->file('image');

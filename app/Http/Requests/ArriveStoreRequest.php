@@ -28,6 +28,9 @@ class ArriveStoreRequest extends FormRequest
             "annee"                 => ["required", "string"],
             "expediteur"            => ["required", "string"],
             "objet"                 => ["required", "string"],
+            "numero_reponse"        => ["string", "min:4", "max:6","nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL"],
+            "date_reponse"          => ["nullable", "date"],
+            "observation"           => ["nullable", "string"],
         ];
     }
 }
