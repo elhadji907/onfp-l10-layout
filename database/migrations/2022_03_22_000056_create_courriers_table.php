@@ -27,8 +27,8 @@ class CreateCourriersTable extends Migration
             $table->string('numero', 200);
             $table->longText('objet')->nullable();
             $table->string('expediteur', 200)->nullable();
-            $table->string('name', 200)->nullable();
-            $table->string('type', 200)->nullable();
+            $table->string('numero_reponse', 200)->nullable();
+            $table->string('annee', 200)->nullable();
             $table->longText('description')->nullable();
             $table->longText('reference')->nullable();
             $table->longText('message')->nullable();
@@ -47,6 +47,7 @@ class CreateCourriersTable extends Migration
             $table->timestamp('date_cores')->nullable();
             $table->timestamp('date_rejet')->nullable();
             $table->timestamp('date_liq')->nullable();
+            $table->timestamp('date_reponse')->nullable();
             $table->longText('designation')->nullable();
             $table->longText('observation')->nullable();
             $table->timestamp('date_visa')->nullable();

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArriveStoreRequest;
 use App\Models\Arrive;
 use App\Models\Courrier;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class ArriveController extends Controller
 {
@@ -20,27 +23,20 @@ class ArriveController extends Controller
         return view("courriers.arrives.create");
     }
 
-    public function store(Request $request)
+    public function store(ArriveStoreRequest $request): RedirectResponse
     {
-        $request->validate(
-            [
-                "date_arrivee"          => ["required", "date"],
-                "date_correspondance"   => ["required", "date"],
-                "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:arrives,numero,Null,id,deleted_at,NULL"],
-                "annee"                 => ["required", "string"],
-                "expediteur"            => ["required", "string"],
-                "objet"                 => ["required", "string"],
-            ]
-        );
-
         $courrier = new Courrier([
-            'numero'             =>      $request->input('numero_correspondance'),
-            'objet'              =>      $request->input('objet'),
-            'observation'        =>      $request->input('observation'),
-            'expediteur'         =>      $request->input('expediteur'),
-            'date_recep'         =>      $request->input('date_arrivee'),
-            'date_cores'         =>      $request->input('date_correspondance'),
-            'users_id'           =>      Auth::user()->id,
+            'date_recep'            =>      $request->input('date_arrivee'),
+            'date_cores'            =>      $request->input('date_correspondance'),
+            'numero'                =>      $request->input('numero_correspondance'),
+            'annee'                 =>      $request->input('annee'),
+            'objet'                 =>      $request->input('objet'),
+            'expediteur'            =>      $request->input('expediteur'),
+            'reference'             =>      $request->input('reference'),
+            'numero_reponse'        =>      $request->input('numero_reponse'),
+            'date_reponse'          =>      $request->input('date_reponse'),
+            'observation'           =>      $request->input('observation'),
+            'users_id'              =>      Auth::user()->id,
         ]);
 
         $courrier->save();
@@ -60,18 +56,54 @@ class ArriveController extends Controller
     public function edit($id)
     {
         $arrive = Arrive::findOrFail($id);
-        dd($arrive);
+        return view("courriers.arrives.update", compact("arrive"));
     }
 
     public function update(Request $request, $id)
     {
         $arrive = Arrive::findOrFail($id);
-        dd($arrive);
+        $courrier = Courrier::findOrFail($arrive->courriers_id);
+
+        $this->validate($request, [
+            "date_arrivee"          => ["required", "date"],
+            "date_correspondance"   => ["required", "date"],
+            "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:arrives,numero,Null,id,deleted_at,NULL" . $arrive->id],
+            "annee"                 => ["required", "string"],
+            "expediteur"            => ["required", "string"],
+            "objet"                 => ["required", "string"],
+        ]);
+
+        $courrier->update(
+            [
+                'date_recep'       =>      $request->input('date_arrivee'),
+                'date_cores'       =>      $request->input('date_correspondance'),
+                'numero'           =>      $request->input('numero_correspondance'),
+                'annee'            =>      $request->input('annee'),
+                'objet'            =>      $request->input('objet'),
+                'expediteur'       =>      $request->input('expediteur'),
+                'reference'        =>      $request->input('reference'),
+                'numero_reponse'   =>      $request->input('numero_reponse'),
+                'date_reponse'     =>      $request->input('date_reponse'),
+                'observation'      =>      $request->input('observation'),
+                'users_id'         =>      Auth::user()->id,
+            ]
+        );
+
+        $arrive->update(
+            [
+                'numero'             =>      $request->input('numero_correspondance'),
+                'courriers_id'       =>      $courrier->id,
+            ]
+        );
+
+        $status = 'Mise à jour effectuée avec succès';
+
+        return Redirect::route('arrives.index')->with('status', $status);
     }
     public function show($id)
     {
         $arrive = Arrive::findOrFail($id);
-        dd($id);
+        return view("courriers.arrives.show", compact("arrive"));
     }
 
     public function destroy($arriveId)

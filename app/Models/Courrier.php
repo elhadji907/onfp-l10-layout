@@ -105,6 +105,7 @@ class Courrier extends Model
 		'traitementcourriers_id' => 'int',
 		'date_recep' => 'datetime',
 		'date_cores' => 'datetime',
+		'date_reponse' => 'datetime',
 	];
 
 	protected $dates = [
@@ -112,6 +113,7 @@ class Courrier extends Model
 		'date_imp',
 		'date_recep',
 		'date_cores',
+		'date_reponse',
 		'date_rejet',
 		'date_liq',
 		'date_visa',
@@ -125,8 +127,8 @@ class Courrier extends Model
 		'num_bord',
 		'objet',
 		'expediteur',
-		'name',
-		'type',
+		'numero_reponse',
+		'annee',
 		'description',
 		'reference',
 		'message',
@@ -143,6 +145,7 @@ class Courrier extends Model
 		'date_depart',
 		'date_recep',
 		'date_cores',
+		'date_reponse',
 		'date_rejet',
 		'date_liq',
 		'designation',

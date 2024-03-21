@@ -31,13 +31,13 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        @can('role-create')
+                        {{-- @can('role-create') --}}
                             <div class="pt-5">
                                 <a href="{{ route('roles.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                         class="fas fa-plus"></i>
                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                             </div>
-                        @endcan
+                        {{-- @endcan --}}
                         <h5 class="card-title">roles</h5>
                         <p>Le tableau de tous les roles du système.</p>
                         <!-- Table with stripped rows -->
@@ -57,24 +57,24 @@
                                         <td>{{ $role->name }}</td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline">
-                                                @can('give-role-permissions')
+                                                {{-- @can('give-role-permissions') --}}
                                                     <a href="{{ url('roles/' . $role->id . '/give-permissions') }}"
                                                         class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
                                                             class="bi bi-file-lock"></i></a>
-                                                @endcan
-                                                @can('role-update')
+                                                {{-- @endcan --}}
+                                                {{-- @can('role-update') --}}
                                                     <a href="{{ url('roles/' . $role->id . '/edit') }}"
                                                         class="btn btn-success btn-sm" title="Modifier"><i
                                                             class="bi bi-pencil-square"></i></a>
-                                                @endcan
-                                                @can('role-delete')
+                                                {{-- @endcan
+                                                @can('role-delete') --}}
                                                     <form action="{{ url('roles', $role->id) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm show_confirm mx-1"
                                                             title="Supprimer"><i class="bi bi-trash"></i></button>
                                                     </form>
-                                                @endcan
+                                               {{--  @endcan --}}
                                             </span>
                                         </td>
                                     </tr>

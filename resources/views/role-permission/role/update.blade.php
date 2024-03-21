@@ -51,14 +51,15 @@
                     <div class="card-header text-center">
                         AUDIT
                     </div>
-                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-left">
+                    <div class="card-body profile-card pt-1 d-flex flex-column align-items-left">
                         <h5 class="card-title">Informations complémentaires</h5>
-                        <span><b>Création</b> : {{ $role->created_at->format('d, M Y à H:i') }}, par <label
-                                class="badge bg-success mx-1">{{ $user_create->firstname }} {{ $user_create->name }}</label
-                                class="btn btn-success btn-sm"></span>
-                        <span><b>Modification</b> : {{ $role->updated_at->format('d, M Y à H:i') }}, par <label
-                                class="badge bg-info mx-1">{{ $user_update->firstname }} {{ $user_create->name }}</label
-                                class="btn btn-success btn-sm"></span>
+
+                        <p>Créé le {{ $role->created_at->format('d, M Y à H:i') }} par <span class="fst-italic fw-bolder">
+                                {{ $user_create->firstname }} {{ $user_create->name }}</span></label></p>
+                        <p>Modifié le {{ $role->updated_at->format('d, M Y à H:i') }} par
+                            <span class="fst-italic fw-bolder">{{ $user_update->firstname }}
+                                {{ $user_create->name }}</span></label>
+                        </p>
                     </div>
                 </div>
             </div>

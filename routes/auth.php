@@ -37,7 +37,7 @@ Route::middleware('guest')->group(function () {
                 ->name('home');
 
     Route::post('/', [AuthenticatedSessionController::class, 'store']);
-    //finchangement pages de connexion et d'inscription
+    //fin changement pages de connexion et d'inscription
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

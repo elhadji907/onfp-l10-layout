@@ -63,10 +63,10 @@
                                         <td>{{ $user->telephone }}</td>
                                         <td>
                                             @if (!empty($user->getRoleNames()))
-                                            @foreach ($user->getRoleNames() as $roleName)
-                                                <label for="label" class="badge bg-primary mx-1">{{ $roleName }}</label>
-                                            @endforeach
-                                                
+                                                @foreach ($user->getRoleNames() as $roleName)
+                                                    <label for="label"
+                                                        class="badge bg-primary mx-1">{{ $roleName }}</label>
+                                                @endforeach
                                             @endif
                                         </td>
                                         <td>
