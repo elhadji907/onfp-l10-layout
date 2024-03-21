@@ -31,7 +31,7 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-5">
+                        <div class="pt-1">
                             <a href="{{ route('arrives.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
@@ -47,8 +47,6 @@
                                     <th>N° courrier</th>
                                     <th>Expéditeur</th>
                                     <th>Objet</th>
-                                    <th>Responsable</th>
-                                    <th>Imputation</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -61,19 +59,32 @@
                                         <td class="text-center">{{ $arrive->numero }}</td>
                                         <td>{{ $arrive->courrier->expediteur }}</td>
                                         <td>{{ $arrive->courrier->objet }}</td>
-                                        <td></td>
-                                        <td></td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('arrives.edit', $arrive->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="Modifier"><i
-                                                        class="bi bi-pencil-square"></i></a>
-                                                <form action="{{ route('arrives.destroy', $arrive->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm show_confirm"
-                                                        title="Supprimer"><i class="bi bi-trash"></i></button>
-                                                </form>
+                                                    href="{{ route('arrives.show', $arrive->id) }}"
+                                                    class="btn btn-success btn-sm mx-1" title="voir détails"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <div class="filter">
+                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                            class="bi bi-three-dots"></i></a>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                        <li class="dropdown-header text-start">
+                                                            <h6>ACTIONS</h6>
+                                                        </li>
+                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                                href="{{ route('arrives.edit', $arrive->id) }}"
+                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a> </li>
+                                                        <li>
+                                                            <form action="{{ route('arrives.destroy', $arrive->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="dropdown-item show_confirm"><i class="bi bi-trash"></i>Supprimer</button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </span>
                                         </td>
                                     </tr>

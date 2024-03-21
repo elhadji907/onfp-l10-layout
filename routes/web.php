@@ -55,10 +55,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/users/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update');
 
-    Route::get('/arrives/create', [ArriveController::class, 'create'])->name('arrive.create');
-    Route::post('/arrives/create', [ArriveController::class, 'store'])->name('arrive.store');
-    Route::get('/arrives/{id}', [ArriveController::class, 'edit'])->name('arrive.edit');
-    Route::put('/arrives/{id}', [ArriveController::class, 'update'])->name('arrive.update');
     Route::put('/arrives/{arriveId}/delete', [ArriveController::class, 'destroy']);
 
 

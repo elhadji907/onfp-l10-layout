@@ -56,9 +56,6 @@ class ArriveController extends Controller
         return redirect()->back()->with("status", $status);
     }
 
-    public function show($id)
-    {
-    }
 
     public function edit($id)
     {
@@ -70,6 +67,11 @@ class ArriveController extends Controller
     {
         $arrive = Arrive::findOrFail($id);
         dd($arrive);
+    }
+    public function show($id)
+    {
+        $arrive = Arrive::findOrFail($id);
+        dd($id);
     }
 
     public function destroy($arriveId)
