@@ -61,6 +61,8 @@ class CreateCourriersTable extends Migration
             $table->double('montant')->nullable();
             $table->double('autres_montant')->nullable();
             $table->double('total')->nullable();
+            $table->double('user_create_id'); // For l'utilisateur qui a créé le courrier;
+            $table->double('user_update_id'); // For l'utilisateur qui a modifié le courrier;
             $table->unsignedInteger('users_id')->nullable();
             $table->unsignedInteger('types_courriers_id')->nullable();
             $table->unsignedInteger('projets_id')->nullable();

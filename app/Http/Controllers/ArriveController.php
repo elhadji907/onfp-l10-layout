@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArriveStoreRequest;
 use App\Models\Arrive;
 use App\Models\Courrier;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,8 @@ class ArriveController extends Controller
             'numero_reponse'        =>      $request->input('numero_reponse'),
             'date_reponse'          =>      $request->input('date_reponse'),
             'observation'           =>      $request->input('observation'),
+            "user_create_id"        =>      Auth::user()->id,
+            "user_update_id"        =>      Auth::user()->id,
             'users_id'              =>      Auth::user()->id,
         ]);
 
@@ -89,6 +92,8 @@ class ArriveController extends Controller
                 'numero_reponse'   =>      $request->input('numero_reponse'),
                 'date_reponse'     =>      $request->input('date_reponse'),
                 'observation'      =>      $request->input('observation'),
+                "user_create_id"   =>      Auth::user()->id,
+                "user_update_id"   =>      Auth::user()->id,
                 'users_id'         =>      Auth::user()->id,
             ]
         );
@@ -107,7 +112,13 @@ class ArriveController extends Controller
     public function show($id)
     {
         $arrive = Arrive::findOrFail($id);
-        return view("courriers.arrives.show", compact("arrive"));
+        
+        $courrier = Courrier::findOrFail($arrive->courriers_id);
+
+        $user_create = User::find($courrier->user_create_id);
+        $user_update = User::find($courrier->user_update_id);
+
+        return view("courriers.arrives.show", compact("arrive", "courrier", "user_create", "user_update"));
     }
 
     public function destroy($arriveId)

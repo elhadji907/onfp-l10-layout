@@ -29,11 +29,11 @@
                                 <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
                                 <p class="text-center small">Introduire les nouvelles données pour modifier</p>
                             </div>
-                            <form method="post" action="{{ route('user.update', $user->id) }}"
+                            <form method="post" action="{{ route('users.update', $user->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('patch')
-                                <div class="col-6">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="firstname" class="form-label">Prénom</label>
                                     <input type="text" name="firstname" value="{{ $user->firstname }}"
                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
@@ -45,7 +45,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="name" class="form-label">Nom</label>
                                     <input type="text" name="name" value="{{ $user->name }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
@@ -57,7 +57,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="email" class="form-label">email</label>
                                     <div class="input-group has-validation">
                                         {{-- <span class="input-group-text" id="email">@</span> --}}
@@ -72,7 +72,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="telephone" class="form-label">Téléphone</label>
                                     <input type="text" name="telephone" value="{{ $user->telephone }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
@@ -84,7 +84,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="adresse" class="form-label">Adresse</label>
                                     <input type="text" name="adresse" value="{{ $user->adresse }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
@@ -96,7 +96,19 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <label for="password" class="form-label">Mot de passe</label>
+                                    <input type="password" name="password"
+                                        class="form-control  @error('password') is-invalid @enderror" id="password"
+                                        placeholder="Votre mot de passe">
+                                    <div class="invalid-feedback">
+                                        @error('password')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="roles" class="form-label">Roles</label>
                                     <select name="roles[]" class="form-select" aria-label="Select"
                                         id="multiple-select-field" multiple data-placeholder="Choisir roles">
@@ -109,21 +121,9 @@
                                     </select>
                                 </div>
 
-                                <div class="col-6">
-                                    <label for="password" class="form-label">Mot de passe</label>
-                                    <input type="password" name="password"
-                                        class="form-control  @error('password') is-invalid @enderror" id="password"
-                                        placeholder="Votre mot de passe">
-                                    <div class="invalid-feedback">
-                                        @error('password')
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
-                                </div>
-
                                 <input type="hidden" name="newPassword" value="{{ $user->password }}">
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="profil" class="form-label">Image de profil</label>
                                     <input type="file" name="image" id="image" multiple
                                         class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">

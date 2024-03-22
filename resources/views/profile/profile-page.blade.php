@@ -13,18 +13,6 @@
 
     <section class="section profile">
         <div class="row justify-content-center">
-            @if ($message = Session::get('status'))
-                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if ($message = Session::get('message'))
-                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
             {{-- Début Photo de profil --}}
             <div class="col-xl-4">
 
@@ -92,12 +80,12 @@
 
                                     <h5 class="card-title">Audit</h5>
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Création</div>
-                                        <div class="col-lg-9 col-md-8">créé le
-                                            {{ Auth::user()->created_at->format('d/m/Y à H:m:s') }}</div>
-                                        <div class="col-lg-3 col-md-4 label">Modification</div>
-                                        <div class="col-lg-9 col-md-8">Modifié le
-                                            {{ Auth::user()->updated_at->format('d/m/Y à H:m:s') }}</div>
+                                        <div class="col-lg-2 col-md-3 label">Création</div>
+                                        <div class="col-lg-10 col-md-9">créé le
+                                            {{ Auth::user()->created_at->format('d/m/Y à H:i:s') }}</div>
+                                        <div class="col-lg-2 col-md-3 label">Modification</div>
+                                        <div class="col-lg-10 col-md-9">Modifié le
+                                            {{ Auth::user()->updated_at->format('d/m/Y à H:i:s') }}</div>
                                     </div>
 
                                 </div>
@@ -114,6 +102,20 @@
             {{-- Début Edition --}}
             <div class="col-xl-8">
                 <div class="flex items-center gap-4">
+                    @if ($message = Session::get('status'))
+                        <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                            role="alert">
+                            <strong>{{ $message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('message'))
+                        <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                            role="alert">
+                            <strong>{{ $message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <div class="card">
                         <div class="card-body pt-">
                             <!-- Bordered Tabs -->

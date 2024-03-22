@@ -54,11 +54,11 @@
                     <div class="card-body profile-card pt-1 d-flex flex-column align-items-left">
                         <h5 class="card-title">Informations complémentaires</h5>
 
-                        <p>Créé le {{ $role->created_at->format('d, M Y à H:i') }} par <span class="fst-italic fw-bolder">
+                        <p>Créé le {{ $role->created_at->format('d, M Y à H:i:s') }} par, <br> <span class="fst-italic fw-bolder">
                                 {{ $user_create->firstname }} {{ $user_create->name }}</span></label></p>
-                        <p>Modifié le {{ $role->updated_at->format('d, M Y à H:i') }} par
+                        <p>Modifié le {{ $role->updated_at->format('d, M Y à H:i:s') }} par, <br>
                             <span class="fst-italic fw-bolder">{{ $user_update->firstname }}
-                                {{ $user_create->name }}</span></label>
+                                {{ $user_update->name }}</span></label>
                         </p>
                     </div>
                 </div>

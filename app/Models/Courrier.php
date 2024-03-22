@@ -162,6 +162,8 @@ class Courrier extends Model
 		'autres_montant',
 		'total',
 		'users_id',
+		'user_create_id',
+		'user_update_id',
 		'types_courriers_id',
 		'projets_id',
 		'traitementcourriers_id'

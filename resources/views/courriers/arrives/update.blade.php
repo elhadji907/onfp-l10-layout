@@ -35,7 +35,8 @@
                                 <div class="col-6">
                                     <label for="date_arrivee" class="form-label">Date arrivée<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="date" name="date_arrivee" value="{{ $arrive->courrier->date_recep?->format('Y-m-d') ?? old('date_arrivee') }}"
+                                    <input type="date" name="date_arrivee"
+                                        value="{{ $arrive->courrier->date_recep?->format('Y-m-d') ?? old('date_arrivee') }}"
                                         class="form-control form-control-sm @error('date_arrivee') is-invalid @enderror"
                                         id="date_arrivee" placeholder="Date arrivée">
                                     @error('date_arrivee')
@@ -45,7 +46,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="date_correspondance" class="form-label">Date correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_correspondance"
@@ -59,7 +60,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="numero_correspondance" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -75,10 +76,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="annee" class="form-label">Année<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="2024" name="annee" value="{{ $arrive->courrier->annee ?? old('annee') }}"
+                                    <input type="number" min="2024" name="annee"
+                                        value="{{ $arrive->courrier->annee ?? old('annee') }}"
                                         class="form-control form-control-sm @error('annee') is-invalid @enderror"
                                         id="annee" placeholder="Année">
                                     @error('annee')
@@ -88,10 +90,11 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="expediteur" class="form-label">Expéditeur<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="expediteur" value="{{ $arrive->courrier->expediteur ?? old('expediteur') }}"
+                                    <input type="text" name="expediteur"
+                                        value="{{ $arrive->courrier->expediteur ?? old('expediteur') }}"
                                         class="form-control form-control-sm @error('expediteur') is-invalid @enderror"
                                         id="expediteur" placeholder="Expéditeur">
                                     @error('expediteur')
@@ -101,10 +104,11 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="objet" value="{{ $arrive->courrier->objet ?? old('objet') }}"
+                                    <input type="text" name="objet"
+                                        value="{{ $arrive->courrier->objet ?? old('objet') }}"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror"
                                         id="objet" placeholder="Objet">
                                     @error('objet')
@@ -114,9 +118,10 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="reference" class="form-label">Référence</label>
-                                    <input type="text" name="reference" value="{{ $arrive->courrier->reference ?? old('reference') }}"
+                                    <input type="text" name="reference"
+                                        value="{{ $arrive->courrier->reference ?? old('reference') }}"
                                         class="form-control form-control-sm @error('reference') is-invalid @enderror"
                                         id="reference" placeholder="Référence">
                                     @error('reference')
@@ -126,7 +131,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                     <input type="number" min="0" name="numero_reponse"
                                         value="{{ $arrive->courrier->numero_reponse ?? old('numero_reponse') }}"
@@ -139,7 +144,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="date_reponse" class="form-label">Date réponse</label>
                                     <input type="date" min="0" name="date_reponse"
                                         value="{{ $arrive->courrier->date_reponse?->format('Y-m-d') ?? old('date_reponse') }}"
@@ -152,10 +157,10 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12">
-                                    <label for="observation" class="form-label">Observations</label>
-                                    <textarea name="observation" id="observation" rows="2" class="form-control" style="height: 100px"
-                                        value="{{  $arrive->courrier->obervation ?? old('observation') }}" placeholder="Observations"></textarea>
+                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                    <label for="observation" class="form-label">Observations </label>
+                                    <textarea name="observation" id="observation" rows="1" class="form-control form-control-sm"
+                                        placeholder="Observations">{{ old('observation', $arrive->courrier->observation) }}</textarea>
                                     @error('observation')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>

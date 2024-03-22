@@ -51,10 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profil', [ProfileController::class, 'profilePage'])->name('profil');
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
-    Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
+    /* Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/users/create', [UserController::class, 'store'])->name('user.store');
     Route::get('/users/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update'); */
 
     Route::put('/arrives/{arriveId}/delete', [ArriveController::class, 'destroy']);
 

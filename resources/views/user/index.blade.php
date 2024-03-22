@@ -69,7 +69,7 @@
                                                 @endforeach
                                             @endif
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
                                                     href="{{ route('users.edit', $user->id) }}"
                                                     class="btn btn-success btn-sm mx-1" title="Modifier"><i
@@ -80,6 +80,36 @@
                                                     <button type="submit" class="btn btn-danger btn-sm show_confirm"
                                                         title="Supprimer"><i class="bi bi-trash"></i></button>
                                                 </form>
+                                            </span>
+                                        </td> --}}
+                                        
+                                        <td>
+                                            <span class="d-flex mt-2 align-items-baseline"><a
+                                                    href="{{ route('users.show', $user->id) }}"
+                                                    class="btn btn-success btn-sm mx-1" title="voir détails"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <div class="filter">
+                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                            class="bi bi-three-dots"></i></a>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                        {{-- <li class="dropdown-header text-start">
+                                                            <h6>ACTIONS</h6>
+                                                        </li> --}}
+                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                                href="{{ route('users.edit', $user->id) }}"
+                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('users.destroy', $user->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="dropdown-item show_confirm"><i
+                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </span>
                                         </td>
                                     </tr>

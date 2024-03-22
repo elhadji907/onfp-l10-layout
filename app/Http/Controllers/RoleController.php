@@ -46,7 +46,6 @@ class RoleController extends Controller
             "name" => $request->name,
             "user_create_id" => Auth::user()->id,
             "user_update_id" => Auth::user()->id,
-            "user_delete_id" => ''
         ]);
         return redirect()->route("roles.create")->with("status", "Role créé avec succès");
     }
@@ -85,7 +84,6 @@ class RoleController extends Controller
 
     public function addPermissionsToRole($roleId)
     {
-
         $permissions = Permission::orderBy('created_at', 'desc')->get();
         $role = Role::findOrFail($roleId);
         $rolePermissions = DB::table('role_has_permissions')
