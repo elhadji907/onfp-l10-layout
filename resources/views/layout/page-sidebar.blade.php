@@ -181,7 +181,7 @@
                         <span>Roles</span>
                     </a>
                 </li><!-- End roles Nav -->
-        
+
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('permissions') }}">
                         <i class="bi bi-key"></i>
@@ -190,7 +190,7 @@
                 </li><!-- End Permissions Nav -->
             </ul>
         </li><!-- End Courriers Nav -->
-        
+
         <li class="nav-heading">CURRIERS</li>
 
         <li class="nav-item">
@@ -204,7 +204,7 @@
                         <span>Arrivé</span>
                     </a>
                 </li><!-- End arrives Nav -->
-        
+
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('departs') }}">
                         <i class="bi bi-envelope-fill"></i>
@@ -221,14 +221,14 @@
             </ul>
         </li><!-- End Courriers Nav -->
 
-        <li class="nav-heading">Pages</li>
-
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('/profil') }}">
-                <i class="bi bi-person"></i>
-                <span>Profil</span>
+            <a class="nav-link collapsed" href="{{ url('/directions') }}">
+                <i class="bi bi-stack"></i>
+                <span>Directions/Services</span>
             </a>
-        </li><!-- End Profile Page Nav -->
+        </li><!-- End directions Page Nav -->
+
+        <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="pages-faq.html">

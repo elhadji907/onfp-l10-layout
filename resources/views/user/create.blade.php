@@ -37,7 +37,7 @@
                                 <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
                                 <p class="text-center small">Ajouter un nouveau utilisateur</p>
                             </div>
-                            <form method="post" action="{{ route('user.store') }}" enctype="multipart/form-data"
+                            <form method="post" action="{{ url('users') }}" enctype="multipart/form-data"
                                 class="row g-3">
                                 @csrf
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">

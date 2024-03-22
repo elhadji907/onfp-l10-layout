@@ -50,6 +50,7 @@ class Direction extends Model
 		'uuid',
 		'name',
 		'sigle',
+		'type',
 		'chef_id',
 		'types_directions_id'
 	];

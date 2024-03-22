@@ -50,7 +50,7 @@
                                 </tr>
                                 <tr>
                                     <td><input type="text" name="permissions[0][name]" placeholder="Entrer une permission"
-                                            class="form-control" autofocus/></td>
+                                            class="form-control form-control-sm" autofocus/></td>
                                     <td><button type="button" name="add" id="add-btn" class="btn btn-success"
                                             title="Ajouter une ligne">Ajouter</button>
                                     </td>

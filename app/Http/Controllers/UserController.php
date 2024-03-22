@@ -17,7 +17,8 @@ class UserController extends Controller
     public function homePage()
     {
         $total_user = User::count();
-        return view("home-page", compact("total_user"));
+        $roles = Role::orderBy('created_at', 'desc')->get();
+        return view("home-page", compact("total_user", 'roles'));
     }
 
     public function create()

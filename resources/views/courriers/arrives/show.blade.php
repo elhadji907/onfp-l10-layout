@@ -48,7 +48,10 @@
 
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab"
-                                    data-bs-target="#profile-edit">Imputer</button>
+                                    data-bs-target="#profile-edit"><a
+                                    class="dropdown-item btn btn-sm mx-1"
+                                    href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1"><i
+                                        class="bi bi-recycle mx-1"></i>Imputer</a></button>
                             </li>
 
                             <li class="nav-item">

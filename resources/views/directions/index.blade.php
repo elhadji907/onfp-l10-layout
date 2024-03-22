@@ -1,9 +1,8 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des roles')
+@section('title', 'ONFP - Liste des directions')
 @section('space-work')
 
     <div class="pagetitle">
-        {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
@@ -14,10 +13,10 @@
     </div><!-- End Page Title -->
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-12 col-md-12 col-lg-12 mb-4">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                        role="alert">
+                        direction="alert">
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -31,55 +30,37 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        {{-- @can('role-create') --}}
+                        {{-- @can('direction-create') --}}
                         <div class="pt-5">
-                            <a href="{{ route('roles.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <a href="{{ route('directions.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
                         {{-- @endcan --}}
-                        <h5 class="card-title">roles</h5>
-                        <p>Le tableau de tous les roles du système.</p>
+                        <h5 class="card-title">directions</h5>
+                        <p>Le tableau de toutes les directions.</p>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-roles">
+                        <table class="table datatables align-middle" id="table-directions">
                             <thead>
                                 <tr>
                                     <th>N°</th>
-                                    <th>Roles</th>
+                                    <th>Direction</th>
+                                    <th>Sigle</th>
+                                    <th>Type</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($roles as $role)
+                                @foreach ($directions as $direction)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $role->name }}</td>
-                                        {{-- <td>
-                                            <span class="d-flex mt-2 align-items-baseline">
-                                                @can('give-role-permissions')
-                                                    <a href="{{ url('roles/' . $role->id . '/give-permissions') }}"
-                                                        class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
-                                                            class="bi bi-file-lock"></i></a>
-                                                @endcan
-                                                @can('role-update')
-                                                    <a href="{{ url('roles/' . $role->id . '/edit') }}"
-                                                        class="btn btn-success btn-sm" title="Modifier"><i
-                                                            class="bi bi-pencil-square"></i></a>
-                                                @endcan
-                                                @can('role-delete')
-                                                    <form action="{{ url('roles', $role->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm show_confirm mx-1"
-                                                            title="Supprimer"><i class="bi bi-trash"></i></button>
-                                                    </form>
-                                                @endcan
-                                            </span>
-                                        </td> --}}
+                                        <td>{{ $direction->name }}</td>
+                                        <td>{{ $direction->sigle }}</td>
+                                        <td>{{ $direction->type }}</td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ url('roles/' . $role->id . '/give-permissions') }}"
+                                                    href="#"
                                                     class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
                                                         class="bi bi-file-lock"></i></a>
                                                 <div class="filter">
@@ -87,11 +68,11 @@
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ url('roles/' . $role->id . '/edit') }}"
+                                                                href="{{ url('directions/' . $direction->id . '/edit') }}"
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('roles', $role->id) }}" method="post">
+                                                            <form action="{{ url('directions', $direction->id) }}" method="post">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="dropdown-item show_confirm"><i
@@ -118,7 +99,7 @@
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-roles', {
+        new DataTable('#table-directions', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

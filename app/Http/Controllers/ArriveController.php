@@ -129,4 +129,15 @@ class ArriveController extends Controller
         $status = "Supprimer avec succès";
         return redirect()->back()->with("danger", $status);
     }
+
+    public function arriveImputation(Request $request, $id){
+       $arrive = Arrive::findOrFail($id);
+       $courrier = $arrive->courrier;
+
+       return view("courriers.arrives.imputation-arrive", compact("arrive","courrier"));
+    }
+
+    function fetch(Request $request){
+        dd("fetch");
+    }
 }

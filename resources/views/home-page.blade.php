@@ -14,11 +14,12 @@
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <li class="dropdown-header text-start">
-                                        <h6>Filtrer</h6>
+                                        <h6>Roles</h6>
                                     </li>
-
-                                    <li><a class="dropdown-item" href="#">Admin</a></li>
-                                    <li><a class="dropdown-item" href="#">Autres</a></li>
+                                    @foreach ($roles as $role)
+                                        {{-- <li><a class="dropdown-item" href="{{ url('roles/' . $role->name . '/get-users') }}">{{ $role->name }}</a></li> --}}
+                                        <li><a class="dropdown-item" href="#">{{ $role->name }}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
 

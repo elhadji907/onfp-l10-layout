@@ -90,7 +90,6 @@ class RoleController extends Controller
             ->where('role_has_permissions.role_id', $roleId)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
-
         return view("role-permission.role.add-permissions", compact('role', 'permissions', 'rolePermissions'));
     }
 
@@ -105,5 +104,20 @@ class RoleController extends Controller
 
         $messages = "Permissions accordée(s)";
         return redirect()->route('roles.index', compact('role'))->with('status', $messages);
+    }
+
+    public function getUsersToRole($roleName, Request $request)
+    {
+        $role = Role::where('name', $roleName)->first();
+        $users = User::orderBy('created_at', 'desc')->get();
+
+        $roleUsers = DB::table('model_has_roles')
+            ->where('model_has_roles.role_id', $role->id)
+            ->pluck('model_has_roles.model_id', 'model_has_roles.model_id')
+            ->all();
+
+            foreach ($users as $user)
+
+            return view("role-permission.role.role-users", compact('role', 'users', 'roleUsers', 'roleName', 'user'));
     }
 }

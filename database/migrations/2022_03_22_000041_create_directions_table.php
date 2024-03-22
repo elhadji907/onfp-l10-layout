@@ -26,8 +26,9 @@ class CreateDirectionsTable extends Migration
             $table->char('uuid', 36);
             $table->string('name', 200)->nullable();
             $table->string('sigle', 200)->nullable();
+            $table->string('type', 200)->nullable();
             $table->unsignedInteger('chef_id')->nullable();
-            $table->unsignedInteger('types_directions_id');
+            $table->unsignedInteger('types_directions_id')->nullable(true);
 
             $table->index(["types_directions_id"], 'fk_directions_types_directions1_idx');
             $table->softDeletes();
