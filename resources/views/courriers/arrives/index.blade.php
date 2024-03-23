@@ -68,12 +68,13 @@
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        {{-- <li class="dropdown-header text-start">
-                                                            <h6>ACTIONS</h6>
-                                                        </li> --}}
                                                         <li><a class="dropdown-item btn btn-sm mx-1"
                                                                 href="{{ route('arrives.edit', $arrive->id) }}"
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                                href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
+                                                                class="mx-1"><i class="bi bi-recycle"></i> Imputer</a>
                                                         </li>
                                                         <li>
                                                             <form action="{{ route('arrives.destroy', $arrive->id) }}"

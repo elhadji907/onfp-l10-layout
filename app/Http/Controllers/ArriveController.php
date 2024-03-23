@@ -76,8 +76,8 @@ class ArriveController extends Controller
             "annee"                 => ["required", "string"],
             "expediteur"            => ["required", "string"],
             "objet"                 => ["required", "string"],
-            
-            "numero_reponse"        => ["string", "min:4", "max:6","nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL" . $courrier->id],
+
+            "numero_reponse"        => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL" . $courrier->id],
             "date_reponse"          => ["nullable", "date"],
             "observation"           => ["nullable", "string"],
         ]);
@@ -114,14 +114,14 @@ class ArriveController extends Controller
     public function show($id)
     {
         $arrive = Arrive::findOrFail($id);
-        
+
         $courrier = Courrier::findOrFail($arrive->courriers_id);
 
         $user_create = User::find($courrier->user_create_id);
         $user_update = User::find($courrier->user_update_id);
 
-        $user_create_name = $user_create->firstname.' '.$user_create->name;
-        $user_update_name = $user_update->firstname.' '.$user_update->name;
+        $user_create_name = $user_create->firstname . ' ' . $user_create->name;
+        $user_update_name = $user_update->firstname . ' ' . $user_update->name;
 
         return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
     }
@@ -135,44 +135,44 @@ class ArriveController extends Controller
         return redirect()->back()->with("danger", $status);
     }
 
-    public function arriveImputation(Request $request, $id){
-       $arrive = Arrive::findOrFail($id);
-       $courrier = $arrive->courrier;
+    public function arriveImputation(Request $request, $id)
+    {
+        $arrive = Arrive::findOrFail($id);
+        $courrier = $arrive->courrier;
 
-       return view("courriers.arrives.imputation-arrive", compact("arrive","courrier"));
+        return view("courriers.arrives.imputation-arrive", compact("arrive", "courrier"));
     }
 
-    function fetch(Request $request){
+    function fetch(Request $request)
+    {
+
+        if ($request->get('query')) {
+            $query = $request->get('query');
+
+            $data = DB::table('directions')
+                ->where('sigle', 'LIKE', "%{$query}%")
+                ->get();
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach ($data as $direction) {
+                $id = $direction->id;
+                $sigle = $direction->sigle;
+                $chef_id = $direction->chef_id;
+                $chef = Employe::findOrFail($chef_id);
+
+                $matricule = $chef->matricule;
+                $employee_id = $chef_id;
+                $user_id = $chef->users_id;
+                $user = User::findOrFail($user_id);
+                $user = $user->firstname . ' ' . $user->name;
+
+                $output .= '
        
-     if($request->get('query'))
-     {
-      $query = $request->get('query');
-
-      $data = DB::table('directions')      
-      ->where('sigle', 'LIKE', "%{$query}%")
-        ->get();
-
-      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-      foreach($data as $direction)
-      {
-        $id = $direction->id;
-        $sigle = $direction->sigle;                                              
-        $chef_id = $direction->chef_id;
-        $chef = Employe::findOrFail($chef_id);
-
-        $matricule = $chef->matricule;
-        $employee_id = $chef_id;
-        $user_id = $chef->users_id;
-        $user = User::findOrFail($user_id);
-        $user = $user->firstname.' '.$user->name;
-
-       $output .= '
-       
-       <li data-id="'.$id.'" data-chef="'.$user.'" data-matricule="'.$matricule.'" data-employeeid="'.$employee_id.'"><a href="#">'.$sigle.'</a></li>
+       <li data-id="' . $id . '" data-chef="' . $user . '" data-matricule="' . $matricule . '" data-employeeid="' . $employee_id . '"><a href="#">' . $sigle . '</a></li>
        ';
-      }
-      $output .= '</ul>';
-      echo $output;
-     }
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 }

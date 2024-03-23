@@ -41,20 +41,18 @@
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"><a
-                                        class="dropdown-item btn btn-sm mx-1"
-                                        href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1"><i
-                                            class="bi bi-recycle mx-1"></i>Imputer</a></button>
-                            </li>
-
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#"><a
-                                        class="dropdown-item btn btn-sm mx-1"
+                                <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
                                         href="{{ route('arrives.edit', $arrive->id) }}" class="mx-1"><i
                                             class="bi bi-pencil mx-1"></i>Modifier</a></button>
                             </li>
 
+                            <li class="nav-item">
+                                <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
+                                        href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1"><i
+                                            class="bi bi-recycle mx-1"></i>Imputer</a></button>
+                            </li>
                         </ul>
+                        
                         <div class="tab-content pt-0">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -100,34 +98,6 @@
                                     <h5 class="card-title">Observations</h5>
                                     <p class="small fst-italic">{{ $arrive->courrier->observation }}.</p>
                                 @endisset
-
-                            </div>
-
-                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                                <!-- Profile Edit Form -->
-                                <form>
-
-                                    {{-- <div class="row mb-3">
-                                        <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="address" type="text" class="form-control" id="Address"
-                                                value="A108 Adam Street, New York, NY 535022">
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="phone" type="text" class="form-control" id="Phone"
-                                                value="(436) 486-3538 x29071">
-                                        </div>
-                                    </div> --}}
-
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Imputer</button>
-                                    </div>
-                                </form><!-- End Profile Edit Form -->
 
                             </div>
 

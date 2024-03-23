@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\User;
 use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 

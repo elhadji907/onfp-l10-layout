@@ -13,7 +13,7 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        
+
                         <div class="row">
                             <div class="col-sm-12 pt-5">
                                 <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('roles.index') }}"
@@ -25,8 +25,7 @@
                         </div>
                         <h5 class="card-title">Création nouveau role</h5>
                         <!-- role -->
-                        <form method="post" action="{{ url('roles') }}" enctype="multipart/form-data"
-                            class="row g-3">
+                        <form method="post" action="{{ url('roles') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
                             <div class="row mb-3">
                                 <label for="name" class="form-label"></label>
