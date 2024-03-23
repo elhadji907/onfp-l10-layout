@@ -19,7 +19,7 @@
                                 <div class="col-sm-12 pt-2">
                                     <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrives.index') }}"
                                             class="btn btn-success btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                                class="bi bi-arrow-counterclockwise mx-1"></i></a>
                                         <p> | Liste des courriers arrivés</p>
                                     </span>
                                 </div>

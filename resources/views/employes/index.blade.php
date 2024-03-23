@@ -1,9 +1,8 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des users')
+@section('title', 'ONFP - Liste des employes')
 @section('space-work')
 
     <div class="pagetitle">
-        {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
@@ -32,75 +31,53 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-2">
-                            <a href="{{ route('users.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <a href="{{ route('employes.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
-                        <h5 class="card-title">Utilisateurs</h5>
-                        {{-- <p>Le tableau de tous les utilisateurs du système.</p> --}}
+                        <h5 class="card-title">Employés</h5>
+                        {{-- <p>Le tableau de tous les employés.</p> --}}
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-users">
+                        <table class="table datatables align-middle" id="table-employes">
                             <thead>
                                 <tr>
                                     <th></th>
-                                    {{-- <th>N°</th> --}}
-                                    <th>Prénom & Nom</th>
+                                    <th>Matricule</th>
+                                    <th>Prénom</th>
+                                    <th>Nom</th>
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
-                                    <th>Roles</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($user_liste as $user)
+                                @foreach ($employes as $employe)
                                     <tr>
                                         <th scope="row"><img class="rounded-circle w-20" alt="Profil"
-                                                src="{{ asset($user->getImage()) }}" width="40" height="auto"></th>
+                                                src="{{ asset($employe->user->getImage()) }}" width="40" height="auto">
+                                        </th>
                                         {{-- <td>{{ $i++ }}</td> --}}
-                                        <td>{{ $user->firstname }} {{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->telephone }}</td>
-                                        <td>
-                                            @if (!empty($user->getRoleNames()))
-                                                @foreach ($user->getRoleNames() as $roleName)
-                                                    <label for="label"
-                                                        class="badge bg-primary mx-1">{{ $roleName }}</label>
-                                                @endforeach
-                                            @endif
-                                        </td>
-                                        {{-- <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="Modifier"><i
-                                                        class="bi bi-pencil-square"></i></a>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm show_confirm"
-                                                        title="Supprimer"><i class="bi bi-trash"></i></button>
-                                                </form>
-                                            </span>
-                                        </td> --}}
-                                        
+                                        <td>{{ $employe->matricule }}</td>
+                                        <td>{{ $employe->user->firstname }}</td>
+                                        <td>{{ $employe->user->name }}</td>
+                                        <td>{{ $employe->user->email }}</td>
+                                        <td>{{ $employe->user->telephone }}</td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('users.show', $user->id) }}"
+                                                    href="{{ route('employes.show', $employe->id) }}"
                                                     class="btn btn-success btn-sm mx-1" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        {{-- <li class="dropdown-header text-start">
-                                                            <h6>ACTIONS</h6>
-                                                        </li> --}}
                                                         <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ route('users.edit', $user->id) }}"
+                                                                href="{{ route('employes.edit', $employe->id) }}"
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ route('users.destroy', $user->id) }}"
+                                                            <form action="{{ route('employes.destroy', $employe->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -129,7 +106,7 @@
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-users', {
+        new DataTable('#table-employes', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
@@ -138,6 +115,7 @@
             "order": [
                 [0, 'asc']
             ],
+            pageLength: 10,
             language: {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArriveStoreRequest;
 use App\Models\Arrive;
 use App\Models\Courrier;
+use App\Models\Employe;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class ArriveController extends Controller
@@ -118,7 +120,10 @@ class ArriveController extends Controller
         $user_create = User::find($courrier->user_create_id);
         $user_update = User::find($courrier->user_update_id);
 
-        return view("courriers.arrives.show", compact("arrive", "courrier", "user_create", "user_update"));
+        $user_create_name = $user_create->firstname.' '.$user_create->name;
+        $user_update_name = $user_update->firstname.' '.$user_update->name;
+
+        return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
     }
 
     public function destroy($arriveId)
@@ -138,6 +143,36 @@ class ArriveController extends Controller
     }
 
     function fetch(Request $request){
-        dd("fetch");
+       
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      $data = DB::table('directions')      
+      ->where('sigle', 'LIKE', "%{$query}%")
+        ->get();
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $direction)
+      {
+        $id = $direction->id;
+        $sigle = $direction->sigle;                                              
+        $chef_id = $direction->chef_id;
+        $chef = Employe::findOrFail($chef_id);
+
+        $matricule = $chef->matricule;
+        $employee_id = $chef_id;
+        $user_id = $chef->users_id;
+        $user = User::findOrFail($user_id);
+        $user = $user->firstname.' '.$user->name;
+
+       $output .= '
+       
+       <li data-id="'.$id.'" data-chef="'.$user.'" data-matricule="'.$matricule.'" data-employeeid="'.$employee_id.'"><a href="#">'.$sigle.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
     }
 }

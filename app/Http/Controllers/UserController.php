@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -140,6 +141,7 @@ class UserController extends Controller
             $password = Hash::make($request->password);
             $user->update([
                 'password'      => $password,
+                'updated_by'    => Auth::user()->id,
             ]);
         } else {
             $user->update([
@@ -149,6 +151,7 @@ class UserController extends Controller
                 'telephone'     =>  $request->telephone,
                 'adresse'       =>  $request->adresse,
                 'password'      =>  $request->newPassword,
+                'updated_by'    => Auth::user()->id,
             ]);
         }
 
@@ -164,7 +167,16 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view("user.show", compact("user"));
+        $user_created_id = $user->created_by;
+        $user_updated_id = $user->updated_by;
+
+        $user_create = User::findOrFail($user_created_id);
+        $user_update = User::findOrFail($user_updated_id);
+
+        $user_create_name = $user_create->firstname." ".$user_create->firstname;
+        $user_update_name = $user_update->firstname." ".$user_update->firstname;
+
+        return view("user.show", compact("user", "user_create_name", "user_update_name"));
     }
 
     public function destroy($userId)

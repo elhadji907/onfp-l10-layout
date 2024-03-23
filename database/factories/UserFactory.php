@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -23,15 +26,30 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = Faker::create();
+        $gender = $faker->randomElement(['M.', 'Mme']);
+        $users_id = User::all()->random()->id;
+
+
         return [
+            'civilite' => $gender,
             'firstname' => fake()->name(),
             'name' => fake()->name(),
             'telephone' => $this->faker->unique(true)->numberBetween(70, 79).rand(10, 99).rand(10, 99).rand(0, 9).rand(0, 9).rand(0, 9),
             'adresse' => fake()->address(),
+            'lieu_naissance' => fake()->address(),
             'email' => fake()->unique()->safeEmail(),
+            'username' => $faker->username,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'date_naissance' => $faker->date($format = 'Y-m-d', $max = '-20 years'),
+            'created_by' => function () use ($users_id) {
+                return $users_id;
+            },
+            'updated_by' =>function () use ($users_id) {
+                return $users_id;
+            },
         ];
     }
 

@@ -51,7 +51,14 @@
                     <div class="card-header text-center">
                         AUDIT
                     </div>
-                    <div class="card-body profile-card pt-1 d-flex flex-column align-items-left">
+                    
+                    <div class="card-body profile-card pt-1 d-flex flex-column">
+                        <h5 class="card-title">Informations complémentaires</h5>
+                        <p>créé par <b>{{ $user_create_name }}</b>, {{ $role->created_at->diffForHumans() }}</p>
+                        <p>modifié par <b>{{ $user_update_name }}</b>, {{ $role->updated_at->diffForHumans() }}</p>
+                    </div>
+
+                    {{-- <div class="card-body profile-card pt-1 d-flex flex-column align-items-left">
                         <h5 class="card-title">Informations complémentaires</h5>
 
                         <p>Créé le {{ $role->created_at->format('d, M Y à H:i:s') }} par, <br> <span class="fst-italic fw-bolder">
@@ -60,7 +67,7 @@
                             <span class="fst-italic fw-bolder">{{ $user_update->firstname }}
                                 {{ $user_update->name }}</span></label>
                         </p>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

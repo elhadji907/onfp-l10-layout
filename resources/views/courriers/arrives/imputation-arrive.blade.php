@@ -6,11 +6,10 @@
             <div class="col-lg-12">
                 <div class="row pb-2">
                     <div class="col-sm-12">
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('arrives.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                            <li class="breadcrumb-item active">Imputation courrier arrivé</li>
-                        </ul>
+                        <span class="d-flex mt-2 align-items-baseline"><a class="btn btn-success btn-sm" title="retour" href="{{ route('arrives.index') }}"><i
+                                    class="bi bi-arrow-counterclockwise mx-1"></i></a>
+                            <p> | retour, liste courriers arrivés</p>
+                        </span>
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
                         {{-- @if ($arrive->courrier->directions != '[]') --}}

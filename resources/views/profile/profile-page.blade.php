@@ -78,16 +78,20 @@
                                 </div>
                                 <div class="tab-pane fade profile-overview" id="profile-autre">
 
-                                    <h5 class="card-title">Audit</h5>
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-3 label">Création</div>
+                                   {{--  <h5 class="card-title">Audit</h5> --}}
+
+                                        <div class="card-body profile-card pt-1 d-flex flex-column">
+                                            <h5 class="card-title">Informations complémentaires</h5>
+                                            <p>créé, {{ Auth::user()->created_at->diffForHumans() }}</p>
+                                            <p>modifié, {{ Auth::user()->updated_at->diffForHumans() }}</p>
+                                        </div>
+
+                                        {{-- <div class="col-lg-2 col-md-3 label">Création</div>
                                         <div class="col-lg-10 col-md-9">créé le
                                             {{ Auth::user()->created_at->format('d/m/Y à H:i:s') }}</div>
                                         <div class="col-lg-2 col-md-3 label">Modification</div>
                                         <div class="col-lg-10 col-md-9">Modifié le
-                                            {{ Auth::user()->updated_at->format('d/m/Y à H:i:s') }}</div>
-                                    </div>
-
+                                            {{ Auth::user()->updated_at->format('d/m/Y à H:i:s') }}</div> --}}
                                 </div>
 
                             </div><!-- End Bordered Tabs -->

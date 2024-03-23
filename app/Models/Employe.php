@@ -52,7 +52,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @package App\Models
  */
-class Employee extends Model
+class Employe extends Model
 {
     use HasFactory;
 	use SoftDeletes;

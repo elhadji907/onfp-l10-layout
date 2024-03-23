@@ -29,6 +29,8 @@ class User extends Authenticatable
         'adresse',
         'image',
         'password',
+        'created_by',
+        'updated_by',
 
         'twitter',
         'facebook',

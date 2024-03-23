@@ -21,17 +21,8 @@
                     </div>
                     <div class="card-body profile-card pt-1 d-flex flex-column">
                         <h5 class="card-title">Informations complémentaires</h5>
-                        <p>Créé le {{ $user->created_at->format('d/m/Y à H:i:s') }} par, <br> <span
-                                class="fst-italic fw-bolder">
-                                {{-- {{ $user_create->firstname }}
-                                {{ $user_create->name }} --}}
-                            </span></label></p>
-                        <p>Modifié le {{ $user->updated_at->format('d/m/Y à H:i:s') }} par, <br>
-                            <span class="fst-italic fw-bolder">
-                                {{--  {{ $user_create->firstname }}
-                                {{ $user_create->name }} --}}
-                            </span></label>
-                        </p>
+                        <p>créé par <b>{{ $user_create_name }}</b>, {{ $user->created_at->diffForHumans() }}</p>
+                        <p>modifié par <b>{{ $user_update_name }}</b>, {{ $user->updated_at->diffForHumans() }}</p>
                     </div>
                 </div>
 

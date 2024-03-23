@@ -8,12 +8,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
      */
-    
+
     /**
      * List of applications to add.
      */
@@ -34,6 +35,10 @@ class DatabaseSeeder extends Seeder
             Permission::create(['name' => $permission]);
         }
 
+        $this->call([
+            EmployeSeeder::class,
+        ]);
+
         // Create admin User and assign the role to him.
         $user = User::create([
             'name' => 'Prevail Ejimadu',
@@ -49,5 +54,4 @@ class DatabaseSeeder extends Seeder
 
         $user->assignRole([$role->id]);
     }
-
 }

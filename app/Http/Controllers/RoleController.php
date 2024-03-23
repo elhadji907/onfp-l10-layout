@@ -55,7 +55,11 @@ class RoleController extends Controller
         $role = Role::find($id);
         $user_create = User::find($role->user_create_id);
         $user_update = User::find($role->user_update_id);
-        return view("role-permission.role.update", compact('role', 'user_create', 'user_update'));
+
+        $user_create_name = $user_create->firstname . ' ' . $user_create->name;
+        $user_update_name = $user_update->firstname . ' ' . $user_update->name;
+
+        return view("role-permission.role.update", compact('role', 'user_create_name', 'user_update_name'));
     }
 
     public function update(Request $request, $id)
@@ -116,7 +120,7 @@ class RoleController extends Controller
             ->pluck('model_has_roles.model_id', 'model_has_roles.model_id')
             ->all();
 
-            foreach ($users as $user)
+        foreach ($users as $user)
 
             return view("role-permission.role.role-users", compact('role', 'users', 'roleUsers', 'roleName', 'user'));
     }

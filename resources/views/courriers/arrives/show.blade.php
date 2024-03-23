@@ -21,14 +21,8 @@
                     </div>
                     <div class="card-body profile-card pt-1 d-flex flex-column">
                         <h5 class="card-title">Informations complémentaires</h5>
-                        <p>Créé le {{ $courrier->created_at->format('d/m/Y à H:i:s') }} par, <br> <span
-                                class="fst-italic fw-bolder">
-                                {{ $user_create->firstname }}
-                                {{ $user_create->name }}</span></label></p>
-                        <p>Modifié le {{ $courrier->updated_at->format('d/m/Y à H:i:s') }} par, <br>
-                            <span class="fst-italic fw-bolder">{{ $user_create->firstname }}
-                                {{ $user_create->name }}</span></label>
-                        </p>
+                        <p>créé par <b>{{ $user_create_name }}</b>, {{ $courrier->created_at->diffForHumans() }}</p>
+                        <p>modifié par <b>{{ $user_update_name }}</b>, {{ $courrier->updated_at->diffForHumans() }}</p>
                     </div>
                 </div>
 
@@ -47,11 +41,10 @@
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab"
-                                    data-bs-target="#profile-edit"><a
-                                    class="dropdown-item btn btn-sm mx-1"
-                                    href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1"><i
-                                        class="bi bi-recycle mx-1"></i>Imputer</a></button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"><a
+                                        class="dropdown-item btn btn-sm mx-1"
+                                        href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1"><i
+                                            class="bi bi-recycle mx-1"></i>Imputer</a></button>
                             </li>
 
                             <li class="nav-item">

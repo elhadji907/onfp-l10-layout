@@ -4,12 +4,14 @@ use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\CourrierController;
 use App\Http\Controllers\DepartController;
 use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\InterneController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -79,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/departs', DepartController::class);
     Route::resource('/internes', InterneController::class);
     Route::resource('/directions', DirectionController::class);
+    Route::resource('/employes', EmployeController::class);
 });
 
 
