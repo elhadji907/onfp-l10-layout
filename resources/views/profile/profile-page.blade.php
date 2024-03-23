@@ -30,10 +30,22 @@
                             @endforeach
                         </h3>
                         <div class="social-links mt-2">
-                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            @isset(Auth::user()->twitter)
+                                <a href="{{ Auth::user()->twitter }}" class="twitter" target="_blank"><i
+                                        class="bi bi-twitter"></i></a>
+                            @endisset
+                            @isset(Auth::user()->facebook)
+                                <a href="{{ Auth::user()->facebook }}" class="facebook" target="_blank"><i
+                                        class="bi bi-facebook"></i></a>
+                            @endisset
+                            @isset(Auth::user()->instagram)
+                                <a href="{{ Auth::user()->instagram }}" class="instagram" target="_blank"><i
+                                        class="bi bi-instagram"></i></a>
+                            @endisset
+                            @isset(Auth::user()->linkedin)
+                                <a href="{{ Auth::user()->linkedin }}" class="linkedin" target="_blank"><i
+                                        class="bi bi-linkedin"></i></a>
+                            @endisset
                         </div>
                     </div>
                 </div>
@@ -78,15 +90,15 @@
                                 </div>
                                 <div class="tab-pane fade profile-overview" id="profile-autre">
 
-                                   {{--  <h5 class="card-title">Audit</h5> --}}
+                                    {{--  <h5 class="card-title">Audit</h5> --}}
 
-                                        <div class="card-body profile-card pt-1 d-flex flex-column">
-                                            <h5 class="card-title">Informations complémentaires</h5>
-                                            <p>créé, {{ Auth::user()->created_at->diffForHumans() }}</p>
-                                            <p>modifié, {{ Auth::user()->updated_at->diffForHumans() }}</p>
-                                        </div>
+                                    <div class="card-body profile-card pt-1 d-flex flex-column">
+                                        <h5 class="card-title">Informations complémentaires</h5>
+                                        <p>créé, {{ Auth::user()->created_at->diffForHumans() }}</p>
+                                        <p>modifié, {{ Auth::user()->updated_at->diffForHumans() }}</p>
+                                    </div>
 
-                                        {{-- <div class="col-lg-2 col-md-3 label">Création</div>
+                                    {{-- <div class="col-lg-2 col-md-3 label">Création</div>
                                         <div class="col-lg-10 col-md-9">créé le
                                             {{ Auth::user()->created_at->format('d/m/Y à H:i:s') }}</div>
                                         <div class="col-lg-2 col-md-3 label">Modification</div>
@@ -167,7 +179,7 @@
 
                                         {{-- Prénom --}}
                                         <div class="row mb-3">
-                                            <label for="firstname" class="col-md-4 col-lg-3 col-form-label">Prénom
+                                            <label for="firstname" class="col-md-4 col-lg-3 col-form-label">Prénom<span class="text-danger mx-1">*</span>
                                             </label>
                                             <div class="col-md-8 col-lg-9">
                                                 <div class="pt-2">
@@ -184,7 +196,7 @@
 
                                         {{-- Nom --}}
                                         <div class="row mb-3">
-                                            <label for="name" class="col-md-4 col-lg-3 col-form-label">Nom</label>
+                                            <label for="name" class="col-md-4 col-lg-3 col-form-label">Nom<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="name" type="text"
                                                     class="form-control @error('name') is-invalid @enderror"
@@ -200,7 +212,7 @@
 
                                         {{-- Email --}}
                                         <div class="row mb-3">
-                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="email" type="email"
                                                     class="form-control @error('email') is-invalid @enderror"
@@ -217,7 +229,7 @@
                                         {{-- Telephone --}}
                                         <div class="row mb-3">
                                             <label for="telephone"
-                                                class="col-md-4 col-lg-3 col-form-label">Téléphone</label>
+                                                class="col-md-4 col-lg-3 col-form-label">Téléphone<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="telephone" type="telephone"
                                                     class="form-control @error('telephone') is-invalid @enderror"
@@ -233,13 +245,81 @@
 
                                         {{-- Email --}}
                                         <div class="row mb-3">
-                                            <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Adresse</label>
+                                            <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Adresse<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="adresse" type="adresse"
                                                     class="form-control @error('adresse') is-invalid @enderror"
                                                     id="adresse" value="{{ $user->adresse ?? old('adresse') }}"
                                                     autocomplete="adresse" placeholder="Votre adresse de résidence">
                                                 @error('adresse')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- twitter --}}
+                                        <div class="row mb-3">
+                                            <label for="twitter" class="col-md-4 col-lg-3 col-form-label">Twitter</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="twitter" type="twitter"
+                                                    class="form-control @error('twitter') is-invalid @enderror"
+                                                    id="twitter" value="{{ $user->twitter ?? old('twitter') }}"
+                                                    autocomplete="twitter"
+                                                    placeholder="lien de votre compte x (ex twitte)">
+                                                @error('twitter')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- facebook --}}
+                                        <div class="row mb-3">
+                                            <label for="facebook"
+                                                class="col-md-4 col-lg-3 col-form-label">Facebook</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="facebook" type="facebook"
+                                                    class="form-control @error('facebook') is-invalid @enderror"
+                                                    id="facebook" value="{{ $user->facebook ?? old('facebook') }}"
+                                                    autocomplete="facebook" placeholder="lien de votre compte facebook">
+                                                @error('facebook')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- instagram --}}
+                                        <div class="row mb-3">
+                                            <label for="instagram"
+                                                class="col-md-4 col-lg-3 col-form-label">Instagram</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="instagram" type="instagram"
+                                                    class="form-control @error('instagram') is-invalid @enderror"
+                                                    id="instagram" value="{{ $user->instagram ?? old('instagram') }}"
+                                                    autocomplete="instagram" placeholder="lien de votre compte instagram">
+                                                @error('instagram')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- linkedin --}}
+                                        <div class="row mb-3">
+                                            <label for="linkedin"
+                                                class="col-md-4 col-lg-3 col-form-label">Linkedin</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="linkedin" type="linkedin"
+                                                    class="form-control @error('linkedin') is-invalid @enderror"
+                                                    id="linkedin" value="{{ $user->linkedin ?? old('linkedin') }}"
+                                                    autocomplete="linkedin" placeholder="lien de votre ompte linkedin">
+                                                @error('linkedin')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>
@@ -308,7 +388,7 @@
                                         @method('put')
                                         <div class="row mb-3">
                                             <label for="update_password_current_password"
-                                                class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel</label>
+                                                class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="current_password" type="password"
                                                     class="form-control @error('current_password') is-invalid @enderror"
@@ -321,7 +401,7 @@
                                         <!-- Mot de passe -->
                                         <div class="row mb-3">
                                             <label for="password" class="col-md-4 col-lg-3 col-form-label">Mot de
-                                                passe</label>
+                                                passe<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input type="password" name="password"
                                                     class="form-control @error('password') is-invalid @enderror"
@@ -338,7 +418,7 @@
                                         <!-- Mot de passe de confirmation -->
                                         <div class="row mb-3">
                                             <label for="password_confirmation"
-                                                class="col-md-4 col-lg-3 col-form-label">Confirmez</label>
+                                                class="col-md-4 col-lg-3 col-form-label">Confirmez<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input type="password" name="password_confirmation"
                                                     class="form-control @error('password_confirmation') is-invalid @enderror"

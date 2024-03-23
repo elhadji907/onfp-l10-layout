@@ -28,7 +28,7 @@
                         <form method="post" action="{{ url('roles') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
                             <div class="row mb-3">
-                                <label for="name" class="form-label"></label>
+                                <label for="name" class="form-label">Role<span class="text-danger mx-1">*</span></label>
                                 <input type="text" name="name" value="{{ old('name') }}"
                                     class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
                                     placeholder="Nom role" autofocus>

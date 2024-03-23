@@ -151,6 +151,10 @@ class UserController extends Controller
                 'telephone'     =>  $request->telephone,
                 'adresse'       =>  $request->adresse,
                 'password'      =>  $request->newPassword,
+                'twitter'      =>  $request->newPassword,
+                'facebook'      =>  $request->newPassword,
+                'instagram'      =>  $request->newPassword,
+                'linkedin'      =>  $request->newPassword,
                 'updated_by'    => Auth::user()->id,
             ]);
         }
@@ -167,14 +171,20 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $user_created_id = $user->created_by;
-        $user_updated_id = $user->updated_by;
 
-        $user_create = User::findOrFail($user_created_id);
-        $user_update = User::findOrFail($user_updated_id);
+        if ($user->created_by == null || $user->updated_by == null) {
+            $user_create_name = "moi même";
+            $user_update_name = "moi même";
+        } else {
+            $user_created_id = $user->created_by;
+            $user_updated_id = $user->updated_by;
 
-        $user_create_name = $user_create->firstname." ".$user_create->firstname;
-        $user_update_name = $user_update->firstname." ".$user_update->firstname;
+            $user_create = User::findOrFail($user_created_id);
+            $user_update = User::findOrFail($user_updated_id);
+
+            $user_create_name = $user_create->firstname . " " . $user_create->firstname;
+            $user_update_name = $user_update->firstname . " " . $user_update->firstname;
+        }
 
         return view("user.show", compact("user", "user_create_name", "user_update_name"));
     }

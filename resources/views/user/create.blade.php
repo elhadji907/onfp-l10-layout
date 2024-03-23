@@ -37,11 +37,11 @@
                                 <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
                                 <p class="text-center small">Ajouter un nouveau utilisateur</p>
                             </div>
-                            <form method="post" action="{{ url('users') }}" enctype="multipart/form-data"
-                                class="row g-3">
+                            <form method="post" action="{{ url('users') }}" enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="firstname" class="form-label">Prénom</label>
+                                    <label for="firstname" class="form-label">Prénom<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="firstname" value="{{ old('firstname') }}"
                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
                                         id="firstname" placeholder="prénom">
@@ -53,7 +53,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="name" class="form-label">Nom</label>
+                                    <label for="name" class="form-label">Nom<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="name" value="{{ old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         id="name" placeholder="nom">
@@ -65,7 +66,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="email" class="form-label">Email</label>
+                                    <label for="email" class="form-label">Email<span
+                                            class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         {{-- <span class="input-group-text" id="email">@</span> --}}
                                         <input type="email" name="email" value="{{ old('email') }}"
@@ -80,7 +82,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="telephone" class="form-label">Téléphone</label>
+                                    <label for="telephone" class="form-label">Téléphone<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone" value="{{ old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="téléphone">
@@ -92,7 +95,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="adresse" class="form-label">Adresse</label>
+                                    <label for="adresse" class="form-label">Adresse<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse" value="{{ old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
@@ -107,7 +111,7 @@
 
                                     <label for="roles" class="form-label">Roles</label>
                                     <select name="roles[]" class="form-select" aria-label="Select"
-                                        id="multiple-select-field" multiple data-placeholder="Choisir roles"> 
+                                        id="multiple-select-field" multiple data-placeholder="Choisir roles">
                                         @foreach ($roles as $role)
                                             <option value="{{ $role }}">{{ $role ?? old('role') }}</option>
                                         @endforeach

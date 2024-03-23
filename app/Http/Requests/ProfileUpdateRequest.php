@@ -22,6 +22,10 @@ class ProfileUpdateRequest extends FormRequest
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'telephone' => ['required', 'string', 'max:25', 'min:9'],
             'adresse' => ['required', 'string', 'max:255'],
+            'twitter' => ['nullable', 'string', 'max:255'],
+            'facebook' => ['nullable', 'string', 'max:255'],
+            'instagram' => ['nullable', 'string', 'max:255'],
+            'linkedin' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

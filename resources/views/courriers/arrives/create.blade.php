@@ -153,8 +153,8 @@
 
                                 <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="observation" class="form-label">Observations</label>
-                                    <textarea name="observation" id="observation" rows="1" class="form-control form-control-sm @error('date_reponse') is-invalid @enderror"
-                                       placeholder="Observations">{{ old('observation') }}</textarea>
+                                    <textarea name="observation" id="observation" rows="1"
+                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
                                     @error('observation')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>

@@ -17,12 +17,24 @@
             <div class="col-xl-4">
                 <div class="card border-info mb-3">
                     <div class="card-header text-center">
-                        AUDIT
+                        Image de profil
                     </div>
-                    <div class="card-body profile-card pt-1 d-flex flex-column">
-                        <h5 class="card-title">Informations complémentaires</h5>
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        <img class="rounded-circle w-25" alt="Profil" src="{{ asset($user->getImage()) }}" width="50"
+                            height="auto">
+
+                        <h2>{{ $user->firstname }} {{ $user->name }}</h2>
+
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+
+                        {{-- <h5 class="card-title">Informations complémentaires</h5>
                         <p>créé par <b>{{ $user_create_name }}</b>, {{ $user->created_at->diffForHumans() }}</p>
-                        <p>modifié par <b>{{ $user_update_name }}</b>, {{ $user->updated_at->diffForHumans() }}</p>
+                        <p>modifié par <b>{{ $user_update_name }}</b>, {{ $user->updated_at->diffForHumans() }}</p> --}}
                     </div>
                 </div>
 
@@ -39,88 +51,87 @@
                                 <button class="nav-link active" data-bs-toggle="tab"
                                     data-bs-target="#profile-overview">Utilisateur</button>
                             </li>
-
-                            {{-- <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab"
-                                    data-bs-target="#profile-edit">Imputer</button>
-                            </li> --}}
-
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#"><a
                                         class="dropdown-item btn btn-sm mx-1" href="{{ route('users.edit', $user->id) }}"
                                         class="mx-1"><i class="bi bi-pencil mx-1"></i>Modifier</a></button>
                             </li>
 
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-autre">Info.
+                                </button>
+                            </li>
+
                         </ul>
                         <div class="tab-content pt-0">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                {{-- <h5 class="card-title">Objet</h5>
-                                <p class="small fst-italic"></p> --}}
 
                                 <h5 class="card-title">Détails</h5>
 
                                 <div class="row">
-                                    <div class="col-6 col-md-4 col-lg-3 label ">Prénom</div>
-                                    <div class="col-6 col-md-4 col-lg-3">{{ $user->firstname }}
-                                    </div>
-                                    <div class="col-6 col-md-4 col-lg-3 label">Nom</div>
-                                    <div class="col-6 col-md-4 col-lg-3">{{ $user->name }}
+                                    <div class="col-lg-3 col-md-4 label">Prénom</div>
+                                    <div class="col-lg-9 col-md-8">{{ $user->firstname }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Nom</div>
+                                    <div class="col-lg-9 col-md-8">{{ $user->name }}
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-6 col-md-4 col-lg-3 label ">Email</div>
-                                    <div class="col-6 col-md-4 col-lg-3">{{ $user->email }}</div>
-                                    <div class="col-6 col-md-4 col-lg-3 label">Téléphone</div>
-                                    <div class="col-6 col-md-4 col-lg-3">{{ $user->telephone }}</div>
+                                    <div class="col-lg-3 col-md-4 label ">Email</div>
+                                    <div class="col-lg-9 col-md-8">{{ $user->email }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Téléphone</div>
+                                    <div class="col-lg-9 col-md-8">{{ $user->telephone }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-6 col-md-4 col-lg-3 label ">Adresse</div>
-                                    <div class="col-6 col-md-4 col-lg-3">{{ $user->adresse }}</div>
-                                    @if (isset($user->roles) && $user->roles != '[]')
-                                        <div class="col-6 col-md-4 col-lg-3 label">Roles</div>
-                                        <div class="col-6 col-md-4 col-lg-3">
-                                            @foreach ($user->roles as $role)
-                                                {{ $role->name }} |
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                    {{--  @isset($user->roles)
-                                    @endisset --}}
+                                    <div class="col-lg-3 col-md-4 label ">Adresse</div>
+                                    <div class="col-lg-9 col-md-8">{{ $user->adresse }}</div>
                                 </div>
 
                             </div>
 
-                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade profile-overview" id="profile-autre">
 
-                                <!-- Profile Edit Form -->
-                                <form>
+                                    {{--  <h5 class="card-title">Audit</h5> --}}
 
-                                    {{-- <div class="row mb-3">
-                                        <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="address" type="text" class="form-control" id="Address"
-                                                value="A108 Adam Street, New York, NY 535022">
+                                    <div class="card-body profile-card pt-1 d-flex flex-column">
+                                        <h5 class="card-title">Informations complémentaires</h5>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label pb-2">Créé par </div>
+                                            <div class="col-lg-9 col-md-8 pb-2">{{ $user_create_name }}
+                                                {{ $user->created_at->diffForHumans() }}</div>
+
+                                            <div class="col-lg-3 col-md-4 label pt-2">Modifié par</div>
+                                            <div class="col-lg-9 col-md-8 pt-2">{{ $user_update_name }}
+                                                {{ $user->updated_at->diffForHumans() }}</div>
+
+                                            <div class="col-lg-3 col-md-4 label pt-3">Roles</div>
+                                            <div class="col-lg-9 col-md-8 pt-3">
+                                                @if (isset($user->roles) && $user->roles != '[]')
+                                                    @foreach ($user->roles as $role)
+                                                        {{ $role->name }} |
+                                                    @endforeach
+                                                @endif
+                                            </div>
                                         </div>
+
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="phone" type="text" class="form-control" id="Phone"
-                                                value="(436) 486-3538 x29071">
-                                        </div>
-                                    </div> --}}
-
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Imputer</button>
-                                    </div>
-                                </form><!-- End Profile Edit Form -->
-
+                                    {{-- <div class="col-lg-2 col-md-3 label">Création</div>
+                                        <div class="col-lg-10 col-md-9">créé le
+                                            {{ Auth::user()->created_at->format('d/m/Y à H:i:s') }}</div>
+                                        <div class="col-lg-2 col-md-3 label">Modification</div>
+                                        <div class="col-lg-10 col-md-9">Modifié le
+                                            {{ Auth::user()->updated_at->format('d/m/Y à H:i:s') }}</div> --}}
+                                </div>
                             </div>
-
                         </div><!-- End Bordered Tabs -->
 
                     </div>

@@ -45,7 +45,7 @@
 
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
-                                    <th>Permissions</th>
+                                    <th>Permissions<span class="text-danger mx-1">*</span></th>
                                     <th width="15%">Action</th>
                                 </tr>
                                 <tr>

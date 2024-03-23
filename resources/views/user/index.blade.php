@@ -55,8 +55,12 @@
                                 <?php $i = 1; ?>
                                 @foreach ($user_liste as $user)
                                     <tr>
-                                        <th scope="row"><img class="rounded-circle w-20" alt="Profil"
-                                                src="{{ asset($user->getImage()) }}" width="40" height="auto"></th>
+                                        <th scope="row">
+                                            <a href="{{ route('users.show', $user->id) }}">
+                                                <img class="rounded-circle w-20" alt="Profil"
+                                                    src="{{ asset($user->getImage()) }}" width="40" height="auto">
+                                            </a>
+                                        </th>
                                         {{-- <td>{{ $i++ }}</td> --}}
                                         <td>{{ $user->firstname }} {{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
@@ -82,7 +86,7 @@
                                                 </form>
                                             </span>
                                         </td> --}}
-                                        
+
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
                                                     href="{{ route('users.show', $user->id) }}"

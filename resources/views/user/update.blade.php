@@ -34,7 +34,8 @@
                                 @csrf
                                 @method('patch')
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="firstname" class="form-label">Prénom</label>
+                                    <label for="firstname" class="form-label">Prénom<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="firstname" value="{{ $user->firstname }}"
                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
                                         id="firstname" placeholder="prénom">
@@ -46,7 +47,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="name" class="form-label">Nom</label>
+                                    <label for="name" class="form-label">Nom<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="name" value="{{ $user->name }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         id="name" placeholder="nom">
@@ -58,7 +60,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="email" class="form-label">email</label>
+                                    <label for="email" class="form-label">email<span
+                                            class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         {{-- <span class="input-group-text" id="email">@</span> --}}
                                         <input type="email" name="email" value="{{ $user->email }}"
@@ -73,7 +76,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="telephone" class="form-label">Téléphone</label>
+                                    <label for="telephone" class="form-label">Téléphone<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone" value="{{ $user->telephone }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="téléphone">
@@ -85,7 +89,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="adresse" class="form-label">Adresse</label>
+                                    <label for="adresse" class="form-label">Adresse<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse" value="{{ $user->adresse }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
