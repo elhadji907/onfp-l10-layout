@@ -77,7 +77,7 @@
                                             <input type="text" name="prenom"
                                                 class="form-control @error('prenom') is-invalid @enderror"
                                                 id="prenom" required placeholder="Votre prenom"
-                                                value="{{ old('prenom') }}" autocomplete="prenom">
+                                                value="{{ old('prenom') }}" autocomplete="prenom" autofocus>
                                             <div class="invalid-feedback">
                                                 @error('prenom')
                                                     {{ $message }}

@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des users')
+@section('title', 'ONFP - Liste des départements')
 @section('space-work')
 
     <div class="pagetitle">
@@ -13,8 +13,8 @@
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-12 col-lg-10">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -31,80 +31,54 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-2">
-                            <a href="{{ route('users.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                        {{-- @can('role-create') --}}
+                        <div class="pt-1">
+                            <a href="{{ route('departements.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
-                        <h5 class="card-title">Utilisateurs</h5>
-                        {{-- <p>Le tableau de tous les utilisateurs du système.</p> --}}
+                        {{-- @endcan --}}
+                        <h5 class="card-title">Départements</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-users">
+                        <table class="table datatables align-middle justify-content-center" id="table-departements">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    {{-- <th>N°</th> --}}
-                                    <th>Prénom & Nom</th>
-                                    <th>E-mail</th>
-                                    <th>Téléphone</th>
-                                    <th>Roles</th>
-                                    <th>#</th>
+                                    <th class="text-center" scope="col">N°</th>
+                                    <th>départements</th>
+                                    <th>Région</th>
+                                    <th class="text-center" scope="col">Arrondissements</th>
+                                    <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($user_liste as $user)
+                                @foreach ($departements as $departement)
                                     <tr>
-                                        <th scope="row">
-                                            <a href="{{ route('users.show', $user->id) }}">
-                                                <img class="rounded-circle w-20" alt="Profil"
-                                                    src="{{ asset($user->getImage()) }}" width="40" height="auto">
-                                            </a>
-                                        </th>
-                                        {{-- <td>{{ $i++ }}</td> --}}
-                                        <td>{{ $user->firstname }} {{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->telephone }}</td>
-                                        <td>
-                                            @if (!empty($user->getRoleNames()))
-                                                @foreach ($user->getRoleNames() as $roleName)
-                                                    <label for="label"
-                                                        class="badge bg-primary mx-1">{{ $roleName }}</label>
-                                                @endforeach
-                                            @endif
+                                        <td style="text-align: center;">{{ $i++ }}</td>
+                                        <td>{{ $departement->nom }}</td>
+                                        <td>{{ $departement->region->nom }}</td>
+                                        <td style="text-align: center;">
+                                            @foreach ($departement->arrondissements as $arrondissement)
+                                                @if ($loop->last)
+                                                    <span class="badge bg-info">{{ $loop->count }}</span>
+                                                @endif
+                                            @endforeach
                                         </td>
-                                        {{-- <td>
+                                        <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="Modifier"><i
-                                                        class="bi bi-pencil-square"></i></a>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm show_confirm"
-                                                        title="Supprimer"><i class="bi bi-trash"></i></button>
-                                                </form>
-                                            </span>
-                                        </td> --}}
-
-                                        <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('users.show', $user->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
+                                                    href="{{ url('departements/' . $departement->id . '/give-permissions') }}"
+                                                    class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
+                                                        class="bi bi-file-lock"></i></a>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        {{-- <li class="dropdown-header text-start">
-                                                            <h6>ACTIONS</h6>
-                                                        </li> --}}
                                                         <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ route('users.edit', $user->id) }}"
+                                                                href="{{ url('departements/' . $departement->id . '/edit') }}"
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ route('users.destroy', $user->id) }}"
+                                                            <form action="{{ url('departements', $departement->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -116,40 +90,23 @@
                                                 </div>
                                             </span>
                                         </td>
+
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
-    <div class="modal fade" id="basicModal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Basic Modal</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div><!-- End Basic Modal-->
+
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-users', {
+        new DataTable('#table-departements', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

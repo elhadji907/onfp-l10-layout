@@ -20,7 +20,7 @@
                         Image de profil
                     </div>
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                        <img class="rounded-circle w-25" alt="Profil" src="{{ asset($user->getImage()) }}" width="50"
+                        <img class="rounded-circle w-50" alt="Profil" src="{{ asset($user->getImage()) }}" width="100"
                             height="auto">
 
                         <h2>{{ $user->firstname }} {{ $user->name }}</h2>

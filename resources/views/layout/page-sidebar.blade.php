@@ -16,7 +16,7 @@
             </a>
         </li><!-- End utilisateurs Nav -->
 
-        <li class="nav-heading">Autorisations</li>
+        <li class="nav-heading">AUTORISATIONS</li>
 
         {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -177,14 +177,12 @@
             <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('roles') }}">
-                        <i class="bi bi-file-lock2-fill"></i>
                         <span>Roles</span>
                     </a>
                 </li><!-- End roles Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('permissions') }}">
-                        <i class="bi bi-key"></i>
                         <span>Permissions</span>
                     </a>
                 </li><!-- End Permissions Nav -->
@@ -200,24 +198,54 @@
             <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('arrives') }}">
-                        <i class="bi bi-envelope-open"></i>
                         <span>Arrivé</span>
                     </a>
                 </li><!-- End arrives Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('departs') }}">
-                        <i class="bi bi-envelope-fill"></i>
                         <span>Départ</span>
                     </a>
                 </li><!-- End departs Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('internes') }}">
-                        <i class="bi bi-envelope-open-fill"></i>
                         <span>Interne</span>
                     </a>
                 </li><!-- End internes Nav -->
+            </ul>
+        </li><!-- End Courriers Nav -->
+
+        <li class="nav-heading">LOCALITES</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#localite-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-globe"></i><span>Localités</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="localite-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('regions') }}">
+                        <span>Région</span>
+                    </a>
+                </li><!-- End regions Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('departements') }}">
+                        <span>Département</span>
+                    </a>
+                </li><!-- End departements Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('arrondissements') }}">
+                        <span>Arrondissement</span>
+                    </a>
+                </li><!-- End arrondissements Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('communes') }}">
+                        <span>Commune</span>
+                    </a>
+                </li><!-- End communes Nav -->
             </ul>
         </li><!-- End Courriers Nav -->
 

@@ -85,7 +85,7 @@
                                                 <input type="email" name="email"
                                                     class="form-control @error('email') is-invalid @enderror"
                                                     id="email" required placeholder="Votre adresse e-mail"
-                                                    value="{{ old('email') }}">
+                                                    value="{{ old('email') }}" autofocus>
                                                 <div class="invalid-feedback">
                                                     @error('email')
                                                         {{ $message }}
