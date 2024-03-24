@@ -83,7 +83,7 @@
                                 <tr>
                                     <th style="width: 50%">Direction</th>
                                     <th>Responsable</th>
-                                    <th style="width: 5%"></th>
+                                    <th style="width: 5%">#</th>
                                 </tr>
                             </thead>
                             <tbody id="addRow" class="addRow">
@@ -161,14 +161,14 @@
                         <td>
                             <input type="hidden" name="id_direction[]" value="@{{ id_direction }}" required placeholder="Id direction" class="form-control form-control-sm">
                             <input type="hidden" name="id_employe[]" value="@{{ id_employe }}" required placeholder="Id employe" class="form-control form-control-sm">
-                            <input type="text" name="product[]" value="@{{ product }}" required placeholder="Direction" class="form-control form-control-sm">                            
+                            <input type="text" name="product[]" value="@{{ product }}" required placeholder="Direction" class="form-control form-control-sm" readonly>                            
                             <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
                         <td>
                         <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="Le nom du responsable" readonly>
                       </td>
                         <td>
-                        <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>
+                        <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="bi bi-trash"></i></i>
                         </td>    
                     </tr>
                     </script>
@@ -219,7 +219,7 @@
                     $(document).on('click', 'li', function() {
                         $('#product').val($(this).text());
                         $('#id_direction').val($(this).data("id"));
-                        $('#id_employe').val($(this).data("employeeid"));
+                        $('#id_employe').val($(this).data("userid"));
                         $('#chef').val($(this).data("chef"));
                         $('#productList').fadeOut();
                     });

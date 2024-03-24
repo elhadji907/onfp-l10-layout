@@ -23,7 +23,7 @@
                         <img class="rounded-circle w-50" alt="Profil" src="{{ asset($user->getImage()) }}" width="100"
                             height="auto">
 
-                        <h2>{{ $user->firstname }} {{ $user->name }}</h2>
+                        <h2 class="pt-3">{{ $user->firstname }} {{ $user->name }}</h2>
 
                         <div class="social-links mt-2">
                             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -116,7 +116,7 @@
                                             <div class="col-lg-9 col-md-8 pt-3">
                                                 @if (isset($user->roles) && $user->roles != '[]')
                                                     @foreach ($user->roles as $role)
-                                                        {{ $role->name }} |
+                                                    <span class="badge bg-info">{{ $role->name }}</span>
                                                     @endforeach
                                                 @endif
                                             </div>

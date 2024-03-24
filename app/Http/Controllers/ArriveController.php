@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArriveStoreRequest;
 use App\Models\Arrive;
 use App\Models\Courrier;
-use App\Models\Employe;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -68,6 +67,26 @@ class ArriveController extends Controller
     {
         $arrive = Arrive::findOrFail($id);
         $courrier = Courrier::findOrFail($arrive->courriers_id);
+
+        $imp = $request->input('imp');
+
+        if (isset($imp) && $imp == "1") {
+
+            /* dd($request->id_employe); */
+            
+            $courrier = $arrive->courrier;
+            $count = count($request->product);
+            $courrier->directions()->sync($request->id_direction);
+            $courrier->employees()->sync($request->id_employe);
+            $courrier->description =  $request->input('description');
+            $courrier->date_imp    =  $request->input('date_imp');
+            $courrier->save();
+            $status = 'Courrier imputé avec succès';
+
+            return Redirect::route('arrives.index')->with('status', $status);
+
+            //solution, récuper l'id à partir de blade avec le mode hidden
+        }
 
         $this->validate($request, [
             "date_arrivee"          => ["required", "date"],
@@ -157,18 +176,14 @@ class ArriveController extends Controller
             foreach ($data as $direction) {
                 $id = $direction->id;
                 $sigle = $direction->sigle;
-                $chef_id = $direction->chef_id;
-                $chef = Employe::findOrFail($chef_id);
+                $user_id = $direction->chef_id;
+                $user = User::find($user_id);
 
-                $matricule = $chef->matricule;
-                $employee_id = $chef_id;
-                $user_id = $chef->users_id;
-                $user = User::findOrFail($user_id);
-                $user = $user->firstname . ' ' . $user->name;
+                $name = $user->firstname . ' ' . $user->name;
 
                 $output .= '
        
-       <li data-id="' . $id . '" data-chef="' . $user . '" data-matricule="' . $matricule . '" data-employeeid="' . $employee_id . '"><a href="#">' . $sigle . '</a></li>
+                <li data-id="' . $id . '" data-chef="' . $name . '" data-userid="' . $user_id . '"><a href="#">' . $sigle . '</a></li>
        ';
             }
             $output .= '</ul>';

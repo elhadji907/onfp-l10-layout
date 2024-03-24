@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employe;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeController extends Controller
 {
     public function index()
     {
-        $employes = Employe::orderBy("created_at", "desc")->get();
+        $employes = Employee::orderBy("created_at", "desc")->get();
         return view("employes.index", compact("employes"));
     }
 
@@ -27,7 +27,7 @@ class EmployeController extends Controller
 
     public function edit($id)
     {
-        $employe = Employe::find($id);
+        $employe = Employee::find($id);
         dd($employe);
     }
 
@@ -40,13 +40,13 @@ class EmployeController extends Controller
 
     public function show($id)
     {
-        $employe = Employe::findOrFail($id);
+        $employe = Employee::findOrFail($id);
         dd($employe);
     }
 
     public function destroy($id)
     {
-        $employe = Employe::findOrFail($id);
+        $employe = Employee::findOrFail($id);
         $employe->user->delete();
         $employe->delete();
         $mesage = $employe->user->firstname . ' ' . $employe->user->name . ' a été supprimé(e)';

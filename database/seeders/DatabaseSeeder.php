@@ -4,11 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -104,8 +100,9 @@ class DatabaseSeeder extends Seeder
             FonctionSeeder::class,
             CategorieSeeder::class,
             DirectionSeeder::class,
-            /* UserSeeder::class,
-            EmployeSeeder::class, */
+            AdministrateurSeeder::class,
+            GestionnaireSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }

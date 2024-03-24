@@ -7,8 +7,10 @@ use App\Models\Fonction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
-class EmployeFactory extends Factory
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
+ */
+class EmployeeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +21,6 @@ class EmployeFactory extends Factory
     {
         $categories_id = Category::all()->random()->id;
         $fonctions_id = Fonction::all()->random()->id;
-        $users_id = User::all()->random()->id;
 
         $letter = chr(rand(65, 90));
         $nombre1 = rand(1, 2);
@@ -41,13 +42,8 @@ class EmployeFactory extends Factory
             'date_embauche' => $this->faker->dateTime(),
             'classification' => $this->faker->word,
             'categorie_salaire' => $this->faker->word,
-
-            /* 'users_id' => function () {
+            'users_id' => function () {
                 return User::factory()->create()->id;
-            }, */
-
-            'users_id' => function () use ($users_id) {
-                return $users_id;
             },
             'categories_id' => function () use ($categories_id) {
                 return $categories_id;
