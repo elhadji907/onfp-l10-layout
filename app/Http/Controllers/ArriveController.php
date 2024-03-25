@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArriveStoreRequest;
 use App\Models\Arrive;
 use App\Models\Courrier;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -70,10 +71,7 @@ class ArriveController extends Controller
 
         $imp = $request->input('imp');
 
-        if (isset($imp) && $imp == "1") {
-
-            /* dd($request->id_employe); */
-            
+        if (isset($imp) && $imp == "1") {            
             $courrier = $arrive->courrier;
             $count = count($request->product);
             $courrier->directions()->sync($request->id_direction);
@@ -81,6 +79,7 @@ class ArriveController extends Controller
             $courrier->description =  $request->input('description');
             $courrier->date_imp    =  $request->input('date_imp');
             $courrier->save();
+            
             $status = 'Courrier imputé avec succès';
 
             return Redirect::route('arrives.index')->with('status', $status);
@@ -176,14 +175,16 @@ class ArriveController extends Controller
             foreach ($data as $direction) {
                 $id = $direction->id;
                 $sigle = $direction->sigle;
-                $user_id = $direction->chef_id;
-                $user = User::find($user_id);
+                $employe_id = $direction->chef_id;
+                $employe = Employee::find($employe_id);
+
+                $user = User::find($employe->users_id);
 
                 $name = $user->firstname . ' ' . $user->name;
 
                 $output .= '
        
-                <li data-id="' . $id . '" data-chef="' . $name . '" data-userid="' . $user_id . '"><a href="#">' . $sigle . '</a></li>
+                <li data-id="' . $id . '" data-chef="' . $name . '" data-userid="' . $employe->users_id . '"><a href="#">' . $sigle . '</a></li>
        ';
             }
             $output .= '</ul>';

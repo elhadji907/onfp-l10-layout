@@ -151,11 +151,11 @@ class UserController extends Controller
                 'telephone'     =>  $request->telephone,
                 'adresse'       =>  $request->adresse,
                 'password'      =>  $request->newPassword,
-                'twitter'      =>  $request->newPassword,
-                'facebook'      =>  $request->newPassword,
-                'instagram'      =>  $request->newPassword,
-                'linkedin'      =>  $request->newPassword,
-                'updated_by'    => Auth::user()->id,
+                'twitter'       =>  $request->twitter,
+                'facebook'      =>  $request->facebook,
+                'instagram'     =>  $request->instagram,
+                'linkedin'      =>  $request->linkedin,
+                'updated_by'    =>  Auth::user()->id,
             ]);
         }
 
