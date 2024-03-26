@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\ArrondissementController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CourrierController;
 use App\Http\Controllers\DepartController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\InterneController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
@@ -46,9 +48,9 @@ Route::get('/', [UserController::class, 'homePage'])->name('home');
 Route::get('/login-page', [ProfileController::class, 'loginPage'])->name('login-page');
 Route::get('/register-page', [ProfileController::class, 'registerPage'])->name('register-page');
 
-Route::get('/dashboard', function () {
+/* Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard'); */
 
 /* Route::group(['middleware' => ['isAdmin']], function () { */
 Route::group(['middleware' => ['auth']], function () {
@@ -75,6 +77,12 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::get('arrive-imputations/{id}', [ArriveController::class, 'arriveImputation'])->name('arrive-imputations');
     Route::post('/arrive/fetch', [ArriveController::class, 'fetch'])->name('arrive.fetch');
+
+    
+    Route::post('/comments/{courrier}', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
+    
+    Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

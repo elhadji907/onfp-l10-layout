@@ -1,7 +1,7 @@
 @extends('layout.user-layout')
 @section('title', 'Détails courrier arrivé')
-@section('space-work')
 
+@section('space-work')
     <section class="section profile">
         <div class="row">
             @if ($message = Session::get('status'))
@@ -42,17 +42,24 @@
 
                             <li class="nav-item">
                                 <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
-                                        href="{{ route('arrives.edit', $arrive->id) }}" class="mx-1"><i
-                                            class="bi bi-pencil mx-1"></i>Modifier</a></button>
+                                        href="{{ route('arrives.edit', $arrive->id) }}" class="mx-1">
+                                        {{-- <i class="bi bi-pencil mx-1"></i> --}}
+                                        Modifier</a></button>
                             </li>
 
                             <li class="nav-item">
                                 <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
-                                        href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1"><i
-                                            class="bi bi-recycle mx-1"></i>Imputer</a></button>
+                                        href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1">
+                                        {{-- <i class="bi bi-recycle mx-1"></i> --}}
+                                        Imputer</a></button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#profile-settings">Commentaires</button>
                             </li>
                         </ul>
-                        
+
                         <div class="tab-content pt-0">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -101,6 +108,139 @@
 
                             </div>
 
+                            <div class="tab-pane fade pt-3" id="profile-settings">
+
+                                <!-- Settings Form -->
+
+                                <form method="POST" action="{{ route('comments.store', $arrive->courrier) }}"
+                                    class="mt-3">
+                                    @csrf
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Commentaires</label>
+                                        <div class="col-md-8 col-lg-9">
+
+                                            <div class="form-floating mb-3">
+                                                <textarea class="form-control @error('commentaire') is-invalid @enderror" placeholder="Ecrire votre commentaire ici"
+                                                    name="commentaire" id="commentaire" style="height: 100px;"></textarea>
+                                                <label for="floatingTextarea">Ecrire votre commentaire ici</label>
+                                            </div>
+                                            <small id="emailHelp" class="form-text text-muted">
+                                                @if ($errors->has('commentaire'))
+                                                    @foreach ($errors->get('commentaire') as $message)
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @endforeach
+                                                @endif
+                                            </small>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Poster</button>
+                                    </div>
+                                </form><!-- End settings Form -->
+                                <hr>
+                                <h3 class="card-title text-center">Commentaires</h3>
+                                @forelse ($arrive->courrier->comments as $comment)
+                                    <div class="card mt-2">
+                                        <div class="card-body">
+                                            <div>{!! $comment->content !!}
+                                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                                    {{-- <small>Posté le {!! Carbon\Carbon::parse($comment->created_at)->format('d/m/Y à H:i:s') !!}</small> --}}
+                                                    <small>Posté le {!! Carbon\Carbon::parse($comment->created_at)->diffForHumans() !!}</small>
+                                                    <span
+                                                        class="badge bg-info mx-1">{!! $comment->user->firstname ?? '' !!}&nbsp;{!! $comment->user->name ?? '' !!}</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <solution-button></solution-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- Réponse aux commentaires --}}
+                                    @foreach ($comment->comments as $replayComment)
+                                        <div class="row mb-3">
+                                            <label for="" class="col-md-1 col-lg-1 col-form-label"></label>
+                                            <div class="col-md-11 col-lg-11">
+                                                <div class="card form-floating mb-3">
+                                                    <div class="card-body">
+                                                        {!! $replayComment->content !!}
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mt-2">
+                                                            <small>Posté le {!! Carbon\Carbon::parse($replayComment->created_at)->diffForHumans() !!}</small>
+                                                            <span
+                                                                class="badge bg-primary mx-1">{!! $replayComment->user->firstname ?? '' !!}&nbsp;{!! $replayComment->user->name ?? '' !!}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                    @auth
+                                        <button class="btn btn-info btn-sm mt-0 mb-2" id="commentReplyId"
+                                            onclick="toggleReplayComment({{ $comment->id }})">
+                                            Répondre
+                                        </button>
+                                        <form method="POST" action="{{ route('comments.storeReply', $comment) }}"
+                                            class="ml-5 d-none" id="replayComment-{{ $comment->id }}">
+                                            @csrf
+
+
+
+                                            <div class="row mb-3">
+                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Réponse
+                                                    commentaires</label>
+                                                <div class="col-md-8 col-lg-9">
+
+                                                    <div class="form-floating mb-3">
+                                                        <textarea class="form-control @error('replayComment') is-invalid @enderror" placeholder="Répondre à ce commentaire"
+                                                            name="replayComment" id="replayComment" style="height: 100px;"></textarea>
+                                                        <label for="floatingTextarea">Répondre à ce commentaire</label>
+                                                    </div>
+                                                    <small id="emailHelp" class="form-text text-muted">
+                                                        @if ($errors->has('replayComment'))
+                                                            @foreach ($errors->get('replayComment') as $message)
+                                                                <p class="text-danger">{{ $message }}</p>
+                                                            @endforeach
+                                                        @endif
+                                                    </small>
+
+                                                    <button class="btn btn-primary btn-sm m-2">
+                                                        Répondre à ce commentaire
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {{-- <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Poster</button>
+                                    </div> --}}
+
+
+                                            {{-- <div class="form-group">
+                                                <label for="replayComment"><b>Ma réponse</b></label>
+                                                <textarea class="form-control @error('replayComment') is-invalid @enderror" name="replayComment" id="replayComment"
+                                                    rows="3" placeholder="Répondre à ce commentaire"></textarea>
+                                                <small id="emailHelp" class="form-text text-muted">
+                                                    @if ($errors->has('replayComment'))
+                                                        @foreach ($errors->get('replayComment') as $message)
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                        @endforeach
+                                                    @endif
+                                                </small>
+                                            </div>
+                                            <button class="btn btn-primary btn-sm m-2">
+                                                Répondre à ce commentaire
+                                            </button> --}}
+                                        </form>
+                                    @endauth
+                                    {{-- fin réponse aux commentaires --}}
+                                @empty
+
+                                    <div class="alert alert-info">Aucun commentaire pour ce courrier</div>
+
+                                @endforelse
+                            </div>
                         </div><!-- End Bordered Tabs -->
 
                     </div>
@@ -110,3 +250,12 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        function toggleReplayComment(id) {
+            let element = document.getElementById('replayComment-' + id);
+            element.classList.toggle('d-none');
+        }
+    </script>
+@endpush
