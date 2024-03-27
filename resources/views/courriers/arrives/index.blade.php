@@ -76,6 +76,10 @@
                                                                 href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
                                                                 class="mx-1"><i class="bi bi-recycle"></i> Imputer</a>
                                                         </li>
+                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                                href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}"
+                                                                class="mx-1" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i> Coupon</a>
+                                                        </li>
                                                         <li>
                                                             <form action="{{ route('arrives.destroy', $arrive->id) }}"
                                                                 method="post">
