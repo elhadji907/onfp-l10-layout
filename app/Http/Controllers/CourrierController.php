@@ -37,7 +37,9 @@ class CourrierController extends Controller
         $user_create_name = $user_create->firstname . ' ' . $user_create->name;
         $user_update_name = $user_update->firstname . ' ' . $user_update->name;
 
-        return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
+        if ($courrier->type == 'arrive') {
+            return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
+        }
 
         /*  if ($typescourrier == 'Courriers arrives') {            
             return view('arrives.show', compact('arrives','courrier'));

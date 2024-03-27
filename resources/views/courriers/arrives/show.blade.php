@@ -87,8 +87,10 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Expéditeur</div>
                                     <div class="col-lg-3 col-md-4">{{ $arrive->courrier->expediteur }}</div>
-                                    <div class="col-lg-3 col-md-4 label">Référence</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->reference }}</div>
+                                    @isset($arrive->courrier->reference)
+                                        <div class="col-lg-3 col-md-4 label">Référence</div>
+                                        <div class="col-lg-3 col-md-4">{{ $arrive->courrier->reference }}</div>
+                                    @endisset
                                 </div>
 
                                 @isset($arrive->courrier->numero_reponse)

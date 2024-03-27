@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArriveStoreRequest;
 use App\Models\Arrive;
 use App\Models\Courrier;
+use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\User;
+use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +41,7 @@ class ArriveController extends Controller
             'numero_reponse'        =>      $request->input('numero_reponse'),
             'date_reponse'          =>      $request->input('date_reponse'),
             'observation'           =>      $request->input('observation'),
+            'type'                  =>      'arrive',
             "user_create_id"        =>      Auth::user()->id,
             "user_update_id"        =>      Auth::user()->id,
             'users_id'              =>      Auth::user()->id,
@@ -73,7 +76,7 @@ class ArriveController extends Controller
 
         if (isset($imp) && $imp == "1") {            
             $courrier = $arrive->courrier;
-            $count = count($request->product);
+            /* $count = count($request->product); */
             $courrier->directions()->sync($request->id_direction);
             $courrier->employees()->sync($request->id_employe);
             $courrier->description =  $request->input('description');
@@ -112,6 +115,7 @@ class ArriveController extends Controller
                 'numero_reponse'   =>      $request->input('numero_reponse'),
                 'date_reponse'     =>      $request->input('date_reponse'),
                 'observation'      =>      $request->input('observation'),
+                'type'             =>      'arrive',
                 "user_create_id"   =>      Auth::user()->id,
                 "user_update_id"   =>      Auth::user()->id,
                 'users_id'         =>      Auth::user()->id,
@@ -190,5 +194,66 @@ class ArriveController extends Controller
             $output .= '</ul>';
             echo $output;
         }
+    }
+
+    public function couponArrive($id)
+    {
+        $arrive = Arrive::find($id);
+        $courrier = $arrive->courrier;
+
+       /*  $directions     = Direction::pluck('sigle', 'id'); */
+        
+        $directions = Direction::pluck('sigle', 'sigle')->all();
+        
+        $arriveDirections = $courrier->directions->pluck('sigle', 'sigle')->all();
+        
+        $numero = $courrier->numero;
+      
+        $title =' Coupon d\'envoi n° '.$numero;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $dompdf->setOptions($options);
+
+        $actions = [
+            'Urgent',
+            'M\'en parler',
+            'Etudes et Avis',
+            'Répondre',
+            'Suivi',
+            'Information',
+            'Diffusion',
+            'Attribution',
+            'Classement',
+            ];
+
+        $dompdf->loadHtml(view('courriers.arrives.arrive-coupon', compact(
+            'arrive',
+            'courrier',
+            'directions',
+            'arriveDirections',
+            'title',
+            'actions'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $name = $courrier->expediteur.', facture n° '.$numero.' du '.$anne.'.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+
     }
 }

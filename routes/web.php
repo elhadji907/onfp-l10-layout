@@ -83,6 +83,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
     
     Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
+    
+    Route::get('coupon-arrive/{id}', [ArriveController::class, 'couponArrive'])->name('coupon-arrive');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

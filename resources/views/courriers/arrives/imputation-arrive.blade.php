@@ -67,11 +67,11 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center p-4">
                     <small style="text-align: center; vertical-align: middle;">
-                        {{--  <a
-                        href="{!! url('recufactures', ['$id' => $arrive->id]) !!}" class='btn btn-primary btn-sm'
+                         <a
+                        href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class='btn btn-primary btn-sm'
                         title="télécharger le coupon" target="_blank">
                         <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
-                    </a> --}}
+                    </a>
                     </small>
                 </div>
                 <div class="col-lg-12">

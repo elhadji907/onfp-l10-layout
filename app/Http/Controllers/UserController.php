@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,9 +90,11 @@ class UserController extends Controller
         return redirect()->back()->with("status", $status);
     }
 
-    public function edit(User $user)
+    public function edit($id)
     {
         $roles = Role::pluck('name', 'name')->all();
+
+        $user = User::findOrFail($id);
 
         $userRoles = $user->roles->pluck('name', 'name')->all();
 
@@ -197,4 +200,5 @@ class UserController extends Controller
         $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
         return redirect()->back()->with("danger", $mesage);
     }
+
 }

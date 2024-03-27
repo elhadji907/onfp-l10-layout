@@ -106,6 +106,7 @@ class Courrier extends Model
 		'date_recep' => 'datetime',
 		'date_cores' => 'datetime',
 		'date_reponse' => 'datetime',
+		'date_imp' => 'datetime',
 	];
 
 	protected $dates = [
@@ -150,6 +151,7 @@ class Courrier extends Model
 		'date_liq',
 		'designation',
 		'observation',
+		'type',
 		'date_visa',
 		'date_mandat',
 		'tva',
