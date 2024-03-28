@@ -104,7 +104,7 @@
                             style="width: 100%; max-width: 300px" />
                     </td>
                     <td colspan="4" align="right"><b>
-                            <h2><br><u>{{ __("FICHE D'IMPUTATION") }}</u></h2>
+                            <h1><br><u>{{ __("FICHE D'IMPUTATION") }}</u></h1>
                         </b>
                     </td>
                 </tr>

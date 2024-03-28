@@ -250,7 +250,7 @@ class ArriveController extends Controller
         $anne = $anne.' '.date('i').'min';
         $anne = $anne.' '.date('s').'s';
 
-        $name = $courrier->expediteur.', facture n° '.$numero.' du '.$anne.'.pdf';
+        $name = $courrier->expediteur.', courrier arrivé n° '.$numero.' du '.$anne.'.pdf';
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);

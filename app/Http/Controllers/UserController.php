@@ -113,7 +113,7 @@ class UserController extends Controller
             'adresse' => ['required', 'string', 'max:255'],
             'password' => ['string', 'max:255', 'nullable'],
             'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
-            "email" => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id),],
+            "email" => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
         ]);
 
         if (request('image')) {

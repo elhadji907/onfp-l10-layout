@@ -5,17 +5,25 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="col-sm-12 col-md-12 pt-2">
+
                     <div class="card">
                         <div class="card-body custom-edit-service">
-                            <div class="col-sm-12 pt-0">
-                                <span class="d-flex mt-0 align-items-baseline"><a href="{{ route('arrives.index') }}"
-                                        class="btn btn-success btn-sm" title="retour"><i
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span><a href="{{ route('arrives.index') }}" class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                    <p> | Liste des courriers arrivés</p>
+                                     | Liste des courriers arrivés
                                 </span>
+
+
+                                <small>
+                                    <a href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class='btn btn-primary btn-sm'
+                                        title="télécharger le coupon" target="_blank">
+                                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
+                                    </a>
+                                </small>
                             </div>
                             @csrf
-                            <div class="row form-row">
+                            <div class="row form-row pt-5">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <label for="">Direction/Service/Cellule</label>
@@ -64,15 +72,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 text-center p-4">
-                    <small style="text-align: center; vertical-align: middle;">
-                         <a
-                        href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class='btn btn-primary btn-sm'
-                        title="télécharger le coupon" target="_blank">
-                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
-                    </a>
-                    </small>
                 </div>
                 <div class="col-lg-12">
                     {!! Form::open(['url' => 'arrives/' . $arrive->id, 'method' => 'PATCH', 'files' => true]) !!}
