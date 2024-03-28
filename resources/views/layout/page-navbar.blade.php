@@ -39,26 +39,25 @@
                     @endforeach
 
                     <hr class="dropdown-divider">
+                    <li class="dropdown-footer">
+                        <a href="#">Voir toutes les notifications</a>
+                    </li>
+
+                </ul><!-- End Notification Dropdown Items -->
+
             </li>
-            <li class="dropdown-footer">
-                <a href="#">Voir toutes les notifications</a>
-            </li>
+        @endunless
+        <!-- End Notification Nav -->
 
-        </ul><!-- End Notification Dropdown Items -->
-
-        </li>
-    @endunless
-    <!-- End Notification Nav -->
-
-    {{-- <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
 
             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                 <i class="bi bi-chat-left-text"></i>
                 <span class="badge bg-success badge-number">3</span>
             </a> --}}
-    <!-- End Messages Icon -->
+        <!-- End Messages Icon -->
 
-    {{--  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+        {{--  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                 <li class="dropdown-header">
                     You have 3 new messages
                     <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -114,43 +113,43 @@
                 </li>
 
             </ul> --}}
-    <!-- End Messages Dropdown Items -->
+        <!-- End Messages Dropdown Items -->
 
-    {{--  </li> --}}
-    <!-- End Messages Nav -->
+        {{--  </li> --}}
+        <!-- End Messages Nav -->
 
-    <li class="nav-item dropdown pe-3">
+        <li class="nav-item dropdown pe-3">
 
-        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
-            <img class="rounded-circle" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}">
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
+                <img class="rounded-circle" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}">
 
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->firstname }}
-                {{ Auth::user()->name }}</span>
-        </a><!-- End Profile Iamge Icon -->
+                <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->firstname }}
+                    {{ Auth::user()->name }}</span>
+            </a><!-- End Profile Iamge Icon -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-                <h6>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h6>
-                @foreach (Auth::user()->roles as $role)
-                    <span>{{ $role->name }}</span>
-                @endforeach
-            </li>
-            <li>
-                <hr class="dropdown-divider">
-            </li>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                <li class="dropdown-header">
+                    <h6>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h6>
+                    @foreach (Auth::user()->roles as $role)
+                        <span>{{ $role->name }}</span>
+                    @endforeach
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
 
-            <li>
-                <a class="dropdown-item d-flex align-items-center" href="{{ url('/profil') }}">
-                    <i class="bi bi-person"></i>
-                    <span>Mon Profil</span>
-                </a>
-            </li>
-            <li>
-                <hr class="dropdown-divider">
-            </li>
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="{{ url('/profil') }}">
+                        <i class="bi bi-person"></i>
+                        <span>Mon Profil</span>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
 
-            {{-- <li>
+                {{-- <li>
                     <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                         <i class="bi bi-gear"></i>
                         <span>Account Settings</span>
@@ -170,20 +169,20 @@
                     <hr class="dropdown-divider">
                 </li> --}}
 
-            <li>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <a class="dropdown-item d-flex align-items-center" href="route('logout')"
-                        onclick="event.preventDefault();
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a class="dropdown-item d-flex align-items-center" href="route('logout')"
+                            onclick="event.preventDefault();
       this.closest('form').submit();">
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Se déconnecter</span>
-                    </a>
-                </form>
-            </li>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Se déconnecter</span>
+                        </a>
+                    </form>
+                </li>
 
-        </ul><!-- End Profile Dropdown Items -->
-    </li><!-- End Profile Nav -->
+            </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
 
     </ul>
 </nav>
