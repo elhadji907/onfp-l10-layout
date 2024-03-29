@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Arrondissement extends Model
 {
 	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
+	use SoftDeletes;
 	protected $table = 'arrondissements';
 
 	protected $casts = [

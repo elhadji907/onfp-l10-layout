@@ -62,7 +62,7 @@
                                             </a>
                                         </th>
                                         {{-- <td>{{ $i++ }}</td> --}}
-                                        <td>{{ $user->firstname }} {{ $user->name }}</td>
+                                        <td>{{ $user->civilite }} {{ $user->firstname }} {{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->telephone }}</td>
                                         <td>

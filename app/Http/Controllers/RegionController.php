@@ -18,31 +18,33 @@ class RegionController extends Controller
 
     public function create()
     {
-        $regions = Region::orderBy("created_at", "desc")->get();
-        return view("localites.regions.create", compact("regions"));
+        return view("localites.regions.create");
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             "region" => "required|string|unique:regions,nom,except,id",
-            "code_region" => "required|string|unique:regions,sigle,except,id",
+            "sigle" => "required|string|unique:regions,sigle,except,id",
         ]);
 
         $region = Region::create([
             "nom" => $request->input("region"),
-            "sigle" => $request->input("code_region"),
+            "sigle" => $request->input("sigle"),
         ]);
 
         $region->save();
 
         $status = "Région " . $region->nom . " ajoutée avec succès";
 
-        return  redirect()->route("regions.index", compact("region"))->with("status", $status);
+        return  redirect()->route("regions.index")->with("status", $status);
     }
 
     public function show($id)
     {
+        $region = Region::find($id);
+        return view("localites.regions.show", compact("region"));
+        
     }
 
     public function edit($id)
@@ -55,13 +57,13 @@ class RegionController extends Controller
     {
         $region = Region::find($id);
         $this->validate($request, [
-            "region" => "required|string",
-            "code_region" => "required|string",
+            'nom' => ['required', 'string', 'max:25', Rule::unique(Region::class)->ignore($id)],
+            "sigle" => ['required', 'string', 'max:25', Rule::unique(Region::class)->ignore($id)->whereNull('deleted_at')],
         ]);
 
         $region->update([
-            'nom' => $request->region,
-            'sigle' => $request->code_region,
+            'nom' => $request->nom,
+            'sigle' => $request->sigle,
         ]);
 
         $mesage = 'La région ' . $region->nom . '  a été modifiée';
@@ -73,7 +75,7 @@ class RegionController extends Controller
     {
         $region = Region::find($id);
         $region->delete();
-        $status = "Région " . $region->nom . " vient d'être supprimé";
+        $status = "Région " . $region->nom . " vient d'être supprimée";
         return redirect()->route("regions.index")->with('status', $status);
     }
 }

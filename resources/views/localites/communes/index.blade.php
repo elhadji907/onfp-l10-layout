@@ -60,7 +60,7 @@
                                         <td style="text-align: center;">{{ $commune->arrondissement->departement->nom }}</td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ url('communes/' . $commune->id . '/give-permissions') }}"
+                                                    href="{{ url('communes/' . $commune->id) }}"
                                                     class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
                                                         class="bi bi-file-lock"></i></a>
                                                 <div class="filter">

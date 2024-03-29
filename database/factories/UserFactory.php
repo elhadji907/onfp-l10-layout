@@ -25,14 +25,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $faker = Faker::create();
-        $gender = $faker->randomElement(['M.', 'Mme']);
+       /*  $gender = $faker->randomElement(['1', '2']); */
 
 
         return [
-            'civilite' => $gender,
+            /* 'civilite' => $gender, */
             'firstname' => fake()->name(),
             'name' => fake()->name(),
-            'telephone' => $this->faker->unique(true)->numberBetween(70, 79).rand(10, 99).rand(10, 99).rand(0, 9).rand(0, 9).rand(0, 9),
+            'telephone' => $this->faker->unique(true)->numberBetween(70, 79) . rand(10, 99) . rand(10, 99) . rand(0, 9) . rand(0, 9) . rand(0, 9),
             'adresse' => fake()->address(),
             'lieu_naissance' => fake()->address(),
             'email' => fake()->unique()->safeEmail(),

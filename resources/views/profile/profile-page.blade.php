@@ -24,12 +24,12 @@
                         <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}"
                             width="50" height="auto">
 
-                        <h2>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h2>
-                        <h3>
+                        <h2>{{ Auth::user()->civilite }} {{ Auth::user()->firstname }} {{ Auth::user()->name }}</h2>
+                        {{-- <h3>
                             @foreach (Auth::user()->roles as $role)
                                 <span>{{ $role->name }} |</span>
                             @endforeach
-                        </h3>
+                        </h3> --}}
                         <div class="social-links mt-2">
                             @isset(Auth::user()->twitter)
                                 <a href="{{ Auth::user()->twitter }}" class="twitter" target="_blank"><i
@@ -169,6 +169,35 @@
                                                 </div>
                                             </div>
 
+                                            {{-- Civilité --}}
+                                            <div class="row mb-3">
+                                                <label for="Civilité"
+                                                    class="col-md-4 col-lg-3 col-form-label">Civilité<span
+                                                        class="text-danger mx-1">*</span>
+                                                </label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <div class="pt-2">
+                                                        <select name="civilite"
+                                                            class="form-select form-select-sm @error('civilite') is-invalid @enderror"
+                                                            aria-label="Select" id="select-field-civilite"
+                                                            data-placeholder="Choisir civilité">
+                                                            <option value="{{ $user->civilite }}">
+                                                                {{ $user->civilite ?? old('civilite') }}
+                                                            </option>
+                                                            <option value="M.">
+                                                                M.
+                                                            </option>
+                                                            <option value="Mme">
+                                                                Mme
+                                                            </option>
+                                                        </select>
+                                                        @error('civilite')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             {{-- Prénom --}}
                                             <div class="row mb-3">
                                                 <label for="firstname"
@@ -178,7 +207,7 @@
                                                 <div class="col-md-8 col-lg-9">
                                                     <div class="pt-2">
                                                         <input name="firstname" type="text"
-                                                            class="form-control  @error('firstname') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('firstname') is-invalid @enderror"
                                                             id="firstname"
                                                             value="{{ $user->firstname ?? old('firstname') }}"
                                                             autocomplete="firstname" placeholder="Votre prénom">
@@ -195,10 +224,45 @@
                                                         class="text-danger mx-1">*</span></label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="name" type="text"
-                                                        class="form-control @error('name') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
                                                         id="name" value="{{ $user->name ?? old('name') }}"
                                                         autocomplete="name" placeholder="Votre Nom">
                                                     @error('name')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <div>{{ $message }}</div>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            {{-- Date de naissance --}}
+                                            <div class="row mb-3">
+                                                <label for="date_naissance" class="col-md-4 col-lg-3 col-form-label">Date
+                                                    naissance<span class="text-danger mx-1">*</span></label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input type="date" name="date_naissance"
+                                                        value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
+                                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                                        id="date_naissance" placeholder="Date naissance">
+                                                    @error('date_naissance')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <div>{{ $message }}</div>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            {{-- Lieu naissance --}}
+                                            <div class="row mb-3">
+                                                <label for="lieu naissance" class="col-md-4 col-lg-3 col-form-label">Lieu
+                                                    naissance<span class="text-danger mx-1">*</span></label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="lieu_naissance" type="text"
+                                                        class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
+                                                        id="lieu_naissance"
+                                                        value="{{ $user->lieu_naissance ?? old('lieu_naissance') }}"
+                                                        autocomplete="lieu_naissance" placeholder="Votre Lieu naissance">
+                                                    @error('lieu_naissance')
                                                         <span class="invalid-feedback" role="alert">
                                                             <div>{{ $message }}</div>
                                                         </span>
@@ -212,7 +276,7 @@
                                                         class="text-danger mx-1">*</span></label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="email" type="email"
-                                                        class="form-control @error('email') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                         id="Email" value="{{ $user->email ?? old('email') }}"
                                                         autocomplete="email" placeholder="Votre adresse e-mail">
                                                     @error('email')
@@ -230,7 +294,7 @@
                                                         class="text-danger mx-1">*</span></label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="telephone" type="telephone"
-                                                        class="form-control @error('telephone') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                                         id="telephone" value="{{ $user->telephone ?? old('telephone') }}"
                                                         autocomplete="telephone" placeholder="Votre n° de téléphone">
                                                     @error('telephone')
@@ -241,17 +305,50 @@
                                                 </div>
                                             </div>
 
-                                            {{-- Email --}}
+                                            {{-- Adresse --}}
                                             <div class="row mb-3">
                                                 <label for="adresse"
                                                     class="col-md-4 col-lg-3 col-form-label">Adresse<span
                                                         class="text-danger mx-1">*</span></label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="adresse" type="adresse"
-                                                        class="form-control @error('adresse') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                                         id="adresse" value="{{ $user->adresse ?? old('adresse') }}"
                                                         autocomplete="adresse" placeholder="Votre adresse de résidence">
                                                     @error('adresse')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <div>{{ $message }}</div>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            {{-- Situation familiale --}}
+                                            <div class="row mb-3">
+                                                <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
+                                                    familiale<span class="text-danger mx-1">*</span></label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <select name="situation_familiale"
+                                                        class="form-select form-select-sm @error('situation_familiale') is-invalid @enderror"
+                                                        aria-label="Select" id="select-field-familiale"
+                                                        data-placeholder="Choisir situation familiale">
+                                                        <option value="{{ $user->situation_familiale }}">
+                                                            {{ $user->situation_familiale ?? old('situation_familiale') }}
+                                                        </option>
+                                                        <option value="Marié(e)">
+                                                            Marié(e)
+                                                        </option>
+                                                        <option value="Célibataire">
+                                                            Célibataire
+                                                        </option>
+                                                        <option value="Veuf(ve)">
+                                                            Veuf(ve)
+                                                        </option>
+                                                        <option value="Divorsé(e)">
+                                                            Divorsé(e)
+                                                        </option>
+                                                    </select>
+                                                    @error('situation_familiale')
                                                         <span class="invalid-feedback" role="alert">
                                                             <div>{{ $message }}</div>
                                                         </span>
@@ -265,7 +362,7 @@
                                                     profil</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="twitter" type="twitter"
-                                                        class="form-control @error('twitter') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('twitter') is-invalid @enderror"
                                                         id="twitter" value="{{ $user->twitter ?? old('twitter') }}"
                                                         autocomplete="twitter"
                                                         placeholder="lien de votre compte x (ex twitter)">
@@ -283,7 +380,7 @@
                                                     profil</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="facebook" type="facebook"
-                                                        class="form-control @error('facebook') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('facebook') is-invalid @enderror"
                                                         id="facebook" value="{{ $user->facebook ?? old('facebook') }}"
                                                         autocomplete="facebook"
                                                         placeholder="lien de votre compte facebook">
@@ -301,7 +398,7 @@
                                                     profil</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="instagram" type="instagram"
-                                                        class="form-control @error('instagram') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('instagram') is-invalid @enderror"
                                                         id="instagram" value="{{ $user->instagram ?? old('instagram') }}"
                                                         autocomplete="instagram"
                                                         placeholder="lien de votre compte instagram">
@@ -319,7 +416,7 @@
                                                     profil</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="linkedin" type="linkedin"
-                                                        class="form-control @error('linkedin') is-invalid @enderror"
+                                                        class="form-control form-control-sm @error('linkedin') is-invalid @enderror"
                                                         id="linkedin" value="{{ $user->linkedin ?? old('linkedin') }}"
                                                         autocomplete="linkedin"
                                                         placeholder="lien de votre ompte linkedin">
@@ -445,7 +542,7 @@
                                 </div>
                             </div><!-- End Bordered Tabs -->
 
-                            
+
                         </div>
                     </div>
 

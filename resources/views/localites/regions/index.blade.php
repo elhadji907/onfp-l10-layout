@@ -66,9 +66,9 @@
                                         </td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ url('regions/' . $region->id . '/give-permissions') }}"
-                                                    class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
-                                                        class="bi bi-file-lock"></i></a>
+                                                    href="{{ route('regions.show', $region->id) }}"
+                                                    class="btn btn-warning btn-sm mx-1" title="Voir détails"><i
+                                                        class="bi bi-eye"></i></a>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>

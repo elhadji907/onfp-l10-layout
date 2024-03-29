@@ -124,16 +124,16 @@
                 {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
                 <img class="rounded-circle" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}">
 
-                <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->firstname }}
+                <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->civilite }} {{ Auth::user()->firstname }}
                     {{ Auth::user()->name }}</span>
             </a><!-- End Profile Iamge Icon -->
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
-                    <h6>{{ Auth::user()->firstname }} {{ Auth::user()->name }}</h6>
-                    @foreach (Auth::user()->roles as $role)
+                    <h6>{{ Auth::user()->civilite }} {{ Auth::user()->firstname }} {{ Auth::user()->name }}</h6>
+                    {{-- @foreach (Auth::user()->roles as $role)
                         <span>{{ $role->name }}</span>
-                    @endforeach
+                    @endforeach --}}
                 </li>
                 <li>
                     <hr class="dropdown-divider">

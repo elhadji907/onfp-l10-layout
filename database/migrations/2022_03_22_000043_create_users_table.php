@@ -24,52 +24,37 @@ class CreateUsersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('civilite', 45)->nullable();
-            $table->string('firstname', 200)->nullable();
-            $table->string('name', 200)->nullable();
-            $table->string('username', 200)->nullable();
-            $table->string('email', 200)->nullable();
-            $table->string('telephone', 200)->nullable();
-            $table->string('fixe', 200)->nullable();
-            $table->string('sexe', 200)->nullable();
-            $table->dateTime('date_naissance')->nullable();
-            $table->string('lieu_naissance', 200)->nullable();
-            $table->longText('adresse')->nullable();
-            $table->string('bp', 200)->nullable();
-            $table->string('fax', 200)->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->string('image', 200)->nullable();
-            $table->string('created_by', 200)->nullable();
-            $table->string('updated_by', 200)->nullable();
-            $table->string('deleted_by', 200)->nullable();
-            
-            $table->string('twitter', 200)->nullable();
-            $table->string('facebook', 200)->nullable();
-            $table->string('instagram', 200)->nullable();
-            $table->string('linkedin', 200)->nullable();
-            $table->unsignedInteger('professionnelles_id')->nullable();
-            $table->unsignedInteger('familiales_id')->nullable();
+            $table->enum('civilite', ['', 'M.', 'Mme'])->nullable(true);
+            $table->string('firstname', 200)->nullable(true);
+            $table->string('name', 200)->nullable(true);
+            $table->string('username', 200)->nullable(true);
+            $table->string('email', 200)->nullable(true);
+            $table->string('telephone', 200)->nullable(true);
+            $table->string('fixe', 200)->nullable(true);
+            $table->dateTime('date_naissance')->nullable(true);
+            $table->string('lieu_naissance', 200)->nullable(true);
+            $table->longText('adresse')->nullable(true);
+            $table->string('bp', 200)->nullable(true);
+            $table->string('fax', 200)->nullable(true);
+            $table->timestamp('email_verified_at')->nullable(true);
+            $table->string('password')->nullable(true);
+            $table->string('image', 200)->nullable(true);
+            $table->string('created_by', 200)->nullable(true);
+            $table->string('updated_by', 200)->nullable(true);
+            $table->string('deleted_by', 200)->nullable(true);
+            $table->string('twitter', 200)->nullable(true);
+            $table->string('facebook', 200)->nullable(true);
+            $table->string('instagram', 200)->nullable(true);
+            $table->string('linkedin', 200)->nullable(true);
+            /* 1->employe; 2->sans emploi; 3->informel; 4->etudiant; 5->eleve; 6->autre */
+            $table->enum('situation_professionnelle', ['', 'Employé', 'Sans emploi', 'Informel', 'Etudiant', 'Eleve', 'Autre']);
+            /*  1->marié; 2->celibataire; 3->veuf(ve); 4->divorsé */
+            $table->enum('situation_familiale', ['', 'Marié(e)', 'Célibataire', 'Veuf(ve)', 'Divorsé(e)']);
             $table->rememberToken();
 
             $table->unique(["email"], 'email_UNIQUE');
-
-            $table->index(["professionnelles_id"], 'fk_users_professionnelles1_idx')->onDelete('restrict');
-
-            $table->index(["familiales_id"], 'fk_users_familiales1_idx')->onDelete('restrict');
             $table->softDeletes();
             $table->nullableTimestamps();
-
-
-            $table->foreign('professionnelles_id', 'fk_users_professionnelles1_idx')->onDelete('restrict')
-                ->references('id')->on('professionnelles')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('familiales_id', 'fk_users_familiales1_idx')->onDelete('restrict')
-                ->references('id')->on('familiales')
-                ->onDelete('no action')
-                ->onUpdate('no action');
         });
     }
 

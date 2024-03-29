@@ -45,15 +45,14 @@ class User extends Authenticatable
         'civilite',
         'username',
         'fixe',
-        'sexe',
         'date_naissance',
         'lieu_naissance',
         'bp',
         'fax',
         'email_verified_at',
         'deleted_by',
-        'professionnelles_id',
-        'familiales_id',
+        'situation_professionnelle',
+        'situation_familiale',
         'remember_token'
     ];
 
@@ -75,8 +74,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'professionnelles_id' => 'int',
-        'familiales_id' => 'int'
+        'date_naissance' => 'datetime'
     ];
 
     public function getImage()
@@ -100,16 +98,6 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'username';
-    }
-
-    public function familiale()
-    {
-        return $this->belongsTo(Familiale::class, 'familiales_id');
-    }
-
-    public function professionnelle()
-    {
-        return $this->belongsTo(Professionnelle::class, 'professionnelles_id');
     }
 
     public function administrateur()

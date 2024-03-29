@@ -34,6 +34,27 @@
                                 @csrf
                                 @method('patch')
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <label for="civilite" class="form-label">Civilité<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="civilite" class="form-select  @error('civilite') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-civilite" data-placeholder="Choisir civilité">
+                                        <option value="{{ $user->civilite }}">
+                                            {{ $user->civilite ?? old('civilite') }}
+                                        </option>
+                                        <option value="M.">
+                                            M.
+                                        </option>
+                                        <option value="Mme">
+                                            Mme
+                                        </option>
+                                    </select>
+                                    @error('civilite')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="firstname" class="form-label">Prénom<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="firstname" value="{{ $user->firstname }}"
@@ -53,6 +74,31 @@
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         id="name" placeholder="nom">
                                     @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <label for="date naissance" class="form-label">Date naissance</label>
+                                    <input type="date" name="date_naissance"
+                                        value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
+                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                        id="date_naissance" placeholder="Date naissance">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <label for="lieu_naissance" class="form-label">Lieu naissance</label>
+                                    <input type="text" name="lieu_naissance" value="{{ $user->lieu_naissance }}"
+                                        class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
+                                        id="lieu_naissance" placeholder="Lieu de naissance">
+                                    @error('lieu_naissance')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -102,9 +148,38 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="password" class="form-label">Mot de passe</label>
+                                    <label for="situation_familiale" class="form-label">Situation familiale<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="situation_familiale"
+                                        class="form-select  @error('situation_familiale') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-familiale"
+                                        data-placeholder="Choisir situation familiale">
+                                        <option value="{{ $user->situation_familiale }}">
+                                            {{ $user->situation_familiale ?? old('situation_familiale') }}
+                                        </option>
+                                        <option value="Marié(e)">
+                                            Marié(e)
+                                        </option>
+                                        <option value="Célibataire">
+                                            Célibataire
+                                        </option>
+                                        <option value="Veuf(ve)">
+                                            Veuf(ve)
+                                        </option>
+                                        <option value="Divorsé(e)">
+                                            Divorsé(e)
+                                        </option>
+                                    </select>
+                                    @error('situation_familiale')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <label for="password" class="form-label">Modifier mot de passe</label>
                                     <input type="password" name="password"
-                                        class="form-control  @error('password') is-invalid @enderror" id="password"
+                                        class="form-control form-control-sm @error('password') is-invalid @enderror" id="password"
                                         placeholder="Votre mot de passe">
                                     <div class="invalid-feedback">
                                         @error('password')
@@ -113,7 +188,22 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <label for="profil" class="form-label">Image de profil</label>
+                                    <input type="file" name="image" id="image" multiple
+                                        class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
+                                    @error('image')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    <div class="col-xl-4">
+                                        <div class="profile-card pt-4 d-flex flex-column">
+                                            <img class="rounded-sm w-25" alt="Profil"
+                                                src="{{ asset($user->getImage()) }}" width="20" height="auto">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="roles" class="form-label">Roles</label>
                                     <select name="roles[]" class="form-select" aria-label="Select"
                                         id="multiple-select-field" multiple data-placeholder="Choisir roles">
@@ -128,20 +218,6 @@
 
                                 <input type="hidden" name="newPassword" value="{{ $user->password }}">
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
-                                    <label for="profil" class="form-label">Image de profil</label>
-                                    <input type="file" name="image" id="image" multiple
-                                        class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
-                                    @error('image')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    <div class="col-xl-4">
-                                        <div class="profile-card pt-4 d-flex flex-column">
-                                            <img class="rounded-sm w-25" alt="Profil"
-                                                src="{{ asset($user->getImage()) }}" width="20" height="auto">
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Sauvegarder les
                                         modifications</button>

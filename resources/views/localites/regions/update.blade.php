@@ -3,7 +3,7 @@
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-10">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         region="alert">
@@ -29,26 +29,26 @@
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="row mb-3 col-12 col-md-8 col-lg-8 pt-5">
+                            <div class="row mb-3 col-12 col-md-6 col-lg-6 pt-5">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="region" value="{{ $region->nom ??  old('region') }}"
-                                        class="form-control form-control-sm @error('region') is-invalid @enderror"
-                                        id="region" placeholder="Nom region">
-                                    @error('region')
-                                        <span class="invalid-feedback" region="alert">
+                                    <input type="text" name="nom" value="{{ $region->nom ??  old('nom') }}"
+                                        class="form-control form-control-sm @error('nom') is-invalid @enderror"
+                                        id="nom" placeholder="Nom région">
+                                    @error('nom')
+                                        <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
                                     <label for="floatingInput">Région</label>
                                 </div>
                             </div>
-                            <div class="row mb-3 col-12 col-md-4 col-lg-4 pt-5">
+                            <div class="row mb-3 col-12 col-md-6 col-lg-6 pt-5">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="code_region" value="{{ $region->sigle ?? old('code_region') }}"
-                                        class="form-control form-control-sm @error('code_region') is-invalid @enderror"
-                                        id="code_region" placeholder="Code region">
-                                    @error('code_region')
-                                        <span class="invalid-feedback" region="alert">
+                                    <input type="text" name="sigle" value="{{ $region->sigle ?? old('sigle') }}"
+                                        class="form-control form-control-sm @error('sigle') is-invalid @enderror"
+                                        id="sigle" placeholder="Code region">
+                                    @error('sigle')
+                                        <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
