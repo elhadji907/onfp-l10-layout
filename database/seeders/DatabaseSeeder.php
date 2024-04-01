@@ -98,11 +98,11 @@ class DatabaseSeeder extends Seeder
             ArrondissementSeeder::class,
             CommuneSeeder::class,
             FonctionSeeder::class,
-            CategorieSeeder::class,
             DirectionSeeder::class,
             AdministrateurSeeder::class,
             GestionnaireSeeder::class,
             EmployeeSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }

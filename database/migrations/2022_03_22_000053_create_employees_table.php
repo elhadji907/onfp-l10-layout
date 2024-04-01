@@ -36,6 +36,10 @@ class CreateEmployeesTable extends Migration
             $table->unsignedInteger('directions_id')->nullable();
             $table->string('dirrection_employee', 200)->nullable();
 
+            $table->unsignedInteger('historiques_id')->nullable();
+            $table->unsignedInteger('promotions_id')->nullable();
+            $table->unsignedInteger('medicales_id')->nullable();
+
             $table->index(["users_id"], 'fk_employees_users1_idx');
 
             $table->index(["categories_id"], 'fk_employees_categories1_idx');
@@ -43,6 +47,12 @@ class CreateEmployeesTable extends Migration
             $table->index(["fonctions_id"], 'fk_employees_fonctions1_idx');
 
             $table->index(["directions_id"], 'fk_employees_directions1_idx');
+
+            $table->index(["historiques_id"], 'fk_employees_historiques1_idx');
+
+            $table->index(["promotions_id"], 'fk_employees_promotions1_idx');
+
+            $table->index(["medicales_id"], 'fk_employees_medicales1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 

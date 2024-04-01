@@ -16,7 +16,7 @@
             </a>
         </li><!-- End utilisateurs Nav -->
 
-        <li class="nav-heading">AUTORISATIONS</li>
+        <li class="nav-heading">SECURITE</li>
 
         {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -172,7 +172,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-key"></i><span>Autorisations</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-key"></i><span>SECURITE</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li class="nav-item">
