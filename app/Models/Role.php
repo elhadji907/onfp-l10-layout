@@ -30,7 +30,6 @@ class Role extends Model
 {
     use HasFactory;
 	use SoftDeletes;
-	use \App\Helpers\UuidForKey;
 	protected $table = 'roles';
 
 	protected $fillable = [

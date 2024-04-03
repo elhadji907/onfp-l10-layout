@@ -45,7 +45,7 @@
                                         class="text-danger mx-1">*</span></label>
                                 <select name="departement" class="form-select  @error('departement') is-invalid @enderror"
                                     aria-label="Select" id="select-field-departement" data-placeholder="Choisir le département">
-                                    <option value="#">--Choisir la département--</option>
+                                    <option value="">--Choisir la département--</option>
                                     @foreach ($departements as $departement)
                                         <option value="{{ $departement->id }}">
                                             {{ $departement->nom }}

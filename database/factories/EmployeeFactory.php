@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\Direction;
 use App\Models\Fonction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,6 +22,7 @@ class EmployeeFactory extends Factory
     {
         $categories_id = Category::all()->random()->id;
         $fonctions_id = Fonction::all()->random()->id;
+        $directions_id = Direction::all()->random()->id;
 
         $letter = chr(rand(65, 90));
         $nombre1 = rand(1, 2);
@@ -50,6 +52,9 @@ class EmployeeFactory extends Factory
             },
             'fonctions_id' => function () use ($fonctions_id) {
                 return $fonctions_id;
+            },
+            'directions_id' => function () use ($directions_id) {
+                return $directions_id;
             },
         ];
     }

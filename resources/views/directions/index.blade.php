@@ -37,7 +37,7 @@
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
                         {{-- @endcan --}}
-                        <h5 class="card-title">directions</h5>
+                        <h5 class="card-title">Directions</h5>
                         <p>Le tableau de toutes les directions.</p>
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-directions">
@@ -47,6 +47,8 @@
                                     <th>Direction</th>
                                     <th>Sigle</th>
                                     <th>Type</th>
+                                    <th>Responsable</th>
+                                    <th>Effectif</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -58,13 +60,22 @@
                                         <td>{{ $direction->name }}</td>
                                         <td>{{ $direction->sigle }}</td>
                                         <td>{{ $direction->type }}</td>
+                                        <td>{{ $direction->chef->user->civilite . ' ' . $direction->chef->user->firstname . ' ' . $direction->chef->user->name }}
+                                        </td>
+                                        <td style="text-align: center;">
+                                            @foreach ($direction->employees as $employe)
+                                                @if ($loop->last)
+                                                    <span class="badge bg-info">{{ $loop->count }}</span>
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="#"
+                                                    href="{{ url('directions/' . $direction->id) }}"
                                                     class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
-                                                        class="bi bi-file-lock"></i></a>
+                                                        class="bi bi-eye"></i></a>
                                                 <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                    <a class="icon" href="" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li><a class="dropdown-item btn btn-sm mx-1"
@@ -72,7 +83,8 @@
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('directions', $direction->id) }}" method="post">
+                                                            <form action="{{ url('directions', $direction->id) }}"
+                                                                method="post">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="dropdown-item show_confirm"><i

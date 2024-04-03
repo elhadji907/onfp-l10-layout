@@ -220,6 +220,22 @@
     </script>
 
     <script>
+        $('#select-field-employe').select2({
+            theme: 'bootstrap-5',
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+    {{-- type de dirction/service/cellule --}}
+    <script>
+        $('#select-field-type').select2({
+            theme: 'bootstrap-5',
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-arrondissement').select2({
             theme: 'bootstrap-5',
             selectionCssClass: "select2--small",

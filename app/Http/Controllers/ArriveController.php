@@ -8,6 +8,7 @@ use App\Models\Courrier;
 use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\User;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,33 @@ class ArriveController extends Controller
 
     public function create()
     {
-        return view("courriers.arrives.create");
+        $anneeEnCours = date('Y');
+        $numCourrier = Arrive::get()->last();
+        if (isset($numCourrier)) {
+            $numCourrier = Courrier::get()->last()->numero;
+                $numCourrier = ++$numCourrier;
+           
+        } else {
+            $numCourrier = "000001";
+
+        }
+
+        $longueur = strlen($numCourrier);
+
+        if ($longueur <= 1) {
+            $numCourrier   =   strtolower("00000".$numCourrier);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numCourrier   =   strtolower("0000".$numCourrier);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("000".$numCourrier);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numCourrier   =   strtolower("00".$numCourrier);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numCourrier   =   strtolower("0".$numCourrier);
+        } else {
+            $numCourrier   =   strtolower($numCourrier);
+        }
+        return view("courriers.arrives.create", compact('anneeEnCours', 'numCourrier'));
     }
 
     public function store(ArriveStoreRequest $request): RedirectResponse

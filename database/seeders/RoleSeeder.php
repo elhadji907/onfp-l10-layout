@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class RoleSeeder extends Seeder
 {
@@ -16,22 +15,20 @@ class RoleSeeder extends Seeder
     {
         DB::table('roles')->insert([
             'name' => "admin",
-            'guard_name' => 'admin',
+            'guard_name' => 'web',
             'user_create_id' => '1',
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
 
         DB::table('roles')->insert([
             'name' => "super-admin",
-            'guard_name' => 'admin',
+            'guard_name' => 'web',
             'user_create_id' => '1',
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
 
         DB::table('roles')->insert([
@@ -41,7 +38,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "gestionnaire",
@@ -50,7 +46,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "beneficiaire",
@@ -59,7 +54,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "comptable",
@@ -68,7 +62,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "a-comptable",
@@ -77,7 +70,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "courrier",
@@ -86,7 +78,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "a-courrier",
@@ -95,7 +86,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "DPP",
@@ -104,7 +94,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "ADPP",
@@ -113,7 +102,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "DIOF",
@@ -122,7 +110,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "ADIOF",
@@ -131,7 +118,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "DEC",
@@ -140,7 +126,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "ADEC",
@@ -149,7 +134,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "Ingenieur",
@@ -158,7 +142,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "COM",
@@ -167,7 +150,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "ACOM",
@@ -176,7 +158,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "Visiteur",
@@ -185,7 +166,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "Demandeur",
@@ -194,7 +174,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "Operateur",
@@ -203,7 +182,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "DAF",
@@ -212,7 +190,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "FDAF",
@@ -221,7 +198,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "RHDAF",
@@ -230,7 +206,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "LOGDAF",
@@ -239,7 +214,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
 
         DB::table('roles')->insert([
@@ -249,7 +223,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "PLDPP",
@@ -258,7 +231,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "Consultant",
@@ -267,7 +239,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "SUIVI",
@@ -276,7 +247,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "EVDEC",
@@ -285,7 +255,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
         DB::table('roles')->insert([
             'name' => "Nologin",
@@ -294,7 +263,6 @@ class RoleSeeder extends Seeder
             'user_update_id' => '1',
             'created_at' => now(),
             'updated_at' => now(),
-            'uuid' => Str::uuid(),
         ]);
     }
 }

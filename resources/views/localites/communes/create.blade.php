@@ -45,7 +45,7 @@
                                         class="text-danger mx-1">*</span></label>
                                 <select name="arrondissement" class="form-select  @error('arrondissement') is-invalid @enderror"
                                     aria-label="Select" id="select-field-arrondissement" data-placeholder="Choisir le arrondissement">
-                                    <option value="#">--Choisir la arrondissement--</option>
+                                    <option value="">--Choisir la arrondissement--</option>
                                     @foreach ($arrondissements as $arrondissement)
                                         <option value="{{ $arrondissement->id }}">
                                             {{ $arrondissement->nom }}

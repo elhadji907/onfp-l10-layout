@@ -63,7 +63,7 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         <input type="number" min="0" name="numero_correspondance"
-                                            value="{{ old('numero_correspondance') }}"
+                                            value="{{ $numCourrier ?? old('numero_correspondance') }}"
                                             class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
                                             id="numero_correspondance" placeholder="Numéro de correspondance">
                                         @error('numero_correspondance')
@@ -77,7 +77,7 @@
                                 <div class="col-12 col-md-12 col-lg-6 mb-4">
                                     <label for="annee" class="form-label">Année<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="2024" name="annee" value="{{ Carbon\Carbon::now()->format('Y') ?? old('annee') }}"
+                                    <input type="number" min="2024" name="annee" value="{{ $anneeEnCours ?? old('annee') }}"
                                         class="form-control form-control-sm @error('annee') is-invalid @enderror"
                                         id="annee" placeholder="Année">
                                     @error('annee')
