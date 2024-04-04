@@ -236,6 +236,30 @@
     </script>
 
     <script>
+        $('#select-field').select2({
+            theme: 'bootstrap-5',
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-categorie').select2({
+            theme: 'bootstrap-5',
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-fonction').select2({
+            theme: 'bootstrap-5',
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-arrondissement').select2({
             theme: 'bootstrap-5',
             selectionCssClass: "select2--small",

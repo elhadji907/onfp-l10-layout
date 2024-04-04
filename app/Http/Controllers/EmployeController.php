@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Direction;
 use App\Models\Employee;
+use App\Models\Fonction;
 use Illuminate\Http\Request;
 
 class EmployeController extends Controller
@@ -15,7 +18,10 @@ class EmployeController extends Controller
 
     public function create()
     {
-        return view("employes.create");
+        $directions = Direction::orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('created_at', 'desc')->get();
+        $fonctions = Fonction::orderBy('created_at', 'desc')->get();
+        return view("employes.create", compact('directions', 'categories', 'fonctions'));
     }
 
     public function store(Request $request)

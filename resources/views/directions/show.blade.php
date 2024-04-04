@@ -16,7 +16,16 @@
             <div class="col-12 col-md-12 col-lg-12 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $direction->name.' ('.$direction->sigle.')'}}</h5>
+                        <div class="row">
+                            <div class="col-sm-12 pt-0">
+                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('directions.index') }}"
+                                        class="btn btn-success btn-sm" title="retour"><i
+                                            class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                    <p> | Liste des directions</p>
+                                </span>
+                            </div>
+                        </div>
+                        <h5 class="card-title">{{ $direction->name . ' (' . $direction->sigle . ')' }}</h5>
                         <p>Liste de employés</p>
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-directions">
@@ -36,7 +45,8 @@
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $employe->matricule }}</td>
-                                        <td>{{ $employe->user->civilite.' '.$employe->user->firtname.' '.$employe->user->name }}</td>
+                                        <td>{{ $employe->user->civilite . ' ' . $employe->user->firtname . ' ' . $employe->user->name }}
+                                        </td>
                                         <td>{{ $employe->user->telephone }}</td>
                                         <td>{{ $employe->user->fonction }}</td>
                                         <td>
@@ -53,7 +63,8 @@
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('employes', $employe->id) }}" method="post">
+                                                            <form action="{{ url('employes', $employe->id) }}"
+                                                                method="post">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="dropdown-item show_confirm"><i

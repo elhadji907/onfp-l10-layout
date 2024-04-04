@@ -16,10 +16,14 @@
                                     <li class="dropdown-header text-start">
                                         <h6>Roles</h6>
                                     </li>
-                                    @foreach ($roles as $role)
-                                        {{-- <li><a class="dropdown-item" href="{{ url('roles/' . $role->name . '/get-users') }}">{{ $role->name }}</a></li> --}}
-                                        <li><a class="dropdown-item" href="#">{{ $role->name }}</a></li>
-                                    @endforeach
+                                    {{-- @foreach ($roles as $role) --}}
+                                    {{-- <li><a class="dropdown-item" href="{{ url('roles/' . $role->name . '/get-users') }}">{{ $role->name }}</a></li> --}}
+                                    <li><a class="dropdown-item" href="#">
+                                            @foreach (Auth::user()->roles as $role)
+                                                <div>{{ $role->name }}</div>
+                                            @endforeach
+                                        </a></li>
+                                    {{-- @endforeach --}}
                                 </ul>
                             </div>
 
