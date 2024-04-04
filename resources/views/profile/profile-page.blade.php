@@ -24,7 +24,8 @@
                         <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}"
                             width="50" height="auto">
 
-                        <h2>{{ Auth::user()->civilite }} {{ Auth::user()->firstname }} {{ Auth::user()->name }}</h2>
+                        <h2>{{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}</h2>
+                        <span style="color: blue;">{{ Auth::user()->email }}</span>
                         {{-- <h3>
                             @foreach (Auth::user()->roles as $role)
                                 <span>{{ $role->name }} |</span>

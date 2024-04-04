@@ -169,56 +169,58 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="categorie" class="form-label">Catégorie<span
-                                        class="text-danger mx-1">*</span></label>
-                                    <select name="categorie" class="form-select" aria-label="Select"
-                                        id="select-field-categorie" data-placeholder="Choisir categorie">
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="categorie" class="form-select @error('categorie') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-categorie"
+                                        data-placeholder="Choisir categorie">
                                         <option value=""></option>
                                         @foreach ($categories as $categorie)
                                             <option value="{{ $categorie->id }}">
                                                 {{ $categorie->name ?? old('categorie') }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('categorie'))
+                                    @error('categorie')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
-                                    @endif
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="direction" class="form-label">Direction<span
-                                        class="text-danger mx-1">*</span></label>
-                                    <select name="direction" class="form-select" aria-label="Select" id="select-field"
-                                        data-placeholder="Choisir direction">
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="direction" class="form-select @error('direction') is-invalid @enderror"
+                                        aria-label="Select" id="select-field" data-placeholder="Choisir direction">
                                         <option value=""></option>
                                         @foreach ($directions as $direction)
                                             <option value="{{ $direction->id }}">
                                                 {{ $direction->name ?? old('direction') }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('direction'))
+                                    @error('direction')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
-                                        </span>>
-                                    @endif
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="fonction" class="form-label">Fonction<span
-                                        class="text-danger mx-1">*</span></label>
-                                    <select name="fonction" class="form-select" aria-label="Select"
-                                        id="select-field-fonction" data-placeholder="Choisir fonction">
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="fonction" class="form-select @error('fonction') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-fonction"
+                                        data-placeholder="Choisir fonction">
                                         <option value=""></option>
                                         @foreach ($fonctions as $fonction)
                                             <option value="{{ $fonction->id }}">
                                                 {{ $fonction->name ?? old('fonction') }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('fonction'))
+                                    @error('fonction')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
-                                    @endif
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">

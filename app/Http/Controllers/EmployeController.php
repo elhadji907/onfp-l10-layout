@@ -6,7 +6,9 @@ use App\Models\Category;
 use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\Fonction;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EmployeController extends Controller
 {
@@ -27,7 +29,21 @@ class EmployeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "matricule" => "required",
+            "matricule" => ['nullable', 'string', 'min:8', 'max:8'],
+            'firstname' => ['required', 'string', 'max:50'],
+            'name' => ['required', 'string', 'max:25'],
+            'image' => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'telephone' => ['required', 'string', 'max:25', 'min:9'],
+            'adresse' => ['required', 'string', 'max:255'],
+            'civilite' => ['required', 'string', 'max:5'],
+            'cin' => ['required', 'string', 'min:13', 'max:15'],
+            'date_naissance' => ['required', 'date'],
+            'lieu_naissance' => ['string', 'required'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
+            'date_embauche' => ['required', 'date'],
+            'categorie' => ['required', 'string'],
+            'fonction' => ['required', 'string'],
+            'direction' => ['required', 'string'],
         ]);
     }
 
