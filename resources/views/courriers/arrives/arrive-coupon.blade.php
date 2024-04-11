@@ -118,7 +118,7 @@
                             <b>{{ __('Expéditeur') }}</u></b> : {{ mb_strtoupper($courrier->expediteur) }}<br>
                             <b>{{ __('Réf') }}</u></b> : {{ $courrier->reference }}&nbsp;&nbsp;&nbsp;&nbsp;
                             <b>{{ __('du') }}</u></b> :
-                            {{ optional($courrier->date_recep)->format('d/m/Y') }}<br>
+                            {{ $courrier->date_recep?->format('d/m/Y') }}<br>
                             <b>{{ __('Objet') }}</u></b> : {{ ucfirst($courrier->objet) }}<br>
                             {{-- @if ($courrier->directions != '[]')
                                 <span class="card-category"><u>Imputation </u></b>:
@@ -155,7 +155,7 @@
                                         <td>
                                             {!! $direction ?? 'Aucune' !!}
                                             <span style="float:right;">
-                                                {{ in_array($direction, $arriveDirections) ? '[X]' : '' }}</span>
+                                                {{ in_array($direction, $arriveDirections) ? "X" : "" }}</span>
                                         </td>
                                         @if ($i % 5 == 0)
                                 </tr>

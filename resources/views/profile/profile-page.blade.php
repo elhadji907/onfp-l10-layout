@@ -101,7 +101,11 @@
                                     <h5 class="card-title">À propos</h5>
                                     <p class="small fst-italic">
                                         créé, {{ Auth::user()->created_at->diffForHumans() }},
-                                        modifié, {{ Auth::user()->updated_at->diffForHumans() }}
+                                        @if (Auth::user()->created_at !== Auth::user()->updated_at)
+                                            modifié, {{ Auth::user()->updated_at->diffForHumans() }}
+                                        @else
+                                            jamais modifié
+                                        @endif
                                     </p>
                                     <h5 class="card-title">Détail du profils</h5>
 

@@ -215,7 +215,7 @@ class ArriveController extends Controller
 
                 $output .= '
        
-                <li data-id="' . $id . '" data-chef="' . $name . '" data-userid="' . $employe->users_id . '"><a href="#">' . $sigle . '</a></li>
+                <li data-id="' . $id . '" data-chef="' . $name . '" data-employeid="' . $employe->id . '"><a href="#">' . $sigle . '</a></li>
        ';
             }
             $output .= '</ul>';

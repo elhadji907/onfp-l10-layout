@@ -45,7 +45,7 @@
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $employe->matricule }}</td>
-                                        <td>{{ $employe->user->civilite . ' ' . $employe->user->firtname . ' ' . $employe->user->name }}
+                                        <td>{{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}
                                         </td>
                                         <td>{{ $employe->user->telephone }}</td>
                                         <td>{{ $employe->user->fonction }}</td>

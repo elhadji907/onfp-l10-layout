@@ -45,6 +45,11 @@
                                             Mme
                                         </option>
                                     </select>
+                                    @error('civilite')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="firstname" class="form-label">Prénom<span
@@ -217,6 +222,36 @@
                                         @endforeach
                                     </select>
                                     @error('fonction')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <label for="matricule" class="form-label">Situation familiale<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="situation_familiale"
+                                        class="form-select  @error('situation_familiale') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-familiale"
+                                        data-placeholder="Choisir situation familiale">
+                                        <option value="">
+                                            {{ old('situation_familiale') }}
+                                        </option>
+                                        <option value="Marié(e)">
+                                            Marié(e)
+                                        </option>
+                                        <option value="Célibataire">
+                                            Célibataire
+                                        </option>
+                                        <option value="Veuf(ve)">
+                                            Veuf(ve)
+                                        </option>
+                                        <option value="Divorsé(e)">
+                                            Divorsé(e)
+                                        </option>
+                                    </select>
+                                    @error('situation_familiale')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>

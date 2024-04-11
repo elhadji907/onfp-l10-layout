@@ -63,7 +63,8 @@ class Employee extends Model
 		'users_id' => 'int',
 		'categories_id' => 'int',
 		'fonctions_id' => 'int',
-		'directions_id' => 'int'
+		'directions_id' => 'int',
+        'date_embauche' => 'datetime'
 	];
 
 	protected $dates = [

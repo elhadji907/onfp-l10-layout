@@ -8,7 +8,11 @@ use App\Models\Employee;
 use App\Models\Fonction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
 
 class EmployeController extends Controller
 {
@@ -22,48 +26,192 @@ class EmployeController extends Controller
     {
         $directions = Direction::orderBy('created_at', 'desc')->get();
         $categories = Category::orderBy('created_at', 'desc')->get();
-        $fonctions = Fonction::orderBy('created_at', 'desc')->get();
+        $fonctions  = Fonction::orderBy('created_at', 'desc')->get();
         return view("employes.create", compact('directions', 'categories', 'fonctions'));
     }
 
     public function store(Request $request)
     {
+        /* dd($request->civilite); */
         $this->validate($request, [
-            "matricule" => ['nullable', 'string', 'min:8', 'max:8'],
-            'firstname' => ['required', 'string', 'max:50'],
-            'name' => ['required', 'string', 'max:25'],
-            'image' => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'telephone' => ['required', 'string', 'max:25', 'min:9'],
-            'adresse' => ['required', 'string', 'max:255'],
-            'civilite' => ['required', 'string', 'max:5'],
-            'cin' => ['required', 'string', 'min:13', 'max:15'],
-            'date_naissance' => ['required', 'date'],
-            'lieu_naissance' => ['string', 'required'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
-            'date_embauche' => ['required', 'date'],
-            'categorie' => ['required', 'string'],
-            'fonction' => ['required', 'string'],
-            'direction' => ['required', 'string'],
+            "matricule"           => ['nullable', 'string', 'min:8', 'max:8'],
+            'firstname'           => ['required', 'string', 'max:50'],
+            'name'                => ['required', 'string', 'max:25'],
+            'image'               => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'telephone'           => ['required', 'string', 'max:25', 'min:9'],
+            'adresse'             => ['required', 'string', 'max:255'],
+            'civilite'            => ['required', 'string', 'max:5'],
+            'cin'                 => ['required', 'string', 'min:13', 'max:15'],
+            'date_naissance'      => ['required', 'date'],
+            'lieu_naissance'      => ['string', 'required'],
+            'email'               => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
+            'date_embauche'       => ['required', 'date'],
+            'categorie'           => ['required', 'string'],
+            'fonction'            => ['required', 'string'],
+            'direction'           => ['required', 'string'],
+            'situation_familiale' => ['required', 'string'],
         ]);
+
+        $user = User::create([
+            'civilite'              => $request->civilite,
+            'firstname'             => $request->firstname,
+            'name'                  => $request->name,
+            'date_naissance'        => $request->date_naissance,
+            'lieu_naissance'        => $request->lieu_naissance,
+            'situation_familiale'   => $request->situation_familiale,
+            'email'                 => $request->email,
+            'telephone'             => $request->telephone,
+            'adresse'               => $request->adresse,
+            'password'              => Hash::make($request->email),
+        ]);
+
+        if (request('image')) {
+            $imagePath = request('image')->store('avatars', 'public');
+            $file = $request->file('image');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'avatars/' . $filename . '' . time() . '.' . $extension;
+
+            //dd($fileNameToStore);
+
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
+
+            $image->save();
+
+            $user->update([
+                'image' => $imagePath
+            ]);
+        }
+
+        Employee::create([
+            'users_id'      => $user->id,
+            'matricule'     => $request->matricule,
+            'cin'           => $request->cin,
+            'date_embauche' => $request->date_embauche,
+            'fonctions_id'  => $request->fonction,
+            'directions_id' => $request->direction,
+            'categories_id' => $request->categorie,
+        ]);
+
+        $status = "Enregistrement effectué avec succès";
+        return Redirect::route('employes.index')->with("status", $status);
     }
 
     public function edit($id)
     {
         $employe = Employee::find($id);
-        dd($employe);
+        $directions = Direction::orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('created_at', 'desc')->get();
+        $fonctions  = Fonction::orderBy('created_at', 'desc')->get();
+        return view("employes.update", compact('employe', 'directions', 'categories', 'fonctions'));
     }
 
     public function update(Request $request, $id)
     {
+        $employe = Employee::findOrFail($id);
+        $user    = $employe->user;
         $this->validate($request, [
-            "matricule" => "required",
+            'civilite'            => ['required', 'string', 'max:5'],
+            'firstname'           => ['required', 'string', 'max:50'],
+            'name'                => ['required', 'string', 'max:25'],
+            'date_naissance'      => ['required', 'date'],
+            'lieu_naissance'      => ['string', 'required'],
+            'image'               => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'telephone'           => ['required', 'string', 'max:25', 'min:9'],
+            'adresse'             => ['required', 'string', 'max:255'],
+            'password'            => ['string', 'max:255', 'nullable'],
+            'situation_familiale' => ['string', 'max:15', 'required'],
+            'roles.*'             => ['string', 'max:255', 'nullable', 'max:255'],
+            "email"               => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($user->id)],
+            "matricule"           => ['nullable', 'string', 'min:8', 'max:8', Rule::unique(Employee::class)->ignore($employe->id)],
+            'cin'                 => ['required', 'string', 'min:13', 'max:15', Rule::unique(Employee::class)->ignore($employe->id)],
+            'date_embauche'       => ['required', 'date'],
+            'categorie'           => ['required', 'string'],
+            'fonction'            => ['required', 'string'],
+            'direction'           => ['required', 'string'],
         ]);
+
+        if (request('image')) {
+            $imagePath = request('image')->store('avatars', 'public');
+            $file = $request->file('image');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'avatars/' . $filename . '' . time() . '.' . $extension;
+
+            //dd($fileNameToStore);
+
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
+
+            $image->save();
+
+            $user->update([
+                'image' => $imagePath
+            ]);
+        }
+
+        $user->update([
+            'civilite'                  =>  $request->civilite,
+            'firstname'                 =>  $request->firstname,
+            'name'                      =>  $request->name,
+            'date_naissance'            =>  $request->date_naissance,
+            'lieu_naissance'            =>  $request->lieu_naissance,
+            'email'                     =>  $request->email,
+            'telephone'                 =>  $request->telephone,
+            'adresse'                   =>  $request->adresse,
+            'situation_familiale'       =>  $request->situation_familiale,
+            'updated_by'                =>  Auth::user()->id,
+        ]);
+
+
+        $employe->update([
+            'users_id'      => $user->id,
+            'matricule'     => $request->matricule,
+            'cin'           => $request->cin,
+            'date_embauche' => $request->date_embauche,
+            'fonctions_id'  => $request->fonction,
+            'directions_id' => $request->direction,
+            'categories_id' => $request->categorie,
+        ]);
+
+        $status = 'Mise à jour effectuée avec succès';
+
+        return Redirect::route('employes.index')->with('status', $status);
     }
 
     public function show($id)
     {
         $employe = Employee::findOrFail($id);
-        dd($employe);
+        $user = $employe->user;
+
+        if ($user->created_by == null || $user->updated_by == null) {
+            $user_create_name = "moi même";
+            $user_update_name = "moi même";
+        } else {
+            $user_created_id = $user->created_by;
+            $user_updated_id = $user->updated_by;
+
+            $user_create = User::findOrFail($user_created_id);
+            $user_update = User::findOrFail($user_updated_id);
+
+            $user_create_name = $user_create->firstname . " " . $user_create->firstname;
+            $user_update_name = $user_update->firstname . " " . $user_update->firstname;
+        }
+
+        return view("employes.show", compact("user", "user_create_name", "user_update_name", "employe"));
     }
 
     public function destroy($id)

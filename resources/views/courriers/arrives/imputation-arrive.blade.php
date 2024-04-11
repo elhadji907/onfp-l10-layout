@@ -11,7 +11,7 @@
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <span><a href="{{ route('arrives.index') }}" class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                     | Liste des courriers arrivés
+                                    | Liste des courriers arrivés
                                 </span>
 
 
@@ -23,7 +23,20 @@
                                 </small>
                             </div>
                             @csrf
-                            <div class="row form-row pt-5">
+                            <div class="row form-row pt-3">
+                                <div class="pb-1"><b>Expéditeur:</b> {{ $arrive->courrier->expediteur }}</div>
+                                <div class="pb-3"><b>Objet:</b> {{ $arrive->courrier->objet }}</div>
+                                <div class="pb-3"><b>Imputation:</b>
+                                    @if ($arrive->courrier->directions != '[]')
+                                        <?php $i = 1; ?>
+                                        @foreach ($arrive->courrier->directions as $direction)
+                                            <br>{{ $i++ }}. {!! $direction->name ?? '' !!}
+                                            <b>[{!! $direction->sigle ?? '' !!}]</b>
+                                        @endforeach
+                                    @else
+                                        Aucune imputation pour l'instant
+                                    @endif
+                                </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <label for="">Direction/Service/Cellule</label>
@@ -218,7 +231,7 @@
                     $(document).on('click', 'li', function() {
                         $('#product').val($(this).text());
                         $('#id_direction').val($(this).data("id"));
-                        $('#id_employe').val($(this).data("userid"));
+                        $('#id_employe').val($(this).data("employeid"));
                         $('#chef').val($(this).data("chef"));
                         $('#productList').fadeOut();
                     });
