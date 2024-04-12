@@ -39,9 +39,13 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
+                                <button type="submit" class="btn btn-outline-success"><i
+                                        class="far fa-save"></i>&nbsp;Modifier</button>
                             </div>
+                            {{-- <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Modifier</button>
+                            </div> --}}
                         </form><!-- End Permission -->
                     </div>
                 </div>

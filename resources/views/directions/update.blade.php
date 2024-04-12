@@ -63,6 +63,7 @@
                                     <option value="Direction">Direction</option>
                                     <option value="Service">Service</option>
                                     <option value="Cellule">Cellule</option>
+                                    <option value="Antenne">Antenne</option>
                                     <option value="Autre">Autre</option>
                                 </select>
                                 @error('type')

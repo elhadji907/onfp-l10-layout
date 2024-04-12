@@ -48,7 +48,7 @@
                                         <td>{{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}
                                         </td>
                                         <td>{{ $employe->user->telephone }}</td>
-                                        <td>{{ $employe->user->fonction }}</td>
+                                        <td>{{ $employe->fonction->name }}</td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
                                                     href="{{ url('employes/' . $employe->id) }}"

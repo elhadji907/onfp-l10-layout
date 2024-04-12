@@ -55,6 +55,8 @@ class DirectionController extends Controller
     public function update(Request $request, $id)
     {
         $direction = Direction::find($id);
+        $employe = Employee::findOrFail($request->input("employe"));
+        
         $this->validate($request, [
             'name'      => ['required', 'string', 'max:255', Rule::unique(Direction::class)->ignore($id)],
             'sigle'     => ['required', 'string', 'max:10', Rule::unique(Direction::class)->ignore($id)],
@@ -66,6 +68,11 @@ class DirectionController extends Controller
             'sigle' => $request->input("sigle"),
             'type' => $request->input("type"),
             'chef_id' => $request->input("employe"),
+        ]);
+
+        $employe->update([
+            'directions_id' => $direction->id,
+            'fonctions_id'  => $employe->fonction->id,
         ]);
 
         $mesage = $direction->name . '  a été modifiée';
