@@ -249,19 +249,31 @@
             </ul>
         </li><!-- End Courriers Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('/directions') }}">
-                <i class="bi bi-stack"></i>
-                <span>Directions/Services</span>
-            </a>
-        </li><!-- End directions Page Nav -->
+
+        
+        <li class="nav-heading">EMPLOYES</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('/employes') }}">
-                <i class="bi bi-person"></i>
-                <span>Employés</span>
+            <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-globe"></i><span>Employés</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-        </li><!-- End employes Page Nav -->
+            <ul id="employes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/employes') }}">
+                        {{-- <i class="bi bi-person"></i> --}}
+                        <span>Employés</span>
+                    </a>
+                </li><!-- End employes Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/directions') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Directions/Services</span>
+                    </a>
+                </li><!-- End directions Page Nav -->
+
+            </ul>
+        </li>
 
         {{-- <li class="nav-heading">Pages</li> --}}
 

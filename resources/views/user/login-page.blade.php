@@ -49,7 +49,7 @@
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
@@ -70,7 +70,7 @@
                                         </div>
                                     @endif
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Connectez-vous à votre compte</h5>
+                                        <h5 class="card-title text-center pb-0 fs-4">Connectez-vous</h5>
                                         <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de
                                             passe pour vous connecter</p>
                                     </div>

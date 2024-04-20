@@ -30,6 +30,8 @@ class CreateEmployeesTable extends Migration
             $table->dateTime('date_embauche')->nullable();
             $table->string('classification', 200)->nullable();
             $table->string('categorie_salaire', 200)->nullable();
+            $table->string('bureau', 200)->nullable();
+            $table->string('poste', 200)->nullable();
             $table->unsignedInteger('users_id');
             $table->unsignedInteger('categories_id')->nullable();
             $table->unsignedInteger('fonctions_id')->nullable();

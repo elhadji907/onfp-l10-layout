@@ -79,6 +79,8 @@ class Employee extends Model
 		'date_embauche',
 		'classification',
 		'categorie_salaire',
+		'bureau',
+		'poste',
 		'users_id',
 		'categories_id',
 		'fonctions_id',
