@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\ArrondissementController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CourrierController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\DepartController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\InterneController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
@@ -100,6 +102,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/departements', DepartementController::class);
     Route::resource('/arrondissements', ArrondissementController::class);
     Route::resource('/communes', CommuneController::class);
+    Route::resource('/categories', CategorieController::class);
+    Route::resource('/fonctions', FonctionController::class);
 });
 
 

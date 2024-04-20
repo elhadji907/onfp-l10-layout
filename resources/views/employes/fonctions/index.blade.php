@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des permissions')
+@section('title', 'ONFP - Liste des fonctions')
 @section('space-work')
 
     <div class="pagetitle">
@@ -14,7 +14,7 @@
     </div><!-- End Page Title -->
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -32,32 +32,34 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-5">
-                            <a href="{{ route('permissions.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <a href="{{ route('fonctions.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
-                        <h5 class="card-title">Permissions</h5>
-                        <p>Le tableau de toutes les permissions du système.</p>
+                        <h5 class="card-title">Fonctions</h5>
+                        <p>Le tableau de toutes les fonctions du système.</p>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-permissions">
+                        <table class="table datatables align-middle" id="table-fonctions">
                             <thead>
                                 <tr>
                                     <th>N°</th>
-                                    <th>Permissions</th>
+                                    <th>Fonctions</th>
+                                    <th>Sigle</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($permissions as $permission)
+                                @foreach ($fonctions as $fonction)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $permission->name }}</td>
+                                        <td>{{ $fonction->name }}</td>
+                                        <td>{{ $fonction->sigle }}</td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('permissions/'.$permission->id.'/edit') }}"
+                                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('fonctions/'.$fonction->id.'/edit') }}"
                                                     class="btn btn-success btn-sm" title="Modifier"><i
                                                         class="bi bi-pencil-square"></i></a>&nbsp;
-                                                <form action="{{ url('permissions', $permission->id) }}" method="post">
+                                                <form action="{{ url('fonctions', $fonction->id) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm show_confirm"
@@ -82,7 +84,7 @@
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-permissions', {
+        new DataTable('#table-fonctions', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

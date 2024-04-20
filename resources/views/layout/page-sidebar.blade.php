@@ -5,7 +5,7 @@
         <li class="nav-item">
             <a class="nav-link " href="{{ url('/home') }}">
                 <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
+                <span>Tableau de bord</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
@@ -250,12 +250,12 @@
         </li><!-- End Courriers Nav -->
 
 
-        
+
         <li class="nav-heading">EMPLOYES</li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-globe"></i><span>Employés</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-people"></i><span>Employés</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="employes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
@@ -268,9 +268,21 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('/directions') }}">
                         {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Directions/Services</span>
+                        <span>Directions</span>
                     </a>
                 </li><!-- End directions Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/categories') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Catégories</span>
+                    </a>
+                </li><!-- End categories Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/fonctions') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Fonction</span>
+                    </a>
+                </li><!-- End fonction Page Nav -->
 
             </ul>
         </li>
@@ -309,7 +321,7 @@
         </li> --}}
         <!-- End Login Page Nav -->
 
-       {{--  <li class="nav-item">
+        {{--  <li class="nav-item">
             <a class="nav-link collapsed" href="pages-error-404.html">
                 <i class="bi bi-dash-circle"></i>
                 <span>Error 404</span>
