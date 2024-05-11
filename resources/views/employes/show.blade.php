@@ -96,74 +96,74 @@
                                 <h5 class="card-title">Détails</h5>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Matricule</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label">Matricule</div>
+                                    <div class="col-lg-10 col-md-8">
                                         {{ $employe?->matricule }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Prénom & Nom</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label">Prénom & Nom</div>
+                                    <div class="col-lg-10 col-md-8">
                                         {{ $user?->civilite . ' ' . $user->firstname . ' ' . $user->name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Date & lieu naissance</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label">Date & lieu naissance</div>
+                                    <div class="col-lg-10 col-md-8">
                                         {{ $user->date_naissance?->format('d/m/Y') . ' à ' . $user->lieu_naissance }}
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Email</div>
-                                    <div class="col-lg-9 col-md-8">{{ $user->email }}</div>
+                                    <div class="col-lg-2 col-md-4 label ">Email</div>
+                                    <div class="col-lg-10 col-md-8">{{ $user->email }}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                                    <div class="col-lg-9 col-md-8">{{ $user->telephone }}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Adresse</div>
-                                    <div class="col-lg-9 col-md-8">{{ $user->adresse }}</div>
+                                    <div class="col-lg-2 col-md-4 label">Téléphone</div>
+                                    <div class="col-lg-10 col-md-8">{{ $user->telephone }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Date embauche</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label ">Adresse</div>
+                                    <div class="col-lg-10 col-md-8">{{ $user->adresse }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-4 label">Date embauche</div>
+                                    <div class="col-lg-10 col-md-8">
                                         {{ $employe->date_embauche?->format('d/m/Y') }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">CIN</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label">CIN</div>
+                                    <div class="col-lg-10 col-md-8">
                                         {{ $employe?->cin }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Situation familiale</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label">Situation familiale</div>
+                                    <div class="col-lg-10 col-md-8">
                                         {{ $employe->user?->situation_familiale }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Direction</div>
-                                    <div class="col-lg-9 col-md-8">{{ $employe->direction?->name }}</div>
+                                    <div class="col-lg-2 col-md-4 label ">Direction</div>
+                                    <div class="col-lg-10 col-md-8">{{ $employe->direction?->name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Fonction</div>
-                                    <div class="col-lg-9 col-md-8">{{ $employe->fonction?->name }}</div>
+                                    <div class="col-lg-2 col-md-4 label ">Fonction</div>
+                                    <div class="col-lg-10 col-md-8">{{ $employe->fonction?->name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Catégorie</div>
-                                    <div class="col-lg-9 col-md-8">{{ $employe->category?->name }}</div>
+                                    <div class="col-lg-2 col-md-4 label ">Catégorie</div>
+                                    <div class="col-lg-10 col-md-8">{{ $employe->category?->name }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Lois</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label ">Lois</div>
+                                    <div class="col-lg-10 col-md-8">
                                         @foreach ($employe->lois as $loi)
                                             <b>Vu</b>&nbsp;&nbsp;
                                             {{ $loi?->name }};<br>
@@ -172,8 +172,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Decrets</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label ">Decrets</div>
+                                    <div class="col-lg-10 col-md-8">
                                         @foreach ($employe->decrets as $decret)
                                             <b>Vu</b>&nbsp;&nbsp;
                                             {{ $decret?->name }};<br>
@@ -182,8 +182,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Procès verbaux</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label ">Procès verbaux</div>
+                                    <div class="col-lg-10 col-md-8">
                                         @foreach ($employe->procesverbals as $procesverbal)
                                             <b>Vu</b>&nbsp;&nbsp;
                                             {{ $procesverbal?->name }};<br>
@@ -192,8 +192,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Décisions</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label ">Décisions</div>
+                                    <div class="col-lg-10 col-md-8">
                                         @foreach ($employe->decisions as $decision)
                                             <b>Vu</b>&nbsp;&nbsp;
                                             {{ $decision?->name }};<br>
@@ -202,8 +202,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Articles</div>
-                                    <div class="col-lg-9 col-md-8">
+                                    <div class="col-lg-2 col-md-4 label ">Articles</div>
+                                    <div class="col-lg-10 col-md-8">
                                         <?php $i = 1; ?>
                                         @foreach ($employe->articles as $article)
                                             <b>Article {{ $i++ }} :</b>&nbsp;&nbsp;
