@@ -26,6 +26,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $users_id
  * @property int|null $categories_id
  * @property int|null $fonctions_id
+ * @property int|null $nomminations_id
+ * @property int|null $decisions_id
+ * @property int|null $procesverbals_id
  * @property int|null $directions_id
  * @property string|null $dirrection_employee
  * @property string|null $deleted_at
@@ -35,6 +38,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Category|null $category
  * @property Direction|null $direction
  * @property Fonction|null $fonction
+ * @property Nommination|null $nommination
+ * @property Decision|null $decision
+ * @property Procesverbal|null $procesverbals
  * @property User $user
  * @property Collection|Charge[] $charges
  * @property Collection|Conger[] $congers
@@ -87,6 +93,20 @@ class Employee extends Model
 		'directions_id',
 		'dirrection_employee'
 	];
+	public function procesverbals()
+	{
+		return $this->belongsTo(Procesverbal::class, 'procesverbals_id');
+	}
+
+	public function decisions()
+	{
+		return $this->belongsTo(Decision::class, 'decisions_id');
+	}
+
+	public function nomminations()
+	{
+		return $this->belongsTo(Nommination::class, 'nomminations_id');
+	}
 
 	public function category()
 	{
@@ -130,6 +150,13 @@ class Employee extends Model
 					->withTimestamps();
 	}
 
+	public function lois()
+	{
+		return $this->belongsToMany(Loi::class, 'employeslois', 'employes_id', 'lois_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
 	public function formations()
 	{
 		return $this->belongsToMany(Formation::class, 'employeesformations', 'employees_id', 'formations_id')
@@ -143,6 +170,12 @@ class Employee extends Model
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
+
+	
+/* 	public function lois()
+	{
+		return $this->belongsToMany(Loi::class, 'employeslois');
+	} */
 
 	public function familles()
 	{

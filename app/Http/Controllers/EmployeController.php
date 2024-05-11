@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Decision;
 use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\Fonction;
+use App\Models\Loi;
+use App\Models\Nommination;
+use App\Models\Procesverbal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -90,7 +95,7 @@ class EmployeController extends Controller
             ]);
         }
 
-        Employee::create([
+        $employe = Employee::create([
             'users_id'      => $user->id,
             'matricule'     => $request->matricule,
             'cin'           => $request->cin,
@@ -98,6 +103,22 @@ class EmployeController extends Controller
             'fonctions_id'  => $request->fonction,
             'directions_id' => $request->direction,
             'categories_id' => $request->categorie,
+        ]);
+
+      /*   Nommination::create([
+            'name'     => $request->nommination,
+            'date_debut'     => $request->date_debut,
+            'employees_id' => $employe->id,
+        ]); */
+
+        Decision::create([
+            'name'     => $request->decision,
+            'employees_id' => $employe->id,
+        ]);
+
+        Procesverbal::create([
+            'name'     => $request->procesverbal,
+            'employees_id' => $employe->id,
         ]);
 
         $status = "Enregistrement effectué avec succès";
@@ -173,6 +194,10 @@ class EmployeController extends Controller
             'telephone'                 =>  $request->telephone,
             'adresse'                   =>  $request->adresse,
             'situation_familiale'       =>  $request->situation_familiale,
+            'twitter'                   =>  $request->twitter,
+            'facebook'                  =>  $request->facebook,
+            'instagram'                 =>  $request->instagram,
+            'linkedin'                  =>  $request->linkedin,
             'updated_by'                =>  Auth::user()->id,
         ]);
 
@@ -189,12 +214,15 @@ class EmployeController extends Controller
 
         $status = 'Mise à jour effectuée avec succès';
 
-        return Redirect::route('employes.index')->with('status', $status);
+        return Redirect::back()->with('status', $status);
     }
 
     public function show($id)
     {
         $employe = Employee::findOrFail($id);
+        $directions = Direction::orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('created_at', 'desc')->get();
+        $fonctions  = Fonction::orderBy('created_at', 'desc')->get();
         $user = $employe->user;
 
         if ($user->created_by == null || $user->updated_by == null) {
@@ -211,7 +239,7 @@ class EmployeController extends Controller
             $user_update_name = $user_update->firstname . " " . $user_update->firstname;
         }
 
-        return view("employes.show", compact("user", "user_create_name", "user_update_name", "employe"));
+        return view("employes.show", compact("user", "user_create_name", "user_update_name", "employe", "directions", "categories", "fonctions"));
     }
 
     public function destroy($id)
@@ -221,5 +249,32 @@ class EmployeController extends Controller
         $employe->delete();
         $mesage = $employe->user->firstname . ' ' . $employe->user->name . ' a été supprimé(e)';
         return redirect()->back()->with("danger", $mesage);
+    }
+
+    
+    public function addLoisToEmploye($employeId)
+    {
+        $lois = Loi::orderBy('created_at', 'desc')->get();
+        $employe = Employee::findOrFail($employeId);
+        $employesLois = DB::table('employeslois')
+            ->where('employeslois.employes_id', $employeId)
+            ->pluck('employeslois.lois_id', 'employeslois.lois_id')
+            ->all();
+        return view("employes.add-lois", compact('employe', 'lois', 'employesLois'));
+    }
+
+    public function giveLoisToEmploye($employeId, Request $request)
+    {
+        $request->validate([
+            'lois' => ['required']
+        ]);
+        /* dd($request->lois); */
+        $employe = Employee::findOrFail($employeId);
+        /* dd($employe); */
+        /* $employe->lois()->sync($request->lois); */
+        $employe->lois()->sync($request->lois);
+
+        $messages = "loi(s) ajoutée(s)";
+        return redirect()->back()->with('status', $messages);
     }
 }

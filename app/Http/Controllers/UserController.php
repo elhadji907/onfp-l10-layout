@@ -156,6 +156,7 @@ class UserController extends Controller
                 'name'                      =>  $request->name,
                 'date_naissance'            =>  $request->date_naissance,
                 'lieu_naissance'            =>  $request->lieu_naissance,
+                'situation_familiale'       =>  $request->situation_familiale,
                 'email'                     =>  $request->email,
                 'telephone'                 =>  $request->telephone,
                 'adresse'                   =>  $request->adresse,
@@ -164,7 +165,6 @@ class UserController extends Controller
                 'facebook'                  =>  $request->facebook,
                 'instagram'                 =>  $request->instagram,
                 'linkedin'                  =>  $request->linkedin,
-                'situation_familiale'       =>  $request->situation_familiale,
                 'updated_by'                =>  Auth::user()->id,
             ]);
         }

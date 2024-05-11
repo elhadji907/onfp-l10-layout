@@ -144,7 +144,7 @@
                                     <form method="post" action="{{ route('profile.update') }}"
                                         enctype="multipart/form-data">
                                         @csrf
-                                        @method('patch') <div class="flex items-center gap-4">
+                                        @method('patch')
                                             <h5 class="card-title">Modification du profil</h5>
                                             <!-- Profile Edit Form -->
                                             <div class="row mb-3">

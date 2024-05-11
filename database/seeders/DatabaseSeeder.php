@@ -103,6 +103,7 @@ class DatabaseSeeder extends Seeder
             GestionnaireSeeder::class,
             EmployeeSeeder::class,
             RoleSeeder::class,
+            LoiSeeder::class,
         ]);
     }
 }

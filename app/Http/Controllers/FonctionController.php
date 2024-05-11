@@ -22,8 +22,9 @@ class FonctionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'fonctions.*.name' => 'required|unique:fonctions,name',
-            'fonctions.*.sigle' => 'required|unique:fonctions,sigle'
+            /* 'fonctions.*.name' => 'required|unique:fonctions,name', */
+            'fonctions.*.name' => 'required|string',
+            'fonctions.*.sigle' => 'required|string'
         ]);
 
         /* dd($request->fonctions); */
@@ -48,8 +49,9 @@ class FonctionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => ['required', 'string', Rule::unique(Fonction::class)->ignore($id)],
-            'sigle' => ['required', 'string', Rule::unique(Fonction::class)->ignore($id)]
+            /* 'name' => ['required', 'string', Rule::unique(Fonction::class)->ignore($id)], */
+            'name' => ['required', 'string'],
+            'sigle' => ['required', 'string']
         ]);
 
         Fonction::find($id)->update([

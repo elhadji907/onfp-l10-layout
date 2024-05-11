@@ -283,6 +283,12 @@
                         <span>Fonction</span>
                     </a>
                 </li><!-- End fonction Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/lois') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Lois</span>
+                    </a>
+                </li><!-- End fonction Page Nav -->
 
             </ul>
         </li>

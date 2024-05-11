@@ -12,6 +12,7 @@ use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\InterneController;
+use App\Http\Controllers\LoiController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -73,6 +75,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionsToRole']);
     Route::put('/roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionsToRole']);
+
+    
+    Route::get('/employes/{employeId}/give-lois', [EmployeController::class, 'addLoisToEmploye']);
+    Route::put('/employes/{employeId}/give-lois', [EmployeController::class, 'giveLoisToEmploye']);
     
     Route::get('/roles/{roleName}/get-users', [RoleController::class, 'getUsersToRole']);
 
@@ -103,6 +109,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/arrondissements', ArrondissementController::class);
     Route::resource('/communes', CommuneController::class);
     Route::resource('/categories', CategorieController::class);
+    Route::resource('/lois', LoiController::class);
     Route::resource('/fonctions', FonctionController::class);
 });
 

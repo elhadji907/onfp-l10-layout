@@ -29,7 +29,7 @@
                             <form method="post" action="{{ url('employes') }}" enctype="multipart/form-data"
                                 class="row g-3">
                                 @csrf
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="firstname" class="form-label">Civilité<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="civilite"
@@ -51,7 +51,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="firstname" class="form-label">Prénom<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="firstname" value="{{ old('firstname') }}"
@@ -64,7 +64,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="name" class="form-label">Nom<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="name" value="{{ old('name') }}"
@@ -77,7 +77,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="name" class="form-label">Date naissance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_naissance" value="{{ old('date_naissance') }}"
@@ -90,7 +90,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="name" class="form-label">Lieu naissance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input name="lieu_naissance" type="text"
@@ -104,7 +104,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse" value="{{ old('adresse') }}"
@@ -117,7 +117,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="email" class="form-label">Email<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone" value="{{ old('telephone') }}"
@@ -146,7 +146,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="cin" class="form-label">N° CIN<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="cin" value="{{ old('cin') }}"
@@ -159,7 +159,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="name" class="form-label">Date embauche<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_embauche" value="{{ old('date_embauche') }}"
@@ -172,7 +172,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="categorie" class="form-label">Catégorie<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="categorie" class="form-select @error('categorie') is-invalid @enderror"
@@ -191,7 +191,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="direction" class="form-label">Direction<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="direction" class="form-select @error('direction') is-invalid @enderror"
@@ -209,7 +209,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="fonction" class="form-label">Fonction<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="fonction" class="form-select @error('fonction') is-invalid @enderror"
@@ -228,7 +228,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="matricule" class="form-label">Situation familiale<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="situation_familiale"
@@ -258,7 +258,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="matricule" class="form-label">Matricule</label>
                                     <input type="text" name="matricule" value="{{ old('matricule') }}"
                                         class="form-control form-control-sm @error('matricule') is-invalid @enderror"
@@ -269,8 +269,31 @@
                                         </span>
                                     @enderror
                                 </div>
-
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <label for="procesverbal" class="form-label">Procès verbal<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="procesverbal" value="{{ old('procesverbal') }}"
+                                        class="form-control form-control-sm @error('procesverbal') is-invalid @enderror"
+                                        id="procesverbal" placeholder="Procès verbal de recrutement">
+                                    @error('procesverbal')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <label for="decision" class="form-label">Décision<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="decision" value="{{ old('decision') }}"
+                                        class="form-control form-control-sm @error('decision') is-invalid @enderror"
+                                        id="decision" placeholder="décision">
+                                    @error('decision')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="profil" class="form-label">Photo de profil</label>
                                     <input type="file" name="image" id="image" multiple
                                         value="{{ old('image') }}"
