@@ -104,6 +104,10 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             RoleSeeder::class,
             LoiSeeder::class,
+            DecretSeeder::class,
+            ProcesverbalSeeder::class,
+            DecisionSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }

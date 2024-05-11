@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Decret extends Model
 {
+    
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -17,4 +18,12 @@ class Decret extends Model
 		'name',
 		'uuid'
 	];
+
+	public function employes()
+	{
+		return $this->belongsToMany(Employee::class, 'employesdecrets', 'decrets_id', 'employes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
 }

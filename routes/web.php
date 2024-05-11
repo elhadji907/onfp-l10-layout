@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\ArrondissementController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CourrierController;
+use App\Http\Controllers\DecisionController;
+use App\Http\Controllers\DecretController;
 use App\Http\Controllers\DepartController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
@@ -15,6 +18,7 @@ use App\Http\Controllers\InterneController;
 use App\Http\Controllers\LoiController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
@@ -76,22 +80,34 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionsToRole']);
     Route::put('/roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionsToRole']);
 
-    
+
     Route::get('/employes/{employeId}/give-lois', [EmployeController::class, 'addLoisToEmploye']);
     Route::put('/employes/{employeId}/give-lois', [EmployeController::class, 'giveLoisToEmploye']);
-    
+
+    Route::get('/employes/{employeId}/give-decrets', [EmployeController::class, 'addDecretToEmploye']);
+    Route::put('/employes/{employeId}/give-decrets', [EmployeController::class, 'giveDecretToEmploye']);
+
+    Route::get('/employes/{employeId}/give-procesverbals', [EmployeController::class, 'addProcesverbalToEmploye']);
+    Route::put('/employes/{employeId}/give-procesverbals', [EmployeController::class, 'giveProcesverbalToEmploye']);
+
+    Route::get('/employes/{employeId}/give-decisions', [EmployeController::class, 'addDecisionToEmploye']);
+    Route::put('/employes/{employeId}/give-decisions', [EmployeController::class, 'giveDecisionToEmploye']);
+
+    Route::get('/employes/{employeId}/give-articles', [EmployeController::class, 'addArticleToEmploye']);
+    Route::put('/employes/{employeId}/give-articles', [EmployeController::class, 'giveArticleToEmploye']);
+
     Route::get('/roles/{roleName}/get-users', [RoleController::class, 'getUsersToRole']);
 
-    
+
     Route::get('arrive-imputations/{id}', [ArriveController::class, 'arriveImputation'])->name('arrive-imputations');
     Route::post('/arrive/fetch', [ArriveController::class, 'fetch'])->name('arrive.fetch');
 
-    
+
     Route::post('/comments/{courrier}', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
-    
+
     Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
-    
+
     Route::get('coupon-arrive/{id}', [ArriveController::class, 'couponArrive'])->name('coupon-arrive');
 
     /* Vues ressouces */
@@ -109,8 +125,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/arrondissements', ArrondissementController::class);
     Route::resource('/communes', CommuneController::class);
     Route::resource('/categories', CategorieController::class);
-    Route::resource('/lois', LoiController::class);
     Route::resource('/fonctions', FonctionController::class);
+    Route::resource('/lois', LoiController::class);
+    Route::resource('/decrets', DecretController::class);
+    Route::resource('/procesverbals', ProcesverbalController::class);
+    Route::resource('/decisions', DecisionController::class);
+    Route::resource('/articles', ArticleController::class);
 });
 
 

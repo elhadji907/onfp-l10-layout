@@ -288,7 +288,31 @@
                         {{-- <i class="bi bi-stack"></i> --}}
                         <span>Lois</span>
                     </a>
-                </li><!-- End fonction Page Nav -->
+                </li><!-- End loi Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/decrets') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Decret</span>
+                    </a>
+                </li><!-- End loi Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/procesverbals') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>PV</span>
+                    </a>
+                </li><!-- End PV Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/decisions') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Décisions</span>
+                    </a>
+                </li><!-- End Décisions Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/articles') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Articles</span>
+                    </a>
+                </li><!-- End articles Page Nav -->
 
             </ul>
         </li>

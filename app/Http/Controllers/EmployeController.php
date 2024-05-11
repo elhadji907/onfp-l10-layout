@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\Decision;
+use App\Models\Decret;
 use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\Fonction;
@@ -105,7 +107,7 @@ class EmployeController extends Controller
             'categories_id' => $request->categorie,
         ]);
 
-      /*   Nommination::create([
+        /*   Nommination::create([
             'name'     => $request->nommination,
             'date_debut'     => $request->date_debut,
             'employees_id' => $employe->id,
@@ -251,7 +253,7 @@ class EmployeController extends Controller
         return redirect()->back()->with("danger", $mesage);
     }
 
-    
+
     public function addLoisToEmploye($employeId)
     {
         $lois = Loi::orderBy('created_at', 'desc')->get();
@@ -275,6 +277,98 @@ class EmployeController extends Controller
         $employe->lois()->sync($request->lois);
 
         $messages = "loi(s) ajoutée(s)";
+        return redirect()->back()->with('status', $messages);
+    }
+
+    public function addDecretToEmploye($employeId)
+    {
+        $decrets = Decret::orderBy('created_at', 'desc')->get();
+        $employe = Employee::findOrFail($employeId);
+        $employesDecrets = DB::table('employesdecrets')
+            ->where('employesdecrets.employes_id', $employeId)
+            ->pluck('employesdecrets.decrets_id', 'employesdecrets.decrets_id')
+            ->all();
+        return view("employes.add-decrets", compact('employe', 'decrets', 'employesDecrets'));
+    }
+
+    public function giveDecretToEmploye($employeId, Request $request)
+    {
+        $request->validate([
+            'decrets' => ['required']
+        ]);
+        $employe = Employee::findOrFail($employeId);
+        $employe->decrets()->sync($request->decrets);
+
+        $messages = "decret(s) ajoutée(s)";
+        return redirect()->back()->with('status', $messages);
+    }
+
+    public function addProcesverbalToEmploye($employeId)
+    {
+        $procesverbals = Procesverbal::orderBy('created_at', 'desc')->get();
+        $employe = Employee::findOrFail($employeId);
+        $employesProcesverbals = DB::table('employesprocesverbals')
+            ->where('employesprocesverbals.employes_id', $employeId)
+            ->pluck('employesprocesverbals.procesverbals_id', 'employesprocesverbals.procesverbals_id')
+            ->all();
+        return view("employes.add-procesverbals", compact('employe', 'procesverbals', 'employesProcesverbals'));
+    }
+
+    public function giveProcesverbalToEmploye($employeId, Request $request)
+    {
+        $request->validate([
+            'procesverbals' => ['required']
+        ]);
+        $employe = Employee::findOrFail($employeId);
+        $employe->procesverbals()->sync($request->procesverbals);
+
+        $messages = "procès verbal(s) ajouté(s)";
+        return redirect()->back()->with('status', $messages);
+    }
+
+    public function addDecisionToEmploye($employeId)
+    {
+        $decisions = Decision::orderBy('created_at', 'desc')->get();
+        $employe = Employee::findOrFail($employeId);
+        $employesDecisions = DB::table('employesdecisions')
+            ->where('employesdecisions.employes_id', $employeId)
+            ->pluck('employesdecisions.decisions_id', 'employesdecisions.decisions_id')
+            ->all();
+        return view("employes.add-decisions", compact('employe', 'decisions', 'employesDecisions'));
+    }
+
+    public function giveDecisionToEmploye($employeId, Request $request)
+    {
+        $request->validate([
+            'decisions' => ['required']
+        ]);
+        $employe = Employee::findOrFail($employeId);
+        $employe->decisions()->sync($request->decisions);
+
+        $messages = "décision(s) ajouté(s)";
+        return redirect()->back()->with('status', $messages);
+    }
+
+    public function addArticleToEmploye($employeId)
+    {
+        $articles = Article::orderBy('created_at', 'desc')->get();
+        $employe = Employee::findOrFail($employeId);
+        $employesArticles = DB::table('employesarticles')
+            ->where('employesarticles.employes_id', $employeId)
+            ->pluck('employesarticles.articles_id', 'employesarticles.articles_id')
+            ->all();
+        return view("employes.add-articles", compact('employe', 'articles', 'employesArticles'));
+    }
+
+    public function giveArticleToEmploye($employeId, Request $request)
+    {
+        $request->validate([
+            'articles' => ['required']
+        ]);
+        $employe = Employee::findOrFail($employeId);
+        $employe->articles()->sync($request->articles);
+
+        $messages = "article(s) ajouté(s)";
         return redirect()->back()->with('status', $messages);
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->char('uuid', 36);
-            $table->string('name');
+            $table->longText('name');
             $table->timestamp('date_debut')->nullable();
             $table->timestamp('date_fin')->nullable();
             $table->unsignedInteger('employees_id')->nullable();

@@ -93,15 +93,6 @@ class Employee extends Model
 		'directions_id',
 		'dirrection_employee'
 	];
-	public function procesverbals()
-	{
-		return $this->belongsTo(Procesverbal::class, 'procesverbals_id');
-	}
-
-	public function decisions()
-	{
-		return $this->belongsTo(Decision::class, 'decisions_id');
-	}
 
 	public function nomminations()
 	{
@@ -153,6 +144,34 @@ class Employee extends Model
 	public function lois()
 	{
 		return $this->belongsToMany(Loi::class, 'employeslois', 'employes_id', 'lois_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function decrets()
+	{
+		return $this->belongsToMany(Loi::class, 'employesdecrets', 'employes_id', 'decrets_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function procesverbals()
+	{
+		return $this->belongsToMany(Procesverbal::class, 'employesprocesverbals', 'employes_id', 'procesverbals_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function decisions()
+	{
+		return $this->belongsToMany(Decision::class, 'employesdecisions', 'employes_id', 'decisions_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function articles()
+	{
+		return $this->belongsToMany(Article::class, 'employesarticles', 'employes_id', 'articles_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

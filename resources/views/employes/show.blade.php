@@ -14,7 +14,7 @@
                     class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                 <p> | retour, liste des employés</p>
             </span>
-            <div class="col-xl-4">
+            {{-- <div class="col-xl-4">
                 <div class="card border-info mb-3">
                     <div class="card-header text-center">
                         Image de profil
@@ -43,23 +43,12 @@
                                         class="bi bi-linkedin"></i></a>
                             @endisset
                         </div>
-
-                        {{-- <div class="social-links mt-2">
-                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                        </div> --}}
-
-                        {{-- <h5 class="card-title">Informations complémentaires</h5>
-                        <p>créé par <b>{{ $user_create_name }}</b>, {{ $user->created_at->diffForHumans() }}</p>
-                        <p>modifié par <b>{{ $user_update_name }}</b>, {{ $user->updated_at->diffForHumans() }}</p> --}}
                     </div>
                 </div>
 
-            </div>
+            </div> --}}
 
-            <div class="col-xl-8">
+            <div class="col-xl-12">
 
                 <div class="card border-info mb-3">
                     @if ($message = Session::get('status'))
@@ -178,6 +167,47 @@
                                         @foreach ($employe->lois as $loi)
                                             <b>Vu</b>&nbsp;&nbsp;
                                             {{ $loi?->name }};<br>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Decrets</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        @foreach ($employe->decrets as $decret)
+                                            <b>Vu</b>&nbsp;&nbsp;
+                                            {{ $decret?->name }};<br>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Procès verbaux</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        @foreach ($employe->procesverbals as $procesverbal)
+                                            <b>Vu</b>&nbsp;&nbsp;
+                                            {{ $procesverbal?->name }};<br>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Décisions</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        @foreach ($employe->decisions as $decision)
+                                            <b>Vu</b>&nbsp;&nbsp;
+                                            {{ $decision?->name }};<br>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Articles</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <?php $i = 1; ?>
+                                        @foreach ($employe->articles as $article)
+                                            <b>Article {{ $i++ }} :</b>&nbsp;&nbsp;
+                                            {{ $article?->name }};<br>
                                         @endforeach
                                     </div>
                                 </div>
@@ -649,11 +679,15 @@
                                     <h5 class="card-title">AJOUTER DE NOUVELLES INFORMATIONS A LA DECISION</h5>
                                     <a type="button" class="btn btn-outline-primary"
                                         href="{{ url('employes/' . $employe->id . '/give-lois') }}">LOI</a><br>
-                                    <a type="button" class="btn btn-outline-secondary" href="#">DECRET</a><br>
-                                    <a type="button" class="btn btn-outline-success" href="#">PROCES
+                                    <a type="button" class="btn btn-outline-secondary"
+                                        href="{{ url('employes/' . $employe->id . '/give-decrets') }}">DECRET</a><br>
+                                    <a type="button" class="btn btn-outline-success"
+                                        href="{{ url('employes/' . $employe->id . '/give-procesverbals') }}">PROCES
                                         VERBAL</a><br>
-                                    <a type="button" class="btn btn-outline-info" href="#">DECISION</a><br>
-                                    <a type="button" class="btn btn-outline-secondary" href="#">ARTICLE</a><br>
+                                    <a type="button" class="btn btn-outline-info"
+                                        href="{{ url('employes/' . $employe->id . '/give-decisions') }}">DECISION</a><br>
+                                    <a type="button" class="btn btn-outline-secondary"
+                                        href="{{ url('employes/' . $employe->id . '/give-articles') }}">ARTICLE</a><br>
                                     <a type="button" class="btn btn-outline-warning" href="#">NOMMINATION</a><br>
                                 </div>
                             </div>
