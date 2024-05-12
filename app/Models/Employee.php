@@ -150,7 +150,7 @@ class Employee extends Model
 
 	public function decrets()
 	{
-		return $this->belongsToMany(Loi::class, 'employesdecrets', 'employes_id', 'decrets_id')
+		return $this->belongsToMany(Decret::class, 'employesdecrets', 'employes_id', 'decrets_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

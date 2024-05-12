@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
 
     Route::get('coupon-arrive/{id}', [ArriveController::class, 'couponArrive'])->name('coupon-arrive');
+    Route::get('file-decision/{id}', [EmployeController::class, 'fileDecision'])->name('file-decision');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

@@ -92,9 +92,15 @@
                         <div class="tab-content pt-0">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                                <h5 class="card-title">Détails</h5>
-
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <h5 class="card-title">Détails</h5>
+                                    <small>
+                                        <a href="{!! url('file-decision', ['$id' => $employe->id]) !!}" class='btn btn-primary btn-sm'
+                                            title="télécharger la décision" target="_blank">
+                                            <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger décision
+                                        </a>
+                                    </small>
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-4 label">Matricule</div>
                                     <div class="col-lg-10 col-md-8">

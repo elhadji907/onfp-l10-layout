@@ -10,9 +10,9 @@ use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\Fonction;
 use App\Models\Loi;
-use App\Models\Nommination;
 use App\Models\Procesverbal;
 use App\Models\User;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -254,6 +254,39 @@ class EmployeController extends Controller
     }
 
 
+    public function fileDecision($id)
+    {
+        $employe = Employee::find($id);
+        $title = 'Coupon d\'envoi ' . $employe->matricule;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('employes.file-decision', compact(
+            'employe',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's';
+
+        $name = "Décision de " . $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name . ' ' . $anne . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
     public function addLoisToEmploye($employeId)
     {
         $lois = Loi::orderBy('created_at', 'desc')->get();

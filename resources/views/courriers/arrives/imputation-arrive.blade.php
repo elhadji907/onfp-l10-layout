@@ -14,7 +14,6 @@
                                     | Liste des courriers arrivés
                                 </span>
 
-
                                 <small>
                                     <a href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class='btn btn-primary btn-sm'
                                         title="télécharger le coupon" target="_blank">
