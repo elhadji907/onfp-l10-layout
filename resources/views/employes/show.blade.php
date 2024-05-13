@@ -211,13 +211,17 @@
                                     <div class="col-lg-2 col-md-4 label ">Articles</div>
                                     <div class="col-lg-10 col-md-8">
                                         <?php $i = 1; ?>
-                                        @foreach ($employe->articles as $article)
-                                            <b>Article {{ $i++ }} :</b>&nbsp;&nbsp;
-                                            {{ $article?->name }};<br>
-                                        @endforeach
+                                        <b><u>Article premier</u> :
+                                            {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
+                                            {{-- Pour mettre le mois en français, j'ai ajouter dans AppServiceProvider Carbon::setLocale(config('app.locale')); --}}
+                                            {{ ' né le ' . $employe->user->date_naissance?->translatedFormat('d F Y') . ' à ' . $employe->user->lieu_naissance }}
+                                            ;<br>
+                                            @foreach ($employe->articles as $article)
+                                                <b>Article {{ ++$i }} :</b>&nbsp;&nbsp;
+                                                {{ $article?->name }};<br>
+                                            @endforeach
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="tab-content pt-2">

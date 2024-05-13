@@ -240,6 +240,7 @@ class EmployeController extends Controller
             $user_create_name = $user_create->firstname . " " . $user_create->firstname;
             $user_update_name = $user_update->firstname . " " . $user_update->firstname;
         }
+        
 
         return view("employes.show", compact("user", "user_create_name", "user_update_name", "employe", "directions", "categories", "fonctions"));
     }
