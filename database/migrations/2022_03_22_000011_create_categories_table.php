@@ -25,6 +25,12 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('name', 200);
+            $table->string('salaire', 200)->nullable();
+            $table->longText('salaire_lettre')->nullable();
+            $table->string('indemnite_transport', 200)->nullable();
+            $table->string('indemnite_fonction', 200)->nullable();
+            $table->string('indemnite_sujetion', 200)->nullable();
+            $table->string('autre_indemnite', 200)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });

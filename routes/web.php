@@ -14,8 +14,10 @@ use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FonctionController;
+use App\Http\Controllers\IndemniteController;
 use App\Http\Controllers\InterneController;
 use App\Http\Controllers\LoiController;
+use App\Http\Controllers\NomminationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProcesverbalController;
@@ -96,6 +98,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/employes/{employeId}/give-articles', [EmployeController::class, 'addArticleToEmploye']);
     Route::put('/employes/{employeId}/give-articles', [EmployeController::class, 'giveArticleToEmploye']);
 
+    Route::get('/employes/{employeId}/give-nomminations', [EmployeController::class, 'addNomminationToEmploye']);
+    Route::put('/employes/{employeId}/give-nomminations', [EmployeController::class, 'giveNomminationToEmploye']);
+
+    Route::get('/employes/{employeId}/give-indemnites', [EmployeController::class, 'addIndemniteToEmploye']);
+    Route::put('/employes/{employeId}/give-indemnites', [EmployeController::class, 'giveIndemniteToEmploye']);
+
     Route::get('/roles/{roleName}/get-users', [RoleController::class, 'getUsersToRole']);
 
 
@@ -132,6 +140,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/procesverbals', ProcesverbalController::class);
     Route::resource('/decisions', DecisionController::class);
     Route::resource('/articles', ArticleController::class);
+    Route::resource('/nomminations', NomminationController::class);
+    Route::resource('/indemnites', IndemniteController::class);
 });
 
 

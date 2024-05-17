@@ -36,7 +36,13 @@ class Category extends Model
 
 	protected $fillable = [
 		'uuid',
-		'name'
+		'name',
+		'salaire',
+		'salaire_lettre',
+		'indemnite_transport',
+		'indemnite_fonction',
+		'indemnite_sujetion',
+		'autre_indemnite',
 	];
 
 	public function employees()

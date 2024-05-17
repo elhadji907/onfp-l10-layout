@@ -209,24 +209,36 @@
 
                                 <div class="row">
                                     <div class="col-lg-2 col-md-4 label ">Articles</div>
-                                    <div class="col-lg-10 col-md-8">
-                                        <?php $i = 1; ?>
+                                    <div class="col-lg-10 col-md-8" style="line-height: 100%">
+                                        <?php $i = 3; ?>
                                         <b><u>Article premier</u> :
                                             {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
-                                            {{-- Pour mettre le mois en français, j'ai ajouter dans AppServiceProvider Carbon::setLocale(config('app.locale')); --}}
-                                            {{ ' né le ' . $employe->user->date_naissance?->translatedFormat('d F Y') . ' à ' . $employe->user->lieu_naissance }}
-                                            ;<br>
-                                            @foreach ($employe->articles as $article)
-                                                <b>Article {{ ++$i }} :</b>&nbsp;&nbsp;
-                                                {{ $article?->name }};<br>
-                                            @endforeach
+                                        {{-- Pour mettre le mois en français, j'ai ajouter dans AppServiceProvider Carbon::setLocale(config('app.locale')); --}}
+                                        {{ ' né le ' . $employe->user->date_naissance?->translatedFormat('d F Y') . ' à ' . $employe->user->lieu_naissance }}
+                                        ;<br><br>
+                                        <b><u>Article 2</u> :
+                                            {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
+                                        percevra un salaire mensuel de base de
+                                        ;<br><br>
+                                        <b><u>Article 3</u> :
+                                            {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
+                                        bénéficiera :<br><br>
+                                        @foreach ($employe->indemnites as $indemnite)
+                                            <span style="padding-left: 50px">{{ ' ' . ' - ' . $indemnite?->name }};<br></span>
+                                            {{-- <ul style="line-height: 70%">
+                                                <li>{{ $indemnite?->name }};</li>
+                                            </ul> --}}
+                                        @endforeach
+                                        @foreach ($employe->articles as $article)
+                                        <br><b><u>Article {{ ++$i }}</u> :</b>&nbsp;&nbsp;
+                                            {{ $article?->name }};<br><br>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
 
                             <div class="tab-content pt-2">
                                 {{-- Fin aperçu --}}
-
                                 {{-- Début Edition --}}
                                 <div class="tab-pane fade profile-edit pt-3" id="employe-edit">
                                     <form method="post" action="{{ route('employes.update', $employe->id) }}"
@@ -698,7 +710,10 @@
                                         href="{{ url('employes/' . $employe->id . '/give-decisions') }}">DECISION</a><br>
                                     <a type="button" class="btn btn-outline-secondary"
                                         href="{{ url('employes/' . $employe->id . '/give-articles') }}">ARTICLE</a><br>
-                                    <a type="button" class="btn btn-outline-warning" href="#">NOMMINATION</a><br>
+                                    <a type="button" class="btn btn-outline-warning"
+                                        href="{{ url('employes/' . $employe->id . '/give-nomminations') }}">ESSAI/NOMMINATION/RECLASSEMENT</a><br>
+                                    <a type="button" class="btn btn-outline-secondary"
+                                        href="{{ url('employes/' . $employe->id . '/give-indemnites') }}">INDEMNITES</a><br>
                                 </div>
                             </div>
                         </div>

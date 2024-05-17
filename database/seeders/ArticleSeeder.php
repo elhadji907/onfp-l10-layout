@@ -14,7 +14,7 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('articles')->insert([
+       /*  DB::table('articles')->insert([
             "name" => "Monsieur Lamine BADJI, né le 10 Février 1990 à Bandjikaky, titulaire d'un Master 2 en Génie Logiciel et Sécurité des Technologies de l'Information, matricule de solde  n° 932476/E, précédemment Informaticien est nommé Chef du Service Informatique",
             'created_at' => now(),
             'updated_at' => now(),
@@ -25,7 +25,7 @@ class ArticleSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
             "uuid" => Str::uuid(),
-        ]);
+        ]); */
         DB::table('articles')->insert([
             "name" => "La présente décision prend effet à compter de la date de signature",
             'created_at' => now(),

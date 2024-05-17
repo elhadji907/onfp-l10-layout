@@ -108,6 +108,8 @@ class DatabaseSeeder extends Seeder
             ProcesverbalSeeder::class,
             DecisionSeeder::class,
             ArticleSeeder::class,
+            NomminationSeeder::class,
+            IndemniteSeeder::class,
         ]);
     }
 }

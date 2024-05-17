@@ -24,7 +24,7 @@ class CreateEmployeesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('matricule', 200);
+            $table->string('matricule', 200)->nullable();
             $table->string('adresse', 200)->nullable();
             $table->string('cin', 20);
             $table->dateTime('date_embauche')->nullable();
@@ -32,6 +32,11 @@ class CreateEmployeesTable extends Migration
             $table->string('categorie_salaire', 200)->nullable();
             $table->string('bureau', 200)->nullable();
             $table->string('poste', 200)->nullable();
+            $table->longText('diplome')->nullable();
+            $table->longText('autres_diplomes')->nullable();
+            $table->string('fonction_occupee', 200)->nullable();
+            $table->string('indemnite_fonction', 200)->nullable();
+            $table->string('fonction_precedente', 200)->nullable();
             $table->unsignedInteger('users_id');
             $table->unsignedInteger('categories_id')->nullable();
             $table->unsignedInteger('fonctions_id')->nullable();

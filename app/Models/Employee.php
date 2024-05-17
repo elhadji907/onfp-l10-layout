@@ -60,7 +60,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Employee extends Model
 {
-    use HasFactory;
+	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'employees';
@@ -70,7 +70,7 @@ class Employee extends Model
 		'categories_id' => 'int',
 		'fonctions_id' => 'int',
 		'directions_id' => 'int',
-        'date_embauche' => 'datetime'
+		'date_embauche' => 'datetime'
 	];
 
 	protected $dates = [
@@ -91,13 +91,14 @@ class Employee extends Model
 		'categories_id',
 		'fonctions_id',
 		'directions_id',
-		'dirrection_employee'
+		'dirrection_employee',
+		'indemnite_fonction',
+		'fonction_occupee',
+		'indemnite_fonction',
+		'fonction_precedente',
+		'diplome',
+		'autres_diplomes'
 	];
-
-	public function nomminations()
-	{
-		return $this->belongsTo(Nommination::class, 'nomminations_id');
-	}
 
 	public function category()
 	{
@@ -137,61 +138,73 @@ class Employee extends Model
 	public function courriers()
 	{
 		return $this->belongsToMany(Courrier::class, 'employeescourriers', 'employees_id', 'courriers_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function lois()
 	{
 		return $this->belongsToMany(Loi::class, 'employeslois', 'employes_id', 'lois_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function decrets()
 	{
 		return $this->belongsToMany(Decret::class, 'employesdecrets', 'employes_id', 'decrets_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function procesverbals()
 	{
 		return $this->belongsToMany(Procesverbal::class, 'employesprocesverbals', 'employes_id', 'procesverbals_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function decisions()
 	{
 		return $this->belongsToMany(Decision::class, 'employesdecisions', 'employes_id', 'decisions_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function articles()
 	{
 		return $this->belongsToMany(Article::class, 'employesarticles', 'employes_id', 'articles_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
+	}
+	public function nomminations()
+	{
+		return $this->belongsToMany(Nommination::class, 'employesnomminations', 'employes_id', 'nomminations_id')
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
+	}
+	public function indemnites()
+	{
+		return $this->belongsToMany(Indemnite::class, 'employesindemnites', 'employes_id', 'indemnites_id')
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function formations()
 	{
 		return $this->belongsToMany(Formation::class, 'employeesformations', 'employees_id', 'formations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function imputations()
 	{
 		return $this->belongsToMany(Imputation::class, 'employeesimputations', 'employees_id', 'imputations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
-	
-/* 	public function lois()
+
+	/* 	public function lois()
 	{
 		return $this->belongsToMany(Loi::class, 'employeslois');
 	} */
@@ -230,7 +243,7 @@ class Employee extends Model
 	{
 		return $this->hasMany(Stagiaire::class, 'employees_id');
 	}
-		
+
 	public function chef()
 	{
 		return $this->belongsTo(Direction::class, 'chef_id');

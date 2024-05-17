@@ -312,7 +312,13 @@
                         {{-- <i class="bi bi-stack"></i> --}}
                         <span>Articles</span>
                     </a>
-                </li><!-- End articles Page Nav -->
+                </li><!-- End nomminations Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('/nomminations') }}">
+                        {{-- <i class="bi bi-stack"></i> --}}
+                        <span>Nomminations</span>
+                    </a>
+                </li><!-- End nomminations Page Nav -->
 
             </ul>
         </li>

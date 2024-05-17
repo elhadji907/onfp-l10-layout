@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|Employe[] $employees
+ * @property Collection|Employee[] $employees
  *
  * @package App\Models
  */
@@ -43,6 +43,6 @@ class Fonction extends Model
 
 	public function employees()
 	{
-		return $this->hasMany(Employe::class, 'fonctions_id');
-	}
+		return $this->hasMany(Employee::class, 'fonctions_id');
+	}	
 }

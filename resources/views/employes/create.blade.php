@@ -269,30 +269,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12">
-                                    <label for="procesverbal" class="form-label">Procès verbal<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="procesverbal" value="{{ old('procesverbal') }}"
-                                        class="form-control form-control-sm @error('procesverbal') is-invalid @enderror"
-                                        id="procesverbal" placeholder="Procès verbal de recrutement">
-                                    @error('procesverbal')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-12">
-                                    <label for="decision" class="form-label">Décision<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="decision" value="{{ old('decision') }}"
-                                        class="form-control form-control-sm @error('decision') is-invalid @enderror"
-                                        id="decision" placeholder="décision">
-                                    @error('decision')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
+                
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label for="profil" class="form-label">Photo de profil</label>
                                     <input type="file" name="image" id="image" multiple

@@ -9,7 +9,9 @@ use App\Models\Decret;
 use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\Fonction;
+use App\Models\Indemnite;
 use App\Models\Loi;
+use App\Models\Nommination;
 use App\Models\Procesverbal;
 use App\Models\User;
 use Dompdf\Dompdf;
@@ -99,28 +101,12 @@ class EmployeController extends Controller
 
         $employe = Employee::create([
             'users_id'      => $user->id,
-            'matricule'     => $request->matricule,
+            'matricule'     => $request?->matricule,
             'cin'           => $request->cin,
             'date_embauche' => $request->date_embauche,
             'fonctions_id'  => $request->fonction,
             'directions_id' => $request->direction,
             'categories_id' => $request->categorie,
-        ]);
-
-        /*   Nommination::create([
-            'name'     => $request->nommination,
-            'date_debut'     => $request->date_debut,
-            'employees_id' => $employe->id,
-        ]); */
-
-        Decision::create([
-            'name'     => $request->decision,
-            'employees_id' => $employe->id,
-        ]);
-
-        Procesverbal::create([
-            'name'     => $request->procesverbal,
-            'employees_id' => $employe->id,
         ]);
 
         $status = "Enregistrement effectué avec succès";
@@ -403,6 +389,52 @@ class EmployeController extends Controller
         $employe->articles()->sync($request->articles);
 
         $messages = "article(s) ajouté(s)";
+        return redirect()->back()->with('status', $messages);
+    }
+
+    public function addNomminationToEmploye($employeId)
+    {
+        $nomminations = Nommination::orderBy('created_at', 'desc')->get();
+        $employe = Employee::findOrFail($employeId);
+        $employesNomminations = DB::table('employesnomminations')
+            ->where('employesnomminations.employes_id', $employeId)
+            ->pluck('employesnomminations.nomminations_id', 'employesnomminations.nomminations_id')
+            ->all();
+        return view("employes.add-nomminations", compact('employe', 'nomminations', 'employesNomminations'));
+    }
+
+    public function giveNomminationToEmploye($employeId, Request $request)
+    {
+        $request->validate([
+            'nomminations' => ['required']
+        ]);
+        $employe = Employee::findOrFail($employeId);
+        $employe->nomminations()->sync($request->nomminations);
+
+        $messages = "nommination(s) ajouté(s)";
+        return redirect()->back()->with('status', $messages);
+    }
+
+    public function addIndemniteToEmploye($employeId)
+    {
+        $indemnites = Indemnite::orderBy('created_at', 'desc')->get();
+        $employe = Employee::findOrFail($employeId);
+        $employesIndemnites = DB::table('employesindemnites')
+            ->where('employesindemnites.employes_id', $employeId)
+            ->pluck('employesindemnites.indemnites_id', 'employesindemnites.indemnites_id')
+            ->all();
+        return view("employes.add-indemnites", compact('employe', 'indemnites', 'employesIndemnites'));
+    }
+
+    public function giveIndemniteToEmploye($employeId, Request $request)
+    {
+        $request->validate([
+            'indemnites' => ['required']
+        ]);
+        $employe = Employee::findOrFail($employeId);
+        $employe->indemnites()->sync($request->indemnites);
+
+        $messages = "indemnite(s) ajouté(s)";
         return redirect()->back()->with('status', $messages);
     }
 }
