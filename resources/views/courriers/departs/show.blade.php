@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails courrier arrivé')
+@section('title', 'Détails courrier départ')
 
 @section('space-work')
     <section class="section profile">
@@ -10,9 +10,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrives.index') }}"
+            <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('departs.index') }}"
                     class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                <p> | Liste des courriers arrivés</p>
+                <p> | Liste des courriers départs</p>
             </span>
             <div class="col-xl-4">
                 <div class="card border-info mb-3">
@@ -20,7 +20,7 @@
                         AUDIT
                     </div>
                     <div class="card-body profile-card pt-1 d-flex flex-column">
-                        <h5 class="card-title">Informations complémentaires</h5>
+                        <h5 class="card-title">?Informations complémentaires</h5>
                         <p>créé par <b>{{ $user_create_name }}</b>, {{ $courrier->created_at->diffForHumans() }}</p>
                         {{-- <p>modifié par <b>{{ $user_update_name }}</b>, {{ $courrier->updated_at->diffForHumans() }}</p> --}}
                         @if ($courrier->created_at != $courrier->updated_at)
@@ -48,14 +48,14 @@
 
                             <li class="nav-item">
                                 <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
-                                        href="{{ route('arrives.edit', $arrive->id) }}" class="mx-1">
+                                        href="{{ route('departs.edit', $depart->id) }}" class="mx-1">
                                         {{-- <i class="bi bi-pencil mx-1"></i> --}}
                                         Modifier</a></button>
                             </li>
 
                             <li class="nav-item">
                                 <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
-                                        href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}" class="mx-1">
+                                        href="{{ url('depart-imputations', ['id' => $depart->id]) }}" class="mx-1">
                                         {{-- <i class="bi bi-recycle mx-1"></i> --}}
                                         Imputer</a></button>
                             </li>
@@ -70,55 +70,60 @@
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <h5 class="card-title">Objet</h5>
-                                <p class="small fst-italic">{{ $arrive->courrier->objet }}.</p>
+                                <p class="small fst-italic">{{ $depart->courrier->objet }}.</p>
 
                                 <h5 class="card-title">Détails</h5>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Date arrivé</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->date_recep->format('d/m/Y') }}
+                                    <div class="col-lg-3 col-md-4 label ">Date départ</div>
+                                    <div class="col-lg-3 col-md-4">{{ $depart->courrier->date_depart?->format('d/m/Y') }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">N° départ</div>
+                                    <div class="col-lg-3 col-md-4">{{ $depart->numero }}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Date correspondance</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->date_cores->format('d/m/Y') }}
+                                    <div class="col-lg-3 col-md-4">{{ $depart->courrier->date_cores?->format('d/m/Y') }}
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">N° correspondance</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->numero }}</div>
+                                    <div class="col-lg-3 col-md-4">{{ $depart->courrier->numero }}</div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Année</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->annee }}</div>
+                                    <div class="col-lg-3 col-md-4">{{ $depart->courrier->annee }}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Expéditeur</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->expediteur }}</div>
+                                    <div class="col-lg-3 col-md-4 label ">Destinataire</div>
+                                    <div class="col-lg-3 col-md-4">{{ $depart->destinataire }}</div>
                                 </div>
                                 <div class="row">
-                                    @isset($arrive->courrier->reference)
-                                        <div class="col-lg-3 col-md-4 label">Référence</div>
-                                        <div class="col-lg-3 col-md-4">{{ $arrive->courrier->reference }}</div>
+                                    @isset($depart->courrier->reference)
+                                        <div class="col-lg-3 col-md-4 label">Service expéditeur</div>
+                                        <div class="col-lg-3 col-md-4">{{ $depart->courrier->reference }}</div>
                                     @endisset
                                 </div>
 
-                                @isset($arrive->courrier->numero_reponse)
+                                @isset($depart->courrier->numero_reponse)
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">N° réponse</div>
-                                        <div class="col-lg-3 col-md-4">{{ $arrive->courrier->numero_reponse }}</div>
+                                        <div class="col-lg-3 col-md-4">{{ $depart->courrier->numero_reponse }}</div>
                                         <div class="col-lg-3 col-md-4 label">Date réponse</div>
-                                        <div class="col-lg-3 col-md-4">{{ $arrive->courrier->date_reponse->format('d/m/Y') }}
+                                        <div class="col-lg-3 col-md-4">{{ $depart->courrier->date_reponse?->format('d/m/Y') }}
                                         </div>
                                     </div>
                                 @endisset
 
-                                @isset($arrive->courrier->observation)
+                                @isset($depart->courrier->observation)
                                     <h5 class="card-title">Observations</h5>
-                                    <p class="small fst-italic">{{ $arrive->courrier->observation }}.</p>
+                                    <p class="small fst-italic">{{ $depart->courrier->observation }}.</p>
                                 @endisset
 
                             </div>
@@ -127,7 +132,7 @@
 
                                 <!-- Settings Form -->
 
-                                <form method="POST" action="{{ route('comments.store', $arrive->courrier) }}"
+                                <form method="POST" action="{{ route('comments.store', $depart->courrier) }}"
                                     class="mt-3">
                                     @csrf
                                     <div class="row mb-3">
@@ -156,12 +161,12 @@
                                 </form><!-- End settings Form -->
                                 <hr>
                                 <h3 class="card-title text-center">Commentaires</h3>
-                                @forelse ($arrive->courrier->comments as $comment)
+                                @forelse ($depart->courrier->comments as $comment)
                                     <div class="card mt-2">
                                         <div class="card-body">
                                             <div>{!! $comment->content !!}
                                                 <div class="d-flex justify-content-between align-items-center mt-2">
-                                                    {{-- <small>Posté le {!! Carbon\Carbon::parse($comment->created_at)->format('d/m/Y à H:i:s') !!}</small> --}}
+                                                    {{-- <small>Posté le {!! Carbon\Carbon::parse($comment->created_at)?->format('d/m/Y à H:i:s') !!}</small> --}}
                                                     <small>Posté le {!! Carbon\Carbon::parse($comment->created_at)->diffForHumans() !!}</small>
                                                     <span
                                                         class="badge bg-info mx-1">{!! $comment->user->firstname ?? '' !!}&nbsp;{!! $comment->user->name ?? '' !!}</span>
@@ -226,27 +231,6 @@
                                                     </button>
                                                 </div>
                                             </div>
-
-                                            {{-- <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Poster</button>
-                                    </div> --}}
-
-
-                                            {{-- <div class="form-group">
-                                                <label for="replayComment"><b>Ma réponse</b></label>
-                                                <textarea class="form-control @error('replayComment') is-invalid @enderror" name="replayComment" id="replayComment"
-                                                    rows="3" placeholder="Répondre à ce commentaire"></textarea>
-                                                <small id="emailHelp" class="form-text text-muted">
-                                                    @if ($errors->has('replayComment'))
-                                                        @foreach ($errors->get('replayComment') as $message)
-                                                            <p class="text-danger">{{ $message }}</p>
-                                                        @endforeach
-                                                    @endif
-                                                </small>
-                                            </div>
-                                            <button class="btn btn-primary btn-sm m-2">
-                                                Répondre à ce commentaire
-                                            </button> --}}
                                         </form>
                                     @endauth
                                     {{-- fin réponse aux commentaires --}}

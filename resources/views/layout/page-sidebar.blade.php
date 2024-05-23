@@ -265,6 +265,7 @@
                         <span>Employés</span>
                     </a>
                 </li><!-- End employes Page Nav -->
+                <li class="nav-heading">PARAMETRES</li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url('/directions') }}">
                         {{-- <i class="bi bi-stack"></i> --}}

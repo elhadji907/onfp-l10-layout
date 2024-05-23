@@ -32,21 +32,17 @@ class ArriveController extends Controller
                 $numCourrier = ++$numCourrier;
            
         } else {
-            $numCourrier = "000001";
+            $numCourrier = "0001";
 
         }
 
         $longueur = strlen($numCourrier);
 
         if ($longueur <= 1) {
-            $numCourrier   =   strtolower("00000".$numCourrier);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("0000".$numCourrier);
-        } elseif ($longueur >= 3 && $longueur < 4) {
             $numCourrier   =   strtolower("000".$numCourrier);
-        } elseif ($longueur >= 4 && $longueur < 5) {
+        } elseif ($longueur >= 2 && $longueur < 3) {
             $numCourrier   =   strtolower("00".$numCourrier);
-        } elseif ($longueur >= 5 && $longueur < 6) {
+        } elseif ($longueur >= 3 && $longueur < 4) {
             $numCourrier   =   strtolower("0".$numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);

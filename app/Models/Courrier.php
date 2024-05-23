@@ -107,6 +107,7 @@ class Courrier extends Model
 		'date_cores' => 'datetime',
 		'date_reponse' => 'datetime',
 		'date_imp' => 'datetime',
+		'date_depart' => 'datetime',
 	];
 
 	protected $dates = [
@@ -119,7 +120,8 @@ class Courrier extends Model
 		'date_liq',
 		'date_visa',
 		'date_mandat',
-		'date_paye'
+		'date_paye',
+		'date_depart'
 	];
 
 	protected $fillable = [

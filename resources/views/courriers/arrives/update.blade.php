@@ -26,7 +26,7 @@
                             </div>
                             <div class="pt-0 pb-0">
                                 <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
-                                <p class="text-center small">modification un nouveau courrier</p>
+                                <p class="text-center small">modification courrier arrivé</p>
                             </div>
                             <form method="post" action="{{ url('arrives/' . $arrive->id) }}" enctype="multipart/form-data"
                                 class="row g-3">

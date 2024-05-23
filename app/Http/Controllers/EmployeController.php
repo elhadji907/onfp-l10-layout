@@ -127,7 +127,7 @@ class EmployeController extends Controller
         $employe = Employee::findOrFail($id);
         $user    = $employe->user;
         $this->validate($request, [
-            'civilite'            => ['required', 'string', 'max:5'],
+            'civilite'            => ['required', 'string', 'max:10'],
             'firstname'           => ['required', 'string', 'max:50'],
             'name'                => ['required', 'string', 'max:25'],
             'date_naissance'      => ['required', 'date'],
@@ -193,8 +193,10 @@ class EmployeController extends Controller
         $employe->update([
             'users_id'      => $user->id,
             'matricule'     => $request->matricule,
+            'diplome'       => $request->diplome,
             'cin'           => $request->cin,
             'date_embauche' => $request->date_embauche,
+            'fonction_precedente' => $request->fonction_precedente,
             'fonctions_id'  => $request->fonction,
             'directions_id' => $request->direction,
             'categories_id' => $request->categorie,

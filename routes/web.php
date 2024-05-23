@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update'); */
 
     Route::put('/arrives/{arriveId}/delete', [ArriveController::class, 'destroy']);
+    Route::put('/departs/{departId}/delete', [DepartController::class, 'destroy']);
 
 
     Route::get('/roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionsToRole']);

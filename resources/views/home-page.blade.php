@@ -4,10 +4,10 @@
         <div class="row">
 
             <!-- Left side columns -->
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="row">
                     <!-- Sales Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-xl-2 col-md-6">
                         <div class="card info-card sales-card">
 
                             <div class="filter">
@@ -38,6 +38,76 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>{{ $total_user }}</h6>
+                                            {{--  <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                            class="text-muted small pt-2 ps-1">increase</span> --}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div><!-- End Sales Card -->
+                    <div class="col-xl-2 col-md-6">
+                        <div class="card info-card sales-card">
+
+                            <a href="{{ url('/arrives') }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Courriers <span>| Arrivés</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-envelope-open"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ $total_arrive }}</h6>
+                                            {{--  <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                            class="text-muted small pt-2 ps-1">increase</span> --}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div><!-- End Sales Card -->
+                    <div class="col-xl-2 col-md-6">
+                        <div class="card info-card sales-card">
+
+                            <a href="{{ url('/departs') }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Courriers <span>| Départs</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-envelope"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ $total_depart }}</h6>
+                                            {{--  <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                            class="text-muted small pt-2 ps-1">increase</span> --}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div><!-- End Sales Card -->
+                    <div class="col-xl-2 col-md-6">
+                        <div class="card info-card sales-card">
+
+                            <a href="{{ url('/departs') }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Demandes <span>| Individuelles</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-folder"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ $total_individuelle }}</h6>
                                             {{--  <span class="text-success small pt-1 fw-bold">12%</span> <span
                                             class="text-muted small pt-2 ps-1">increase</span> --}}
 

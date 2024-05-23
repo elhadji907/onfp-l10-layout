@@ -21,16 +21,14 @@ class ArriveStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            "date_arrivee"          => ["required", "date"],
-            "date_correspondance"   => ["required", "date"],
-            "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:arrives,numero,Null,id,deleted_at,NULL"],
-            "annee"                 => ["required", "string"],
-            "expediteur"            => ["required", "string"],
-            "objet"                 => ["required", "string"],
-            "numero_reponse"        => ["string", "min:4", "max:6","nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL"],
-            "date_reponse"          => ["nullable", "date"],
-            "observation"           => ["nullable", "string"],
+        return [           
+            'numero_ordre'    =>  ['required','string','min:4','max:6','unique:departs,numero,Null,id,deleted_at,NULL'],
+            'nbre_pieces'     =>  ['required','numeric'],
+            'annee'           =>  ['required','numeric','min:2022'],
+            'destinataire'    =>  ['required','string','max:100'],
+            'objet'           =>  ['required','string','max:200'],
+            'numero_archive'  =>  ['required','string','min:4','max:6','unique:courriers,num_bord,Null,id,deleted_at,NULL'],
+            'date_depart'     =>  ['required','date'],
         ];
     }
 }

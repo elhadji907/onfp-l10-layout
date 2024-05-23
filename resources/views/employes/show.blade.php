@@ -212,25 +212,33 @@
                                     <div class="col-lg-10 col-md-8" style="line-height: 100%">
                                         <?php $i = 3; ?>
                                         <b><u>Article premier</u> :
-                                            {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
+                                            {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name . ', ' }}</b>
                                         {{-- Pour mettre le mois en français, j'ai ajouter dans AppServiceProvider Carbon::setLocale(config('app.locale')); --}}
-                                        {{ ' né le ' . $employe->user->date_naissance?->translatedFormat('d F Y') . ' à ' . $employe->user->lieu_naissance }}
+                                        {{ ' né le ' . $employe->user->date_naissance?->translatedFormat('d F Y') . ' à ' . $employe->user->lieu_naissance . ', titulaire d\'un(e) ' }}
+                                        <b> {{ $employe->diplome . ', ' }} </b> matricule de solde
+                                        <b>{{ $employe->matricule . ', ' }}</b> précédemment <b>
+                                            {{ $employe->fonction_precedente . ', ' }} </b> est nommé(e)
+                                        <b>{{ $employe->fonction?->name }}</b>
                                         ;<br><br>
                                         <b><u>Article 2</u> :
                                             {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
                                         percevra un salaire mensuel de base de
+                                        <b>{{ $employe->category->salaire_lettre . '(' . $employe->category->salaire . ')' . 'Francs CFA ' }}</b>
+                                        correspondant à la catégorie <b>{{ $employe->category->name }}</b> de la grille salariale du personnel de l'ONFP
+                                        adoptée par le Conseil d'Administration du 21 Août 2014.
                                         ;<br><br>
                                         <b><u>Article 3</u> :
                                             {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
                                         bénéficiera :<br><br>
                                         @foreach ($employe->indemnites as $indemnite)
-                                            <span style="padding-left: 50px">{{ ' ' . ' - ' . $indemnite?->name }};<br></span>
+                                            <span
+                                                style="padding-left: 50px">{{ ' ' . ' - ' . $indemnite?->name }};<br></span>
                                             {{-- <ul style="line-height: 70%">
                                                 <li>{{ $indemnite?->name }};</li>
                                             </ul> --}}
                                         @endforeach
                                         @foreach ($employe->articles as $article)
-                                        <br><b><u>Article {{ ++$i }}</u> :</b>&nbsp;&nbsp;
+                                            <br><b><u>Article {{ ++$i }}</u> :</b>&nbsp;&nbsp;
                                             {{ $article?->name }};<br><br>
                                         @endforeach
                                     </div>
@@ -288,11 +296,11 @@
                                                         <option value="{{ $employe->user?->civilite }}">
                                                             {{ $employe->user?->civilite ?? old('civilite') }}
                                                         </option>
-                                                        <option value="M.">
-                                                            M.
+                                                        <option value="Monsieur">
+                                                            Monsieur
                                                         </option>
-                                                        <option value="Mme">
-                                                            Mme
+                                                        <option value="Madame">
+                                                            Madame
                                                         </option>
                                                     </select>
                                                     @error('civilite')
@@ -584,6 +592,43 @@
                                                     @endforeach
                                                 </select>
                                                 @error('fonction')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- diplome --}}
+                                        <div class="row mb-3">
+                                            <label for="diplome" class="col-md-4 col-lg-3 col-form-label">Diplome
+                                                employé(e)</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="diplome" type="diplome"
+                                                    class="form-control form-control-sm @error('diplome') is-invalid @enderror"
+                                                    id="diplome" value="{{ $employe?->diplome ?? old('diplome') }}"
+                                                    autocomplete="diplome" placeholder="le diplome de l'employé">
+                                                @error('diplome')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- fonction_precedente --}}
+                                        <div class="row mb-3">
+                                            <label for="fonction_precedente"
+                                                class="col-md-4 col-lg-3 col-form-label">Fonction précédente de
+                                                employé(e)</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="fonction_precedente" type="fonction_precedente"
+                                                    class="form-control form-control-sm @error('fonction_precedente') is-invalid @enderror"
+                                                    id="fonction_precedente"
+                                                    value="{{ $employe?->fonction_precedente ?? old('fonction_precedente') }}"
+                                                    autocomplete="fonction_precedente"
+                                                    placeholder="la fonction précédente de l'employé">
+                                                @error('fonction_precedente')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>

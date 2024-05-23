@@ -33,7 +33,7 @@ class ArticleSeeder extends Seeder
             "uuid" => Str::uuid(),
         ]);
         DB::table('articles')->insert([
-            "name" => "lLa dépense sera imputée au compte 66 « charges de personnel",
+            "name" => "La dépense sera imputée au compte 66 « charges de personnel",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid" => Str::uuid(),

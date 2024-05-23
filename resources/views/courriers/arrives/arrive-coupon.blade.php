@@ -75,7 +75,7 @@
                         <b>REPUBLIQUE DU SENEGAL<br>
                             Un Peuple - Un But - Une Foi<br>
                             ********<br>
-                            MFPAI
+                            MINISTERE DE LA FORMATION PROFESSIONNELLE
                         </b>
                     </td>
                     <td colspan="2" align="right" valign="top">

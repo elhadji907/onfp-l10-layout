@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Arrive;
+use App\Models\Depart;
+use App\Models\Individuelle;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,8 +21,11 @@ class UserController extends Controller
     public function homePage()
     {
         $total_user = User::count();
+        $total_arrive = Arrive::count();
+        $total_depart = Depart::count();
+        $total_individuelle = Individuelle::count();
         $roles = Role::orderBy('created_at', 'desc')->get();
-        return view("home-page", compact("total_user", 'roles'));
+        return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle'));
     }
 
     public function create()
@@ -207,5 +213,4 @@ class UserController extends Controller
         $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
         return redirect()->back()->with("danger", $mesage);
     }
-
 }
