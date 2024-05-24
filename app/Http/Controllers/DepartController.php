@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DepartStoreRequest;
 use App\Models\Courrier;
 use App\Models\Depart;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class DepartController extends Controller
@@ -172,5 +174,45 @@ class DepartController extends Controller
         $depart->delete();
         $status = "courrier supprimer avec succès";
         return redirect()->back()->with("danger", $status);
+    }
+
+    
+    public function departImputation(Request $request, $id)
+    {
+        $depart = Depart::findOrFail($id);
+        $courrier = $depart->courrier;
+
+        return view("courriers.departs.imputation-depart", compact("depart", "courrier"));
+    }
+    
+    function fetch(Request $request)
+    {
+
+        if ($request->get('query')) {
+            $query = $request->get('query');
+
+            $data = DB::table('directions')
+                ->where('sigle', 'LIKE', "%{$query}%")
+                ->get();
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach ($data as $direction) {
+                $id = $direction->id;
+                $sigle = $direction->sigle;
+                $employe_id = $direction->chef_id;
+                $employe = Employee::find($employe_id);
+
+                $user = User::find($employe->users_id);
+
+                $name = $user->firstname . ' ' . $user->name;
+
+                $output .= '
+       
+                <li data-id="' . $id . '" data-chef="' . $name . '" data-employeid="' . $employe->id . '"><a href="#">' . $sigle . '</a></li>
+       ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 }

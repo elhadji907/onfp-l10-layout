@@ -111,6 +111,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('arrive-imputations/{id}', [ArriveController::class, 'arriveImputation'])->name('arrive-imputations');
     Route::post('/arrive/fetch', [ArriveController::class, 'fetch'])->name('arrive.fetch');
 
+    Route::get('depart-imputations/{id}', [DepartController::class, 'departImputation'])->name('depart-imputations');
+    Route::post('/depart/fetch', [DepartController::class, 'fetch'])->name('depart.fetch');
+
 
     Route::post('/comments/{courrier}', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');

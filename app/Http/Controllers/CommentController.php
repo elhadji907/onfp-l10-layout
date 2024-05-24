@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Courrier;
 use App\Notifications\newCommentPosted;
-use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -31,7 +30,19 @@ class CommentController extends Controller
 
         $success = 'Commentaire posté !';
 
-        return redirect()->route('arrives.show', $courrier->id)->with('status', $success);
+        $type_courrier = $courrier->type;
+
+        if ($type_courrier == 'depart') {
+            foreach ($courrier->departs as $key => $depart) {
+                $id = $depart->id;
+            }
+        } elseif ($type_courrier == 'arrive') {
+            foreach ($courrier->arrives as $key => $arrive) {
+                $id = $arrive->id;
+            }
+        }
+
+        return redirect()->route($type_courrier . 's.show', $id)->with('status', $success);
     }
 
     public function storeCommentReply(Comment $comment)
@@ -54,7 +65,21 @@ class CommentController extends Controller
         $success = 'réponse posté !';
 
         $comment->user->notify(new newCommentPosted($comment->courrier, auth()->user()));
+       
+        $courrier = $comment->courrier;
+        $type_courrier = $courrier->type;
 
-        return redirect()->route('arrives.show', $comment->courrier->id)->with('status', $success);
+        if ($type_courrier == 'depart') {
+            foreach ($courrier->departs as $key => $depart) {
+                $id = $depart->id;
+            }
+        } elseif ($type_courrier == 'arrive') {
+            foreach ($courrier->arrives as $key => $arrive) {
+                $id = $arrive->id;
+            }
+        }
+
+        return redirect()->route($type_courrier . 's.show', $id)->with('status', $success);
+
     }
 }

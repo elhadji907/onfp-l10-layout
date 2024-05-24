@@ -17,7 +17,10 @@ class CourrierController extends Controller
         /* $typescourrier = $courrier->types_courrier->name; */
         /* $arrive = $courrier->arrives; */
         $arrives = $courrier->arrives;
+        $departs = $courrier->departs;
         foreach ($arrives as $key => $arrive) {
+        }
+        foreach ($departs as $key => $depart) {
         }
         $departs = $courrier->departs;
         $internes = $courrier->internes;
@@ -39,6 +42,10 @@ class CourrierController extends Controller
 
         if ($courrier->type == 'arrive') {
             return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
+        }
+
+        if ($courrier->type == 'depart') {
+            return view("courriers.departs.show", compact("depart", "courrier", "user_create_name", "user_update_name"));
         }
 
         /*  if ($typescourrier == 'Courriers arrives') {            

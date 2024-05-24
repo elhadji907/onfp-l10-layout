@@ -20,7 +20,7 @@
                         AUDIT
                     </div>
                     <div class="card-body profile-card pt-1 d-flex flex-column">
-                        <h5 class="card-title">?Informations complémentaires</h5>
+                        <h5 class="card-title">Informations complémentaires</h5>
                         <p>créé par <b>{{ $user_create_name }}</b>, {{ $courrier->created_at->diffForHumans() }}</p>
                         {{-- <p>modifié par <b>{{ $user_update_name }}</b>, {{ $courrier->updated_at->diffForHumans() }}</p> --}}
                         @if ($courrier->created_at != $courrier->updated_at)
@@ -144,6 +144,7 @@
                                                     name="commentaire" id="commentaire" style="height: 100px;"></textarea>
                                                 <label for="floatingTextarea">Ecrire votre commentaire ici</label>
                                             </div>
+                                            <input type="hidden" name="type" value="depart">
                                             <small id="emailHelp" class="form-text text-muted">
                                                 @if ($errors->has('commentaire'))
                                                     @foreach ($errors->get('commentaire') as $message)
@@ -218,6 +219,7 @@
                                                             name="replayComment" id="replayComment" style="height: 100px;"></textarea>
                                                         <label for="floatingTextarea">Répondre à ce commentaire</label>
                                                     </div>
+                                                    <input type="hidden" name="type" value="depart">
                                                     <small id="emailHelp" class="form-text text-muted">
                                                         @if ($errors->has('replayComment'))
                                                             @foreach ($errors->get('replayComment') as $message)

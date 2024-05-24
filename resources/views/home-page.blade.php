@@ -7,7 +7,7 @@
             <div class="col-lg-12">
                 <div class="row">
                     <!-- Sales Card -->
-                    <div class="col-xl-2 col-md-6">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="card info-card sales-card">
 
                             <div class="filter">
@@ -47,7 +47,7 @@
                             </a>
                         </div>
                     </div><!-- End Sales Card -->
-                    <div class="col-xl-2 col-md-6">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="card info-card sales-card">
 
                             <a href="{{ url('/arrives') }}">
@@ -71,7 +71,7 @@
 
                         </div>
                     </div><!-- End Sales Card -->
-                    <div class="col-xl-2 col-md-6">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="card info-card sales-card">
 
                             <a href="{{ url('/departs') }}">
@@ -94,7 +94,7 @@
                             </a>
                         </div>
                     </div><!-- End Sales Card -->
-                    <div class="col-xl-2 col-md-6">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="card info-card sales-card">
 
                             <a href="{{ url('/departs') }}">
