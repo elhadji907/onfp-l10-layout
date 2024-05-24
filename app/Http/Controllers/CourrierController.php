@@ -41,11 +41,13 @@ class CourrierController extends Controller
         $user_update_name = $user_update->firstname . ' ' . $user_update->name;
 
         if ($courrier->type == 'arrive') {
-            return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
+            /* return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name")); */
+            return redirect()->back()->with('arrive', 'courrier', 'user_create_name', 'user_update_name');
         }
 
         if ($courrier->type == 'depart') {
-            return view("courriers.departs.show", compact("depart", "courrier", "user_create_name", "user_update_name"));
+            /* return view("courriers.departs.show", compact("depart", "courrier", "user_create_name", "user_update_name")); */
+            return redirect()->back()->with('depart', 'courrier', 'user_create_name', 'user_update_name');
         }
 
         /*  if ($typescourrier == 'Courriers arrives') {            
@@ -75,5 +77,10 @@ class CourrierController extends Controller
             }else {
                 return view('courriers.show', compact('courrier'));
             } */
+    }
+
+    public function notifications()
+    {
+        return view("courriers.notifications");
     }
 }

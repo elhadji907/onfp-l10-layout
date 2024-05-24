@@ -19,7 +19,8 @@
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
                         {!! auth()->user()->unReadNotifications->count() !!} nouvelles notifications
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Voir toutes</span></a>
+                        <a href="{{ url('notifications') }}"><span class="badge rounded-pill bg-primary p-2 ms-2">Voir
+                                toutes</span></a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
