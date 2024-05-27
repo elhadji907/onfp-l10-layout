@@ -178,6 +178,25 @@
                 });
         });
     </script>
+    <script type="text/javascript">
+        $('.show_confirm_disconnect').click(function(event) {
+            var form = $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                    title: `Êtes-vous sûr de vouloir vous déconnecter ?`,
+                    text: "Vous pouvez cliquer sur ok pour confirmer ou cliquer sur cancel pour annuler.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
     <script>
         $("#checkAll").click(function() {
             $(".form-check-input").prop('checked', $(this).prop('checked'));

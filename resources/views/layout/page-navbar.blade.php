@@ -125,7 +125,7 @@
                 {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
                 <img class="rounded-circle" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}">
                 <span
-                    class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}</span>
+                    class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->civilite . ' ' . Auth::user()->name }}</span>
             </a><!-- End Profile Iamge Icon -->
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -171,7 +171,7 @@
                 </li> --}}
 
                 <li>
-                    <form method="POST" action="{{ route('logout') }}">
+                    {{--   <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <a class="dropdown-item d-flex align-items-center" href="route('logout')"
                             onclick="event.preventDefault();
@@ -179,6 +179,11 @@
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Se déconnecter</span>
                         </a>
+                    </form> --}}
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item show_confirm_disconnect"><i class="bi bi-trash"></i>Se
+                            déconnecter</button>
                     </form>
                 </li>
 

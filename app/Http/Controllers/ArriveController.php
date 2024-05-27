@@ -29,21 +29,19 @@ class ArriveController extends Controller
         $numCourrier = Arrive::get()->last();
         if (isset($numCourrier)) {
             $numCourrier = Arrive::get()->last()->numero;
-                $numCourrier = ++$numCourrier;
-           
+            $numCourrier = ++$numCourrier;
         } else {
             $numCourrier = "0001";
-
         }
 
         $longueur = strlen($numCourrier);
 
         if ($longueur <= 1) {
-            $numCourrier   =   strtolower("000".$numCourrier);
+            $numCourrier   =   strtolower("000" . $numCourrier);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("00".$numCourrier);
+            $numCourrier   =   strtolower("00" . $numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
-            $numCourrier   =   strtolower("0".$numCourrier);
+            $numCourrier   =   strtolower("0" . $numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
         }
@@ -96,7 +94,7 @@ class ArriveController extends Controller
 
         $imp = $request->input('imp');
 
-        if (isset($imp) && $imp == "1") {            
+        if (isset($imp) && $imp == "1") {
             $courrier = $arrive->courrier;
             /* $count = count($request->product); */
             $courrier->directions()->sync($request->id_direction);
@@ -104,7 +102,7 @@ class ArriveController extends Controller
             $courrier->description =  $request->input('description');
             $courrier->date_imp    =  $request->input('date_imp');
             $courrier->save();
-            
+
             $status = 'Courrier imputé avec succès';
 
             return Redirect::route('arrives.index')->with('status', $status);
@@ -115,15 +113,48 @@ class ArriveController extends Controller
         $this->validate($request, [
             "date_arrivee"          => ["required", "date"],
             "date_correspondance"   => ["required", "date"],
-            "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:arrives,numero,Null,id,deleted_at,NULL" . $arrive->id],
+            "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:courriers,numero,{$arrive->courrier->id}"],
+            "numero_arrive"         => ["required", "string", "min:4", "max:6", "unique:arrives,numero,{$arrive->id}"],
             "annee"                 => ["required", "string"],
             "expediteur"            => ["required", "string"],
             "objet"                 => ["required", "string"],
-
-            "numero_reponse"        => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL" . $courrier->id],
+            "numero_reponse"        => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,{$courrier->id}"],
             "date_reponse"          => ["nullable", "date"],
             "observation"           => ["nullable", "string"],
         ]);
+
+       if (isset($courrier->file)) {
+        $this->validate($request, [
+            "legende"          => ["required", "string"],
+        ]);
+       }
+
+        if (request('file')) {
+            $this->validate($request, [
+                "legende"          => ["required", "string"],
+            ]);
+            $filePath = request('file')->store('courriers', 'public');
+            $courrier->update(
+                [
+                    'date_recep'       =>      $request->input('date_arrivee'),
+                    'date_cores'       =>      $request->input('date_correspondance'),
+                    'numero'           =>      $request->input('numero_correspondance'),
+                    'annee'            =>      $request->input('annee'),
+                    'objet'            =>      $request->input('objet'),
+                    'expediteur'       =>      $request->input('expediteur'),
+                    'reference'        =>      $request->input('reference'),
+                    'numero_reponse'   =>      $request->input('numero_reponse'),
+                    'date_reponse'     =>      $request->input('date_reponse'),
+                    'observation'      =>      $request->input('observation'),
+                    'file'             =>      $filePath,
+                    'legende'          =>      $request->input('legende'),
+                    'type'             =>      'arrive',
+                    "user_create_id"   =>      Auth::user()->id,
+                    "user_update_id"   =>      Auth::user()->id,
+                    'users_id'         =>      Auth::user()->id,
+                ]
+            );
+        }
 
         $courrier->update(
             [
@@ -137,6 +168,7 @@ class ArriveController extends Controller
                 'numero_reponse'   =>      $request->input('numero_reponse'),
                 'date_reponse'     =>      $request->input('date_reponse'),
                 'observation'      =>      $request->input('observation'),
+                'legende'          =>      $request->input('legende'),
                 'type'             =>      'arrive',
                 "user_create_id"   =>      Auth::user()->id,
                 "user_update_id"   =>      Auth::user()->id,
@@ -146,7 +178,7 @@ class ArriveController extends Controller
 
         $arrive->update(
             [
-                'numero'             =>      $request->input('numero_correspondance'),
+                'numero'             =>      $request->input('numero_arrive'),
                 'courriers_id'       =>      $courrier->id,
             ]
         );
@@ -223,15 +255,15 @@ class ArriveController extends Controller
         $arrive = Arrive::find($id);
         $courrier = $arrive->courrier;
 
-       /*  $directions     = Direction::pluck('sigle', 'id'); */
-        
+        /*  $directions     = Direction::pluck('sigle', 'id'); */
+
         $directions = Direction::pluck('sigle', 'sigle')->all();
-        
+
         $arriveDirections = $courrier->directions->pluck('sigle', 'sigle')->all();
-        
+
         $numero = $courrier->numero;
-      
-        $title =' Coupon d\'envoi n° '.$numero;
+
+        $title = ' Coupon d\'envoi n° ' . $numero;
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
@@ -248,7 +280,7 @@ class ArriveController extends Controller
             'Diffusion',
             'Attribution',
             'Classement',
-            ];
+        ];
 
         $dompdf->loadHtml(view('courriers.arrives.arrive-coupon', compact(
             'arrive',
@@ -266,16 +298,15 @@ class ArriveController extends Controller
         $dompdf->render();
 
         $anne = date('d');
-        $anne = $anne.' '.date('m');
-        $anne = $anne.' '.date('Y');
-        $anne = $anne.' à '.date('H').'h';
-        $anne = $anne.' '.date('i').'min';
-        $anne = $anne.' '.date('s').'s';
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's';
 
-        $name = $courrier->expediteur.', courrier arrivé n° '.$numero.' du '.$anne.'.pdf';
+        $name = $courrier->expediteur . ', courrier arrivé n° ' . $numero . ' du ' . $anne . '.pdf';
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
-
     }
 }

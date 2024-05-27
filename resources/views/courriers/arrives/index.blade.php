@@ -44,7 +44,7 @@
                                 <tr>
                                     <th>Date arrivé</th>
                                     <th>Date correspondance</th>
-                                    <th>N° courrier</th>
+                                    {{-- <th>N° courrier</th> --}}
                                     <th>Expéditeur</th>
                                     <th>Objet</th>
                                     <th>#</th>
@@ -60,7 +60,7 @@
                                         {{-- <td>{{ $arrive->courrier->date_cores->format('d/m/Y') }}</td> --}}
                                         <td>{{ $arrive->courrier->date_cores?->format('d/m/Y') }} <br>
                                             <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $arrive->courrier->numero }}</span> </td>
-                                        <td class="text-center">{{ $arrive->numero }}</td>
+                                        {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
                                         <td>{{ $arrive->courrier->expediteur }}</td>
                                         <td>{{ $arrive->courrier->objet }}</td>
                                         <td>

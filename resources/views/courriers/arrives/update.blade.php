@@ -32,7 +32,7 @@
                                 class="row g-3">
                                 @csrf
                                 @method('PUT')
-                                <div class="col-6">
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="date_arrivee" class="form-label">Date arrivée<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_arrivee"
@@ -46,7 +46,23 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="numero_arrive" class="form-label">Numéro<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="number" min="0" name="numero_arrive"
+                                            value="{{ $arrive->numero ?? old('numero_arrive') }}"
+                                            class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
+                                            id="numero_arrive" placeholder="Numéro de correspondance">
+                                        @error('numero_arrive')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="date_correspondance" class="form-label">Date correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_correspondance"
@@ -60,7 +76,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="numero_correspondance" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -76,7 +92,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="annee" class="form-label">Année<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="2024" name="annee"
@@ -90,7 +106,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-9 col-lg-9 mb-0">
                                     <label for="expediteur" class="form-label">Expéditeur<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="expediteur"
@@ -104,7 +120,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="objet"
@@ -118,7 +134,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="reference" class="form-label">Référence</label>
                                     <input type="text" name="reference"
                                         value="{{ $arrive->courrier->reference ?? old('reference') }}"
@@ -131,7 +147,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                     <input type="number" min="0" name="numero_reponse"
                                         value="{{ $arrive->courrier->numero_reponse ?? old('numero_reponse') }}"
@@ -144,7 +160,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="date_reponse" class="form-label">Date réponse</label>
                                     <input type="date" min="0" name="date_reponse"
                                         value="{{ $arrive->courrier->date_reponse?->format('Y-m-d') ?? old('date_reponse') }}"
@@ -157,7 +173,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 mb-4">
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="observation" class="form-label">Observations </label>
                                     <textarea name="observation" id="observation" rows="1" class="form-control form-control-sm"
                                         placeholder="Observations">{{ old('observation', $arrive->courrier->observation) }}</textarea>
@@ -166,6 +182,45 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="legende" class="form-label">Légende</label>
+                                    <input type="text" name="legende"
+                                        value="{{ $arrive->courrier->legende ?? old('legende') }}"
+                                        class="form-control form-control-sm @error('legende') is-invalid @enderror"
+                                        id="legende" placeholder="Le nom du fichier scanné">
+                                    @error('legende')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="reference" class="form-label">Scan courrier</label>
+                                    <input type="file" name="file" id="file"
+                                        class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                    @error('file')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    @error('reference')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    @if (isset($arrive->courrier->file))
+                                    <label for="reference" class="form-label">Cliquer ici pour télécharger</label><br>
+                                        <a class="btn btn-outline-secondary btn-sm" title="télécharger le fichier joint"
+                                            target="_blank" href="{{ asset($arrive->courrier->getFile()) }}">
+                                            <i class="bi bi-download">&nbsp;Cliquer ici pour télécharger le courrier scanné</i>
+                                        </a>
+                                    @endif
+                                    {{-- <img class="w-25" alt="courrier"
+                                    src="{{ asset($arrive->courrier->getFile()) }}" width="50"
+                                    height="auto"> --}}
                                 </div>
 
                                 <div class="text-center">

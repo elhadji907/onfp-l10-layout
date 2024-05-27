@@ -174,7 +174,7 @@ class Courrier extends Model
 	];
 
 	public function getFile(){
-		$filePath = $this->file ?? 'arrives/default.jpg';
+		$filePath = $this->file ?? 'courriers/default.jpg';
 		return "/storage/" . $filePath;
 	}
 
