@@ -28,7 +28,7 @@ class ArriveController extends Controller
         $anneeEnCours = date('Y');
         $numCourrier = Arrive::get()->last();
         if (isset($numCourrier)) {
-            $numCourrier = Courrier::get()->last()->numero;
+            $numCourrier = Arrive::get()->last()->numero;
                 $numCourrier = ++$numCourrier;
            
         } else {
@@ -72,7 +72,7 @@ class ArriveController extends Controller
         $courrier->save();
 
         $arrive = new Arrive([
-            'numero'             =>      $request->input('numero_correspondance'),
+            'numero'             =>      $request->input('numero_arrive'),
             'courriers_id'       =>      $courrier->id
         ]);
 

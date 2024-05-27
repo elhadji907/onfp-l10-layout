@@ -25,7 +25,7 @@ class DepartController extends Controller
         $anneeEnCours = date('Y');
         $numCourrier = Depart::get()->last();
         if (isset($numCourrier)) {
-            $numCourrier = Courrier::get()->last()->numero;
+            $numCourrier = Depart::get()->last()->numero;
             $numCourrier = ++$numCourrier;
         } else {
             $numCourrier = "0001";

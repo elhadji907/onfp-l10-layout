@@ -26,7 +26,7 @@
                             </div>
                             <div class="pt-0 pb-0">
                                 <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
-                                <p class="text-center small">enregister un nouveau courrier</p>
+                                <p class="text-center small">enregister un nouveau courrier départ</p>
                             </div>
                             <form method="post" action="{{ route('departs.store') }}" enctype="multipart/form-data"
                                 class="row g-3">
