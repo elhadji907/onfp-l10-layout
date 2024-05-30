@@ -179,6 +179,45 @@
                                     @enderror
                                 </div>
 
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="legende" class="form-label">Légende</label>
+                                    <input type="text" name="legende"
+                                        value="{{ $depart->courrier->legende ?? old('legende') }}"
+                                        class="form-control form-control-sm @error('legende') is-invalid @enderror"
+                                        id="legende" placeholder="Le nom du fichier scanné">
+                                    @error('legende')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="reference" class="form-label">Scan courrier</label>
+                                    <input type="file" name="file" id="file"
+                                        class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                    @error('file')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    @error('reference')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    @if (isset($depart->courrier->file))
+                                    <label for="reference" class="form-label">Cliquer ici pour télécharger</label><br>
+                                        <a class="btn btn-outline-secondary btn-sm" title="télécharger le fichier joint"
+                                            target="_blank" href="{{ asset($depart->courrier->getFile()) }}">
+                                            <i class="bi bi-download">&nbsp;Cliquer ici pour télécharger le courrier scanné</i>
+                                        </a>
+                                    @endif
+                                    {{-- <img class="w-25" alt="courrier"
+                                    src="{{ asset($depart->courrier->getFile()) }}" width="50"
+                                    height="auto"> --}}
+                                </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                                 </div>

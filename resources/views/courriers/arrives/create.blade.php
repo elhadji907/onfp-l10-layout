@@ -75,8 +75,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="numero_correspondance" class="form-label">Numéro correspondance</label>
                                     <div class="input-group has-validation">
                                         <input type="text" min="0" name="numero_correspondance"
                                             value="{{ old('numero_correspondance') }}"

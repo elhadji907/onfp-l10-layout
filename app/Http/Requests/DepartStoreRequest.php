@@ -25,7 +25,7 @@ class DepartStoreRequest extends FormRequest
             "date_depart"           => ["required", "date"],
             "date_corres"           => ["required", "date"],
             "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:courriers,numero,Null,id,deleted_at,NULL"],
-            "numero_depart"         => ["required", "string", "min:4", "max:6", "unique:depart,numero,Null,id,deleted_at,NULL"],
+            "numero_depart"         => ["required", "string", "min:4", "max:6", "unique:departs,numero,Null,id,deleted_at,NULL"],
             "annee"                 => ["required", "string"],
             "objet"                 => ["required", "string"],
             "destinataire"          => ["required", "string"],

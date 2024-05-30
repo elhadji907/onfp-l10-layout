@@ -113,7 +113,7 @@ class ArriveController extends Controller
         $this->validate($request, [
             "date_arrivee"          => ["required", "date"],
             "date_correspondance"   => ["required", "date"],
-            "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:courriers,numero,{$arrive->courrier->id}"],
+            "numero_correspondance" => ["nullable", "string", "min:4", "max:6", "unique:courriers,numero,{$arrive->courrier->id}"],
             "numero_arrive"         => ["required", "string", "min:4", "max:6", "unique:arrives,numero,{$arrive->id}"],
             "annee"                 => ["required", "string"],
             "expediteur"            => ["required", "string"],
@@ -123,11 +123,11 @@ class ArriveController extends Controller
             "observation"           => ["nullable", "string"],
         ]);
 
-       if (isset($courrier->file)) {
-        $this->validate($request, [
-            "legende"          => ["required", "string"],
-        ]);
-       }
+        if (isset($courrier->file)) {
+            $this->validate($request, [
+                "legende"          => ["required", "string"],
+            ]);
+        }
 
         if (request('file')) {
             $this->validate($request, [
@@ -154,27 +154,27 @@ class ArriveController extends Controller
                     'users_id'         =>      Auth::user()->id,
                 ]
             );
+        } else {
+            $courrier->update(
+                [
+                    'date_recep'       =>      $request->input('date_arrivee'),
+                    'date_cores'       =>      $request->input('date_correspondance'),
+                    'numero'           =>      $request->input('numero_correspondance'),
+                    'annee'            =>      $request->input('annee'),
+                    'objet'            =>      $request->input('objet'),
+                    'expediteur'       =>      $request->input('expediteur'),
+                    'reference'        =>      $request->input('reference'),
+                    'numero_reponse'   =>      $request->input('numero_reponse'),
+                    'date_reponse'     =>      $request->input('date_reponse'),
+                    'observation'      =>      $request->input('observation'),
+                    'legende'          =>      $request->input('legende'),
+                    'type'             =>      'arrive',
+                    "user_create_id"   =>      Auth::user()->id,
+                    "user_update_id"   =>      Auth::user()->id,
+                    'users_id'         =>      Auth::user()->id,
+                ]
+            );
         }
-
-        $courrier->update(
-            [
-                'date_recep'       =>      $request->input('date_arrivee'),
-                'date_cores'       =>      $request->input('date_correspondance'),
-                'numero'           =>      $request->input('numero_correspondance'),
-                'annee'            =>      $request->input('annee'),
-                'objet'            =>      $request->input('objet'),
-                'expediteur'       =>      $request->input('expediteur'),
-                'reference'        =>      $request->input('reference'),
-                'numero_reponse'   =>      $request->input('numero_reponse'),
-                'date_reponse'     =>      $request->input('date_reponse'),
-                'observation'      =>      $request->input('observation'),
-                'legende'          =>      $request->input('legende'),
-                'type'             =>      'arrive',
-                "user_create_id"   =>      Auth::user()->id,
-                "user_update_id"   =>      Auth::user()->id,
-                'users_id'         =>      Auth::user()->id,
-            ]
-        );
 
         $arrive->update(
             [

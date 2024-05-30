@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->enum('civilite', ['', 'Monsieur', 'Madame'])->nullable(true);
+            $table->string('civilite')->nullable(true);
             $table->string('firstname', 200)->nullable(true);
             $table->string('name', 200)->nullable(true);
             $table->string('username', 200)->nullable(true);

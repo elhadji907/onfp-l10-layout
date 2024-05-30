@@ -49,7 +49,7 @@ class EmployeController extends Controller
             'image'               => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'telephone'           => ['required', 'string', 'max:25', 'min:9'],
             'adresse'             => ['required', 'string', 'max:255'],
-            'civilite'            => ['required', 'string', 'max:5'],
+            'civilite'            => ['required', 'string', 'max:10'],
             'cin'                 => ['required', 'string', 'min:13', 'max:15'],
             'date_naissance'      => ['required', 'date'],
             'lieu_naissance'      => ['string', 'required'],

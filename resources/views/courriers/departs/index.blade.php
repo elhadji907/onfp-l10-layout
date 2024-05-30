@@ -55,10 +55,10 @@
                                 @foreach ($departs as $depart)
                                     <tr>
                                         <td>{{ $depart->courrier->date_depart?->format('d/m/Y') }} <br>
-                                            <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart->numero }}</span> </td>
+                                            <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->numero }}</span> </td>
                                         <td>{{ $depart->courrier->date_cores?->format('d/m/Y') }} <br>
-                                            <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart->courrier->numero }}</span> </td>
-                                        <td>{{ $depart->destinataire }}</td>
+                                            <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->courrier->numero }}</span> </td>
+                                        <td>{{ $depart?->destinataire }}</td>
                                         <td>{{ $depart->courrier?->objet }}</td>
                                         <td>{{ $depart->courrier?->reference }}</td>
                                         <td>

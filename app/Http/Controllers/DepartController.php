@@ -78,13 +78,13 @@ class DepartController extends Controller
         return redirect()->back()->with("status", $status);
     }
 
-    
+
     public function edit($id)
     {
         $depart = Depart::findOrFail($id);
         return view("courriers.departs.update", compact("depart"));
     }
-    
+
     public function update(Request $request, $id)
     {
         $depart = Depart::findOrFail($id);
@@ -92,7 +92,7 @@ class DepartController extends Controller
 
         $imp = $request->input('imp');
 
-        if (isset($imp) && $imp == "1") {            
+        if (isset($imp) && $imp == "1") {
             $courrier = $depart->courrier;
             /* $count = count($request->product); */
             $courrier->directions()->sync($request->id_direction);
@@ -100,7 +100,7 @@ class DepartController extends Controller
             $courrier->description =  $request->input('description');
             $courrier->date_imp    =  $request->input('date_imp');
             $courrier->save();
-            
+
             $status = 'Courrier imputé avec succès';
 
             return Redirect::route('departs.index')->with('status', $status);
@@ -122,24 +122,56 @@ class DepartController extends Controller
             "reference"             => ["nullable", "string"],
         ]);
 
-        $courrier->update(
-            [
-            'date_depart'        =>      $request->input('date_depart'),
-            'numero'             =>      $request->input('numero_correspondance'),
-            'date_cores'         =>      $request->input('date_corres'),
-            'annee'              =>      $request->input('annee'),
-            'objet'              =>      $request->input('objet'),
-            'numero_reponse'     =>      $request->input('numero_reponse'),
-            'date_reponse'       =>      $request->input('date_reponse'),
-            'observation'        =>      $request->input('observation'),
-            'reference'          =>      $request->input('service_expediteur'),
-            'type'               =>      'depart',
-            "user_create_id"     =>      Auth::user()->id,
-            "user_update_id"     =>      Auth::user()->id,
-            'users_id'           =>      Auth::user()->id
-            ]
-        );
+        if (isset($courrier->file)) {
+            $this->validate($request, [
+                "legende"          => ["required", "string"],
+            ]);
+        }
 
+        if (request('file')) {
+            $this->validate($request, [
+                "legende"          => ["required", "string"],
+            ]);
+            $filePath = request('file')->store('courriers', 'public');
+            $courrier->update(
+                [
+                    'date_depart'        =>      $request->input('date_depart'),
+                    'numero'             =>      $request->input('numero_correspondance'),
+                    'date_cores'         =>      $request->input('date_corres'),
+                    'annee'              =>      $request->input('annee'),
+                    'objet'              =>      $request->input('objet'),
+                    'numero_reponse'     =>      $request->input('numero_reponse'),
+                    'date_reponse'       =>      $request->input('date_reponse'),
+                    'observation'        =>      $request->input('observation'),
+                    'reference'          =>      $request->input('service_expediteur'),
+                    'file'               =>      $filePath,
+                    'legende'            =>      $request->input('legende'),
+                    'type'               =>      'depart',
+                    "user_create_id"     =>      Auth::user()->id,
+                    "user_update_id"     =>      Auth::user()->id,
+                    'users_id'           =>      Auth::user()->id
+                ]
+            );
+        } else {
+            $courrier->update(
+                [
+                    'date_depart'        =>      $request->input('date_depart'),
+                    'numero'             =>      $request->input('numero_correspondance'),
+                    'date_cores'         =>      $request->input('date_corres'),
+                    'annee'              =>      $request->input('annee'),
+                    'objet'              =>      $request->input('objet'),
+                    'numero_reponse'     =>      $request->input('numero_reponse'),
+                    'date_reponse'       =>      $request->input('date_reponse'),
+                    'observation'        =>      $request->input('observation'),
+                    'reference'          =>      $request->input('service_expediteur'),
+                    'legende'            =>      $request->input('legende'),
+                    'type'               =>      'depart',
+                    "user_create_id"     =>      Auth::user()->id,
+                    "user_update_id"     =>      Auth::user()->id,
+                    'users_id'           =>      Auth::user()->id
+                ]
+            );
+        }
         $depart->update(
             [
                 'numero'             =>      $request->input('numero_depart'),
@@ -176,7 +208,7 @@ class DepartController extends Controller
         return redirect()->back()->with("danger", $status);
     }
 
-    
+
     public function departImputation(Request $request, $id)
     {
         $depart = Depart::findOrFail($id);
@@ -184,7 +216,7 @@ class DepartController extends Controller
 
         return view("courriers.departs.imputation-depart", compact("depart", "courrier"));
     }
-    
+
     function fetch(Request $request)
     {
 

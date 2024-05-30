@@ -42,9 +42,10 @@
                         <table class="table datatables align-middle" id="table-arrives">
                             <thead>
                                 <tr>
+                                    <th>N°</th>
                                     <th>Date arrivé</th>
+                                    <th>N° correspondance</th>
                                     <th>Date correspondance</th>
-                                    {{-- <th>N° courrier</th> --}}
                                     <th>Expéditeur</th>
                                     <th>Objet</th>
                                     <th>#</th>
@@ -54,35 +55,35 @@
                                 <?php $i = 1; ?>
                                 @foreach ($arrives as $arrive)
                                     <tr>
+                                        <td>{{ $arrive->numero }}</td>
                                         {{-- Date reception = date arrivée --}}
-                                        <td>{{ $arrive->courrier->date_recep?->format('d/m/Y') }} <br>
-                                            <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $arrive->numero }}</span> </td>
-                                        {{-- <td>{{ $arrive->courrier->date_cores->format('d/m/Y') }}</td> --}}
-                                        <td>{{ $arrive->courrier->date_cores?->format('d/m/Y') }} <br>
-                                            <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $arrive->courrier->numero }}</span> </td>
+                                        <td>{{ $arrive->courrier->date_recep?->format('d/m/Y') }} </td>
+                                        <td>{{ $arrive->courrier->numero }}</td>
+                                        <td>{{ $arrive->courrier->date_cores?->format('d/m/Y') }} </td>
                                         {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
                                         <td>{{ $arrive->courrier->expediteur }}</td>
                                         <td>{{ $arrive->courrier->objet }}</td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a
+                                            <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('arrives.show', $arrive->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="voir détails"><i
+                                                    class="btn btn-success btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                        <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('arrives.edit', $arrive->id) }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
+                                                                class="mx-1"><i class="bi bi-pencil"></i></a>
                                                         </li>
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                        <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
-                                                                class="mx-1"><i class="bi bi-recycle"></i> Imputer</a>
+                                                                class="mx-1"><i class="bi bi-recycle"></i></a>
                                                         </li>
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}"
-                                                                class="mx-1" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i> Coupon</a>
+                                                        <li><a class="dropdown-item btn btn-sm"
+                                                                href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class="mx-1"
+                                                                target="_blank"><i
+                                                                    class="bi bi-file-earmark-arrow-down"></i></a>
                                                         </li>
                                                         <li>
                                                             <form action="{{ route('arrives.destroy', $arrive->id) }}"
@@ -90,7 +91,7 @@
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="dropdown-item show_confirm"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                        class="bi bi-trash"></i></button>
                                                             </form>
                                                         </li>
                                                     </ul>
@@ -121,7 +122,7 @@
                 }
             },
             "order": [
-                [2, 'desc']
+                [0, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",
