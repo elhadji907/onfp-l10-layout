@@ -31,13 +31,13 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-5">
+                        <div class="pt-0">
                             <a href="{{ route('procesverbals.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
-                        <h5 class="card-title">procès verbaux</h5>
-                        <p>Le tableau de tous les procès verbaux du système.</p>
+                        <h5 class="card-title">Procès verbaux</h5>
+                        {{-- <p>Le tableau de tous les procès verbaux du système.</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-procesverbals">
                             <thead>

@@ -209,12 +209,39 @@
                 </li><!-- End departs Nav -->
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('internes') }}">
+                    <a class="nav-link collapsed" href="#">
                         <span>Interne</span>
                     </a>
                 </li><!-- End internes Nav -->
             </ul>
         </li><!-- End Courriers Nav -->
+
+        <li class="nav-heading">Demandes</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-folder-plus"></i><span>Demandes</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('individuelles') }}">
+                        <span>Individuelles</span>
+                    </a>
+                </li><!-- End individuelles Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('collectives') }}">
+                        <span>Collectives</span>
+                    </a>
+                </li><!-- End collectives Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#">
+                        <span>Prise en charge</span>
+                    </a>
+                </li><!-- End Prise en charges Nav -->
+            </ul>
+        </li><!-- End demandes Nav -->
 
         <li class="nav-heading">LOCALITES</li>
 

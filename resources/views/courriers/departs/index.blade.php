@@ -36,8 +36,8 @@
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
-                        <h5 class="card-title">Courriers départs</h5>
-                        <p>Le tableau des courriers départs</p>
+                        <h5 class="card-title">Liste des courriers départs</h5>
+                        {{-- <p>Le tableau des courriers départs</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-departs">
                             <thead>

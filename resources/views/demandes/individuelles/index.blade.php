@@ -1,8 +1,9 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des directions')
+@section('title', 'ONFP - demandes individuelles')
 @section('space-work')
 
     <div class="pagetitle">
+        {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
@@ -12,11 +13,11 @@
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-12 col-lg-12 mb-4">
+        <div class="row">
+            <div class="col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                        direction="alert">
+                        role="alert">
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -30,77 +31,78 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        {{-- @can('direction-create') --}}
-                        <div class="pt-0">
-                            <a href="{{ route('directions.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                        <div class="pt-1">
+                            <a href="{{ route('individuelles.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
-                        {{-- @endcan --}}
-                        <h5 class="card-title">Directions</h5>
-                        {{-- <p>Le tableau de toutes les directions.</p> --}}
+                        <h5 class="card-title">Liste demandes individuelles</h5>
+                        {{-- <p>Le tableau des demandes individuelles</p> --}}
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-directions">
+                        <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
-                                    <th>Direction</th>
-                                    <th>Sigle</th>
-                                    <th>Type</th>
-                                    <th>Responsable</th>
-                                    <th>Effectif</th>
+                                    <th>N° Dossier</th>
+                                    <th>CIN</th>
+                                    <th>Prénom et NOM</th>
+                                    <th>Date et lieu de naissance</th>
+                                    <th>Module</th>
+                                    <th>Statut</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($directions as $direction)
+                                @foreach ($individuelles as $individuelle)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
-                                        <td>{{ $direction->name }}</td>
-                                        <td>{{ $direction->sigle }}</td>
-                                        <td>{{ $direction->type }}</td>
-                                        <td>{{ $direction->chef?->user->civilite . ' ' . $direction->chef?->user->firstname . ' ' . $direction->chef?->user->name }}
-                                        </td>
-                                        <td style="text-align: center;">
-                                            @foreach ($direction->employees as $employe)
-                                                @if ($loop->last)
-                                                    <span class="badge bg-info">{{ $loop->count }}</span>
-                                                @endif
-                                            @endforeach
-                                        </td>
+                                        <td>{{ $individuelle->numero }}</td>
+                                        <td>{{ $individuelle->courrier->date_recep?->format('d/m/Y') }} </td>
+                                        <td>{{ $individuelle->courrier->numero }}</td>
+                                        <td>{{ $individuelle->courrier->date_cores?->format('d/m/Y') }} </td>
+                                        <td>{{ $individuelle->courrier->objet }}</td>
+                                        <td></td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ url('directions/' . $direction->id) }}"
-                                                    class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
+                                            <span class="d-flex align-items-baseline"><a
+                                                    href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                    class="btn btn-success btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
-                                                    <a class="icon" href="" data-bs-toggle="dropdown"><i
+                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ url('directions/' . $direction->id . '/edit') }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
+                                                        <li><a class="dropdown-item btn btn-sm"
+                                                                href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                class="mx-1"><i class="bi bi-pencil"></i></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item btn btn-sm"
+                                                                href="{{ url('individuelle-imputations', ['id' => $individuelle->id]) }}"
+                                                                class="mx-1"><i class="bi bi-recycle"></i></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item btn btn-sm"
+                                                                href="{!! url('coupon-individuelle', ['$id' => $individuelle->id]) !!}" class="mx-1"
+                                                                target="_blank"><i
+                                                                    class="bi bi-file-earmark-arrow-down"></i></a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('directions', $direction->id) }}"
+                                                            <form action="{{ route('individuelles.destroy', $individuelle->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="dropdown-item show_confirm"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                        class="bi bi-trash"></i></button>
                                                             </form>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </span>
                                         </td>
-
                                     </tr>
                                 @endforeach
+
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
+
                     </div>
                 </div>
 
@@ -111,14 +113,14 @@
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-directions', {
+        new DataTable('#table-individuelles', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
             "order": [
-                [0, 'asc']
+                [0, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

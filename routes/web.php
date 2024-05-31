@@ -4,6 +4,7 @@ use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CourrierController;
@@ -15,9 +16,11 @@ use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\IndemniteController;
+use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\InterneController;
 use App\Http\Controllers\LoiController;
 use App\Http\Controllers\NomminationController;
+use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProcesverbalController;
@@ -148,6 +151,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/articles', ArticleController::class);
     Route::resource('/nomminations', NomminationController::class);
     Route::resource('/indemnites', IndemniteController::class);
+    Route::resource('/individuelles', IndividuelleController::class);
+    Route::resource('/collectives', CollectiveController::class);
+    Route::resource('/pcharges', PchargeController::class);
 });
 
 

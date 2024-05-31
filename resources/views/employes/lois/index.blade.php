@@ -31,13 +31,13 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-5">
+                        <div class="pt-0">
                             <a href="{{ route('lois.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
                         <h5 class="card-title">Lois</h5>
-                        <p>Le tableau de toutes les lois du système.</p>
+                       {{--  <p>Le tableau de toutes les lois du système.</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-lois">
                             <thead>

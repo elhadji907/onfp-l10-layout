@@ -97,7 +97,7 @@
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="card info-card sales-card">
 
-                            <a href="{{ url('/departs') }}">
+                            <a href="{{ url('/individuelles') }}">
                                 <div class="card-body">
                                     <h5 class="card-title">Demandes <span>| Individuelles</span></h5>
 
