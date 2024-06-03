@@ -111,7 +111,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $this->validate($request, [
-            'civilite' => ['required', 'string', 'max:9'],
+            'civilite' => ['required', 'string', 'max:5'],
             'firstname' => ['required', 'string', 'max:50'],
             'name' => ['required', 'string', 'max:25'],
             'date_naissance' => ['string', 'nullable'],

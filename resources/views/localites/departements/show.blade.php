@@ -23,7 +23,8 @@
                                 </span>
                             </div>
                         </div>
-                        <h5 class="card-title">Détail département de : {{ $departement->nom }}, région de {{ $departement->region->nom }}</h5>
+                        <h5 class="card-title">Détail département de : {{ $departement->nom }}, région de
+                            {{ $departement->region->nom }}</h5>
                         <!-- departement -->
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                             <div class="row mb-3 col-12 col-md-6 col-lg-6 pt-1">
@@ -34,6 +35,7 @@
                                         @endforeach
                                     </ol>
                                 </div>
+                            </div>
                         </form><!-- End departement -->
                     </div>
                 </div>

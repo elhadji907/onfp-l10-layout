@@ -112,6 +112,13 @@ class IndividuelleController extends Controller
         $status = "Enregistrement effectué avec succès";
         return redirect()->back()->with("status", $status);
     }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return view("demandes.individuelles.show", compact("user"));
+    }
+
     public function destroy($id)
     {
         $individuelle   = Individuelle::find($id);

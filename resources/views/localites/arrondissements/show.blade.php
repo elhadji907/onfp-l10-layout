@@ -16,14 +16,16 @@
 
                         <div class="row">
                             <div class="col-sm-12 pt-0">
-                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrondissements.index') }}"
-                                        class="btn btn-success btn-sm" title="retour"><i
-                                            class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                <span class="d-flex mt-2 align-items-baseline"><a
+                                        href="{{ route('arrondissements.index') }}" class="btn btn-success btn-sm"
+                                        title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Liste des arrondissements</p>
                                 </span>
                             </div>
                         </div>
-                        <h5 class="card-title">Détail arrondissement de : {{ $arrondissement->nom }}, département de {{ $arrondissement->departement->nom }}, région de {{ $arrondissement->departement->region->nom }}</h5>
+                        <h5 class="card-title">Détail arrondissement de : {{ $arrondissement->nom }}, département de
+                            {{ $arrondissement->departement->nom }}, région de
+                            {{ $arrondissement->departement->region->nom }}</h5>
                         <!-- arrondissement -->
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                             <div class="row mb-3 col-12 col-md-6 col-lg-6 pt-1">
@@ -34,6 +36,7 @@
                                         @endforeach
                                     </ol>
                                 </div>
+                            </div>
                         </form><!-- End arrondissement -->
                     </div>
                 </div>

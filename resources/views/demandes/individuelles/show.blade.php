@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails région')
+@section('title', 'Détails')
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -16,25 +16,34 @@
 
                         <div class="row">
                             <div class="col-sm-12 pt-0">
-                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('regions.index') }}"
+                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
                                         class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                    <p> | Liste des régions</p>
+                                    <p> | Détails</p>
                                 </span>
                             </div>
                         </div>
-                        <h5 class="card-title">Détail région de : {{ $region->nom }}</h5>
+                        {{-- <h5 class="card-title">Détail</h5> --}}
                         <!-- region -->
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
-                            <div class="row mb-3 col-12 col-md-6 col-lg-6 pt-1">
-                                <div class="form-floating mb-3">
-                                    <ol>
-                                        @foreach ($region->departements as $departement)
-                                            <li> Département de : {{ $departement->nom }}</li>
-                                        @endforeach
-                                    </ol>
-                                </div>
-                            </div>
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N°</th>
+                                        <th scope="col">Module</th>
+                                        <th scope="col">Localité</th>
+                                        <th scope="col">Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="" class="text-primary fw-bold"></a></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </form><!-- End region -->
                     </div>
                 </div>

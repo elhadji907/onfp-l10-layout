@@ -15,48 +15,81 @@
     <section class="section profile">
         <div class="row justify-content-center">
             {{-- Début Photo de profil --}}
-            <div class="col-xl-4">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
+                            <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}"
+                                width="50" height="auto">
 
-                <div class="card">
-                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                        {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
-                        <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}"
-                            width="50" height="auto">
-
-                        <h2>{{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}</h2>
-                        <span style="color: blue;">{{ Auth::user()->email }}</span>
-                        {{-- <h3>
+                            <h2>{{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}</h2>
+                            <span style="color: blue;">{{ Auth::user()->email }}</span>
+                            {{-- <h3>
                             @foreach (Auth::user()->roles as $role)
                                 <span>{{ $role->name }} |</span>
                             @endforeach
                         </h3> --}}
-                        <div class="social-links mt-2">
-                            @isset(Auth::user()->twitter)
-                                <a href="{{ Auth::user()->twitter }}" class="twitter" target="_blank"><i
-                                        class="bi bi-twitter"></i></a>
-                            @endisset
-                            @isset(Auth::user()->facebook)
-                                <a href="{{ Auth::user()->facebook }}" class="facebook" target="_blank"><i
-                                        class="bi bi-facebook"></i></a>
-                            @endisset
-                            @isset(Auth::user()->instagram)
-                                <a href="{{ Auth::user()->instagram }}" class="instagram" target="_blank"><i
-                                        class="bi bi-instagram"></i></a>
-                            @endisset
-                            @isset(Auth::user()->linkedin)
-                                <a href="{{ Auth::user()->linkedin }}" class="linkedin" target="_blank"><i
-                                        class="bi bi-linkedin"></i></a>
-                            @endisset
+                            <div class="social-links mt-2">
+                                @isset(Auth::user()->twitter)
+                                    <a href="{{ Auth::user()->twitter }}" class="twitter" target="_blank"><i
+                                            class="bi bi-twitter"></i></a>
+                                @endisset
+                                @isset(Auth::user()->facebook)
+                                    <a href="{{ Auth::user()->facebook }}" class="facebook" target="_blank"><i
+                                            class="bi bi-facebook"></i></a>
+                                @endisset
+                                @isset(Auth::user()->instagram)
+                                    <a href="{{ Auth::user()->instagram }}" class="instagram" target="_blank"><i
+                                            class="bi bi-instagram"></i></a>
+                                @endisset
+                                @isset(Auth::user()->linkedin)
+                                    <a href="{{ Auth::user()->linkedin }}" class="linkedin" target="_blank"><i
+                                            class="bi bi-linkedin"></i></a>
+                                @endisset
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
 
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">Demandes <span>| Toutes</span></h5>
+
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Demande</th>
+                                        <th scope="col">Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="{{ route('individuelles.show', Auth::user()->id) }}" class="text-primary fw-bold">Individuelle</a></td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="text-primary fw-bold">Collective</a></td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="text-primary fw-bold">Prise en charge</a>
+                                        </td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
             </div>
             {{-- Fin Photo de profil --}}
 
+
             {{-- Début aperçu --}}
-            <div class="col-xl-8">
+            <div class="col-12 col-md-8 col-lg-8">
                 <div class="flex items-center gap-4">
                     <div class="card">
                         @if ($message = Session::get('status'))
