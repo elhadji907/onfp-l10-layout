@@ -27,6 +27,7 @@ class CreateDemandeursTable extends Migration
             $table->string('cin', 200)->nullable();
             $table->string('numero_dossier', 200)->nullable();
             $table->string('statut', 45)->nullable();
+            $table->string('type', 200)->nullable();
             $table->string('items1', 200)->nullable();
             $table->string('items2', 200)->nullable();
             $table->timestamp('date1')->nullable();

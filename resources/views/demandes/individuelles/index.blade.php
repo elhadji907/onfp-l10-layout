@@ -42,7 +42,7 @@
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th>N° Dossier</th>
+                                    <th>N°</th>
                                     <th>CIN</th>
                                     <th>Prénom et NOM</th>
                                     <th>Date et lieu de naissance</th>
@@ -55,11 +55,11 @@
                                 <?php $i = 1; ?>
                                 @foreach ($individuelles as $individuelle)
                                     <tr>
-                                        <td>{{ $individuelle->numero }}</td>
-                                        <td>{{ $individuelle->courrier->date_recep?->format('d/m/Y') }} </td>
-                                        <td>{{ $individuelle->courrier->numero }}</td>
-                                        <td>{{ $individuelle->courrier->date_cores?->format('d/m/Y') }} </td>
-                                        <td>{{ $individuelle->courrier->objet }}</td>
+                                        <td>{{ $individuelle?->numero }}</td>
+                                        <td>{{ $individuelle->demandeur?->cin }}</td>
+                                        <td>{{ $individuelle->demandeur->user?->firstname .' '.$individuelle->demandeur->user?->name }} </td>
+                                        <td>{{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') .' à '.$individuelle->demandeur->user->lieu_naissance }} </td>
+                                        <td></td>
                                         <td></td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a

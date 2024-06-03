@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $cin
  * @property string|null $numero_dossier
  * @property string|null $statut
+ * @property string|null $type
  * @property string|null $items1
  * @property string|null $items2
  * @property Carbon|null $date1
@@ -88,6 +89,7 @@ class Demandeur extends Model
 		'cin',
 		'numero_dossier',
 		'statut',
+		'type',
 		'items1',
 		'items2',
 		'date1',

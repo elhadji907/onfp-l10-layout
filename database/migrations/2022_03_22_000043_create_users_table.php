@@ -47,9 +47,11 @@ class CreateUsersTable extends Migration
             $table->string('instagram', 200)->nullable(true);
             $table->string('linkedin', 200)->nullable(true);
             /* 1->employe; 2->sans emploi; 3->informel; 4->etudiant; 5->eleve; 6->autre */
-            $table->enum('situation_professionnelle', ['', 'Employé', 'Sans emploi', 'Informel', 'Etudiant', 'Eleve', 'Autre']);
+            /* $table->enum('situation_professionnelle', ['', 'Employé', 'Sans emploi', 'Informel', 'Etudiant', 'Eleve', 'Autre']); */
+            $table->string('situation_professionnelle')->nullable(true);
             /*  1->marié; 2->celibataire; 3->veuf(ve); 4->divorsé */
-            $table->enum('situation_familiale', ['', 'Marié(e)', 'Célibataire', 'Veuf(ve)', 'Divorsé(e)']);
+            /* $table->enum('situation_familiale', ['', 'Marié(e)', 'Célibataire', 'Veuf(ve)', 'Divorsé(e)']); */
+            $table->string('situation_familiale')->nullable(true);
             $table->rememberToken();
 
             $table->unique(["email"], 'email_UNIQUE');

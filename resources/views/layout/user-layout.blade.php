@@ -247,6 +247,14 @@
     </script>
 
     <script>
+        $('#select-field-projet_poste_formation').select2({
+            theme: 'bootstrap-5',
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-diplome_pro').select2({
             theme: 'bootstrap-5',
             selectionCssClass: "select2--small",

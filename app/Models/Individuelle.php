@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
+ * @property string|null $numero
  * @property string|null $experience
  * @property string|null $projetprofessionnel
  * @property string|null $prerequis
@@ -111,7 +112,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Individuelle extends Model
 {
-    use HasFactory;
+	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'individuelles';
@@ -149,6 +150,7 @@ class Individuelle extends Model
 
 	protected $fillable = [
 		'uuid',
+		'numero',
 		'experience',
 		'projetprofessionnel',
 		'prerequis',
@@ -158,6 +160,16 @@ class Individuelle extends Model
 		'statut',
 		'type',
 		'qualification',
+		'niveau_etude',
+		'diplome_academique',
+		'autre_diplome_academique',
+		'option_diplome_academique',
+		'etablissement_academique',
+		'diplome_professionnel',
+		'autre_diplome_professionnel',
+		'specialite_diplome_professionnel',
+		'etablissement_professionnel',
+		'projet_poste_formation',
 		'etablissement',
 		'adresse',
 		'option',
