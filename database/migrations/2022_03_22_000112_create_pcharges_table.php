@@ -63,6 +63,7 @@ class CreatePchargesTable extends Migration
             $table->unsignedInteger('diplomes_id')->nullable();
             $table->unsignedInteger('diplomespros_id')->nullable();
             $table->string('optiondiplome', 200)->nullable();
+            $table->unsignedInteger('users_id');
 
             $table->index(["demandeurs_id"], 'fk_charge_demandeurs1_idx');
 
@@ -81,6 +82,9 @@ class CreatePchargesTable extends Migration
             $table->index(["diplomes_id"], 'fk_pcharges_diplomes1_idx');
 
             $table->index(["diplomespros_id"], 'fk_pcharges_diplomespros1_idx');
+
+            $table->index(["users_id"], 'fk_pcharges_users1_idx');
+
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -129,6 +133,11 @@ class CreatePchargesTable extends Migration
                 ->references('id')->on('diplomespros')
                 ->onDelete('no action')
                 ->onUpdate('no action');
+                
+            $table->foreign('users_id', 'fk_pcharges_users1_idx')
+            ->references('id')->on('users')
+            ->onDelete('no action')
+            ->onUpdate('no action');
         });
     }
 

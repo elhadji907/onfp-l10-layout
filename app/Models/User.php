@@ -150,6 +150,22 @@ class User extends Authenticatable
         return $this->hasOne(Demandeur::class, 'users_id')->latest();
     }
 
+    public function individuelle()
+    {
+        return $this->hasOne(Individuelle::class, 'users_id')->latest();
+    }
+
+    public function collective()
+    {
+        return $this->hasOne(Collective::class, 'users_id')->latest();
+    }
+
+	
+    public function pcharge()
+    {
+        return $this->hasOne(Pcharge::class, 'users_id')->latest();
+    }
+
     public function employee()
     {
         return $this->hasOne(Employee::class, 'users_id')->latest()->latest();

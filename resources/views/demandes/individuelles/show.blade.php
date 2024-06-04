@@ -33,11 +33,13 @@
                                         <th scope="col">Module</th>
                                         <th scope="col">Localité</th>
                                         <th scope="col">Statut</th>
+                                        <th scope="col">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td><a href="" class="text-primary fw-bold"></a></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

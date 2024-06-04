@@ -107,6 +107,8 @@ class IndividuelleController extends Controller
             'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
             'qualification'                     =>  $request->input('qualification'),
             'experience'                        =>  $request->input('experience'),
+            "departements_id"                   =>  $request->input("departement"),
+            'users_id'                          => $user->id,
             'demandeurs_id'                     =>  $demandeur->id
         ]);
 
@@ -156,25 +158,25 @@ class IndividuelleController extends Controller
         $cin            = str_replace(' ', '', $cin);
 
         $user->update([
-            'civilite'                          => $request->input('civilite'),
-            'firstname'                         => $request->input('firstname'),
-            'name'                              => $request->input('name'),
-            'date_naissance'                    => $request->input('date_naissance'),
-            'lieu_naissance'                    => $request->input('lieu_naissance'),
-            'email'                             => $request->input('email'),
-            'telephone'                         => $request->input('telephone'),
-            'situation_familiale'               => $request->input('situation_familiale'),
-            'situation_professionnelle'         => $request->input('situation_professionnelle'),
-            'adresse'                           => $request->input('adresse'),
+            'civilite'                          =>  $request->input('civilite'),
+            'firstname'                         =>  $request->input('firstname'),
+            'name'                              =>  $request->input('name'),
+            'date_naissance'                    =>  $request->input('date_naissance'),
+            'lieu_naissance'                    =>  $request->input('lieu_naissance'),
+            'email'                             =>  $request->input('email'),
+            'telephone'                         =>  $request->input('telephone'),
+            'situation_familiale'               =>  $request->input('situation_familiale'),
+            'situation_professionnelle'         =>  $request->input('situation_professionnelle'),
+            'adresse'                           =>  $request->input('adresse'),
         ]);
 
         $user->save();
 
         $demandeur->update([
-            'cin'                               => $cin,
-            'type'                              => 'individuelle',
-            "departements_id"                   => $request->input("departement"),
-            'users_id'                          => $user->id
+            'cin'                               =>  $cin,
+            'type'                              =>  'individuelle',
+            "departements_id"                   =>  $request->input("departement"),
+            'users_id'                          =>  $user->id
         ]);
 
         $demandeur->save();
@@ -195,6 +197,8 @@ class IndividuelleController extends Controller
             'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
             'qualification'                     =>  $request->input('qualification'),
             'experience'                        =>  $request->input('experience'),
+            "departements_id"                   =>  $request->input("departement"),
+            'users_id'                          =>  $user->id,
             'demandeurs_id'                     =>  $demandeur->id
         ]);
 

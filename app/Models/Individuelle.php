@@ -140,6 +140,7 @@ class Individuelle extends Model
 		'communes_id' => 'int',
 		'arrondissements_id' => 'int',
 		'departements_id' => 'int',
+		'users_id' => 'int',
 		'regions_id' => 'int'
 	];
 
@@ -230,6 +231,7 @@ class Individuelle extends Model
 		'communes_id',
 		'arrondissements_id',
 		'departements_id',
+		'users_id',
 		'regions_id'
 	];
 
@@ -243,6 +245,10 @@ class Individuelle extends Model
 		return $this->belongsTo(Arrondissement::class, 'arrondissements_id');
 	}
 
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
+	}
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');

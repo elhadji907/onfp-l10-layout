@@ -92,6 +92,7 @@ class Collective extends Model
 		'projets_id' => 'int',
 		'conventions_id' => 'int',
 		'fcollectives_id' => 'int',
+		'users_id' => 'int',
 		'modules_id' => 'int'
 	];
 
@@ -135,6 +136,7 @@ class Collective extends Model
 		'projets_id',
 		'conventions_id',
 		'fcollectives_id',
+		'users_id',
 		'modules_id'
 	];
 
@@ -143,6 +145,10 @@ class Collective extends Model
 		return $this->belongsTo(Antenne::class, 'antennes_id');
 	}
 
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
+	}
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');

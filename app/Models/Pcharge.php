@@ -98,6 +98,7 @@ class Pcharge extends Model
 		'etudes_id' => 'int',
 		'typepcharges_id' => 'int',
 		'diplomes_id' => 'int',
+		'users_id' => 'int',
 		'diplomespros_id' => 'int'
 	];
 
@@ -146,6 +147,7 @@ class Pcharge extends Model
 		'typepcharges_id',
 		'diplomes_id',
 		'diplomespros_id',
+		'users_id',
 		'optiondiplome'
 	];
 
@@ -154,6 +156,10 @@ class Pcharge extends Model
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
 	}
 
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
+	}
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
