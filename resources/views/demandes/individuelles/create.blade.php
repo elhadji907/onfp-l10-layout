@@ -334,7 +334,7 @@
                                     <select name="diplome_academique"
                                         class="form-select  @error('diplome_academique') is-invalid @enderror"
                                         aria-label="Select" id="select-field-diplome_academique"
-                                        data-placeholder="Choisir Niveau étude">
+                                        data-placeholder="Choisir diplôme académique">
                                         <option value="">
                                             {{ old('diplome_academique') }}
                                         </option>
@@ -374,12 +374,12 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="autre_dipome_acad" class="form-label">Si autre ? précisez</label>
-                                    <input type="text" name="autre_dipome_acad"
-                                        value="{{ old('autre_dipome_acad') }}"
-                                        class="form-control form-control-sm @error('autre_dipome_acad') is-invalid @enderror"
-                                        id="autre_dipome_acad" placeholder="autre diplôme académique">
-                                    @error('autre_dipome_acad')
+                                    <label for="autre_diplome_academique" class="form-label">Si autre ? précisez</label>
+                                    <input type="text" name="autre_diplome_academique"
+                                        value="{{ old('autre_diplome_academique') }}"
+                                        class="form-control form-control-sm @error('autre_diplome_academique') is-invalid @enderror"
+                                        id="autre_diplome_academique" placeholder="autre diplôme académique">
+                                    @error('autre_diplome_academique')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -387,11 +387,11 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="option_diplome" class="form-label">Option du diplôme</label>
-                                    <input type="text" name="option_diplome" value="{{ old('option_diplome') }}"
-                                        class="form-control form-control-sm @error('option_diplome') is-invalid @enderror"
-                                        id="option_diplome" placeholder="Ex: Mathématiques">
-                                    @error('option_diplome')
+                                    <label for="option_diplome_academique" class="form-label">Option du diplôme</label>
+                                    <input type="text" name="option_diplome_academique" value="{{ old('option_diplome_academique') }}"
+                                        class="form-control form-control-sm @error('option_diplome_academique') is-invalid @enderror"
+                                        id="option_diplome_academique" placeholder="Ex: Mathématiques">
+                                    @error('option_diplome_academique')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -399,11 +399,11 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="etablissement" class="form-label">Etablissement obtention</label>
-                                    <input type="text" name="etablissement" value="{{ old('etablissement') }}"
-                                        class="form-control form-control-sm @error('etablissement') is-invalid @enderror"
-                                        id="etablissement" placeholder="Etablissement obtention">
-                                    @error('etablissement')
+                                    <label for="etablissement_academique" class="form-label">Etablissement académique</label>
+                                    <input type="text" name="etablissement_academique" value="{{ old('etablissement_academique') }}"
+                                        class="form-control form-control-sm @error('etablissement_academique') is-invalid @enderror"
+                                        id="etablissement_academique" placeholder="Etablissement obtention">
+                                    @error('etablissement_academique')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -413,12 +413,12 @@
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="diplome_pro" class="form-label">Diplôme professionnel<span
                                             class="text-danger mx-1">*</span></label>
-                                    <select name="diplome_pro"
-                                        class="form-select  @error('diplome_pro') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-diplome_pro"
+                                    <select name="diplome_professionnel"
+                                        class="form-select  @error('diplome_professionnel') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-diplome_professionnel"
                                         data-placeholder="Choisir Niveau étude">
                                         <option value="">
-                                            {{ old('diplome_pro') }}
+                                            {{ old('diplome_professionnel') }}
                                         </option>
                                         <option value="Aucun">
                                             Aucun
@@ -448,7 +448,7 @@
                                             Autre
                                         </option>
                                     </select>
-                                    @error('diplome_pro')
+                                    @error('diplome_professionnel')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -456,11 +456,11 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="autre_dipome_pro" class="form-label">Si autre ? précisez</label>
-                                    <input type="text" name="autre_dipome_pro" value="{{ old('autre_dipome_pro') }}"
-                                        class="form-control form-control-sm @error('autre_dipome_pro') is-invalid @enderror"
-                                        id="autre_dipome_pro" placeholder="autre diplôme professionnel ou attestations">
-                                    @error('autre_dipome_pro')
+                                    <label for="autre_diplome_professionnel" class="form-label">Si autre ? précisez</label>
+                                    <input type="text" name="autre_diplome_professionnel" value="{{ old('autre_diplome_professionnel') }}"
+                                        class="form-control form-control-sm @error('autre_diplome_professionnel') is-invalid @enderror"
+                                        id="autre_diplome_professionnel" placeholder="autre diplôme professionnel ou attestations">
+                                    @error('autre_diplome_professionnel')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -468,11 +468,23 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="specialite" class="form-label">Spécialité</label>
-                                    <input type="text" name="specialite" value="{{ old('specialite') }}"
-                                        class="form-control form-control-sm @error('specialite') is-invalid @enderror"
-                                        id="specialite" placeholder="Ex: électricité">
-                                    @error('specialite')
+                                    <label for="etablissement_professionnel" class="form-label">Etablissement professionnel</label>
+                                    <input type="text" name="etablissement_professionnel" value="{{ old('etablissement_professionnel') }}"
+                                        class="form-control form-control-sm @error('etablissement_professionnel') is-invalid @enderror"
+                                        id="etablissement_professionnel" placeholder="Etablissement obtention">
+                                    @error('etablissement_professionnel')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="specialite_diplome_professionnel" class="form-label">Spécialité</label>
+                                    <input type="text" name="specialite_diplome_professionnel" value="{{ old('specialite_diplome_professionnel') }}"
+                                        class="form-control form-control-sm @error('specialite_diplome_professionnel') is-invalid @enderror"
+                                        id="specialite_diplome_professionnel" placeholder="Ex: électricité">
+                                    @error('specialite_diplome_professionnel')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -512,7 +524,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="qualification" class="form-label">Qualification et autres diplômes</label>
                                     <textarea name="qualification" id="qualification" rows="1"
                                         class="form-control form-control-sm @error('qualification') is-invalid @enderror"

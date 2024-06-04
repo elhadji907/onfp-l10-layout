@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class IndividuelleController extends Controller
 {
@@ -65,26 +66,26 @@ class IndividuelleController extends Controller
         }
 
         $user = User::create([
-            'civilite'                  => $request->input('civilite'),
-            'firstname'                 => $request->input('firstname'),
-            'name'                      => $request->input('name'),
-            'date_naissance'            => $request->input('date_naissance'),
-            'lieu_naissance'            => $request->input('lieu_naissance'),
-            'email'                     => $request->input('email'),
-            'telephone'                 => $request->input('telephone'),
-            'situation_familiale'       => $request->input('situation_familiale'),
-            'situation_professionnelle' => $request->input('situation_professionnelle'),
-            'adresse'                   => $request->input('adresse'),
+            'civilite'                          => $request->input('civilite'),
+            'firstname'                         => $request->input('firstname'),
+            'name'                              => $request->input('name'),
+            'date_naissance'                    => $request->input('date_naissance'),
+            'lieu_naissance'                    => $request->input('lieu_naissance'),
+            'email'                             => $request->input('email'),
+            'telephone'                         => $request->input('telephone'),
+            'situation_familiale'               => $request->input('situation_familiale'),
+            'situation_professionnelle'         => $request->input('situation_professionnelle'),
+            'adresse'                           => $request->input('adresse'),
         ]);
 
         $user->save();
 
         $demandeur = new Demandeur([
-            'cin'               => $cin,
-            'type'              => 'individuelle',
-            "departements_id"   => $request->input("departement"),
-            'numero_dossier'    => "DO" . $num_demande_inividuelle . "" . $anne,
-            'users_id'          => $user->id
+            'cin'                               => $cin,
+            'type'                              => 'individuelle',
+            "departements_id"                   => $request->input("departement"),
+            'numero_dossier'                    => "DO" . $num_demande_inividuelle . "" . $anne,
+            'users_id'                          => $user->id
         ]);
 
         $demandeur->save();
@@ -104,12 +105,102 @@ class IndividuelleController extends Controller
             'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
             'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
             'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+            'qualification'                     =>  $request->input('qualification'),
+            'experience'                        =>  $request->input('experience'),
             'demandeurs_id'                     =>  $demandeur->id
         ]);
 
         $individuelle->save();
 
         $status = "Enregistrement effectué avec succès";
+        return redirect()->back()->with("status", $status);
+    }
+
+
+    public function edit($id)
+    {
+        $individuelle = Individuelle::findOrFail($id);
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        return view("demandes.individuelles.update", compact("individuelle", "departements"));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'civilite'                      => ["required", "string"],
+            'cin'                           => ["required", "string"],
+            'firstname'                     => ['required', 'string', 'max:50'],
+            'name'                          => ['required', 'string', 'max:25'],
+            'telephone'                     => ['required', 'string', 'max:25', 'min:9'],
+            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9'],
+            'date_naissance'                => ['required', 'date'],
+            'lieu_naissance'                => ['string', 'required'],
+            /* 'email'                         => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)], */
+            'adresse'                       => ['required', 'string', 'max:255'],
+            'departement'                   => ['required', 'string', 'max:255'],
+            'situation_professionnelle'     => ['required', 'string', 'max:255'],
+            'situation_familiale'           => ['required', 'string', 'max:255'],
+            'niveau_etude'                  => ['required', 'string', 'max:255'],
+            'diplome_academique'            => ['required', 'string', 'max:255'],
+            'diplome_professionnel'         => ['required', 'string', 'max:255'],
+            'projet_poste_formation'        => ['required', 'string', 'max:255'],
+        ]);
+        
+        $individuelle   = Individuelle::findOrFail($id);
+        $demandeur      = $individuelle->demandeur;
+        $user           = $demandeur->user;
+
+        $cin            = $request->input('cin');
+        $cin            = str_replace(' ', '', $cin);
+
+        $user->update([
+            'civilite'                          => $request->input('civilite'),
+            'firstname'                         => $request->input('firstname'),
+            'name'                              => $request->input('name'),
+            'date_naissance'                    => $request->input('date_naissance'),
+            'lieu_naissance'                    => $request->input('lieu_naissance'),
+            'email'                             => $request->input('email'),
+            'telephone'                         => $request->input('telephone'),
+            'situation_familiale'               => $request->input('situation_familiale'),
+            'situation_professionnelle'         => $request->input('situation_professionnelle'),
+            'adresse'                           => $request->input('adresse'),
+        ]);
+
+        $user->save();
+
+        $demandeur->update([
+            'cin'                               => $cin,
+            'type'                              => 'individuelle',
+            "departements_id"                   => $request->input("departement"),
+            'users_id'                          => $user->id
+        ]);
+
+        $demandeur->save();
+
+        $individuelle->update([
+            'date_depot'                        =>  $request->input('date_depot'),
+            'telephone'                         =>  $request->input('telephone_secondaire'),
+            'niveau_etude'                      =>  $request->input('niveau_etude'),
+            'diplome_academique'                =>  $request->input('diplome_academique'),
+            'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+            'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+            'etablissement_academique'          =>  $request->input('etablissement_academique'),
+            'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+            'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+            'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+            'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+            'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+            'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+            'qualification'                     =>  $request->input('qualification'),
+            'experience'                        =>  $request->input('experience'),
+            'demandeurs_id'                     =>  $demandeur->id
+        ]);
+
+        $individuelle->save();
+
+        $status = "Modification effectuée avec succès";
         return redirect()->back()->with("status", $status);
     }
 

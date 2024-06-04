@@ -72,24 +72,24 @@
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i></a>
+                                                                class="mx-1" title="Modifier"><i class="bi bi-pencil"></i>Modifier</a>
                                                         </li>
                                                         <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ url('individuelle-imputations', ['id' => $individuelle->id]) }}"
-                                                                class="mx-1"><i class="bi bi-recycle"></i></a>
+                                                                class="mx-1" title="Imputer"><i class="bi bi-recycle"></i>Imputer</a>
                                                         </li>
                                                         <li><a class="dropdown-item btn btn-sm"
                                                                 href="{!! url('coupon-individuelle', ['$id' => $individuelle->id]) !!}" class="mx-1"
-                                                                target="_blank"><i
-                                                                    class="bi bi-file-earmark-arrow-down"></i></a>
+                                                                target="_blank" title="Télécharger"><i
+                                                                    class="bi bi-file-earmark-arrow-down"></i>Télécharger</a>
                                                         </li>
                                                         <li>
                                                             <form action="{{ route('individuelles.destroy', $individuelle->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"><i
-                                                                        class="bi bi-trash"></i></button>
+                                                                <button type="submit" class="dropdown-item show_confirm" title="Supprimer"><i
+                                                                        class="bi bi-trash"></i>Supprimer</button>
                                                             </form>
                                                         </li>
                                                     </ul>

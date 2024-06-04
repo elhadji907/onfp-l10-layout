@@ -255,7 +255,7 @@
     </script>
 
     <script>
-        $('#select-field-diplome_pro').select2({
+        $('#select-field-diplome_professionnel').select2({
             theme: 'bootstrap-5',
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",

@@ -41,7 +41,7 @@ class IndividuelleStoreRequest extends FormRequest
             'situation_familiale'           => ['required', 'string', 'max:255'],
             'niveau_etude'                  => ['required', 'string', 'max:255'],
             'diplome_academique'            => ['required', 'string', 'max:255'],
-            'diplome_pro'                   => ['required', 'string', 'max:255'],
+            'diplome_professionnel'         => ['required', 'string', 'max:255'],
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ];
     }

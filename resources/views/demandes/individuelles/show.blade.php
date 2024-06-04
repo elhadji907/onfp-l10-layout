@@ -3,7 +3,7 @@
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
+            <div class="col-12 col-md-12 col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         region="alert">
@@ -23,13 +23,13 @@
                                 </span>
                             </div>
                         </div>
-                        {{-- <h5 class="card-title">Détail</h5> --}}
-                        <!-- region -->
+                        <h5 class="card-title">N° dossier: </h5>
+                        <!-- demande -->
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th scope="col">N°</th>
+                                        <th scope="col">N° demande</th>
                                         <th scope="col">Module</th>
                                         <th scope="col">Localité</th>
                                         <th scope="col">Statut</th>
@@ -44,7 +44,8 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </form><!-- End region -->
+                        </form>
+                        <!-- End demande -->
                     </div>
                 </div>
             </div>
