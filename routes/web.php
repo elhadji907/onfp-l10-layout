@@ -10,6 +10,7 @@ use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CourrierController;
 use App\Http\Controllers\DecisionController;
 use App\Http\Controllers\DecretController;
+use App\Http\Controllers\DemandeurController;
 use App\Http\Controllers\DepartController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -151,6 +153,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/articles', ArticleController::class);
     Route::resource('/nomminations', NomminationController::class);
     Route::resource('/indemnites', IndemniteController::class);
+    Route::resource('/demandeurs', DemandeurController::class);
     Route::resource('/individuelles', IndividuelleController::class);
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/pcharges', PchargeController::class);

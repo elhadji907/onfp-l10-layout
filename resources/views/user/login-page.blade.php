@@ -69,10 +69,10 @@
                                                 aria-label="Close"></button>
                                         </div>
                                     @endif
-                                    <div class="pt-4 pb-2">
+                                    <div class="pt-0 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Connectez-vous</h5>
-                                        <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de
-                                            passe pour vous connecter</p>
+                                        {{-- <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de
+                                            passe pour vous connecter</p> --}}
                                     </div>
                                     <form class="row g-3 needs-validation" novalidate method="POST"
                                         action="{{ route('login') }}">

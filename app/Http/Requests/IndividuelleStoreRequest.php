@@ -34,7 +34,7 @@ class IndividuelleStoreRequest extends FormRequest
             'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9'],
             'date_naissance'                => ['required', 'date'],
             'lieu_naissance'                => ['string', 'required'],
-            'email'                         => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
+            /* 'email'                         => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)], */
             'adresse'                       => ['required', 'string', 'max:255'],
             'departement'                   => ['required', 'string', 'max:255'],
             'situation_professionnelle'     => ['required', 'string', 'max:255'],

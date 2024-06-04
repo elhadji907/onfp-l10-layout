@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Demandeur;
+use App\Models\Individuelle;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -49,7 +51,18 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $demandeur = Demandeur::create([
+            'users_id' => $user->id,
+        ]);
+
+        $individuelle = Individuelle::create([
+            'demandeurs_id' => $demandeur->id,
+            'users_id' => $user->id,
+        ]);
+
         event(new Registered($user));
+        event(new Registered($demandeur));
+        event(new Registered($individuelle));
 
         /* Se connecter automatiquement après inscription */
         /* Auth::login($user); */
@@ -57,9 +70,9 @@ class RegisteredUserController extends Controller
         /* Redirection vers le home directement après incrption */
         /* return redirect(RouteServiceProvider::HOME); */
 
-        
+
         /* Redirection vers le connexion après incrption */
         $status = "Compte créé, merci de vous connecter";
-        return redirect(RouteServiceProvider::LOGIN)->with('status',$status);
+        return redirect(RouteServiceProvider::LOGIN)->with('status', $status);
     }
 }

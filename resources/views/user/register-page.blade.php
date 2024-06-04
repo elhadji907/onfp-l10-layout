@@ -62,10 +62,10 @@
 
                                 <div class="card-body">
 
-                                    <div class="pt-4 pb-2">
+                                    <div class="pt-0 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Créer un compte</h5>
-                                        <p class="text-center small">Entrez vos informations personnelles pour créer un
-                                            compte</p>
+                                       {{--  <p class="text-center small">Entrez vos informations personnelles pour créer un
+                                            compte</p> --}}
                                     </div>
 
                                     <form class="row g-3 needs-validation" novalidate method="POST"
@@ -75,7 +75,7 @@
                                         <div class="col-12">
                                             <label for="prenom" class="form-label">Prénom</label>
                                             <input type="text" name="prenom"
-                                                class="form-control @error('prenom') is-invalid @enderror"
+                                                class="form-control form-control-sm @error('prenom') is-invalid @enderror"
                                                 id="prenom" required placeholder="Votre prenom"
                                                 value="{{ old('prenom') }}" autocomplete="prenom" autofocus>
                                             <div class="invalid-feedback">
@@ -89,7 +89,7 @@
                                         <div class="col-12">
                                             <label for="name" class="form-label">Nom</label>
                                             <input type="text" name="name"
-                                                class="form-control @error('name') is-invalid @enderror" id="name"
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
                                                 required placeholder="Votre Nom" value="{{ old('name') }}"
                                                 autocomplete="name">
                                             <div class="invalid-feedback">
@@ -103,9 +103,9 @@
                                         <div class="col-12">
                                             <label for="email" class="form-label">E-mail</label>
                                             <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                                {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
                                                 <input type="email" name="email"
-                                                    class="form-control @error('email') is-invalid @enderror"
+                                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                     id="email" required placeholder="Votre e-mail"
                                                     value="{{ old('email') }}" autocomplete="email">
                                                 <div class="invalid-feedback">
@@ -120,7 +120,7 @@
                                         <div class="col-12">
                                             <label for="telephone" class="form-label">Téléphone</label>
                                             <input type="text" name="telephone"
-                                                class="form-control @error('telephone') is-invalid @enderror"
+                                                class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                                 id="telephone" required placeholder="Votre n° de téléphone"
                                                 value="{{ old('telephone') }}" autocomplete="telephone">
                                             <div class="invalid-feedback">
@@ -135,7 +135,7 @@
                                             <label for="adresse" class="form-label">Adresse de résidence</label>
                                             <div class="input-group has-validation">
                                                 <input type="name" name="adresse"
-                                                    class="form-control @error('adresse') is-invalid @enderror"
+                                                    class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                                     id="adresse" required placeholder="Votre adresse de résidence"
                                                     value="{{ old('adresse') }}" autocomplete="adresse">
                                                 <div class="invalid-feedback">
@@ -150,7 +150,7 @@
                                         <div class="col-12">
                                             <label for="password" class="form-label">Mot de passe</label>
                                             <input type="password" name="password"
-                                                class="form-control @error('password') is-invalid @enderror"
+                                                class="form-control form-control-sm @error('password') is-invalid @enderror"
                                                 id="password" required placeholder="Votre mot de passe"
                                                 value="{{ old('password') }}" autocomplete="new-password">
                                             <div class="invalid-feedback">
@@ -165,7 +165,7 @@
                                             <label for="password_confirmation" class="form-label">Confirmez mot de
                                                 passe</label>
                                             <input type="password" name="password_confirmation"
-                                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
                                                 id="password_confirmation" required
                                                 placeholder="Confimez votre mot de passe"
                                                 value="{{ old('password_confirmation') }}"

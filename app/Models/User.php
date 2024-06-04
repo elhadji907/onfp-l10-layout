@@ -27,6 +27,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'firstname',
+        'cin',
         'name',
         'email',
         'telephone',
@@ -53,6 +54,7 @@ class User extends Authenticatable
         'deleted_by',
         'situation_professionnelle',
         'situation_familiale',
+        'cin',
         'remember_token'
     ];
 
@@ -150,20 +152,20 @@ class User extends Authenticatable
         return $this->hasOne(Demandeur::class, 'users_id')->latest();
     }
 
-    public function individuelle()
+    public function individuelles()
     {
-        return $this->hasOne(Individuelle::class, 'users_id')->latest();
+        return $this->hasMany(Individuelle::class, 'users_id')->latest();
     }
 
-    public function collective()
+    public function collectives()
     {
-        return $this->hasOne(Collective::class, 'users_id')->latest();
+        return $this->hasMany(Collective::class, 'users_id')->latest();
     }
 
 	
-    public function pcharge()
+    public function pcharges()
     {
-        return $this->hasOne(Pcharge::class, 'users_id')->latest();
+        return $this->hasMany(Pcharge::class, 'users_id')->latest();
     }
 
     public function employee()

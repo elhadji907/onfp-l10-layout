@@ -26,6 +26,7 @@ class ProfileUpdateRequest extends FormRequest
             'telephone' => ['required', 'string', 'max:25', 'min:9'],
             'adresse' => ['required', 'string', 'max:255'],
             'situation_familiale' => ['string', 'max:15', 'required'],
+            'situation_professionnelle' => ['string', 'max:25', 'required'],
             'twitter' => ['nullable', 'string', 'max:255'],
             'facebook' => ['nullable', 'string', 'max:255'],
             'instagram' => ['nullable', 'string', 'max:255'],

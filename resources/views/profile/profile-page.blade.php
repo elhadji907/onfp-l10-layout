@@ -61,22 +61,43 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Demande</th>
-                                        <th scope="col">Nombre</th>
+                                        <th scope="col" class="text-center">Nombre</th>
+                                        <th scope="col" class="text-center">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><a href="{{ route('individuelles.show', Auth::user()->id) }}" class="text-primary fw-bold">Individuelle</a></td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="text-primary fw-bold">Collective</a></td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="text-primary fw-bold">Prise en charge</a>
+                                        <td class="text-primary fw-bold">Individuelle</td>
+                                        <td class="text-center">
+                                            @foreach (Auth::user()->individuelles as $individuelle)
+                                                @if (isset($individuelle->numero) && isset($individuelle->modules_id))
+                                                    @if ($loop->last)
+                                                        <a class="text-primary fw-bold"
+                                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                    @endif
+                                                @else
+                                                    <span class="text-primary fw-bold">0</span>
+                                                @endif
+                                            @endforeach
                                         </td>
-                                        <td>0</td>
+                                        <td class="text-center">
+                                            <a href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
+                                                class="btn btn-success btn-sm" title="voir">ajouter</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary fw-bold">Collective</td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-success btn-sm" title="voir">ajouter</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary fw-bold">Prise en charge</td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-success btn-sm" title="voir">ajouter</a>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -382,6 +403,45 @@
                                                     </option>
                                                 </select>
                                                 @error('situation_familiale')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- Situation professionnelle --}}
+                                        <div class="row mb-3">
+                                            <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
+                                                professionnelle<span class="text-danger mx-1">*</span></label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select name="situation_professionnelle"
+                                                    class="form-select  @error('situation_professionnelle') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-professionnelle"
+                                                    data-placeholder="Choisir situation professionnelle">
+                                                    <option value="{{ $user->situation_professionnelle }}">
+                                                        {{ $user->situation_professionnelle ?? old('situation_professionnelle') }}
+                                                    </option>
+                                                    <option value="Employé(e)">
+                                                        Employé(e)
+                                                    </option>
+                                                    <option value="Informel">
+                                                        Informel
+                                                    </option>
+                                                    <option value="Elève ou étudiant">
+                                                        Elève ou étudiant
+                                                    </option>
+                                                    <option value="chercheur emploi">
+                                                        chercheur emploi
+                                                    </option>
+                                                    <option value="Stage ou période essai">
+                                                        Stage ou période essai
+                                                    </option>
+                                                    <option value="Entrepreneur ou freelance">
+                                                        Entrepreneur ou freelance
+                                                    </option>
+                                                </select>
+                                                @error('situation_professionnelle')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>

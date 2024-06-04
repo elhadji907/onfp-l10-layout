@@ -33,7 +33,7 @@
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('patch')
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="civilite" class="form-label">Civilité<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="civilite" class="form-select  @error('civilite') is-invalid @enderror"
@@ -41,11 +41,11 @@
                                         <option value="{{ $user->civilite }}">
                                             {{ $user->civilite ?? old('civilite') }}
                                         </option>
-                                        <option value="M.">
-                                            M.
+                                        <option value="Monsieur">
+                                            Monsieur
                                         </option>
-                                        <option value="Mme">
-                                            Mme
+                                        <option value="Madame">
+                                            Madame
                                         </option>
                                     </select>
                                     @error('civilite')
@@ -54,7 +54,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="firstname" class="form-label">Prénom<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="firstname" value="{{ $user->firstname }}"
@@ -67,7 +67,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="name" class="form-label">Nom<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="name" value="{{ $user->name }}"
@@ -80,7 +80,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="date naissance" class="form-label">Date naissance</label>
                                     <input type="date" name="date_naissance"
                                         value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
@@ -93,7 +93,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="lieu_naissance" class="form-label">Lieu naissance</label>
                                     <input type="text" name="lieu_naissance" value="{{ $user->lieu_naissance }}"
                                         class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
@@ -105,7 +105,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="email" class="form-label">email<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone" value="{{ $user->telephone }}"
@@ -134,7 +134,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse" value="{{ $user->adresse }}"
@@ -147,7 +147,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="situation_familiale" class="form-label">Situation familiale<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="situation_familiale"
@@ -176,7 +176,44 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="situation_profesionnelle" class="form-label">Situation profesionnelle<span
+                                            class="text-danger mx-1">*</span></label>
+                                            <select name="situation_professionnelle"
+                                                class="form-select  @error('situation_professionnelle') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-professionnelle"
+                                                data-placeholder="Choisir situation professionnelle">
+                                                <option value="{{ $user->situation_professionnelle }}">
+                                                    {{ $user->situation_professionnelle ?? old('situation_professionnelle') }}
+                                                </option>
+                                                <option value="Employé(e)">
+                                                    Employé(e)
+                                                </option>
+                                                <option value="Informel">
+                                                    Informel
+                                                </option>
+                                                <option value="Elève ou étudiant">
+                                                    Elève ou étudiant
+                                                </option>
+                                                <option value="chercheur emploi">
+                                                    chercheur emploi
+                                                </option>
+                                                <option value="Stage ou période essai">
+                                                    Stage ou période essai
+                                                </option>
+                                                <option value="Entrepreneur ou freelance">
+                                                    Entrepreneur ou freelance
+                                                </option>
+                                            </select>
+                                            @error('situation_professionnelle')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="password" class="form-label">Modifier mot de passe</label>
                                     <input type="password" name="password"
                                         class="form-control form-control-sm @error('password') is-invalid @enderror" id="password"
@@ -188,7 +225,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="roles" class="form-label">Roles</label>
+                                    <select name="roles[]" class="form-select" aria-label="Select"
+                                        id="multiple-select-field" multiple data-placeholder="Choisir roles">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role }}"
+                                                {{ in_array($role, $userRoles) ? 'selected' : '' }}>
+                                                {{ $role ?? old('role') }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="profil" class="form-label">Image de profil</label>
                                     <input type="file" name="image" id="image" multiple
                                         class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
@@ -201,19 +251,6 @@
                                                 src="{{ asset($user->getImage()) }}" width="20" height="auto">
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                    <label for="roles" class="form-label">Roles</label>
-                                    <select name="roles[]" class="form-select" aria-label="Select"
-                                        id="multiple-select-field" multiple data-placeholder="Choisir roles">
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role }}"
-                                                {{ in_array($role, $userRoles) ? 'selected' : '' }}>
-                                                {{ $role ?? old('role') }}
-                                            </option>
-                                        @endforeach
-                                    </select>
                                 </div>
 
                                 <input type="hidden" name="newPassword" value="{{ $user->password }}">

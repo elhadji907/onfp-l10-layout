@@ -23,7 +23,7 @@
                                 </span>
                             </div>
                         </div>
-                        <h5 class="card-title">N° dossier: </h5>
+                        <h5 class="card-title">N° dossier : {{ $individuelle->demandeur->numero_dossier }}</h5>
                         <!-- demande -->
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                             <table class="table table-borderless">
@@ -38,10 +38,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><a href="" class="text-primary fw-bold"></a></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><a href="" class="text-primary fw-bold">{{ $individuelle->numero }}</a>
+                                        </td>
+                                        <td>{{ $individuelle?->module?->name }}</td>
+                                        <td>{{ $individuelle->departement->nom }}</td>
+                                        <td>{{ $individuelle->statut }}</td>
                                         <td></td>
                                     </tr>
                                 </tbody>

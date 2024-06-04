@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'enregistrement demande individuelle')
+@section('title', 'Enregistrement demande individuelle')
 @section('space-work')
     <section class="section min-vh-0 d-flex flex-column align-items-center justify-content-center py-0">
         <div class="container">
@@ -13,20 +13,19 @@
                 @endif
                 <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
-
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12 pt-2">
-                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                <div class="col-sm-12 pt-0">
+                                    <span class="d-flex mt-0 align-items-baseline"><a
                                             href="{{ route('individuelles.index') }}" class="btn btn-success btn-sm"
                                             title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | Liste des demandes individuelles</p>
+                                        <p> | Mes demandes individuelles</p>
                                     </span>
                                 </div>
                             </div>
                             <div class="pt-0 pb-0">
-                                <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
-                                <p class="text-center small">enregister un nouveau demande individuelle</p>
+                                <h5 class="card-title text-center pb-0 fs-4">Nouvelle demande</h5>
+                                {{-- <p class="text-center small"></p> --}}
                             </div>
                             <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data"
                                 class="row g-3">
@@ -59,6 +58,22 @@
                                         @enderror
                                     </div>
                                 </div> --}}
+                                <span class="badge bg-secondary">
+                                    <h6>Informations personnelles</h6>
+                                </span>
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="cin" class="form-label">N° CIN<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="cin"
+                                        value="{{ Auth::user()->demandeur->cin ?? old('cin') }}"
+                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                        id="cin" placeholder="Numéro carte d'identité nationale">
+                                    @error('cin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="civilite" class="form-label">Civilité<span
@@ -66,8 +81,8 @@
                                     <select name="civilite"
                                         class="form-select form-select-sm @error('civilite') is-invalid @enderror"
                                         aria-label="Select" id="select-field-civilite" data-placeholder="Choisir civilité">
-                                        <option value="">
-                                            {{ old('civilite') }}
+                                        <option value="{{ Auth::user()->civilite }}">
+                                            {{ Auth::user()->civilite ?? old('civilite') }}
                                         </option>
                                         <option value="Monsieur">
                                             Monsieur
@@ -84,24 +99,12 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="cin" class="form-label">N° CIN<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="cin" value="{{ old('cin') }}"
-                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                        id="cin" placeholder="Numéro carte d'identité nationale">
-                                    @error('cin')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="firstname" class="form-label">Prénom<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="firstname" value="{{ old('firstname') }}"
+                                    <input type="text" name="firstname"
+                                        value="{{ Auth::user()->demandeur->user->firstname ?? old('firstname') }}"
                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
-                                        id="firstname" placeholder="prénom">
+                                        id="firstname" placeholder="prénom" @readonly(true)>
                                     @error('firstname')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -112,9 +115,10 @@
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="name" class="form-label">Nom<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="name" value="{{ old('name') }}"
+                                    <input type="text" name="name"
+                                        value="{{ Auth::user()->demandeur->user->name ?? old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                        id="name" placeholder="nom">
+                                        id="name" placeholder="nom" @readonly(true)>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -125,7 +129,8 @@
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="date_naissance" class="form-label">Date naissance<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="date" name="date_naissance" value="{{ old('date_naissance') }}"
+                                    <input type="date" name="date_naissance"
+                                        value="{{ Auth::user()->demandeur->user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
                                         class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
                                         id="date_naissance" placeholder="Date naissance">
                                     @error('date_naissance')
@@ -140,7 +145,8 @@
                                             class="text-danger mx-1">*</span></label>
                                     <input name="lieu_naissance" type="text"
                                         class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
-                                        id="lieu_naissance" value="{{ old('lieu_naissance') }}"
+                                        id="lieu_naissance"
+                                        value="{{ Auth::user()->demandeur->user->lieu_naissance ?? old('lieu_naissance') }}"
                                         autocomplete="lieu_naissance" placeholder="Lieu naissance">
                                     @error('lieu_naissance')
                                         <span class="invalid-feedback" role="alert">
@@ -152,7 +158,8 @@
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="adresse" value="{{ old('adresse') }}"
+                                    <input type="text" name="adresse"
+                                        value="{{ Auth::user()->demandeur->user->adresse ?? old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
                                     @error('adresse')
@@ -167,9 +174,10 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         {{-- <span class="input-group-text" id="email">@</span> --}}
-                                        <input type="email" name="email" value="{{ old('email') }}"
+                                        <input type="email" name="email"
+                                            value="{{ Auth::user()->demandeur->user->email ?? old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                            id="email" placeholder="email">
+                                            id="email" placeholder="email" @readonly(true)>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -181,7 +189,8 @@
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="telephone" class="form-label">Téléphone personnel<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone" value="{{ old('telephone') }}"
+                                    <input type="text" name="telephone"
+                                        value="{{ Auth::user()->demandeur->user->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="téléphone">
                                     @error('telephone')
@@ -195,31 +204,10 @@
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone_secondaire"
-                                        value="{{ old('telephone_secondaire') }}"
+                                        value="{{ Auth::user()->demandeur->individuelle->telephone ?? old('telephone_secondaire') }}"
                                         class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
                                         id="telephone_secondaire" placeholder="téléphone secondaire">
                                     @error('telephone_secondaire')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="departement" class="form-label">Département de résidence<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="departement"
-                                        class="form-select  @error('departement') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-departement"
-                                        data-placeholder="Choisir le département">
-                                        <option value="">--Choisir la département--</option>
-                                        @foreach ($departements as $departement)
-                                            <option value="{{ $departement->id }}">
-                                                {{ $departement->nom }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('departement')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -233,8 +221,8 @@
                                         class="form-select  @error('situation_familiale') is-invalid @enderror"
                                         aria-label="Select" id="select-field-familiale"
                                         data-placeholder="Choisir situation familiale">
-                                        <option value="">
-                                            {{ old('situation_familiale') }}
+                                        <option value="{{Auth::user()->situation_familiale }}">
+                                            {{Auth::user()->situation_familiale ?? old('situation_familiale') }}
                                         </option>
                                         <option value="Marié(e)">
                                             Marié(e)
@@ -263,8 +251,8 @@
                                         class="form-select  @error('situation_professionnelle') is-invalid @enderror"
                                         aria-label="Select" id="select-field-professionnelle"
                                         data-placeholder="Choisir situation professionnelle">
-                                        <option value="">
-                                            {{ old('situation_professionnelle') }}
+                                        <option value="{{Auth::user()->situation_professionnelle }}">
+                                            {{Auth::user()->situation_professionnelle ?? old('situation_professionnelle') }}
                                         </option>
                                         <option value="Employé(e)">
                                             Employé(e)
@@ -286,6 +274,32 @@
                                         </option>
                                     </select>
                                     @error('situation_professionnelle')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <span class="badge bg-secondary">
+                                    <h6>Demande</h6>
+                                </span>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="departement" class="form-label">Département de résidence<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="departement"
+                                        class="form-select  @error('departement') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-departement"
+                                        data-placeholder="Choisir le département">
+                                        <option value="{{ Auth::user()->demandeur?->departement?->id }}">
+                                            {{ Auth::user()->demandeur?->departement?->nom }}</option>
+                                        @foreach ($departements as $departement)
+                                            <option value="{{ $departement->id }}">
+                                                {{ $departement->nom }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('departement')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -388,7 +402,8 @@
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="option_diplome_academique" class="form-label">Option du diplôme</label>
-                                    <input type="text" name="option_diplome_academique" value="{{ old('option_diplome_academique') }}"
+                                    <input type="text" name="option_diplome_academique"
+                                        value="{{ old('option_diplome_academique') }}"
                                         class="form-control form-control-sm @error('option_diplome_academique') is-invalid @enderror"
                                         id="option_diplome_academique" placeholder="Ex: Mathématiques">
                                     @error('option_diplome_academique')
@@ -399,8 +414,10 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="etablissement_academique" class="form-label">Etablissement académique</label>
-                                    <input type="text" name="etablissement_academique" value="{{ old('etablissement_academique') }}"
+                                    <label for="etablissement_academique" class="form-label">Etablissement
+                                        académique</label>
+                                    <input type="text" name="etablissement_academique"
+                                        value="{{ old('etablissement_academique') }}"
                                         class="form-control form-control-sm @error('etablissement_academique') is-invalid @enderror"
                                         id="etablissement_academique" placeholder="Etablissement obtention">
                                     @error('etablissement_academique')
@@ -456,10 +473,13 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="autre_diplome_professionnel" class="form-label">Si autre ? précisez</label>
-                                    <input type="text" name="autre_diplome_professionnel" value="{{ old('autre_diplome_professionnel') }}"
+                                    <label for="autre_diplome_professionnel" class="form-label">Si autre ?
+                                        précisez</label>
+                                    <input type="text" name="autre_diplome_professionnel"
+                                        value="{{ old('autre_diplome_professionnel') }}"
                                         class="form-control form-control-sm @error('autre_diplome_professionnel') is-invalid @enderror"
-                                        id="autre_diplome_professionnel" placeholder="autre diplôme professionnel ou attestations">
+                                        id="autre_diplome_professionnel"
+                                        placeholder="autre diplôme professionnel ou attestations">
                                     @error('autre_diplome_professionnel')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -468,8 +488,10 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="etablissement_professionnel" class="form-label">Etablissement professionnel</label>
-                                    <input type="text" name="etablissement_professionnel" value="{{ old('etablissement_professionnel') }}"
+                                    <label for="etablissement_professionnel" class="form-label">Etablissement
+                                        professionnel</label>
+                                    <input type="text" name="etablissement_professionnel"
+                                        value="{{ old('etablissement_professionnel') }}"
                                         class="form-control form-control-sm @error('etablissement_professionnel') is-invalid @enderror"
                                         id="etablissement_professionnel" placeholder="Etablissement obtention">
                                     @error('etablissement_professionnel')
@@ -481,7 +503,8 @@
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="specialite_diplome_professionnel" class="form-label">Spécialité</label>
-                                    <input type="text" name="specialite_diplome_professionnel" value="{{ old('specialite_diplome_professionnel') }}"
+                                    <input type="text" name="specialite_diplome_professionnel"
+                                        value="{{ old('specialite_diplome_professionnel') }}"
                                         class="form-control form-control-sm @error('specialite_diplome_professionnel') is-invalid @enderror"
                                         id="specialite_diplome_professionnel" placeholder="Ex: électricité">
                                     @error('specialite_diplome_professionnel')
@@ -525,6 +548,28 @@
                                 </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="module" class="form-label">Module<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="module"
+                                        class="form-select  @error('module') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-module"
+                                        data-placeholder="Choisir module">
+                                        <option value="">
+                                            {{ old('module') }}</option>
+                                        @foreach ($modules as $module)
+                                            <option value="{{ $module->id }}">
+                                                {{ $module->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="qualification" class="form-label">Qualification et autres diplômes</label>
                                     <textarea name="qualification" id="qualification" rows="1"
                                         class="form-control form-control-sm @error('qualification') is-invalid @enderror"
@@ -549,7 +594,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                    <label for="projetprofessionnel" class="form-label">Informations complémentaires sur le projet
+                                    <label for="projetprofessionnel" class="form-label">Informations complémentaires sur
+                                        le projet
                                         professionnel</label>
                                     <textarea name="projetprofessionnel" id="projetprofessionnel" rows="2"
                                         class="form-control form-control-sm @error('projetprofessionnel') is-invalid @enderror"
