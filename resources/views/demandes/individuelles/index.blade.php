@@ -59,8 +59,8 @@
                                         <td>{{ $individuelle->demandeur?->cin }}</td>
                                         <td>{{ $individuelle->demandeur->user?->firstname .' '.$individuelle->demandeur->user?->name }} </td>
                                         <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') .' à '.$individuelle->demandeur->user->lieu_naissance }} </td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $individuelle->module?->name }}</td>
+                                        <td>{{ $individuelle?->statut }}</td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('individuelles.show', $individuelle->id) }}"

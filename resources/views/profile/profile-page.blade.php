@@ -82,21 +82,24 @@
                                         </td>
                                         <td class="text-center">
                                             <a href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
-                                                class="btn btn-success btn-sm" title="voir">ajouter</a>
+                                                class="btn btn-success btn-sm" title="voir"><i
+                                                class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-primary fw-bold">Collective</td>
                                         <td class="text-center"></td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-success btn-sm" title="voir">ajouter</a>
+                                            <a href="#" class="btn btn-success btn-sm" title="voir"><i
+                                                class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-primary fw-bold">Prise en charge</td>
                                         <td class="text-center"></td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-success btn-sm" title="voir">ajouter</a>
+                                            <a href="#" class="btn btn-success btn-sm" title="voir"><i
+                                                class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>

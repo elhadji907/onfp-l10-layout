@@ -6,11 +6,12 @@ use App\Http\Requests\IndividuelleStoreRequest;
 use App\Models\Departement;
 use App\Models\Individuelle;
 use App\Models\Module;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
-use App\Models\User;
 
 class IndividuelleController extends Controller
 {
@@ -23,7 +24,7 @@ class IndividuelleController extends Controller
     public function create()
     {
         $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
-        if ($total_individuelle >= 3) {
+        if ($total_individuelle >= 6) {
             $status = "Vous avez atteint le nombre de demandes individuels autorisées";
             return redirect()->back()->with("status", $status);
         } else {
@@ -42,6 +43,7 @@ class IndividuelleController extends Controller
 
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
+        $date_depot =   date('Y-m-d');
 
         $num_demande_inividuelle = Individuelle::get()->last()->numero;
         $num_demande_inividuelle = ++$num_demande_inividuelle;
@@ -89,7 +91,7 @@ class IndividuelleController extends Controller
         $demandeur->save(); */
 
         $individuelle = new Individuelle([
-            'date_depot'                        =>  $request->input('date_depot'),
+            'date_depot'                        =>  $date_depot,
             'numero'                            =>  $num_demande_inividuelle . "" . $anne,
             'niveau_etude'                      =>  $request->input('niveau_etude'),
             'diplome_academique'                =>  $request->input('diplome_academique'),
@@ -113,8 +115,11 @@ class IndividuelleController extends Controller
 
         $individuelle->save();
 
-        $status = "Enregistrement effectué avec succès";
-        return redirect()->back()->with("status", $status);
+        $demandeur = $individuelle->demandeur;
+
+        $status = "Demande ajoutée avec succès";
+        /* return view("demandes.individuelles.show", compact("individuelle")); */
+        return Redirect::route("demandeurs.show", compact("demandeur"))->with("success", $status);
     }
 
 
@@ -269,8 +274,15 @@ class IndividuelleController extends Controller
             $individuelle->save();
         }
 
-        $status = "Modification effectuée avec succès";
-        return redirect()->back()->with("status", $status);
+       /*  $status = "Modification effectuée avec succès";
+        return redirect()->back()->with("status", $status); */
+        
+        $demandeur = $individuelle->demandeur;
+
+        $status = "Votre demande a été modifiée avec succès";
+        /* return view("demandes.individuelles.show", compact("individuelle")); */
+        return Redirect::route("demandeurs.show", compact("demandeur"))->with("success", $status);
+
     }
 
     public function show($id)

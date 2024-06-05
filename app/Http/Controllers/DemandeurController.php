@@ -10,6 +10,7 @@ class DemandeurController extends Controller
     public function show($id)
     {
         $demandeur = Demandeur::findOrFail($id);
-        return view("demandes.show", compact("demandeur"));
+        $demandes_total = $demandeur->individuelles()->count();
+        return view("demandes.show", compact("demandeur", "demandes_total"));
     }
 }

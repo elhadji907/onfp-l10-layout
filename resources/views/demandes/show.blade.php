@@ -10,6 +10,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                        region="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mt-3">
@@ -18,6 +25,8 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | Détails</p>
                             </span>
+                            <span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>
+                                {{ $demandes_total }}/6</span>
                             @if (isset($demandeur->numero_dossier))
                                 <a href="{{ route('individuelles.create') }}"
                                     class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
@@ -44,13 +53,18 @@
                                                 <td>{{ $individuelle->numero }}</td>
                                                 <td>{{ $individuelle->module->name }}</td>
                                                 <td>{{ $individuelle->departement->nom }}</td>
-                                                <td>{{ $individuelle->statut }}</td>
+                                                <td><span class="badge bg-info text-dark">{{ $individuelle->statut }}</span>
+                                                </td>
                                                 <td>
-                                                    <span class="d-flex align-items-baseline"><a
-                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                    <span class="d-flex align-items-baseline">
+                                                        <a class="btn btn-success btn-sm"
+                                                            href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                            class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a>
+
+                                                        {{-- <a href="{{ route('individuelles.show', $individuelle->id) }}"
                                                             class="btn btn-success btn-sm" title="voir détails"><i
-                                                                class="bi bi-eye"></i></a>
-                                                        <div class="filter">
+                                                                class="bi bi-eye"></i></a> --}}
+                                                        {{-- <div class="filter">
                                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                     class="bi bi-three-dots"></i></a>
                                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -72,7 +86,7 @@
                                                                     </form>
                                                                 </li>
                                                             </ul>
-                                                        </div>
+                                                        </div> --}}
                                                     </span>
                                                 </td>
                                             </tr>
