@@ -9,6 +9,8 @@ use App\Models\Module;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use App\Models\User;
 
 class IndividuelleController extends Controller
 {
@@ -127,10 +129,13 @@ class IndividuelleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $individuelle   = Individuelle::findOrFail($id);
+        $demandeur      = $individuelle->demandeur;
+        $user           = $demandeur->user;
 
         $this->validate($request, [
             'civilite'                      => ["required", "string"],
-            'cin'                           => ["required", "string"],
+            "cin"                           => ["required", "string", "min:13", "max:15", "unique:users,cin,{$user->id}"],
             'firstname'                     => ['required', 'string', 'max:50'],
             'name'                          => ['required', 'string', 'max:25'],
             'telephone'                     => ['required', 'string', 'max:25', 'min:9'],
@@ -148,10 +153,6 @@ class IndividuelleController extends Controller
             'diplome_professionnel'         => ['required', 'string', 'max:255'],
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ]);
-
-        $individuelle   = Individuelle::findOrFail($id);
-        $demandeur      = $individuelle->demandeur;
-        $user           = $demandeur->user;
 
         $anne = date('y');
         $num = rand(100, 999);

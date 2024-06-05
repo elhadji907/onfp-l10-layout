@@ -152,8 +152,22 @@ class UserController extends Controller
         if ($request->password) {
             $password = Hash::make($request->password);
             $user->update([
-                'password'      => $password,
-                'updated_by'    => Auth::user()->id,
+                'password'                  => $password,
+                'civilite'                  =>  $request->civilite,
+                'firstname'                 =>  $request->firstname,
+                'name'                      =>  $request->name,
+                'date_naissance'            =>  $request->date_naissance,
+                'lieu_naissance'            =>  $request->lieu_naissance,
+                'situation_familiale'       =>  $request->situation_familiale,
+                'situation_professionnelle' =>  $request->situation_professionnelle,
+                'email'                     =>  $request->email,
+                'telephone'                 =>  $request->telephone,
+                'adresse'                   =>  $request->adresse,
+                'twitter'                   =>  $request->twitter,
+                'facebook'                  =>  $request->facebook,
+                'instagram'                 =>  $request->instagram,
+                'linkedin'                  =>  $request->linkedin,
+                'updated_by'                =>  Auth::user()->id,
             ]);
         } else {
             $user->update([

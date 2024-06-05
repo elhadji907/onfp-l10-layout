@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Enregistrement demande individuelle')
+@section('title', 'Ajouter une nouvelle demande individuelle')
 @section('space-work')
     <section class="section min-vh-0 d-flex flex-column align-items-center justify-content-center py-0">
         <div class="container">
@@ -17,16 +17,15 @@
                             <div class="row">
                                 <div class="col-sm-12 pt-0">
                                     <span class="d-flex mt-0 align-items-baseline"><a
-                                            href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}" class="btn btn-success btn-sm"
-                                            title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                            href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}"
+                                            class="btn btn-success btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | Mon dossier</p>
                                     </span>
                                 </div>
                             </div>
-                            <div class="pt-0 pb-0">
-                                <h5 class="card-title text-center pb-0 fs-4">Nouvelle demande</h5>
-                                {{-- <p class="text-center small"></p> --}}
-                            </div>
+                            <h5 class="card-title text-center pb-0 fs-4">Ajouter une nouvelle demande</h5>
+                            <p class="text-center small"></p>
                             <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data"
                                 class="row g-3">
                                 @csrf
@@ -58,7 +57,7 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-                                <span class="badge bg-secondary">
+                                {{-- <span class="badge bg-secondary">
                                     <h6>Informations personnelles</h6>
                                 </span>
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
@@ -173,7 +172,7 @@
                                     <label for="email" class="form-label">Email<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
-                                        {{-- <span class="input-group-text" id="email">@</span> --}}
+                                        <span class="input-group-text" id="email">@</span>
                                         <input type="email" name="email"
                                             value="{{ Auth::user()->demandeur->user->email ?? old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
@@ -278,19 +277,38 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
+                                </div> --}}
+
+                                {{--  <span class="badge bg-secondary">
+                                    <h6>Demande</h6>
+                                </span> --}}
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="module" class="form-label">Formation sollicitée<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="module" class="form-select  @error('module') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-module" data-placeholder="Choisir formation">
+                                        <option value="">
+                                            {{ old('module') }}</option>
+                                        @foreach ($modules as $module)
+                                            <option value="{{ $module->id }}">
+                                                {{ $module->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
 
-                                <span class="badge bg-secondary">
-                                    <h6>Demande</h6>
-                                </span>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="departement" class="form-label">Département de résidence<span
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="departement" class="form-label">Lieu de formation<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="departement"
-                                        class="form-select  @error('departement') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-departement"
-                                        data-placeholder="Choisir le département">
+                                        class="form-select  @error('departement') is-invalid @enderror" aria-label="Select"
+                                        id="select-field-departement" data-placeholder="Choisir la localité">
                                         <option value="{{ Auth::user()->demandeur?->departement?->id }}">
                                             {{ Auth::user()->demandeur?->departement?->nom }}</option>
                                         @foreach ($departements as $departement)
@@ -306,13 +324,12 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="Niveau étude" class="form-label">Niveau étude<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="niveau_etude"
-                                        class="form-select  @error('niveau_etude') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-niveau_etude"
-                                        data-placeholder="Choisir Niveau étude">
+                                        class="form-select  @error('niveau_etude') is-invalid @enderror" aria-label="Select"
+                                        id="select-field-niveau_etude" data-placeholder="Choisir niveau étude">
                                         <option value="">
                                             {{ old('niveau_etude') }}
                                         </option>
@@ -342,7 +359,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="diplome_academique" class="form-label">Diplôme académique<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="diplome_academique"
@@ -387,7 +404,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="autre_diplome_academique" class="form-label">Si autre ? précisez</label>
                                     <input type="text" name="autre_diplome_academique"
                                         value="{{ old('autre_diplome_academique') }}"
@@ -400,7 +417,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="option_diplome_academique" class="form-label">Option du diplôme</label>
                                     <input type="text" name="option_diplome_academique"
                                         value="{{ old('option_diplome_academique') }}"
@@ -413,7 +430,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="etablissement_academique" class="form-label">Etablissement
                                         académique</label>
                                     <input type="text" name="etablissement_academique"
@@ -427,13 +444,13 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="diplome_pro" class="form-label">Diplôme professionnel<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="diplome_professionnel"
                                         class="form-select  @error('diplome_professionnel') is-invalid @enderror"
                                         aria-label="Select" id="select-field-diplome_professionnel"
-                                        data-placeholder="Choisir Niveau étude">
+                                        data-placeholder="Choisir diplôme professionnel">
                                         <option value="">
                                             {{ old('diplome_professionnel') }}
                                         </option>
@@ -472,7 +489,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="autre_diplome_professionnel" class="form-label">Si autre ?
                                         précisez</label>
                                     <input type="text" name="autre_diplome_professionnel"
@@ -487,7 +504,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="etablissement_professionnel" class="form-label">Etablissement
                                         professionnel</label>
                                     <input type="text" name="etablissement_professionnel"
@@ -501,7 +518,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="specialite_diplome_professionnel" class="form-label">Spécialité</label>
                                     <input type="text" name="specialite_diplome_professionnel"
                                         value="{{ old('specialite_diplome_professionnel') }}"
@@ -514,13 +531,13 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="projet_poste_formation" class="form-label">Votre projet après la
                                         formation<span class="text-danger mx-1">*</span></label>
                                     <select name="projet_poste_formation"
                                         class="form-select  @error('projet_poste_formation') is-invalid @enderror"
                                         aria-label="Select" id="select-field-projet_poste_formation"
-                                        data-placeholder="Choisir Niveau étude">
+                                        data-placeholder="Choisir projet">
                                         <option value="">
                                             {{ old('projet_poste_formation') }}
                                         </option>
@@ -547,29 +564,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="module" class="form-label">Module<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="module"
-                                        class="form-select  @error('module') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-module"
-                                        data-placeholder="Choisir module">
-                                        <option value="">
-                                            {{ old('module') }}</option>
-                                        @foreach ($modules as $module)
-                                            <option value="{{ $module->id }}">
-                                                {{ $module->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('module')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="qualification" class="form-label">Qualification et autres diplômes</label>
                                     <textarea name="qualification" id="qualification" rows="1"
                                         class="form-control form-control-sm @error('qualification') is-invalid @enderror"
