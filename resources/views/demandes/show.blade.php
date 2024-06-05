@@ -5,8 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-12">
                 @if ($message = Session::get('status'))
-                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                        region="alert">
+                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" region="alert">
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -46,7 +45,36 @@
                                                 <td>{{ $individuelle->module->name }}</td>
                                                 <td>{{ $individuelle->departement->nom }}</td>
                                                 <td>{{ $individuelle->statut }}</td>
-                                                <td></td>
+                                                <td>
+                                                    <span class="d-flex align-items-baseline"><a
+                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                            class="btn btn-success btn-sm" title="voir détails"><i
+                                                                class="bi bi-eye"></i></a>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                        href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                        class="mx-1" title="Modifier"><i
+                                                                            class="bi bi-pencil"></i>Modifier</a>
+                                                                </li>
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="dropdown-item show_confirm"
+                                                                            title="Supprimer"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

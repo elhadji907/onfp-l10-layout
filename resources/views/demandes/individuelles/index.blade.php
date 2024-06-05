@@ -74,15 +74,6 @@
                                                                 href="{{ route('individuelles.edit', $individuelle->id) }}"
                                                                 class="mx-1" title="Modifier"><i class="bi bi-pencil"></i>Modifier</a>
                                                         </li>
-                                                        <li><a class="dropdown-item btn btn-sm"
-                                                                href="{{ url('individuelle-imputations', ['id' => $individuelle->id]) }}"
-                                                                class="mx-1" title="Imputer"><i class="bi bi-recycle"></i>Imputer</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item btn btn-sm"
-                                                                href="{!! url('coupon-individuelle', ['$id' => $individuelle->id]) !!}" class="mx-1"
-                                                                target="_blank" title="Télécharger"><i
-                                                                    class="bi bi-file-earmark-arrow-down"></i>Télécharger</a>
-                                                        </li>
                                                         <li>
                                                             <form action="{{ route('individuelles.destroy', $individuelle->id) }}"
                                                                 method="post">

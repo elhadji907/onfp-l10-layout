@@ -24,7 +24,6 @@ class CreateDemandeursTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('cin', 200)->nullable();
             $table->string('numero_dossier', 200)->nullable();
             $table->string('statut', 45)->nullable();
             $table->string('type', 200)->nullable();

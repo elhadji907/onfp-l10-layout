@@ -45,7 +45,6 @@ class CreateIndividuellesTable extends Migration
             $table->string('projet_poste_formation', 200)->nullable();
             $table->longText('projetprofessionnel')->nullable();
             $table->string('adresse', 200)->nullable();
-            $table->string('telephone', 200)->nullable();
             $table->string('fixe', 200)->nullable();
             $table->longText('motivation')->nullable();
             $table->longText('motif')->nullable();

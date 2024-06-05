@@ -36,6 +36,9 @@ class User extends Authenticatable
         'password',
         'created_by',
         'updated_by',
+        'telephone_secondaire',
+        'telephone_parent',
+        'updated_by',
 
         'twitter',
         'facebook',

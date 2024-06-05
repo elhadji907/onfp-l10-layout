@@ -17,9 +17,9 @@
                             <div class="row">
                                 <div class="col-sm-12 pt-0">
                                     <span class="d-flex mt-0 align-items-baseline"><a
-                                            href="{{ route('individuelles.index') }}" class="btn btn-success btn-sm"
+                                            href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}" class="btn btn-success btn-sm"
                                             title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | Mes demandes individuelles</p>
+                                        <p> | Mon dossier</p>
                                     </span>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                     <label for="cin" class="form-label">N° CIN<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="cin"
-                                        value="{{ Auth::user()->demandeur->cin ?? old('cin') }}"
+                                        value="{{ Auth::user()->cin ?? old('cin') }}"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         id="cin" placeholder="Numéro carte d'identité nationale">
                                     @error('cin')
@@ -190,7 +190,7 @@
                                     <label for="telephone" class="form-label">Téléphone personnel<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone"
-                                        value="{{ Auth::user()->demandeur->user->telephone ?? old('telephone') }}"
+                                        value="{{ Auth::user()->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="téléphone">
                                     @error('telephone')
@@ -204,7 +204,7 @@
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone_secondaire"
-                                        value="{{ Auth::user()->demandeur->individuelle->telephone ?? old('telephone_secondaire') }}"
+                                        value="{{ Auth::user()->telephone_secondaire ?? old('telephone_secondaire') }}"
                                         class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
                                         id="telephone_secondaire" placeholder="téléphone secondaire">
                                     @error('telephone_secondaire')

@@ -18,9 +18,9 @@
                             <div class="row">
                                 <div class="col-sm-12 pt-2">
                                     <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('individuelles.index') }}" class="btn btn-success btn-sm"
+                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}" class="btn btn-success btn-sm"
                                             title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | Liste des demandes individuelles</p>
+                                        <p> | Mon dossier</p>
                                     </span>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                     <label for="cin" class="form-label">N° CIN<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="cin"
-                                        value="{{ $individuelle->demandeur->cin ?? old('cin') }}"
+                                        value="{{ $individuelle->demandeur->user->cin ?? old('cin') }}"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         id="cin" placeholder="Numéro carte d'identité nationale">
                                     @error('cin')
@@ -175,7 +175,7 @@
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone_secondaire"
-                                        value="{{ $individuelle->telephone ?? old('telephone_secondaire') }}"
+                                        value="{{ $individuelle->demandeur->user->telephone_secondaire ?? old('telephone_secondaire') }}"
                                         class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
                                         id="telephone_secondaire" placeholder="téléphone secondaire">
                                     @error('telephone_secondaire')

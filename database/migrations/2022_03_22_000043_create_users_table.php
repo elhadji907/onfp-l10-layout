@@ -24,12 +24,15 @@ class CreateUsersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
+            $table->string('cin', 200)->nullable();
             $table->string('civilite')->nullable(true);
             $table->string('firstname', 200)->nullable(true);
             $table->string('name', 200)->nullable(true);
             $table->string('username', 200)->nullable(true);
             $table->string('email', 200)->nullable(true);
             $table->string('telephone', 200)->nullable(true);
+            $table->string('telephone_secondaire', 200)->nullable(true);
+            $table->string('telephone_parent', 200)->nullable(true);
             $table->string('fixe', 200)->nullable(true);
             $table->dateTime('date_naissance')->nullable(true);
             $table->string('lieu_naissance', 200)->nullable(true);
@@ -46,7 +49,6 @@ class CreateUsersTable extends Migration
             $table->string('facebook', 200)->nullable(true);
             $table->string('instagram', 200)->nullable(true);
             $table->string('linkedin', 200)->nullable(true);
-            $table->string('cin', 200)->nullable();
             /* 1->employe; 2->sans emploi; 3->informel; 4->etudiant; 5->eleve; 6->autre */
             /* $table->enum('situation_professionnelle', ['', 'Employé', 'Sans emploi', 'Informel', 'Etudiant', 'Eleve', 'Autre']); */
             $table->string('situation_professionnelle')->nullable(true);

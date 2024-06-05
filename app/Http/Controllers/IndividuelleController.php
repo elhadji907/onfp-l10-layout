@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\IndividuelleStoreRequest;
-use App\Models\Demandeur;
 use App\Models\Departement;
 use App\Models\Individuelle;
 use App\Models\Module;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 
 class IndividuelleController extends Controller
 {
@@ -25,9 +20,15 @@ class IndividuelleController extends Controller
 
     public function create()
     {
-        $departements = Departement::orderBy("created_at", "desc")->get();
-        $modules = Module::orderBy("created_at", "desc")->get();
-        return view("demandes.individuelles.create", compact("departements", "modules"));
+        $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
+        if ($total_individuelle >= 3) {
+            $status = "Vous avez atteint le nombre de demandes individuels autorisées";
+            return redirect()->back()->with("status", $status);
+        } else {
+            $departements = Departement::orderBy("created_at", "desc")->get();
+            $modules = Module::orderBy("created_at", "desc")->get();
+            return view("demandes.individuelles.create", compact("departements", "modules"));
+        }
     }
 
     public function store(IndividuelleStoreRequest $request): RedirectResponse
@@ -40,16 +41,10 @@ class IndividuelleController extends Controller
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
 
-        $first = Individuelle::get()->first();
-
-        if (isset($first)) {
-            $num_demande_inividuelle = Individuelle::get()->last()->numero;
-            $num_demande_inividuelle = ++$num_demande_inividuelle;
-            $individuelle_id         = Individuelle::latest('id')->first()->id;
-        } else {
-            $num_demande_inividuelle = "0001";
-            $individuelle_id         = "0";
-        }
+        $num_demande_inividuelle = Individuelle::get()->last()->numero;
+        $num_demande_inividuelle = ++$num_demande_inividuelle;
+        $individuelle_id         = Individuelle::latest('id')->first()->id;
+        $individuelle_id         = ++$individuelle_id;
 
         $longueur = strlen($individuelle_id);
 
@@ -67,7 +62,7 @@ class IndividuelleController extends Controller
             $num_demande_inividuelle   =   strtolower($num_demande_inividuelle);
         }
 
-       /*  $user = User::create([
+        /*  $user = User::create([
             'civilite'                          => $request->input('civilite'),
             'firstname'                         => $request->input('firstname'),
             'name'                              => $request->input('name'),
@@ -82,19 +77,18 @@ class IndividuelleController extends Controller
 
         $user->save(); */
 
-        $demandeur = new Demandeur([
+        /* $demandeur = new Demandeur([
             'type'                              => 'individuelle',
             "departements_id"                   => $request->input("departement"),
             'numero_dossier'                    => "D" . $num_demande_inividuelle . "" . $anne,
             'users_id'                          => Auth::user()->id,
         ]);
 
-        $demandeur->save();
+        $demandeur->save(); */
 
         $individuelle = new Individuelle([
             'date_depot'                        =>  $request->input('date_depot'),
             'numero'                            =>  $num_demande_inividuelle . "" . $anne,
-            'telephone'                         =>  $request->input('telephone_secondaire'),
             'niveau_etude'                      =>  $request->input('niveau_etude'),
             'diplome_academique'                =>  $request->input('diplome_academique'),
             'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -110,9 +104,9 @@ class IndividuelleController extends Controller
             'experience'                        =>  $request->input('experience'),
             "departements_id"                   =>  $request->input("departement"),
             "modules_id"                        =>  $request->input("module"),
-            'tatut'                             => 'Attente',
+            'statut'                             => 'Attente',
             'users_id'                          =>  Auth::user()->id,
-            'demandeurs_id'                     =>  $demandeur->id
+            'demandeurs_id'                     =>  Auth::user()->demandeur->id
         ]);
 
         $individuelle->save();
@@ -146,6 +140,7 @@ class IndividuelleController extends Controller
             /* 'email'                         => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)], */
             'adresse'                       => ['required', 'string', 'max:255'],
             'departement'                   => ['required', 'string', 'max:255'],
+            'module'                        => ['required', 'string', 'max:255'],
             'situation_professionnelle'     => ['required', 'string', 'max:255'],
             'situation_familiale'           => ['required', 'string', 'max:255'],
             'niveau_etude'                  => ['required', 'string', 'max:255'],
@@ -153,7 +148,7 @@ class IndividuelleController extends Controller
             'diplome_professionnel'         => ['required', 'string', 'max:255'],
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ]);
-        
+
         $individuelle   = Individuelle::findOrFail($id);
         $demandeur      = $individuelle->demandeur;
         $user           = $demandeur->user;
@@ -166,16 +161,9 @@ class IndividuelleController extends Controller
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
 
-        $first = Individuelle::get()->first();
-
-        if (isset($first)) {
-            $num_demande_inividuelle = Individuelle::get()->last()->numero;
-            $num_demande_inividuelle = ++$num_demande_inividuelle;
-            $individuelle_id         = Individuelle::latest('id')->first()->id;
-        } else {
-            $num_demande_inividuelle = "0001";
-            $individuelle_id         = "0";
-        }
+        $num_demande_inividuelle = Individuelle::get()->last()->id;
+        $num_demande_inividuelle = ++$num_demande_inividuelle;
+        $individuelle_id         = Individuelle::latest('id')->first()->id;
 
         $longueur = strlen($individuelle_id);
 
@@ -191,12 +179,12 @@ class IndividuelleController extends Controller
             $num_demande_inividuelle   =   strtolower("0" . $individuelle_id);
         } else {
             $num_demande_inividuelle   =   strtolower($num_demande_inividuelle);
-        }      
-        
+        }
+
         $date_depot =   date('Y-m-d');
 
         $user->update([
-           /*  'cin'                           =>  $cin, */
+            'cin'                           =>  $cin,
             'civilite'                      =>  $request->input('civilite'),
             'firstname'                     =>  $request->input('firstname'),
             'name'                          =>  $request->input('name'),
@@ -204,25 +192,24 @@ class IndividuelleController extends Controller
             'lieu_naissance'                =>  $request->input('lieu_naissance'),
             'email'                         =>  $request->input('email'),
             'telephone'                     =>  $request->input('telephone'),
+            'telephone_secondaire'          =>  $request->input('telephone_secondaire'),
             'situation_familiale'           =>  $request->input('situation_familiale'),
             'situation_professionnelle'     =>  $request->input('situation_professionnelle'),
             'adresse'                       =>  $request->input('adresse'),
         ]);
 
         $user->save();
-        
+
         if (isset($individuelle->numero)) {
             $demandeur->update([
-                'cin'                            =>  $cin,
                 'type'                           =>  'individuelle',
                 "departements_id"                =>  $request->input("departement"),
                 'users_id'                       =>  Auth::user()->id,
             ]);
-    
+
             $demandeur->save();
-    
+
             $individuelle->update([
-                'telephone'                         =>  $request->input('telephone_secondaire'),
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -237,29 +224,27 @@ class IndividuelleController extends Controller
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $request->input("departement"),
+                'statut'                            => 'Attente',
                 "modules_id"                        =>  $request->input("module"),
                 'users_id'                          =>  Auth::user()->id,
                 'demandeurs_id'                     =>  $demandeur->id
             ]);
-    
-            $individuelle->save();
 
+            $individuelle->save();
         } else {
-        
+
             $demandeur->update([
-                'cin'                            =>  $cin,
                 'type'                           =>  'individuelle',
                 "departements_id"                =>  $request->input("departement"),
                 'numero_dossier'                 => "D" . $num_demande_inividuelle . "" . $anne,
                 'users_id'                       =>  Auth::user()->id,
             ]);
-    
+
             $demandeur->save();
-    
+
             $individuelle->update([
                 'date_depot'                        =>  $date_depot,
                 'numero'                            =>  $num_demande_inividuelle . "" . $anne,
-                'telephone'                         =>  $request->input('telephone_secondaire'),
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -274,11 +259,12 @@ class IndividuelleController extends Controller
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $request->input("departement"),
+                'statut'                            => 'Attente',
                 "modules_id"                        =>  $request->input("module"),
                 'users_id'                          =>  Auth::user()->id,
                 'demandeurs_id'                     =>  $demandeur->id
             ]);
-    
+
             $individuelle->save();
         }
 

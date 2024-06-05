@@ -37,6 +37,7 @@ class IndividuelleStoreRequest extends FormRequest
             /* 'email'                         => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)], */
             'adresse'                       => ['required', 'string', 'max:255'],
             'departement'                   => ['required', 'string', 'max:255'],
+            'module'                        => ['required', 'string', 'max:255'],
             'situation_professionnelle'     => ['required', 'string', 'max:255'],
             'situation_familiale'           => ['required', 'string', 'max:255'],
             'niveau_etude'                  => ['required', 'string', 'max:255'],
