@@ -90,6 +90,7 @@ class CreateIndividuellesTable extends Migration
             $table->unsignedInteger('conventions_id')->nullable();
             $table->unsignedInteger('diplomespros_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();
+            $table->string('autre_module', 200)->nullable();
             $table->unsignedInteger('formations_id')->nullable();
             $table->unsignedInteger('zones_id')->nullable();
             $table->unsignedInteger('localites_id')->nullable();

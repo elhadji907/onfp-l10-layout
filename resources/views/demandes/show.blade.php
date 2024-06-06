@@ -25,8 +25,13 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | Détails</p>
                             </span>
-                            <span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>
-                                {{ $demandes_total }}/6</span>
+                            @if (isset($demandeur->numero_dossier))
+                                <button type="button" class="btn btn-info">
+                                    <span class="badge bg-white text-info">{{ $demandes_total }}/5</span>
+                                </button>
+                            @endif
+                            {{-- <span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>
+                                {{ $demandes_total }}/5</span> --}}
                             @if (isset($demandeur->numero_dossier))
                                 <a href="{{ route('individuelles.create') }}"
                                     class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
@@ -57,14 +62,14 @@
                                                 </td>
                                                 <td>
                                                     <span class="d-flex align-items-baseline">
-                                                        <a class="btn btn-success btn-sm"
+                                                        {{--  <a class="btn btn-success btn-sm"
                                                             href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                            class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a>
+                                                            class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a> --}}
 
-                                                        {{-- <a href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                        <a href="{{ route('individuelles.show', $individuelle->id) }}"
                                                             class="btn btn-success btn-sm" title="voir détails"><i
-                                                                class="bi bi-eye"></i></a> --}}
-                                                        {{-- <div class="filter">
+                                                                class="bi bi-eye"></i></a>
+                                                        <div class="filter">
                                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                     class="bi bi-three-dots"></i></a>
                                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -73,7 +78,7 @@
                                                                         class="mx-1" title="Modifier"><i
                                                                             class="bi bi-pencil"></i>Modifier</a>
                                                                 </li>
-                                                                <li>
+                                                                {{-- <li>
                                                                     <form
                                                                         action="{{ route('individuelles.destroy', $individuelle->id) }}"
                                                                         method="post">
@@ -84,9 +89,9 @@
                                                                             title="Supprimer"><i
                                                                                 class="bi bi-trash"></i>Supprimer</button>
                                                                     </form>
-                                                                </li>
+                                                                </li> --}}
                                                             </ul>
-                                                        </div> --}}
+                                                        </div>
                                                     </span>
                                                 </td>
                                             </tr>

@@ -289,7 +289,8 @@
                                     <select name="module" class="form-select  @error('module') is-invalid @enderror"
                                         aria-label="Select" id="select-field-module" data-placeholder="Choisir formation">
                                         <option value="">
-                                            {{ old('module') }}</option>
+                                            {{ old('module') }}
+                                        </option>
                                         @foreach ($modules as $module)
                                             <option value="{{ $module->id }}">
                                                 {{ $module->name }}
@@ -297,6 +298,18 @@
                                         @endforeach
                                     </select>
                                     @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
+                                    <input type="text" name="autre_module" value="{{ old('autre_module') }}"
+                                        class="form-control form-control-sm @error('autre_module') is-invalid @enderror"
+                                        id="autre_module" placeholder="autre diplôme académique">
+                                    @error('autre_module')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -330,7 +343,7 @@
                                     <select name="niveau_etude"
                                         class="form-select  @error('niveau_etude') is-invalid @enderror" aria-label="Select"
                                         id="select-field-niveau_etude" data-placeholder="Choisir niveau étude">
-                                        <option value="">
+                                        <option value="{{ old('niveau_etude') }}">
                                             {{ old('niveau_etude') }}
                                         </option>
                                         <option value="Aucun">
@@ -366,7 +379,7 @@
                                         class="form-select  @error('diplome_academique') is-invalid @enderror"
                                         aria-label="Select" id="select-field-diplome_academique"
                                         data-placeholder="Choisir diplôme académique">
-                                        <option value="">
+                                        <option value="{{ old('diplome_academique') }}">
                                             {{ old('diplome_academique') }}
                                         </option>
                                         <option value="Aucun">
@@ -451,7 +464,7 @@
                                         class="form-select  @error('diplome_professionnel') is-invalid @enderror"
                                         aria-label="Select" id="select-field-diplome_professionnel"
                                         data-placeholder="Choisir diplôme professionnel">
-                                        <option value="">
+                                        <option value="{{ old('diplome_professionnel') }}">
                                             {{ old('diplome_professionnel') }}
                                         </option>
                                         <option value="Aucun">
@@ -538,7 +551,7 @@
                                         class="form-select  @error('projet_poste_formation') is-invalid @enderror"
                                         aria-label="Select" id="select-field-projet_poste_formation"
                                         data-placeholder="Choisir projet">
-                                        <option value="">
+                                        <option value="{{ old('projet_poste_formation') }}">
                                             {{ old('projet_poste_formation') }}
                                         </option>
                                         <option value="Poursuivre mes études">

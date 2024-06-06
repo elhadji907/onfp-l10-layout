@@ -108,6 +108,7 @@ class IndividuelleController extends Controller
             'experience'                        =>  $request->input('experience'),
             "departements_id"                   =>  $request->input("departement"),
             "modules_id"                        =>  $request->input("module"),
+            'autre_module'                      =>  $request->input('autre_module'),
             'statut'                             => 'Attente',
             'users_id'                          =>  Auth::user()->id,
             'demandeurs_id'                     =>  Auth::user()->demandeur->id
@@ -232,6 +233,7 @@ class IndividuelleController extends Controller
                 "departements_id"                   =>  $request->input("departement"),
                 'statut'                            => 'Attente',
                 "modules_id"                        =>  $request->input("module"),
+                'autre_module'                      =>  $request->input('autre_module'),
                 'users_id'                          =>  Auth::user()->id,
                 'demandeurs_id'                     =>  $demandeur->id
             ]);
@@ -267,6 +269,7 @@ class IndividuelleController extends Controller
                 "departements_id"                   =>  $request->input("departement"),
                 'statut'                            => 'Attente',
                 "modules_id"                        =>  $request->input("module"),
+                'autre_module'                      =>  $request->input('autre_module'),
                 'users_id'                          =>  Auth::user()->id,
                 'demandeurs_id'                     =>  $demandeur->id
             ]);

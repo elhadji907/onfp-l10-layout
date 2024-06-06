@@ -207,6 +207,7 @@ class Individuelle extends Model
 		'file6',
 		'file7',
 		'nbre_pieces',
+		'autre_module',
 		'nbre_enfants',
 		'note_obtenue',
 		'niveau_maitrise',

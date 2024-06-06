@@ -24,10 +24,11 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="pt-0 pb-0">
+                            {{-- <p>NB: Si la formation souhaiter n'est pas disponible, merci de choisir <b>Autre</b> et renseigner votre formation souhaitée sur la case: {{ ("<<Si autre formation ? précisez>>") }}</p> --}}
+                            {{-- <div class="pt-0 pb-0">
                                 <h5 class="card-title text-center pb-0 fs-4">modification</h5>
                                 <p class="text-center small">enregister un nouveau demande individuelle</p>
-                            </div>
+                            </div> --}}
                             <form method="post" action="{{ url('individuelles/' . $individuelle->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
@@ -148,7 +149,7 @@
                                         <input type="email" name="email"
                                             value="{{ $individuelle->demandeur->user->email ?? old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                            id="email" placeholder="email">
+                                            id="email" placeholder="email" @readonly(true)>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -184,14 +185,49 @@
                                         </span>
                                     @enderror
                                 </div>
+                                
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="module" class="form-label">Formation sollicitée<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="module"
+                                        class="form-select  @error('module') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-module"
+                                        data-placeholder="Choisir formation">
+                                        <option value="{{ $individuelle?->module?->id }}">
+                                            {{ $individuelle?->module?->name }}</option>
+                                        @foreach ($modules as $module)
+                                            <option value="{{ $module->id }}">
+                                                {{ $module->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="departement" class="form-label">Département de résidence<span
+                                    <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
+                                    <input type="text" name="autre_module"
+                                        value="{{ $individuelle->autre_module ?? old('autre_module') }}"
+                                        class="form-control form-control-sm @error('autre_module') is-invalid @enderror"
+                                        id="autre_module" placeholder="autre formation">
+                                    @error('autre_module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="departement" class="form-label">Lieu de formation<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="departement"
                                         class="form-select  @error('departement') is-invalid @enderror"
                                         aria-label="Select" id="select-field-departement"
-                                        data-placeholder="Choisir département">
+                                        data-placeholder="Choisir localité">
                                         <option value="{{ $individuelle?->departement?->id }}">
                                             {{ $individuelle?->departement?->nom }}</option>
                                         @foreach ($departements as $departement)
@@ -509,28 +545,6 @@
                                         </option>
                                     </select>
                                     @error('projet_poste_formation')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="module" class="form-label">Module<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="module"
-                                        class="form-select  @error('module') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-module"
-                                        data-placeholder="Choisir module">
-                                        <option value="{{ $individuelle?->module?->id }}">
-                                            {{ $individuelle?->module?->name }}</option>
-                                        @foreach ($modules as $module)
-                                            <option value="{{ $module->id }}">
-                                                {{ $module->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('module')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>

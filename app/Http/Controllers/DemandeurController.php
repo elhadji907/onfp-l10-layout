@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class DemandeurController extends Controller
 {
+    public function index()
+    {
+        $demandeurs = demandeur::orderBy('created_at', 'desc')->get();
+        return view("demandes.index", compact("demandeurs"));
+    }
     public function show($id)
     {
         $demandeur = Demandeur::findOrFail($id);

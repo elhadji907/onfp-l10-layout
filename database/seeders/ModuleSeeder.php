@@ -15,6 +15,13 @@ class ModuleSeeder extends Seeder
     public function run(): void
     {
         DB::table('modules')->insert([
+            "name"=>"Autre",
+            "domaines_id"=>"1",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        DB::table('modules')->insert([
             "name"=>"Accueil",
             "domaines_id"=>"1",
             'created_at' => now(),
