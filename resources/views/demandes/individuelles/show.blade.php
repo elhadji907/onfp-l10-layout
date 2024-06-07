@@ -174,7 +174,9 @@
                                     </div>
 
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <a href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                    class="btn btn-info btn-sm text-white" title="voir détails"><i
+                                                        class="bi bi-pencil"></i>&nbsp;Modifier</a>
                                     </div>
                                 </form>
 
