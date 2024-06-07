@@ -1,57 +1,189 @@
 @extends('layout.user-layout')
-@section('title', 'Détails')
+@section('title', 'Détails demande individuelle')
 @section('space-work')
-    <section class="section">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-12 col-lg-12">
+    <section class="section min-vh-0 d-flex flex-column align-items-center justify-content-center py-0 section profile">
+        <div class="container">
+            <div class="row justify-content-center">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                        region="alert">
+                        role="alert">
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="card">
-                    <div class="card-body">
+                <div class="col-12 col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
+                    <div class="card mb-3">
 
-                        <div class="row">
-                            <div class="col-sm-12 pt-0">
-                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
-                                        class="btn btn-success btn-sm" title="retour"><i
-                                            class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                    <p> | Détails</p>
-                                </span>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12 pt-2">
+                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
+                                            class="btn btn-success btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                        <p> | Détails</p>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <form method="post" action="{{ url('individuelles/' . $individuelle->id) }}"
+                                    enctype="multipart/form-data" class="row g-3">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Civilité</div>
+                                        <div>{{ $individuelle->demandeur->user?->civilite }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">N° CIN</div>
+                                        <div>{{ $individuelle->demandeur->user?->cin }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Prénom</div>
+                                        <div>{{ $individuelle->demandeur->user->firstname }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Nom</div>
+                                        <div>{{ $individuelle->demandeur->user->name }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div for="date_naissance" class="label">Date naissance</div>
+                                        <div>{{ $individuelle->demandeur->user->date_naissance?->format('Y-m-d') }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Lieu naissance</div>
+                                        <div>{{ $individuelle->demandeur->user->lieu_naissance }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Adresse</div>
+                                        <div>{{ $individuelle->demandeur->user->adresse }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Email</div>
+                                        <div>{{ $individuelle->demandeur->user->email }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Téléphone personnel</div>
+                                        <div>{{ $individuelle->demandeur->user->telephone }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Téléphone secondaire</div>
+                                        <div>{{ $individuelle->demandeur->user->telephone_secondaire }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Formation sollicitée</div>
+                                        <div>{{ $individuelle?->module?->name }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Si autre formation ? précisez</div>
+                                        <div>{{ $individuelle->autre_module }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Lieu de formation</div>
+                                        <div>{{ $individuelle?->departement?->nom }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Situation familiale</div>
+                                        <div>{{ $individuelle->demandeur->user->situation_familiale }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Situation professionnelle</div>
+                                        <div>{{ $individuelle->demandeur->user->situation_professionnelle }}</div>
+                                    </div>
+
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Niveau étude</div>
+                                        <div>{{ $individuelle->niveau_etude }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Diplôme académique</div>
+                                        <div>{{ $individuelle->diplome_academique }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Si autre ? précisez</div>
+                                        <div>{{ $individuelle->autre_diplome_academique }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Option du diplôme</div>
+                                        <div>{{ $individuelle->option_diplome_academique }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Etablissement académique</div>
+                                        <div>{{ $individuelle->etablissement_academique }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Diplôme professionnel</div>
+                                        <div>{{ $individuelle->diplome_professionnel }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Si autre ? précisez</div>
+                                        <div>{{ $individuelle->autre_diplome_professionnel }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Etablissement professionnel</div>
+                                        <div>{{ $individuelle->etablissement_professionnel }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Spécialité</div>
+                                        <div>{{ $individuelle->specialite_diplome_professionnel }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Votre projet après la formation</div>
+                                        <div>{{ $individuelle->projet_poste_formation }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Qualification et autres diplômes</div>
+                                        <div>{{ $individuelle->qualification }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <div class="label">Expériences et stages</div>
+                                        <div>{{ $individuelle->experience }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <div class="label">Informations complémentaires sur
+                                            le projet
+                                            professionnel</div>
+                                        <div>{{ $individuelle->projetprofessionnel }}</div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
-                        <h5 class="card-title">N° dossier : {{ $individuelle->demandeur->numero_dossier }}</h5>
-                        <!-- demande -->
-                        <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">N° demande</th>
-                                        <th scope="col">Module</th>
-                                        <th scope="col">Localité</th>
-                                        <th scope="col">Statut</th>
-                                        <th scope="col">#</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="" class="text-primary fw-bold">{{ $individuelle->numero }}</a>
-                                        </td>
-                                        <td>{{ $individuelle?->module?->name }}</td>
-                                        <td>{{ $individuelle->departement->nom }}</td>
-                                        <td>{{ $individuelle->statut }}</td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <!-- End demande -->
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 @endsection

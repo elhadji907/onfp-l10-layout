@@ -167,7 +167,7 @@
                                     <h5 class="card-title">Détail du profils</h5>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">Prénom</div>
+                                        <div class="col-lg-3 col-md-4 label">Prénom</div>
                                         <div class="col-lg-9 col-md-8">{{ Auth::user()->firstname }}</div>
                                     </div>
 
