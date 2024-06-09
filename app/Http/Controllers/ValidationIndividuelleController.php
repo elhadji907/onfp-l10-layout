@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Individuelle;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ValidationIndividuelleController extends Controller
 {
@@ -12,13 +13,16 @@ class ValidationIndividuelleController extends Controller
         $individuelle   = Individuelle::findOrFail($id);
         $demandeur      = $individuelle->demandeur;
         $user           = $demandeur->user;
-        
+
         $individuelle->update([
             'statut'                            => 'Validée',
         ]);
 
         $individuelle->save();
 
-        return redirect()->back()->with("status", "Demande validée");
+        Alert::success('Validée ! ', 'Demande acceptée');
+
+        /* return redirect()->back()->with("status", "Demande validée"); */
+        return redirect()->back();
     }
 }

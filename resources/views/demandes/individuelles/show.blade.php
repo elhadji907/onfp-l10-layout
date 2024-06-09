@@ -25,7 +25,7 @@
                                 <form action="{{ route('validation-individuelles.update', $individuelle->id) }}" method="post">
                                     @csrf
                                     @method('PUT')
-                                    <button type="button" class="btn btn-info show_confirm">
+                                    <button type="button" class="btn btn-success show_confirm">
                                         <span class="badge bg-white text-info">Valider</span>
                                     </button>
                                 </form>
@@ -33,8 +33,8 @@
                                 {{-- <button type="submit" class="dropdown-item show_confirm" title="valider"><i
                                     class="bi bi-trash"></i>Valider</button> --}}
 
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalValidation"
-                                    class="btn btn-primary float-end btn-rounded" title="validation">Validation</a>
+                               {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#modalValidation"
+                                    class="btn btn-primary float-end btn-rounded" title="validation">Validation</a> --}}
                             </div>
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <form method="post" action="{{ url('individuelles/' . $individuelle->id) }}"
@@ -191,7 +191,7 @@
                                     </div>
                                 </form>
                             </div>
-                            @include('demandes.individuelles.validationModal')
+                            {{-- @include('demandes.individuelles.validationModal') --}}
                         </div>
                     </div>
                 </div>

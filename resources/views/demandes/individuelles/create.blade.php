@@ -11,6 +11,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                    role="alert">{{ $error }}</div>
+                    @endforeach
+                @endif
                 <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
                         <div class="card-body">

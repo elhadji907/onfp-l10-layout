@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class IndividuelleController extends Controller
 {
@@ -24,9 +25,11 @@ class IndividuelleController extends Controller
     public function create()
     {
         $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
-        if ($total_individuelle >= 6) {
-            $status = "Vous avez atteint le nombre de demandes individuels autorisées";
-            return redirect()->back()->with("status", $status);
+        if ($total_individuelle >= 5) {
+            /* $status = "Vous avez atteint le nombre de demandes individuels autorisées"; */
+            /* return redirect()->back()->with("status", $status); */
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
+            return redirect()->back();
         } else {
             $departements = Departement::orderBy("created_at", "desc")->get();
             $modules = Module::orderBy("created_at", "desc")->get();
@@ -118,9 +121,12 @@ class IndividuelleController extends Controller
 
         $demandeur = $individuelle->demandeur;
 
-        $status = "Demande ajoutée avec succès";
+        Alert::success('Enregistrement ! ', 'demande ajoutée avec succès');
+
+        /* $status = "Demande ajoutée avec succès"; */
         /* return view("demandes.individuelles.show", compact("individuelle")); */
-        return Redirect::route("demandeurs.show", compact("demandeur"))->with("success", $status);
+        /* return Redirect::route("demandeurs.show", compact("demandeur"))->with("success", $status); */
+        return Redirect::route("demandeurs.show", compact("demandeur"));
     }
 
 
@@ -239,7 +245,6 @@ class IndividuelleController extends Controller
             ]);
 
             $individuelle->save();
-            
         } else {
 
             $demandeur->update([
@@ -278,15 +283,17 @@ class IndividuelleController extends Controller
             $individuelle->save();
         }
 
-       /*  $status = "Modification effectuée avec succès";
+        /*  $status = "Modification effectuée avec succès";
         return redirect()->back()->with("status", $status); */
-        
+
         $demandeur = $individuelle->demandeur;
 
-        $status = "Votre demande a été modifiée avec succès";
-        /* return view("demandes.individuelles.show", compact("individuelle")); */
-        return Redirect::route("demandeurs.show", compact("demandeur"))->with("success", $status);
+        Alert::success('Modification ! ', 'demande modifié avec succès');
 
+        /* $status = "Votre demande a été modifiée avec succès"; */
+        /* return view("demandes.individuelles.show", compact("individuelle")); */
+        /* return Redirect::route("demandeurs.show", compact("demandeur"))->with("success", $status); */
+        return Redirect::route("demandeurs.show", compact("demandeur"));
     }
 
     public function show($id)

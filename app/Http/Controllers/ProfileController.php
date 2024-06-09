@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileController extends Controller
 {
@@ -85,8 +86,11 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        Alert::success('Effectuée ! ', 'Votre profil a été modifié avec succès');
+
         /* return Redirect::route('profile.edit')->with('status', 'profile-updated'); */
-        return Redirect::route('profil')->with('status', 'Votre profil a été modifié avec succès');
+        /* return Redirect::route('profil')->with('status', 'Votre profil a été modifié avec succès'); */
+        return Redirect::route('profil');
     }
 
     /**

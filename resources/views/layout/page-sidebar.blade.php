@@ -1,21 +1,20 @@
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
-        <li class="nav-item">
-            <a class="nav-link " href="{{ url('/home') }}">
-                <i class="bi bi-grid"></i>
-                <span>Tableau de bord</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('user') }}">
-                <i class="bi bi-person"></i>
-                <span>Users</span>
-            </a>
-        </li><!-- End utilisateurs Nav -->
-
+        @if (auth()->user()->hasRole('super-admin'))
+            <li class="nav-item">
+                <a class="nav-link " href="{{ url('/home') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Tableau de bord</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('user') }}">
+                    <i class="bi bi-person"></i>
+                    <span>Users</span>
+                </a>
+            </li><!-- End utilisateurs Nav -->
+        @endif
         <li class="nav-heading">SECURITE</li>
 
         {{-- <li class="nav-item">

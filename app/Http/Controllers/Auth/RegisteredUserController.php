@@ -10,10 +10,10 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RegisteredUserController extends Controller
 {
@@ -60,6 +60,8 @@ class RegisteredUserController extends Controller
             'users_id' => $user->id,
         ]);
 
+        Alert::success('Félicitations ! ', 'Compte créé, merci de vous connecter');
+
         event(new Registered($user));
         event(new Registered($demandeur));
         event(new Registered($individuelle));
@@ -72,7 +74,9 @@ class RegisteredUserController extends Controller
 
 
         /* Redirection vers le connexion après incrption */
-        $status = "Compte créé, merci de vous connecter";
-        return redirect(RouteServiceProvider::LOGIN)->with('status', $status);
+        /* $status = "Compte créé, merci de vous connecter";
+        return redirect(RouteServiceProvider::LOGIN)->with('status', $status); */
+        
+        return redirect(RouteServiceProvider::LOGIN);
     }
 }

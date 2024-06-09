@@ -56,54 +56,56 @@
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($demandeurs as $demandeur)
-                                    <tr>
-                                        <td>{{ $demandeur?->numero_dossier }}</td>
-                                        <td>{{ $demandeur->user?->cin }}</td>
-                                        <td>{{ $demandeur->user?->civilite }} </td>
-                                        <td>{{ $demandeur->user?->firstname }} </td>
-                                        <td>{{ $demandeur->user?->name }} </td>
-                                        <td>{{ $demandeur->user->date_naissance?->format('d/m/Y') }}
-                                        <td>{{ $demandeur->user->lieu_naissance }}
-                                        <td>{{ $demandeur->user->telephone }}
-                                        </td>
-                                        <td class="text-center">
-                                            @foreach ($demandeur->individuelles as $individuelle)
-                                                @if ($loop->last)
-                                                    <a class="text-primary fw-bold"
-                                                        href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('demandeurs.show', $demandeur->id) }}"
-                                                    class="btn btn-success btn-sm" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                               {{--  <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm"
-                                                                href="{{ route('demandeurs.edit', $demandeur->id) }}"
-                                                                class="mx-1" title="Modifier"><i
-                                                                    class="bi bi-pencil"></i>Modifier</a>
-                                                        </li>
-                                                        <li>
-                                                            <form
-                                                                action="{{ route('demandeurs.destroy', $demandeur->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"
-                                                                    title="Supprimer"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
-                                                </div> --}}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                    @isset($demandeur?->numero_dossier)
+                                        <tr>
+                                            <td>{{ $demandeur?->numero_dossier }}</td>
+                                            <td>{{ $demandeur->user?->cin }}</td>
+                                            <td>{{ $demandeur->user?->civilite }} </td>
+                                            <td>{{ $demandeur->user?->firstname }} </td>
+                                            <td>{{ $demandeur->user?->name }} </td>
+                                            <td>{{ $demandeur->user->date_naissance?->format('d/m/Y') }}
+                                            <td>{{ $demandeur->user->lieu_naissance }}
+                                            <td>{{ $demandeur->user->telephone }}
+                                            </td>
+                                            <td class="text-center">
+                                                @foreach ($demandeur->individuelles as $individuelle)
+                                                    @if ($loop->last)
+                                                        <a class="text-primary fw-bold"
+                                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <span class="d-flex align-items-baseline"><a
+                                                        href="{{ route('demandeurs.show', $demandeur->id) }}"
+                                                        class="btn btn-success btn-sm" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
+                                                    {{--  <div class="filter">
+                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                        class="bi bi-three-dots"></i></a>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                    <li><a class="dropdown-item btn btn-sm"
+                                                            href="{{ route('demandeurs.edit', $demandeur->id) }}"
+                                                            class="mx-1" title="Modifier"><i
+                                                                class="bi bi-pencil"></i>Modifier</a>
+                                                    </li>
+                                                    <li>
+                                                        <form
+                                                            action="{{ route('demandeurs.destroy', $demandeur->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item show_confirm"
+                                                                title="Supprimer"><i
+                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div> --}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endisset
                                 @endforeach
                             </tbody>
                         </table>

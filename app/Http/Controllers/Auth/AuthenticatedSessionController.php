@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,6 +30,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        Alert::success('Bienvenue ! ', 'Vous êtes bien connectés');
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
