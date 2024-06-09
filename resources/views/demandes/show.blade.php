@@ -35,7 +35,7 @@
                             @if (isset($demandeur->numero_dossier))
                                 <a href="{{ route('individuelles.create') }}"
                                     class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
-                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                    <i class="bi bi-plus" title="Ajouter"></i> Ajouter</a>
                             @endif
                         </div>
                         @if (isset($demandeur->numero_dossier))
@@ -46,6 +46,8 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">N° demande</th>
+                                            <th scope="col">CIN</th>
+                                            <th scope="col">Prénom & Nom</th>
                                             <th scope="col">Module</th>
                                             <th scope="col">Localité</th>
                                             <th scope="col">Statut</th>
@@ -58,9 +60,26 @@
                                                 <td><span
                                                         class="badge bg-default text-dark">{{ $individuelle->numero }}</span>
                                                 </td>
+                                                <td>{{ $individuelle->demandeur->user?->cin }}</td>
+                                                <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
+                                                </td>
                                                 <td>{{ $individuelle->module->name }}</td>
                                                 <td>{{ $individuelle->departement->nom }}</td>
-                                                <td><span class="badge bg-info text-dark">{{ $individuelle->statut }}</span>
+                                                <td>
+                                                    @isset($individuelle?->statut)
+                                                        @if ($individuelle?->statut == 'Attente')
+                                                        <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
+                                                            </span>
+                                                        @endif
+                                                        @if ($individuelle?->statut == 'Validée')
+                                                            <span class="badge bg-success text-white">{{ $individuelle?->statut }}
+                                                            </span>
+                                                        @endif
+                                                        @if ($individuelle?->statut == 'Rejetée')
+                                                            <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
+                                                            </span>
+                                                        @endif
+                                                    @endisset
                                                 </td>
                                                 <td>
                                                     <span class="d-flex align-items-baseline">

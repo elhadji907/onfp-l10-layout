@@ -32,9 +32,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-1">
-                            <a href="{{ route('individuelles.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            @if (isset($demandeur->numero_dossier))
+                                <a href="{{ route('individuelles.create') }}"
+                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
+                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            @else
+                                <a class="btn btn-primary float-end btn-rounded"
+                                    href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}"><i
+                                        class="bi bi-person-plus" title="Ajouter"></i> </a></a>
+                            @endif
                         </div>
                         <h5 class="card-title">Liste demandes individuelles</h5>
                         {{-- <p>Le tableau des demandes individuelles</p> --}}
@@ -42,13 +48,13 @@
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
-                                    <th>CIN</th>
+                                    <th class="text-center">N°</th>
+                                    <th class="text-center">CIN</th>
                                     <th>Prénom et NOM</th>
                                     <th>Date et lieu de naissance</th>
                                     <th>Module</th>
-                                    <th>Statut</th>
-                                    <th>#</th>
+                                    <th class="text-center">Statut</th>
+                                    <th class="text-center">#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,17 +64,32 @@
                                         <tr>
                                             <td><span class="badge bg-default text-dark">{{ $individuelle?->numero }}</span>
                                             </td>
-                                            <td>{{ $individuelle->demandeur?->cin }}</td>
+                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
                                             <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
                                             </td>
                                             <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
                                             </td>
                                             <td>{{ $individuelle->module?->name }}</td>
-                                            <td><span class="badge bg-info text-dark">{{ $individuelle?->statut }}</span></td>
+                                            <td>
+                                                @isset($individuelle?->statut)
+                                                    @if ($individuelle?->statut == 'Attente')
+                                                    <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
+                                                        </span>
+                                                    @endif
+                                                    @if ($individuelle?->statut == 'Validée')
+                                                        <span class="badge bg-success text-white">{{ $individuelle?->statut }}
+                                                        </span>
+                                                    @endif
+                                                    @if ($individuelle?->statut == 'Rejetée')
+                                                        <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
+                                                        </span>
+                                                    @endif
+                                                @endisset
+                                            </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
                                                         href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                        class="btn btn-success btn-sm" title="voir détails"><i
+                                                        class="btn btn-primary btn-sm" title="voir détails"><i
                                                             class="bi bi-eye"></i></a>
                                                     <div class="filter">
                                                         <a class="icon" href="#" data-bs-toggle="dropdown"><i

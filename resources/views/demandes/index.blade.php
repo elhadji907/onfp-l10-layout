@@ -30,11 +30,11 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
+                        {{-- <div class="pt-1">
                             <a href="{{ route('demandeurs.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                        </div>
+                        </div> --}}
                         <h5 class="card-title">Liste de demandeurs</h5>
                         {{-- <p>Le tableau des demandeurs</p> --}}
                         <!-- Table with stripped rows -->

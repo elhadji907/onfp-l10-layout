@@ -61,6 +61,8 @@ class RegisteredUserController extends Controller
         ]);
 
         Alert::success('Félicitations ! ', 'Compte créé, merci de vous connecter');
+        
+        $user->assignRole('Demandeur');
 
         event(new Registered($user));
         event(new Registered($demandeur));

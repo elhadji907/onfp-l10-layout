@@ -217,6 +217,7 @@ class Individuelle extends Model
 		'created_by',
 		'updated_by',
 		'deleted_by',
+		'validated_by',
 		'demandeurs_id',
 		'etudes_id',
 		'antennes_id',
@@ -235,6 +236,12 @@ class Individuelle extends Model
 		'users_id',
 		'regions_id'
 	];
+
+	
+	public function validationindividuelles()
+	{
+		return $this->hasMany(Validationindividuelle::class, 'individuelles_id');
+	}
 
 	public function antenne()
 	{

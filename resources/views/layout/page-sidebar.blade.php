@@ -14,8 +14,8 @@
                     <span>Users</span>
                 </a>
             </li><!-- End utilisateurs Nav -->
+            <li class="nav-heading">SECURITE</li>
         @endif
-        <li class="nav-heading">SECURITE</li>
 
         {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -168,53 +168,54 @@
             </ul>
         </li> --}}
         <!-- End Charts Nav -->
+        @if (auth()->user()->hasRole('super-admin'))
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-key"></i><span>SECURITE</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('roles') }}">
+                            <span>Roles</span>
+                        </a>
+                    </li><!-- End roles Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-key"></i><span>SECURITE</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('roles') }}">
-                        <span>Roles</span>
-                    </a>
-                </li><!-- End roles Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                            <span>Permissions</span>
+                        </a>
+                    </li><!-- End Permissions Nav -->
+                </ul>
+            </li><!-- End Courriers Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('permissions') }}">
-                        <span>Permissions</span>
-                    </a>
-                </li><!-- End Permissions Nav -->
-            </ul>
-        </li><!-- End Courriers Nav -->
+            <li class="nav-heading">CURRIERS</li>
 
-        <li class="nav-heading">CURRIERS</li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-envelope"></i><span>Courriers</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('arrives') }}">
+                            <span>Arrivé</span>
+                        </a>
+                    </li><!-- End arrives Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-envelope"></i><span>Courriers</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('arrives') }}">
-                        <span>Arrivé</span>
-                    </a>
-                </li><!-- End arrives Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('departs') }}">
+                            <span>Départ</span>
+                        </a>
+                    </li><!-- End departs Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('departs') }}">
-                        <span>Départ</span>
-                    </a>
-                </li><!-- End departs Nav -->
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#">
-                        <span>Interne</span>
-                    </a>
-                </li><!-- End internes Nav -->
-            </ul>
-        </li><!-- End Courriers Nav -->
-
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Interne</span>
+                        </a>
+                    </li><!-- End internes Nav -->
+                </ul>
+            </li><!-- End Courriers Nav -->
+        @endif
         <li class="nav-heading">Demandes</li>
 
         <li class="nav-item">
@@ -222,139 +223,162 @@
                 <i class="bi bi-folder-plus"></i><span>Demandes</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('demandeurs') }}">
-                        <span>Demandeurs</span>
-                    </a>
-                </li><!-- End individuelles Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('individuelles') }}">
-                        <span>Individuelles</span>
-                    </a>
-                </li><!-- End individuelles Nav -->
+                @if (auth()->user()->hasRole('super-admin'))
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandeurs') }}">
+                            <span>Demandeurs</span>
+                        </a>
+                    </li><!-- End individuelles Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('individuelles') }}">
+                            <span>Individuelles</span>
+                        </a>
+                    </li><!-- End individuelles Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('collectives') }}">
-                        <span>Collectives</span>
-                    </a>
-                </li><!-- End collectives Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Collectives</span>
+                        </a>
+                    </li><!-- End collectives Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#">
-                        <span>Prise en charge</span>
-                    </a>
-                </li><!-- End Prise en charges Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Prise en charge</span>
+                        </a>
+                    </li><!-- End Prise en charges Nav -->
+                @endif
+                @if (auth()->user()->hasRole('Demandeur'))
+                    <li class="nav-item">
+                        <a class="nav-link collapsed"
+                            href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}">
+                            <span>Individuelles</span>
+                        </a>
+                    </li><!-- End individuelles Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Collectives</span>
+                        </a>
+                    </li><!-- End collectives Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Prise en charge</span>
+                        </a>
+                    </li><!-- End Prise en charges Nav -->
+                @endif
             </ul>
         </li><!-- End demandes Nav -->
 
-        <li class="nav-heading">LOCALITES</li>
+        @if (auth()->user()->hasRole('super-admin'))
+            <li class="nav-heading">LOCALITES</li>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#localite-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-globe"></i><span>Localités</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="localite-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('regions') }}">
-                        <span>Région</span>
-                    </a>
-                </li><!-- End regions Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#localite-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-globe"></i><span>Localités</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="localite-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('regions') }}">
+                            <span>Région</span>
+                        </a>
+                    </li><!-- End regions Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('departements') }}">
-                        <span>Département</span>
-                    </a>
-                </li><!-- End departements Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('departements') }}">
+                            <span>Département</span>
+                        </a>
+                    </li><!-- End departements Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('arrondissements') }}">
-                        <span>Arrondissement</span>
-                    </a>
-                </li><!-- End arrondissements Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('arrondissements') }}">
+                            <span>Arrondissement</span>
+                        </a>
+                    </li><!-- End arrondissements Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('communes') }}">
-                        <span>Commune</span>
-                    </a>
-                </li><!-- End communes Nav -->
-            </ul>
-        </li><!-- End Courriers Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('communes') }}">
+                            <span>Commune</span>
+                        </a>
+                    </li><!-- End communes Nav -->
+                </ul>
+            </li><!-- End Courriers Nav -->
+        @endif
 
+        @if (auth()->user()->hasRole('super-admin'))
+            <li class="nav-heading">EMPLOYES</li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-people"></i><span>Employés</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="employes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-        <li class="nav-heading">EMPLOYES</li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/employes') }}">
+                            {{-- <i class="bi bi-person"></i> --}}
+                            <span>Employés</span>
+                        </a>
+                    </li><!-- End employes Page Nav -->
+                    <li class="nav-heading">PARAMETRES</li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/directions') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Directions</span>
+                        </a>
+                    </li><!-- End directions Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/categories') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Catégories</span>
+                        </a>
+                    </li><!-- End categories Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/fonctions') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Fonction</span>
+                        </a>
+                    </li><!-- End fonction Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/lois') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Lois</span>
+                        </a>
+                    </li><!-- End loi Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/decrets') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Decret</span>
+                        </a>
+                    </li><!-- End loi Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/procesverbals') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>PV</span>
+                        </a>
+                    </li><!-- End PV Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/decisions') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Décisions</span>
+                        </a>
+                    </li><!-- End Décisions Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/articles') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Articles</span>
+                        </a>
+                    </li><!-- End nomminations Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('/nomminations') }}">
+                            {{-- <i class="bi bi-stack"></i> --}}
+                            <span>Nomminations</span>
+                        </a>
+                    </li><!-- End nomminations Page Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-people"></i><span>Employés</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="employes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/employes') }}">
-                        {{-- <i class="bi bi-person"></i> --}}
-                        <span>Employés</span>
-                    </a>
-                </li><!-- End employes Page Nav -->
-                <li class="nav-heading">PARAMETRES</li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/directions') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Directions</span>
-                    </a>
-                </li><!-- End directions Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/categories') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Catégories</span>
-                    </a>
-                </li><!-- End categories Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/fonctions') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Fonction</span>
-                    </a>
-                </li><!-- End fonction Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/lois') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Lois</span>
-                    </a>
-                </li><!-- End loi Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/decrets') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Decret</span>
-                    </a>
-                </li><!-- End loi Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/procesverbals') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>PV</span>
-                    </a>
-                </li><!-- End PV Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/decisions') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Décisions</span>
-                    </a>
-                </li><!-- End Décisions Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/articles') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Articles</span>
-                    </a>
-                </li><!-- End nomminations Page Nav -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('/nomminations') }}">
-                        {{-- <i class="bi bi-stack"></i> --}}
-                        <span>Nomminations</span>
-                    </a>
-                </li><!-- End nomminations Page Nav -->
-
-            </ul>
-        </li>
-
+                </ul>
+            </li>
+        @endif
         {{-- <li class="nav-heading">Pages</li> --}}
 
         {{-- <li class="nav-item">
