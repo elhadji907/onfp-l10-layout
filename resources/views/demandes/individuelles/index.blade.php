@@ -55,12 +55,12 @@
                                 <?php $i = 1; ?>
                                 @foreach ($individuelles as $individuelle)
                                     <tr>
-                                        <td>{{ $individuelle?->numero }}</td>
+                                        <td><span class="badge bg-default text-dark">{{ $individuelle?->numero }}</span></td>
                                         <td>{{ $individuelle->demandeur?->cin }}</td>
                                         <td>{{ $individuelle->demandeur->user?->firstname .' '.$individuelle->demandeur->user?->name }} </td>
                                         <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') .' à '.$individuelle->demandeur->user->lieu_naissance }} </td>
                                         <td>{{ $individuelle->module?->name }}</td>
-                                        <td>{{ $individuelle?->statut }}</td>
+                                        <td><span class="badge bg-info text-dark">{{ $individuelle?->statut }}</span></td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('individuelles.show', $individuelle->id) }}"

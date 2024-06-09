@@ -13,17 +13,28 @@
                 @endif
                 <div class="col-12 col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
-
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-12 pt-2">
-                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
-                                            class="btn btn-success btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | Détails</p>
-                                    </span>
-                                </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="d-flex mt-2 align-items-baseline"><a
+                                        href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
+                                        class="btn btn-success btn-sm" title="retour"><i
+                                            class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                    <p> | Détails</p>
+                                </span>
+
+                                <form action="{{ route('validation-individuelles.update', $individuelle->id) }}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="button" class="btn btn-info show_confirm">
+                                        <span class="badge bg-white text-info">Valider</span>
+                                    </button>
+                                </form>
+
+                                {{-- <button type="submit" class="dropdown-item show_confirm" title="valider"><i
+                                    class="bi bi-trash"></i>Valider</button> --}}
+
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalValidation"
+                                    class="btn btn-primary float-end btn-rounded" title="validation">Validation</a>
                             </div>
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <form method="post" action="{{ url('individuelles/' . $individuelle->id) }}"
@@ -175,17 +186,16 @@
 
                                     <div class="text-center">
                                         <a href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                    class="btn btn-info btn-sm text-white" title="voir détails"><i
-                                                        class="bi bi-pencil"></i>&nbsp;Modifier</a>
+                                            class="btn btn-info btn-sm text-white" title="voir détails"><i
+                                                class="bi bi-pencil"></i>&nbsp;Modifier</a>
                                     </div>
                                 </form>
-
                             </div>
+                            @include('demandes.individuelles.validationModal')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
 @endsection

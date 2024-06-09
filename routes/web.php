@@ -29,6 +29,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ValidationIndividuelleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -157,6 +158,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/individuelles', IndividuelleController::class);
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/pcharges', PchargeController::class);
+    Route::resource('/validation-individuelles', ValidationIndividuelleController::class);
 });
 
 

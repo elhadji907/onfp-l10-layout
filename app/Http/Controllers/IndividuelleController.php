@@ -239,6 +239,7 @@ class IndividuelleController extends Controller
             ]);
 
             $individuelle->save();
+            
         } else {
 
             $demandeur->update([

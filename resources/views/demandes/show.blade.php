@@ -55,14 +55,12 @@
                                     <tbody>
                                         @foreach (Auth::user()->individuelles as $individuelle)
                                             <tr>
-                                                <td>
-                                                    <a
-                                                        href="{{ route('individuelles.show', $individuelle->id) }}"><b>{{ $individuelle->numero }}</b></a>
+                                                <td><span
+                                                        class="badge bg-default text-dark">{{ $individuelle->numero }}</span>
                                                 </td>
                                                 <td>{{ $individuelle->module->name }}</td>
                                                 <td>{{ $individuelle->departement->nom }}</td>
-                                                <td><span
-                                                        class="badge bg-info text-dark">{{ $individuelle->statut }}</span>
+                                                <td><span class="badge bg-info text-dark">{{ $individuelle->statut }}</span>
                                                 </td>
                                                 <td>
                                                     <span class="d-flex align-items-baseline">

@@ -202,6 +202,25 @@
             $(".form-check-input").prop('checked', $(this).prop('checked'));
         });
     </script>
+    <script type="text/javascript">
+        $('.show_confirm').click(function(event) {
+            var form = $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                    title: `Êtes-vous sûr de vouloir valider ?`,
+                    text: "Si oui, cliquer sur ok.",
+                    icon: "success",
+                    buttons: true,
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                })
+                .then((willValide) => {
+                    if (willValide) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
