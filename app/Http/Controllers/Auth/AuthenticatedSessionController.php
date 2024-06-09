@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        Alert::success('Bienvenue ! ', 'Vous êtes bien connectés');
+        Alert::success('Bienvenue ! '  . Auth::user()->firstname . ' ' . Auth::user()->name, 'Vous êtes bien connectés');
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

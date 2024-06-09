@@ -289,17 +289,19 @@
                         </a>
                     </li><!-- End departements Nav -->
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('arrondissements') }}">
                             <span>Arrondissement</span>
                         </a>
-                    </li><!-- End arrondissements Nav -->
+                    </li> --}}
+                    <!-- End arrondissements Nav -->
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('communes') }}">
                             <span>Commune</span>
                         </a>
-                    </li><!-- End communes Nav -->
+                    </li> --}}
+                    <!-- End communes Nav -->
                 </ul>
             </li><!-- End Courriers Nav -->
         @endif

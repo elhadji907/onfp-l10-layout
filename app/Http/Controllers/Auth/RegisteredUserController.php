@@ -60,8 +60,8 @@ class RegisteredUserController extends Controller
             'users_id' => $user->id,
         ]);
 
-        Alert::success('Félicitations ! ', 'Compte créé, merci de vous connecter');
-        
+        Alert::success('Félicitations ! ' . $user->firstname . ' ' . $user->name, ' votre compte a été créé, connectez-vous');
+
         $user->assignRole('Demandeur');
 
         event(new Registered($user));
@@ -78,7 +78,7 @@ class RegisteredUserController extends Controller
         /* Redirection vers le connexion après incrption */
         /* $status = "Compte créé, merci de vous connecter";
         return redirect(RouteServiceProvider::LOGIN)->with('status', $status); */
-        
+
         return redirect(RouteServiceProvider::LOGIN);
     }
 }

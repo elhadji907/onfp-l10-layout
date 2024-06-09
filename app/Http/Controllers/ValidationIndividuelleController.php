@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Individuelle;
 use App\Models\Validationindividuelle;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ValidationIndividuelleController extends Controller
 {
-    public function update(Request $request, $id)
+    public function update($id)
     {
         $individuelle   = Individuelle::findOrFail($id);
         $demandeur      = $individuelle->demandeur;
         $user           = $demandeur->user;
 
         $individuelle->update([
-            'statut'                            => 'Rejetée',
+            'statut'                            => 'Validée',
         ]);
 
         $individuelle->save();
@@ -30,7 +29,7 @@ class ValidationIndividuelleController extends Controller
 
         $validated_by->save();
 
-        Alert::success('Validée ! ', 'Demande acceptée');
+        Alert::success('La demande de '.$individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name, 'est validée');
 
         /* return redirect()->back()->with("status", "Demande validée"); */
         return redirect()->back();

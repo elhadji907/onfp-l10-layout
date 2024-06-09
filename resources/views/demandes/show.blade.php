@@ -26,7 +26,7 @@
                                 <p> | Détails</p>
                             </span>
                             @if (isset($demandeur->numero_dossier))
-                                <button type="button" class="btn btn-info">
+                                <button type="button" class="btn btn-info btn-sm">
                                     <span class="badge bg-white text-info">{{ $demandes_total }}/5</span>
                                 </button>
                             @endif
@@ -34,7 +34,7 @@
                                 {{ $demandes_total }}/5</span> --}}
                             @if (isset($demandeur->numero_dossier))
                                 <a href="{{ route('individuelles.create') }}"
-                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
+                                    class="btn btn-primary btn-sm float-end btn-rounded"><i class="fas fa-plus"></i>
                                     <i class="bi bi-plus" title="Ajouter"></i> Ajouter</a>
                             @endif
                         </div>

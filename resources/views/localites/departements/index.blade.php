@@ -43,10 +43,10 @@
                         <table class="table datatables align-middle justify-content-center" id="table-departements">
                             <thead>
                                 <tr>
-                                    <th class="text-center" scope="col">N°</th>
-                                    <th>départements</th>
+                                    {{-- <th class="text-center" scope="col">N°</th> --}}
+                                    <th>Localités</th>
                                     <th>Région</th>
-                                    <th class="text-center" scope="col">Arrondissements</th>
+                                    <th class="text-center" scope="col">Demandes individuelles</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
@@ -54,19 +54,27 @@
                                 <?php $i = 1; ?>
                                 @foreach ($departements as $departement)
                                     <tr>
-                                        <td style="text-align: center;">{{ $i++ }}</td>
+                                        {{-- <td style="text-align: center;">{{ $i++ }}</td> --}}
                                         <td>{{ $departement->nom }}</td>
                                         <td>{{ $departement->region->nom }}</td>
                                         <td style="text-align: center;">
-                                            @foreach ($departement->arrondissements as $arrondissement)
+                                            {{-- @foreach ($departement->arrondissements as $arrondissement)
+                                                @if ($loop->last)
+                                                    <span class="badge bg-info">{{ $loop->count }}</span>
+                                                @endif
+                                            @endforeach --}}
+                                            @foreach ($departement->individuelles as $individuelle)
                                                 @if ($loop->last)
                                                     <span class="badge bg-info">{{ $loop->count }}</span>
                                                 @endif
                                             @endforeach
                                         </td>
                                         <td style="text-align: center;">
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ url('departements/' . $departement->id) }}"
+                                            <span class="d-flex mt-2 align-items-baseline">
+                                                <a href="{{ url('departements/' . $departement->id) }}"
+                                                    class="btn btn-success btn-sm mx-1" title="Voir détails"><i
+                                                        class="bi bi-eye"></i></a>
+                                                {{-- <a href="{{ url('departements/' . $departement->id) }}"
                                                     class="btn btn-warning btn-sm mx-1" title="Voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
@@ -87,7 +95,7 @@
                                                             </form>
                                                         </li>
                                                     </ul>
-                                                </div>
+                                                </div> --}}
                                             </span>
                                         </td>
 
@@ -112,7 +120,7 @@
                 }
             },
             "order": [
-                [0, 'asc']
+                [2, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",
