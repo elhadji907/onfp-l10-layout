@@ -41,11 +41,256 @@
 </head>
 
 <body>
-
     <main>
         <div class="container">
-
             <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center py-4">
+                                    <a href="{{ url('/register-page') }}" class="logo d-flex align-items-center w-auto">
+                                        <span class="d-none d-lg-block">ONFP</span>
+                                    </a>
+                                </div>
+
+                                <!-- Slides with captions -->
+                                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleCaptions"
+                                            data-bs-slide-to="0" class="active" aria-current="true"
+                                            aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions"
+                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleCaptions"
+                                            data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="assets/img/slides-1.jpg" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>First slide label</h5>
+                                                <p>Some representative placeholder content for the first slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="assets/img/slides-2.jpg" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Second slide label</h5>
+                                                <p>Some representative placeholder content for the second slide.</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="assets/img/slides-3.jpg" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>Third slide label</h5>
+                                                <p>Some representative placeholder content for the third slide.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+
+                                </div><!-- End Slides with captions -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+
+                                <div class="pt-0 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Créer un compte</h5>
+                                    {{--  <p class="text-center small">Entrez vos informations personnelles pour créer un
+                                    compte</p> --}}
+                                </div>
+
+                                <form class="row g-3 needs-validation" novalidate method="POST"
+                                    action="{{ route('register') }}">
+                                    @csrf
+                                    <!-- Prénom -->
+                                    <div class="col-6">
+                                        <label for="prenom" class="form-label">Prénom</label>
+                                        <input type="text" name="prenom"
+                                            class="form-control form-control-sm @error('prenom') is-invalid @enderror"
+                                            id="prenom" required placeholder="Votre prenom"
+                                            value="{{ old('prenom') }}" autocomplete="prenom" autofocus>
+                                        <div class="invalid-feedback">
+                                            @error('prenom')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Nom -->
+                                    <div class="col-6">
+                                        <label for="name" class="form-label">Nom</label>
+                                        <input type="text" name="name"
+                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                            id="name" required placeholder="Votre Nom"
+                                            value="{{ old('name') }}" autocomplete="name">
+                                        <div class="invalid-feedback">
+                                            @error('name')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <!-- Date naissance -->
+                                    <div class="col-6">
+                                        <label for="date_naissance" class="form-label">Date naissance</label>
+                                        <input type="date" name="date_naissance"
+                                            class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                            id="date_naissance" required placeholder="Votre date de naissance"
+                                            value="{{ old('date_naissance') }}" autocomplete="date_naissance" autofocus>
+                                        <div class="invalid-feedback">
+                                            @error('date_naissance')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Lieu naissance -->
+                                    <div class="col-6">
+                                        <label for="lieu_naissance" class="form-label">Lieu naissance</label>
+                                        <input type="text" name="lieu_naissance"
+                                            class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
+                                            id="lieu_naissance" required placeholder="Votre lieu de naissance"
+                                            value="{{ old('lieu_naissance') }}" autocomplete="lieu_naissance">
+                                        <div class="invalid-feedback">
+                                            @error('lieu_naissance')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Addresse E-mail -->
+                                    <div class="col-6">
+                                        <label for="email" class="form-label">E-mail</label>
+                                        <div class="input-group has-validation">
+                                            {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
+                                            <input type="email" name="email"
+                                                class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                                id="email" required placeholder="Votre e-mail"
+                                                value="{{ old('email') }}" autocomplete="email">
+                                            <div class="invalid-feedback">
+                                                @error('email')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Telephone -->
+                                    <div class="col-6">
+                                        <label for="telephone" class="form-label">Téléphone</label>
+                                        <input type="text" name="telephone"
+                                            class="form-control form-control-sm @error('telephone') is-invalid @enderror"
+                                            id="telephone" required placeholder="Votre n° de téléphone"
+                                            value="{{ old('telephone') }}" autocomplete="telephone">
+                                        <div class="invalid-feedback">
+                                            @error('telephone')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Adresse -->
+                                    {{-- <div class="col-12">
+                                        <label for="adresse" class="form-label">Adresse de résidence</label>
+                                        <div class="input-group has-validation">
+                                            <input type="name" name="adresse"
+                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror"
+                                                id="adresse" required placeholder="Votre adresse de résidence"
+                                                value="{{ old('adresse') }}" autocomplete="adresse">
+                                            <div class="invalid-feedback">
+                                                @error('adresse')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+                                    <!-- Mot de passe -->
+                                    <div class="col-6">
+                                        <label for="password" class="form-label">Mot de passe</label>
+                                        <input type="password" name="password"
+                                            class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                            id="password" required placeholder="Votre mot de passe"
+                                            value="{{ old('password') }}" autocomplete="new-password">
+                                        <div class="invalid-feedback">
+                                            @error('password')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Mot de passe de confirmation -->
+                                    <div class="col-6">
+                                        <label for="password_confirmation" class="form-label">Confirmez mot de
+                                            passe</label>
+                                        <input type="password" name="password_confirmation"
+                                            class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
+                                            id="password_confirmation" required
+                                            placeholder="Confimez votre mot de passe"
+                                            value="{{ old('password_confirmation') }}"
+                                            autocomplete="new-password_confirmation">
+                                        <div class="invalid-feedback">
+                                            @error('password_confirmation')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="terms" type="checkbox"
+                                                value="" id="acceptTerms" required>
+                                            <label class="form-check-label" for="acceptTerms">Je suis d'accord et
+                                                j'accepte les
+                                                <a href="#">termes et conditions</a></label>
+                                            <div class="invalid-feedback">
+                                                @error('password_confirmation')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Créer un
+                                            compte</button>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <p class="small">Vous avez déjà un compte ? <a
+                                                href="{{ url('/login-page') }}">Se connecter</a></p>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="credits">
+                    <!-- All the links in the footer should remain intact. -->
+                    <!-- You can delete the links only if you purchased the pro version. -->
+                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                    Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
+                </div>
+            </section>
+            {{-- <section
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
@@ -53,10 +298,9 @@
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="{{ url('/register-page') }}" class="logo d-flex align-items-center w-auto">
-                                    {{-- <img src="assets/img/logo.png" alt=""> --}}
                                     <span class="d-none d-lg-block">ONFP</span>
                                 </a>
-                            </div><!-- End Logo -->
+                            </div>
 
                             <div class="card mb-3">
 
@@ -64,14 +308,11 @@
 
                                     <div class="pt-0 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Créer un compte</h5>
-                                       {{--  <p class="text-center small">Entrez vos informations personnelles pour créer un
-                                            compte</p> --}}
                                     </div>
 
                                     <form class="row g-3 needs-validation" novalidate method="POST"
                                         action="{{ route('register') }}">
                                         @csrf
-                                        <!-- Prénom -->
                                         <div class="col-12">
                                             <label for="prenom" class="form-label">Prénom</label>
                                             <input type="text" name="prenom"
@@ -85,13 +326,12 @@
                                             </div>
                                         </div>
 
-                                        <!-- Nom -->
                                         <div class="col-12">
                                             <label for="name" class="form-label">Nom</label>
                                             <input type="text" name="name"
-                                                class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                                required placeholder="Votre Nom" value="{{ old('name') }}"
-                                                autocomplete="name">
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                                id="name" required placeholder="Votre Nom"
+                                                value="{{ old('name') }}" autocomplete="name">
                                             <div class="invalid-feedback">
                                                 @error('name')
                                                     {{ $message }}
@@ -99,11 +339,9 @@
                                             </div>
                                         </div>
 
-                                        <!-- Addresse E-mail -->
                                         <div class="col-12">
                                             <label for="email" class="form-label">E-mail</label>
                                             <div class="input-group has-validation">
-                                                {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
                                                 <input type="email" name="email"
                                                     class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                     id="email" required placeholder="Votre e-mail"
@@ -116,7 +354,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Telephone -->
                                         <div class="col-12">
                                             <label for="telephone" class="form-label">Téléphone</label>
                                             <input type="text" name="telephone"
@@ -130,7 +367,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Adresse -->
                                         <div class="col-12">
                                             <label for="adresse" class="form-label">Adresse de résidence</label>
                                             <div class="input-group has-validation">
@@ -146,7 +382,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Mot de passe -->
                                         <div class="col-12">
                                             <label for="password" class="form-label">Mot de passe</label>
                                             <input type="password" name="password"
@@ -160,7 +395,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Mot de passe de confirmation -->
                                         <div class="col-12">
                                             <label for="password_confirmation" class="form-label">Confirmez mot de
                                                 passe</label>
@@ -205,10 +439,6 @@
                             </div>
 
                             <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
                                 Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
                             </div>
 
@@ -216,10 +446,10 @@
                     </div>
                 </div>
 
-            </section>
+            </section> --}}
 
         </div>
-    </main><!-- End #main -->
+    </main>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>

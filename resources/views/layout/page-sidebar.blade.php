@@ -278,16 +278,22 @@
                 </a>
                 <ul id="localite-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('localites') }}">
+                            <span>Localités</span>
+                        </a>
+                    </li><!-- End localites Nav -->
+                    <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('regions') }}">
-                            <span>Région</span>
+                            <span>Régions</span>
                         </a>
                     </li><!-- End regions Nav -->
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('departements') }}">
-                            <span>Département</span>
+                            <span>Départements</span>
                         </a>
-                    </li><!-- End departements Nav -->
+                    </li> --}}
+                    <!-- End departements Nav -->
 
                     {{-- <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('arrondissements') }}">
@@ -305,6 +311,13 @@
                 </ul>
             </li><!-- End Courriers Nav -->
         @endif
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url('modules') }}">
+                <i class="bi bi-layers-half"></i>
+                <span>Modules</span>
+            </a>
+        </li><!-- End utilisateurs Nav -->
 
         @if (auth()->user()->hasRole('super-admin'))
             <li class="nav-heading">EMPLOYES</li>

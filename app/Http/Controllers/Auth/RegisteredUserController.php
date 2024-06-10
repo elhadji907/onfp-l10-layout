@@ -34,12 +34,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'prenom' => ['required', 'string', 'max:50'],
-            'name' => ['required', 'string', 'max:25'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'telephone' => ['required', 'string', 'max:25', 'min:9'],
-            'adresse' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'prenom'                => ['required', 'string', 'max:50'],
+            'name'                  => ['required', 'string', 'max:25'],
+            'email'                 => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'telephone'             => ['required', 'string', 'max:25', 'min:9'],
+            /* 'adresse'               => ['required', 'string', 'max:255'], */
+            'date_naissance'        => ['required', 'date'],
+            'lieu_naissance'        => ['required', 'string', 'max:50'],
+            'password'              => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
@@ -47,7 +49,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'telephone' => $request->telephone,
-            'adresse' => $request->adresse,
+            'date_naissance' => $request->date_naissance,
+            'lieu_naissance' => $request->lieu_naissance,
             'password' => Hash::make($request->password),
         ]);
 

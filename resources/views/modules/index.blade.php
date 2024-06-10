@@ -1,20 +1,19 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des départements')
+@section('title', 'ONFP - Liste des modules')
 @section('space-work')
-
-    <div class="pagetitle">
-        {{-- <h1>Data Tables</h1> --}}
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Données</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
     <section class="section">
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-10">
+                <div class="pagetitle">
+                    {{-- <h1>Data Tables</h1> --}}
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                            <li class="breadcrumb-item">Tables</li>
+                            <li class="breadcrumb-item active">Données</li>
+                        </ol>
+                    </nav>
+                </div><!-- End Page Title -->
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -33,66 +32,39 @@
                     <div class="card-body">
                         {{-- @can('role-create') --}}
                         <div class="pt-1">
-                            <a href="{{ route('departements.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <a href="{{ route('modules.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>
                         {{-- @endcan --}}
-                        <h5 class="card-title">Départements</h5>
-                        <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center" id="table-departements">
+                        <h5 class="card-title">Modules</h5>
+                        <table class="table datatables align-middle justify-content-center" id="table-modules">
                             <thead>
                                 <tr>
-                                    {{-- <th class="text-center" scope="col">N°</th> --}}
-                                    <th>Localités</th>
-                                    <th>Région</th>
+                                    <th>Modules</th>
+                                    <th>Domaines</th>
                                     <th class="text-center" scope="col">Demandes individuelles</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($departements as $departement)
+                                @foreach ($modules as $module)
                                     <tr>
-                                        {{-- <td style="text-align: center;">{{ $i++ }}</td> --}}
-                                        <td>{{ $departement->nom }}</td>
-                                        <td>{{ $departement->region->nom }}</td>
+                                        <td>{{ $module->name }}</td>
+                                        <td>{{ $module->domaine->name }}</td>
                                         <td style="text-align: center;">
-                                            @foreach ($departement->arrondissements as $arrondissement)
+                                            @foreach ($module->individuelles as $individuelle)
                                                 @if ($loop->last)
                                                     <span class="badge bg-info">{{ $loop->count }}</span>
                                                 @endif
                                             @endforeach
-                                            {{-- @foreach ($departement->individuelles as $individuelle)
-                                                @if ($loop->last)
-                                                    <span class="badge bg-info">{{ $loop->count }}</span>
-                                                @endif
-                                            @endforeach --}}
                                         </td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline">
-                                                <a href="{{ url('departements/' . $departement->id) }}"
-                                                    class="btn btn-warning btn-sm mx-1" title="Voir détails"><i
+                                                <a href="{{ url('modules/' . $module->id) }}"
+                                                    class="btn btn-success btn-sm mx-1" title="Voir détails"><i
                                                         class="bi bi-eye"></i></a>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ url('departements/' . $departement->id . '/edit') }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
-                                                        </li>
-                                                        <li>
-                                                            <form action="{{ url('departements', $departement->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                             </span>
                                         </td>
 
@@ -100,7 +72,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- End Table with stripped rows -->
                     </div>
                 </div>
             </div>
@@ -110,7 +81,7 @@
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-departements', {
+        new DataTable('#table-modules', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

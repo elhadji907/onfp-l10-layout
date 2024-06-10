@@ -19,7 +19,9 @@ use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\IndemniteController;
 use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\InterneController;
+use App\Http\Controllers\LocaliteController;
 use App\Http\Controllers\LoiController;
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NomminationController;
 use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
@@ -159,6 +161,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/pcharges', PchargeController::class);
     Route::resource('/validation-individuelles', ValidationIndividuelleController::class);
+    Route::resource('/localites', LocaliteController::class);
+    Route::resource('/modules', ModuleController::class);
 });
 
 
