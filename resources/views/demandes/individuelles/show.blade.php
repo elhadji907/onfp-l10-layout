@@ -53,24 +53,24 @@
                                                     <li class="message-item">
                                                         {{-- <i class="bi bi-exclamation-circle text-warning"></i> --}}
                                                         <a href="#">
-                                                            <img src="{{ asset($validationindividuelle->user->getImage()) }}" alt=""
-                                                                class="rounded-circle">
+                                                            <img src="{{ asset($validationindividuelle->user->getImage()) }}"
+                                                                alt="" class="rounded-circle">
                                                             <div>
                                                                 <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
                                                                 </h4>
                                                                 <p>
                                                                     @if ($validationindividuelle->action == 'Attente')
-                                                                    <span
-                                                                        class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                                                                @endif
-                                                                @if ($validationindividuelle->action == 'Validée')
-                                                                    <span
-                                                                        class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                                                                @endif
-                                                                @if ($validationindividuelle->action == 'Rejetée')
-                                                                    <span
-                                                                        class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
-                                                                @endif
+                                                                        <span
+                                                                            class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
+                                                                    @endif
+                                                                    @if ($validationindividuelle->action == 'Validée')
+                                                                        <span
+                                                                            class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
+                                                                    @endif
+                                                                    @if ($validationindividuelle->action == 'Rejetée')
+                                                                        <span
+                                                                            class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
+                                                                    @endif
                                                                     {{-- {{ $validationindividuelle->action }} --}}
                                                                 </p>
                                                                 <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
