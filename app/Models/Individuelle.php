@@ -218,6 +218,7 @@ class Individuelle extends Model
 		'updated_by',
 		'deleted_by',
 		'validated_by',
+		'canceled_by',
 		'demandeurs_id',
 		'etudes_id',
 		'antennes_id',

@@ -21,16 +21,36 @@
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Détails</p>
                                 </span>
+                                @if ($individuelle?->statut == 'Attente')
+                                    <span class="badge bg-white text-warning">{{ $individuelle?->statut }}</span>
+                                @endif
+                                @if ($individuelle?->statut == 'Validée')
+                                    <span class="badge bg-white text-info">{{ $individuelle?->statut }}</span>
+                                @endif
+                                @if ($individuelle?->statut == 'Rejetée')
+                                    <span class="badge bg-white text-danger">{{ $individuelle?->statut }}</span>
+                                @endif
 
                                 @if (auth()->user()->hasRole('super-admin'))
-                                    <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="button" class="btn btn-success show_confirm">
-                                            <span class="badge bg-white text-info">Valider</span>
-                                        </button>
-                                    </form>
+                                    @if ($individuelle?->statut == 'Validée')
+                                        <form action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger show_confirm_annuler">
+                                                <span class="badge bg-white text-danger">Rejeter</span>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="button" class="btn btn-success show_confirm">
+                                                <span class="badge bg-white text-info">Valider</span>
+                                            </button>
+                                        </form>
+                                    @endif
                                 @endif
                                 {{-- <button type="submit" class="dropdown-item show_confirm" title="valider"><i
                                     class="bi bi-trash"></i>Valider</button> --}}
