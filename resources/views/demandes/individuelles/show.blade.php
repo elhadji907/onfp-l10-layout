@@ -21,16 +21,70 @@
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Détails</p>
                                 </span>
-                                @if ($individuelle?->statut == 'Attente')
-                                    <span class="badge bg-white text-warning">{{ $individuelle?->statut }}</span>
-                                @endif
-                                @if ($individuelle?->statut == 'Validée')
-                                    <span class="badge bg-white text-info">{{ $individuelle?->statut }}</span>
-                                @endif
-                                @if ($individuelle?->statut == 'Rejetée')
-                                    <span class="badge bg-white text-danger">{{ $individuelle?->statut }}</span>
-                                @endif
+                                <span>
+                                    <nav class="header-nav ms-auto">
+                                        <ul class="d-flex align-items-center">
+                                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                                @if ($individuelle?->statut == 'Attente')
+                                                    <span
+                                                        class="badge bg-warning badge-number">{{ $individuelle?->statut }}</span>
+                                                @endif
+                                                @if ($individuelle?->statut == 'Validée')
+                                                    <span
+                                                        class="badge bg-info badge-number">{{ $individuelle?->statut }}</span>
+                                                @endif
+                                                @if ($individuelle?->statut == 'Rejetée')
+                                                    <span
+                                                        class="badge bg-danger badge-number">{{ $individuelle?->statut }}</span>
+                                                @endif
+                                            </a><!-- End Notification Icon -->
 
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                                                <li class="dropdown-header">
+                                                    Historique de validation
+                                                    {{-- <a href="#"><span
+                                                            class="badge rounded-pill bg-primary p-2 ms-2">View
+                                                            all</span></a> --}}
+                                                </li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                @foreach ($individuelle->validationindividuelles as $validationindividuelle)
+                                                    <li class="message-item">
+                                                        {{-- <i class="bi bi-exclamation-circle text-warning"></i> --}}
+                                                        <a href="#">
+                                                            <img src="{{ asset($validationindividuelle->user->getImage()) }}" alt=""
+                                                                class="rounded-circle">
+                                                            <div>
+                                                                <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
+                                                                </h4>
+                                                                <p>
+                                                                    @if ($validationindividuelle->action == 'Attente')
+                                                                    <span
+                                                                        class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
+                                                                @endif
+                                                                @if ($validationindividuelle->action == 'Validée')
+                                                                    <span
+                                                                        class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
+                                                                @endif
+                                                                @if ($validationindividuelle->action == 'Rejetée')
+                                                                    <span
+                                                                        class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
+                                                                @endif
+                                                                    {{-- {{ $validationindividuelle->action }} --}}
+                                                                </p>
+                                                                <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </ul>
+                                    </nav>
+                                </span>
                                 @if (auth()->user()->hasRole('super-admin'))
                                     @if ($individuelle?->statut == 'Validée')
                                         <form action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"

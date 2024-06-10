@@ -29,4 +29,9 @@ class Validationindividuelle extends Model
 	{
 		return $this->belongsTo(Individuelle::class, 'individuelles_id');
 	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'validated_id')->latest()->latest();
+	}
 }

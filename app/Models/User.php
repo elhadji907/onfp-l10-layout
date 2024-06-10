@@ -207,4 +207,8 @@ class User extends Authenticatable
             ->withPivot('id', 'deleted_at')
             ->withTimestamps();
     }
+    public function validationindividuelle()
+    {
+        return $this->hasOne(Validationindividuelle::class, 'validated_id')->latest()->latest();
+    }
 }
