@@ -69,7 +69,10 @@ Route::get('/register-page', [ProfileController::class, 'registerPage'])->name('
 /* Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard'); */
-
+Route::get('/modal', [RegionController::class, 'modal'])->name('modal');
+Route::post('/updateRegion', [RegionController::class, 'updateRegion'])->name('updateRegion');
+Route::post('/rejeterIndividuelle', [IndividuelleController::class, 'rejeterIndividuelle'])->name('rejeterIndividuelle');
+Route::post('/addRegion', [RegionController::class, 'addRegion'])->name('addRegion');
 /* Route::group(['middleware' => ['isAdmin']], function () { */
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

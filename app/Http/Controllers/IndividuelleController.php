@@ -302,6 +302,18 @@ class IndividuelleController extends Controller
         return view("demandes.individuelles.show", compact("individuelle"));
     }
 
+    public function rejeterIndividuelle(Request $request)
+    {
+        $request->validate([
+            'motif' => 'required', 'string'
+        ]);
+
+        $individuelle = Individuelle::findOrFail($request->input('id'));
+        $individuelle->numero = $request->input('motif');
+        $individuelle->save();
+
+        return redirect()->route('modal')->with('success', 'Région modifiée avec succès');
+    }
     public function destroy($id)
     {
         $individuelle   = Individuelle::find($id);

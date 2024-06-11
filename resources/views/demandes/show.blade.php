@@ -51,7 +51,7 @@
                                             <th scope="col">Module</th>
                                             <th scope="col">Localité</th>
                                             <th scope="col">Statut</th>
-                                            <th scope="col">#</th>
+                                            <th class="col"><i class="bi bi-gear"></i> Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>

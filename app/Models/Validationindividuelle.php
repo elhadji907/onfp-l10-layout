@@ -21,6 +21,7 @@ class Validationindividuelle extends Model
 		'uuid',
 		'validated_id',
 		'action',
+		'motif',
 		'individuelles_id'
 	];
 

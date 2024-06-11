@@ -63,7 +63,7 @@ class RegisteredUserController extends Controller
             'users_id' => $user->id,
         ]);
 
-        Alert::success('Félicitations ! ' . $user->firstname . ' ' . $user->name, ' votre compte a été créé, connectez-vous');
+        Alert::success('Félicitations ! ' . $user->firstname . ' ' . $user->name, ' Votre compte est créé, introduisez vos identifiants pour vous connecter.');
 
         $user->assignRole('Demandeur');
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->char('uuid', 36);
             $table->unsignedInteger('validated_id');
             $table->string('action', 50)->nullable();
+            $table->longText('motif')->nullable();
             $table->unsignedInteger('individuelles_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();

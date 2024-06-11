@@ -204,7 +204,7 @@
         });
     </script>
     <script type="text/javascript">
-        $('.show_confirm').click(function(event) {
+        $('.show_confirm_valider').click(function(event) {
             var form = $(this).closest("form");
             var name = $(this).data("name");
             event.preventDefault();
@@ -227,7 +227,7 @@
             var name = $(this).data("name");
             event.preventDefault();
             swal({
-                    title: `Êtes-vous sûr de vouloir valider ?`,
+                    title: `Êtes-vous sûr de vouloir rejeter ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "error",
                     buttons: true,

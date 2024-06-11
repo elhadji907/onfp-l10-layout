@@ -100,7 +100,7 @@
                                             method="post">
                                             @csrf
                                             @method('PUT')
-                                            <button type="button" class="btn btn-success show_confirm">
+                                            <button type="button" class="btn btn-success show_confirm_valider">
                                                 <span class="badge bg-white text-info">Valider</span>
                                             </button>
                                         </form>
