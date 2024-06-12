@@ -31,68 +31,105 @@
                                     <nav class="header-nav ms-auto">
                                         <ul class="d-flex align-items-center">
                                             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                                @if ($individuelle?->statut == 'Attente')
+                                                {{--  @if ($individuelle?->statut == 'Attente')
                                                     <span
                                                         class="badge bg-warning badge-number">{{ $individuelle?->statut }}</span>
-                                                @endif
-                                                @if ($individuelle?->statut == 'Validée')
-                                                    <button type="submit" class="btn btn-success btn-sm text-white"><i
+                                                @endif --}}
+                                                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                                    <i class="bi bi-chat-left-text m-1"></i>
+                                                    <span class="badge bg-success badge-number"
+                                                        title="{{ $individuelle?->statut }}">{{ $individuelle->validationindividuelles->count() }}</span>
+                                                </a>
+
+                                                {{-- @if ($individuelle?->statut == 'Validée')
+                                                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                                        <i class="bi bi-chat-left-text"></i>
+                                                        <span class="badge bg-success badge-number">3</span>
+                                                    </a> --}}
+                                                <!-- End Messages Icon -->
+                                                {{-- <button type="submit" class="btn btn-success btn-sm text-white"><i
                                                             class="bi bi-eye"></i>
-                                                        {{ $individuelle?->statut }}</button>
-                                                    {{--  <span
+                                                        {{ $individuelle?->statut }}
+                                                    </button> --}}
+                                                {{--  <span
                                                         class="badge bg-info badge-number">{{ $individuelle?->statut }}</span> --}}
-                                                @endif
-                                                @if ($individuelle?->statut == 'Rejetée')
-                                                    {{-- <span
+                                                {{-- @endif --}}
+                                                {{-- @if ($individuelle?->statut == 'Rejetée')
+                                                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                                        <i class="bi bi-chat-left-text m-1"></i>
+                                                        <span class="badge bg-success badge-number"
+                                                            title="{{ $individuelle?->statut }}">{{ $individuelle->validationindividuelles->count() }}</span>
+                                                    </a> --}}
+                                                <!-- End Messages Icon -->
+                                                {{-- <span
                                                         class="badge bg-danger badge-number">{{ $individuelle?->statut }}</span> --}}
-                                                    <button type="submit" class="btn btn-danger btn-sm text-white"><i
+                                                {{-- <button type="submit" class="btn btn-danger btn-sm text-white"><i
                                                             class="bi bi-eye"></i>
-                                                        {{ $individuelle?->statut }}</button>
-                                                @endif
+                                                        {{ $individuelle?->statut }}</button> --}}
+                                                {{-- @endif --}}
                                             </a><!-- End Notification Icon -->
 
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                                                 <li class="dropdown-header">
-                                                    Historique de validation
-                                                    {{-- <a href="#"><span
-                                                            class="badge rounded-pill bg-primary p-2 ms-2">View
-                                                            all</span></a> --}}
+                                                    @if ($individuelle->validationindividuelles->count() == '0')
+                                                        Aucune validation pour le moment
+                                                    @else
+                                                        Vous avez
+                                                        {{ $individuelle->validationindividuelles->count() . ' validation(s)' }}
+                                                    @endif
+                                                    @if ($individuelle->validationindividuelles->count() != '0')
+                                                        <a href="{{ url('validationsRejetMessage/' . $individuelle->id) }}"><span
+                                                                class="badge rounded-pill bg-primary p-2 ms-2">Voir
+                                                                toutes</span></a>
+                                                    @endif
                                                 </li>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
-                                                @foreach ($individuelle->validationindividuelles as $validationindividuelle)
-                                                    <li class="message-item">
-                                                        {{-- <i class="bi bi-exclamation-circle text-warning"></i> --}}
-                                                        <a href="#">
-                                                            <img src="{{ asset($validationindividuelle->user->getImage()) }}"
-                                                                alt="" class="rounded-circle">
-                                                            <div>
-                                                                <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
-                                                                </h4>
-                                                                <p>
-                                                                    @if ($validationindividuelle->action == 'Attente')
-                                                                        <span
-                                                                            class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                                                                    @endif
-                                                                    @if ($validationindividuelle->action == 'Validée')
-                                                                        <span
-                                                                            class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                                                                    @endif
-                                                                    @if ($validationindividuelle->action == 'Rejetée')
-                                                                        <span
-                                                                            class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
-                                                                    @endif
-                                                                    {{-- {{ $validationindividuelle->action }} --}}
-                                                                </p>
-                                                                <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <hr class="dropdown-divider">
-                                                    </li>
+                                                <?php $i = 1; ?>
+                                                @foreach ($individuelle->validationindividuelles as $count => $validationindividuelle)
+                                                    @if ($count < 2)
+                                                        <li class="message-item">
+                                                            {{-- <i class="bi bi-exclamation-circle text-warning"></i> --}}
+                                                            <a
+                                                                href="{{ url('validationsRejetMessage/' . $individuelle->id) }}">
+                                                                <img src="{{ asset($validationindividuelle->user->getImage()) }}"
+                                                                    alt="" class="rounded-circle">
+                                                                <div>
+                                                                    <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
+                                                                    </h4>
+                                                                    <p>
+                                                                        @if ($validationindividuelle->action == 'Attente')
+                                                                            <span
+                                                                                class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
+                                                                        @endif
+                                                                        @if ($validationindividuelle->action == 'Validée')
+                                                                            <span
+                                                                                class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
+                                                                        @endif
+                                                                        @if ($validationindividuelle->action == 'Rejetée')
+                                                                            <span
+                                                                                class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
+                                                                            <p>{!! substr($validationindividuelle?->motif, 0, 25) . ' ...' !!}</p>
+                                                                        @endif
+                                                                        {{-- {{ $validationindividuelle->action }} --}}
+                                                                    </p>
+                                                                    <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                    @endif
                                                 @endforeach
+                                                @if ($individuelle->validationindividuelles->count() != '0')
+                                                    <li class="dropdown-footer">
+                                                        <a
+                                                            href="{{ url('validationsRejetMessage/' . $individuelle->id) }}">Voir
+                                                            toutes les validations</a>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </ul>
                                     </nav>
@@ -103,16 +140,16 @@
                                             method="post">
                                             @csrf
                                             @method('DELETE') --}}
-                                            {{-- <button type="button" class="btn btn-danger show_confirm_annuler">
+                                        {{-- <button type="button" class="btn btn-danger show_confirm_annuler">
                                                 <span class="badge bg-white text-danger">Rejeter</span>
                                             </button> --}}
 
-                                            {{-- <button type="button" class="btn btn-danger btn-sm text-white show_confirm_annuler"><i
+                                        {{-- <button type="button" class="btn btn-danger btn-sm text-white show_confirm_annuler"><i
                                                 class="bi bi-x"></i>Rejeter</button> --}}
-                                            <button type="button" class="btn btn-danger btn-sm text-white"
-                                                data-bs-toggle="modal" data-bs-target="#AddRegionModal"><i
-                                                    class="bi bi-x"></i>Rejeter
-                                            </button>
+                                        <button type="button" class="btn btn-danger btn-sm text-white"
+                                            data-bs-toggle="modal" data-bs-target="#AddRegionModal"><i
+                                                class="bi bi-x"></i>Rejeter
+                                        </button>
                                         {{-- </form> --}}
                                     @else
                                         <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"

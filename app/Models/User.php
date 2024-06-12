@@ -209,6 +209,6 @@ class User extends Authenticatable
     }
     public function validationindividuelle()
     {
-        return $this->hasOne(Validationindividuelle::class, 'validated_id')->latest()->latest();
+        return $this->hasOne(Validationindividuelle::class, 'validated_id');
     }
 }

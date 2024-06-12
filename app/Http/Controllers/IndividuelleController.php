@@ -324,4 +324,9 @@ class IndividuelleController extends Controller
 
         return redirect()->back()->with("danger", $message);
     }
+    public function validationsRejetMessage(Request $request, $id)
+    {
+        $individuelle = Individuelle::findOrFail($id);
+        return view("demandes.individuelles.validationsrejetmessage", compact('individuelle'));
+    }
 }

@@ -33,6 +33,6 @@ class Validationindividuelle extends Model
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'validated_id')->latest()->latest();
+		return $this->belongsTo(User::class, 'validated_id');
 	}
 }
