@@ -11,13 +11,19 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                @endif
                 <div class="col-12 col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <span class="d-flex mt-2 align-items-baseline"><a
                                         href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
-                                        class="btn btn-success btn-sm" title="retour"><i
+                                        class="btn btn-secondary btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Détails</p>
                                 </span>
@@ -30,12 +36,18 @@
                                                         class="badge bg-warning badge-number">{{ $individuelle?->statut }}</span>
                                                 @endif
                                                 @if ($individuelle?->statut == 'Validée')
-                                                    <span
-                                                        class="badge bg-info badge-number">{{ $individuelle?->statut }}</span>
+                                                    <button type="submit" class="btn btn-success btn-sm text-white"><i
+                                                            class="bi bi-eye"></i>
+                                                        {{ $individuelle?->statut }}</button>
+                                                    {{--  <span
+                                                        class="badge bg-info badge-number">{{ $individuelle?->statut }}</span> --}}
                                                 @endif
                                                 @if ($individuelle?->statut == 'Rejetée')
-                                                    <span
-                                                        class="badge bg-danger badge-number">{{ $individuelle?->statut }}</span>
+                                                    {{-- <span
+                                                        class="badge bg-danger badge-number">{{ $individuelle?->statut }}</span> --}}
+                                                    <button type="submit" class="btn btn-danger btn-sm text-white"><i
+                                                            class="bi bi-eye"></i>
+                                                        {{ $individuelle?->statut }}</button>
                                                 @endif
                                             </a><!-- End Notification Icon -->
 
@@ -87,22 +99,32 @@
                                 </span>
                                 @if (auth()->user()->hasRole('super-admin'))
                                     @if ($individuelle?->statut == 'Validée')
-                                        <form action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"
+                                        {{-- <form action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"
                                             method="post">
                                             @csrf
-                                            @method('DELETE')
-                                            <button type="button" class="btn btn-danger show_confirm_annuler">
+                                            @method('DELETE') --}}
+                                            {{-- <button type="button" class="btn btn-danger show_confirm_annuler">
                                                 <span class="badge bg-white text-danger">Rejeter</span>
+                                            </button> --}}
+
+                                            {{-- <button type="button" class="btn btn-danger btn-sm text-white show_confirm_annuler"><i
+                                                class="bi bi-x"></i>Rejeter</button> --}}
+                                            <button type="button" class="btn btn-danger btn-sm text-white"
+                                                data-bs-toggle="modal" data-bs-target="#AddRegionModal"><i
+                                                    class="bi bi-x"></i>Rejeter
                                             </button>
-                                        </form>
+                                        {{-- </form> --}}
                                     @else
                                         <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                             method="post">
                                             @csrf
                                             @method('PUT')
-                                            <button type="button" class="btn btn-success show_confirm_valider">
+                                            {{-- <button type="button" class="btn btn-success show_confirm_valider">
                                                 <span class="badge bg-white text-info">Valider</span>
-                                            </button>
+                                            </button> --}}
+                                            <button type="button"
+                                                class="btn btn-success btn-sm text-white show_confirm_valider"><i
+                                                    class="bi bi-x"></i>Valider</button>
                                         </form>
                                     @endif
                                 @endif
@@ -262,7 +284,7 @@
 
                                     <div class="text-center">
                                         <a href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                            class="btn btn-info btn-sm text-white" title="voir détails"><i
+                                            class="btn btn-primary btn-sm text-white" title="voir détails"><i
                                                 class="bi bi-pencil"></i>&nbsp;Modifier</a>
                                     </div>
                                 </form>
@@ -270,6 +292,40 @@
                             {{-- @include('demandes.individuelles.validationModal') --}}
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="AddRegionModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    {{-- <form method="POST" action="{{ route('addRegion') }}">
+                        @csrf --}}
+                    <form method="post" action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"
+                        enctype="multipart/form-data" class="row">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet demande</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="motif" class="form-label">Motifs du rejet</label>
+                            <textarea name="motif" id="motif" rows="5"
+                                class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                            @error('motif')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
+                                Rejeter</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
