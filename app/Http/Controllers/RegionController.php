@@ -38,7 +38,7 @@ class RegionController extends Controller
 
         /* $status = "Région " . $region->nom . " ajoutée avec succès";
         return  redirect()->route("regions.index")->with("status", $status); */
-        Alert::success('La région de ' . $region->nom, 'a été ajoutée avec succès');
+        Alert::success('La région de ' . $region->nom, ' a été ajoutée avec succès');
 
         return redirect()->back();
     }
@@ -71,7 +71,7 @@ class RegionController extends Controller
         /* $mesage = 'La région ' . $region->nom . '  a été modifiée';
         return redirect()->route("regions.index")->with("status", $mesage); */
 
-        Alert::success('La région de ' . $region->nom, 'a été modifié avec succès');
+        Alert::success('La région de ' . $region->nom, ' a été modifié avec succès');
 
         return redirect()->back();
     }
@@ -84,7 +84,7 @@ class RegionController extends Controller
         /* $status = "Région " . $region->nom . " vient d'être supprimée";
         return redirect()->route("regions.index")->with('status', $status); */
 
-        Alert::error('La région de ' . $region->nom, 'a été supprimée avec succès');
+        Alert::success('La région de ' . $region->nom, 'a été supprimée avec succès');
         return redirect()->back();
     }
 

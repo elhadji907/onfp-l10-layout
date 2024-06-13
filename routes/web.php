@@ -16,6 +16,7 @@ use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FonctionController;
+use App\Http\Controllers\FormationController;
 use App\Http\Controllers\IndemniteController;
 use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\InterneController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\LocaliteController;
 use App\Http\Controllers\LoiController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NomminationController;
+use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
@@ -167,6 +169,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/validation-individuelles', ValidationIndividuelleController::class);
     Route::resource('/localites', LocaliteController::class);
     Route::resource('/modules', ModuleController::class);
+    Route::resource('/formations', FormationController::class);
+    Route::resource('/operateurs', OperateurController::class);
 });
 
 

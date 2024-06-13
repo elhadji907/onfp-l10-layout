@@ -319,6 +319,20 @@
             </a>
         </li><!-- End utilisateurs Nav -->
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url('formations') }}">
+                <i class="bi bi-folder-symlink-fill"></i>
+                <span>Formations</span>
+            </a>
+        </li><!-- End Formations Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url('operateurs') }}">
+                <i class="bi bi-people-fill"></i>
+                <span>Opérateurs</span>
+            </a>
+        </li><!-- End Formations Nav -->
+
         @if (auth()->user()->hasRole('super-admin'))
             <li class="nav-heading">EMPLOYES</li>
 

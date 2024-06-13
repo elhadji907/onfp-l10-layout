@@ -97,7 +97,10 @@ class Operateur extends Model
 		'types_operateurs_id' => 'int',
 		'specialites_id' => 'int',
 		'courriers_id' => 'int',
-		'communes_id' => 'int'
+		'communes_id' => 'int',
+		'departements_id' => 'int',
+		'fin_quitus' => 'datetime',
+    	'debut_quitus' => 'datetime'
 	];
 
 	protected $dates = [
@@ -142,6 +145,8 @@ class Operateur extends Model
 		'fonction_responsable',
 		'operateur_type',
 		'statut',
+		'autre_statut',
+		'categorie',
 		'qualification',
 		'users_id',
 		'rccms_id',
@@ -150,6 +155,7 @@ class Operateur extends Model
 		'specialites_id',
 		'courriers_id',
 		'communes_id',
+		'departements_id',
 		'file1',
 		'file2',
 		'file3',
@@ -165,6 +171,11 @@ class Operateur extends Model
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
+	}
+
+	public function departement()
+	{
+		return $this->belongsTo(Departement::class, 'departements_id');
 	}
 
 	public function courrier()

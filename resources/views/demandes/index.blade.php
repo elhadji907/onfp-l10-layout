@@ -49,8 +49,8 @@
                                     <th class="text-center">Date naissance</th>
                                     <th class="text-center">Lieu naissance</th>
                                     <th class="text-center">Téléphone</th>
-                                    <th class="text-center">Formations</th>
-                                    <th class="text-center">#</th>
+                                    <th class="text-center">Demandes</th>
+                                    <th class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>

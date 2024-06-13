@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Departement extends Model
 {
-    use HasFactory;
+	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'departements';
@@ -71,5 +71,9 @@ class Departement extends Model
 	public function individuelles()
 	{
 		return $this->hasMany(Individuelle::class, 'departements_id');
+	}
+	public function operateurs()
+	{
+		return $this->hasMany(Operateur::class, 'communes_id');
 	}
 }

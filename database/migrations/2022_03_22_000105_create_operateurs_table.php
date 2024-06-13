@@ -28,6 +28,7 @@ class CreateOperateursTable extends Migration
             $table->string('name', 200)->nullable();
             $table->string('sigle', 200)->nullable();
             $table->string('typestructure', 200)->nullable();
+            $table->string('categorie', 200)->nullable();
             $table->timestamp('date_depot')->nullable();
             $table->timestamp('annee_agrement')->nullable();
             $table->timestamp('date')->nullable();
@@ -53,6 +54,7 @@ class CreateOperateursTable extends Migration
             $table->string('fonction_responsable', 200)->nullable();
             $table->string('operateur_type', 200)->nullable();
             $table->string('statut', 200)->nullable();
+            $table->string('autre_statut', 200)->nullable();
             $table->longText('qualification')->nullable();
             $table->unsignedInteger('users_id')->nullable();
             $table->unsignedInteger('rccms_id')->nullable();
@@ -61,6 +63,7 @@ class CreateOperateursTable extends Migration
             $table->unsignedInteger('specialites_id')->nullable();
             $table->unsignedInteger('courriers_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
+            $table->unsignedInteger('departements_id')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();
@@ -85,6 +88,8 @@ class CreateOperateursTable extends Migration
             $table->index(["courriers_id"], 'fk_operateurs_courriers1_idx');
 
             $table->index(["communes_id"], 'fk_operateurs_communes1_idx');
+
+            $table->index(["departements_id"], 'fk_operateurs_departements1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -121,6 +126,11 @@ class CreateOperateursTable extends Migration
 
             $table->foreign('communes_id', 'fk_operateurs_communes1_idx')
                 ->references('id')->on('communes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('departements_id', 'fk_operateurs_departements1_idx')
+                ->references('id')->on('departements')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
