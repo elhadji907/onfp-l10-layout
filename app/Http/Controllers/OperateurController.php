@@ -83,7 +83,7 @@ class OperateurController extends Controller
 
         $operateur->save();
 
-        Alert::success("L'opérateur "  . $operateur->name, " a été ajouté avec succès");
+        Alert::success("L'opérateur "  . $operateur->sigle, " a été ajouté avec succès");
 
         return redirect()->back();
     }

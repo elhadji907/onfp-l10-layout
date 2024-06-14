@@ -254,6 +254,7 @@
                                                         <th scope="col">Module</th>
                                                         <th scope="col">Niveau qualification</th>
                                                         <th scope="col">Domaine</th>
+                                                        <th scope="col">Statut</th>
                                                         <th class="col"><i class="bi bi-gear"></i></th>
                                                     </tr>
                                                 </thead>
@@ -265,6 +266,7 @@
                                                             <td>{{ $operateurmodule->module }}</td>
                                                             <td>{{ $operateurmodule->niveau_qualification }}</td>
                                                             <td>{{ $operateurmodule->domaine }}</td>
+                                                            <td></td>
                                                             {{--     <td>
                                                                 @isset($individuelle?->statut)
                                                                     @if ($individuelle?->statut == 'Attente')
@@ -304,7 +306,7 @@
                                                                                     class="mx-1" title="Modifier"><i
                                                                                         class="bi bi-pencil"></i>Modifier</a>
                                                                             </li>
-                                                                            {{-- <li>
+                                                                            <li>
                                                                                 <form
                                                                                     action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
                                                                                     method="post">
@@ -315,7 +317,7 @@
                                                                                         title="Supprimer"><i
                                                                                             class="bi bi-trash"></i>Supprimer</button>
                                                                                 </form>
-                                                                            </li> --}}
+                                                                            </li>
                                                                         </ul>
                                                                     </div>
                                                                 </span>

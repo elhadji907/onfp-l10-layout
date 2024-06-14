@@ -28,7 +28,7 @@ class IndividuelleController extends Controller
         if ($total_individuelle >= 5) {
             /* $status = "Vous avez atteint le nombre de demandes individuels autorisées"; */
             /* return redirect()->back()->with("status", $status); */
-            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autorisées');
             return redirect()->back();
         } else {
             $departements = Departement::orderBy("created_at", "desc")->get();

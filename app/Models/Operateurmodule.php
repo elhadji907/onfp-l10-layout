@@ -34,6 +34,6 @@ class Operateurmodule extends Model
 
     public function operateur()
     {
-        return $this->belongsTo(Operateur::class, 'operateurs_id');
+        return $this->belongsTo(Operateur::class, 'operateurs_id')->latest();
     }
 }

@@ -63,7 +63,13 @@
                                             <td>{{ $operateur?->numero_agrement }}</td>
                                             <td>{{ $operateur?->name }}</td>
                                             <td>{{ $operateur?->sigle }}</td>
-                                            <td></td>
+                                            <td style="text-align: center;">
+                                                @foreach ($operateur->operateurmodules as $operateurmodule)
+                                                    @if ($loop->last)
+                                                        <span class="badge bg-info">{{ $loop->count }}</span>
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <td></td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
@@ -81,12 +87,14 @@
                                                                         class="bi bi-pencil"></i>Modifier</a> --}}
 
                                                                 <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                    data-bs-toggle="modal" data-bs-target="#EditOperateurModal{{ $operateur->id }}">
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#EditOperateurModal{{ $operateur->id }}">
                                                                     <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                                 </button>
                                                             </li>
                                                             <li>
-                                                                <form action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                <form
+                                                                    action="{{ route('operateurs.destroy', $operateur->id) }}"
                                                                     method="post">
                                                                     @csrf
                                                                     @method('DELETE')
@@ -604,8 +612,8 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="categorie" class="form-label">Catégorie<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <select name="categorie"
-                                                class="form-select selectpicker" data-live-search="true @error('categorie') is-invalid @enderror"
+                                            <select name="categorie" class="form-select selectpicker"
+                                                data-live-search="true @error('categorie') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-categorie-update"
                                                 data-placeholder="Choisir categorie">
                                                 <option value="{{ $operateur->categorie }}">
@@ -895,9 +903,9 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
-            "order": [
+            /* "order": [
                 [0, 'desc']
-            ],
+            ], */
             language: {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",

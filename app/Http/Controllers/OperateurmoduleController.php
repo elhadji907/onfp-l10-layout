@@ -17,22 +17,35 @@ class OperateurmoduleController extends Controller
         ]); */
 
         $this->validate($request, [
-            'module'                => 'required|unique:operateurmodules,module',
-            'domaine'               => 'required|unique:operateurmodules,domaine',
-            'niveau_qualification'  => 'required|unique:operateurmodules,niveau_qualification',
+            'module'                => 'required|string',
+            'domaine'               => 'required|string',
+            'niveau_qualification'  => 'required|string',
         ]);
+        $total_module = Operateurmodule::where('operateurs_id', $request->input('operateur'))->count();
+        if ($total_module >= 10) {
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
+            return redirect()->back();
+        } else {
+            $operateurmodule = new Operateurmodule([
+                "module"                =>  $request->input("module"),
+                "domaine"               =>  $request->input("domaine"),
+                'niveau_qualification'  =>  $request->input('niveau_qualification'),
+                'operateurs_id'         =>  $request->input('operateur'),
+            ]);
 
-        $operateurmodule = new Operateurmodule([
-            "module"                =>  $request->input("module"),
-            "domaine"               =>  $request->input("domaine"),
-            'niveau_qualification'  =>  $request->input('niveau_qualification'),
-            'operateurs_id'         =>  $request->input('operateur'),
-        ]);
-
-        $operateurmodule->save();
+            $operateurmodule->save();
+        }
 
         Alert::success('Féliciations ! ', 'module ajouté avec succès');
 
+        return redirect()->back();
+    }
+    public function destroy($id)
+    {
+        $operateurmodule = Operateurmodule::find($id);
+        $operateurmodule->delete();
+
+        Alert::success("Module " . $operateurmodule->module, 'a été supprimé avec succès');
         return redirect()->back();
     }
 }
