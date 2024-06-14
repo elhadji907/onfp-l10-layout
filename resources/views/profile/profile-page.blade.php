@@ -193,8 +193,8 @@
                                 </div>
                             </div>
 
-                            <div class="tab-content pt-2">
                                 {{-- Fin aperçu --}}
+                            <div class="tab-content pt-2">
 
                                 {{-- Début Edition --}}
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
