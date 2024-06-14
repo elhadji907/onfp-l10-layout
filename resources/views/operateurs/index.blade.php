@@ -292,7 +292,7 @@
                                         <label for="departement" class="form-label">Siège social<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
-                                            class="form-select  @error('departement') is-invalid @enderror"
+                                            class="form-select form-select-sm @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement" data-placeholder="Choisir">
                                             <option value=""></option>
                                             @foreach ($departements as $departement)
@@ -678,7 +678,7 @@
                                             <label for="departement" class="form-label">Siège social<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="departement"
-                                                class="form-select  @error('departement') is-invalid @enderror"
+                                                class="form-select form-select-sm @error('departement') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-departement-update"
                                                 data-placeholder="Choisir">
                                                 <option value="{{ $operateur->departement?->id }}">
@@ -724,8 +724,8 @@
                                                 <option value="Registre de commerce">
                                                     Registre de commerce
                                                 </option>
-                                                <option value="Quitus fiscal">
-                                                    Quitus fiscal
+                                                <option value="Ninea">
+                                                    Ninea
                                                 </option>
                                             </select>
                                             @error('registre_commerce')
@@ -776,7 +776,7 @@
                                             @enderror
                                         </div>
 
-                                        <hr class="dropdown-divider mt-5">
+                                        <hr class="dropdown-divider mt-3">
 
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="civilite" class="form-label">Civilité<span
@@ -871,7 +871,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="modal-footer mt-5">
+                                    <div class="modal-footer mt-3">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fermer</button>
                                         <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>

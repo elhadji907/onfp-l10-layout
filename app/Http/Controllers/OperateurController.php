@@ -154,6 +154,12 @@ class OperateurController extends Controller
         return redirect()->back();
     }
 
+    public function show($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        return view("operateurs.show", compact("operateur"));
+    }
+
     public function destroy($id)
     {
         $operateur = Operateur::find($id);

@@ -39,6 +39,15 @@ class IndividuelleController extends Controller
 
     public function store(IndividuelleStoreRequest $request): RedirectResponse
     {
+
+        $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
+        if ($total_individuelle >= 5) {
+            /* $status = "Vous avez atteint le nombre de demandes individuels autorisées"; */
+            /* return redirect()->back()->with("status", $status); */
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
+            return redirect()->back();
+        }
+
         $anne = date('y');
         $num = rand(100, 999);
         $letter = chr(rand(65, 90));
