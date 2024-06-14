@@ -42,6 +42,12 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
+                                    <span class="nav-link"><a href="{{ route('operateurs.index', $operateur->id) }}"
+                                            class="btn btn-secondary btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>
+                                    </span>
+                                </li>
+                                <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview"><i class="bi bi-eye"></i> Opérateur</button>
                                 </li>
@@ -62,19 +68,19 @@
                                 </li>
 
                             </ul>
-                            {{-- <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="d-flex mt-2 align-items-baseline"><a
+                            <div class="d-flex justify-content-between align-items-center mt-0">
+                                {{-- <span class="d-flex mt-2 align-items-baseline"><a
                                     href="{{ route('operateurs.index', $operateur->id) }}" class="btn btn-secondary btn-sm"
                                     title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Détails</p>
-                            </span>
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                <p> | Retour</p>
+                            </span> --}}
+                                {{-- <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                 data-bs-target="#AddOperateurModal">
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
-                            </button>
-                        </div> --}}
+                            </button> --}}
+                            </div>
                             {{-- Détail opérateur --}}
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview pt-3" id="profile-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
@@ -184,11 +190,142 @@
                             {{-- Détail Modules --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade profile-overview pt-3" id="module-overview">
-                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                    <form method="post" action="{{ url('operateurmodules') }}"
+                                        enctype="multipart/form-data" class="row g-3">
                                         @csrf
-                                        @method('PUT')
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <h5 class="card-title">Ajouter nouveau module</h5>
+                                            <table class="table table-bordered" id="dynamicAddRemove">
+                                                <tr>
+                                                    <th>modules<span class="text-danger mx-1">*</span></th>
+                                                    <th>Niveau qualification<span class="text-danger mx-1">*</span></th>
+                                                    <th>Domaines<span class="text-danger mx-1">*</span></th>
+                                                    {{-- <th width="5%"><i class="bi bi-gear"></i></th> --}}
+                                                </tr>
+                                                {{-- <tr>
+                                                    <td><input type="text" name="modules[0][module]"
+                                                            placeholder="Entrer un module"
+                                                            class="form-control form-control-sm" autofocus /></td>
+                                                    <td><input type="text" name="niveau_qualifications[0][niveau_qualification]"
+                                                            placeholder="Entrer niveau qualification"
+                                                            class="form-control form-control-sm" /></td>
+                                                    <td><input type="text" name="domaines[0][domaine]"
+                                                            placeholder="Entrer un domaine"
+                                                            class="form-control form-control-sm" /></td>
+                                                    <td><button type="button" name="add" id="add-btn"
+                                                            class="btn btn-success btn-sm" title="Ajouter une ligne"><i
+                                                                class="bi bi-plus-lg"></i></button>
+                                                    </td>
+                                                </tr> --}}
+                                                <tr>
+                                                    <input type="hidden" name="operateur" value="{{ $operateur->id }}">
+                                                    <td><input type="text" name="module"
+                                                            placeholder="Entrer un module"
+                                                            class="form-control form-control-sm" autofocus /></td>
+                                                    <td><input type="text" name="niveau_qualification"
+                                                            placeholder="Entrer niveau qualification"
+                                                            class="form-control form-control-sm" /></td>
+                                                    <td><input type="text" name="domaine"
+                                                            placeholder="Entrer un domaine"
+                                                            class="form-control form-control-sm" /></td>
+                                                    {{-- <td><button type="button" name="add" id="add-btn"
+                                                            class="btn btn-success btn-sm" title="Ajouter une ligne"><i
+                                                                class="bi bi-plus-lg"></i></button>
+                                                    </td> --}}
+                                                </tr>
+                                            </table>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
+                                                <button type="submit" class="btn btn-success btn-sm"><i
+                                                        class="bi bi-printer"></i> Enregistrer</button>
+                                            </div>
+                                        </div>
+
+                                    </form><!-- End module -->
+
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <h5 class="card-title">Modules</h5>
-                                    </form>
+                                        <form method="post" action="#" enctype="multipart/form-data"
+                                            class="row g-3">
+                                            <table
+                                                class="table datatables align-middle justify-content-center table-borderless">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">N°</th>
+                                                        <th scope="col">Module</th>
+                                                        <th scope="col">Niveau qualification</th>
+                                                        <th scope="col">Domaine</th>
+                                                        <th class="col"><i class="bi bi-gear"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 1; ?>
+                                                    @foreach ($operateur->operateurmodules as $operateurmodule)
+                                                        <tr>
+                                                            <td style="text-align: center;">{{ $i++ }}</td>
+                                                            <td>{{ $operateurmodule->module }}</td>
+                                                            <td>{{ $operateurmodule->niveau_qualification }}</td>
+                                                            <td>{{ $operateurmodule->domaine }}</td>
+                                                            {{--     <td>
+                                                                @isset($individuelle?->statut)
+                                                                    @if ($individuelle?->statut == 'Attente')
+                                                                        <span
+                                                                            class="badge bg-secondary text-white">{{ $individuelle?->statut }}
+                                                                        </span>
+                                                                    @endif
+                                                                    @if ($individuelle?->statut == 'Validée')
+                                                                        <span
+                                                                            class="badge bg-success text-white">{{ $individuelle?->statut }}
+                                                                        </span>
+                                                                    @endif
+                                                                    @if ($individuelle?->statut == 'Rejetée')
+                                                                        <span
+                                                                            class="badge bg-danger text-white">{{ $individuelle?->statut }}
+                                                                        </span>
+                                                                    @endif
+                                                                @endisset
+                                                            </td> --}}
+                                                            <td>
+                                                                <span class="d-flex align-items-baseline">
+                                                                    {{--  <a class="btn btn-success btn-sm"
+                                                                        href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                        class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a> --}}
+
+                                                                    <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
+                                                                        class="btn btn-success btn-sm"
+                                                                        title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                    <div class="filter">
+                                                                        <a class="icon" href="#"
+                                                                            data-bs-toggle="dropdown"><i
+                                                                                class="bi bi-three-dots"></i></a>
+                                                                        <ul
+                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                            <li><a class="dropdown-item btn btn-sm"
+                                                                                    href="{{ route('operateurmodules.edit', $operateurmodule->id) }}"
+                                                                                    class="mx-1" title="Modifier"><i
+                                                                                        class="bi bi-pencil"></i>Modifier</a>
+                                                                            </li>
+                                                                            {{-- <li>
+                                                                                <form
+                                                                                    action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="dropdown-item show_confirm"
+                                                                                        title="Supprimer"><i
+                                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                                </form>
+                                                                            </li> --}}
+                                                                        </ul>
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             {{-- Détail Formations --}}
@@ -210,3 +347,19 @@
     </section>
 
 @endsection
+{{-- @push('scripts')
+    <script type="text/javascript">
+        var i = 0;
+        $("#add-btn").click(function() {
+            ++i;
+            $("#dynamicAddRemove").append('<tr><td><input type="text" name="modules[' + i +
+                '][module]" placeholder="Entrer module" class="form-control" /></td> <td><input type="text" name="niveau_qualifications[' + i +
+                '][niveau_qualification]" placeholder="Entrer niveau de qualification" class="form-control" /></td><td><input type="text" name="domaines[' + i +
+                '][domaine]" placeholder="Entrer domaine" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="bi bi-trash"></i></button></td></tr>'
+            );
+        });
+        $(document).on('click', '.remove-tr', function() {
+            $(this).parents('tr').remove();
+        });
+    </script>
+@endpush --}}

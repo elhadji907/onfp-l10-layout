@@ -71,6 +71,11 @@ class Module extends Model
 		'statuts_id'
 	];
 
+	public function operateurmodules()
+	{
+		return $this->hasMany(Operateurmodule::class, 'modules_id')->latest();
+	}
+
 	public function domaine()
 	{
 		return $this->belongsTo(Domaine::class, 'domaines_id');

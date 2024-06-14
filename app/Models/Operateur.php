@@ -168,6 +168,10 @@ class Operateur extends Model
 		'file10'
 	];
 
+	public function operateurmodules()
+	{
+		return $this->hasMany(Operateurmodule::class, 'operateurs_id')->latest();
+	}
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
