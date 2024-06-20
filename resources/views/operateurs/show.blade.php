@@ -244,8 +244,9 @@
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <h5 class="card-title">Modules</h5>
-                                        <form method="post" action="#" enctype="multipart/form-data"
-                                            class="row g-3">
+                                        {{-- <form method="post" action="#" enctype="multipart/form-data"
+                                            class="row g-3"> --}}
+                                        <div class="row g-3">
                                             <table
                                                 class="table datatables align-middle justify-content-center table-borderless">
                                                 <thead>
@@ -326,7 +327,8 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                        </form>
+                                        </div>
+                                        {{-- </form> --}}
                                     </div>
                                 </div>
                             </div>

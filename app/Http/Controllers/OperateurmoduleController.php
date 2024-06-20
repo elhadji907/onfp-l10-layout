@@ -8,6 +8,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class OperateurmoduleController extends Controller
 {
+    public function index()
+    {
+        $operateurmodules = Operateurmodule::orderBy('created_at', 'desc')->get();
+        return view("operateurmodules.index", compact("operateurmodules"));
+    }
+
     public function store(Request $request)
     {
         /* $this->validate($request, [

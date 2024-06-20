@@ -326,11 +326,26 @@
             </a>
         </li><!-- End Formations Nav -->
 
+        <li class="nav-heading">Opérateurs</li>
+        {{-- Formations --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('operateurs') }}">
-                <i class="bi bi-people-fill"></i>
-                <span>Opérateurs</span>
+            <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-people-fill"></i><span>Opérateurs</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
+            <ul id="operateur-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('operateurs') }}">
+                        <span>Opérateurs</span>
+                    </a>
+                </li><!-- End operateurs Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
+                        <span>Modules</span>
+                    </a>
+                </li><!-- End operateurmodules Nav -->
+
+            </ul>
         </li><!-- End Formations Nav -->
 
         @if (auth()->user()->hasRole('super-admin'))

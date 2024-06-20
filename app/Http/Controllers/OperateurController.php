@@ -15,7 +15,7 @@ class OperateurController extends Controller
 {
     public function index()
     {
-        $operateurs = Operateur::orderBy('created_at', 'desc')->get();
+        $operateurs = Operateur::query()->orderBy('created_at', 'desc')->orderByDesc('created_at')->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
         return view("operateurs.index", compact("operateurs", "departements"));
     }

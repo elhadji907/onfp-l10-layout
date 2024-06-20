@@ -22,6 +22,7 @@ class Operateurmodule extends Model
         'module',
         'domaine',
         'niveau_qualification',
+        'statut',
         'details',
         'modules_id',
         'operateurs_id'

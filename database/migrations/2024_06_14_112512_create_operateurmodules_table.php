@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('domaine')->nullable();
             $table->string('niveau_qualification')->nullable();
             $table->longText('details')->nullable();
+            $table->string('statut')->nullable();
             $table->unsignedInteger('operateurs_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();
             $table->softDeletes();

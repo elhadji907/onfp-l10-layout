@@ -66,7 +66,7 @@
                                             <td style="text-align: center;">
                                                 @foreach ($operateur->operateurmodules as $operateurmodule)
                                                     @if ($loop->last)
-                                                        <span class="badge bg-info">{{ $loop->count }}</span>
+                                                        <a href="#"><span class="badge bg-info">{{ $loop->count }}</span></a>
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -903,9 +903,9 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
-            /* "order": [
-                [0, 'desc']
-            ], */
+            "order": [
+                [4, 'desc']
+            ],
             language: {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",
