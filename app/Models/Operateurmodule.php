@@ -37,4 +37,10 @@ class Operateurmodule extends Model
     {
         return $this->belongsTo(Operateur::class, 'operateurs_id')->latest();
     }
+
+    
+	public function moduleoperateurstatuts()
+	{
+		return $this->hasMany(Moduleoperateurstatut::class, 'operateurmodules_id');
+	}
 }

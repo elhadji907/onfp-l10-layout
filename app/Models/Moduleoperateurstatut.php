@@ -28,19 +28,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Moduleoperateurstatut extends Model
 {
-	
-    use HasFactory;
+
+	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'moduleoperateurstatut';
-
+	protected $casts = [
+		'operateurmodules_id'
+	];
 	protected $fillable = [
 		'uuid',
-		'statut'
+		'statut',
+		'operateurmodules_id'
 	];
 
 	public function modulesoperateurs()
 	{
 		return $this->hasMany(Modulesoperateur::class);
+	}
+
+	public function operateurmodule()
+	{
+		return $this->belongsTo(Operateurmodule::class, 'operateurmodules_id');
 	}
 }

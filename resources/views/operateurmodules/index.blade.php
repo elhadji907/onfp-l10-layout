@@ -1,20 +1,20 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - operateurs modules')
+@section('title', 'ONFP - Liste des régions')
 @section('space-work')
 
-    <div class="pagetitle">
-        {{-- <h1>Data Tables</h1> --}}
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Données</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
+    <section class="section register">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="pagetitle">
+                    {{-- <h1>Data Tables</h1> --}}
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                            <li class="breadcrumb-item">Tables</li>
+                            <li class="breadcrumb-item active">Données</li>
+                        </ol>
+                    </nav>
+                </div><!-- End Page Title -->
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -37,22 +37,18 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddOperateurModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
-                            </button>
-                        </div>
-                        <h5 class="card-title">Liste des modules des opérateurs</h5>
-                        <table class="table datatables align-middle table-striped" id="table-operateurs-modules">
+                        <h5 class="card-title">Liste des modules opérateurs</h5>
+                        <!-- Table with stripped rows -->
+                        <table class="table datatables align-middle justify-content-center" id="table-operateurModules">
                             <thead>
                                 <tr>
                                     <th>Modules</th>
                                     <th>Niveau qualification</th>
                                     <th>Domaine</th>
-                                    {{-- <th>Demandes</th> --}}
+                                    <th>Opérateur</th>
+                                    <th>Statut</th>
                                     {{-- <th>Formations</th> --}}
-                                    <th class="text-center"><i class="bi bi-gear"></i></th>
+                                    <th><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,8 +58,14 @@
                                         <td>{{ $operateurmodule?->module }}</td>
                                         <td>{{ $operateurmodule?->niveau_qualification }}</td>
                                         <td>{{ $operateurmodule?->domaine }}</td>
-                                        {{-- <td style="text-align: center;"></td> --}}
-                                        {{-- <td></td> --}}
+                                        <td>{{ $operateurmodule?->operateur?->sigle }}</td>
+                                        <td>
+                                            @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
+                                                @if ($loop->last)
+                                                    <span class="badge bg-info">{{ $moduleoperateurstatut->statut }}</span>
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
@@ -76,20 +78,16 @@
                                                         <li>
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#EditOperateurModal{{ $operateurmodule->id }}">
+                                                                data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">
                                                                 <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <form
-                                                                action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"
-                                                                    title="Supprimer"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
+                                                            <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#myModal{{ $operateurmodule->id }}">
+                                                                <i class="bi bi-trash" title="Supprimer"></i> Supprimer
+                                                            </button>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -105,21 +103,122 @@
 
             </div>
         </div>
-        
-            <!-- End Edit Operateur-->
+
+        <!-- Edit Operateur Module -->
+        @foreach ($operateurmodules as $operateurmodule)
+            <div class="modal fade" id="EditOperateurmoduleModal{{ $operateurmodule->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditOperateurmoduleModalLabel{{ $operateurmodule->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {{-- <form method="POST" action="#">
+                            @csrf --}}
+                        <form method="post" action="{{ route('operateurmodules.update', $operateurmodule->id) }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
+                            <div class="modal-header" id="EditOperateurmoduleModalLabel{{ $operateurmodule->id }}">
+                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module
+                                    opérateur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="{{ $operateurmodule->id }}">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="module"
+                                        value="{{ $operateurmodule?->module ?? old('module') }}"
+                                        class="form-control form-control-sm @error('module') is-invalid @enderror"
+                                        placeholder="Module" autofocus>
+                                    @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Module</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="niveau_qualification"
+                                        value="{{ $operateurmodule->niveau_qualification ?? old('niveau_qualification') }}"
+                                        class="form-control form-control-sm @error('niveau_qualification') is-invalid @enderror"
+                                        id="niveau_qualification" placeholder="Niveau qualification">
+                                    @error('niveau_qualification')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Niveau qualification</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="domaine"
+                                        value="{{ $operateurmodule->domaine ?? old('domaine') }}"
+                                        class="form-control form-control-sm @error('domaine') is-invalid @enderror"
+                                        id="domaine" placeholder="Domaine">
+                                    @error('domaine')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Domaine</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        <!-- End Edit Operateur Module-->
+        <!-- The Modal Delete -->
+        @foreach ($operateurmodules as $operateurmodule)
+            <div class="modal" id="myModal{{ $operateurmodule->id }}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmation</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            Êtes-vous sûre de bien vouloir supprimer ?
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <form method="post" action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal"> Non</button>
+                                    <button class="btn btn-danger">
+                                        <i class="bi bi-trash"></i> Oui
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-operateurs-modules', {
+        new DataTable('#table-operateurModules', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
             "order": [
-                [4, 'desc']
+                [0, 'asc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

@@ -165,8 +165,9 @@
             </div>
         </div>
         <!-- End Add Region-->
+
+        <!-- Edit Region -->
         @foreach ($regions as $region)
-            <!-- Edit Region -->
             <div class="modal fade" id="EditRegionModal{{ $region->id }}" tabindex="-1" role="dialog"
                 aria-labelledby="EditRegionModalLabel{{ $region->id }}" aria-hidden="true">
                 <div class="modal-dialog">
@@ -216,8 +217,8 @@
                     </div>
                 </div>
             </div>
-            <!-- End Add Region-->
         @endforeach
+        <!-- End Add Region-->
     </section>
 
 @endsection

@@ -25,6 +25,7 @@ class CreateModuleoperateurstatutTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('statut', 200)->nullable();
+            $table->unsignedInteger('operateurmodules_id');
             $table->softDeletes();
             $table->nullableTimestamps();
         });

@@ -146,6 +146,7 @@ class Operateur extends Model
 		'operateur_type',
 		'statut',
 		'autre_statut',
+		'web',
 		'categorie',
 		'qualification',
 		'users_id',

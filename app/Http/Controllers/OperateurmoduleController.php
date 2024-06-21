@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Moduleoperateurstatut;
 use App\Models\Operateurmodule;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -40,15 +41,47 @@ class OperateurmoduleController extends Controller
             ]);
 
             $operateurmodule->save();
+
+            $moduleoperateurstatut = new Moduleoperateurstatut([
+                'statut'                =>  "Attente",
+                'operateurmodules_id'   =>  $operateurmodule->id,
+
+            ]);
+
+            $moduleoperateurstatut->save();
         }
 
         Alert::success('Féliciations ! ', 'module ajouté avec succès');
 
         return redirect()->back();
     }
+
+
+    public function update(Request $request, $id)
+    {
+        $operateurmodule = Operateurmodule::findOrFail($id);
+
+        $this->validate($request, [
+            'module'                => 'required|string',
+            'domaine'               => 'required|string',
+            'niveau_qualification'  => 'required|string',
+        ]);
+
+        $operateurmodule->update([
+            "module"                =>  $request->input("module"),
+            "domaine"               =>  $request->input("domaine"),
+            'niveau_qualification'  =>  $request->input('niveau_qualification'),
+            'operateurs_id'         =>  $operateurmodule->operateurs_id,
+        ]);
+
+        Alert::success($operateurmodule->module, 'mis à jour');
+
+        return redirect()->back();
+    }
     public function destroy($id)
     {
         $operateurmodule = Operateurmodule::find($id);
+        /* dd($operateurmodule); */
         $operateurmodule->delete();
 
         Alert::success("Module " . $operateurmodule->module, 'a été supprimé avec succès');

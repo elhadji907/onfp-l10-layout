@@ -47,12 +47,12 @@
                         <table class="table datatables align-middle table-striped" id="table-operateurs">
                             <thead>
                                 <tr>
-                                    <th class="text-center">N° agrément</th>
-                                    <th class="text-center">Opérateur</th>
+                                    <th>N° agrément</th>
+                                    <th>Opérateurs</th>
                                     <th>Sigle</th>
-                                    <th>Modules</th>
-                                    <th>Formations</th>
-                                    <th class="text-center"><i class="bi bi-gear"></i></th>
+                                    <th class="text-center">Modules</th>
+                                    <th class="text-center">Formations</th>
+                                    <th><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -177,9 +177,9 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="email1" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="email1" value="{{ old('email1') }}"
+                                        <input type="email" name="email1" value="{{ old('email1') }}"
                                             class="form-control form-control-sm @error('email1') is-invalid @enderror"
-                                            id="email1" placeholder="Ex: Mathématiques">
+                                            id="email1" placeholder="Adresse email">
                                         @error('email1')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -341,8 +341,8 @@
                                             <option value="Registre de commerce">
                                                 Registre de commerce
                                             </option>
-                                            <option value="Quitus fiscal">
-                                                Quitus fiscal
+                                            <option value="Ninea">
+                                                Ninea
                                             </option>
                                         </select>
                                         @error('registre_commerce')
@@ -357,7 +357,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="ninea" value="{{ old('ninea') }}"
                                             class="form-control form-control-sm @error('ninea') is-invalid @enderror"
-                                            id="ninea" placeholder="Votre ninéa">
+                                            id="ninea" placeholder="Votre ninéa / Numéro RCCM">
                                         @error('ninea')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -370,7 +370,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="quitus" value="{{ old('quitus') }}"
                                             class="form-control form-control-sm @error('quitus') is-invalid @enderror"
-                                            id="quitus" placeholder="Quitus fiscal">
+                                            id="quitus" placeholder="N° quitus fiscal">
                                         @error('quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -560,7 +560,7 @@
                                             <input type="text" name="email1"
                                                 value="{{ $operateur->email1 ?? old('email1') }}"
                                                 class="form-control form-control-sm @error('email1') is-invalid @enderror"
-                                                id="email1" placeholder="Ex: Mathématiques">
+                                                id="email1" placeholder="Adresse email">
                                             @error('email1')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -749,7 +749,7 @@
                                             <input type="text" name="ninea"
                                                 value="{{ $operateur?->ninea ?? old('ninea') }}"
                                                 class="form-control form-control-sm @error('ninea') is-invalid @enderror"
-                                                id="ninea" placeholder="Votre ninéa">
+                                                id="ninea" placeholder="Votre ninéa / Numéro RCCM">
                                             @error('ninea')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
