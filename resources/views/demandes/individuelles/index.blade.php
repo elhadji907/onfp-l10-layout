@@ -62,7 +62,7 @@
                                 @foreach ($individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                            <td><span class="badge bg-default text-dark">{{ $individuelle?->numero }}</span>
+                                            <td>{{ $individuelle?->numero }}
                                             </td>
                                             <td>{{ $individuelle->demandeur->user?->cin }}</td>
                                             <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}

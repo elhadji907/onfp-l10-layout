@@ -104,7 +104,7 @@ class IndividuelleController extends Controller
 
         $individuelle = new Individuelle([
             'date_depot'                        =>  $date_depot,
-            'numero'                            =>  $num_demande_inividuelle . "" . $anne,
+            'numero'                            =>  $anne.'-'.$num_demande_inividuelle,
             'niveau_etude'                      =>  $request->input('niveau_etude'),
             'diplome_academique'                =>  $request->input('diplome_academique'),
             'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -259,7 +259,7 @@ class IndividuelleController extends Controller
             $demandeur->update([
                 'type'                           =>  'individuelle',
                 "departements_id"                =>  $request->input("departement"),
-                'numero_dossier'                 => "D" . $num_demande_inividuelle . "" . $anne,
+                'numero_dossier'                 => "D".$anne.'-'. $num_demande_inividuelle,
                 'users_id'                       =>  Auth::user()->id,
             ]);
 
@@ -267,7 +267,7 @@ class IndividuelleController extends Controller
 
             $individuelle->update([
                 'date_depot'                        =>  $date_depot,
-                'numero'                            =>  $num_demande_inividuelle . "" . $anne,
+                'numero'                            =>  $anne.'-'. $num_demande_inividuelle,
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),

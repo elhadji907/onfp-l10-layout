@@ -20,29 +20,31 @@
     @foreach ($individuelle->validationindividuelles as $count => $validationindividuelle)
         {{-- <i class="bi bi-exclamation-circle text-warning"></i> --}}
         {{-- <img src="{{ asset($validationindividuelle->user->getImage()) }}" alt="" class="rounded-circle w-20" width="40" height="auto"> --}}
-        @if ($validationindividuelle->action == 'Rejetée')
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
-                </h4>
-                <p>
-                    @if ($validationindividuelle->action == 'Attente')
-                        <span class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                    @endif
-                    @if ($validationindividuelle->action == 'Validée')
-                        <span class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                    @endif
-                    @if ($validationindividuelle->action == 'Rejetée')
-                        <span class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
-                    @endif
-                    {{-- {{ $validationindividuelle->action }} --}}
-                </p>
-            </div>
-        @endif
+        {{-- @if ($validationindividuelle->action == 'Rejetée') --}}
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
+            </h4>
+            <p>
+                @if ($validationindividuelle->action == 'Attente')
+                    <span class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
+                @endif
+                @if ($validationindividuelle->action == 'Validée')
+                    <span class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
+                @endif
+                @if ($validationindividuelle->action == 'Rejetée')
+                    <span class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
+                @endif
+                {{-- {{ $validationindividuelle->action }} --}}
+            </p>
+        </div>
+        {{-- @endif --}}
         <div>
             <p>
             <p>{!! $validationindividuelle?->motif !!}</p>
             </p>
-            <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
+            <p>{!! $validationindividuelle->created_at->diffForHumans() . ',' !!}
+                {{ 'le (' . $validationindividuelle->created_at->format('d/m/Y, H:i:s') . ')' }}
+            </p>
         </div>
         <hr class="dropdown-divider">
     @endforeach
