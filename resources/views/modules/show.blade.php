@@ -14,7 +14,7 @@
                             </span>
                         </div>
                         <h5 class="card-title">Module : {{ $module?->name }}</h5>
-                        
+
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
@@ -22,7 +22,8 @@
                                     <th class="text-center">CIN</th>
                                     <th>Prénom et NOM</th>
                                     <th>Date et lieu de naissance</th>
-                                    <th class="text-center">Statut</th>
+                                    <th>Localité</th>
+                                    <th>Statut</th>
                                     <th class="text-center">#</th>
                                 </tr>
                             </thead>
@@ -38,21 +39,23 @@
                                             </td>
                                             <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
                                             </td>
+                                            <td><a
+                                                    href="{{ url('modulelocalite', ['$idlocalite' => $individuelle->departement->id, '$idmodule' => $module?->id]) }}">{{ $individuelle->departement->nom }}</a>
+                                            </td>
                                             <td>
-                                                @isset($individuelle?->statut)
-                                                    @if ($individuelle?->statut == 'Attente')
-                                                    <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @endif
-                                                    @if ($individuelle?->statut == 'Validée')
-                                                        <span class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @endif
-                                                    @if ($individuelle?->statut == 'Rejetée')
-                                                        <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @endif
-                                                @endisset
+                                                <a href="{{ url('modulestatut', ['$statut' => $individuelle->statut, '$idmodule' => $module?->id]) }}">
+                                                    @isset($individuelle?->statut)
+                                                        @if ($individuelle?->statut == 'Attente')
+                                                            {{ $individuelle?->statut }}
+                                                        @endif
+                                                        @if ($individuelle?->statut == 'Validée')
+                                                            {{ $individuelle?->statut }}
+                                                        @endif
+                                                        @if ($individuelle?->statut == 'Rejetée')
+                                                            {{ $individuelle?->statut }}
+                                                        @endif
+                                                    @endisset
+                                                </a>
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a

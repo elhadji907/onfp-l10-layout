@@ -43,7 +43,7 @@
                                 <tr>
                                     <th>Modules</th>
                                     <th>Domaines</th>
-                                    <th class="text-center" scope="col">Demandes individuelles</th>
+                                    <th class="text-center" scope="col">Effectif</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
@@ -56,7 +56,7 @@
                                         <td style="text-align: center;">
                                             @foreach ($module->individuelles as $individuelle)
                                                 @if ($loop->last)
-                                                    <span class="badge bg-info">{{ $loop->count }}</span>
+                                                    <a href="{{ url('modules/' . $module->id) }}"><span class="badge bg-info">{{ $loop->count }}</span></a>
                                                 @endif
                                             @endforeach
                                         </td>
