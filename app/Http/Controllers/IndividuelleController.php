@@ -339,9 +339,9 @@ class IndividuelleController extends Controller
 
         $individuelle->delete();
 
-        "La demande de " . $message = $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name . ' a été supprimée';
+        Alert::success('La demande de ' . $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name  , 'a été supprimée');
 
-        return redirect()->back()->with("danger", $message);
+        return redirect()->back();
     }
     public function validationsRejetMessage(Request $request, $id)
     {

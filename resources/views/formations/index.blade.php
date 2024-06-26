@@ -54,8 +54,9 @@
                             <thead>
                                 <tr>
                                     <th>Code</th>
+                                    <th>Type</th>
                                     <th>Intitulé formation</th>
-                                    <th>Département</th>
+                                    <th>Localité</th>
                                     <th>Modules</th>
                                     <th>Niveau qualification</th>
                                     <th>Effectif</th>
@@ -68,8 +69,9 @@
                                 @foreach ($formations as $formation)
                                     <tr>
                                         <td>{{ $formation?->code }}</td>
+                                        <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
                                         <td>{{ $formation?->name }}</td>
-                                        <td>{{ $formation->departement?->nom }}</td>
+                                        <td>{{ $formation->departement?->region?->nom }}</td>
                                         <td>{{ $formation->module?->name }}</td>
                                         <td>{{ $formation->niveau_qualification }}</td>
                                         <td></td>
@@ -143,7 +145,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="region" class="form-label">Région<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="region" class="form-select  @error('region') is-invalid @enderror"
@@ -164,13 +166,13 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="departement" class="form-label">Département<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select  @error('departement') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-departement"
-                                            data-placeholder="Choisir région">
+                                            aria-label="Select" id="select-field-departement-modal"
+                                            data-placeholder="Choisir département">
                                             <option value="">
                                                 {{ old('departement') }}
                                             </option>
@@ -187,7 +189,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="lieu" class="form-label">Lieu exact<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="lieu" value="{{ old('lieu') }}"
@@ -200,7 +202,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="module" class="form-label">Module<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
@@ -222,7 +224,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="operateur" class="form-label">Opérateur<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="operateur"
@@ -245,7 +247,30 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="types_formation" class="form-label">Type formation<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="types_formation"
+                                            class="form-select  @error('types_formation') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-types_formation"
+                                            data-placeholder="Choisir type formation">
+                                            <option value="">
+                                                {{ old('types_formation') }}
+                                            </option>
+                                            @foreach ($types_formations as $types_formation)
+                                                <option value="{{ $types_formation->id }}">
+                                                    {{ $types_formation->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('types_formation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="niveau_qualification" class="form-label">Niveau qualification<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="niveau_qualification"
@@ -269,20 +294,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="titre" class="form-label">Titre (convention)</label>
-                                        <input type="text" name="titre" value="{{ old('titre') }}"
-                                            class="form-control form-control-sm @error('titre') is-invalid @enderror"
-                                            id="titre"
-                                            placeholder="Ex: 4ème catégorie de la convention collective ...">
-                                        @error('titre')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="date_debut" class="form-label">Date début</label>
                                         <input type="date" name="date_debut" value="{{ old('date_debut') }}"
                                             class="form-control form-control-sm @error('date_debut') is-invalid @enderror"
@@ -294,12 +306,25 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="date_fin" class="form-label">Date fin</label>
                                         <input type="date" name="date_fin" value="{{ old('date_fin') }}"
                                             class="form-control form-control-sm @error('date_fin') is-invalid @enderror"
                                             id="date_fin" placeholder="Date début">
                                         @error('date_fin')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <label for="titre" class="form-label">Titre (convention)</label>
+                                        <input type="text" name="titre" value="{{ old('titre') }}"
+                                            class="form-control form-control-sm @error('titre') is-invalid @enderror"
+                                            id="titre"
+                                            placeholder="Ex: 4ème catégorie de la convention collective ...">
+                                        @error('titre')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

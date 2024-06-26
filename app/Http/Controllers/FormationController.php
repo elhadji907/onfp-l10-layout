@@ -8,6 +8,7 @@ use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Region;
 use App\Models\Statut;
+use App\Models\TypesFormation;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -20,38 +21,29 @@ class FormationController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $regions = Region::orderBy("created_at", "desc")->get();
         $operateurs = Operateur::orderBy("created_at", "desc")->get();
-        return view("formations.index", compact("formations", "modules", "departements", "regions", "operateurs"));
+        $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
+        return view("formations.index", compact("formations", "modules", "departements", "regions", "operateurs", 'types_formations'));
     }
 
     public function store(Request $request)
     {
         $annee = date('y');
+        $mois = date('m');
 
-        if (Formation::where('id', 1)->exists()) {
-            $code = Formation::get()->last()->id;;
+        $rand1 = rand(100, 999);
+        $rand2 = chr(rand(65, 90));
+
+        $rand = $rand1 . '' . $rand2;
+
+        $types_formation = TypesFormation::findOrFail($request->input('types_formation'));
+
+        if ($types_formation->name == "Individuelle") {
+            $fic = "FI";
         } else {
-            $code = 0;
+            $fic = "FC";
         }
 
-        $code = ++$code;
-
-        $longueur = strlen($code);
-
-        if ($longueur == 0) {
-            $code            =   strtolower("00000" . $code);
-        } elseif ($longueur <= 1) {
-            $code            =   strtolower("0000" . $code);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $code            =   strtolower("000" . $code);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-            $code            =   strtolower("00" . $code);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-            $code            =   strtolower("0" . $code);
-        } else {
-            $code            =   strtolower($code);
-        }
-
-        /* dd($code); */
+        $rand = $fic . '' . $mois . $annee . $rand;
 
         $this->validate($request, [
             "name"                  =>   "required|string|unique:formations,name,except,id",
@@ -67,13 +59,14 @@ class FormationController extends Controller
         ]);
 
         $formation = new Formation([
-            "code"                  =>   "FI".$annee.'-'.$code,
+            "code"                  =>   $rand,
             "name"                  =>   $request->input('name'),
             "regions_id"            =>   $request->input('region'),
             "departements_id"       =>   $request->input('departement'),
             "lieu"                  =>   $request->input('lieu'),
             "modules_id"            =>   $request->input('module'),
             "operateurs_id"         =>   $request->input('operateur'),
+            "types_formations_id"   =>   $request->input('types_formation'),
             "niveau_qualification"  =>   $request->input('niveau_qualification'),
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
@@ -85,16 +78,27 @@ class FormationController extends Controller
 
         $formation->save();
 
-        
+
         $statut = new Statut([
             "statut"                =>   "Attente",
             "formations_id"         =>   $formation->id,
         ]);
-        
+
         $statut->save();
-        
+
 
         Alert::success("La formation "  . $formation->name, " a été créée avec succès");
+
+        return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        $formation   = Formation::find($id);
+
+        $formation->delete();
+
+        Alert::success('La formation ' . $formation->name, 'a été supprimée');
 
         return redirect()->back();
     }

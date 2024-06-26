@@ -48,8 +48,8 @@
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th class="text-center">N°</th>
-                                    <th class="text-center">CIN</th>
+                                    <th>N°</th>
+                                    <th>CIN</th>
                                     <th>Prénom et NOM</th>
                                     <th>Date et lieu de naissance</th>
                                     <th>Module</th>
