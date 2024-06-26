@@ -45,10 +45,13 @@ class OperateurController extends Controller
         ]);
 
         $user = new User([
-            'civilite'              =>      $request->input("civilite"),
+            /* 'civilite'              =>      $request->input("civilite"), */
             'firstname'             =>      $request->input("name"),
             'name'                  =>      $request->input("sigle"),
             'email'                 =>      $request->input('email1'),
+            "telephone"             =>      $request->input("telephone1"),
+            'lieu_naissance'        =>      $request->input("adresse"),
+            "adresse"               =>      $request->input("adresse"),
             'password'              =>      Hash::make($request->input('email1')),
             "bp"                    =>      $request->input("bp"),
             'created_by'            =>      Auth::user()->id,
@@ -100,27 +103,30 @@ class OperateurController extends Controller
             "email1"                =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "fixe"                  =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "telephone1"            =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
-            "categorie"             =>      'required', 'string',
-            "statut"                =>      'required', 'string',
-            "departement"           =>      'required', 'string',
-            "adresse"               =>      'required', 'string',
-            "ninea"                 =>      'required', 'string',
-            "registre_commerce"     =>      'required', 'string',
-            "quitus"                =>      'required', 'string',
-            "date_quitus"           =>      'required', 'string',
-            "civilite"              =>      'required', 'string',
-            "prenom"                =>      'required', 'string',
-            "nom"                   =>      'required', 'string',
+            "categorie"             =>      ['required', 'string'],
+            "statut"                =>      ['required', 'string'],
+            "departement"           =>      ['required', 'string'],
+            "adresse"               =>      ['required', 'string'],
+            "ninea"                 =>      ['required', 'string'],
+            "registre_commerce"     =>      ['required', 'string'],
+            "quitus"                =>      ['required', 'string'],
+            "date_quitus"           =>      ['required', 'string'],
+            "civilite"              =>      ['required', 'string'],
+            "prenom"                =>      ['required', 'string'],
+            "nom"                   =>      ['required', 'string'],
             "email2"                =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "telephone2"            =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
-            "fonction_responsable"  =>      'required', 'string',
+            "fonction_responsable"  =>      ['required', 'string'],
         ]);
 
         $user->update([
-            'civilite'              =>      $request->input("civilite"),
+            /* 'civilite'              =>      $request->input("civilite"), */
             'firstname'             =>      $request->input("name"),
             'name'                  =>      $request->input("sigle"),
+            "telephone"             =>      $request->input("telephone1"),
             'email'                 =>      $request->input('email1'),
+            'lieu_naissance'        =>      $request->input("adresse"),
+            "adresse"               =>      $request->input("adresse"),
             "bp"                    =>      $request->input("bp"),
             'updated_by'            =>      Auth::user()->id
         ]);

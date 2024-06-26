@@ -65,6 +65,7 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('specialites_id')->nullable();
             $table->unsignedInteger('courriers_id')->nullable();
             $table->unsignedInteger('statuts_id')->nullable();
+            $table->string('statut')->nullable();
             $table->unsignedInteger('types_formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();

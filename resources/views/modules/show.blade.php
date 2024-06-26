@@ -18,8 +18,8 @@
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th class="text-center">N°</th>
-                                    <th class="text-center">CIN</th>
+                                    <th>N°</th>
+                                    <th>CIN</th>
                                     <th>Prénom et NOM</th>
                                     <th>Date et lieu de naissance</th>
                                     <th>Localité</th>
@@ -32,7 +32,7 @@
                                 @foreach ($module->individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                            <td><span class="badge bg-default text-dark">{{ $individuelle?->numero }}</span>
+                                            <td>{{ $individuelle?->numero }}
                                             </td>
                                             <td>{{ $individuelle->demandeur->user?->cin }}</td>
                                             <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}

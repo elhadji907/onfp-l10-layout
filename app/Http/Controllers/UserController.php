@@ -121,16 +121,15 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $this->validate($request, [
-            'civilite' => ['required', 'string', 'max:10'],
-            'firstname' => ['required', 'string', 'max:50'],
-            'name' => ['required', 'string', 'max:25'],
+            'civilite' => ['nullable', 'string', 'max:10'],
+            'firstname' => ['required', 'string', 'max:150'],
+            'name' => ['required', 'string', 'max:50'],
             'date_naissance' => ['string', 'nullable'],
             'lieu_naissance' => ['string', 'nullable'],
             'image' => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'telephone' => ['required', 'string', 'max:25', 'min:9'],
             'adresse' => ['required', 'string', 'max:255'],
             'password' => ['string', 'max:255', 'nullable'],
-            'situation_familiale' => ['string', 'max:15', 'required'],
             'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
             "email" => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
         ]);

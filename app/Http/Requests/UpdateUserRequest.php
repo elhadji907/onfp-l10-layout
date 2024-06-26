@@ -18,13 +18,13 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => ['required', 'string', 'max:50'],
-            'name' => ['required', 'string', 'max:25'],
-            'image' => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'telephone' => ['required', 'string', 'max:25', 'min:9'],
-            'adresse' => ['required', 'string', 'max:255'],
-            'password' => ['string', 'max:255', 'nullable'],
-            'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
+            'firstname'     => ['required', 'string', 'max:150'],
+            'name'          => ['required', 'string', 'max:25'],
+            'image'         => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'telephone'     => ['required', 'string', 'max:25', 'min:9'],
+            'adresse'       => ['required', 'string', 'max:255'],
+            'password'      => ['string', 'max:255', 'nullable'],
+            'roles.*'       => ['string', 'max:255', 'nullable', 'max:255'],
         ];
     }
 }

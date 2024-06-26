@@ -183,24 +183,34 @@ class IndividuelleController extends Controller
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
 
-        $num_demande_inividuelle = Individuelle::get()->last()->id;
+        /* $num_demande_inividuelle = Individuelle::get()->last()->id;
         $num_demande_inividuelle = ++$num_demande_inividuelle;
         $individuelle_id         = Individuelle::latest('id')->first()->id;
 
-        $longueur = strlen($individuelle_id);
+        $longueur = strlen($individuelle_id); */
+        
+        if (Individuelle::where('id', 1)->exists()) {
+            $code = Individuelle::get()->last()->id;;
+        } else {
+            $code = 0;
+        }
+
+        $code = ++$code;
+
+        $longueur = strlen($code);
 
         if ($longueur == 0) {
-            $num_demande_inividuelle   =   strtolower("00000" . $individuelle_id);
+            $code            =   strtolower("00000" . $code);
         } elseif ($longueur <= 1) {
-            $num_demande_inividuelle   =   strtolower("0000" . $individuelle_id);
+            $code            =   strtolower("0000" . $code);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $num_demande_inividuelle   =   strtolower("000" . $individuelle_id);
+            $code            =   strtolower("000" . $code);
         } elseif ($longueur >= 3 && $longueur < 4) {
-            $num_demande_inividuelle   =   strtolower("00" . $individuelle_id);
+            $code            =   strtolower("00" . $code);
         } elseif ($longueur >= 4 && $longueur < 5) {
-            $num_demande_inividuelle   =   strtolower("0" . $individuelle_id);
+            $code            =   strtolower("0" . $code);
         } else {
-            $num_demande_inividuelle   =   strtolower($num_demande_inividuelle);
+            $code            =   strtolower($code);
         }
 
         $date_depot =   date('Y-m-d');
@@ -259,7 +269,7 @@ class IndividuelleController extends Controller
             $demandeur->update([
                 'type'                           =>  'individuelle',
                 "departements_id"                =>  $request->input("departement"),
-                'numero_dossier'                 => "D".$anne.'-'. $num_demande_inividuelle,
+                'numero_dossier'                 => "D".$anne.'-'. $code,
                 'users_id'                       =>  Auth::user()->id,
             ]);
 
@@ -267,7 +277,7 @@ class IndividuelleController extends Controller
 
             $individuelle->update([
                 'date_depot'                        =>  $date_depot,
-                'numero'                            =>  $anne.'-'. $num_demande_inividuelle,
+                'numero'                            =>  $anne.'-'. $code,
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),

@@ -243,10 +243,12 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <script>
         $('#select-field-civilite').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -254,7 +256,10 @@
 
     <script>
         $('#select-field-registre-update').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -262,7 +267,10 @@
 
     <script>
         $('#select-field-civilite-update').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -270,7 +278,21 @@
 
     <script>
         $('#select-field-departement-update').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-statut-update').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -278,29 +300,21 @@
 
     <script>
         $('#select-field-categorie-update').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
     </script>
- 
-    <script>
-        $('#select-field-statut-update').select2({
-            theme: 'bootstrap-5',
-            selectionCssClass: "select2--small",
-            dropdownCssClass: "select2--small",
-        });
-    </script>
-    <script>
-        $('#select-field-categorie-update').select2({
-            theme: 'bootstrap-5',
-            selectionCssClass: "select2--small",
-            dropdownCssClass: "select2--small",
-        });
-    </script>
+
     <script>
         $('#select-field-registre').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -308,7 +322,10 @@
 
     <script>
         $('#select-field-familiale').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -316,7 +333,10 @@
 
     <script>
         $('#select-field-statut').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -324,7 +344,10 @@
 
     <script>
         $('#select-field-professionnelle').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -332,15 +355,22 @@
 
     <script>
         $('#select-field-niveau_etude').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
     </script>
 
+
     <script>
         $('#select-field-diplome_academique').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -348,7 +378,10 @@
 
     <script>
         $('#select-field-projet_poste_formation').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -356,7 +389,10 @@
 
     <script>
         $('#select-field-diplome_professionnel').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -364,7 +400,11 @@
 
     <script>
         $('#select-field-region').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddFormationModal'),
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -372,7 +412,10 @@
 
     <script>
         $('#select-field-departement').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -380,15 +423,22 @@
 
     <script>
         $('#select-field-employe').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
     </script>
+
     {{-- type de dirction/service/cellule --}}
     <script>
         $('#select-field-type').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -396,23 +446,46 @@
 
     <script>
         $('#select-field').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
     </script>
 
+
     <script>
         $('#select-field-categorie').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddFormationModal'),
+        });
+    </script>
+
+    <script>
+        $('#select-field-operateur').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddFormationModal'),
         });
     </script>
 
     <script>
         $('#select-field-fonction').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -420,7 +493,10 @@
 
     <script>
         $('#select-field-arrondissement').select2({
-            theme: 'bootstrap-5',
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -447,7 +523,7 @@
             dropdownCssClass: "select2--small",
         });
     </script>
-    
+
     <script>
         $('#select-field-civilite-update').select2({
             theme: "bootstrap-5",

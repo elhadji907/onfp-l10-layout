@@ -188,6 +188,7 @@ class Formation extends Model
 		'forme_h',
 		'forme_f',
 		'total',
+		'statut',
 		'appreciations',
 		'ingenieurs_id',
 		'agents_id',
@@ -212,6 +213,12 @@ class Formation extends Model
 		'localites_id',
 		'zones_id'
 	];
+
+	
+	public function statuts()
+	{
+		return $this->hasMany(Statut::class, 'formations_id')->latest();
+	}
 
 	public function agent()
 	{

@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CreateStatutsTable extends Migration
 {
@@ -24,20 +25,16 @@ class CreateStatutsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('name', 200)->nullable();
+            $table->string('statut', 200)->nullable();
             $table->string('niveau', 200)->nullable();
             $table->string('details', 200)->nullable();
             $table->dateTime('date1')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('date2')->nullable();
-            $table->dateTime('date3')->nullable();
-            $table->dateTime('date5')->nullable();
-            $table->dateTime('date6')->nullable();
-            $table->dateTime('date7')->nullable();
-            $table->dateTime('date8')->nullable();
-            $table->dateTime('date9')->nullable();
-            $table->dateTime('date10')->nullable();
+            $table->unsignedInteger('formations_id')->nullable();
             $table->softDeletes();
-            $table->nullableTimestamps();
+            $table->nullableTimestamps();           
+
+            
         });
     }
 

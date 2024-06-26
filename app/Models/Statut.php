@@ -49,29 +49,16 @@ class Statut extends Model
 	protected $dates = [
 		'date1',
 		'date2',
-		'date3',
-		'date5',
-		'date6',
-		'date7',
-		'date8',
-		'date9',
-		'date10'
 	];
 
 	protected $fillable = [
 		'uuid',
-		'name',
+		'statut',
 		'niveau',
 		'details',
 		'date1',
 		'date2',
-		'date3',
-		'date5',
-		'date6',
-		'date7',
-		'date8',
-		'date9',
-		'date10'
+		'formations_id',
 	];
 
 	public function formations()
@@ -82,5 +69,11 @@ class Statut extends Model
 	public function modules()
 	{
 		return $this->hasMany(Module::class, 'statuts_id');
+	}
+
+	
+	public function formation()
+	{
+		return $this->belongsTo(Formation::class, 'formations_id');
 	}
 }
