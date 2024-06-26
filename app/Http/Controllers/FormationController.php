@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Departement;
 use App\Models\Formation;
+use App\Models\Individuelle;
 use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Region;
@@ -28,14 +29,30 @@ class FormationController extends Controller
     public function store(Request $request)
     {
         $annee = date('y');
-        $mois = date('m');
 
+        /* $mois = date('m');
         $rand1 = rand(100, 999);
         $rand2 = chr(rand(65, 90));
 
-        $rand = $rand1 . '' . $rand2;
+        $rand = $rand1 . '' . $rand2; */
 
         $types_formation = TypesFormation::findOrFail($request->input('types_formation'));
+
+        $count_formation = Formation::get()->count();
+
+        $count_formation = ++$count_formation;
+
+        $longueur = strlen($count_formation);
+
+        if ($longueur == 1) {
+            $code_formation   =   strtolower("000" . $count_formation);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $code_formation   =   strtolower("00" . $count_formation);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $code_formation   =   strtolower("0" . $count_formation);
+        } else {
+            $code_formation   =   strtolower($count_formation);
+        }
 
         if ($types_formation->name == "Individuelle") {
             $fic = "FI";
@@ -43,7 +60,9 @@ class FormationController extends Controller
             $fic = "FC";
         }
 
-        $rand = $fic . '' . $mois . $annee . $rand;
+        $code_formation = $fic . '' . $annee . '' . $code_formation;
+
+        /* $rand = $fic . '' . $mois . $annee . $rand; */
 
         $this->validate($request, [
             "name"                  =>   "required|string|unique:formations,name,except,id",
@@ -59,7 +78,7 @@ class FormationController extends Controller
         ]);
 
         $formation = new Formation([
-            "code"                  =>   $rand,
+            "code"                  =>   $code_formation,
             "name"                  =>   $request->input('name'),
             "regions_id"            =>   $request->input('region'),
             "departements_id"       =>   $request->input('departement'),

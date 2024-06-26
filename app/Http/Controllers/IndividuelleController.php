@@ -49,15 +49,15 @@ class IndividuelleController extends Controller
         }
 
         $anne = date('y');
-        $num = rand(100, 999);
-        $letter = chr(rand(65, 90));
+        /* $num = rand(100, 999);
+        $letter = chr(rand(65, 90)); */
         /* dd($anne . ' ' . $num . ' ' . $letter); */
 
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
         $date_depot =   date('Y-m-d');
 
-        $num_demande_inividuelle = Individuelle::get()->last()->numero;
+        /*   $num_demande_inividuelle = Individuelle::get()->last()->numero;
         $num_demande_inividuelle = ++$num_demande_inividuelle;
         $individuelle_id         = Individuelle::latest('id')->first()->id;
         $individuelle_id         = ++$individuelle_id;
@@ -76,7 +76,38 @@ class IndividuelleController extends Controller
             $num_demande_inividuelle   =   strtolower("0" . $individuelle_id);
         } else {
             $num_demande_inividuelle   =   strtolower($num_demande_inividuelle);
+        } */
+
+
+        $annee = date('y');
+
+        /* $mois = date('m');
+        $rand1 = rand(100, 999);
+        $rand2 = chr(rand(65, 90));
+
+        $rand = $rand1 . '' . $rand2; */
+
+        $count_individuelle = Individuelle::get()->count();
+
+        $count_individuelle = ++$count_individuelle;
+
+        $longueur = strlen($count_individuelle);
+
+        if ($longueur == 1) {
+            $numero_individuelle   =   strtolower("0000" . $count_individuelle);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero_individuelle   =   strtolower("000" . $count_individuelle);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero_individuelle   =   strtolower("00" . $count_individuelle);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero_individuelle   =   strtolower("0" . $count_individuelle);
+        } else {
+            $numero_individuelle   =   strtolower($count_individuelle);
         }
+
+
+        $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
+
 
         /*  $user = User::create([
             'civilite'                          => $request->input('civilite'),
@@ -104,7 +135,7 @@ class IndividuelleController extends Controller
 
         $individuelle = new Individuelle([
             'date_depot'                        =>  $date_depot,
-            'numero'                            =>  $anne.'-'.$num_demande_inividuelle,
+            'numero'                            =>  $numero_individuelle,
             'niveau_etude'                      =>  $request->input('niveau_etude'),
             'diplome_academique'                =>  $request->input('diplome_academique'),
             'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -188,7 +219,7 @@ class IndividuelleController extends Controller
         $individuelle_id         = Individuelle::latest('id')->first()->id;
 
         $longueur = strlen($individuelle_id); */
-        
+
         if (Individuelle::where('id', 1)->exists()) {
             $code = Individuelle::get()->last()->id;;
         } else {
@@ -269,7 +300,7 @@ class IndividuelleController extends Controller
             $demandeur->update([
                 'type'                           =>  'individuelle',
                 "departements_id"                =>  $request->input("departement"),
-                'numero_dossier'                 => "D".$anne.'-'. $code,
+                'numero_dossier'                 => "D" . $anne . '-' . $code,
                 'users_id'                       =>  Auth::user()->id,
             ]);
 
@@ -277,7 +308,7 @@ class IndividuelleController extends Controller
 
             $individuelle->update([
                 'date_depot'                        =>  $date_depot,
-                'numero'                            =>  $anne.'-'. $code,
+                'numero'                            =>  $anne . '-' . $code,
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -339,7 +370,7 @@ class IndividuelleController extends Controller
 
         $individuelle->delete();
 
-        Alert::success('La demande de ' . $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name  , 'a été supprimée');
+        Alert::success('La demande de ' . $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name, 'a été supprimée');
 
         return redirect()->back();
     }

@@ -206,7 +206,7 @@
                                         <label for="module" class="form-label">Module<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-module"
+                                            aria-label="Select" id="select-field-module-modal"
                                             data-placeholder="Choisir module">
                                             <option value="">
                                                 {{ old('module') }}
