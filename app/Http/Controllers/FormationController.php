@@ -55,12 +55,14 @@ class FormationController extends Controller
         }
 
         if ($types_formation->name == "Individuelle") {
-            $fic = "FI";
+            $for = "F";
+            $fin = "I";
         } else {
-            $fic = "FC";
+            $for = "F";
+            $fin = "C";
         }
 
-        $code_formation = $fic . '' . $annee . '' . $code_formation;
+        $code_formation = $for . '' . $annee . '' . $code_formation . '' . $fin;
 
         /* $rand = $fic . '' . $mois . $annee . $rand; */
 
@@ -111,11 +113,33 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
+    public function show($id)
+    {
+        $formation = Formation::findOrFail($id);
+        return view("formations.show", compact("formation"));
+    }
+
     public function destroy($id)
     {
         $formation   = Formation::find($id);
 
-        $formation->delete();
+        /* $formation->delete(); */
+
+        $formation->update([
+            "statut"       =>   "Supprimée",
+        ]);
+
+        $formation->save();
+
+        foreach ($formation->statuts as $statut) {
+        }
+
+        $statut->update([
+            "statut"                =>   "Supprimée",
+            "formations_id"         =>   $formation->id,
+        ]);
+
+        $statut->save();
 
         Alert::success('La formation ' . $formation->name, 'a été supprimée');
 

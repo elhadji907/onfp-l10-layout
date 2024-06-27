@@ -74,6 +74,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Agent|null $agent
+ * @property Statut|null $statut
  * @property Antenne|null $antenne
  * @property Arrondissement|null $arrondissement
  * @property Choixoperateur|null $choixoperateur
@@ -310,10 +311,10 @@ class Formation extends Model
 		return $this->belongsTo(Specialite::class, 'specialites_id');
 	}
 
-	public function statut()
+	/* public function statut()
 	{
 		return $this->belongsTo(Statut::class, 'statuts_id');
-	}
+	} */
 
 	public function traitement()
 	{

@@ -24,6 +24,7 @@ class CreateCollectivesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
+            $table->string('numero', 200)->unique()->nullable();
             $table->longText('name')->nullable();
             $table->string('sigle', 100)->nullable();
             $table->timestamp('date_depot')->nullable();

@@ -103,6 +103,7 @@ class Collective extends Model
 
 	protected $fillable = [
 		'uuid',
+		'numero',
 		'name',
 		'sigle',
 		'date_depot',

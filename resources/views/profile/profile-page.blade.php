@@ -24,7 +24,7 @@
                                 width="50" height="auto">
 
                             <h2>{{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}</h2>
-                            <span style="color: blue;">{{ Auth::user()->email }}</span>
+                            <span><a href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a></span>
                             {{-- <h3>
                             @foreach (Auth::user()->roles as $role)
                                 <span>{{ $role->name }} |</span>
@@ -82,8 +82,7 @@
                                         </td>
                                         <td class="text-center">
                                             <a href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
-                                                class="btn btn-success btn-sm" title="voir"><i
-                                                class="bi bi-eye"></i></a>
+                                                class="btn btn-success btn-sm" title="voir"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -91,7 +90,7 @@
                                         <td class="text-center"></td>
                                         <td class="text-center">
                                             <a href="#" class="btn btn-success btn-sm" title="voir"><i
-                                                class="bi bi-eye"></i></a>
+                                                    class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -99,7 +98,7 @@
                                         <td class="text-center"></td>
                                         <td class="text-center">
                                             <a href="#" class="btn btn-success btn-sm" title="voir"><i
-                                                class="bi bi-eye"></i></a>
+                                                    class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -178,12 +177,16 @@
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->email }}</div>
+                                        <div class="col-lg-9 col-md-8"><a
+                                                href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a>
+                                        </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->telephone }}</div>
+                                        <div class="col-lg-9 col-md-8"><a
+                                                href="tel:+221{{ Auth::user()->telephone }}">{{ Auth::user()->telephone }}</a>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -193,7 +196,7 @@
                                 </div>
                             </div>
 
-                                {{-- Fin aperçu --}}
+                            {{-- Fin aperçu --}}
                             <div class="tab-content pt-2">
 
                                 {{-- Début Edition --}}

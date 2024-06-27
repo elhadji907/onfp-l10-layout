@@ -161,7 +161,7 @@ class IndividuelleController extends Controller
 
         $demandeur = $individuelle->demandeur;
 
-        Alert::success('Enregistrement ! ', 'demande ajoutée avec succès');
+        Alert::success('Enregistrée ! ', 'demande ajoutée avec succès');
 
         /* $status = "Demande ajoutée avec succès"; */
         /* return view("demandes.individuelles.show", compact("individuelle")); */
@@ -206,10 +206,10 @@ class IndividuelleController extends Controller
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ]);
 
-        $anne = date('y');
-        $num = rand(100, 999);
-        $letter = chr(rand(65, 90));
-        /* dd($anne . ' ' . $num . ' ' . $letter); */
+        $annee = date('y');
+        /* $num = rand(100, 999);
+        $letter = chr(rand(65, 90)); */
+        /* dd($annee . ' ' . $num . ' ' . $letter); */
 
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
@@ -220,7 +220,7 @@ class IndividuelleController extends Controller
 
         $longueur = strlen($individuelle_id); */
 
-        if (Individuelle::where('id', 1)->exists()) {
+        /* if (Individuelle::where('id', 1)->exists()) {
             $code = Individuelle::get()->last()->id;;
         } else {
             $code = 0;
@@ -242,7 +242,26 @@ class IndividuelleController extends Controller
             $code            =   strtolower("0" . $code);
         } else {
             $code            =   strtolower($code);
+        } */
+
+        $count_individuelle = Individuelle::where($individuelle->numero)->get()->count();
+
+        $longueur = strlen($count_individuelle);
+
+        if ($longueur == 1) {
+            $numero_ind   =   strtolower("0000" . $count_individuelle);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero_ind   =   strtolower("000" . $count_individuelle);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero_ind   =   strtolower("00" . $count_individuelle);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero_ind   =   strtolower("0" . $count_individuelle);
+        } else {
+            $numero_ind   =   strtolower($count_individuelle);
         }
+
+        $numero_individuelle = 'I' . $annee . '' . $numero_ind;
+        $numero_Demande = 'D' . $annee . '' . $numero_ind;
 
         $date_depot =   date('Y-m-d');
 
@@ -299,8 +318,8 @@ class IndividuelleController extends Controller
 
             $demandeur->update([
                 'type'                           =>  'individuelle',
+                'numero_dossier'                 =>  $numero_Demande,
                 "departements_id"                =>  $request->input("departement"),
-                'numero_dossier'                 => "D" . $anne . '-' . $code,
                 'users_id'                       =>  Auth::user()->id,
             ]);
 
@@ -308,7 +327,7 @@ class IndividuelleController extends Controller
 
             $individuelle->update([
                 'date_depot'                        =>  $date_depot,
-                'numero'                            =>  $anne . '-' . $code,
+                'numero'                            =>  $numero_individuelle,
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
