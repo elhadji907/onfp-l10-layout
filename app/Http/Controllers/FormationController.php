@@ -26,6 +26,12 @@ class FormationController extends Controller
         return view("formations.index", compact("formations", "modules", "departements", "regions", "operateurs", 'types_formations'));
     }
 
+
+    public function create()
+    {
+        return view("formations.create");
+    }
+
     public function store(Request $request)
     {
         $annee = date('y');
@@ -144,5 +150,12 @@ class FormationController extends Controller
         Alert::success('La formation ' . $formation->name, 'a été supprimée');
 
         return redirect()->back();
+    }
+
+    public function addDemandeursToFormation($formationId)
+    {
+        $formation = Formation::findOrFail($formationId);        
+        $individuelles = Individuelle::orderBy('created_at', 'desc')->get();
+        return view("formations.add-demandeurs", compact('formation', 'individuelles'));
     }
 }

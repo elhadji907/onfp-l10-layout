@@ -41,7 +41,6 @@
                             {{-- <a href="#" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-plus" title="Ajouter"></i> Ajouter</a> --}}
-
                             <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                 data-bs-target="#AddFormationModal">
                                 <i class="bi bi-folder-plus" title="Ajouter"></i>
@@ -56,9 +55,9 @@
                                     <th>Code</th>
                                     <th>Type</th>
                                     <th>Intitulé formation</th>
-                                    <th>Localité</th>
+                                    {{-- <th>Localité</th> --}}
                                     <th>Modules</th>
-                                    <th>Niveau qualification</th>
+                                    {{-- <th>Niveau qualification</th> --}}
                                     <th>Effectif</th>
                                     <th class="text-center">Statut</th>
                                     <th class="text-center">#</th>
@@ -71,9 +70,9 @@
                                         <td>{{ $formation?->code }}</td>
                                         <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
                                         <td>{{ $formation?->name }}</td>
-                                        <td>{{ $formation->departement?->region?->nom }}</td>
+                                        {{-- <td>{{ $formation->departement?->region?->nom }}</td> --}}
                                         <td>{{ $formation->module?->name }}</td>
-                                        <td>{{ $formation->niveau_qualification }}</td>
+                                        {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
                                         <td></td>
                                         <td><a href="#">{{ $formation?->statut }}</a></td>
                                         <td>

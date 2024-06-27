@@ -14,8 +14,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-12 pt-5">
-                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('roles.index') }}"
+                            <div class="col-sm-12 pt-0">
+                                <span class="d-flex mt-0 align-items-baseline"><a href="{{ route('roles.index') }}"
                                         class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Liste des roles</p>

@@ -14,7 +14,8 @@
                         <li class="breadcrumb-item active">Formations</li>
                     </ol>
                 </nav>
-            </div><!-- End Page Title -->
+            </div>
+            <!-- End Title -->
             <div class="row justify-content-center">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
@@ -64,8 +65,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#module-overview">Module
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#module-overview">Module
                                     </button>
                                 </li>
 
@@ -128,7 +128,7 @@
 
                                 </div>
                             </div>
-                            {{-- Détail représentant --}}
+                            {{-- Détail --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade profile-overview pt-3" id="responsable-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
@@ -233,9 +233,14 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="tab-content pt-2">
-                                <div class="tab-pane fade show active profile-overview pt-3" id="beneficiaires-overview">
+                            <div class="tab-content pt-0">
+                                <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <div class="pt-1">
+                                            <a href="{{ url('formations/' . $formation->id . '/get-demandeurs') }}"
+                                                class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
+                                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                        </div>
                                         <h5 class="card-title">Liste des bénéficiaires</h5>
                                         <div class="row g-3">
                                             <table
@@ -325,7 +330,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             {{-- Détail Formations --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade module-overview pt-3" id="module-overview">
@@ -342,7 +346,6 @@
             </div>
         </div>
         <!-- End Edit Operateur-->
-
     </section>
 @endsection
 @push('scripts')
