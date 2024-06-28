@@ -73,7 +73,14 @@
                                         {{-- <td>{{ $formation->departement?->region?->nom }}</td> --}}
                                         <td>{{ $formation->module?->name }}</td>
                                         {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
-                                        <td></td>
+                                            <td class="text-center">
+                                                @foreach ($formation->individuelles as $individuelle)
+                                                    @if ($loop->last)
+                                                        <a class="text-primary fw-bold"
+                                                            href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                         <td><a href="#">{{ $formation?->statut }}</a></td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a

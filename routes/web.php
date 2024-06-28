@@ -147,8 +147,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('modulestatut/{statut}/{idmodule}', [ModuleController::class, 'modulestatut'])->name('modulestatut');
     Route::get('modulestatutlocalite/{idlocalite}/{idmodule}/{statut}', [ModuleController::class, 'modulestatutlocalite'])->name('modulestatutlocalite');
 
-    Route::get('/formations/{formationId}/get-demandeurs', [FormationController::class, 'addDemandeursToFormation']);
-    Route::put('/formations/{formationId}/get-demandeurs', [FormationController::class, 'giveDemandeursToFormation']);
+    Route::get('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurs']);
+    Route::put('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurs']);
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

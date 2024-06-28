@@ -52,11 +52,12 @@
                                             <th scope="col">Module</th>
                                             <th scope="col">Localité</th>
                                             <th scope="col">Statut</th>
-                                            <th class="col"><i class="bi bi-gear"></i> Actions</th>
+                                            <th class="col"><i class="bi bi-gear"></i></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (Auth::user()->individuelles as $individuelle)
+                                        {{-- @foreach (Auth::user()->individuelles as $individuelle) --}}
+                                        @foreach ($demandeur->individuelles as $individuelle)
                                             <tr>
                                                 <td>{{ $individuelle->numero }}</td>
                                                 <td>{{ $individuelle->demandeur->user?->cin }}</td>

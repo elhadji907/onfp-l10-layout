@@ -244,7 +244,7 @@ class IndividuelleController extends Controller
             $code            =   strtolower($code);
         } */
 
-        $count_individuelle = Individuelle::where($individuelle->numero)->get()->count();
+        $count_individuelle = Individuelle::get()->count();
 
         $longueur = strlen($count_individuelle);
 
@@ -286,7 +286,7 @@ class IndividuelleController extends Controller
             $demandeur->update([
                 'type'                           =>  'individuelle',
                 "departements_id"                =>  $request->input("departement"),
-                'users_id'                       =>  Auth::user()->id,
+                'users_id'                       =>  $user->id,
             ]);
 
             $demandeur->save();
@@ -309,7 +309,7 @@ class IndividuelleController extends Controller
                 'statut'                            => 'Attente',
                 "modules_id"                        =>  $request->input("module"),
                 'autre_module'                      =>  $request->input('autre_module'),
-                'users_id'                          =>  Auth::user()->id,
+                'users_id'                          =>  $user->id,
                 'demandeurs_id'                     =>  $demandeur->id
             ]);
 
@@ -320,7 +320,7 @@ class IndividuelleController extends Controller
                 'type'                           =>  'individuelle',
                 'numero_dossier'                 =>  $numero_Demande,
                 "departements_id"                =>  $request->input("departement"),
-                'users_id'                       =>  Auth::user()->id,
+                'users_id'                       =>  $user->id,
             ]);
 
             $demandeur->save();
@@ -345,7 +345,7 @@ class IndividuelleController extends Controller
                 'statut'                            => 'Attente',
                 "modules_id"                        =>  $request->input("module"),
                 'autre_module'                      =>  $request->input('autre_module'),
-                'users_id'                          =>  Auth::user()->id,
+                'users_id'                          =>  $user->id,
                 'demandeurs_id'                     =>  $demandeur->id
             ]);
 

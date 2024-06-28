@@ -20,6 +20,8 @@ class DemandeurController extends Controller
         $modules = Module::orderBy("created_at", "desc")->get();
         $demandeur = Demandeur::findOrFail($id);
         $demandes_total = $demandeur->individuelles()->count();
+
         return view("demandes.show", compact("demandeur", "demandes_total","departements", "modules"));
+        
     }
 }

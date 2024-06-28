@@ -11,6 +11,7 @@ use App\Models\Region;
 use App\Models\Statut;
 use App\Models\TypesFormation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class FormationController extends Controller
@@ -152,10 +153,42 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
-    public function addDemandeursToFormation($formationId)
+    public function addformationdemandeurs($idformation, $idmodule, $idlocalite)
     {
-        $formation = Formation::findOrFail($formationId);        
-        $individuelles = Individuelle::orderBy('created_at', 'desc')->get();
-        return view("formations.add-demandeurs", compact('formation', 'individuelles'));
+        $formation = Formation::findOrFail($idformation);
+        $module = Module::findOrFail($idmodule);
+        $localite = Departement::findOrFail($idlocalite);
+
+        $individuelles = Individuelle::where('departements_id', $idlocalite)
+            ->where('modules_id', $idmodule)
+            ->where('statut', 'Validée')
+            ->get();
+
+        $individuelleFormation = DB::table('individuelles')
+            ->where('formations_id', $idformation)
+            ->pluck('formations_id', 'formations_id')
+            ->all();
+
+        return view("formations.add-demandeurs", compact('formation', 'individuelles', 'individuelleFormation', 'module', 'localite'));
+    }
+
+    public function giveformationdemandeurs($idformation, $idmodule, $idlocalite, Request $request)
+    {
+        $request->validate([
+            'individuelles' => ['required']
+        ]);
+
+        foreach ($request->individuelles as $individuelle) {
+            $individuelle = Individuelle::findOrFail($individuelle);
+            $individuelle->update([
+                "formations_id"      =>  $idformation,
+            ]);
+
+            $individuelle->save();
+        }
+
+        Alert::success('Modifications' , 'prises en charge');
+
+        return redirect()->back();
     }
 }

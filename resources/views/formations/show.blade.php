@@ -4,7 +4,7 @@
 
     <section
         class="section profile min-vh-0 d-flex flex-column align-items-center justify-content-center py-0 section profile">
-        <div class="container">
+        <div class="container-fluid">
             <div class="pagetitle">
                 {{-- <h1>Data Tables</h1> --}}
                 <nav>
@@ -237,7 +237,7 @@
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="pt-1">
-                                            <a href="{{ url('formations/' . $formation->id . '/get-demandeurs') }}"
+                                            <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                                                 class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
                                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                                         </div>
@@ -249,52 +249,44 @@
                                                 <thead>
                                                     <tr>
                                                         <th>N°</th>
+                                                        <th>Numéro</th>
+                                                        <th>Civilité</th>
                                                         <th>CIN</th>
-                                                        <th>Prénom et NOM</th>
-                                                        <th>Date et lieu de naissance</th>
-                                                        <th>Module</th>
-                                                        <th class="text-center">Statut</th>
+                                                        <th>Prénom</th>
+                                                        <th>NOM</th>
+                                                        <th>Date naissance</th>
+                                                        <th>Lieu de naissance</th>
+                                                        <th>Adresse</th>
+                                                        <th class="col"><i class="bi bi-backspace-reverse"></i></th>
                                                         <th class="col"><i class="bi bi-gear"></i></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php $i = 1; ?>
                                                     @foreach ($formation->individuelles as $individuelle)
-                                                        @isset($formation->individuelle?->numero)
-                                                            <tr>
-                                                                <td>{{ $individuelle?->numero }}
-                                                                </td>
-                                                                <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                                                <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
-                                                                </td>
-                                                                <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
-                                                                </td>
-                                                                <td>{{ $individuelle->module?->name }}</td>
-                                                                <td>
-                                                                    @isset($individuelle?->statut)
-                                                                        @if ($individuelle?->statut == 'Attente')
-                                                                            <span
-                                                                                class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                                            </span>
-                                                                        @endif
-                                                                        @if ($individuelle?->statut == 'Validée')
-                                                                            <span
-                                                                                class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                                            </span>
-                                                                        @endif
-                                                                        @if ($individuelle?->statut == 'Rejetée')
-                                                                            <span
-                                                                                class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                                            </span>
-                                                                        @endif
-                                                                    @endisset
-                                                                </td>
-                                                                <td>
-                                                                    <span class="d-flex align-items-baseline"><a
-                                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                                            class="btn btn-primary btn-sm"
-                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                        <div class="filter">
+                                                        <tr>
+                                                            <td>{{ $i++ }}</td>
+                                                            <td>{{ $individuelle?->numero }}</td>
+                                                            <td>{{ $individuelle->demandeur->user?->civilite }}</td>
+                                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
+                                                            <td>{{ $individuelle->demandeur->user?->firstname }}</td>
+                                                            <td>{{ $individuelle->demandeur->user?->name }}</td>
+                                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}
+                                                            </td>
+                                                            <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
+                                                            <td>{{ $individuelle->demandeur->user->adresse }}</td>
+                                                            <td>
+                                                                <a href="#" title="retirer">
+                                                                    <span class="badge bg-info text-white"><i
+                                                                            class="bi bi-arrow-right-circle"></i></span>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <span class="d-flex align-items-baseline"><a
+                                                                        href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                        class="btn btn-primary btn-sm"
+                                                                        title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                    {{-- <div class="filter">
                                                                             <a class="icon" href="#"
                                                                                 data-bs-toggle="dropdown"><i
                                                                                     class="bi bi-three-dots"></i></a>
@@ -318,11 +310,10 @@
                                                                                     </form>
                                                                                 </li>
                                                                             </ul>
-                                                                        </div>
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        @endisset
+                                                                        </div> --}}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
