@@ -11,7 +11,9 @@ use App\Models\Operateur;
 use App\Models\Region;
 use App\Models\Statut;
 use App\Models\TypesFormation;
+use App\Models\Validationindividuelle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -163,6 +165,7 @@ class FormationController extends Controller
         $individuelles = Individuelle::where('departements_id', $idlocalite)
             ->where('modules_id', $idmodule)
             ->where('statut', 'Validée')
+            ->orWhere('statut', 'Retirée')
             ->get();
 
         $individuelleFormation = DB::table('individuelles')
@@ -203,6 +206,7 @@ class FormationController extends Controller
 
         $individuelle->update([
             "formations_id"      =>  null,
+            "statut"             =>  'Retirée',
         ]);
 
         $individuelle->save();
@@ -214,6 +218,16 @@ class FormationController extends Controller
         ]);
 
         $indisponible->save();
+
+        
+        $validated_by = new Validationindividuelle([
+            'validated_id'       =>      Auth::user()->id,
+            'action'             =>      'Retirée',
+            'motif'              =>      $request->input('motif'),
+            'individuelles_id'   =>      $individuelle->id
+        ]);
+
+        $validated_by->save();
 
         Alert::success('Effectué', 'demandeur retirer de cette formation');
 

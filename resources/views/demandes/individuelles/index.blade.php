@@ -73,15 +73,16 @@
                                             <td>
                                                 @isset($individuelle?->statut)
                                                     @if ($individuelle?->statut == 'Attente')
-                                                    <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
+                                                        <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
                                                         </span>
-                                                    @endif
-                                                    @if ($individuelle?->statut == 'Validée')
+                                                    @elseif ($individuelle?->statut == 'Validée')
                                                         <span class="badge bg-success text-white">{{ $individuelle?->statut }}
                                                         </span>
-                                                    @endif
-                                                    @if ($individuelle?->statut == 'Rejetée')
+                                                    @elseif ($individuelle?->statut == 'Rejetée')
                                                         <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-warning text-white">{{ $individuelle?->statut }}
                                                         </span>
                                                     @endif
                                                 @endisset
@@ -89,7 +90,8 @@
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
                                                         href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                        class="btn btn-primary btn-sm" title="voir détails"><i class="bi bi-eye"></i></a>
+                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
                                                     <div class="filter">
                                                         <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                 class="bi bi-three-dots"></i></a>

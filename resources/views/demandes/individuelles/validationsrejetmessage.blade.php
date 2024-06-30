@@ -27,12 +27,12 @@
             <p>
                 @if ($validationindividuelle->action == 'Attente')
                     <span class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                @endif
-                @if ($validationindividuelle->action == 'Validée')
+                @elseif ($validationindividuelle->action == 'Validée')
                     <span class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                @endif
-                @if ($validationindividuelle->action == 'Rejetée')
+                @elseif ($validationindividuelle->action == 'Rejetée')
                     <span class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
+                    @else
+                    <span class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
                 @endif
                 {{-- {{ $validationindividuelle->action }} --}}
             </p>

@@ -102,15 +102,16 @@
                                                                         @if ($validationindividuelle->action == 'Attente')
                                                                             <span
                                                                                 class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                                                                        @endif
-                                                                        @if ($validationindividuelle->action == 'Validée')
+                                                                        @elseif ($validationindividuelle->action == 'Validée')
                                                                             <span
                                                                                 class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                                                                        @endif
-                                                                        @if ($validationindividuelle->action == 'Rejetée')
+                                                                        @elseif ($validationindividuelle->action == 'Rejetée')
                                                                             <span
                                                                                 class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
                                                                             <p>{!! substr($validationindividuelle?->motif, 0, 25) . ' ...' !!}</p>
+                                                                        @else
+                                                                            <span
+                                                                                class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
                                                                         @endif
                                                                         {{-- {{ $validationindividuelle->action }} --}}
                                                                     </p>
@@ -151,7 +152,7 @@
                                                 class="bi bi-x"></i>Rejeter
                                         </button>
                                         {{-- </form> --}}
-                                    @else
+                                    @elseif($individuelle?->statut == 'Rejetée')
                                         <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                             method="post">
                                             @csrf
@@ -162,6 +163,18 @@
                                             <button type="button"
                                                 class="btn btn-success btn-sm text-white show_confirm_valider"><i
                                                     class="bi bi-x"></i>Valider</button>
+                                        </form>
+                                    @else
+                                        <form action="#"
+                                            method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            {{-- <button type="button" class="btn btn-success show_confirm_valider">
+                                                <span class="badge bg-white text-info">Valider</span>
+                                            </button> --}}
+                                            <button type="button"
+                                                class="btn btn-warning btn-sm text-white"><i
+                                                    class="bi bi-x"></i>Retirer</button>
                                         </form>
                                     @endif
                                 @endif
