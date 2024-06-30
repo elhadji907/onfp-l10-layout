@@ -276,10 +276,15 @@
                                                             <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
                                                             <td>{{ $individuelle->demandeur->user->adresse }}</td>
                                                             <td>
-                                                                <a href="#" title="retirer">
+                                                                <a class="btn btn-danger btn-sm"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#indiponibleModal" title="retirer"><i
+                                                                    class="bi bi-arrow-right-circle"></i>
+                                                                </a>
+                                                                {{-- <a href="#" title="retirer">
                                                                     <span class="badge bg-info text-white"><i
                                                                             class="bi bi-arrow-right-circle"></i></span>
-                                                                </a>
+                                                                </a> --}}
                                                             </td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline"><a
@@ -337,6 +342,38 @@
             </div>
         </div>
         <!-- End Edit Operateur-->
+        <div class="modal fade" id="indiponibleModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{{ url('indisponibles', ['$idformation' => $formation->id, '$idindividuelle' => $individuelle->id]) }}"
+                        enctype="multipart/form-data" class="row">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Retirer demandeur</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="motif" class="form-label">Justification du retrait</label>
+                            <textarea name="motif" id="motif" rows="5"
+                                class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ old('motif') }}</textarea>
+                            @error('motif')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-arrow-right-circle"></i>
+                                Retirer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 @push('scripts')

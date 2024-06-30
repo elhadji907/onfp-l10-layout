@@ -150,6 +150,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurs']);
     Route::put('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurs']);
 
+    Route::put('indisponibles/{idformation}/{idindividuelle}', [FormationController::class, 'giveindisponibles']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -177,6 +179,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/individuelles', IndividuelleController::class);
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/pcharges', PchargeController::class);
+    Route::resource('/validation-individuelles', ValidationIndividuelleController::class);
     Route::resource('/validation-individuelles', ValidationIndividuelleController::class);
     Route::resource('/localites', LocaliteController::class);
     Route::resource('/modules', ModuleController::class);

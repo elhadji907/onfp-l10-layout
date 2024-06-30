@@ -244,6 +244,11 @@ class Individuelle extends Model
 		return $this->hasMany(Validationindividuelle::class, 'individuelles_id')->latest();
 	}
 
+	public function indisponibles()
+	{
+		return $this->hasMany(Indisponible::class, 'individuelles_id')->latest();
+	}
+
 	public function antenne()
 	{
 		return $this->belongsTo(Antenne::class, 'antennes_id');

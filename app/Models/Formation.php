@@ -221,6 +221,11 @@ class Formation extends Model
 		return $this->hasMany(Statut::class, 'formations_id')->latest();
 	}
 
+	public function indisponibles()
+	{
+		return $this->hasMany(Indisponible::class, 'formations_id')->latest();
+	}
+
 	public function agent()
 	{
 		return $this->belongsTo(Agent::class, 'agents_id');

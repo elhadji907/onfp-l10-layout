@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Departement;
 use App\Models\Formation;
+use App\Models\Indisponible;
 use App\Models\Individuelle;
 use App\Models\Module;
 use App\Models\Operateur;
@@ -187,7 +188,34 @@ class FormationController extends Controller
             $individuelle->save();
         }
 
-        Alert::success('Modifications' , 'prises en charge');
+        Alert::success('Modifications', 'prises en charge');
+
+        return redirect()->back();
+    }
+
+    public function giveindisponibles($idformation, $idindividuelle,  Request $request)
+    {
+        $request->validate([
+            'motif' => ['required']
+        ]);
+
+        $individuelle = Individuelle::findOrFail($idindividuelle);
+
+        $individuelle->update([
+            "formations_id"      =>  null,
+        ]);
+
+        $individuelle->save();
+
+        $indisponible = new Indisponible([
+            "motif"             => $request->input('motif'),
+            "individuelles_id"  => $idindividuelle,
+            "formations_id"     => $idformation,
+        ]);
+
+        $indisponible->save();
+
+        Alert::success('Effectué', 'demandeur retirer de cette formation');
 
         return redirect()->back();
     }
