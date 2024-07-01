@@ -160,9 +160,9 @@ class FormationController extends Controller
     {
         $formation = Formation::findOrFail($idformation);
         $module = Module::findOrFail($idmodule);
-        $localite = Departement::findOrFail($idlocalite);
+        $localite = Region::findOrFail($idlocalite);
 
-        $individuelles = Individuelle::where('departements_id', $idlocalite)
+        $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
             ->where('statut', 'Validée')
             ->orWhere('statut', 'Retirée')
@@ -186,23 +186,32 @@ class FormationController extends Controller
             $individuelle = Individuelle::findOrFail($individuelle);
             $individuelle->update([
                 "formations_id"      =>  $idformation,
+                "statut"             =>  'Programmer',
             ]);
 
             $individuelle->save();
         }
+ 
+        $validated_by = new Validationindividuelle([
+            'validated_id'       =>      Auth::user()->id,
+            'action'             =>      'Programmer',
+            'individuelles_id'   =>      $individuelle->id
+        ]);
+
+        $validated_by->save();
 
         Alert::success('Modifications', 'prises en charge');
 
         return redirect()->back();
     }
 
-    public function giveindisponibles($idformation, $idindividuelle,  Request $request)
+    public function giveindisponibles($idformation,  Request $request)
     {
         $request->validate([
             'motif' => ['required']
         ]);
 
-        $individuelle = Individuelle::findOrFail($idindividuelle);
+        $individuelle = Individuelle::findOrFail($request->input('individuelleid'));
 
         $individuelle->update([
             "formations_id"      =>  null,
@@ -213,13 +222,12 @@ class FormationController extends Controller
 
         $indisponible = new Indisponible([
             "motif"             => $request->input('motif'),
-            "individuelles_id"  => $idindividuelle,
+            "individuelles_id"  => $request->input('individuelleid'),
             "formations_id"     => $idformation,
         ]);
 
         $indisponible->save();
 
-        
         $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,
             'action'             =>      'Retirée',

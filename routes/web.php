@@ -150,7 +150,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurs']);
     Route::put('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurs']);
 
-    Route::put('indisponibles/{idformation}/{idindividuelle}', [FormationController::class, 'giveindisponibles']);
+    Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

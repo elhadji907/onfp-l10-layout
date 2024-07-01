@@ -237,7 +237,7 @@
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="pt-1">
-                                            <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
+                                            <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                 class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
                                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                                         </div>
@@ -276,10 +276,10 @@
                                                             <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
                                                             <td>{{ $individuelle->demandeur->user->adresse }}</td>
                                                             <td>
-                                                                <a class="btn btn-danger btn-sm"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#indiponibleModal" title="retirer"><i
-                                                                    class="bi bi-arrow-right-circle"></i>
+                                                                <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                                    data-bs-target="#indiponibleModal{{ $individuelle->id }}"
+                                                                    title="retirer"><i
+                                                                        class="bi bi-arrow-right-circle"></i>
                                                                 </a>
                                                                 {{-- <a href="#" title="retirer">
                                                                     <span class="badge bg-info text-white"><i
@@ -342,38 +342,42 @@
             </div>
         </div>
         <!-- End Edit Operateur-->
-        <div class="modal fade" id="indiponibleModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="post" action="{{ url('indisponibles', ['$idformation' => $formation->id, '$idindividuelle' => $individuelle->id]) }}"
-                        enctype="multipart/form-data" class="row">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-header">
-                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Retirer demandeur</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <label for="motif" class="form-label">Justification du retrait</label>
-                            <textarea name="motif" id="motif" rows="5"
-                                class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                                placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ old('motif') }}</textarea>
-                            @error('motif')
-                                <span class="invalid-feedback" role="alert">
-                                    <div>{{ $message }}</div>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-arrow-right-circle"></i>
-                                Retirer</button>
-                        </div>
-                    </form>
+        @foreach ($formation->individuelles as $individuelle)
+            <div class="modal fade" id="indiponibleModal{{ $individuelle->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="{{ url('indisponibles', ['$idformation' => $formation->id]) }}"
+                            enctype="multipart/form-data" class="row">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Retirer demandeur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="individuelleid" value="{{ $individuelle->id }}">
+                                <label for="motif" class="form-label">Justification du retrait</label>
+                                <textarea name="motif" id="motif" rows="5"
+                                    class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                    placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ old('motif') }}</textarea>
+                                @error('motif')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                        class="bi bi-arrow-right-circle"></i>
+                                    Retirer</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
     </section>
 @endsection
 @push('scripts')

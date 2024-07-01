@@ -108,6 +108,8 @@ class IndividuelleController extends Controller
 
         $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
 
+        $departement = Departement::findOrFail($request->input("departement"));
+        $regionid = $departement->region->id;
 
         /*  $user = User::create([
             'civilite'                          => $request->input('civilite'),
@@ -150,6 +152,7 @@ class IndividuelleController extends Controller
             'qualification'                     =>  $request->input('qualification'),
             'experience'                        =>  $request->input('experience'),
             "departements_id"                   =>  $request->input("departement"),
+            "regions_id"                        =>  $regionid,
             "modules_id"                        =>  $request->input("module"),
             'autre_module'                      =>  $request->input('autre_module'),
             'statut'                             => 'Attente',
@@ -265,6 +268,9 @@ class IndividuelleController extends Controller
 
         $date_depot =   date('Y-m-d');
 
+        $departement = Departement::findOrFail($request->input("departement"));
+        $regionid = $departement->region->id;
+
         $user->update([
             'cin'                           =>  $cin,
             'civilite'                      =>  $request->input('civilite'),
@@ -286,6 +292,7 @@ class IndividuelleController extends Controller
             $demandeur->update([
                 'type'                           =>  'individuelle',
                 "departements_id"                =>  $request->input("departement"),
+                "regions_id"                     =>  $regionid,
                 'users_id'                       =>  $user->id,
             ]);
 
@@ -306,7 +313,7 @@ class IndividuelleController extends Controller
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $request->input("departement"),
-                'statut'                            => 'Attente',
+                "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $request->input("module"),
                 'autre_module'                      =>  $request->input('autre_module'),
                 'users_id'                          =>  $user->id,
@@ -320,6 +327,7 @@ class IndividuelleController extends Controller
                 'type'                           =>  'individuelle',
                 'numero_dossier'                 =>  $numero_Demande,
                 "departements_id"                =>  $request->input("departement"),
+                "regions_id"                     =>  $regionid,
                 'users_id'                       =>  $user->id,
             ]);
 
@@ -342,7 +350,7 @@ class IndividuelleController extends Controller
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $request->input("departement"),
-                'statut'                            => 'Attente',
+                "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $request->input("module"),
                 'autre_module'                      =>  $request->input('autre_module'),
                 'users_id'                          =>  $user->id,

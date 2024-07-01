@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <h5><u><b>MODULE</b>:</u> {{ $module->name }}</h5>
-                        <h5><u><b>REGION</b>:</u> {{ $localite->region->nom }}</h5>
+                        <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
                         <form method="post"
                             action="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">

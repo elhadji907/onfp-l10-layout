@@ -55,7 +55,7 @@
                                     <th>Code</th>
                                     <th>Type</th>
                                     <th>Intitulé formation</th>
-                                    {{-- <th>Localité</th> --}}
+                                    <th>Localité</th>
                                     <th>Modules</th>
                                     {{-- <th>Niveau qualification</th> --}}
                                     <th>Effectif</th>
@@ -70,7 +70,7 @@
                                         <td>{{ $formation?->code }}</td>
                                         <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
                                         <td>{{ $formation?->name }}</td>
-                                        {{-- <td>{{ $formation->departement?->region?->nom }}</td> --}}
+                                        <td>{{ $formation->departement?->region?->nom }}</td>
                                         <td>{{ $formation->module?->name }}</td>
                                         {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
                                             <td class="text-center">

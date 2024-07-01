@@ -164,6 +164,18 @@
                                                 class="btn btn-success btn-sm text-white show_confirm_valider"><i
                                                     class="bi bi-x"></i>Valider</button>
                                         </form>
+                                    @elseif($individuelle?->statut == 'Attente')
+                                        <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            {{-- <button type="button" class="btn btn-success show_confirm_valider">
+                                                <span class="badge bg-white text-info">Valider</span>
+                                            </button> --}}
+                                            <button type="button"
+                                                class="btn btn-success btn-sm text-white show_confirm_valider"><i
+                                                    class="bi bi-x"></i>Valider</button>
+                                        </form>
                                     @else
                                         <form action="#"
                                             method="post">

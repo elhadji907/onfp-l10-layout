@@ -53,6 +53,7 @@
                                     <th>Prénom et NOM</th>
                                     <th>Date et lieu de naissance</th>
                                     <th>Module</th>
+                                    <th>Localité</th>
                                     <th class="text-center">Statut</th>
                                     <th class="text-center">#</th>
                                 </tr>
@@ -70,6 +71,7 @@
                                             <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
                                             </td>
                                             <td>{{ $individuelle->module?->name }}</td>
+                                            <td>{{ $individuelle->region?->nom }}</td>
                                             <td>
                                                 @isset($individuelle?->statut)
                                                     @if ($individuelle?->statut == 'Attente')
