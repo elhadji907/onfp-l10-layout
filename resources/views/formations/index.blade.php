@@ -151,7 +151,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="region" class="form-label">Région<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="region" class="form-select  @error('region') is-invalid @enderror"
@@ -170,7 +170,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="departement" class="form-label">Département<span
@@ -230,7 +230,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                   {{--  <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="operateur" class="form-label">Opérateur<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="operateur"
@@ -251,7 +251,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="types_formation" class="form-label">Type formation<span
@@ -312,7 +312,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="date_fin" class="form-label">Date fin</label>
                                         <input type="date" name="date_fin" value="{{ old('date_fin') }}"
                                             class="form-control form-control-sm @error('date_fin') is-invalid @enderror"
@@ -322,7 +322,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="titre" class="form-label">Titre (convention)</label>

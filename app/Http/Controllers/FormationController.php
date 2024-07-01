@@ -78,11 +78,9 @@ class FormationController extends Controller
 
         $this->validate($request, [
             "name"                  =>   "required|string|unique:formations,name,except,id",
-            "region"                =>   "required|string",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
             "module"                =>   "required|string",
-            "operateur"             =>   "required|string",
             "niveau_qualification"  =>   "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
