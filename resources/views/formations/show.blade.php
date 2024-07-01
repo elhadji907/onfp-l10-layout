@@ -129,104 +129,90 @@
                                 </div>
                             </div>
                             {{-- Détail --}}
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-1">
                                 <div class="tab-pane fade profile-overview pt-3" id="responsable-overview">
-                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-1">
                                         @csrf
                                         @method('PUT')
                                         <h5 class="card-title">
                                             <a
                                                 href="#">{{ $formation?->operateur?->name . '(' . $formation?->operateur?->sigle . ')' }}</a>
                                         </h5>
-
-
-
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <div class="pt-1">
+                                                <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
+                                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                            </div>
                                             <h5 class="card-title">Liste des formations</h5>
                                             <div class="row g-3">
-                                                <table
-                                                    class="table datatables align-middle justify-content-center table-borderless"
-                                                    id="table-operateurFormations">
+                                                <table class="table datatables" id="table-formations">
                                                     <thead>
                                                         <tr>
-                                                            <th>N°</th>
-                                                            <th>CIN</th>
-                                                            <th>Prénom et NOM</th>
-                                                            <th>Date et lieu de naissance</th>
-                                                            <th>Module</th>
-                                                            <th class="text-center">Statut</th>
-                                                            <th class="col"><i class="bi bi-gear"></i></th>
+                                                            <th>Code</th>
+                                                            <th>Type</th>
+                                                            <th>Intitulé formation</th>
+                                                            <th>Localité</th>
+                                                            {{-- <th>Modules</th> --}}
+                                                            {{-- <th>Niveau qualification</th> --}}
+                                                            <th>Effectif</th>
+                                                            <th>Statut</th>
+                                                            <th class="text-center">#</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <?php $i = 1; ?>
-                                                        @foreach ($formation->individuelles as $individuelle)
-                                                            @isset($formation->individuelle?->numero)
-                                                                <tr>
-                                                                    <td>{{ $individuelle?->numero }}
-                                                                    </td>
-                                                                    <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                                                    <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
-                                                                    </td>
-                                                                    <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
-                                                                    </td>
-                                                                    <td>{{ $individuelle->module?->name }}</td>
-                                                                    <td>
-                                                                        @isset($individuelle?->statut)
-                                                                            @if ($individuelle?->statut == 'Attente')
-                                                                                <span
-                                                                                    class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                                                </span>
+                                                        @foreach ($operateur?->formations as $formation)
+                                                            <tr>
+                                                                <td>{{ $formation?->code }}</td>
+                                                                <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
+                                                                <td>{{ $formation?->name }}</td>
+                                                                <td>{{ $formation->departement?->region?->nom }}</td>
+                                                                {{-- <td>{{ $formation->module?->name }}</td> --}}
+                                                                {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
+                                                                    <td class="text-center">
+                                                                        @foreach ($formation->individuelles as $individuelle)
+                                                                            @if ($loop->last)
+                                                                                <a class="text-primary fw-bold"
+                                                                                    href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                                             @endif
-                                                                            @if ($individuelle?->statut == 'Validée')
-                                                                                <span
-                                                                                    class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                                                </span>
-                                                                            @endif
-                                                                            @if ($individuelle?->statut == 'Rejetée')
-                                                                                <span
-                                                                                    class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                                                </span>
-                                                                            @endif
-                                                                        @endisset
+                                                                        @endforeach
                                                                     </td>
-                                                                    <td>
-                                                                        <span class="d-flex align-items-baseline"><a
-                                                                                href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                                                class="btn btn-primary btn-sm"
-                                                                                title="voir détails"><i
-                                                                                    class="bi bi-eye"></i></a>
-                                                                            <div class="filter">
-                                                                                <a class="icon" href="#"
-                                                                                    data-bs-toggle="dropdown"><i
-                                                                                        class="bi bi-three-dots"></i></a>
-                                                                                <ul
-                                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                    <li><a class="dropdown-item btn btn-sm"
-                                                                                            href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                                                            class="mx-1" title="Modifier"><i
-                                                                                                class="bi bi-pencil"></i>Modifier</a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <form
-                                                                                            action="{{ route('individuelles.destroy', $individuelle->id) }}"
-                                                                                            method="post">
-                                                                                            @csrf
-                                                                                            @method('DELETE')
-                                                                                            <button type="submit"
-                                                                                                class="dropdown-item show_confirm"
-                                                                                                title="Supprimer"><i
-                                                                                                    class="bi bi-trash"></i>Supprimer</button>
-                                                                                        </form>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                            @endisset
+                                                                <td><a href="#">{{ $formation?->statut }}</a></td>
+                                                                <td>
+                                                                    <span class="d-flex align-items-baseline"><a
+                                                                            href="{{ route('formations.show', $formation->id) }}"
+                                                                            class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                                class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                                        href="{{ route('formations.edit', $formation->id) }}"
+                                                                                        class="mx-1" title="Modifier"><i
+                                                                                            class="bi bi-pencil"></i>Modifier</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <form
+                                                                                        action="{{ route('formations.destroy', $formation->id) }}"
+                                                                                        method="post">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
+                                                                                        <button type="submit" class="dropdown-item show_confirm"
+                                                                                            title="Supprimer"><i
+                                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                                    </form>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
                                                         @endforeach
+                        
                                                     </tbody>
+                                                </table>
                                                 </table>
                                             </div>
                                         </div>

@@ -136,30 +136,16 @@
                                     </nav>
                                 </span>
                                 @if (auth()->user()->hasRole('super-admin'))
-                                    @if ($individuelle?->statut == 'Validée')
-                                        {{-- <form action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"
-                                            method="post">
-                                            @csrf
-                                            @method('DELETE') --}}
-                                        {{-- <button type="button" class="btn btn-danger show_confirm_annuler">
-                                                <span class="badge bg-white text-danger">Rejeter</span>
-                                            </button> --}}
-
-                                        {{-- <button type="button" class="btn btn-danger btn-sm text-white show_confirm_annuler"><i
-                                                class="bi bi-x"></i>Rejeter</button> --}}
+                                    {{-- @if ($individuelle?->statut == 'Validée')
                                         <button type="button" class="btn btn-danger btn-sm text-white"
                                             data-bs-toggle="modal" data-bs-target="#AddRegionModal"><i
                                                 class="bi bi-x"></i>Rejeter
                                         </button>
-                                        {{-- </form> --}}
                                     @elseif($individuelle?->statut == 'Rejetée')
                                         <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                             method="post">
                                             @csrf
                                             @method('PUT')
-                                            {{-- <button type="button" class="btn btn-success show_confirm_valider">
-                                                <span class="badge bg-white text-info">Valider</span>
-                                            </button> --}}
                                             <button type="button"
                                                 class="btn btn-success btn-sm text-white show_confirm_valider"><i
                                                     class="bi bi-x"></i>Valider</button>
@@ -169,9 +155,6 @@
                                             method="post">
                                             @csrf
                                             @method('PUT')
-                                            {{-- <button type="button" class="btn btn-success show_confirm_valider">
-                                                <span class="badge bg-white text-info">Valider</span>
-                                            </button> --}}
                                             <button type="button"
                                                 class="btn btn-success btn-sm text-white show_confirm_valider"><i
                                                     class="bi bi-x"></i>Valider</button>
@@ -181,20 +164,62 @@
                                             method="post">
                                             @csrf
                                             @method('PUT')
-                                            {{-- <button type="button" class="btn btn-success show_confirm_valider">
-                                                <span class="badge bg-white text-info">Valider</span>
-                                            </button> --}}
                                             <button type="button"
                                                 class="btn btn-warning btn-sm text-white"><i
                                                     class="bi bi-x"></i>Retirer</button>
                                         </form>
-                                    @endif
-                                @endif
-                                {{-- <button type="submit" class="dropdown-item show_confirm" title="valider"><i
-                                    class="bi bi-trash"></i>Valider</button> --}}
+                                    @endif --}}
 
-                                {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#modalValidation"
-                                    class="btn btn-primary float-end btn-rounded" title="validation">Validation</a> --}}
+                                    <span class="d-flex align-items-baseline">
+                                        @if ($individuelle?->statut == 'Validée')
+                                            <button
+                                                class="btn btn-success btn-sm text-white">{{ $individuelle->statut }}</button>
+                                        @elseif($individuelle?->statut == 'Rejetée')
+                                            <button
+                                                class="btn btn-danger btn-sm text-white">{{ $individuelle->statut }}</button>
+                                        @elseif($individuelle?->statut == 'Attente')
+                                            <button
+                                                class="btn btn-secondary btn-sm text-white">{{ $individuelle->statut }}</button>
+                                        @else
+                                            <button class="btn btn-warning btn-sm text-white">{{ $individuelle->statut }}</button>
+                                        @endif
+                                        <div class="filter">
+                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                    class="bi bi-three-dots"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                @if ($individuelle?->statut == 'Validée')
+                                                    <button class="btn btn-danger btn-sm text-white" data-bs-toggle="modal"
+                                                        data-bs-target="#AddRegionModal"><i class="bi bi-x"></i>Rejeter
+                                                        cette demande
+                                                    </button>
+                                                @elseif($individuelle?->statut == 'Rejetée')
+                                                    <form
+                                                        action="{{ route('validation-individuelles.update', $individuelle->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button
+                                                            class="btn btn-success btn-sm text-white show_confirm_valider"><i
+                                                                class="bi bi-x"></i>Valider cette demande</button>
+                                                    </form>
+                                                @elseif($individuelle?->statut == 'Attente')
+                                                    <form
+                                                        action="{{ route('validation-individuelles.update', $individuelle->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button
+                                                            class="btn btn-success btn-sm text-white show_confirm_valider"><i
+                                                                class="bi bi-x"></i>Valider cette demande</button>
+                                                    </form>
+                                                @else
+                                                    <button class="btn btn-info btn-sm text-white">Aucune action
+                                                        possible</button>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </span>
+                                @endif
                             </div>
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <form method="post" action="{{ url('individuelles/' . $individuelle->id) }}"
