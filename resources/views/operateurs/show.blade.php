@@ -330,10 +330,12 @@
                                                                                 </button>
                                                                             </li>
                                                                             <li>
-                                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                                <button type="button"
+                                                                                    class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
                                                                                     data-bs-target="#myModal{{ $operateurmodule->id }}">
-                                                                                    <i class="bi bi-trash" title="Supprimer"></i> Supprimer
+                                                                                    <i class="bi bi-trash"
+                                                                                        title="Supprimer"></i> Supprimer
                                                                                 </button>
                                                                             </li>
                                                                         </ul>
@@ -350,13 +352,81 @@
                                 </div>
                             </div>
                             {{-- Détail Formations --}}
-                            <div class="tab-content pt-2">
-                                <div class="tab-pane fade profile-overview pt-3" id="foration-overview">
-                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
-                                        @csrf
-                                        @method('PUT')
-                                        <h5 class="card-title">Formations</h5>
-                                    </form>
+                            <div class="tab-content">
+                                <div class="tab-pane fade profile-overview pt-1" id="foration-overview">
+                                    <h5 class="card-title">Liste des formations</h5>
+                                    <table class="table datatables" id="table-formations">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Type</th>
+                                                <th>Intitulé formation</th>
+                                                <th>Localité</th>
+                                                <th>Modules</th>
+                                                {{-- <th>Niveau qualification</th> --}}
+                                                <th>Effectif</th>
+                                                <th>Statut</th>
+                                                <th>#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1; ?>
+                                            @foreach ($operateur?->formations as $formation)
+                                                <tr>
+                                                    <td>{{ $formation?->code }}</td>
+                                                    <td><a href="#">{{ $formation->types_formation?->name }}</a>
+                                                    </td>
+                                                    <td>{{ $formation?->name }}</td>
+                                                    <td>{{ $formation->departement?->region?->nom }}</td>
+                                                    <td>{{ $formation->module?->name }}</td>
+                                                    {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
+                                                    <td class="text-center">
+                                                        @foreach ($formation->individuelles as $individuelle)
+                                                            @if ($loop->last)
+                                                                <a class="text-primary fw-bold"
+                                                                    href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td><a href="#">{{ $formation?->statut }}</a></td>
+                                                    <td>
+                                                        <span class="d-flex align-items-baseline"><a
+                                                                href="{{ route('formations.show', $formation->id) }}"
+                                                                class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                    class="bi bi-eye"></i></a>
+                                                            <div class="filter">
+                                                                <a class="icon" href="#"
+                                                                    data-bs-toggle="dropdown"><i
+                                                                        class="bi bi-three-dots"></i></a>
+                                                                <ul
+                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                    <li><a class="dropdown-item btn btn-sm"
+                                                                            href="{{ route('formations.edit', $formation->id) }}"
+                                                                            class="mx-1" title="Modifier"><i
+                                                                                class="bi bi-pencil"></i>Modifier</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ route('formations.destroy', $formation->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"
+                                                                                title="Supprimer"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                    <!-- End Table with stripped rows -->
                                 </div>
                             </div>
                         </div>
@@ -456,8 +526,8 @@
                                 @csrf
                                 @method('DELETE')
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal"> Non</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Non</button>
                                     <button class="btn btn-danger">
                                         <i class="bi bi-trash"></i> Oui
                                     </button>

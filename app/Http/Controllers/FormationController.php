@@ -80,7 +80,7 @@ class FormationController extends Controller
             "name"                  =>   "required|string|unique:formations,name,except,id",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
-            "module"                =>   "required|string",
+            /* "module"                =>   "required|string", */
             "niveau_qualification"  =>   "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
@@ -93,7 +93,7 @@ class FormationController extends Controller
             "regions_id"            =>   $request->input('region'),
             "departements_id"       =>   $request->input('departement'),
             "lieu"                  =>   $request->input('lieu'),
-            "modules_id"            =>   $request->input('module'),
+            /* "modules_id"            =>   $request->input('module'), */
             "operateurs_id"         =>   $request->input('operateur'),
             "types_formations_id"   =>   $request->input('types_formation'),
             "niveau_qualification"  =>   $request->input('niveau_qualification'),
@@ -123,10 +123,11 @@ class FormationController extends Controller
 
     public function show($id)
     {
-        $formation = Formation::findOrFail($id);
-        $operateur = $formation->operateur;
+        $formation  = Formation::findOrFail($id);
+        $operateur  = $formation->operateur;
+        $module     = $formation->module;
 
-        return view("formations.show", compact("formation", "operateur"));
+        return view("formations.show", compact("formation", "operateur", "module"));
     }
 
     public function destroy($id)

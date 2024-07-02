@@ -148,7 +148,11 @@ class Formation extends Model
 		'departements_id' => 'int',
 		'arrondissements_id' => 'int',
 		'localites_id' => 'int',
-		'zones_id' => 'int'
+		'zones_id' => 'int',
+		'date_pv' => 'datetime',
+		'date_suivi' => 'datetime',
+		'date_debut' => 'datetime',
+		'date_fin' => 'datetime',
 	];
 
 	protected $dates = [
