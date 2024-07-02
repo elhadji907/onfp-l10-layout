@@ -70,7 +70,12 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                @foreach ($operateur->formations as $formation)
+                                                    @if ($loop->last)
+                                                        <a href="#"><span class="badge bg-info">{{ $loop->count }}</span></a>
+                                                    @endif
+                                                @endforeach</td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
                                                         href="{{ route('operateurs.show', $operateur->id) }}"

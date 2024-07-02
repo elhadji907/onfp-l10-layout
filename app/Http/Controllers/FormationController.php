@@ -251,7 +251,7 @@ class FormationController extends Controller
 
         $operateurs = Operateur::get();
 
-        
+
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)
             ->pluck('operateurs_id', 'operateurs_id')
@@ -263,28 +263,19 @@ class FormationController extends Controller
     public function giveformationoperateurs($idformation, $idmodule, $idlocalite, Request $request)
     {
         $request->validate([
-            'individuelles' => ['required']
+            'operateur' => ['required']
         ]);
 
-        foreach ($request->individuelles as $individuelle) {
-            $individuelle = Individuelle::findOrFail($individuelle);
-            $individuelle->update([
-                "formations_id"      =>  $idformation,
-                "statut"             =>  'Programmer',
-            ]);
+        $formation = Formation::findOrFail($idformation);
 
-            $individuelle->save();
-        }
-
-        $validated_by = new Validationindividuelle([
-            'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'Programmer',
-            'individuelles_id'   =>      $individuelle->id
+        $formation->update([
+            "operateurs_id"      =>  $request->input('operateur'),
+            "statut"             =>  'Programmer',
         ]);
 
-        $validated_by->save();
+        $formation->save();
 
-        Alert::success('Modifications', 'prises en charge');
+        Alert::success('Opérateur', 'ajouté avec succès');
 
         return redirect()->back();
     }

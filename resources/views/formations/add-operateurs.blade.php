@@ -22,16 +22,16 @@
                         <div class="row">
                             <div class="col-sm-12 pt-0">
                                 <span class="d-flex mt-0 align-items-baseline"><a
-                                        href="{{ route('formations.show', $formation->id) }}" class="btn btn-success btn-sm"
+                                        href="{{ route('operateurs.index') }}" class="btn btn-success btn-sm"
                                         title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                    <p> | Liste des formations</p>
+                                    <p> | Liste de tous les opérateurs</p>
                                 </span>
                             </div>
                         </div>
                         <h5><u><b>MODULE</b>:</u> {{ $module->name }}</h5>
                         <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
                         <form method="post"
-                            action="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
+                            action="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT')
@@ -98,7 +98,7 @@
                                                                                     Modifier
                                                                                 </button>
                                                                             </li>
-                                                                            <li>
+                                                                            {{-- <li>
                                                                                 <form
                                                                                     action="{{ route('operateurs.destroy', $operateur->id) }}"
                                                                                     method="post">
@@ -109,7 +109,7 @@
                                                                                         title="Supprimer"><i
                                                                                             class="bi bi-trash"></i>Supprimer</button>
                                                                                 </form>
-                                                                            </li>
+                                                                            </li> --}}
                                                                         </ul>
                                                                     </div>
                                                                 </span>

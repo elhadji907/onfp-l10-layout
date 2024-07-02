@@ -129,25 +129,33 @@
                                 </div>
                             </div>
                             {{-- Détail --}}
-                            <div class="tab-content pt-1">
-                                <div class="tab-pane fade profile-overview pt-3" id="responsable-overview">
-                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-1">
-                                        @csrf
-                                        @method('PUT')
-                                        @isset($operateur)
+                            <div class="tab-content">
+                                <div class="tab-pane fade profile-overview" id="responsable-overview">
+                                    @if (isset($operateur))
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
-                                                <a
-                                                    href="{{ route('operateurs.show', $formation?->operateur?->id) }}">{{ $formation?->operateur?->name . '(' . $formation?->operateur?->sigle . ')' }}</a>
-                                            </h5>
-                                        @endisset
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <div class="pt-1">
+                                                {{ $formation?->operateur?->name . '(' . $formation?->operateur?->sigle . ')' }}
+                                                <a class="btn btn-info btn-sm" title=""
+                                                    href="{{ route('operateurs.show', $formation?->operateur?->id) }}"><i
+                                                        class="bi bi-eye"></i></a>&nbsp;
                                                 <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                    class="btn btn-primary float-end btn-rounded"><i
-                                                        class="fas fa-plus"></i>
-                                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                                    class="btn btn-primary float-end btn-sm">
+                                                    <i class="bi bi-pencil" title="Changer opérateur"></i> </a>
+                                            </h5>
+                                        </div>
+                                    @else
+                                        <div class="pt-1">
+                                            <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                class="btn btn-primary float-end btn-sm">
+                                                <i class="bi bi-person-plus-fill" title="Ajouter opérateur"></i> </a>
+                                        </div>
+                                    @endif
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        @isset($operateur)
+                                            <div class="card-header">
+                                                <i class="bi bi-table"></i>
+                                                Liste des formations
                                             </div>
-                                            <h5 class="card-title">Liste des formations</h5>
                                             <div class="row g-3">
                                                 <table class="table datatables" id="table-formations">
                                                     <thead>
@@ -165,80 +173,81 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php $i = 1; ?>
-                                                        @isset($operateur)
-                                                            @foreach ($operateur?->formations as $formation)
-                                                                <tr>
-                                                                    <td>{{ $formation?->code }}</td>
-                                                                    <td><a
-                                                                            href="#">{{ $formation->types_formation?->name }}</a>
-                                                                    </td>
-                                                                    <td>{{ $formation?->name }}</td>
-                                                                    <td>{{ $formation->departement?->region?->nom }}</td>
-                                                                    {{-- <td>{{ $formation->module?->name }}</td> --}}
-                                                                    {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
-                                                                    <td class="text-center">
-                                                                        @foreach ($formation->individuelles as $individuelle)
-                                                                            @if ($loop->last)
-                                                                                <a class="text-primary fw-bold"
-                                                                                    href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </td>
-                                                                    <td><a href="#">{{ $formation?->statut }}</a></td>
-                                                                    <td>
-                                                                        <span class="d-flex align-items-baseline"><a
-                                                                                href="{{ route('formations.show', $formation->id) }}"
-                                                                                class="btn btn-primary btn-sm"
-                                                                                title="voir détails"><i
-                                                                                    class="bi bi-eye"></i></a>
-                                                                            <div class="filter">
-                                                                                <a class="icon" href="#"
-                                                                                    data-bs-toggle="dropdown"><i
-                                                                                        class="bi bi-three-dots"></i></a>
-                                                                                <ul
-                                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                    <li><a class="dropdown-item btn btn-sm"
-                                                                                            href="{{ route('formations.edit', $formation->id) }}"
-                                                                                            class="mx-1" title="Modifier"><i
-                                                                                                class="bi bi-pencil"></i>Modifier</a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <form
-                                                                                            action="{{ route('formations.destroy', $formation->id) }}"
-                                                                                            method="post">
-                                                                                            @csrf
-                                                                                            @method('DELETE')
-                                                                                            <button type="submit"
-                                                                                                class="dropdown-item show_confirm"
-                                                                                                title="Supprimer"><i
-                                                                                                    class="bi bi-trash"></i>Supprimer</button>
-                                                                                        </form>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endisset
+                                                        @foreach ($operateur?->formations as $formation)
+                                                            <tr>
+                                                                <td>{{ $formation?->code }}</td>
+                                                                <td><a
+                                                                        href="#">{{ $formation->types_formation?->name }}</a>
+                                                                </td>
+                                                                <td>{{ $formation?->name }}</td>
+                                                                <td>{{ $formation->departement?->region?->nom }}</td>
+                                                                {{-- <td>{{ $formation->module?->name }}</td> --}}
+                                                                {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
+                                                                <td class="text-center">
+                                                                    @foreach ($formation->individuelles as $individuelle)
+                                                                        @if ($loop->last)
+                                                                            <a class="text-primary fw-bold"
+                                                                                href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </td>
+                                                                <td><a href="#">{{ $formation?->statut }}</a></td>
+                                                                <td>
+                                                                    <span class="d-flex align-items-baseline"><a
+                                                                            href="{{ route('formations.show', $formation->id) }}"
+                                                                            class="btn btn-primary btn-sm"
+                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                                        href="{{ route('formations.edit', $formation->id) }}"
+                                                                                        class="mx-1" title="Modifier"><i
+                                                                                            class="bi bi-pencil"></i>Modifier</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <form
+                                                                                        action="{{ route('formations.destroy', $formation->id) }}"
+                                                                                        method="post">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
+                                                                                        <button type="submit"
+                                                                                            class="dropdown-item show_confirm"
+                                                                                            title="Supprimer"><i
+                                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                                    </form>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                                 </table>
                                             </div>
-                                        </div>
+                                        @endisset
+                                    </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <div class="pt-1">
+                                        <div class="float-end">
                                             <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
+                                                class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
                                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                                         </div>
-                                        <h5 class="card-title">Liste des bénéficiaires</h5>
-                                        <div class="row g-3">
+                                        <div class="card-header">
+                                            <i class="bi bi-table"></i>
+                                            Liste des bénéficiaires
+                                        </div>
+                                        <div class="row g-3 pt-3">
                                             <table
                                                 class="table datatables align-middle justify-content-center table-borderless"
                                                 id="table-operateurModules">
