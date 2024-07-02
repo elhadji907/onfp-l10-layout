@@ -169,6 +169,7 @@ class FormationController extends Controller
             ->where('statut', 'Validée')
             ->orWhere('statut', 'Retirée')
             ->get();
+            
 
         $individuelleFormation = DB::table('individuelles')
             ->where('formations_id', $idformation)
