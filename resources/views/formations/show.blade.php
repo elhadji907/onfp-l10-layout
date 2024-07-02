@@ -142,7 +142,7 @@
                                         @endisset
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="pt-1">
-                                                <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                     class="btn btn-primary float-end btn-rounded"><i
                                                         class="fas fa-plus"></i>
                                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a>

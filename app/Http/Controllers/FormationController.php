@@ -191,7 +191,7 @@ class FormationController extends Controller
 
             $individuelle->save();
         }
- 
+
         $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,
             'action'             =>      'Programmer',
@@ -238,6 +238,53 @@ class FormationController extends Controller
         $validated_by->save();
 
         Alert::success('Effectué', 'demandeur retirer de cette formation');
+
+        return redirect()->back();
+    }
+
+
+    public function addformationoperateurs($idformation, $idmodule, $idlocalite)
+    {
+        $formation = Formation::findOrFail($idformation);
+        $module = Module::findOrFail($idmodule);
+        $localite = Region::findOrFail($idlocalite);
+
+        $operateurs = Operateur::get();
+
+        
+        $operateurFormation = DB::table('formations')
+            ->where('operateurs_id', $formation->operateurs_id)
+            ->pluck('operateurs_id', 'operateurs_id')
+            ->all();
+
+        return view("formations.add-operateurs", compact('formation', 'operateurs', 'module', 'localite', 'operateurFormation'));
+    }
+
+    public function giveformationoperateurs($idformation, $idmodule, $idlocalite, Request $request)
+    {
+        $request->validate([
+            'individuelles' => ['required']
+        ]);
+
+        foreach ($request->individuelles as $individuelle) {
+            $individuelle = Individuelle::findOrFail($individuelle);
+            $individuelle->update([
+                "formations_id"      =>  $idformation,
+                "statut"             =>  'Programmer',
+            ]);
+
+            $individuelle->save();
+        }
+
+        $validated_by = new Validationindividuelle([
+            'validated_id'       =>      Auth::user()->id,
+            'action'             =>      'Programmer',
+            'individuelles_id'   =>      $individuelle->id
+        ]);
+
+        $validated_by->save();
+
+        Alert::success('Modifications', 'prises en charge');
 
         return redirect()->back();
     }

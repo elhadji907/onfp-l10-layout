@@ -36,53 +36,51 @@
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
-                                <div class="form-check col-md-2 pt-5">
+                                {{-- <div class="form-check col-md-2 pt-5">
                                     <label for="#">Choisir tout</label>
                                     <input type="checkbox" class="form-check-input" id="checkAll">
-                                </div>
-                                <div></div>
-                                <div class="form-check col-md-12">
+                                </div> --}}
+                                <div class="form-check col-md-12 pt-5">
                                     <table class="table datatables align-middle" id="table-individuelles">
                                         <thead>
                                             <tr>
-                                                <th>N°</th>
-                                                <th>Civilité</th>
-                                                <th>CIN</th>
-                                                <th>Prénom</th>
-                                                <th>NOM</th>
-                                                <th>Date naissance</th>
-                                                <th>Lieu de naissance</th>
-                                                <th>Adresse</th>
+                                                <th>N° agrément</th>
+                                                <th>Opérateurs</th>
+                                                <th>Sigle</th>
+                                                <th class="text-center">Modules</th>
+                                                <th class="text-center">Formations</th>
                                                 <th><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; ?>
-                                            @foreach ($individuelles as $individuelle)
-                                                @isset($individuelle?->numero)
+                                            @foreach ($operateurs as $operateur)
+                                                @isset($operateur?->numero_agrement)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" name="individuelles[]"
-                                                                value="{{ $individuelle->id }}"
-                                                                {{ in_array($individuelle->formations_id, $individuelleFormation) ? 'checked' : '' }}
-                                                                class="form-check-input @error('individuelles') is-invalid @enderror">
-                                                            @error('individuelles')
+                                                            <input type="radio" name="operateur" value="{{ $operateur->id }}"
+                                                                {{ in_array($operateur->id, $operateurFormation) ? 'checked' : '' }}
+                                                                class="form-check-input @error('operateur') is-invalid @enderror">
+                                                            @error('operateur')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <div>{{ $message }}</div>
                                                                 </span>
-                                                                @enderror{{ $individuelle?->numero }}
+                                                                @enderror{{ $operateur?->numero_agrement }}
                                                             </td>
-                                                            <td>{{ $individuelle->demandeur->user?->civilite }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->firstname }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->name }}</td>
-                                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}
+                                                            <td>{{ $operateur?->name }}</td>
+                                                            <td>{{ $operateur?->sigle }}</td>
+                                                            <td style="text-align: center;">
+                                                                @foreach ($operateur->operateurmodules as $operateurmodule)
+                                                                    @if ($loop->last)
+                                                                        <a href="#"><span
+                                                                                class="badge bg-info">{{ $loop->count }}</span></a>
+                                                                    @endif
+                                                                @endforeach
                                                             </td>
-                                                            <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
-                                                            <td>{{ $individuelle->demandeur->user->adresse }}</td>
+                                                            <td></td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline"><a
-                                                                        href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                        href="{{ route('operateurs.show', $operateur->id) }}"
                                                                         class="btn btn-primary btn-sm" title="voir détails"><i
                                                                             class="bi bi-eye"></i></a>
                                                                     <div class="filter">
@@ -91,16 +89,21 @@
                                                                                 class="bi bi-three-dots"></i></a>
                                                                         <ul
                                                                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <li><a class="dropdown-item btn btn-sm"
-                                                                                    href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                                                    class="mx-1" title="Modifier"><i
-                                                                                        class="bi bi-pencil"></i>Modifier</a>
+                                                                            <li>
+                                                                                <button type="button"
+                                                                                    class="dropdown-item btn btn-sm mx-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#EditOperateurModal{{ $operateur->id }}">
+                                                                                    <i class="bi bi-pencil" title="Modifier"></i>
+                                                                                    Modifier
+                                                                                </button>
                                                                             </li>
                                                                             <li>
                                                                                 <form
-                                                                                    action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                                    action="{{ route('operateurs.destroy', $operateur->id) }}"
                                                                                     method="post">
                                                                                     @csrf
+                                                                                    @method('DELETE')
                                                                                     <button type="submit"
                                                                                         class="dropdown-item show_confirm"
                                                                                         title="Supprimer"><i
@@ -117,10 +120,9 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                                </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
                             </form>
                         </div>
                     </div>
