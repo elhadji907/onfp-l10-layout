@@ -252,7 +252,6 @@ class FormationController extends Controller
 
         $operateurs = Operateur::get();
 
-
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)
             ->pluck('operateurs_id', 'operateurs_id')
@@ -277,6 +276,43 @@ class FormationController extends Controller
         $formation->save();
 
         Alert::success('Opérateur', 'ajouté avec succès');
+
+        return redirect()->back();
+    }
+
+
+    public function addformationmodules($idformation, $idmodule, $idlocalite)
+    {
+        $formation = Formation::findOrFail($idformation);
+        $module = Module::findOrFail($idmodule);
+        $localite = Region::findOrFail($idlocalite);
+
+        $modules = Module::get();
+
+        $moduleFormation = DB::table('formations')
+            ->where('modules_id', $formation->modules_id)
+            ->pluck('modules_id', 'modules_id')
+            ->all();
+
+        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation'));
+    }
+
+    public function giveformationmodules($idformation, $idmodule, $idlocalite, Request $request)
+    {
+        $request->validate([
+            'module' => ['required']
+        ]);
+
+        $formation = Formation::findOrFail($idformation);
+
+        $formation->update([
+            "modules_id"      =>  $request->input('module'),
+            "statut"             =>  'Programmer',
+        ]);
+
+        $formation->save();
+
+        Alert::success('Module', 'ajouté avec succès');
 
         return redirect()->back();
     }

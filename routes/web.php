@@ -153,6 +153,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('formationoperateurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationoperateurs']);
     Route::put('formationoperateurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationoperateurs']);
 
+    Route::get('formationmodules/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationmodules']);
+    Route::put('formationmodules/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationmodules']);
+
     Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
 
     /* Vues ressouces */

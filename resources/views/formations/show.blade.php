@@ -149,7 +149,7 @@
                                         </div>
                                     @else
                                         <div class="pt-1">
-                                            <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                            <a href="{{ url('formationoperateurs', ['$idformation' => $formation?->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation?->departement?->region?->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
                                                 <i class="bi bi-person-plus-fill" title="Ajouter opérateur"></i> </a>
                                         </div>
@@ -339,18 +339,18 @@
                                     @if (isset($module))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
-                                                {{ $formation?->module?->name }}
+                                                {{ $module?->name }}
                                                 <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('modules.show', $formation?->module?->id) }}"><i
+                                                    href="{{ route('modules.show', $module?->id) }}"><i
                                                         class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idmodule' => $module->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                     class="btn btn-primary float-end btn-sm">
                                                     <i class="bi bi-pencil" title="Changer module"></i> </a>
                                             </h5>
                                         </div>
                                     @else
                                         <div class="pt-1">
-                                            <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                            <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idmodule' => $module->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
                                                 <i class="bi bi-person-plus-fill" title="Ajouter module"></i> </a>
                                         </div>
