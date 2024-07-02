@@ -55,33 +55,38 @@
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; ?>
-                                            @foreach ($operateurs as $operateur)
-                                                @isset($operateur?->numero_agrement)
+                                            @foreach ($operateurmodules as $operateurmodule)
+                                                @isset($operateurmodule?->operateur?->numero_agrement)
                                                     <tr>
                                                         <td>
-                                                            <input type="radio" name="operateur" value="{{ $operateur->id }}"
-                                                                {{ in_array($operateur->id, $operateurFormation) ? 'checked' : '' }}
+                                                            <input type="radio" name="operateur" value="{{ $operateurmodule?->operateur?->id }}"
+                                                                {{ in_array($operateurmodule?->operateur?->id, $operateurFormation) ? 'checked' : '' }}
                                                                 class="form-check-input @error('operateur') is-invalid @enderror">
                                                             @error('operateur')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <div>{{ $message }}</div>
                                                                 </span>
-                                                                @enderror{{ $operateur?->numero_agrement }}
+                                                                @enderror{{ $operateurmodule?->operateur?->numero_agrement }}
                                                             </td>
-                                                            <td>{{ $operateur?->name }}</td>
-                                                            <td>{{ $operateur?->sigle }}</td>
+                                                            <td>{{ $operateurmodule?->operateur?->name }}</td>
+                                                            <td>{{ $operateurmodule?->operateur?->sigle }}</td>
                                                             <td style="text-align: center;">
-                                                                @foreach ($operateur->operateurmodules as $operateurmodule)
+                                                                @foreach ($operateurmodule?->operateur?->operateurmodules as $operateurmodule)
                                                                     @if ($loop->last)
                                                                         <a href="#"><span
                                                                                 class="badge bg-info">{{ $loop->count }}</span></a>
                                                                     @endif
                                                                 @endforeach
                                                             </td>
-                                                            <td></td>
+                                                            <td class="text-center">
+                                                                @foreach ($operateurmodule?->operateur?->formations as $formation)
+                                                                    @if ($loop->last)
+                                                                        <a href="#"><span class="badge bg-info">{{ $loop->count }}</span></a>
+                                                                    @endif
+                                                                @endforeach</td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline"><a
-                                                                        href="{{ route('operateurs.show', $operateur->id) }}"
+                                                                        href="{{ route('operateurs.show', $operateurmodule?->operateur?->id) }}"
                                                                         class="btn btn-primary btn-sm" title="voir détails"><i
                                                                             class="bi bi-eye"></i></a>
                                                                     <div class="filter">
@@ -94,7 +99,7 @@
                                                                                 <button type="button"
                                                                                     class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#EditOperateurModal{{ $operateur->id }}">
+                                                                                    data-bs-target="#EditOperateurModal{{ $operateurmodule?->operateur?->id }}">
                                                                                     <i class="bi bi-pencil" title="Modifier"></i>
                                                                                     Modifier
                                                                                 </button>

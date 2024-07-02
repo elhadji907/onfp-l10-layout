@@ -8,6 +8,7 @@ use App\Models\Indisponible;
 use App\Models\Individuelle;
 use App\Models\Module;
 use App\Models\Operateur;
+use App\Models\Operateurmodule;
 use App\Models\Region;
 use App\Models\Statut;
 use App\Models\TypesFormation;
@@ -116,7 +117,7 @@ class FormationController extends Controller
         $statut->save();
 
 
-        Alert::success("La formation "  . $formation->name, " a été créée avec succès");
+        Alert::success("Formation", "créée avec succès");
 
         return redirect()->back();
     }
@@ -249,15 +250,28 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($idformation);
         $module = Module::findOrFail($idmodule);
         $localite = Region::findOrFail($idlocalite);
+        $modulename = $module->name;
 
         $operateurs = Operateur::get();
+
+        /* $operateurmodules   =   DB::table('operateurmodules')
+            ->where('module', $modulename)
+            ->pluck('module', 'module')
+            ->all(); */
+
+        $operateurmodules   =   Operateurmodule::where('module', $modulename)->get();
+
+        /* foreach ($operateurmodules as $key => $operateurmodule) {
+            
+        }
+            dd($operateurmodule); */
 
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)
             ->pluck('operateurs_id', 'operateurs_id')
             ->all();
 
-        return view("formations.add-operateurs", compact('formation', 'operateurs', 'module', 'localite', 'operateurFormation'));
+        return view("formations.add-operateurs", compact('formation', 'operateurs', 'operateurmodules', 'module', 'localite', 'operateurFormation'));
     }
 
     public function giveformationoperateurs($idformation, $idmodule, $idlocalite, Request $request)
