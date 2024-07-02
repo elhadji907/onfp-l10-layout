@@ -242,7 +242,7 @@
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="float-end">
-                                            <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                            <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                 class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
                                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                                         </div>
@@ -343,14 +343,14 @@
                                                 <a class="btn btn-info btn-sm" title=""
                                                     href="{{ route('modules.show', $module?->id) }}"><i
                                                         class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idmodule' => $module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                     class="btn btn-primary float-end btn-sm">
                                                     <i class="bi bi-pencil" title="Changer module"></i> </a>
                                             </h5>
                                         </div>
                                     @else
                                         <div class="pt-1">
-                                            <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idmodule' => $module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                            <a href="{{ url('moduleformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
                                                 <i class="bi bi-person-plus-fill" title="Ajouter module"></i> </a>
                                         </div>

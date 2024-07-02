@@ -28,8 +28,9 @@
                                 </span>
                             </div>
                         </div>
-                        <h5><u><b>MODULE</b>:</u> {{ $module->name }}</h5>
+                        <h5><u><b>MODULE</b>:</u> {{ $module?->name }}</h5>
                         <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
+                        <h5><u><b>OERATEUR</b>:</u> {{ $formation?->operateur?->sigle }}</h5>
                         <form method="post"
                             action="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
@@ -41,7 +42,7 @@
                                     <input type="checkbox" class="form-check-input" id="checkAll">
                                 </div> --}}
                                 <div class="form-check col-md-12 pt-5">
-                                    <table class="table datatables align-middle" id="table-individuelles">
+                                    <table class="table datatables align-middle" id="table-operateurs">
                                         <thead>
                                             <tr>
                                                 <th>N° agrément</th>
@@ -130,3 +131,50 @@
             </div>
         </section>
     @endsection
+    @push('scripts')
+    <script>
+        new DataTable('#table-operateurs', {
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                }
+            },
+            "lengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "Tout"]
+            ],
+            "order": [
+                [2, 'desc']
+            ],
+            language: {
+                "sProcessing": "Traitement en cours...",
+                "sSearch": "Rechercher&nbsp;:",
+                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix": "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst": "Premier",
+                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                    "sNext": "Suivant",
+                    "sLast": "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                },
+                "select": {
+                    "rows": {
+                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
+                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
+                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
+                    }
+                }
+            }
+        });
+    </script>
+@endpush

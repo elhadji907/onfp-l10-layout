@@ -31,7 +31,7 @@
                         <h5><u><b>MODULE</b>:</u> {{ $formation->module?->name }}</h5>
                         <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
                         <form method="post"
-                            action="{{ url('formationmodules', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
+                            action="{{ url('formationmodules', ['$idformation' => $formation->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT')
@@ -55,7 +55,7 @@
                                             @foreach ($modules as $module)
                                                 <tr>
                                                     <td>
-                                                        <input type="radio" name="module" value="{{ $module->id }}"
+                                                        <input type="radio" name="module" value="{{ $module?->id }}"
                                                             {{ in_array($module->id, $moduleFormation) ? 'checked' : '' }}
                                                             class="form-check-input @error('module') is-invalid @enderror">
                                                         @error('module')

@@ -70,7 +70,7 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 @foreach ($operateur->formations as $formation)
                                                     @if ($loop->last)
                                                         <a href="#"><span class="badge bg-info">{{ $loop->count }}</span></a>

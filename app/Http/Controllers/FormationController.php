@@ -281,10 +281,10 @@ class FormationController extends Controller
     }
 
 
-    public function addformationmodules($idformation, $idmodule, $idlocalite)
+    public function addformationmodules($idformation, $idlocalite)
     {
         $formation = Formation::findOrFail($idformation);
-        $module = Module::findOrFail($idmodule);
+        $module = $formation?->module?->name;
         $localite = Region::findOrFail($idlocalite);
 
         $modules = Module::get();
@@ -297,7 +297,43 @@ class FormationController extends Controller
         return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation'));
     }
 
-    public function giveformationmodules($idformation, $idmodule, $idlocalite, Request $request)
+    public function giveformationmodules($idformation, Request $request)
+    {
+        $request->validate([
+            'module' => ['required']
+        ]);
+
+        $formation = Formation::findOrFail($idformation);
+
+        $formation->update([
+            "modules_id"      =>  $request->input('module'),
+            "statut"             =>  'Programmer',
+        ]);
+
+        $formation->save();
+
+        Alert::success('Module', 'ajouté avec succès');
+
+        return redirect()->back();
+    }
+
+    public function addmoduleformations($idformation, $idlocalite)
+    {
+
+        $formation = Formation::findOrFail($idformation);
+        $module = $formation?->module?->name;
+        $localite = Region::findOrFail($idlocalite);
+
+        $modules = Module::get();
+
+        $moduleFormation = DB::table('formations')
+            ->where('modules_id', $formation->modules_id)
+            ->pluck('modules_id', 'modules_id')
+            ->all();
+
+        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation'));
+    }
+    public function givemoduleformations($idformation, $idlocalite, Request $request)
     {
         $request->validate([
             'module' => ['required']
