@@ -64,23 +64,25 @@
                                                 <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
                                                 </td>
                                                 <td>{{ $individuelle->module->name }}</td>
-                                                <td>{{ $individuelle->departement->nom }}</td>
+                                                <td>{{ $individuelle?->region?->nom }}</td>
                                                 <td>
                                                     @isset($individuelle?->statut)
                                                         @if ($individuelle?->statut == 'Attente')
                                                             <span
                                                                 class="badge bg-secondary text-white">{{ $individuelle?->statut }}
                                                             </span>
-                                                        @endif
-                                                        @if ($individuelle?->statut == 'Validée')
+                                                        @elseif ($individuelle?->statut == 'Validée')
                                                             <span
                                                                 class="badge bg-success text-white">{{ $individuelle?->statut }}
                                                             </span>
-                                                        @endif
-                                                        @if ($individuelle?->statut == 'Rejetée')
+                                                        @elseif ($individuelle?->statut == 'Rejetée')
                                                             <span
                                                                 class="badge bg-danger text-white">{{ $individuelle?->statut }}
                                                             </span>
+                                                        @else
+                                                        <span
+                                                            class="badge bg-warning text-white">{{ $individuelle?->statut }}
+                                                        </span>
                                                         @endif
                                                     @endisset
                                                 </td>
