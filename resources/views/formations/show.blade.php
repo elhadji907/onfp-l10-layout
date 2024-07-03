@@ -147,12 +147,13 @@
                                                     <i class="bi bi-pencil" title="Changer opérateur"></i> </a>
                                             </h5>
                                         </div>
-                                    @else
+                                    @elseif(isset($module))
                                         <div class="pt-1">
                                             <a href="{{ url('formationoperateurs', ['$idformation' => $formation?->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation?->departement?->region?->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
                                                 <i class="bi bi-person-plus-fill" title="Ajouter opérateur"></i> </a>
                                         </div>
+                                    @else
                                     @endif
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($operateur)
@@ -240,76 +241,77 @@
                             </div>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <div class="float-end">
-                                            <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
-                                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                                        </div>
-                                        <div class="card-header">
-                                            <i class="bi bi-table"></i>
-                                            Liste des bénéficiaires
-                                        </div>
-                                        <div class="row g-3 pt-3">
-                                            <table
-                                                class="table datatables align-middle justify-content-center table-borderless"
-                                                id="table-operateurModules">
-                                                <thead>
-                                                    <tr>
-                                                        <th>N°</th>
-                                                        <th>Numéro</th>
-                                                        <th>Civilité</th>
-                                                        <th>CIN</th>
-                                                        <th>Prénom</th>
-                                                        <th>NOM</th>
-                                                        <th>Date naissance</th>
-                                                        <th>Lieu de naissance</th>
-                                                        <th>Adresse</th>
-                                                        {{-- <th class="col"><i class="bi bi-backspace-reverse"></i></th> --}}
-                                                        <th class="col"><i class="bi bi-gear"></i></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php $i = 1; ?>
-                                                    @foreach ($formation->individuelles as $individuelle)
+                                    @isset($module)
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <div class="float-end">
+                                                <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                    class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
+                                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                            </div>
+                                            <div class="card-header">
+                                                <i class="bi bi-table"></i>
+                                                Liste des bénéficiaires
+                                            </div>
+                                            <div class="row g-3 pt-3">
+                                                <table
+                                                    class="table datatables align-middle justify-content-center table-borderless"
+                                                    id="table-operateurModules">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{ $i++ }}</td>
-                                                            <td>{{ $individuelle?->numero }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->civilite }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->firstname }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->name }}</td>
-                                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}
-                                                            </td>
-                                                            <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
-                                                            <td>{{ $individuelle->demandeur->user->adresse }}</td>
-                                                            {{--  <td>
+                                                            <th>N°</th>
+                                                            <th>Numéro</th>
+                                                            <th>Civilité</th>
+                                                            <th>CIN</th>
+                                                            <th>Prénom</th>
+                                                            <th>NOM</th>
+                                                            <th>Date naissance</th>
+                                                            <th>Lieu de naissance</th>
+                                                            <th>Adresse</th>
+                                                            {{-- <th class="col"><i class="bi bi-backspace-reverse"></i></th> --}}
+                                                            <th class="col"><i class="bi bi-gear"></i></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $i = 1; ?>
+                                                        @foreach ($formation->individuelles as $individuelle)
+                                                            <tr>
+                                                                <td>{{ $i++ }}</td>
+                                                                <td>{{ $individuelle?->numero }}</td>
+                                                                <td>{{ $individuelle->demandeur->user?->civilite }}</td>
+                                                                <td>{{ $individuelle->demandeur->user?->cin }}</td>
+                                                                <td>{{ $individuelle->demandeur->user?->firstname }}</td>
+                                                                <td>{{ $individuelle->demandeur->user?->name }}</td>
+                                                                <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}
+                                                                </td>
+                                                                <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
+                                                                <td>{{ $individuelle->demandeur->user->adresse }}</td>
+                                                                {{--  <td>
                                                                 <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                                     data-bs-target="#indiponibleModal{{ $individuelle->id }}"
                                                                     title="retirer"><i
                                                                         class="bi bi-arrow-right-circle"></i>
                                                                 </a>
                                                             </td> --}}
-                                                            <td>
-                                                                <span class="d-flex align-items-baseline"><a
-                                                                        href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                                        class="btn btn-primary btn-sm"
-                                                                        title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                    <div class="filter">
-                                                                        <a class="icon" href="#"
-                                                                            data-bs-toggle="dropdown"><i
-                                                                                class="bi bi-three-dots"></i></a>
-                                                                        <ul
-                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <li>
-                                                                                <a class="btn btn-danger btn-sm"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#indiponibleModal{{ $individuelle->id }}"
-                                                                                    title="retirer">Retirer de cette
-                                                                                    formation
-                                                                                </a>
-                                                                            </li>
-                                                                            {{-- <li>
+                                                                <td>
+                                                                    <span class="d-flex align-items-baseline"><a
+                                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                            class="btn btn-primary btn-sm"
+                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li>
+                                                                                    <a class="btn btn-danger btn-sm"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#indiponibleModal{{ $individuelle->id }}"
+                                                                                        title="retirer">Retirer de cette
+                                                                                        formation
+                                                                                    </a>
+                                                                                </li>
+                                                                                {{-- <li>
                                                                                     <form
                                                                                         action="{{ route('individuelles.destroy', $individuelle->id) }}"
                                                                                         method="post">
@@ -321,16 +323,17 @@
                                                                                                 class="bi bi-trash"></i>Supprimer</button>
                                                                                     </form>
                                                                                 </li> --}}
-                                                                        </ul>
-                                                                    </div>
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endisset
                                 </div>
                             </div>
                             {{-- Détail Modules --}}

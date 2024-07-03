@@ -262,11 +262,6 @@ class FormationController extends Controller
 
         $operateurmodules   =   Operateurmodule::where('module', $modulename)->get();
 
-        /* foreach ($operateurmodules as $key => $operateurmodule) {
-            
-        }
-            dd($operateurmodule); */
-
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)
             ->pluck('operateurs_id', 'operateurs_id')

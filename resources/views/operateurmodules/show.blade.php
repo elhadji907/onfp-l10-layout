@@ -39,61 +39,77 @@
                     <div class="card-body">
                         <h5 class="card-title">Liste des modules opérateurs</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center" id="table-operateurModules">
+                        <table class="table datatables align-middle" id="table-operateurs">
                             <thead>
                                 <tr>
-                                    <th>Modules</th>
-                                    <th>Niveau qualification</th>
-                                    <th>Domaine</th>
-                                    <th>Opérateur</th>
-                                    <th>Statut</th>
-                                    {{-- <th>Formations</th> --}}
+                                    <th>N° agrément</th>
+                                    <th>Opérateurs</th>
+                                    <th>Sigle</th>
+                                    <th class="text-center">Modules</th>
+                                    <th class="text-center">Formations</th>
                                     <th><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($operateurmodules as $operateurmodule)
-                                    <tr>
-                                        <td>{{ $operateurmodule?->module }}</td>
-                                        <td>{{ $operateurmodule?->niveau_qualification }}</td>
-                                        <td>{{ $operateurmodule?->domaine }}</td>
-                                        <td>{{ $operateurmodule?->operateur?->sigle }}</td>
-                                        <td>
-                                            @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
-                                                @if ($loop->last)
-                                                    <span class="badge bg-info">{{ $moduleoperateurstatut->statut }}</span>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
-                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li>
-                                                            <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">
-                                                                <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                            </button>
-                                                        </li>
-                                                        {{-- <li>
-                                                            <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#myModal{{ $operateurmodule->id }}">
-                                                                <i class="bi bi-trash" title="Supprimer"></i> Supprimer
-                                                            </button>
-                                                        </li> --}}
-                                                    </ul>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
+                                    @isset($operateurmodule?->operateur?->numero_agrement)
+                                        <tr>
+                                            <td>{{ $operateurmodule?->operateur?->numero_agrement }}
+                                            </td>
+                                            <td>{{ $operateurmodule?->operateur?->name }}</td>
+                                            <td>{{ $operateurmodule?->operateur?->sigle }}</td>
+                                            <td style="text-align: center;">
+                                                @foreach ($operateurmodule?->operateur?->operateurmodules as $operateurmodule)
+                                                    @if ($loop->last)
+                                                        <a href="#"><span
+                                                                class="badge bg-info">{{ $loop->count }}</span></a>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td class="text-center">
+                                                @foreach ($operateurmodule?->operateur?->formations as $formation)
+                                                    @if ($loop->last)
+                                                        <a href="#"><span
+                                                                class="badge bg-info">{{ $loop->count }}</span></a>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <span class="d-flex align-items-baseline"><a
+                                                        href="{{ route('operateurs.show', $operateurmodule?->operateur?->id) }}"
+                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <li>
+                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#EditOperateurModal{{ $operateurmodule?->operateur?->id }}">
+                                                                    <i class="bi bi-pencil" title="Modifier"></i>
+                                                                    Modifier
+                                                                </button>
+                                                            </li>
+                                                            {{-- <li>
+                                                                    <form
+                                                                        action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="dropdown-item show_confirm"
+                                                                            title="Supprimer"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li> --}}
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endisset
                                 @endforeach
                             </tbody>
                         </table>
@@ -194,8 +210,8 @@
                                 @csrf
                                 @method('DELETE')
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal"> Non</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Non</button>
                                     <button class="btn btn-danger">
                                         <i class="bi bi-trash"></i> Oui
                                     </button>

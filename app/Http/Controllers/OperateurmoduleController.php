@@ -78,6 +78,16 @@ class OperateurmoduleController extends Controller
 
         return redirect()->back();
     }
+
+    public function show($id)
+    {
+        $operateurmodule = Operateurmodule::findOrFail($id);
+        $modulename = $operateurmodule->module;
+        $operateurmodules   =   Operateurmodule::where('module', $modulename)->get();
+
+        return view("operateurmodules.show", compact("operateurmodules"));
+
+    }
     public function destroy($id)
     {
         $operateurmodule = Operateurmodule::find($id);

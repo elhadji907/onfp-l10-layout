@@ -30,7 +30,7 @@
                         </div>
                         <h5><u><b>MODULE</b>:</u> {{ $module?->name }}</h5>
                         <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
-                        <h5><u><b>OERATEUR</b>:</u> {{ $formation?->operateur?->sigle }}</h5>
+                        <h5><u><b>OPERATEUR</b>:</u> {{ $formation?->operateur?->sigle }}</h5>
                         <form method="post"
                             action="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
