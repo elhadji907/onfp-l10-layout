@@ -28,14 +28,13 @@ use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\OperateurmoduleController;
 use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationIndividuelleController;
-use App\Models\Operateurmodule;
+use App\Http\Controllers\ValidationoperateurmoduleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -195,6 +194,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/formations', FormationController::class);
     Route::resource('/operateurs', OperateurController::class);
     Route::resource('/operateurmodules', OperateurmoduleController::class);
+    Route::resource('/validation-operateur-modules', ValidationoperateurmoduleController::class);
 });
 
 

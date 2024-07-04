@@ -181,15 +181,16 @@
                                             <button
                                                 class="btn btn-secondary btn-sm text-white">{{ $individuelle->statut }}</button>
                                         @else
-                                            <button class="btn btn-warning btn-sm text-white">{{ $individuelle->statut }}</button>
+                                            <button
+                                                class="btn btn-warning btn-sm text-white">{{ $individuelle->statut }}</button>
                                         @endif
                                         <div class="filter">
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                     class="bi bi-three-dots"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                 @if ($individuelle?->statut == 'Validée')
-                                                    <button class="btn btn-danger btn-sm text-white" data-bs-toggle="modal"
-                                                        data-bs-target="#AddRegionModal"><i class="bi bi-x"></i>Rejeter
+                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                        data-bs-target="#AddRegionModal">Rejeter
                                                         cette demande
                                                     </button>
                                                 @elseif($individuelle?->statut == 'Rejetée')
@@ -199,8 +200,7 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <button
-                                                            class="btn btn-success btn-sm text-white show_confirm_valider"><i
-                                                                class="bi bi-x"></i>Valider cette demande</button>
+                                                            class="show_confirm_valider btn btn-sm mx-1">Valider</button>
                                                     </form>
                                                 @elseif($individuelle?->statut == 'Attente')
                                                     <form
@@ -209,11 +209,13 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <button
-                                                            class="btn btn-success btn-sm text-white show_confirm_valider"><i
-                                                                class="bi bi-x"></i>Valider cette demande</button>
+                                                            class="show_confirm_valider btn btn-sm mx-1">Valider</button>
                                                     </form>
+                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                        data-bs-target="#AddRegionModal">Rejeter
+                                                    </button>
                                                 @else
-                                                    <button class="btn btn-info btn-sm text-white">Aucune action
+                                                    <button class="btn btn-sm mx-1">Aucune action
                                                         possible</button>
                                                 @endif
                                             </ul>

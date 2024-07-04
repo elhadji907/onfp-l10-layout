@@ -37,6 +37,7 @@ class OperateurmoduleController extends Controller
                 "module"                =>  $request->input("module"),
                 "domaine"               =>  $request->input("domaine"),
                 'niveau_qualification'  =>  $request->input('niveau_qualification'),
+                'statut'                =>  'Attente',
                 'operateurs_id'         =>  $request->input('operateur'),
             ]);
 
@@ -85,7 +86,7 @@ class OperateurmoduleController extends Controller
         $modulename = $operateurmodule->module;
         $operateurmodules   =   Operateurmodule::where('module', $modulename)->get();
 
-        return view("operateurmodules.show", compact("operateurmodules"));
+        return view("operateurmodules.show", compact("operateurmodules", "modulename"));
 
     }
     public function destroy($id)

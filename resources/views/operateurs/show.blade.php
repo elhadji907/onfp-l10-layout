@@ -207,7 +207,7 @@
                                             <h5 class="card-title">Ajouter nouveau module</h5>
                                             <table class="table table-bordered" id="dynamicAddRemove">
                                                 <tr>
-                                                    <th>modules<span class="text-danger mx-1">*</span></th>
+                                                    <th>Modules<span class="text-danger mx-1">*</span></th>
                                                     <th>Niveau qualification<span class="text-danger mx-1">*</span></th>
                                                     <th>Domaines<span class="text-danger mx-1">*</span></th>
                                                     {{-- <th width="5%"><i class="bi bi-gear"></i></th> --}}
@@ -279,12 +279,26 @@
                                                             <td>{{ $operateurmodule->niveau_qualification }}</td>
                                                             <td>{{ $operateurmodule->domaine }}</td>
                                                             <td>
-                                                                @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
+                                                                {{-- @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
                                                                     @if ($loop->last)
                                                                         <span
                                                                             class="badge bg-info">{{ $moduleoperateurstatut->statut }}</span>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
+
+                                                                @if ($operateurmodule?->statut == 'Validé')
+                                                                    <button
+                                                                        class="btn btn-success btn-sm text-white">{{ $operateurmodule->statut }}</button>
+                                                                @elseif($operateurmodule?->statut == 'Rejeté')
+                                                                    <button
+                                                                        class="btn btn-danger btn-sm text-white">{{ $operateurmodule->statut }}</button>
+                                                                @elseif($operateurmodule?->statut == 'Attente')
+                                                                    <button
+                                                                        class="btn btn-secondary btn-sm text-white">{{ $operateurmodule->statut }}</button>
+                                                                @else
+                                                                    <button
+                                                                        class="btn btn-warning btn-sm text-white">{{ $operateurmodule->statut }}</button>
+                                                                @endif
                                                             </td>
                                                             {{--     <td>
                                                                 @isset($individuelle?->statut)
@@ -312,7 +326,8 @@
                                                                         class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a> --}}
 
                                                                     {{-- <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}" --}}
-                                                                    <a href="#" class="btn btn-success btn-sm"
+                                                                    <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
+                                                                        class="btn btn-primary btn-sm"
                                                                         title="voir détails"><i class="bi bi-eye"></i></a>
                                                                     <div class="filter">
                                                                         <a class="icon" href="#"
@@ -320,16 +335,45 @@
                                                                                 class="bi bi-three-dots"></i></a>
                                                                         <ul
                                                                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <li>
-                                                                                <button type="button"
+                                                                            <button class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
+                                                                            </button>
+                                                                            @if ($operateurmodule?->statut == 'Validé')
+                                                                                <button
                                                                                     class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">
-                                                                                    <i class="bi bi-pencil"
-                                                                                        title="Modifier"></i> Modifier
+                                                                                    data-bs-target="#AddRegionModal">Rejeter
                                                                                 </button>
-                                                                            </li>
-                                                                            <li>
+                                                                            @elseif($operateurmodule?->statut == 'Rejetée')
+                                                                                <form
+                                                                                    action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('PUT')
+                                                                                    <button
+                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Valider</button>
+                                                                                </form>
+                                                                            @elseif($operateurmodule?->statut == 'Attente')
+                                                                                <form
+                                                                                    action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('PUT')
+                                                                                    <button
+                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Valider</button>
+                                                                                </form>
+                                                                                <button
+                                                                                    class="dropdown-item btn btn-sm mx-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#AddRegionModal">Rejeter
+                                                                                </button>
+                                                                            @else
+                                                                                <button class="btn btn-sm mx-1">Aucune
+                                                                                    action
+                                                                                    possible</button>
+                                                                            @endif
+                                                                            {{-- <li>
                                                                                 <button type="button"
                                                                                     class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
@@ -337,7 +381,7 @@
                                                                                     <i class="bi bi-trash"
                                                                                         title="Supprimer"></i> Supprimer
                                                                                 </button>
-                                                                            </li>
+                                                                            </li> --}}
                                                                         </ul>
                                                                     </div>
                                                                 </span>

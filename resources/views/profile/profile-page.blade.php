@@ -131,6 +131,20 @@
                                     aria-label="Close"></button>
                             </div>
                         @endif
+                        @if ($errors->updatePassword->get('current_password'))
+                            <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                                role="alert">
+                                <strong><x-input-error :messages="$errors->updatePassword->get('current_password')" /></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                                    role="alert"><strong>{{ $error }}</strong></div>
+                            @endforeach
+                        @endif
                         <div class="card-body pt-3">
                             <!-- Bordered Tabs -->
                             <ul class="nav nav-tabs nav-tabs-bordered">
@@ -195,10 +209,8 @@
                                     </div>
                                 </div>
                             </div>
-
                             {{-- Fin aperçu --}}
                             <div class="tab-content pt-2">
-
                                 {{-- Début Edition --}}
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                                     <form method="post" action="{{ route('profile.update') }}"
@@ -233,7 +245,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         {{-- Civilité --}}
                                         <div class="row mb-3">
                                             <label for="Civilité" class="col-md-4 col-lg-3 col-form-label">Civilité<span
@@ -261,7 +272,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         {{-- Prénom --}}
                                         <div class="row mb-3">
                                             <label for="firstname" class="col-md-4 col-lg-3 col-form-label">Prénom<span
@@ -279,7 +289,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Nom --}}
                                         <div class="row mb-3">
                                             <label for="name" class="col-md-4 col-lg-3 col-form-label">Nom<span
@@ -296,7 +305,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Date de naissance --}}
                                         <div class="row mb-3">
                                             <label for="date_naissance" class="col-md-4 col-lg-3 col-form-label">Date
@@ -313,7 +321,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Lieu naissance --}}
                                         <div class="row mb-3">
                                             <label for="lieu naissance" class="col-md-4 col-lg-3 col-form-label">Lieu
@@ -331,7 +338,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Email --}}
                                         <div class="row mb-3">
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email<span
@@ -348,7 +354,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Telephone --}}
                                         <div class="row mb-3">
                                             <label for="telephone" class="col-md-4 col-lg-3 col-form-label">Téléphone<span
@@ -365,7 +370,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Adresse --}}
                                         <div class="row mb-3">
                                             <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Adresse<span
@@ -382,7 +386,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Situation familiale --}}
                                         <div class="row mb-3">
                                             <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
@@ -415,7 +418,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- Situation professionnelle --}}
                                         <div class="row mb-3">
                                             <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
@@ -454,7 +456,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- twitter --}}
                                         <div class="row mb-3">
                                             <label for="twitter" class="col-md-4 col-lg-3 col-form-label">Twitter
@@ -472,7 +473,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- facebook --}}
                                         <div class="row mb-3">
                                             <label for="facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
@@ -489,7 +489,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- instagram --}}
                                         <div class="row mb-3">
                                             <label for="instagram" class="col-md-4 col-lg-3 col-form-label">Instagram
@@ -506,7 +505,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-
                                         {{-- linkedin --}}
                                         <div class="row mb-3">
                                             <label for="linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin
@@ -546,96 +544,87 @@
                                             </div>
                                         @endif
                                         <!-- End Profile Edit Form -->
-
+                                    </form>
                                 </div>
-                                </form>
                             </div>
-                        </div>
-                        <div class="tab-content pt-2">
-                            {{-- Fin Edition --}}
-                            <div class="tab-pane fade pt-3" id="profile-change-password">
-                                <!-- Change Password Form -->
-                                <form method="post" action="{{ route('password.update') }}">
-                                    {{-- Début Modification mot de passe --}}
-                                    <div class="flex items-center gap-4">
-                                        <!-- Bordered Tabs -->
-                                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                                            <h5 class="card-title">Modification du mot de passe</h5>
-
-                                            <!-- Change Password Form -->
-                                            @csrf
-                                            @method('put')
-                                            <div class="row mb-3">
-                                                <label for="update_password_current_password"
-                                                    class="col-md-4 col-lg-3 col-form-label">Mot de
-                                                    passe actuel<span class="text-danger mx-1">*</span></label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="current_password" type="password"
-                                                        class="form-control @error('current_password') is-invalid @enderror"
-                                                        id="update_password_current_password"
-                                                        placeholder="Votre mot de passe actuel"
-                                                        autocomplete="current-password">
-                                                    <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
-                                                </div>
-                                            </div>
-                                            <!-- Mot de passe -->
-                                            <div class="row mb-3">
-                                                <label for="password" class="col-md-4 col-lg-3 col-form-label">Mot
-                                                    de
-                                                    passe<span class="text-danger mx-1">*</span></label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input type="password" name="password"
-                                                        class="form-control @error('password') is-invalid @enderror"
-                                                        id="password" placeholder="Votre mot de passe"
-                                                        value="{{ old('password') }}" autocomplete="new-password">
-                                                    <div class="invalid-feedback">
-                                                        @error('password')
-                                                            {{ $message }}
-                                                        @enderror
+                            <div class="tab-content pt-2">
+                                {{-- Fin Edition --}}
+                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    <!-- Change Password Form -->
+                                    <form method="post" action="{{ route('password.update') }}">
+                                        {{-- Début Modification mot de passe --}}
+                                        <div class="flex items-center gap-4">
+                                            <!-- Bordered Tabs -->
+                                            <div class="tab-pane fade show profile-overview" id="profile-overview">
+                                                <h5 class="card-title">Modification du mot de passe</h5>
+                                                <!-- Change Password Form -->
+                                                @csrf
+                                                @method('put')
+                                                <div class="row mb-3">
+                                                    <label for="update_password_current_password"
+                                                        class="col-md-4 col-lg-3 col-form-label label">Mot de
+                                                        passe actuel<span class="text-danger mx-1">*</span></label>
+                                                    <div class="col-md-6 col-lg-6">
+                                                        <input name="current_password" type="password"
+                                                            class="form-control @error('current_password') is-invalid @enderror"
+                                                            id="update_password_current_password"
+                                                            placeholder="Votre mot de passe actuel"
+                                                            autocomplete="current-password">
+                                                        {{-- <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" /> --}}
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <!-- Mot de passe de confirmation -->
-                                            <div class="row mb-3">
-                                                <label for="password_confirmation"
-                                                    class="col-md-4 col-lg-3 col-form-label">Confirmez<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input type="password" name="password_confirmation"
-                                                        class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                        id="password_confirmation"
-                                                        placeholder="Confimez votre mot de passe"
-                                                        value="{{ old('password_confirmation') }}"
-                                                        autocomplete="new-password_confirmation">
-                                                    <div class="invalid-feedback">
-                                                        @error('password_confirmation')
-                                                            {{ $message }}
-                                                        @enderror
+                                                <!-- Mot de passe -->
+                                                <div class="row mb-3">
+                                                    <label for="password"
+                                                        class="col-md-4 col-lg-3 col-form-label label">Mot
+                                                        de
+                                                        passe<span class="text-danger mx-1">*</span></label>
+                                                    <div class="col-md-6 col-lg-6">
+                                                        <input type="password" name="password"
+                                                            class="form-control @error('password') is-invalid @enderror"
+                                                            id="password" placeholder="Votre mot de passe"
+                                                            value="{{ old('password') }}" autocomplete="new-password">
+                                                        <div class="invalid-feedback">
+                                                            @error('password')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <!-- Mot de passe de confirmation -->
+                                                <div class="row mb-3">
+                                                    <label for="password_confirmation"
+                                                        class="col-md-4 col-lg-3 col-form-label label">Confirmez<span
+                                                            class="text-danger mx-1">*</span></label>
+                                                    <div class="col-md-6 col-lg-6">
+                                                        <input type="password" name="password_confirmation"
+                                                            class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                            id="password_confirmation"
+                                                            placeholder="Confimez votre mot de passe"
+                                                            value="{{ old('password_confirmation') }}"
+                                                            autocomplete="new-password_confirmation">
+                                                        <div class="invalid-feedback">
+                                                            @error('password_confirmation')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">Changer
+                                                        le mot de
+                                                        passe</button>
+                                                </div>
+                                                <!-- End Change Password Form -->
                                             </div>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-primary">Changer
-                                                    le mot de
-                                                    passe</button>
-                                            </div>
-                                            <!-- End Change Password Form -->
-
                                         </div>
-                                    </div>
-                                    {{-- Fin Modification mot de passe --}}
-
-                                </form><!-- End Change Password Form -->
-
-                            </div>
-                        </div><!-- End Bordered Tabs -->
-
-
+                                        {{-- Fin Modification mot de passe --}}
+                                    </form><!-- End Change Password Form -->
+                                </div>
+                            </div><!-- End Bordered Tabs -->
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>

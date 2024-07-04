@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des régions')
+@section('title', 'ONFP - Liste module opérateurs')
 @section('space-work')
 
     <section class="section register">
@@ -37,7 +37,7 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Liste des modules opérateurs</h5>
+                        <h5 class="card-title">MODULE: {{ $modulename }}</h5>
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-operateurs">
                             <thead>
