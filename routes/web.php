@@ -34,8 +34,9 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationIndividuelleController;
-use App\Http\Controllers\ValidationoperateurmoduleController;
+use App\Http\Controllers\ValidationmoduleController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -194,7 +195,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/formations', FormationController::class);
     Route::resource('/operateurs', OperateurController::class);
     Route::resource('/operateurmodules', OperateurmoduleController::class);
-    Route::resource('/validation-operateur-modules', ValidationoperateurmoduleController::class);
+    Route::resource('/validation-operateur-modules', ValidationmoduleController::class);
 });
 
 

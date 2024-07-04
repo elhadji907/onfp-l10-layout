@@ -25,6 +25,7 @@ class Operateurmodule extends Model
         'statut',
         'details',
         'modules_id',
+        'validated_id',
         'operateurs_id'
     ];
 

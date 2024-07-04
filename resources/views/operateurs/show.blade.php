@@ -343,9 +343,9 @@
                                                                                 <button
                                                                                     class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#AddRegionModal">Rejeter
+                                                                                    data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
                                                                                 </button>
-                                                                            @elseif($operateurmodule?->statut == 'Rejetée')
+                                                                            @elseif($operateurmodule?->statut == 'Rejeté')
                                                                                 <form
                                                                                     action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                     method="post">
@@ -366,12 +366,12 @@
                                                                                 <button
                                                                                     class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#AddRegionModal">Rejeter
+                                                                                    data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
                                                                                 </button>
                                                                             @else
-                                                                                <button class="btn btn-sm mx-1">Aucune
+                                                                                {{-- <button class="btn btn-sm mx-1">Aucune
                                                                                     action
-                                                                                    possible</button>
+                                                                                    possible</button> --}}
                                                                             @endif
                                                                             {{-- <li>
                                                                                 <button type="button"
@@ -578,6 +578,43 @@
                                 </div>
                             </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        @foreach ($operateur->operateurmodules as $operateurmodule)
+            <div class="modal fade" id="AddRegionModal{{ $operateurmodule->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {{-- <form method="POST" action="{{ route('addRegion') }}">
+                        @csrf --}}
+                        <form method="post"
+                            action="{{ route('validation-operateur-modules.destroy', $operateurmodule->id) }}"
+                            enctype="multipart/form-data" class="row">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet module</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="motif" class="form-label">Motifs du rejet</label>
+                                <textarea name="motif" id="motif" rows="5"
+                                    class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                    placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                                @error('motif')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
+                                    Rejeter</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
