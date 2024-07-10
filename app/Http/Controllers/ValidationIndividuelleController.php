@@ -15,7 +15,7 @@ class ValidationIndividuelleController extends Controller
         $individuelle   = Individuelle::findOrFail($id);
 
         $individuelle->update([
-            'statut'             => 'Validée',
+            'statut'             => 'accepter',
             'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
         ]);
 
@@ -23,13 +23,13 @@ class ValidationIndividuelleController extends Controller
 
         $validated_by = new Validationindividuelle([
             'validated_id'       =>       Auth::user()->id,
-            'action'             =>      'Validée',
+            'action'             =>      'accepter',
             'individuelles_id'   =>      $individuelle->id
         ]);
 
         $validated_by->save();
 
-        Alert::success('La demande de ' . $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name, 'est validée');
+        Alert::success('La demande de ' . $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name, 'est acceptée');
 
         /* return redirect()->back()->with("status", "Demande validée"); */
         return redirect()->back();
@@ -44,7 +44,7 @@ class ValidationIndividuelleController extends Controller
         $individuelle   = Individuelle::findOrFail($id);
 
         $individuelle->update([
-            'statut'                => 'Rejetée',
+            'statut'                => 'rejeter',
             'canceled_by'           =>  Auth::user()->firstname . ' ' . Auth::user()->name,
         ]);
 
@@ -52,7 +52,7 @@ class ValidationIndividuelleController extends Controller
 
         $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'Rejetée',
+            'action'             =>      'rejeter',
             'motif'              =>      $request->input('motif'),
             'individuelles_id'   =>      $individuelle->id
         ]);

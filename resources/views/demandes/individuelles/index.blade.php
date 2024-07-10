@@ -80,13 +80,13 @@
                                             <td>{{ $individuelle->region?->nom }}</td>
                                             <td>
                                                 @isset($individuelle?->statut)
-                                                    @if ($individuelle?->statut == 'Attente')
+                                                    @if ($individuelle?->statut == 'attente')
                                                         <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
                                                         </span>
-                                                    @elseif ($individuelle?->statut == 'Validée')
+                                                    @elseif ($individuelle?->statut == 'accepter')
                                                         <span class="badge bg-success text-white">{{ $individuelle?->statut }}
                                                         </span>
-                                                    @elseif ($individuelle?->statut == 'Rejetée')
+                                                    @elseif ($individuelle?->statut == 'rejeter')
                                                         <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
                                                         </span>
                                                     @else

@@ -37,14 +37,14 @@ class OperateurmoduleController extends Controller
                 "module"                =>  $request->input("module"),
                 "domaine"               =>  $request->input("domaine"),
                 'niveau_qualification'  =>  $request->input('niveau_qualification'),
-                'statut'                =>  'Attente',
+                'statut'                =>  'attente',
                 'operateurs_id'         =>  $request->input('operateur'),
             ]);
 
             $operateurmodule->save();
 
             $moduleoperateurstatut = new Moduleoperateurstatut([
-                'statut'                =>  "Attente",
+                'statut'                =>  "attente",
                 'operateurmodules_id'   =>  $operateurmodule->id,
 
             ]);

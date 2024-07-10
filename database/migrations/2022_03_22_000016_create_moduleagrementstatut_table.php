@@ -25,6 +25,7 @@ class CreateModuleagrementstatutTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('statut', 200)->nullable();
+            $table->unsignedInteger('validated_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });

@@ -60,11 +60,20 @@
                                         <td>{{ $operateurmodule?->domaine }}</td>
                                         <td>{{ $operateurmodule?->operateur?->sigle }}</td>
                                         <td>
-                                            @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
+                                            {{--  @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
                                                 @if ($loop->last)
                                                     <span class="badge bg-info">{{ $moduleoperateurstatut->statut }}</span>
                                                 @endif
-                                            @endforeach
+                                            @endforeach --}}
+                                            @if ($operateurmodule?->statut == 'agréer')
+                                                <span class="badge bg-success">{{ $operateurmodule->statut }}</span>
+                                            @elseif($operateurmodule?->statut == 'rejeter')
+                                                <span class="badge bg-danger">{{ $operateurmodule->statut }}</span>
+                                            @elseif($operateurmodule?->statut == 'attente')
+                                                <span class="badge bg-secondary">{{ $operateurmodule->statut }}</span>
+                                            @else
+                                                {{ $operateurmodule->statut }}
+                                            @endif
                                         </td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
@@ -194,8 +203,8 @@
                                 @csrf
                                 @method('DELETE')
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal"> Non</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Non</button>
                                     <button class="btn btn-danger">
                                         <i class="bi bi-trash"></i> Oui
                                     </button>

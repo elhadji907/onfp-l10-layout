@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Moduleoperateurstatut;
 use App\Models\Operateurmodule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,13 +15,21 @@ class ValidationmoduleController extends Controller
         $operateurmodule   = Operateurmodule::findOrFail($id);
 
         $operateurmodule->update([
-            'statut'             => 'Validé',
+            'statut'             => 'agréer',
             'details'            =>  Auth::user()->firstname . ' ' . Auth::user()->name,
         ]);
 
         $operateurmodule->save();
+        
+        $moduleoperateurstatut = new Moduleoperateurstatut([
+            'statut'                =>  "agréer",
+            'operateurmodules_id'   =>  $operateurmodule->id,
 
-        Alert::success('Effectué !', 'le module ' . $operateurmodule->module . ' a été validé');
+        ]);
+
+        $moduleoperateurstatut->save();
+
+        Alert::success('Effectué !', 'le module ' . $operateurmodule->module . ' a été agréé');
 
         return redirect()->back();
     }
@@ -34,11 +43,19 @@ class ValidationmoduleController extends Controller
         $operateurmodule   = Operateurmodule::findOrFail($id);
 
         $operateurmodule->update([
-            'statut'                => 'Rejeté',
-            'details'               =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+            'statut'                => 'rejeter',
+            'details'               =>  Auth::user()->id
         ]);
 
         $operateurmodule->save();
+
+        $moduleoperateurstatut = new Moduleoperateurstatut([
+            'statut'                =>  "rejeter",
+            'operateurmodules_id'   =>  $operateurmodule->id,
+
+        ]);
+
+        $moduleoperateurstatut->save();
 
         Alert::success('Effectué !', 'le module ' . $operateurmodule->module . ' a été rejeté');
 

@@ -155,7 +155,7 @@ class IndividuelleController extends Controller
             "regions_id"                        =>  $regionid,
             "modules_id"                        =>  $request->input("module"),
             'autre_module'                      =>  $request->input('autre_module'),
-            'statut'                             => 'Attente',
+            'statut'                             => 'attente',
             'users_id'                          =>  Auth::user()->id,
             'demandeurs_id'                     =>  Auth::user()->demandeur->id
         ]);
@@ -298,27 +298,52 @@ class IndividuelleController extends Controller
 
             $demandeur->save();
 
-            $individuelle->update([
-                'niveau_etude'                      =>  $request->input('niveau_etude'),
-                'diplome_academique'                =>  $request->input('diplome_academique'),
-                'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
-                'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
-                'etablissement_academique'          =>  $request->input('etablissement_academique'),
-                'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
-                'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
-                'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
-                'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
-                'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
-                'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
-                'qualification'                     =>  $request->input('qualification'),
-                'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
-                "regions_id"                        =>  $regionid,
-                "modules_id"                        =>  $request->input("module"),
-                'autre_module'                      =>  $request->input('autre_module'),
-                'users_id'                          =>  $user->id,
-                'demandeurs_id'                     =>  $demandeur->id
-            ]);
+            if (isset($individuelle->statut)) {
+                $individuelle->update([
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $request->input("departement"),
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $request->input("module"),
+                    'autre_module'                      =>  $request->input('autre_module'),
+                    'users_id'                          =>  $user->id,
+                    'demandeurs_id'                     =>  $demandeur->id
+                ]);
+            } else {
+                $individuelle->update([
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $request->input("departement"),
+                    'statut'                            => 'attente',
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $request->input("module"),
+                    'autre_module'                      =>  $request->input('autre_module'),
+                    'users_id'                          =>  $user->id,
+                    'demandeurs_id'                     =>  $demandeur->id
+                ]);
+            }
 
             $individuelle->save();
         } else {
@@ -333,29 +358,56 @@ class IndividuelleController extends Controller
 
             $demandeur->save();
 
-            $individuelle->update([
-                'date_depot'                        =>  $date_depot,
-                'numero'                            =>  $numero_individuelle,
-                'niveau_etude'                      =>  $request->input('niveau_etude'),
-                'diplome_academique'                =>  $request->input('diplome_academique'),
-                'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
-                'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
-                'etablissement_academique'          =>  $request->input('etablissement_academique'),
-                'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
-                'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
-                'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
-                'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
-                'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
-                'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
-                'qualification'                     =>  $request->input('qualification'),
-                'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
-                "regions_id"                        =>  $regionid,
-                "modules_id"                        =>  $request->input("module"),
-                'autre_module'                      =>  $request->input('autre_module'),
-                'users_id'                          =>  $user->id,
-                'demandeurs_id'                     =>  $demandeur->id
-            ]);
+            if (isset($individuelle->statut)) {
+                $individuelle->update([
+                    'date_depot'                        =>  $date_depot,
+                    'numero'                            =>  $numero_individuelle,
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $request->input("departement"),
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $request->input("module"),
+                    'autre_module'                      =>  $request->input('autre_module'),
+                    'users_id'                          =>  $user->id,
+                    'demandeurs_id'                     =>  $demandeur->id
+                ]);
+            } else {
+                $individuelle->update([
+                    'date_depot'                        =>  $date_depot,
+                    'numero'                            =>  $numero_individuelle,
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $request->input("departement"),
+                    'statut'                            => 'attente',
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $request->input("module"),
+                    'autre_module'                      =>  $request->input('autre_module'),
+                    'users_id'                          =>  $user->id,
+                    'demandeurs_id'                     =>  $demandeur->id
+                ]);
+            }
 
             $individuelle->save();
         }

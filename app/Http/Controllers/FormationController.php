@@ -122,6 +122,50 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
+    public function edit($id)
+    {
+        $formation = Formation::findOrFail($id);
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
+        return view("formations.update", compact("formation", "departements", "types_formations"));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $formation = Formation::findOrFail($id);
+
+        $this->validate($request, [
+            "name"                  =>   "required|string|unique:formations,name,{$formation->id}",
+            "departement"           =>   "required|string",
+            "lieu"                  =>   "required|string",
+            "niveau_qualification"  =>   "required|string",
+            "titre"                 =>   "nullable|string",
+            "date_debut"            =>   "nullable|date",
+            "date_fin"              =>   "nullable|date",
+        ]);
+
+        $formation->update([
+            "name"                  =>   $request->input('name'),
+            "regions_id"            =>   $request->input('region'),
+            "departements_id"       =>   $request->input('departement'),
+            "lieu"                  =>   $request->input('lieu'),
+            "operateurs_id"         =>   $request->input('operateur'),
+            "types_formations_id"   =>   $request->input('types_formation'),
+            "niveau_qualification"  =>   $request->input('niveau_qualification'),
+            "titre"                 =>   $request->input('titre'),
+            "date_debut"            =>   $request->input('date_debut'),
+            "date_fin"              =>   $request->input('date_fin'),
+
+        ]);
+
+        $formation->save();
+
+        Alert::success("Formation", "modifiée avec succès");
+
+        return redirect()->back();
+        
+    }
+
     public function show($id)
     {
         $formation  = Formation::findOrFail($id);
@@ -166,10 +210,10 @@ class FormationController extends Controller
 
         $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
-            ->where('statut', 'Validée')
-            ->orWhere('statut', 'Retirée')
+            ->where('statut', 'accepter')
+            ->orWhere('statut', 'retirer')
             ->get();
-            
+
 
         $individuelleFormation = DB::table('individuelles')
             ->where('formations_id', $idformation)
@@ -218,7 +262,7 @@ class FormationController extends Controller
 
         $individuelle->update([
             "formations_id"      =>  null,
-            "statut"             =>  'Retirée',
+            "statut"             =>  'retirer',
         ]);
 
         $individuelle->save();
@@ -233,14 +277,14 @@ class FormationController extends Controller
 
         $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'Retirée',
+            'action'             =>      'retirer',
             'motif'              =>      $request->input('motif'),
             'individuelles_id'   =>      $individuelle->id
         ]);
 
         $validated_by->save();
 
-        Alert::success('Effectué', 'demandeur retirer de cette formation');
+        Alert::success('Effectué', 'demandeur retiré de cette formation');
 
         return redirect()->back();
     }
@@ -260,7 +304,7 @@ class FormationController extends Controller
             ->pluck('module', 'module')
             ->all(); */
 
-        $operateurmodules   =   Operateurmodule::where('module', $modulename)->where('statut', 'Validé')->get();
+        $operateurmodules   =   Operateurmodule::where('module', $modulename)->where('statut', 'agréer')->get();
 
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)
@@ -353,7 +397,7 @@ class FormationController extends Controller
 
         $formation->update([
             "modules_id"      =>  $request->input('module'),
-            "statut"             =>  'Programmer',
+            "statut"          =>  'Programmer',
         ]);
 
         $formation->save();

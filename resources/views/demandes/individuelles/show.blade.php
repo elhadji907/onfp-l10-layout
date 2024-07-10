@@ -31,7 +31,7 @@
                                     <nav class="header-nav ms-auto">
                                         <ul class="d-flex align-items-center">
                                             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                                {{--  @if ($individuelle?->statut == 'Attente')
+                                                {{--  @if ($individuelle?->statut == 'attente')
                                                     <span
                                                         class="badge bg-warning badge-number">{{ $individuelle?->statut }}</span>
                                                 @endif --}}
@@ -41,7 +41,7 @@
                                                         title="{{ $individuelle?->statut }}">{{ $individuelle->validationindividuelles->count() }}</span>
                                                 </a>
 
-                                                {{-- @if ($individuelle?->statut == 'Validée')
+                                                {{-- @if ($individuelle?->statut == 'accepter')
                                                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                                                         <i class="bi bi-chat-left-text"></i>
                                                         <span class="badge bg-success badge-number">3</span>
@@ -54,7 +54,7 @@
                                                 {{--  <span
                                                         class="badge bg-info badge-number">{{ $individuelle?->statut }}</span> --}}
                                                 {{-- @endif --}}
-                                                {{-- @if ($individuelle?->statut == 'Rejetée')
+                                                {{-- @if ($individuelle?->statut == 'rejeter')
                                                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                                                         <i class="bi bi-chat-left-text m-1"></i>
                                                         <span class="badge bg-success badge-number"
@@ -99,13 +99,13 @@
                                                                     <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
                                                                     </h4>
                                                                     <p>
-                                                                        @if ($validationindividuelle->action == 'Attente')
+                                                                        @if ($validationindividuelle->action == 'attente')
                                                                             <span
                                                                                 class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                                                                        @elseif ($validationindividuelle->action == 'Validée')
+                                                                        @elseif ($validationindividuelle->action == 'accepter')
                                                                             <span
                                                                                 class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                                                                        @elseif ($validationindividuelle->action == 'Rejetée')
+                                                                        @elseif ($validationindividuelle->action == 'rejeter')
                                                                             <span
                                                                                 class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
                                                                             <p>{!! substr($validationindividuelle?->motif, 0, 25) . ' ...' !!}</p>
@@ -136,28 +136,28 @@
                                     </nav>
                                 </span>
                                 @if (auth()->user()->hasRole('super-admin'))
-                                    {{-- @if ($individuelle?->statut == 'Validée')
+                                    {{-- @if ($individuelle?->statut == 'accepter')
                                         <button type="button" class="btn btn-danger btn-sm text-white"
                                             data-bs-toggle="modal" data-bs-target="#AddRegionModal"><i
                                                 class="bi bi-x"></i>Rejeter
                                         </button>
-                                    @elseif($individuelle?->statut == 'Rejetée')
+                                    @elseif($individuelle?->statut == 'rejeter')
                                         <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                             method="post">
                                             @csrf
                                             @method('PUT')
                                             <button type="button"
                                                 class="btn btn-success btn-sm text-white show_confirm_valider"><i
-                                                    class="bi bi-x"></i>Valider</button>
+                                                    class="bi bi-x"></i>Accepter</button>
                                         </form>
-                                    @elseif($individuelle?->statut == 'Attente')
+                                    @elseif($individuelle?->statut == 'attente')
                                         <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                             method="post">
                                             @csrf
                                             @method('PUT')
                                             <button type="button"
                                                 class="btn btn-success btn-sm text-white show_confirm_valider"><i
-                                                    class="bi bi-x"></i>Valider</button>
+                                                    class="bi bi-x"></i>Accepter</button>
                                         </form>
                                     @else
                                         <form action="#"
@@ -171,13 +171,13 @@
                                     @endif --}}
 
                                     <span class="d-flex align-items-baseline">
-                                        @if ($individuelle?->statut == 'Validée')
+                                        @if ($individuelle?->statut == 'accepter')
                                             <button
                                                 class="btn btn-success btn-sm text-white">{{ $individuelle->statut }}</button>
-                                        @elseif($individuelle?->statut == 'Rejetée')
+                                        @elseif($individuelle?->statut == 'rejeter')
                                             <button
                                                 class="btn btn-danger btn-sm text-white">{{ $individuelle->statut }}</button>
-                                        @elseif($individuelle?->statut == 'Attente')
+                                        @elseif($individuelle?->statut == 'attente')
                                             <button
                                                 class="btn btn-secondary btn-sm text-white">{{ $individuelle->statut }}</button>
                                         @else
@@ -188,28 +188,27 @@
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                     class="bi bi-three-dots"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                @if ($individuelle?->statut == 'Validée')
+                                                @if ($individuelle?->statut == 'accepter')
                                                     <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                         data-bs-target="#AddRegionModal">Rejeter
-                                                        cette demande
                                                     </button>
-                                                @elseif($individuelle?->statut == 'Rejetée')
+                                                @elseif($individuelle?->statut == 'rejeter')
                                                     <form
                                                         action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('PUT')
                                                         <button
-                                                            class="show_confirm_valider btn btn-sm mx-1">Valider</button>
+                                                            class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
                                                     </form>
-                                                @elseif($individuelle?->statut == 'Attente')
+                                                @elseif($individuelle?->statut == 'attente')
                                                     <form
                                                         action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('PUT')
                                                         <button
-                                                            class="show_confirm_valider btn btn-sm mx-1">Valider</button>
+                                                            class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
                                                     </form>
                                                     <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                         data-bs-target="#AddRegionModal">Rejeter

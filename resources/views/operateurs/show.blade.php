@@ -286,13 +286,13 @@
                                                                     @endif
                                                                 @endforeach --}}
 
-                                                                @if ($operateurmodule?->statut == 'Validé')
+                                                                @if ($operateurmodule?->statut == 'agréer')
                                                                     <button
                                                                         class="btn btn-success btn-sm text-white">{{ $operateurmodule->statut }}</button>
-                                                                @elseif($operateurmodule?->statut == 'Rejeté')
+                                                                @elseif($operateurmodule?->statut == 'rejeter')
                                                                     <button
                                                                         class="btn btn-danger btn-sm text-white">{{ $operateurmodule->statut }}</button>
-                                                                @elseif($operateurmodule?->statut == 'Attente')
+                                                                @elseif($operateurmodule?->statut == 'attente')
                                                                     <button
                                                                         class="btn btn-secondary btn-sm text-white">{{ $operateurmodule->statut }}</button>
                                                                 @else
@@ -339,29 +339,29 @@
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
                                                                             </button>
-                                                                            @if ($operateurmodule?->statut == 'Validé')
+                                                                            @if ($operateurmodule?->statut == 'agréer')
                                                                                 <button
                                                                                     class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
                                                                                     data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
                                                                                 </button>
-                                                                            @elseif($operateurmodule?->statut == 'Rejeté')
+                                                                            @elseif($operateurmodule?->statut == 'rejeter')
                                                                                 <form
                                                                                     action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                     method="post">
                                                                                     @csrf
                                                                                     @method('PUT')
                                                                                     <button
-                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Valider</button>
+                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
                                                                                 </form>
-                                                                            @elseif($operateurmodule?->statut == 'Attente')
+                                                                            @elseif($operateurmodule?->statut == 'attente')
                                                                                 <form
                                                                                     action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                     method="post">
                                                                                     @csrf
                                                                                     @method('PUT')
                                                                                     <button
-                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Valider</button>
+                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
                                                                                 </form>
                                                                                 <button
                                                                                     class="dropdown-item btn btn-sm mx-1"

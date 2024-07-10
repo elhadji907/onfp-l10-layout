@@ -12,6 +12,7 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -73,14 +74,14 @@
                                         <td>{{ $formation->departement?->region?->nom }}</td>
                                         <td>{{ $formation->module?->name }}</td>
                                         {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
-                                            <td class="text-center">
-                                                @foreach ($formation->individuelles as $individuelle)
-                                                    @if ($loop->last)
-                                                        <a class="text-primary fw-bold"
-                                                            href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
-                                                    @endif
-                                                @endforeach
-                                            </td>
+                                        <td class="text-center">
+                                            @foreach ($formation->individuelles as $individuelle)
+                                                @if ($loop->last)
+                                                    <a class="text-primary fw-bold"
+                                                        href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td><a href="#">{{ $formation?->statut }}</a></td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
@@ -91,10 +92,16 @@
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm"
+                                                        <li>
+                                                            <a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('formations.edit', $formation->id) }}"
                                                                 class="mx-1" title="Modifier"><i
                                                                     class="bi bi-pencil"></i>Modifier</a>
+                                                            {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#EditFormationModal{{ $formation->id }}">
+                                                                <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                            </button> --}}
                                                         </li>
                                                         <li>
                                                             <form
@@ -230,7 +237,7 @@
                                         @enderror
                                     </div> --}}
 
-                                   {{--  <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{--  <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="operateur" class="form-label">Opérateur<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="operateur"
@@ -350,6 +357,162 @@
                 </div>
             </div>
         </div>
+
+        <!-- Edit Formation -->
+       {{--  @foreach ($formations as $formation)
+            <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
+                <div class="modal fade" id="EditFormationModal{{ $formation->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="EditFormationModalLabel{{ $formation->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <form method="post" action="{{ route('formations.update', $formation->id) }}"
+                                enctype="multipart/form-data" class="row g-3">
+                                @csrf
+                                @method('patch')
+                                <div class="modal-header" id="EditFormationModalLabel{{ $formation->id }}">
+                                    <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier
+                                        formation
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="id" value="{{ $formation->id }}">
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <label for="name" class="form-label">Intitulé formation<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <textarea name="name" id="name" rows="1"
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Intitulé formation">{{ $formation?->name ?? old('name') }}</textarea>
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="departement" class="form-label">Département<span
+                                                    class="text-danger mx-1">*</span></label>
+
+                                            <select name="departement"
+                                                class="form-select  @error('departement') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-departement-modal-update"
+                                                data-placeholder="Choisir localité">
+                                                <option value="{{ $formation->departement->id }}">
+                                                    {{ $formation->departement->nom ?? old('departement') }}
+                                                </option>
+                                                @foreach ($departements as $departement)
+                                                    <option value="{{ $departement->id }}">
+                                                        {{ $departement->nom }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('departement')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="lieu" class="form-label">Lieu exact<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <input type="text" name="lieu" value="{{ old('lieu') }}"
+                                                class="form-control form-control-sm @error('lieu') is-invalid @enderror"
+                                                id="lieu" placeholder="Lieu exact">
+                                            @error('lieu')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="types_formation" class="form-label">Type formation<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <select name="types_formation"
+                                                class="form-select  @error('types_formation') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-types_formation-update"
+                                                data-placeholder="Choisir type formation">
+                                                <option value="">
+                                                    {{ old('types_formation') }}
+                                                </option>
+                                                @foreach ($types_formations as $types_formation)
+                                                    <option value="{{ $types_formation->id }}">
+                                                        {{ $types_formation->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('types_formation')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="niveau_qualification" class="form-label">Niveau qualification<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <select name="niveau_qualification"
+                                                class="form-select  @error('niveau_qualification') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-niveau_qualification-update"
+                                                data-placeholder="Choisir niveau de qualification">
+                                                <option value="{{ old('niveau_qualification') }}">
+                                                    {{ old('niveau_qualification') }}
+                                                </option>
+                                                <option value="Titre qualification">
+                                                    Titre qualification
+                                                </option>
+                                                <option value="Renforcement capacité">
+                                                    Renforcement capacité
+                                                </option>
+                                            </select>
+                                            @error('niveau_qualification')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="date_debut" class="form-label">Date début</label>
+                                            <input type="date" name="date_debut" value="{{ old('date_debut') }}"
+                                                class="form-control form-control-sm @error('date_debut') is-invalid @enderror"
+                                                id="date_debut" placeholder="Date début">
+                                            @error('date_debut')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <label for="titre" class="form-label">Titre (convention)</label>
+                                            <input type="text" name="titre" value="{{ old('titre') }}"
+                                                class="form-control form-control-sm @error('titre') is-invalid @enderror"
+                                                id="titre"
+                                                placeholder="Ex: 4ème catégorie de la convention collective ...">
+                                            @error('titre')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                        Modifier</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach --}}
     </section>
 
 @endsection

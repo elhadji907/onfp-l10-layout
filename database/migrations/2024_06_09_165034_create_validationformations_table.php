@@ -12,8 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('validationformations', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
-            $table->timestamps();
+            $table->char('uuid', 36);
+            $table->unsignedInteger('validated_id');
+            $table->string('action', 50)->nullable();
+            $table->longText('motif')->nullable();
+            $table->unsignedInteger('formations_id')->nullable();
+            $table->softDeletes();
+            $table->nullableTimestamps();
+
+            
+            $table->index(["formations_id"], 'fk_validationformations_formations1_idx');
+            
+
+            $table->foreign('formations_id', 'fk_validationformations_formations1_idx')
+                ->references('id')->on('formations')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 
