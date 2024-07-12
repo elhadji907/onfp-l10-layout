@@ -38,6 +38,12 @@ class CreateCollectivesTable extends Migration
             $table->string('fixe', 45)->nullable();
             $table->string('bp', 200)->nullable();
             $table->string('fax', 200)->nullable();
+            $table->string('telephone1', 200)->nullable();
+            $table->string('telephone2', 200)->nullable();
+            $table->string('fixe', 200)->nullable();
+            $table->string('email1', 200)->nullable();
+            $table->string('email2', 200)->nullable();
+            $table->string('adresse', 200)->nullable();
             $table->longText('projetprofessionnel')->nullable();
             $table->longText('experience')->nullable();
             $table->longText('prerequis')->nullable();
@@ -48,9 +54,18 @@ class CreateCollectivesTable extends Migration
             $table->string('file3', 200)->nullable();
             $table->string('file4', 200)->nullable();
             $table->string('file5', 200)->nullable();
+            $table->string('civilite_responsable')->nullable(true);
+            $table->string('nom_responsable', 200)->nullable();
+            $table->string('prenom_responsable', 200)->nullable();
+            $table->string('cin_responsable', 200)->nullable();
+            $table->string('telephone_responsable', 45)->nullable();
+            $table->string('email_responsable', 45)->nullable();
+            $table->string('fonction_responsable', 200)->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('formations_id')->nullable();
+            $table->unsignedInteger('departements_id')->nullable();
+            $table->unsignedInteger('regions_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
@@ -66,6 +81,10 @@ class CreateCollectivesTable extends Migration
             $table->index(["ingenieurs_id"], 'fk_collectives_ingenieurs1_idx');
 
             $table->index(["formations_id"], 'fk_collectives_formations1_idx');
+
+            $table->index(["departements_id"], 'fk_collectives_departements1_idx');
+
+            $table->index(["regions_id"], 'fk_collectives_regions1_idx');
 
             $table->index(["communes_id"], 'fk_collectives_communes1_idx');
 
@@ -101,6 +120,16 @@ class CreateCollectivesTable extends Migration
 
             $table->foreign('formations_id', 'fk_collectives_formations1_idx')
                 ->references('id')->on('formations')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('departements_id', 'fk_collectives_departements1_idx')
+                ->references('id')->on('departements')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('regions_id', 'fk_collectives_regions1_idx')
+                ->references('id')->on('regions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 

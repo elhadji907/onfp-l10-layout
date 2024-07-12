@@ -365,6 +365,17 @@
     </script>
 
     <script>
+        $('#select-field-statut-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-professionnelle').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -426,9 +437,9 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
             closeOnSelect: true,
-            dropdownParent: $('#AddFormationModal'),
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddFormationModal'),
         });
     </script>
 
@@ -495,6 +506,42 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
             closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-departement-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-statut-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-civilite-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });

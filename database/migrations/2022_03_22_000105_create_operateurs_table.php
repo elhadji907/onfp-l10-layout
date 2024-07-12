@@ -46,6 +46,7 @@ class CreateOperateursTable extends Migration
             $table->string('email1', 200)->nullable();
             $table->string('email2', 200)->nullable();
             $table->string('adresse', 200)->nullable();
+            $table->string('civilite_responsable')->nullable(true);
             $table->string('nom_responsable', 200)->nullable();
             $table->string('prenom_responsable', 200)->nullable();
             $table->string('cin_responsable', 200)->nullable();

@@ -22,7 +22,7 @@ class FormationController extends Controller
 {
     public function index()
     {
-        $formations = Formation::orderBy('created_at', 'desc')->get();
+        $formations = Formation::where('statut','!=', 'Supprimée')->orderBy('created_at', 'desc')->get();
         $modules = Module::orderBy("created_at", "desc")->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
         $regions = Region::orderBy("created_at", "desc")->get();
@@ -163,7 +163,7 @@ class FormationController extends Controller
         Alert::success("Formation", "modifiée avec succès");
 
         return redirect()->back();
-        
+
     }
 
     public function show($id)
@@ -187,10 +187,8 @@ class FormationController extends Controller
 
         $formation->save();
 
-        foreach ($formation->statuts as $statut) {
-        }
 
-        $statut->update([
+        $statut = new Statut([
             "statut"                =>   "Supprimée",
             "formations_id"         =>   $formation->id,
         ]);

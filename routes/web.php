@@ -196,6 +196,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/operateurs', OperateurController::class);
     Route::resource('/operateurmodules', OperateurmoduleController::class);
     Route::resource('/validation-operateur-modules', ValidationmoduleController::class);
+    Route::resource('/collectives', CollectiveController::class);
 });
 
 

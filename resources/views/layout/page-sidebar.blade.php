@@ -236,7 +236,7 @@
                     </li><!-- End individuelles Nav -->
 
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
+                        <a class="nav-link collapsed" href="{{ url('collectives') }}">
                             <span>Collectives</span>
                         </a>
                     </li><!-- End collectives Nav -->

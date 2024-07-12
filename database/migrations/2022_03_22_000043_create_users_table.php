@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->char('uuid', 36);
             $table->string('cin', 200)->nullable();
             $table->string('civilite')->nullable(true);
-            $table->string('firstname', 200)->nullable(true);
+            $table->longText('firstname')->nullable(true);
             $table->string('name', 200)->nullable(true);
             $table->string('username', 200)->nullable(true);
             $table->string('email', 200)->nullable(true);
