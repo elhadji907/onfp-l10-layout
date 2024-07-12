@@ -86,6 +86,8 @@ class Collective extends Model
 		'ingenieurs_id' => 'int',
 		'formations_id' => 'int',
 		'communes_id' => 'int',
+		'departements_id' => 'int',
+		'regions_id' => 'int',
 		'etudes_id' => 'int',
 		'antennes_id' => 'int',
 		'programmes_id' => 'int',
@@ -109,7 +111,10 @@ class Collective extends Model
 		'date_depot',
 		'items1',
 		'date1',
-		'statut',
+		'statut_demande',
+		'validated_by',
+		'statut_juridique',
+		'autre_statut_juridique',
 		'description',
 		'type',
 		'adresse',
@@ -118,6 +123,13 @@ class Collective extends Model
 		'bp',
 		'fax',
 		'projetprofessionnel',
+		'civilite_responsable',
+		'nom_responsable',
+		'prenom_responsable',
+		'cin_responsable',
+		'telephone_responsable',
+		'email_responsable',
+		'fonction_responsable',
 		'experience',
 		'prerequis',
 		'motivation',
@@ -131,6 +143,8 @@ class Collective extends Model
 		'ingenieurs_id',
 		'formations_id',
 		'communes_id',
+		'departements_id',
+		'regions_id',
 		'etudes_id',
 		'antennes_id',
 		'programmes_id',
@@ -155,6 +169,14 @@ class Collective extends Model
 		return $this->belongsTo(Commune::class, 'communes_id');
 	}
 
+	public function departement()
+	{
+		return $this->belongsTo(Departement::class, 'departements_id');
+	}
+	public function region()
+	{
+		return $this->belongsTo(Region::class, 'regions_id');
+	}
 	public function convention()
 	{
 		return $this->belongsTo(Convention::class, 'conventions_id');

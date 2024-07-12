@@ -75,6 +75,7 @@ class OperateurController extends Controller
             "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
             "quitus"               =>       $request->input("quitus"),
             "debut_quitus"         =>       $request->input("date_quitus"),
+            "civilite_responsable" =>       $request->input("civilite"),
             "prenom_responsable"   =>       $request->input("prenom"),
             "nom_responsable"      =>       $request->input("nom"),
             "email2"               =>       $request->input("email2"),
@@ -85,6 +86,7 @@ class OperateurController extends Controller
         ]);
 
         $operateur->save();
+        $user->assignRole('Operateur');
 
         Alert::success("L'opérateur "  . $operateur->sigle, " a été ajouté avec succès");
 
@@ -146,6 +148,7 @@ class OperateurController extends Controller
             "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
             "quitus"               =>       $request->input("quitus"),
             "debut_quitus"         =>       $request->input("date_quitus"),
+            "civilite_responsable" =>       $request->input("civilite"),
             "prenom_responsable"   =>       $request->input("prenom"),
             "nom_responsable"      =>       $request->input("nom"),
             "email2"               =>       $request->input("email2"),

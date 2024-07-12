@@ -31,11 +31,11 @@
                 @endif
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
-                    {{-- <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
-                        role="alert"><strong>{{ $error }}</strong></div> --}}
-                    @endforeach
                     <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
-                        role="alert"><strong>(*), champs obligatoires</strong></div>
+                        role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                    {{-- <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                        role="alert"><strong>(*), champs obligatoires</strong></div> --}}
                 @endif
                 <div class="card">
                     <div class="card-body">
@@ -62,10 +62,11 @@
                                 <tr>
                                     <th>N° DEM.</th>
                                     <th>Structure</th>
+                                    <th>Sigle</th>
                                     <th>Téléphone</th>
                                     <th>Module</th>
                                     <th>Localité</th>
-                                    <th class="text-center">Statut</th>
+                                    <th>Statut</th>
                                     <th class="text-center">#</th>
                                 </tr>
                             </thead>
@@ -76,25 +77,24 @@
                                         <tr>
                                             <td>{{ $collective?->numero }}
                                             </td>
-                                            <td>{{ $collective->demandeur->user?->cin }}</td>
-                                            </td>
-                                            <td>{{ $collective->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $collective->demandeur->user->lieu_naissance }}
-                                            </td>
+                                            <td>{{ $collective?->name }}</td>
+                                            <td>{{ $collective?->sigle }}</td>
+                                            <td>{{ $collective?->demandeur?->user?->telephone }}</td>
                                             <td>{{ $collective->module?->name }}</td>
-                                            <td>{{ $collective->region?->nom }}</td>
+                                            <td>{{ $collective->departement?->region?->nom }}</td>
                                             <td>
-                                                @isset($collective?->statut)
-                                                    @if ($collective?->statut == 'attente')
-                                                        <span class="badge bg-secondary text-white">{{ $collective?->statut }}
+                                                @isset($collective?->statut_demande)
+                                                    @if ($collective?->statut_demande == 'attente')
+                                                        <span class="badge bg-secondary text-white">{{ $collective?->statut_demande }}
                                                         </span>
-                                                    @elseif ($collective?->statut == 'accepter')
-                                                        <span class="badge bg-success text-white">{{ $collective?->statut }}
+                                                    @elseif ($collective?->statut_demande == 'accepter')
+                                                        <span class="badge bg-success text-white">{{ $collective?->statut_demande }}
                                                         </span>
-                                                    @elseif ($collective?->statut == 'rejeter')
-                                                        <span class="badge bg-danger text-white">{{ $collective?->statut }}
+                                                    @elseif ($collective?->statut_demande == 'rejeter')
+                                                        <span class="badge bg-danger text-white">{{ $collective?->statut_demande }}
                                                         </span>
                                                     @else
-                                                        <span class="badge bg-warning text-white">{{ $collective?->statut }}
+                                                        <span class="badge bg-warning text-white">{{ $collective?->statut_demande }}
                                                         </span>
                                                     @endif
                                                 @endisset
@@ -283,14 +283,9 @@
                                             class="form-select form-select-sm @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement-col" data-placeholder="Choisir">
                                             <option value=""></option>
-                                            {{-- @foreach ($departements as $departement)
+                                            @foreach ($departements as $departement)
                                                 <option value="{{ $departement->id }}">
                                                     {{ $departement->nom }}
-                                                </option>
-                                            @endforeach --}}
-                                            @foreach ($communes as $commune)
-                                                <option value="{{ $commune->id }}">
-                                                    {{ $commune->nom }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -394,12 +389,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="email2" class="form-label">Adresse e-mail<span
+                                        <label for="email_responsable" class="form-label">Adresse e-mail<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="email" name="email2" value="{{ old('email2') }}"
-                                            class="form-control form-control-sm @error('email2') is-invalid @enderror"
-                                            id="email2" placeholder="Adresse email responsable">
-                                        @error('email2')
+                                        <input type="email" name="email_responsable" value="{{ old('email_responsable') }}"
+                                            class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
+                                            id="email_responsable" placeholder="Adresse email responsable">
+                                        @error('email_responsable')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -407,12 +402,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="telephone2" class="form-label">Téléphone responsable<span
+                                        <label for="telephone1" class="form-label">Téléphone responsable<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone2" value="{{ old('telephone2') }}"
-                                            class="form-control form-control-sm @error('telephone2') is-invalid @enderror"
-                                            id="telephone2" placeholder="Telephone responsable">
-                                        @error('telephone2')
+                                        <input type="text" name="telephone1" value="{{ old('telephone1') }}"
+                                            class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
+                                            id="telephone1" placeholder="Telephone responsable">
+                                        @error('telephone1')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

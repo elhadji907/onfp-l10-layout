@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collective;
 use App\Models\Commune;
+use App\Models\Demandeur;
 use App\Models\Departement;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,41 +23,64 @@ class CollectiveController extends Controller
     }
     public function store(Request $request)
     {
-
-
         $this->validate($request, [
             "name"                  =>      "required|string|unique:collectives,name,except,id",
             "sigle"                 =>      "required|string|unique:collectives,sigle,except,id",
-            "email"                =>      "required|email|unique:users,email,except,id",
+            "email"                 =>      "required|email|unique:users,email,except,id",
             "fixe"                  =>      "required|string|unique:collectives,fixe,except,id",
-            "telephone"            =>      "required|string|unique:collectives,telephone,except,id",
+            "telephone"             =>      "required|string|unique:collectives,telephone,except,id",
             "adresse"               =>      "required|string",
             "statut"                =>      "required|string",
-
             "description"           =>      "required|string",
-            "projetprofessionnel"           =>      "required|string",
-
+            "projetprofessionnel"   =>      "required|string",
             "departement"           =>      "required|string",
-
             "civilite"              =>      "required|string",
             "prenom"                =>      "required|string",
             "nom"                   =>      "required|string",
-            "email2"                =>      "required|email|unique:collectives,email2,except,id",
-            "telephone2"            =>      "required|string|unique:collectives,telephone2,except,id",
             "fonction_responsable"  =>      "required|string",
+            "telephone1"            =>      "required|string",
+            "email_responsable"     =>      "required|string",
         ]);
 
-        dd($request->input('statut'));
-        
+        $annee = date('y');
+        $count_collective = Collective::get()->count();
+
+        if ($count_collective > 0) {
+            $id         = Collective::get()->last()->id;
+            $collective = Collective::find($id);
+            $numero     = $collective?->numero;
+            $numero_collective  = ++$numero;
+        } else {
+            $count_collective = ++$count_collective;
+
+            $longueur = strlen($count_collective);
+
+            if ($longueur == 1) {
+                $numero_collective   =   strtolower("0000" . $count_collective);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numero_collective   =   strtolower("000" . $count_collective);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numero_collective   =   strtolower("00" . $count_collective);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numero_collective   =   strtolower("0" . $count_collective);
+            } else {
+                $numero_collective   =   strtolower($count_collective);
+            }
+            $numero_collective = 'C' . $annee . '' . $numero_collective;
+        }
+
+        $departement = Departement::findOrFail($request->input("departement"));
+        $regionid = $departement->region->id;
+
+
         $user = new User([
-            /* 'civilite'              =>      $request->input("civilite"), */
             'firstname'             =>      $request->input("name"),
             'name'                  =>      $request->input("sigle"),
             'email'                 =>      $request->input('email'),
+            "fixe"                  =>      $request->input("fixe"),
             "telephone"             =>      $request->input("telephone"),
-            'lieu_naissance'        =>      $request->input("adresse"),
             "adresse"               =>      $request->input("adresse"),
-            'password'              =>      Hash::make($request->input('email1')),
+            'password'              =>      Hash::make($request->input('email')),
             "bp"                    =>      $request->input("bp"),
             'created_by'            =>      Auth::user()->id,
             'updated_by'            =>      Auth::user()->id
@@ -64,33 +88,53 @@ class CollectiveController extends Controller
 
         $user->save();
 
+        $demandeur = new Demandeur([
+            'type'                           =>  'collective',
+            "departements_id"                =>  $request->input("departement"),
+            "regions_id"                     =>  $regionid,
+            'users_id'                       =>  $user->id,
+        ]);
+
+        $demandeur->save();
+
         $collective = Collective::create([
-            "name"                 =>       $request->input("name"),
-            "sigle"                =>       $request->input("sigle"),
-            "numero_agrement"      =>       $request->input("numero_agrement"),
-            "email1"               =>       $request->input("email1"),
-            "fixe"                 =>       $request->input("fixe"),
-            "telephone1"           =>       $request->input("telephone1"),
-            "categorie"            =>       $request->input("categorie"),
-            "statut"               =>       $request->input("statut"),
-            "autre_statut"         =>       $request->input("autre_statut"),
-            "adresse"              =>       $request->input("adresse"),
-            "rccm"                 =>       $request->input("registre_commerce"), /* choisir ninea ou rccm */
-            "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
-            "quitus"               =>       $request->input("quitus"),
-            "debut_quitus"         =>       $request->input("date_quitus"),
-            "prenom_responsable"   =>       $request->input("prenom"),
-            "nom_responsable"      =>       $request->input("nom"),
-            "email2"               =>       $request->input("email2"),
-            "telephone2"           =>       $request->input("telephone2"),
-            "fonction_responsable" =>       $request->input("fonction_responsable"),
-            "departements_id"      =>       $request->input("departement"),
-            "users_id"             =>       $user->id
+            "name"                      =>       $request->input("name"),
+            "sigle"                     =>       $request->input("sigle"),
+            "numero"                    =>       $numero_collective,
+            "description"               =>       $request->input("description"),
+            "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
+            "telephone"                 =>      $request->input("telephone"),
+            "email1"                    =>       $request->input("email_responsable"),
+            "fixe"                      =>       $request->input("fixe"),
+            "telephone1"                =>       $request->input("telephone1"),
+            "statut_juridique"          =>       $request->input("statut"),
+            "autre_statut_juridique"    =>       $request->input("autre_statut"),
+            "statut_demande"            =>       'attente',
+            "prenom_responsable"        =>       $request->input("prenom"),
+            "nom_responsable"           =>       $request->input("nom"),
+            "fonction_responsable"      =>       $request->input("fonction_responsable"),
+            "departements_id"           =>       $request->input("departement"),
+            "regions_id"                =>       $regionid,
+            "demandeurs_id"             =>       $demandeur->id,
+            "users_id"                  =>       $user->id
         ]);
 
         $collective->save();
+        $user->assignRole('Demandeur');
 
         Alert::success("Enregistrée !", "avec succès");
+
+        return redirect()->back();
+    }
+
+
+    public function destroy($id)
+    {
+        $collective   = Collective::find($id);
+
+        $collective->delete();
+
+        Alert::success('Demande', 'supprimée');
 
         return redirect()->back();
     }

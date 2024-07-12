@@ -224,7 +224,7 @@ class IndividuelleController extends Controller
         $longueur = strlen($individuelle_id); */
 
         /* if (Individuelle::where('id', 1)->exists()) {
-            $code = Individuelle::get()->last()->id;;
+            $code = Individuelle::get()->last()->id;
         } else {
             $code = 0;
         }

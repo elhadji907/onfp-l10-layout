@@ -137,6 +137,7 @@ class Operateur extends Model
 		'email1',
 		'email2',
 		'adresse',
+		'civilite_responsable',
 		'nom_responsable',
 		'prenom_responsable',
 		'cin_responsable',

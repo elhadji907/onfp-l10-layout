@@ -792,14 +792,14 @@
                                         <hr class="dropdown-divider mt-3">
 
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="civilite" class="form-label">Civilité<span
+                                            <label for="civilite" class="form-label">Civilité responsable<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="civilite"
                                                 class="form-select form-select-sm @error('civilite') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-civilite-update"
                                                 data-placeholder="Choisir civilité">
-                                                <option value="{{ $operateur->user?->civilite }}">
-                                                    {{ $operateur->user?->civilite ?? old('civilite') }}
+                                                <option value="{{ $operateur?->civilite_responsable }}">
+                                                    {{ $operateur?->civilite_responsable ?? old('civilite') }}
                                                 </option>
                                                 <option value="Monsieur">
                                                     Monsieur

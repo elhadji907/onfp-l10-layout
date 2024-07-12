@@ -30,7 +30,10 @@ class CreateCollectivesTable extends Migration
             $table->timestamp('date_depot')->nullable();
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
-            $table->string('statut', 100)->nullable();
+            $table->string('statut_demande', 100)->nullable();
+            $table->string('validated_by', 100)->nullable();
+            $table->string('statut_juridique', 100)->nullable();
+            $table->string('autre_statut_juridique', 100)->nullable();
             $table->longText('description')->nullable();
             $table->string('type', 45)->nullable();
             $table->string('adresse', 200)->nullable();
@@ -71,7 +74,7 @@ class CreateCollectivesTable extends Migration
             $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('conventions_id')->nullable();
             $table->unsignedInteger('fcollectives_id')->nullable();
-            $table->unsignedInteger('modules_id');
+            $table->unsignedInteger('modules_id')->nullable();
             $table->unsignedInteger('users_id');
 
             $table->index(["demandeurs_id"], 'fk_collectives_demandeurs1_idx');

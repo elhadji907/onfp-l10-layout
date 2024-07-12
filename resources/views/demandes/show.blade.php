@@ -40,7 +40,9 @@
                             @endif
                         </div>
                         @if (isset($demandeur->numero_dossier))
-                            <h5 class="card-title">N° dossier : {{ $demandeur?->numero_dossier }}</h5>
+                            <h5 class="card-title">
+                                Bienvenue {{ auth()->user()->civilite . ' ' . auth()->user()->name }},
+                                n° dossier : {{ $demandeur?->numero_dossier }}</h5>
                             <!-- demande -->
                             <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                 <table class="table table-borderless">

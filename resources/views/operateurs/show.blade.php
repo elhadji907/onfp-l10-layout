@@ -165,10 +165,10 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5 class="card-title">Représentant</h5>
+                                        <h5 class="card-title">Personne morale</h5>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Civilité</div>
-                                            <div>{{ $operateur?->user?->civilite }}</div>
+                                            <div>{{ $operateur?->civilite_responsable }}</div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Prénom</div>
