@@ -80,9 +80,9 @@
                                                                 class="badge bg-danger text-white">{{ $individuelle?->statut }}
                                                             </span>
                                                         @else
-                                                        <span
-                                                            class="badge bg-warning text-white">{{ $individuelle?->statut }}
-                                                        </span>
+                                                            <span
+                                                                class="badge bg-warning text-white">{{ $individuelle?->statut }}
+                                                            </span>
                                                         @endif
                                                     @endisset
                                                 </td>
@@ -126,17 +126,20 @@
                                 </table>
                             </form>
                         @else
-                            <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
-                                @foreach ($demandeur->individuelles as $individuelle)
-                                    <a type="button" class="btn btn-outline-danger btn-sm"
+                            {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center"> --}}
+                            @foreach ($demandeur->individuelles as $individuelle)
+                                {{-- <a type="button" class="btn btn-outline-danger btn-sm"
                                         href="{{ route('individuelles.edit', $individuelle->id) }}">Cliquez ici pour
-                                        compléter votre première demande</a>
-                                @endforeach
-                                {{-- <span class="badge bg-secondary">
+                                        compléter votre première demande</a> --}}
+                                <a href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
+                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            @endforeach
+                            {{-- <span class="badge bg-secondary">
                                 <h6>Informations personnelles</h6>
                             </span> --}}
-                                {{-- <h5 class="card-title">Aucune demande pour le moment !!!</h5> --}}
-                            </div>
+                            <h5 class="card-title">Aucune demande pour le moment !!!</h5>
+                            {{-- </div> --}}
                         @endif
                         <!-- End demande -->
                     </div>
@@ -164,7 +167,7 @@
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-module"
+                                            aria-label="Select" id="select-field-module-ind"
                                             data-placeholder="Choisir formation">
                                             <option value="">
                                                 {{ old('module') }}
@@ -199,7 +202,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select  @error('departement') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-departement"
+                                            aria-label="Select" id="select-field-departement-ind"
                                             data-placeholder="Choisir la localité">
                                             <option value="{{ Auth::user()->demandeur?->departement?->id }}">
                                                 {{ Auth::user()->demandeur?->departement?->nom }}</option>
@@ -221,7 +224,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="niveau_etude"
                                             class="form-select  @error('niveau_etude') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-niveau_etude"
+                                            aria-label="Select" id="select-field-niveau_etude-ind"
                                             data-placeholder="Choisir niveau étude">
                                             <option value="{{ old('niveau_etude') }}">
                                                 {{ old('niveau_etude') }}
@@ -257,7 +260,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="diplome_academique"
                                             class="form-select  @error('diplome_academique') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-diplome_academique"
+                                            aria-label="Select" id="select-field-diplome_academique-ind"
                                             data-placeholder="Choisir diplôme académique">
                                             <option value="{{ old('diplome_academique') }}">
                                                 {{ old('diplome_academique') }}
@@ -344,7 +347,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="diplome_professionnel"
                                             class="form-select  @error('diplome_professionnel') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-diplome_professionnel"
+                                            aria-label="Select" id="select-field-diplome_professionnel-ind"
                                             data-placeholder="Choisir diplôme professionnel">
                                             <option value="{{ old('diplome_professionnel') }}">
                                                 {{ old('diplome_professionnel') }}
@@ -432,7 +435,7 @@
                                             formation<span class="text-danger mx-1">*</span></label>
                                         <select name="projet_poste_formation"
                                             class="form-select  @error('projet_poste_formation') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-projet_poste_formation"
+                                            aria-label="Select" id="select-field-projet_poste_formation-ind"
                                             data-placeholder="Choisir projet">
                                             <option value="{{ old('projet_poste_formation') }}">
                                                 {{ old('projet_poste_formation') }}

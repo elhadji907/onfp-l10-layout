@@ -40,10 +40,8 @@ class CreateCollectivesTable extends Migration
             $table->string('fax', 200)->nullable();
             $table->string('telephone1', 200)->nullable();
             $table->string('telephone2', 200)->nullable();
-            $table->string('fixe', 200)->nullable();
             $table->string('email1', 200)->nullable();
             $table->string('email2', 200)->nullable();
-            $table->string('adresse', 200)->nullable();
             $table->longText('projetprofessionnel')->nullable();
             $table->longText('experience')->nullable();
             $table->longText('prerequis')->nullable();
