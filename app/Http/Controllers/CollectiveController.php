@@ -6,6 +6,7 @@ use App\Models\Collective;
 use App\Models\Commune;
 use App\Models\Demandeur;
 use App\Models\Departement;
+use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,8 @@ class CollectiveController extends Controller
         $collectives = Collective::get();
         $departements = Departement::orderBy("created_at", "desc")->get();
         $communes = Commune::orderBy("created_at", "desc")->get();
-        return view('demandes.collectives.index', compact('collectives', 'departements', 'communes'));
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view('demandes.collectives.index', compact('collectives', 'departements', 'communes', 'modules'));
     }
     public function store(Request $request)
     {
@@ -29,6 +31,7 @@ class CollectiveController extends Controller
             "email"                 =>      "required|email|unique:users,email,except,id",
             "fixe"                  =>      "required|string|unique:collectives,fixe,except,id",
             "telephone"             =>      "required|string|unique:collectives,telephone,except,id",
+            "module"                =>      "required|string",
             "adresse"               =>      "required|string",
             "statut"                =>      "required|string",
             "description"           =>      "required|string",
@@ -69,6 +72,8 @@ class CollectiveController extends Controller
             $numero_collective = 'C' . $annee . '' . $numero_collective;
         }
 
+        $numero_Demande = 'D' . '' . $numero_collective;
+
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
 
@@ -89,6 +94,7 @@ class CollectiveController extends Controller
         $user->save();
 
         $demandeur = new Demandeur([
+            'numero_dossier'                 =>  $numero_Demande,
             'type'                           =>  'collective',
             "departements_id"                =>  $request->input("departement"),
             "regions_id"                     =>  $regionid,
@@ -114,6 +120,7 @@ class CollectiveController extends Controller
             "nom_responsable"           =>       $request->input("nom"),
             "fonction_responsable"      =>       $request->input("fonction_responsable"),
             "departements_id"           =>       $request->input("departement"),
+            "modules_id"                =>       $request->input("module"),
             "regions_id"                =>       $regionid,
             "demandeurs_id"             =>       $demandeur->id,
             "users_id"                  =>       $user->id
@@ -127,6 +134,10 @@ class CollectiveController extends Controller
         return redirect()->back();
     }
 
+    public function show($id)
+    {
+        //
+    }
 
     public function destroy($id)
     {

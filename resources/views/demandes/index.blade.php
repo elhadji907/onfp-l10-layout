@@ -41,15 +41,11 @@
                         <table class="table datatables justify-content-center" id="table-demandeurs">
                             <thead>
                                 <tr>
-                                    <th class="text-center">N°</th>
-                                    <th class="text-center">CIN</th>
-                                    <th class="text-center">Civilité</th>
-                                    <th class="text-center">Prénom</th>
-                                    <th class="text-center">NOM</th>
-                                    <th class="text-center">Date naissance</th>
-                                    <th class="text-center">Lieu naissance</th>
-                                    <th class="text-center">Téléphone</th>
-                                    <th class="text-center">Demandes</th>
+                                    <th>N°</th>
+                                    <th>NOM</th>
+                                    <th>Adresse</th>
+                                    <th>Téléphone</th>
+                                    <th>Demandes</th>
                                     <th class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
@@ -59,21 +55,26 @@
                                     @isset($demandeur?->numero_dossier)
                                         <tr>
                                             <td>{{ $demandeur?->numero_dossier }}</td>
-                                            <td>{{ $demandeur->user?->cin }}</td>
-                                            <td>{{ $demandeur->user?->civilite }} </td>
-                                            <td>{{ $demandeur->user?->firstname }} </td>
-                                            <td>{{ $demandeur->user?->name }} </td>
-                                            <td>{{ $demandeur->user->date_naissance?->format('d/m/Y') }}
-                                            <td>{{ $demandeur->user->lieu_naissance }}
+                                            <td>{{ $demandeur->user?->firstname . ' ' . $demandeur->user?->name }} </td>
+                                            <td>{{ $demandeur->user->adresse }}
                                             <td>{{ $demandeur->user->telephone }}
                                             </td>
                                             <td class="text-center">
-                                                @foreach ($demandeur->individuelles as $individuelle)
-                                                    @if ($loop->last)
-                                                        <a class="text-primary fw-bold"
-                                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
-                                                    @endif
-                                                @endforeach
+                                                @if ($demandeur?->type == 'individuelle')
+                                                    @foreach ($demandeur?->individuelles as $individuelle)
+                                                        @if ($loop->last)
+                                                            <a class="text-primary fw-bold"
+                                                                href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                        @endif
+                                                    @endforeach
+                                                @elseif ($demandeur?->type == 'collective')
+                                                    @foreach ($demandeur?->collectives as $collective)
+                                                        @if ($loop->last)
+                                                            <a class="text-primary fw-bold"
+                                                                href="{{ route('demandeurs.show', $collective->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a

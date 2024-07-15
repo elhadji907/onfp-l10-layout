@@ -40,13 +40,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-1">
-                            {{-- @if (isset($demandeur->numero_dossier))
-                                <a href="{{ route('collectives.create') }}"
+                            {{-- @if (isset($demandeur->numero_dossier)) --}}
+                                {{-- <a href="{{ route('collectives.create') }}"
                                     class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
-                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                            @else
+                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
+                           {{--  @else
                                 <a class="btn btn-primary float-end btn-rounded"
-                                    href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}"><i
+                                    href="{{ route('demandeurs.create') }}"><i
                                         class="bi bi-person-plus" title="Ajouter"></i> </a></a>
                             @endif --}}
                             <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
@@ -309,6 +309,28 @@
                                         @enderror
                                     </div>
 
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <label for="module" class="form-label">Formation sollicitée<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="module" class="form-select  @error('module') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-module-col"
+                                            data-placeholder="Choisir formation">
+                                            <option value="">
+                                                {{ old('module') }}
+                                            </option>
+                                            @foreach ($modules as $module)
+                                                <option value="{{ $module->id }}">
+                                                    {{ $module->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('module')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="description" class="form-label">Description de l'organisation<span
                                                 class="text-danger mx-1">*</span></label>

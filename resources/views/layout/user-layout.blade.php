@@ -548,12 +548,48 @@
     </script>
 
     <script>
+        $('#select-field-departement-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-module-ind').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
             closeOnSelect: true,
             dropdownParent: $('#AddIndividuelleModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-module-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-module-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -572,12 +608,36 @@
     </script>
 
     <script>
+        $('#select-field-niveau_etude-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-diplome_academique-ind').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
             closeOnSelect: true,
             dropdownParent: $('#AddIndividuelleModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-diplome_academique-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });
@@ -596,12 +656,36 @@
     </script>
 
     <script>
+        $('#select-field-diplome_professionnel-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-projet_poste_formation-ind').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
             closeOnSelect: true,
             dropdownParent: $('#AddIndividuelleModal'),
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-projet_poste_formation-col').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            dropdownParent: $('#AddCollectiveModal'),
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
         });

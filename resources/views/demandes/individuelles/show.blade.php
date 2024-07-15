@@ -249,7 +249,7 @@
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div for="date_naissance" class="label">Date naissance</div>
-                                        <div>{{ $individuelle->demandeur->user->date_naissance?->format('Y-m-d') }}</div>
+                                        <div>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">

@@ -264,7 +264,7 @@ class IndividuelleController extends Controller
         }
 
         $numero_individuelle = 'I' . $annee . '' . $numero_ind;
-        $numero_Demande = 'D' . $annee . '' . $numero_ind;
+        $numero_Demande = 'D' . '' . $numero_individuelle;
 
         $date_depot =   date('Y-m-d');
 

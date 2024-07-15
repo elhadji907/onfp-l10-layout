@@ -27,21 +27,21 @@
                             </span>
                             @if (isset($demandeur->numero_dossier))
                                 <button type="button" class="btn btn-info btn-sm">
-                                    <span class="badge bg-white text-info">{{ $demandes_total }}/5</span>
+                                    <span class="badge bg-white text-info">{{ $collective_total }}/3</span>
                                 </button>
                             @endif
                             {{-- <span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>
                                 {{ $demandes_total }}/5</span> --}}
                             @if (isset($demandeur->numero_dossier))
                                 <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddIndividuelleModal">
+                                    data-bs-target="#AddCollectiveModal">
                                     <i class="bi bi-person-plus" title="Ajouter"></i>
                                 </button>
                             @endif
                         </div>
                         @if (isset($demandeur->numero_dossier))
                             <h5 class="card-title">
-                                Bienvenue {{ auth()->user()->civilite . ' ' . auth()->user()->name }},
+                                Bienvenue {{ $demandeur?->user?->name }},
                                 n° dossier : {{ $demandeur?->numero_dossier }}</h5>
                             <!-- demande -->
                             <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
@@ -49,8 +49,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">N° demande</th>
-                                            <th scope="col">CIN</th>
-                                            <th scope="col">Prénom & Nom</th>
+                                            <th scope="col">Nom</th>
                                             <th scope="col">Module</th>
                                             <th scope="col">Localité</th>
                                             <th scope="col">Statut</th>
@@ -58,43 +57,47 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach (Auth::user()->individuelles as $individuelle) --}}
-                                        @foreach ($demandeur->individuelles as $individuelle)
+                                        {{-- @foreach (Auth::user()->collectives as $collective) --}}
+                                        @foreach ($demandeur->collectives as $collective)
                                             <tr>
-                                                <td>{{ $individuelle->numero }}</td>
-                                                <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                                <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
+                                                <td>{{ $collective->numero }}</td>
+                                                <td>{{ $collective->demandeur->user?->firstname . ' ' . $collective->demandeur->user?->name }}
                                                 </td>
-                                                <td>{{ $individuelle->module->name }}</td>
-                                                <td>{{ $individuelle?->region?->nom }}</td>
+                                                <td>{{ $collective?->module?->name }}</td>
+                                                <td>{{ $collective?->region?->nom }}</td>
                                                 <td>
-                                                    @isset($individuelle?->statut)
-                                                        @if ($individuelle?->statut == 'attente')
-                                                            <span
-                                                                class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @elseif ($individuelle?->statut == 'accepter')
-                                                            <span
-                                                                class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @elseif ($individuelle?->statut == 'rejeter')
-                                                            <span
-                                                                class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @else
-                                                            <span
-                                                                class="badge bg-warning text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @endif
-                                                    @endisset
+                                                    @if (isset($collective?->module?->name))
+                                                        @isset($collective?->statut_demande)
+                                                            @if ($collective?->statut_demande == 'attente')
+                                                                <span
+                                                                    class="badge bg-secondary text-white">{{ $collective?->statut_demande }}
+                                                                </span>
+                                                            @elseif ($collective?->statut_demande == 'accepter')
+                                                                <span
+                                                                    class="badge bg-success text-white">{{ $collective?->statut_demande }}
+                                                                </span>
+                                                            @elseif ($collective?->statut_demande == 'rejeter')
+                                                                <span
+                                                                    class="badge bg-danger text-white">{{ $collective?->statut_demande }}
+                                                                </span>
+                                                            @else
+                                                                <span
+                                                                    class="badge bg-warning text-white">{{ $collective?->statut_demande }}
+                                                                </span>
+                                                            @endif
+                                                        @endisset
+                                                    @else
+                                                        <span class="badge bg-warning text-white">incomplète
+                                                        </span>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <span class="d-flex align-items-baseline">
                                                         {{--  <a class="btn btn-success btn-sm"
-                                                            href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                            href="{{ route('collectives.edit', $collective->id) }}"
                                                             class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a> --}}
 
-                                                        <a href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                        <a href="{{ route('collectives.show', $collective->id) }}"
                                                             class="btn btn-success btn-sm" title="voir détails"><i
                                                                 class="bi bi-eye"></i></a>
                                                         <div class="filter">
@@ -102,13 +105,13 @@
                                                                     class="bi bi-three-dots"></i></a>
                                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                                 <li><a class="dropdown-item btn btn-sm"
-                                                                        href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                        href="{{ route('collectives.edit', $collective->id) }}"
                                                                         class="mx-1" title="Modifier"><i
                                                                             class="bi bi-pencil"></i>Modifier</a>
                                                                 </li>
                                                                 {{-- <li>
                                                                     <form
-                                                                        action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                        action="{{ route('collectives.destroy', $collective->id) }}"
                                                                         method="post">
                                                                         @csrf
                                                                         @method('DELETE')
@@ -129,11 +132,11 @@
                             </form>
                         @else
                             {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center"> --}}
-                            @foreach ($demandeur->individuelles as $individuelle)
+                            @foreach ($demandeur->collectives as $collective)
                                 {{-- <a type="button" class="btn btn-outline-danger btn-sm"
-                                        href="{{ route('individuelles.edit', $individuelle->id) }}">Cliquez ici pour
+                                        href="{{ route('collectives.edit', $collective->id) }}">Cliquez ici pour
                                         compléter votre première demande</a> --}}
-                                <a href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                <a href="{{ route('collectives.edit', $collective->id) }}"
                                     class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                             @endforeach
@@ -149,17 +152,17 @@
             </div>
         </div>
         <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
-            <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
+            <div class="modal fade" id="AddCollectiveModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         {{-- <form method="POST" action="{{ route('addRegion') }}">
                         @csrf --}}
-                        <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('collectives.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
                                     demande
-                                    individuelle</h5>
+                                    collective</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -169,7 +172,7 @@
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-module-ind"
+                                            aria-label="Select" id="select-field-module-col"
                                             data-placeholder="Choisir formation">
                                             <option value="">
                                                 {{ old('module') }}
@@ -204,7 +207,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select  @error('departement') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-departement-ind"
+                                            aria-label="Select" id="select-field-departement-col"
                                             data-placeholder="Choisir la localité">
                                             <option value="{{ Auth::user()->demandeur?->departement?->id }}">
                                                 {{ Auth::user()->demandeur?->departement?->nom }}</option>
@@ -226,7 +229,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="niveau_etude"
                                             class="form-select  @error('niveau_etude') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-niveau_etude-ind"
+                                            aria-label="Select" id="select-field-niveau_etude-col"
                                             data-placeholder="Choisir niveau étude">
                                             <option value="{{ old('niveau_etude') }}">
                                                 {{ old('niveau_etude') }}
@@ -262,7 +265,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="diplome_academique"
                                             class="form-select  @error('diplome_academique') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-diplome_academique-ind"
+                                            aria-label="Select" id="select-field-diplome_academique-col"
                                             data-placeholder="Choisir diplôme académique">
                                             <option value="{{ old('diplome_academique') }}">
                                                 {{ old('diplome_academique') }}
@@ -349,7 +352,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="diplome_professionnel"
                                             class="form-select  @error('diplome_professionnel') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-diplome_professionnel-ind"
+                                            aria-label="Select" id="select-field-diplome_professionnel-col"
                                             data-placeholder="Choisir diplôme professionnel">
                                             <option value="{{ old('diplome_professionnel') }}">
                                                 {{ old('diplome_professionnel') }}
@@ -437,7 +440,7 @@
                                             formation<span class="text-danger mx-1">*</span></label>
                                         <select name="projet_poste_formation"
                                             class="form-select  @error('projet_poste_formation') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-projet_poste_formation-ind"
+                                            aria-label="Select" id="select-field-projet_poste_formation-col"
                                             data-placeholder="Choisir projet">
                                             <option value="{{ old('projet_poste_formation') }}">
                                                 {{ old('projet_poste_formation') }}
