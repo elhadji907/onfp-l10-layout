@@ -68,7 +68,7 @@
                             <div class="card-body">
 
                                 <div class="pt-0 pb-2">
-                                    <h5 class="card-title text-center pb-0 fs-4">Créer un compte</h5>
+                                    <h5 class="card-title text-center pb-0 fs-4">Créer un compte personnel</h5>
                                     {{--  <p class="text-center small">Entrez vos informations personnelles pour créer un
                                     compte</p> --}}
                                 </div>

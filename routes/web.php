@@ -161,6 +161,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
 
+
+    Route::post('/addIndividuel', [IndividuelleController::class, 'addIndividuel'])->name('addIndividuel');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
