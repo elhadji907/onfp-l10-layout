@@ -142,7 +142,7 @@
             <div class="modal fade" id="AddCollectiveModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('collectives.store') }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('addCollective') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une demande

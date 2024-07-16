@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Collective;
 use App\Models\Demandeur;
 use App\Models\Individuelle;
+use App\Models\Pcharge;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -63,6 +65,16 @@ class RegisteredUserController extends Controller
             'users_id' => $user->id,
         ]);
 
+        $collective = Collective::create([
+            'demandeurs_id' => $demandeur->id,
+            'users_id' => $user->id,
+        ]);
+
+        $pcharge = Pcharge::create([
+            'demandeurs_id' => $demandeur->id,
+            'users_id' => $user->id,
+        ]);
+
         Alert::success('Félicitations ! ' . $user->firstname . ' ' . $user->name, ' Votre compte est créé, introduisez vos identifiants pour vous connecter.');
 
         $user->assignRole('Demandeur');
@@ -70,6 +82,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
         event(new Registered($demandeur));
         event(new Registered($individuelle));
+        event(new Registered($collective));
+        event(new Registered($pcharge));
 
         /* Se connecter automatiquement après inscription */
         /* Auth::login($user); */

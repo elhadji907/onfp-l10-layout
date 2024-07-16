@@ -73,7 +73,7 @@
                                                 @if (isset($individuelle->numero) && isset($individuelle->modules_id))
                                                     @if ($loop->last)
                                                         <a class="text-primary fw-bold"
-                                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                            href="{{ route('showIndividuelle', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                     @endif
                                                 @else
                                                     <span class="text-primary fw-bold">0</span>
@@ -81,15 +81,26 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
+                                            <a href="{{ route('showIndividuelle', $individuelle->demandeur->id) }}"
                                                 class="btn btn-success btn-sm" title="voir"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-primary fw-bold">Collective</td>
-                                        <td class="text-center"></td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-success btn-sm" title="voir"><i
+                                            @foreach (Auth::user()->collectives as $collective)
+                                                @if (isset($collective->numero) && isset($collective->modules_id))
+                                                    @if ($loop->last)
+                                                        <a class="text-primary fw-bold"
+                                                            href="{{ route('showCollective', $collective->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                    @endif
+                                                @else
+                                                    <span class="text-primary fw-bold">0</span>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('showCollective', $individuelle->demandeur->id) }}" class="btn btn-success btn-sm" title="voir"><i
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>

@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
+ * @property string|null $numero
  * @property string|null $name
  * @property string|null $sigle
  * @property Carbon|null $date_depot

@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -27,7 +28,7 @@ class IndividuelleController extends Controller
 
     public function create()
     {
-        $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
+        /*  $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
         if ($total_individuelle >= 5) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autorisées');
             return redirect()->back();
@@ -35,13 +36,16 @@ class IndividuelleController extends Controller
             $departements = Departement::orderBy("created_at", "desc")->get();
             $modules = Module::orderBy("created_at", "desc")->get();
             return view("demandes.individuelles.create", compact("departements", "modules"));
-        }
+        } */
     }
 
     public function store(IndividuelleStoreRequest $request): RedirectResponse
     {
+        $demandeur = Demandeur::findorfail($request->input('id'));
+        $user = $demandeur->user;
 
-        $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
+        $total_individuelle = Individuelle::where('users_id', $user->id)->count();
+
         if ($total_individuelle >= 5) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
             return redirect()->back();
@@ -54,26 +58,11 @@ class IndividuelleController extends Controller
 
         $annee = date('y');
 
-        $count_individuelle = Individuelle::get()->count();
+        $id         = Individuelle::get()->last()->id;
+        $individuelle = Individuelle::findOrFail($id);
 
-        $count_individuelle = ++$count_individuelle;
-
-        $longueur = strlen($count_individuelle);
-
-        if ($longueur == 1) {
-            $numero_individuelle   =   strtolower("0000" . $count_individuelle);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero_individuelle   =   strtolower("000" . $count_individuelle);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-            $numero_individuelle   =   strtolower("00" . $count_individuelle);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-            $numero_individuelle   =   strtolower("0" . $count_individuelle);
-        } else {
-            $numero_individuelle   =   strtolower($count_individuelle);
-        }
-
-
-        $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
+        $numero_individuelle = $individuelle->numero;
+        $numero_individuelle = ++$numero_individuelle;
 
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
@@ -99,8 +88,8 @@ class IndividuelleController extends Controller
             "modules_id"                        =>  $request->input("module"),
             'autre_module'                      =>  $request->input('autre_module'),
             'statut'                             => 'attente',
-            'users_id'                          =>  Auth::user()->id,
-            'demandeurs_id'                     =>  Auth::user()->demandeur->id
+            'users_id'                          =>  $user->id,
+            'demandeurs_id'                     =>  $demandeur->id
         ]);
 
         $individuelle->save();
@@ -112,7 +101,7 @@ class IndividuelleController extends Controller
         return Redirect::route("demandeurs.show", compact("demandeur"));
     }
 
-    public function addIndividuel(Request $request)
+    public function addIndividuelle(Request $request)
     {
         $this->validate($request, [
             'civilite'                      => ["required", "string"],
@@ -142,28 +131,32 @@ class IndividuelleController extends Controller
         $annee = date('y');
 
         $count_individuelle = Individuelle::get()->count();
-
-        $count_individuelle = ++$count_individuelle;
-
-        $longueur = strlen($count_individuelle);
-
-        if ($longueur == 1) {
-            $numero_individuelle   =   strtolower("0000" . $count_individuelle);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero_individuelle   =   strtolower("000" . $count_individuelle);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-            $numero_individuelle   =   strtolower("00" . $count_individuelle);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-            $numero_individuelle   =   strtolower("0" . $count_individuelle);
+        if ($count_individuelle > 0) {
+            $id         = Individuelle::get()->last()->id;
+            $individuelle = Individuelle::findOrFail($id);
+            $numero     = $individuelle?->numero;
+            $numero_individuelle  = ++$numero;
         } else {
-            $numero_individuelle   =   strtolower($count_individuelle);
+            $count_individuelle = ++$count_individuelle;
+            $longueur = strlen($count_individuelle);
+
+            if ($longueur == 1) {
+                $numero_individuelle   =   strtolower("0000" . $count_individuelle);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numero_individuelle   =   strtolower("000" . $count_individuelle);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numero_individuelle   =   strtolower("00" . $count_individuelle);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numero_individuelle   =   strtolower("0" . $count_individuelle);
+            } else {
+                $numero_individuelle   =   strtolower($count_individuelle);
+            }
         }
 
         $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
         $numero_demande = 'D' . '' . $numero_individuelle;
 
         $departement = Departement::findOrFail($request->input("departement"));
-
         $regionid = $departement->region->id;
 
         $user = User::create([
@@ -179,9 +172,12 @@ class IndividuelleController extends Controller
             'situation_familiale'               => $request->input('situation_familiale'),
             'situation_professionnelle'         => $request->input('situation_professionnelle'),
             'adresse'                           => $request->input('adresse'),
+            'password'                          => Hash::make($request->email),
         ]);
 
         $user->save();
+
+        $user->assignRole('Demandeur');
 
         $demandeur = new Demandeur([
             'type'                              => 'individuelle',
@@ -224,7 +220,6 @@ class IndividuelleController extends Controller
         Alert::success('Enregistrée ! ', 'demande ajoutée avec succès');
 
         return redirect()->back();
-
     }
 
     public function edit($id)
@@ -267,27 +262,33 @@ class IndividuelleController extends Controller
 
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
+        $date_depot =   date('Y-m-d');
 
         $count_individuelle = Individuelle::get()->count();
-
-        $longueur = strlen($count_individuelle);
-
-        if ($longueur == 1) {
-            $numero_ind   =   strtolower("0000" . $count_individuelle);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero_ind   =   strtolower("000" . $count_individuelle);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-            $numero_ind   =   strtolower("00" . $count_individuelle);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-            $numero_ind   =   strtolower("0" . $count_individuelle);
+        if ($count_individuelle > 0) {
+            $id         = Individuelle::get()->last()->id;
+            $individuelle = Individuelle::findOrFail($id);
+            $numero     = $individuelle?->numero;
+            $numero_individuelle  = ++$numero;
         } else {
-            $numero_ind   =   strtolower($count_individuelle);
+            $count_individuelle = ++$count_individuelle;
+            $longueur = strlen($count_individuelle);
+
+            if ($longueur == 1) {
+                $numero_individuelle   =   strtolower("0000" . $count_individuelle);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numero_individuelle   =   strtolower("000" . $count_individuelle);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numero_individuelle   =   strtolower("00" . $count_individuelle);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numero_individuelle   =   strtolower("0" . $count_individuelle);
+            } else {
+                $numero_individuelle   =   strtolower($count_individuelle);
+            }
         }
 
-        $numero_individuelle = 'I' . $annee . '' . $numero_ind;
-        $numero_Demande = 'D' . '' . $numero_individuelle;
-
-        $date_depot =   date('Y-m-d');
+        $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
+        $numero_demande = 'D' . '' . $numero_individuelle;
 
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
@@ -371,7 +372,7 @@ class IndividuelleController extends Controller
 
             $demandeur->update([
                 'type'                           =>  'individuelle',
-                'numero_dossier'                 =>  $numero_Demande,
+                'numero_dossier'                 =>  $numero_demande,
                 "departements_id"                =>  $request->input("departement"),
                 "regions_id"                     =>  $regionid,
                 'users_id'                       =>  $user->id,
@@ -461,6 +462,14 @@ class IndividuelleController extends Controller
     public function destroy($id)
     {
         $individuelle   = Individuelle::find($id);
+
+        $date = date('dmYHis');
+
+        $individuelle->update([
+            'numero'    => $individuelle->numero.''.$date,
+        ]);
+
+        $individuelle->save();
 
         $individuelle->delete();
 

@@ -17,6 +17,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                    {{-- <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                        role="alert"><strong>(*), champs obligatoires</strong></div> --}}
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mt-3">
@@ -34,7 +42,7 @@
                                 {{ $demandes_total }}/5</span> --}}
                             @if (isset($demandeur->numero_dossier))
                                 <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddCollectiveModal">
+                                    data-bs-target="#AddColModal">
                                     <i class="bi bi-person-plus" title="Ajouter"></i>
                                 </button>
                             @endif
@@ -93,10 +101,6 @@
                                                 </td>
                                                 <td>
                                                     <span class="d-flex align-items-baseline">
-                                                        {{--  <a class="btn btn-success btn-sm"
-                                                            href="{{ route('collectives.edit', $collective->id) }}"
-                                                            class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a> --}}
-
                                                         <a href="{{ route('collectives.show', $collective->id) }}"
                                                             class="btn btn-success btn-sm" title="voir détails"><i
                                                                 class="bi bi-eye"></i></a>
@@ -109,7 +113,7 @@
                                                                         class="mx-1" title="Modifier"><i
                                                                             class="bi bi-pencil"></i>Modifier</a>
                                                                 </li>
-                                                                {{-- <li>
+                                                                <li>
                                                                     <form
                                                                         action="{{ route('collectives.destroy', $collective->id) }}"
                                                                         method="post">
@@ -120,7 +124,7 @@
                                                                             title="Supprimer"><i
                                                                                 class="bi bi-trash"></i>Supprimer</button>
                                                                     </form>
-                                                                </li> --}}
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </span>
@@ -131,20 +135,12 @@
                                 </table>
                             </form>
                         @else
-                            {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center"> --}}
                             @foreach ($demandeur->collectives as $collective)
-                                {{-- <a type="button" class="btn btn-outline-danger btn-sm"
-                                        href="{{ route('collectives.edit', $collective->id) }}">Cliquez ici pour
-                                        compléter votre première demande</a> --}}
                                 <a href="{{ route('collectives.edit', $collective->id) }}"
                                     class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                             @endforeach
-                            {{-- <span class="badge bg-secondary">
-                                <h6>Informations personnelles</h6>
-                            </span> --}}
-                            <h5 class="card-title">Aucune demande pour le moment !!!</h5>
-                            {{-- </div> --}}
+                            <h5 class="card-title">Aucune demande collective pour le moment !!!</h5>
                         @endif
                         <!-- End demande -->
                     </div>
@@ -155,20 +151,175 @@
             <div class="modal fade" id="AddCollectiveModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        {{-- <form method="POST" action="{{ route('addRegion') }}">
-                        @csrf --}}
                         <form method="post" action="{{ route('collectives.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
-                                    demande
+                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une demande
                                     collective</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <label for="name" class="form-label">Nom de la structure<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <textarea name="name" id="name" rows="2"
+                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                            placeholder="La raison sociale de l'opérateur">{{ old('name') }}</textarea>
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="sigle" class="form-label">Sigle<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="sigle" value="{{ old('sigle') }}"
+                                            class="form-control form-control-sm @error('sigle') is-invalid @enderror"
+                                            id="sigle" placeholder="Sigle ou abréviation">
+                                        @error('sigle')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="email" class="form-label">Email<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="email" name="email" value="{{ old('email') }}"
+                                            class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                            id="email" placeholder="Adresse email">
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="fixe" class="form-label">Téléphone fixe<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="fixe" value="{{ old('fixe') }}"
+                                            class="form-control form-control-sm @error('fixe') is-invalid @enderror"
+                                            id="fixe" placeholder="Téléphone fixe">
+                                        @error('fixe')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="telephone" class="form-label">Téléphone<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="telephone" value="{{ old('telephone') }}"
+                                            class="form-control form-control-sm @error('telephone') is-invalid @enderror"
+                                            id="telephone" placeholder="Téléphone portable">
+                                        @error('telephone')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="bp" class="form-label">Boite postal</label>
+                                        <input type="text" name="bp" value="{{ old('bp') }}"
+                                            class="form-control form-control-sm @error('bp') is-invalid @enderror"
+                                            id="bp" placeholder="Boite postal">
+                                        @error('bp')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="statut" class="form-label">Statut juridique<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="statut" class="form-select  @error('statut') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-statut-col"
+                                            data-placeholder="Choisir statut">
+                                            <option value="{{ old('statut') }}">
+                                                {{ old('statut') }}
+                                            </option>
+                                            <option value="GIE">
+                                                GIE
+                                            </option>
+                                            <option value="Association">
+                                                Association
+                                            </option>
+                                            <option value="Entreprise">
+                                                Entreprise
+                                            </option>
+                                            <option value="Institution publique">
+                                                Institution publique
+                                            </option>
+                                            <option value="Institution privée">
+                                                Institution privée
+                                            </option>
+                                            <option value="Autre">
+                                                Autre
+                                            </option>
+                                        </select>
+                                        @error('statut')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="autre_statut" class="form-label">Si autre ?
+                                            précisez</label>
+                                        <input type="text" name="autre_statut" value="{{ old('autre_statut') }}"
+                                            class="form-control form-control-sm @error('autre_statut') is-invalid @enderror"
+                                            id="autre_statut" placeholder="autre statut juridique">
+                                        @error('autre_statut')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="departement" class="form-label">Siège social<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="departement"
+                                            class="form-select form-select-sm @error('departement') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-departement-col"
+                                            data-placeholder="Choisir">
+                                            <option value=""></option>
+                                            @foreach ($departements as $departement)
+                                                <option value="{{ $departement->id }}">
+                                                    {{ $departement->nom }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('departement')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="adresse" class="form-label">Adresse<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="adresse" value="{{ old('adresse') }}"
+                                            class="form-control form-control-sm @error('adresse') is-invalid @enderror"
+                                            id="adresse" placeholder="Adresse exacte">
+                                        @error('adresse')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
@@ -190,245 +341,14 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
-                                        <input type="text" name="autre_module" value="{{ old('autre_module') }}"
-                                            class="form-control form-control-sm @error('autre_module') is-invalid @enderror"
-                                            id="autre_module" placeholder="autre diplôme académique">
-                                        @error('autre_module')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="departement" class="form-label">Lieu de formation<span
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <label for="description" class="form-label">Description de l'organisation<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <select name="departement"
-                                            class="form-select  @error('departement') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-departement-col"
-                                            data-placeholder="Choisir la localité">
-                                            <option value="{{ Auth::user()->demandeur?->departement?->id }}">
-                                                {{ Auth::user()->demandeur?->departement?->nom }}</option>
-                                            @foreach ($departements as $departement)
-                                                <option value="{{ $departement->id }}">
-                                                    {{ $departement->nom }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('departement')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                        <textarea name="description" id="description" rows="2"
+                                            class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                            placeholder="Description de l'organisation, de ses activités et de ses réalisations">{{ old('description') }}</textarea>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="Niveau étude" class="form-label">Niveau étude<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="niveau_etude"
-                                            class="form-select  @error('niveau_etude') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-niveau_etude-col"
-                                            data-placeholder="Choisir niveau étude">
-                                            <option value="{{ old('niveau_etude') }}">
-                                                {{ old('niveau_etude') }}
-                                            </option>
-                                            <option value="Aucun">
-                                                Aucun
-                                            </option>
-                                            <option value="Arabe">
-                                                Arabe
-                                            </option>
-                                            <option value="Elementaire">
-                                                Elementaire
-                                            </option>
-                                            <option value="Secondaire">
-                                                Secondaire
-                                            </option>
-                                            <option value="Moyen">
-                                                Moyen
-                                            </option>
-                                            <option value="Supérieur">
-                                                Supérieur
-                                            </option>
-                                        </select>
-                                        @error('niveau_etude')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="diplome_academique" class="form-label">Diplôme académique<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="diplome_academique"
-                                            class="form-select  @error('diplome_academique') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-diplome_academique-col"
-                                            data-placeholder="Choisir diplôme académique">
-                                            <option value="{{ old('diplome_academique') }}">
-                                                {{ old('diplome_academique') }}
-                                            </option>
-                                            <option value="Aucun">
-                                                Aucun
-                                            </option>
-                                            <option value="Arabe">
-                                                Arabe
-                                            </option>
-                                            <option value="CFEE">
-                                                CFEE
-                                            </option>
-                                            <option value="BFEM">
-                                                BFEM
-                                            </option>
-                                            <option value="BAC">
-                                                BAC
-                                            </option>
-                                            <option value="Licence">
-                                                Licence
-                                            </option>
-                                            <option value="Master 2">
-                                                Master 2
-                                            </option>
-                                            <option value="Doctorat">
-                                                Doctorat
-                                            </option>
-                                            <option value="Autre">
-                                                Autre
-                                            </option>
-                                        </select>
-                                        @error('diplome_academique')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="autre_diplome_academique" class="form-label">Si autre ?
-                                            précisez</label>
-                                        <input type="text" name="autre_diplome_academique"
-                                            value="{{ old('autre_diplome_academique') }}"
-                                            class="form-control form-control-sm @error('autre_diplome_academique') is-invalid @enderror"
-                                            id="autre_diplome_academique" placeholder="autre diplôme académique">
-                                        @error('autre_diplome_academique')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="option_diplome_academique" class="form-label">Option du
-                                            diplôme</label>
-                                        <input type="text" name="option_diplome_academique"
-                                            value="{{ old('option_diplome_academique') }}"
-                                            class="form-control form-control-sm @error('option_diplome_academique') is-invalid @enderror"
-                                            id="option_diplome_academique" placeholder="Ex: Mathématiques">
-                                        @error('option_diplome_academique')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="etablissement_academique" class="form-label">Etablissement
-                                            académique</label>
-                                        <input type="text" name="etablissement_academique"
-                                            value="{{ old('etablissement_academique') }}"
-                                            class="form-control form-control-sm @error('etablissement_academique') is-invalid @enderror"
-                                            id="etablissement_academique" placeholder="Etablissement obtention">
-                                        @error('etablissement_academique')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="diplome_pro" class="form-label">Diplôme professionnel<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="diplome_professionnel"
-                                            class="form-select  @error('diplome_professionnel') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-diplome_professionnel-col"
-                                            data-placeholder="Choisir diplôme professionnel">
-                                            <option value="{{ old('diplome_professionnel') }}">
-                                                {{ old('diplome_professionnel') }}
-                                            </option>
-                                            <option value="Aucun">
-                                                Aucun
-                                            </option>
-                                            <option value="CAP">
-                                                CAP
-                                            </option>
-                                            <option value="BEP">
-                                                BEP
-                                            </option>
-                                            <option value="BT">
-                                                BT
-                                            </option>
-                                            <option value="BTS">
-                                                BTS
-                                            </option>
-                                            <option value="CPS">
-                                                CPS
-                                            </option>
-                                            <option value="L3 Pro">
-                                                L3 Pro
-                                            </option>
-                                            <option value="DTS">
-                                                DTS
-                                            </option>
-                                            <option value="Autre">
-                                                Autre
-                                            </option>
-                                        </select>
-                                        @error('diplome_professionnel')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="autre_diplome_professionnel" class="form-label">Si autre ?
-                                            précisez</label>
-                                        <input type="text" name="autre_diplome_professionnel"
-                                            value="{{ old('autre_diplome_professionnel') }}"
-                                            class="form-control form-control-sm @error('autre_diplome_professionnel') is-invalid @enderror"
-                                            id="autre_diplome_professionnel"
-                                            placeholder="autre diplôme professionnel ou attestations">
-                                        @error('autre_diplome_professionnel')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="etablissement_professionnel" class="form-label">Etablissement
-                                            professionnel</label>
-                                        <input type="text" name="etablissement_professionnel"
-                                            value="{{ old('etablissement_professionnel') }}"
-                                            class="form-control form-control-sm @error('etablissement_professionnel') is-invalid @enderror"
-                                            id="etablissement_professionnel" placeholder="Etablissement obtention">
-                                        @error('etablissement_professionnel')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="specialite_diplome_professionnel"
-                                            class="form-label">Spécialité</label>
-                                        <input type="text" name="specialite_diplome_professionnel"
-                                            value="{{ old('specialite_diplome_professionnel') }}"
-                                            class="form-control form-control-sm @error('specialite_diplome_professionnel') is-invalid @enderror"
-                                            id="specialite_diplome_professionnel" placeholder="Ex: électricité">
-                                        @error('specialite_diplome_professionnel')
+                                        @error('description')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -436,79 +356,112 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="projet_poste_formation" class="form-label">Votre projet après la
-                                            formation<span class="text-danger mx-1">*</span></label>
-                                        <select name="projet_poste_formation"
-                                            class="form-select  @error('projet_poste_formation') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-projet_poste_formation-col"
-                                            data-placeholder="Choisir projet">
-                                            <option value="{{ old('projet_poste_formation') }}">
-                                                {{ old('projet_poste_formation') }}
-                                            </option>
-                                            <option value="Poursuivre mes études">
-                                                Poursuivre mes études
-                                            </option>
-                                            <option value="Chercher un emploi">
-                                                Chercher un emploi
-                                            </option>
-                                            <option value="Lancer mon entreprise">
-                                                Lancer mon entreprise
-                                            </option>
-                                            <option value="Retourner dans mon entreprise">
-                                                Retourner dans mon entreprise
-                                            </option>
-                                            <option value="Aucun de ces projets">
-                                                Aucun de ces projets
-                                            </option>
-                                        </select>
-                                        @error('projet_poste_formation')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="qualification" class="form-label">Qualification et autres
-                                            diplômes</label>
-                                        <textarea name="qualification" id="qualification" rows="1"
-                                            class="form-control form-control-sm @error('qualification') is-invalid @enderror"
-                                            placeholder="Qualification et autres diplômes">{{ old('qualification') }}</textarea>
-                                        @error('qualification')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="experience" class="form-label">Expériences et stages</label>
-                                        <textarea name="experience" id="experience" rows="1"
-                                            class="form-control form-control-sm @error('experience') is-invalid @enderror"
-                                            placeholder="Expériences ou stages">{{ old('experience') }}</textarea>
-                                        @error('experience')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="projetprofessionnel" class="form-label">Informations complémentaires
-                                            sur
-                                            le projet
-                                            professionnel</label>
+                                        <label for="projetprofessionnel" class="form-label">Projet professionnel<span
+                                                class="text-danger mx-1">*</span></label>
                                         <textarea name="projetprofessionnel" id="projetprofessionnel" rows="2"
                                             class="form-control form-control-sm @error('projetprofessionnel') is-invalid @enderror"
-                                            placeholder="Si vous disposez déjà d'un projet professionnel, merci d'écrire son résumé en quelques lignes">{{ old('projetprofessionnel') }}</textarea>
+                                            placeholder="Description détaillée du projet professionnel et de l'effet attendu après la formation">{{ old('projetprofessionnel') }}</textarea>
+
                                         @error('projetprofessionnel')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
                                     </div>
+
+                                    <hr class="dropdown-divider mt-3">
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="civilite" class="form-label">Civilité responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="civilite"
+                                            class="form-select form-select-sm @error('civilite') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-civilite-col"
+                                            data-placeholder="Choisir civilité">
+                                            <option value="">
+                                                {{ old('civilite') }}
+                                            </option>
+                                            <option value="Monsieur">
+                                                Monsieur
+                                            </option>
+                                            <option value="Madame">
+                                                Madame
+                                            </option>
+                                        </select>
+                                        @error('civilite')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="prenom" class="form-label">Prénom responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="prenom" value="{{ old('prenom') }}"
+                                            class="form-control form-control-sm @error('prenom') is-invalid @enderror"
+                                            id="prenom" placeholder="Prénom responsable">
+                                        @error('prenom')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="nom" class="form-label">Nom responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="nom" value="{{ old('nom') }}"
+                                            class="form-control form-control-sm @error('nom') is-invalid @enderror"
+                                            id="nom" placeholder="Nom responsable">
+                                        @error('nom')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="email_responsable" class="form-label">Adresse e-mail<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="email" name="email_responsable"
+                                            value="{{ old('email_responsable') }}"
+                                            class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
+                                            id="email_responsable" placeholder="Adresse email responsable">
+                                        @error('email_responsable')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="telephone1" class="form-label">Téléphone responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="telephone1" value="{{ old('telephone1') }}"
+                                            class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
+                                            id="telephone1" placeholder="Telephone responsable">
+                                        @error('telephone1')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="fonction_responsable" class="form-label">Fonction responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="fonction_responsable"
+                                            value="{{ old('fonction_responsable') }}"
+                                            class="form-control form-control-sm @error('fonction_responsable') is-invalid @enderror"
+                                            id="fonction_responsable" placeholder="Fonction responsable">
+                                        @error('fonction_responsable')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer mt-5">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Fermer</button>
                                     <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>

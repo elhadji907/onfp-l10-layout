@@ -162,7 +162,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
 
 
-    Route::post('/addIndividuel', [IndividuelleController::class, 'addIndividuel'])->name('addIndividuel');
+    Route::post('/addIndividuelle', [IndividuelleController::class, 'addIndividuelle'])->name('addIndividuelle');
+    Route::post('/addCollective', [CollectiveController::class, 'addCollective'])->name('addCollective');
+
+    Route::get('/showIndividuelle/{id}', [DemandeurController::class, 'showIndividuelle'])->name('showIndividuelle');
+    Route::get('/showCollective/{id}', [DemandeurController::class, 'showCollective'])->name('showCollective');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

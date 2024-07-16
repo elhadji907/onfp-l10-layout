@@ -106,7 +106,7 @@
                                                                         class="mx-1" title="Modifier"><i
                                                                             class="bi bi-pencil"></i>Modifier</a>
                                                                 </li>
-                                                                {{-- <li>
+                                                                <li>
                                                                     <form
                                                                         action="{{ route('individuelles.destroy', $individuelle->id) }}"
                                                                         method="post">
@@ -117,7 +117,7 @@
                                                                             title="Supprimer"><i
                                                                                 class="bi bi-trash"></i>Supprimer</button>
                                                                     </form>
-                                                                </li> --}}
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </span>
@@ -140,7 +140,7 @@
                             {{-- <span class="badge bg-secondary">
                                 <h6>Informations personnelles</h6>
                             </span> --}}
-                            <h5 class="card-title">Aucune demande pour le moment !!!</h5>
+                            <h5 class="card-title">Aucune demande individuelle pour le moment !!!</h5>
                             {{-- </div> --}}
                         @endif
                         <!-- End demande -->
@@ -162,7 +162,8 @@
                                     individuelle</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
-                            </div>
+                            </div>                            
+                            <input type="hidden" name="id" value="{{ $demandeur->id }}">
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
@@ -206,8 +207,8 @@
                                             class="form-select  @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement-ind"
                                             data-placeholder="Choisir la localité">
-                                            <option value="{{ Auth::user()->demandeur?->departement?->id }}">
-                                                {{ Auth::user()->demandeur?->departement?->nom }}</option>
+                                            <option value="{{ old('departement') }}">
+                                                {{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
                                                 <option value="{{ $departement->id }}">
                                                     {{ $departement->nom }}
