@@ -11,6 +11,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                @endif
                 <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
 
@@ -18,79 +24,24 @@
                             <div class="row">
                                 <div class="col-sm-12 pt-2">
                                     <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('demandeurs.show', $collective->demandeur->id) }}" class="btn btn-success btn-sm"
-                                            title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                            href="{{ route('showCollective', $collective->demandeur->id) }}"
+                                            class="btn btn-success btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | Dossier personnel</p>
                                     </span>
                                 </div>
                             </div>
-                            {{-- <p>NB: Si la formation souhaiter n'est pas disponible, merci de choisir <b>Autre</b> et renseigner votre formation souhaitée sur la case: {{ ("<<Si autre formation ? précisez>>") }}</p> --}}
-                            {{-- <div class="pt-0 pb-0">
-                                <h5 class="card-title text-center pb-0 fs-4">modification</h5>
-                                <p class="text-center small">enregister un nouveau demande collective</p>
-                            </div> --}}
                             <form method="post" action="{{ url('collectives/' . $collective->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('PUT')
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="civilite" class="form-label">Civilité<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="civilite"
-                                        class="form-select form-select-sm @error('civilite') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-civilite" data-placeholder="Choisir civilité">
-                                        <option value="{{ $collective->demandeur->user->civilite }}">
-                                            {{ $collective->demandeur->user->civilite ?? old('civilite') }}
-                                        </option>
-                                        <option value="Monsieur">
-                                            Monsieur
-                                        </option>
-                                        <option value="Madame">
-                                            Madame
-                                        </option>
-                                    </select>
-                                    @error('civilite')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="cin" class="form-label">N° CIN<span
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="name" class="form-label">Nom de la structure<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="cin"
-                                        value="{{ $collective->demandeur->user->cin ?? old('cin') }}"
-                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                        id="cin" placeholder="Numéro carte d'identité nationale">
-                                    @error('cin')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="firstname" class="form-label">Prénom<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="firstname"
-                                        value="{{ $collective->demandeur->user->firstname ?? old('firstname') }}"
-                                        class="form-control form-control-sm @error('firstname') is-invalid @enderror"
-                                        id="firstname" placeholder="prénom">
-                                    @error('firstname')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="name" class="form-label">Nom<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="name"
-                                        value="{{ $collective->demandeur->user->name ?? old('name') }}"
+                                    <textarea name="name" id="name" rows="2"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                        id="name" placeholder="nom">
+                                        placeholder="La raison sociale de l'opérateur">{{ $collective?->name ?? old('name') }}</textarea>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -98,73 +49,52 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="date_naissance" class="form-label">Date naissance<span
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="sigle" class="form-label">Sigle<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="date" name="date_naissance"
-                                        value="{{ $collective->demandeur->user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
-                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                        id="date_naissance" placeholder="Date naissance">
-                                    @error('date_naissance')
+                                    <input type="text" name="sigle" value="{{ $collective?->sigle ?? old('sigle') }}"
+                                        class="form-control form-control-sm @error('sigle') is-invalid @enderror"
+                                        id="sigle" placeholder="Sigle ou abréviation">
+                                    @error('sigle')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="name" class="form-label">Lieu naissance<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input name="lieu_naissance" type="text"
-                                        class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
-                                        id="lieu_naissance"
-                                        value="{{ $collective->demandeur->user->lieu_naissance ?? old('lieu_naissance') }}"
-                                        autocomplete="lieu_naissance" placeholder="Lieu naissance">
-                                    @error('lieu_naissance')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="adresse" class="form-label">Adresse<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="adresse"
-                                        value="{{ $collective->demandeur->user->adresse ?? old('adresse') }}"
-                                        class="form-control form-control-sm @error('adresse') is-invalid @enderror"
-                                        id="adresse" placeholder="adresse">
-                                    @error('adresse')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="email" class="form-label">Email<span
                                             class="text-danger mx-1">*</span></label>
-                                    <div class="input-group has-validation">
-                                        {{-- <span class="input-group-text" id="email">@</span> --}}
-                                        <input type="email" name="email"
-                                            value="{{ $collective->demandeur->user->email ?? old('email') }}"
-                                            class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                            id="email" placeholder="email" @readonly(true)>
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                    <input type="email" name="email" value="{{ $collective?->email1 ?? old('email') }}"
+                                        class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                        id="email" placeholder="Adresse email">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="telephone" class="form-label">Téléphone personnel<span
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="fixe" class="form-label">Téléphone fixe<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="fixe" value="{{ $collective?->fixe ?? old('fixe') }}"
+                                        class="form-control form-control-sm @error('fixe') is-invalid @enderror"
+                                        id="fixe" placeholder="Téléphone fixe">
+                                    @error('fixe')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone"
-                                        value="{{ $collective->demandeur->user->telephone ?? old('telephone') }}"
+                                        value="{{ $collective?->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="téléphone">
+                                        id="telephone" placeholder="Téléphone portable">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -172,62 +102,71 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone_secondaire"
-                                        value="{{ $collective->demandeur->user->telephone_secondaire ?? old('telephone_secondaire') }}"
-                                        class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                        id="telephone_secondaire" placeholder="téléphone secondaire">
-                                    @error('telephone_secondaire')
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="bp" class="form-label">Boite postal</label>
+                                    <input type="text" name="bp" value="{{ $collective?->bp ?? old('bp') }}"
+                                        class="form-control form-control-sm @error('bp') is-invalid @enderror"
+                                        id="bp" placeholder="Boite postal">
+                                    @error('bp')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
                                 </div>
-                                
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="module" class="form-label">Formation sollicitée<span
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="statut" class="form-label">Statut juridique<span
                                             class="text-danger mx-1">*</span></label>
-                                    <select name="module"
-                                        class="form-select  @error('module') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-module"
-                                        data-placeholder="Choisir formation">
-                                        <option value="{{ $collective?->module?->id }}">
-                                            {{ $collective?->module?->name }}</option>
-                                        @foreach ($modules as $module)
-                                            <option value="{{ $module->id }}">
-                                                {{ $module->name }}
-                                            </option>
-                                        @endforeach
+                                    <select name="statut" class="form-select  @error('statut') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-statut" data-placeholder="Choisir statut">
+                                        <option value="{{ $collective?->statut_juridique ?? old('statut') }}">
+                                            {{ $collective?->statut_juridique ?? old('statut') }}
+                                        </option>
+                                        <option value="GIE">
+                                            GIE
+                                        </option>
+                                        <option value="Association">
+                                            Association
+                                        </option>
+                                        <option value="Entreprise">
+                                            Entreprise
+                                        </option>
+                                        <option value="Institution publique">
+                                            Institution publique
+                                        </option>
+                                        <option value="Institution privée">
+                                            Institution privée
+                                        </option>
+                                        <option value="Autre">
+                                            Autre
+                                        </option>
                                     </select>
-                                    @error('module')
+                                    @error('statut')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
-                                    <input type="text" name="autre_module"
-                                        value="{{ $collective->autre_module ?? old('autre_module') }}"
-                                        class="form-control form-control-sm @error('autre_module') is-invalid @enderror"
-                                        id="autre_module" placeholder="autre formation">
-                                    @error('autre_module')
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="autre_statut" class="form-label">Si autre ?
+                                        précisez</label>
+                                    <input type="text" name="autre_statut"
+                                        value="{{ $collective?->autre_statut_juridique ?? old('autre_statut') }}"
+                                        class="form-control form-control-sm @error('autre_statut') is-invalid @enderror"
+                                        id="autre_statut" placeholder="autre statut juridique">
+                                    @error('autre_statut')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
                                 </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="departement" class="form-label">Lieu de formation<span
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="departement" class="form-label">Siège social<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="departement"
-                                        class="form-select  @error('departement') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-departement"
-                                        data-placeholder="Choisir localité">
+                                        class="form-select form-select-sm @error('departement') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-departement" data-placeholder="Choisir">
                                         <option value="{{ $collective?->departement?->id }}">
                                             {{ $collective?->departement?->nom }}</option>
                                         @foreach ($departements as $departement)
@@ -243,320 +182,14 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="matricule" class="form-label">Situation familiale<span
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
-                                    <select name="situation_familiale"
-                                        class="form-select  @error('situation_familiale') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-familiale"
-                                        data-placeholder="Choisir situation familiale">
-                                        <option value="{{ $collective->demandeur->user->situation_familiale }}">
-                                            {{ $collective->demandeur->user->situation_familiale ?? old('situation_familiale') }}
-                                        </option>
-                                        <option value="Marié(e)">
-                                            Marié(e)
-                                        </option>
-                                        <option value="Célibataire">
-                                            Célibataire
-                                        </option>
-                                        <option value="Veuf(ve)">
-                                            Veuf(ve)
-                                        </option>
-                                        <option value="Divorsé(e)">
-                                            Divorsé(e)
-                                        </option>
-                                    </select>
-                                    @error('situation_familiale')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="situation professionnelle" class="form-label">Situation
-                                        professionnelle<span class="text-danger mx-1">*</span></label>
-                                    <select name="situation_professionnelle"
-                                        class="form-select  @error('situation_professionnelle') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-professionnelle"
-                                        data-placeholder="Choisir situation professionnelle">
-                                        <option value="{{ $collective->demandeur->user->situation_professionnelle }}">
-                                            {{ $collective->demandeur->user->situation_professionnelle ?? old('situation_professionnelle') }}
-                                        </option>
-                                        <option value="Employé(e)">
-                                            Employé(e)
-                                        </option>
-                                        <option value="Informel">
-                                            Informel
-                                        </option>
-                                        <option value="Elève ou étudiant">
-                                            Elève ou étudiant
-                                        </option>
-                                        <option value="chercheur emploi">
-                                            chercheur emploi
-                                        </option>
-                                        <option value="Stage ou période essai">
-                                            Stage ou période essai
-                                        </option>
-                                        <option value="Entrepreneur ou freelance">
-                                            Entrepreneur ou freelance
-                                        </option>
-                                    </select>
-                                    @error('situation_professionnelle')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="Niveau étude" class="form-label">Niveau étude<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="niveau_etude"
-                                        class="form-select  @error('niveau_etude') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-niveau_etude"
-                                        data-placeholder="Choisir niveau étude">
-                                        <option value="{{ $collective->niveau_etude }}">
-                                            {{ $collective->niveau_etude ?? old('niveau_etude') }}
-                                        </option>
-                                        <option value="Aucun">
-                                            Aucun
-                                        </option>
-                                        <option value="Arabe">
-                                            Arabe
-                                        </option>
-                                        <option value="Elementaire">
-                                            Elementaire
-                                        </option>
-                                        <option value="Secondaire">
-                                            Secondaire
-                                        </option>
-                                        <option value="Moyen">
-                                            Moyen
-                                        </option>
-                                        <option value="Supérieur">
-                                            Supérieur
-                                        </option>
-                                    </select>
-                                    @error('niveau_etude')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="diplome_academique" class="form-label">Diplôme académique<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="diplome_academique"
-                                        class="form-select  @error('diplome_academique') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-diplome_academique"
-                                        data-placeholder="Choisir diplôme académique">
-                                        <option value="{{ $collective->diplome_academique }}">
-                                            {{ $collective->diplome_academique ?? old('diplome_academique') }}
-                                        </option>
-                                        <option value="Aucun">
-                                            Aucun
-                                        </option>
-                                        <option value="Arabe">
-                                            Arabe
-                                        </option>
-                                        <option value="CFEE">
-                                            CFEE
-                                        </option>
-                                        <option value="BFEM">
-                                            BFEM
-                                        </option>
-                                        <option value="BAC">
-                                            BAC
-                                        </option>
-                                        <option value="Licence">
-                                            Licence
-                                        </option>
-                                        <option value="Master 2">
-                                            Master 2
-                                        </option>
-                                        <option value="Doctorat">
-                                            Doctorat
-                                        </option>
-                                        <option value="Autre">
-                                            Autre
-                                        </option>
-                                    </select>
-                                    @error('diplome_academique')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="autre_diplome_academique" class="form-label">Si autre ? précisez</label>
-                                    <input type="text" name="autre_diplome_academique"
-                                        value="{{ $collective->autre_diplome_academique ?? old('autre_diplome_academique') }}"
-                                        class="form-control form-control-sm @error('autre_diplome_academique') is-invalid @enderror"
-                                        id="autre_diplome_academique" placeholder="autre diplôme académique">
-                                    @error('autre_diplome_academique')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="option_diplome_academique" class="form-label">Option du diplôme</label>
-                                    <input type="text" name="option_diplome_academique"
-                                        value="{{ $collective->option_diplome_academique ?? old('option_diplome_academique') }}"
-                                        class="form-control form-control-sm @error('option_diplome_academique') is-invalid @enderror"
-                                        id="option_diplome_academique" placeholder="Ex: Mathématiques">
-                                    @error('option_diplome_academique')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="etablissement_academique" class="form-label">Etablissement
-                                        académique</label>
-                                    <input type="text" name="etablissement_academique"
-                                        value="{{ $collective->etablissement_academique ?? old('etablissement_academique') }}"
-                                        class="form-control form-control-sm @error('etablissement_academique') is-invalid @enderror"
-                                        id="etablissement_academique" placeholder="Etablissement obtention">
-                                    @error('etablissement_academique')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="diplome_pro" class="form-label">Diplôme professionnel<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="diplome_professionnel"
-                                        class="form-select  @error('diplome_professionnel') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-diplome_professionnel"
-                                        data-placeholder="Choisir diplôme professionnel">
-                                        <option value="{{ $collective->diplome_professionnel }}">
-                                            {{ $collective->diplome_professionnel ?? old('diplome_professionnel') }}
-                                        </option>
-                                        <option value="Aucun">
-                                            Aucun
-                                        </option>
-                                        <option value="CAP">
-                                            CAP
-                                        </option>
-                                        <option value="BEP">
-                                            BEP
-                                        </option>
-                                        <option value="BT">
-                                            BT
-                                        </option>
-                                        <option value="BTS">
-                                            BTS
-                                        </option>
-                                        <option value="CPS">
-                                            CPS
-                                        </option>
-                                        <option value="L3 Pro">
-                                            L3 Pro
-                                        </option>
-                                        <option value="DTS">
-                                            DTS
-                                        </option>
-                                        <option value="Autre">
-                                            Autre
-                                        </option>
-                                    </select>
-                                    @error('diplome_professionnel')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="autre_diplome_professionnel" class="form-label">Si autre ?
-                                        précisez</label>
-                                    <input type="text" name="autre_diplome_professionnel"
-                                        value="{{ $collective->autre_diplome_professionnel ?? old('autre_diplome_professionnel') }}"
-                                        class="form-control form-control-sm @error('autre_diplome_professionnel') is-invalid @enderror"
-                                        id="autre_diplome_professionnel"
-                                        placeholder="autre diplôme professionnel ou attestations">
-                                    @error('autre_diplome_professionnel')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="etablissement_professionnel" class="form-label">Etablissement
-                                        professionnel</label>
-                                    <input type="text" name="etablissement_professionnel"
-                                        value="{{ $collective->etablissement_professionnel ?? old('etablissement_professionnel') }}"
-                                        class="form-control form-control-sm @error('etablissement_professionnel') is-invalid @enderror"
-                                        id="etablissement_professionnel" placeholder="Etablissement obtention">
-                                    @error('etablissement_professionnel')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="specialite_diplome_professionnel" class="form-label">Spécialité</label>
-                                    <input type="text" name="specialite_diplome_professionnel"
-                                        value="{{ $collective->specialite_diplome_professionnel ?? old('specialite_diplome_professionnel') }}"
-                                        class="form-control form-control-sm @error('specialite_diplome_professionnel') is-invalid @enderror"
-                                        id="specialite_diplome_professionnel" placeholder="Ex: électricité">
-                                    @error('specialite_diplome_professionnel')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="projet_poste_formation" class="form-label">Votre projet après la
-                                        formation<span class="text-danger mx-1">*</span></label>
-                                    <select name="projet_poste_formation"
-                                        class="form-select  @error('projet_poste_formation') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-projet_poste_formation"
-                                        data-placeholder="Choisir projet poste formation">
-                                        <option value="{{ $collective->projet_poste_formation }}">
-                                            {{ $collective->projet_poste_formation ?? old('projet_poste_formation') }}
-                                        </option>
-                                        <option value="Poursuivre mes études">
-                                            Poursuivre mes études
-                                        </option>
-                                        <option value="Chercher un emploi">
-                                            Chercher un emploi
-                                        </option>
-                                        <option value="Lancer mon entreprise">
-                                            Lancer mon entreprise
-                                        </option>
-                                        <option value="Retourner dans mon entreprise">
-                                            Retourner dans mon entreprise
-                                        </option>
-                                        <option value="Aucun de ces projets">
-                                            Aucun de ces projets
-                                        </option>
-                                    </select>
-                                    @error('projet_poste_formation')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="qualification" class="form-label">Qualification et autres diplômes</label>
-                                    <textarea name="qualification" id="qualification" rows="1"
-                                        class="form-control form-control-sm @error('qualification') is-invalid @enderror"
-                                        placeholder="Qualification et autres diplômes">{{ $collective->qualification ?? old('qualification') }}</textarea>
-                                    @error('qualification')
+                                    <input type="text" name="adresse"
+                                        value="{{ $collective?->adresse ?? old('adresse') }}"
+                                        class="form-control form-control-sm @error('adresse') is-invalid @enderror"
+                                        id="adresse" placeholder="Adresse exacte">
+                                    @error('adresse')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -564,11 +197,21 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                    <label for="experience" class="form-label">Expériences et stages</label>
-                                    <textarea name="experience" id="experience" rows="1"
-                                        class="form-control form-control-sm @error('experience') is-invalid @enderror"
-                                        placeholder="Expériences ou stages">{{ $collective->experience ?? old('experience') }}</textarea>
-                                    @error('experience')
+                                    <label for="module" class="form-label">Formation sollicitée<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="module" class="form-select  @error('module') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-module"
+                                        data-placeholder="Choisir formation">
+                                        <option value="{{ $collective?->module?->name }}">
+                                            {{ $collective?->module?->name ?? old('module') }}
+                                        </option>
+                                        @foreach ($modules as $module)
+                                            <option value="{{ $module->id }}">
+                                                {{ $module->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('module')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -576,12 +219,26 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                    <label for="projetprofessionnel" class="form-label">Informations complémentaires sur
-                                        le projet
-                                        professionnel</label>
+                                    <label for="description" class="form-label">Description de l'organisation<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="description" id="description" rows="2"
+                                        class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                        placeholder="Description de l'organisation, de ses activités et de ses réalisations">{{ $collective?->description ?? old('description') }}</textarea>
+
+                                    @error('description')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="projetprofessionnel" class="form-label">Projet professionnel<span
+                                            class="text-danger mx-1">*</span></label>
                                     <textarea name="projetprofessionnel" id="projetprofessionnel" rows="2"
                                         class="form-control form-control-sm @error('projetprofessionnel') is-invalid @enderror"
-                                        placeholder="Si vous disposez déjà d'un projet professionnel, merci d'écrire son résumé en quelques lignes">{{ $collective->projetprofessionnel ?? old('projetprofessionnel') }}</textarea>
+                                        placeholder="Description détaillée du projet professionnel et de l'effet attendu après la formation">{{ $collective?->projetprofessionnel ?? old('projetprofessionnel') }}</textarea>
+
                                     @error('projetprofessionnel')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -589,15 +246,111 @@
                                     @enderror
                                 </div>
 
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
-                                </div>
-                            </form>
+                                <hr class="dropdown-divider mt-3">
 
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="civilite" class="form-label">Civilité responsable<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="civilite"
+                                        class="form-select form-select-sm @error('civilite') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-civilite"
+                                        data-placeholder="Choisir civilité">
+                                        <option value="{{ $collective->civilite_responsable ?? old('civilite') }}">
+                                            {{ $collective->civilite_responsable ?? old('civilite') }}
+                                        </option>
+                                        <option value="Monsieur">
+                                            Monsieur
+                                        </option>
+                                        <option value="Madame">
+                                            Madame
+                                        </option>
+                                    </select>
+                                    @error('civilite')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="prenom" class="form-label">Prénom responsable<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="prenom"
+                                        value="{{ $collective->prenom_responsable ?? old('prenom') }}"
+                                        class="form-control form-control-sm @error('prenom') is-invalid @enderror"
+                                        id="prenom" placeholder="Prénom responsable">
+                                    @error('prenom')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="nom" class="form-label">Nom responsable<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="nom"
+                                        value="{{ $collective->nom_responsable ?? old('nom') }}"
+                                        class="form-control form-control-sm @error('nom') is-invalid @enderror"
+                                        id="nom" placeholder="Nom responsable">
+                                    @error('nom')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="email_responsable" class="form-label">Adresse e-mail<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="email" name="email_responsable"
+                                        value="{{ $collective->email_responsable ?? old('email_responsable') }}"
+                                        class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
+                                        id="email_responsable" placeholder="Adresse email responsable">
+                                    @error('email_responsable')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="telephone1" class="form-label">Téléphone responsable<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="telephone1"
+                                        value="{{ $collective->telephone1 ?? old('telephone1') }}"
+                                        class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
+                                        id="telephone1" placeholder="Telephone responsable">
+                                    @error('telephone1')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="fonction_responsable" class="form-label">Fonction responsable<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="fonction_responsable"
+                                        value="{{ $collective->fonction_responsable ?? old('fonction_responsable') }}"
+                                        class="form-control form-control-sm @error('fonction_responsable') is-invalid @enderror"
+                                        id="fonction_responsable" placeholder="Fonction responsable">
+                                    @error('fonction_responsable')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                         </div>
+
+                        <div class="text-center p-3">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
     </section>

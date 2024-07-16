@@ -18,6 +18,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $numero
+ * @property string|null $email1
+ * @property string|null $email2
+ * @property string|null $email_responsable
+ * @property string|null $civilite_responsable
+ * @property string|null $prenom_responsable
+ * @property string|null $nom_responsable
+ * @property string|null $fonction_responsable
  * @property string|null $name
  * @property string|null $sigle
  * @property Carbon|null $date_depot
@@ -28,6 +35,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $type
  * @property string|null $adresse
  * @property string|null $telephone
+ * @property string|null $telephone1
+ * @property string|null $telephone2
  * @property string|null $fixe
  * @property string|null $bp
  * @property string|null $fax
@@ -120,6 +129,8 @@ class Collective extends Model
 		'type',
 		'adresse',
 		'telephone',
+		'telephone1',
+		'telephone2',
 		'fixe',
 		'bp',
 		'fax',
@@ -129,6 +140,8 @@ class Collective extends Model
 		'prenom_responsable',
 		'cin_responsable',
 		'telephone_responsable',
+		'email1',
+		'email2',
 		'email_responsable',
 		'fonction_responsable',
 		'experience',

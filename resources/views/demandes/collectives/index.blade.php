@@ -34,29 +34,16 @@
                     <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
                         role="alert"><strong>{{ $error }}</strong></div>
                     @endforeach
-                    {{-- <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
-                        role="alert"><strong>(*), champs obligatoires</strong></div> --}}
                 @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-1">
-                            {{-- @if (isset($demandeur->numero_dossier)) --}}
-                                {{-- <a href="{{ route('collectives.create') }}"
-                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
-                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
-                           {{--  @else
-                                <a class="btn btn-primary float-end btn-rounded"
-                                    href="{{ route('demandeurs.create') }}"><i
-                                        class="bi bi-person-plus" title="Ajouter"></i> </a></a>
-                            @endif --}}
                             <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                 data-bs-target="#AddCollectiveModal">
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
                             </button>
                         </div>
                         <h5 class="card-title">Liste demandes collectives</h5>
-                        {{-- <p>Le tableau des demandes collectives</p> --}}
-                        <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-collectives">
                             <thead>
                                 <tr>

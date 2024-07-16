@@ -18,7 +18,7 @@
                             <div class="row">
                                 <div class="col-sm-12 pt-2">
                                     <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}" class="btn btn-success btn-sm"
+                                            href="{{ route('showIndividuelle', $individuelle->demandeur->id) }}" class="btn btn-success btn-sm"
                                             title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | Dossier personnel</p>
                                     </span>

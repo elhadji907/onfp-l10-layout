@@ -10,7 +10,6 @@ use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -28,15 +27,7 @@ class IndividuelleController extends Controller
 
     public function create()
     {
-        /*  $total_individuelle = Individuelle::where('users_id', Auth::user()->id)->count();
-        if ($total_individuelle >= 5) {
-            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autorisées');
-            return redirect()->back();
-        } else {
-            $departements = Departement::orderBy("created_at", "desc")->get();
-            $modules = Module::orderBy("created_at", "desc")->get();
-            return view("demandes.individuelles.create", compact("departements", "modules"));
-        } */
+        //
     }
 
     public function store(IndividuelleStoreRequest $request): RedirectResponse

@@ -12,7 +12,8 @@ class DemandeurController extends Controller
 {
     public function index()
     {
-        $demandeurs = demandeur::orderBy('created_at', 'desc')->get();
+        $demandeurs = demandeur::where('type', 'individuelle')
+            ->get();
         return view("demandes.index", compact("demandeurs"));
     }
     public function show($id)
