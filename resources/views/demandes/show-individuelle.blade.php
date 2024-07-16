@@ -26,12 +26,10 @@
                                 <p> | Détails</p>
                             </span>
                             @if (isset($demandeur->numero_dossier))
-                                    <button type="button" class="btn btn-info btn-sm">
-                                        <span class="badge bg-white text-info">{{ $individuelle_total }}/5</span>
-                                    </button>
+                                <button type="button" class="btn btn-info btn-sm">
+                                    <span class="badge bg-white text-info">{{ $individuelle_total }}/5</span>
+                                </button>
                             @endif
-                            {{-- <span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i>
-                                {{ $demandes_total }}/5</span> --}}
                             @if (isset($demandeur->numero_dossier))
                                 <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                     data-bs-target="#AddIndividuelleModal">
@@ -90,10 +88,6 @@
                                                 </td>
                                                 <td>
                                                     <span class="d-flex align-items-baseline">
-                                                        {{--  <a class="btn btn-success btn-sm"
-                                                            href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                            class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a> --}}
-
                                                         <a href="{{ route('individuelles.show', $individuelle->id) }}"
                                                             class="btn btn-success btn-sm" title="voir détails"><i
                                                                 class="bi bi-eye"></i></a>
@@ -128,20 +122,12 @@
                                 </table>
                             </form>
                         @else
-                            {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center"> --}}
                             @foreach ($demandeur->individuelles as $individuelle)
-                                {{-- <a type="button" class="btn btn-outline-danger btn-sm"
-                                        href="{{ route('individuelles.edit', $individuelle->id) }}">Cliquez ici pour
-                                        compléter votre première demande</a> --}}
                                 <a href="{{ route('individuelles.edit', $individuelle->id) }}"
                                     class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                             @endforeach
-                            {{-- <span class="badge bg-secondary">
-                                <h6>Informations personnelles</h6>
-                            </span> --}}
                             <h5 class="card-title">Aucune demande individuelle pour le moment !!!</h5>
-                            {{-- </div> --}}
                         @endif
                         <!-- End demande -->
                     </div>
@@ -152,8 +138,6 @@
             <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        {{-- <form method="POST" action="{{ route('addRegion') }}">
-                        @csrf --}}
                         <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
@@ -162,7 +146,7 @@
                                     individuelle</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
-                            </div>                            
+                            </div>
                             <input type="hidden" name="id" value="{{ $demandeur->id }}">
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -316,7 +300,6 @@
                                             </span>
                                         @enderror
                                     </div>
-
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="option_diplome_academique" class="form-label">Option du
                                             diplôme</label>
@@ -330,7 +313,6 @@
                                             </span>
                                         @enderror
                                     </div>
-
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="etablissement_academique" class="form-label">Etablissement
                                             académique</label>
@@ -344,7 +326,6 @@
                                             </span>
                                         @enderror
                                     </div>
-
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="diplome_pro" class="form-label">Diplôme professionnel<span
                                                 class="text-danger mx-1">*</span></label>
