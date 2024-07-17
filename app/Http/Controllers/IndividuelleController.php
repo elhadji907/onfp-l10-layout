@@ -120,8 +120,8 @@ class IndividuelleController extends Controller
         $cin  =   str_replace(' ', '', $cin);
 
         $annee = date('y');
-
         $count_individuelle = Individuelle::get()->count();
+
         if ($count_individuelle > 0) {
             $id         = Individuelle::get()->last()->id;
             $individuelle = Individuelle::findOrFail($id);
@@ -130,7 +130,6 @@ class IndividuelleController extends Controller
         } else {
             $count_individuelle = ++$count_individuelle;
             $longueur = strlen($count_individuelle);
-
             if ($longueur == 1) {
                 $numero_individuelle   =   strtolower("0000" . $count_individuelle);
             } elseif ($longueur >= 2 && $longueur < 3) {
@@ -142,10 +141,10 @@ class IndividuelleController extends Controller
             } else {
                 $numero_individuelle   =   strtolower($count_individuelle);
             }
+            $numero_individuelle = 'C' . $annee . '' . $numero_individuelle;
         }
 
-        $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
-        $numero_demande = 'D' . '' . $numero_individuelle;
+        $numero_Demande = 'D' . '' . $numero_individuelle;
 
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
@@ -173,7 +172,7 @@ class IndividuelleController extends Controller
         $demandeur = new Demandeur([
             'type'                              => 'individuelle',
             "departements_id"                   => $request->input("departement"),
-            'numero_dossier'                    => $numero_demande,
+            'numero_dossier'                    => $numero_Demande,
             'users_id'                          => $user->id,
         ]);
 
@@ -457,7 +456,7 @@ class IndividuelleController extends Controller
         $date = date('dmYHis');
 
         $individuelle->update([
-            'numero'    => $individuelle->numero.''.$date,
+            'numero'    => $individuelle->numero.'-'.$date,
         ]);
 
         $individuelle->save();

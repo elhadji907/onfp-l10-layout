@@ -387,7 +387,7 @@
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
                                             aria-label="Select" id="select-field-module-indiv"
                                             data-placeholder="Choisir formation">
-                                            <option value="{{ old('module') }}">
+                                            <option value="">
                                                 {{ old('module') }}
                                             </option>
                                             @foreach ($modules as $module)
@@ -422,7 +422,7 @@
                                             class="form-select  @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement-indiv"
                                             data-placeholder="Choisir la localité">
-                                            <option value="{{ old('departement') }}">{{ old('departement') }}</option>
+                                            <option value="">{{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
                                                 <option value="{{ $departement->id }}">
                                                     {{ $departement->nom }}

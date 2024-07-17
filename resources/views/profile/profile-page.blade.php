@@ -81,7 +81,7 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('showIndividuelle', $individuelle->demandeur->id) }}"
+                                            <a href="{{ route('showIndividuelle', $individuelle?->demandeur?->id) }}"
                                                 class="btn btn-success btn-sm" title="voir"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
@@ -100,7 +100,7 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('showCollective', $individuelle->demandeur->id) }}" class="btn btn-success btn-sm" title="voir"><i
+                                            <a href="{{ route('showCollective', $collective->demandeur->id) }}" class="btn btn-success btn-sm" title="voir"><i
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>

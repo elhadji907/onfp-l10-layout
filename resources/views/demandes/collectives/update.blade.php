@@ -202,7 +202,7 @@
                                     <select name="module" class="form-select  @error('module') is-invalid @enderror"
                                         aria-label="Select" id="select-field-module"
                                         data-placeholder="Choisir formation">
-                                        <option value="{{ $collective?->module?->name }}">
+                                        <option value="{{ $collective?->module?->id }}">
                                             {{ $collective?->module?->name ?? old('module') }}
                                         </option>
                                         @foreach ($modules as $module)

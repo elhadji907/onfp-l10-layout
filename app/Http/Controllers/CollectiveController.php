@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CollectiveController extends Controller
@@ -130,7 +131,6 @@ class CollectiveController extends Controller
 
         return redirect()->back();
     }
-
     public function addCollective(Request $request)
     {
         $this->validate($request, [
@@ -267,7 +267,6 @@ class CollectiveController extends Controller
             "email_responsable"     =>      ["required", "string"],
         ]);
 
-        
         $annee = date('y');
         $count_collective = Collective::get()->count();
 
@@ -339,7 +338,7 @@ class CollectiveController extends Controller
 
         Alert::success("Enregistrée !", "avec succès");
 
-        return redirect()->back();
+        return Redirect::route("demandeurs.show", compact("demandeur"));
 
     }
 
@@ -358,6 +357,14 @@ class CollectiveController extends Controller
     public function destroy($id)
     {
         $collective   = Collective::find($id);
+
+        $date = date('dmYHis');
+
+        $collective->update([
+            'numero'    => $collective->numero.'-'.$date,
+        ]);
+
+        $collective->save();
 
         $collective->delete();
 
