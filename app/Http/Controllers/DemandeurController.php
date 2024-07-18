@@ -31,8 +31,8 @@ class DemandeurController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
         $demandeur = Demandeur::findOrFail($id);
-        $individuelle_total = $demandeur->individuelles()->count();
-        $collective_total = $demandeur->collectives()->count();
+        $individuelle_total = $demandeur->individuelles()->where('type', 'individuelle')->count();
+        $collective_total = $demandeur->collectives()->where('type', 'collective')->count();
 
         return view("demandes.show-individuelle", compact("demandeur", "individuelle_total", "collective_total", "departements", "modules"));
     }
@@ -41,8 +41,8 @@ class DemandeurController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
         $demandeur = Demandeur::findOrFail($id);
-        $individuelle_total = $demandeur->individuelles()->count();
-        $collective_total = $demandeur->collectives()->count();
+        $individuelle_total = $demandeur->individuelles()->where('type', 'individuelle')->count();
+        $collective_total = $demandeur->collectives()->where('type', 'collective')->count();
 
         return view("demandes.show-collective", compact("demandeur", "individuelle_total", "collective_total", "departements", "modules"));
     }

@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-12 col-lg-12">
+                {{-- <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
 
                         <div class="card-body pb-0">
@@ -73,7 +73,7 @@
                                                 @if (isset($individuelle->numero) && isset($individuelle->modules_id))
                                                     @if ($loop->last)
                                                         <a class="text-primary fw-bold"
-                                                            href="{{ route('showIndividuelle', $individuelle->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                            href="{{ route('showIndividuelle', Auth::user()->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                     @endif
                                                 @else
                                                     <span class="text-primary fw-bold">0</span>
@@ -81,7 +81,7 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('showIndividuelle', $individuelle?->demandeur?->id) }}"
+                                            <a href="{{ route('showIndividuelle', Auth::user()->id) }}"
                                                 class="btn btn-success btn-sm" title="voir"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
@@ -92,7 +92,7 @@
                                                 @if (isset($collective->numero) && isset($collective->modules_id))
                                                     @if ($loop->last)
                                                         <a class="text-primary fw-bold"
-                                                            href="{{ route('showCollective', $collective->demandeur->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                            href="{{ route('showCollective', Auth::user()->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                     @endif
                                                 @else
                                                     <span class="text-primary fw-bold">0</span>
@@ -100,7 +100,7 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('showCollective', $collective->demandeur->id) }}" class="btn btn-success btn-sm" title="voir"><i
+                                            <a href="{{ route('showCollective', Auth::user()->id) }}" class="btn btn-success btn-sm" title="voir"><i
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
@@ -117,7 +117,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             {{-- Fin Photo de profil --}}
 
@@ -181,43 +181,60 @@
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                     <h5 class="card-title">À propos</h5>
                                     <p class="small fst-italic">
-                                        créé, {{ Auth::user()->created_at->diffForHumans() }},
-                                        @if (Auth::user()->created_at !== Auth::user()->updated_at)
+                                        créé, {{ Auth::user()->created_at->diffForHumans() }}
+                                        {{-- @if (Auth::user()->created_at !== Auth::user()->updated_at)
                                             modifié, {{ Auth::user()->updated_at->diffForHumans() }}
                                         @else
                                             jamais modifié
-                                        @endif
+                                        @endif --}}
                                     </p>
                                     <h5 class="card-title">Détail du profils</h5>
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Prénom</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->firstname }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Nom</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->name }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8"><a
-                                                href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a>
+                                    @isset(Auth::user()->username)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Username</div>
+                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->username }}</div>
                                         </div>
-                                    </div>
+                                    @endisset
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                                        <div class="col-lg-9 col-md-8"><a
-                                                href="tel:+221{{ Auth::user()->telephone }}">{{ Auth::user()->telephone }}</a>
+                                    @isset(Auth::user()->firstname)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Prénom</div>
+                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->firstname }}</div>
                                         </div>
-                                    </div>
+                                    @endisset
 
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Adresse</div>
-                                        <div class="col-lg-9 col-md-8">{{ Auth::user()->adresse }}</div>
-                                    </div>
+                                    @isset(Auth::user()->name)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Nom</div>
+                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->name }}</div>
+                                        </div>
+                                    @endisset
+
+                                    @isset(Auth::user()->email)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Email</div>
+                                            <div class="col-lg-9 col-md-8"><a
+                                                    href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a>
+                                            </div>
+                                        </div>
+                                    @endisset
+
+                                    @isset(Auth::user()->telephone)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Téléphone</div>
+                                            <div class="col-lg-9 col-md-8"><a
+                                                    href="tel:+221{{ Auth::user()->telephone }}">{{ Auth::user()->telephone }}</a>
+                                            </div>
+                                        </div>
+                                    @endisset
+
+                                    @isset(Auth::user()->adresse)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Adresse</div>
+                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->adresse }}</div>
+                                        </div>
+                                    @endisset
                                 </div>
                             </div>
                             {{-- Fin aperçu --}}

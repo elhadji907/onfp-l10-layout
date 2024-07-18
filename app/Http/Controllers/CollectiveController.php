@@ -76,8 +76,7 @@ class CollectiveController extends Controller
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
 
-
-        /*    $user = new User([
+        /*$user = new User([
             'firstname'             =>      $request->input("name"),
             'name'                  =>      $request->input("sigle"),
             'email'                 =>      $request->input('email'),
@@ -89,7 +88,6 @@ class CollectiveController extends Controller
             'created_by'            =>      Auth::user()->id,
             'updated_by'            =>      Auth::user()->id
         ]);
-
         $user->save(); */
 
         $demandeur = new Demandeur([
@@ -269,11 +267,11 @@ class CollectiveController extends Controller
 
         $annee = date('y');
         $count_collective = Collective::get()->count();
+        $id         = Collective::get()->last()->id;
+        $collective = Collective::findOrFail($id);
+        $numero     = $collective?->numero;
 
-        if ($count_collective > 0) {
-            $id         = Collective::get()->last()->id;
-            $collective = Collective::findOrFail($id);
-            $numero     = $collective?->numero;
+        if ($count_collective > 0 && isset($numero)) {
             $numero_collective  = ++$numero;
         } else {
             $count_collective = ++$count_collective;
@@ -292,7 +290,7 @@ class CollectiveController extends Controller
             $numero_collective = 'C' . $annee . '' . $numero_collective;
         }
 
-        $numero_Demande = 'D' . '' . $numero_collective;
+        $numero_Demande = 'D' . '' . $annee . '' . $numero_collective;
 
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;

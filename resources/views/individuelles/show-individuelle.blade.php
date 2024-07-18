@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails')
+@section('title', 'Demande individuelle')
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -23,24 +23,23 @@
                             <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Détails</p>
+                                <p> | Profil</p>
                             </span>
-                            @if (isset($demandeur->numero_dossier))
+                            @if ($individuelle_total > 0)
                                 <button type="button" class="btn btn-info btn-sm">
                                     <span class="badge bg-white text-info">{{ $individuelle_total }}/5</span>
                                 </button>
                             @endif
-                            @if (isset($demandeur->numero_dossier))
+                            @if ($individuelle_total > 0)
                                 <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                     data-bs-target="#AddIndividuelleModal">
                                     <i class="bi bi-person-plus" title="Ajouter"></i>
                                 </button>
                             @endif
                         </div>
-                        @if (isset($demandeur->numero_dossier))
+                        @if ($individuelle_total > 0)
                             <h5 class="card-title">
-                                Bienvenue {{ $demandeur?->user?->civilite . ' ' . $demandeur?->user?->name }},
-                                n° dossier : {{ $demandeur?->numero_dossier }}</h5>
+                                Bienvenue {{ Auth::user()->civilite . ' ' . Auth::user()->name }}</h5>
                             <!-- demande -->
                             <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                 <table class="table table-borderless">
@@ -58,75 +57,75 @@
                                     <tbody>
                                         {{-- @foreach (Auth::user()->individuelles as $individuelle) --}}
                                         @foreach ($demandeur->individuelles as $individuelle)
-                                            <tr>
-                                                <td>{{ $individuelle->numero }}</td>
-                                                <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                                <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
-                                                </td>
-                                                <td>{{ $individuelle->module->name }}</td>
-                                                <td>{{ $individuelle?->region?->nom }}</td>
-                                                <td>
-                                                    @isset($individuelle?->statut)
-                                                        @if ($individuelle?->statut == 'attente')
-                                                            <span
-                                                                class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @elseif ($individuelle?->statut == 'accepter')
-                                                            <span
-                                                                class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @elseif ($individuelle?->statut == 'rejeter')
-                                                            <span
-                                                                class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @else
-                                                            <span
-                                                                class="badge bg-warning text-white">{{ $individuelle?->statut }}
-                                                            </span>
-                                                        @endif
-                                                    @endisset
-                                                </td>
-                                                <td>
-                                                    <span class="d-flex align-items-baseline">
-                                                        <a href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                            class="btn btn-success btn-sm" title="voir détails"><i
-                                                                class="bi bi-eye"></i></a>
-                                                        <div class="filter">
-                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                    class="bi bi-three-dots"></i></a>
-                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                <li><a class="dropdown-item btn btn-sm"
-                                                                        href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                                        class="mx-1" title="Modifier"><i
-                                                                            class="bi bi-pencil"></i>Modifier</a>
-                                                                </li>
-                                                                <li>
-                                                                    <form
-                                                                        action="{{ route('individuelles.destroy', $individuelle->id) }}"
-                                                                        method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="dropdown-item show_confirm"
-                                                                            title="Supprimer"><i
-                                                                                class="bi bi-trash"></i>Supprimer</button>
-                                                                    </form>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </span>
-                                                </td>
-                                            </tr>
+                                            @isset($individuelle->numero)
+                                                <tr>
+                                                    <td>{{ $individuelle->numero }}</td>
+                                                    <td>{{ $individuelle->demandeur->user?->cin }}</td>
+                                                    <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
+                                                    </td>
+                                                    <td>{{ $individuelle?->module?->name }}</td>
+                                                    <td>{{ $individuelle?->region?->nom }}</td>
+                                                    <td>
+                                                        @isset($individuelle?->statut)
+                                                            @if ($individuelle?->statut == 'attente')
+                                                                <span
+                                                                    class="badge bg-secondary text-white">{{ $individuelle?->statut }}
+                                                                </span>
+                                                            @elseif ($individuelle?->statut == 'accepter')
+                                                                <span
+                                                                    class="badge bg-success text-white">{{ $individuelle?->statut }}
+                                                                </span>
+                                                            @elseif ($individuelle?->statut == 'rejeter')
+                                                                <span
+                                                                    class="badge bg-danger text-white">{{ $individuelle?->statut }}
+                                                                </span>
+                                                            @else
+                                                                <span
+                                                                    class="badge bg-warning text-white">{{ $individuelle?->statut }}
+                                                                </span>
+                                                            @endif
+                                                        @endisset
+                                                    </td>
+                                                    <td>
+                                                        <span class="d-flex align-items-baseline">
+                                                            <a href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                class="btn btn-success btn-sm" title="voir détails"><i
+                                                                    class="bi bi-eye"></i></a>
+                                                            <div class="filter">
+                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                        class="bi bi-three-dots"></i></a>
+                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                    <li><a class="dropdown-item btn btn-sm"
+                                                                            href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                            class="mx-1" title="Modifier"><i
+                                                                                class="bi bi-pencil"></i>Modifier</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"
+                                                                                title="Supprimer"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endisset
                                         @endforeach
                                     </tbody>
                                 </table>
                             </form>
                         @else
-                            @foreach ($demandeur->individuelles as $individuelle)
-                                <a href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
-                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                            @endforeach
+                            <a href="{{ route('individuelles.create') }}"
+                                class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
+                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                             <h5 class="card-title">Aucune demande individuelle pour le moment !!!</h5>
                         @endif
                         <!-- End demande -->
@@ -147,7 +146,6 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <input type="hidden" name="id" value="{{ $demandeur->id }}">
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">

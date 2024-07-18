@@ -36,54 +36,58 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'prenom'                => ['required', 'string', 'max:50'],
-            'name'                  => ['required', 'string', 'max:25'],
+            /* 'prenom'                => ['required', 'string', 'max:50'], */
+            'username'              => ['required', 'string', 'max:150'],
             'email'                 => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'telephone'             => ['required', 'string', 'max:25', 'min:9'],
+            /* 'telephone'             => ['required', 'string', 'max:25', 'min:9'], */
             /* 'adresse'               => ['required', 'string', 'max:255'], */
-            'date_naissance'        => ['required', 'date'],
-            'lieu_naissance'        => ['required', 'string', 'max:50'],
+            /* 'date_naissance'        => ['required', 'date'],
+            'lieu_naissance'        => ['required', 'string', 'max:50'], */
             'password'              => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'firstname' => $request->prenom,
-            'name' => $request->name,
+            /* 'firstname' => $request->prenom,
+            'laststname' => $request->nom, */
+            'username' => $request->username,
             'email' => $request->email,
-            'telephone' => $request->telephone,
+            /* 'telephone' => $request->telephone,
             'date_naissance' => $request->date_naissance,
-            'lieu_naissance' => $request->lieu_naissance,
+            'lieu_naissance' => $request->lieu_naissance, */
             'password' => Hash::make($request->password),
         ]);
 
-        $demandeur = Demandeur::create([
+        /*     $demandeur = Demandeur::create([
             'users_id' => $user->id,
         ]);
 
         $individuelle = Individuelle::create([
             'demandeurs_id' => $demandeur->id,
+            'statut' => 'attente',
             'users_id' => $user->id,
         ]);
 
         $collective = Collective::create([
             'demandeurs_id' => $demandeur->id,
+            'statut' => 'attente',
             'users_id' => $user->id,
         ]);
 
         $pcharge = Pcharge::create([
             'demandeurs_id' => $demandeur->id,
+            'statut' => 'attente',
             'users_id' => $user->id,
-        ]);
+        ]); */
 
-        Alert::success('Félicitations ! ' . $user->firstname . ' ' . $user->name, ' Votre compte est créé, introduisez vos identifiants pour vous connecter.');
+        Alert::success('Félicitations ! ' . $user->name, ' Votre compte est créé, introduisez vos identifiants pour vous connecter.');
 
         $user->assignRole('Demandeur');
 
         event(new Registered($user));
-        event(new Registered($demandeur));
+        /* event(new Registered($demandeur));
         event(new Registered($individuelle));
         event(new Registered($collective));
-        event(new Registered($pcharge));
+        event(new Registered($pcharge)); */
 
         /* Se connecter automatiquement après inscription */
         /* Auth::login($user); */

@@ -168,6 +168,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/showIndividuelle/{id}', [DemandeurController::class, 'showIndividuelle'])->name('showIndividuelle');
     Route::get('/showCollective/{id}', [DemandeurController::class, 'showCollective'])->name('showCollective');
 
+    Route::get('/demandesIndividuelles', [IndividuelleController::class, 'demandesIndividuelle'])->name('demandesIndividuelle');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

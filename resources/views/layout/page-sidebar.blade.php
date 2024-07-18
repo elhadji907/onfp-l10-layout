@@ -250,7 +250,7 @@
                 @if (auth()->user()->hasRole('Demandeur'))
                     <li class="nav-item">
                         <a class="nav-link collapsed"
-                            href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}">
+                            href="{{ route('demandesIndividuelle') }}">
                             <span>Individuelles</span>
                         </a>
                     </li><!-- End individuelles Nav -->

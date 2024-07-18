@@ -77,7 +77,7 @@
                                     action="{{ route('register') }}">
                                     @csrf
                                     <!-- Prénom -->
-                                    <div class="col-6">
+                                    {{-- <div class="col-6">
                                         <label for="prenom" class="form-label">Prénom</label>
                                         <input type="text" name="prenom"
                                             class="form-control form-control-sm @error('prenom') is-invalid @enderror"
@@ -88,10 +88,10 @@
                                                 {{ $message }}
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <!-- Nom -->
-                                    <div class="col-6">
+                                    {{-- <div class="col-6">
                                         <label for="name" class="form-label">Nom</label>
                                         <input type="text" name="name"
                                             class="form-control form-control-sm @error('name') is-invalid @enderror"
@@ -102,9 +102,9 @@
                                                 {{ $message }}
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <!-- Date naissance -->
-                                    <div class="col-6">
+                                   {{--  <div class="col-6">
                                         <label for="date_naissance" class="form-label">Date naissance</label>
                                         <input type="date" name="date_naissance"
                                             class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
@@ -115,10 +115,10 @@
                                                 {{ $message }}
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <!-- Lieu naissance -->
-                                    <div class="col-6">
+                                    {{-- <div class="col-6">
                                         <label for="lieu_naissance" class="form-label">Lieu naissance</label>
                                         <input type="text" name="lieu_naissance"
                                             class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
@@ -129,10 +129,24 @@
                                                 {{ $message }}
                                             @enderror
                                         </div>
+                                    </div> --}}
+                                    
+                                    <!-- Username -->
+                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" name="username"
+                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                            id="username" required placeholder="Votre username"
+                                            value="{{ old('username') }}" autocomplete="username">
+                                        <div class="invalid-feedback">
+                                            @error('username')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <!-- Addresse E-mail -->
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <label for="email" class="form-label">E-mail</label>
                                         <div class="input-group has-validation">
                                             {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
@@ -149,7 +163,7 @@
                                     </div>
 
                                     <!-- Telephone -->
-                                    <div class="col-6">
+                                   {{--  <div class="col-6">
                                         <label for="telephone" class="form-label">Téléphone</label>
                                         <input type="text" name="telephone"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
@@ -160,7 +174,7 @@
                                                 {{ $message }}
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <!-- Adresse -->
                                     {{-- <div class="col-12">
@@ -179,7 +193,7 @@
                                     </div> --}}
 
                                     <!-- Mot de passe -->
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <label for="password" class="form-label">Mot de passe</label>
                                         <input type="password" name="password"
                                             class="form-control form-control-sm @error('password') is-invalid @enderror"
@@ -193,7 +207,7 @@
                                     </div>
 
                                     <!-- Mot de passe de confirmation -->
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <label for="password_confirmation" class="form-label">Confirmez mot de
                                             passe</label>
                                         <input type="password" name="password_confirmation"

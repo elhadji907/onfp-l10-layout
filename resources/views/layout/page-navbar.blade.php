@@ -124,14 +124,25 @@
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                 {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
                 <img class="rounded-circle" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}">
-                <span
-                    class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->civilite . ' ' . Auth::user()->name }}</span>
+                <span class="d-none d-md-block dropdown-toggle ps-2">
+                    @if (Auth::user()->name)
+                        {{ Auth::user()->civilite . ' ' . Auth::user()->name }}
+                    @else
+                        {{ Auth::user()->username }}
+                    @endif
+                </span>
             </a><!-- End Profile Iamge Icon -->
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
-                    <h6>{{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}</h6>
-                    <span style="color: blue;">{{ Auth::user()->email }}</span>
+                    <h6>
+                        @if (Auth::user()->name)
+                            {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
+                        @else
+                            {{ Auth::user()->username }}
+                        @endif
+                    </h6>
+                    <span><a href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a></span>
                     {{-- @foreach (Auth::user()->roles as $role)
                         <span>{{ $role->name }}</span>
                     @endforeach --}}
@@ -182,7 +193,8 @@
                     </form> --}}
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
-                        <button type="submit" class="dropdown-item show_confirm_disconnect"><i class="bi bi-trash"></i>Se
+                        <button type="submit" class="dropdown-item show_confirm_disconnect"><i
+                                class="bi bi-trash"></i>Se
                             déconnecter</button>
                     </form>
                 </li>

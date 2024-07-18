@@ -44,7 +44,7 @@
                                 <tr>
                                     <th></th>
                                     {{-- <th>N°</th> --}}
-                                    <th>Prénom & Nom</th>
+                                    <th>Username</th>
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
                                     <th>Roles</th>
@@ -62,7 +62,7 @@
                                             </a>
                                         </th>
                                         {{-- <td>{{ $i++ }}</td> --}}
-                                        <td>{{ $user->civilite }} {{ $user->firstname }} {{ $user->name }}</td>
+                                        <td>{{ $user->username }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->telephone }}</td>
                                         <td>

@@ -10,6 +10,7 @@ use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -158,7 +159,7 @@ class IndividuelleController extends Controller
             'lieu_naissance'                    => $request->input('lieu_naissance'),
             'email'                             => $request->input('email'),
             'telephone'                         => $request->input('telephone'),
-            'telephone_secondaire'              =>  $request->input('telephone_secondaire'),
+            'telephone_secondaire'              => $request->input('telephone_secondaire'),
             'situation_familiale'               => $request->input('situation_familiale'),
             'situation_professionnelle'         => $request->input('situation_professionnelle'),
             'adresse'                           => $request->input('adresse'),
@@ -198,7 +199,7 @@ class IndividuelleController extends Controller
             "regions_id"                        =>  $regionid,
             "modules_id"                        =>  $request->input("module"),
             'autre_module'                      =>  $request->input('autre_module'),
-            'statut'                             => 'attente',
+            'statut'                            => 'attente',
             'users_id'                          =>  $user->id,
             'demandeurs_id'                     =>  $user->demandeur->id
         ]);
@@ -255,10 +256,10 @@ class IndividuelleController extends Controller
         $date_depot =   date('Y-m-d');
 
         $count_individuelle = Individuelle::get()->count();
-        if ($count_individuelle > 0) {
-            $id         = Individuelle::get()->last()->id;
-            $individuelle = Individuelle::findOrFail($id);
-            $numero     = $individuelle?->numero;
+        $id         = Individuelle::get()->last()->id;
+        $individuelle = Individuelle::findOrFail($id);
+        $numero     = $individuelle?->numero;
+        if ($count_individuelle > 0 && isset($numero)) {
             $numero_individuelle  = ++$numero;
         } else {
             $count_individuelle = ++$count_individuelle;
@@ -275,10 +276,10 @@ class IndividuelleController extends Controller
             } else {
                 $numero_individuelle   =   strtolower($count_individuelle);
             }
+            $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
         }
 
-        $numero_individuelle = 'I' . $annee . '' . $numero_individuelle;
-        $numero_demande = 'D' . '' . $numero_individuelle;
+        $numero_demande = 'D' . '' . $annee . '' . $numero_individuelle;
 
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
@@ -471,5 +472,16 @@ class IndividuelleController extends Controller
     {
         $individuelle = Individuelle::findOrFail($id);
         return view("demandes.individuelles.validationsrejetmessage", compact('individuelle'));
+    }
+
+    public function demandesIndividuelle()
+    {
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        $user = Auth::user();
+        $individuelle = Individuelle::where('users_id', $user->id)->get();
+        $individuelle_total = $individuelle->count();
+
+        return view("individuelles.show-individuelle", compact("individuelle_total", "departements", "modules"));
     }
 }

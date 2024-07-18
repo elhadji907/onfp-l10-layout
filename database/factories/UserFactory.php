@@ -30,17 +30,17 @@ class UserFactory extends Factory
 
         return [
             /* 'civilite' => $gender, */
-            'firstname' => fake()->name(),
-            'name' => fake()->name(),
-            'telephone' => $this->faker->unique(true)->numberBetween(70, 79) . rand(10, 99) . rand(10, 99) . rand(0, 9) . rand(0, 9) . rand(0, 9),
+            /* 'firstname' => fake()->name(),
+            'name' => fake()->name(), */
+            /* 'telephone' => $this->faker->unique(true)->numberBetween(70, 79) . rand(10, 99) . rand(10, 99) . rand(0, 9) . rand(0, 9) . rand(0, 9),
             'adresse' => fake()->address(),
-            'lieu_naissance' => fake()->address(),
+            'lieu_naissance' => fake()->address(), */
             'email' => fake()->unique()->safeEmail(),
             'username' => $faker->username,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'date_naissance' => $faker->date($format = 'Y-m-d', $max = '-20 years'),
+            /* 'date_naissance' => $faker->date($format = 'Y-m-d', $max = '-20 years'), */
         ];
     }
 
