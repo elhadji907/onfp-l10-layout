@@ -72,14 +72,14 @@
                                                                 </span>
                                                                 @enderror{{ $individuelle?->numero }}
                                                             </td>
-                                                            <td>{{ $individuelle->demandeur->user?->civilite }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->firstname }}</td>
-                                                            <td>{{ $individuelle->demandeur->user?->name }}</td>
-                                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}
+                                                            <td>{{ $individuelle?->user?->civilite }}</td>
+                                                            <td>{{ $individuelle?->user?->cin }}</td>
+                                                            <td>{{ $individuelle?->user?->firstname }}</td>
+                                                            <td>{{ $individuelle?->user?->name }}</td>
+                                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
                                                             </td>
-                                                            <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
-                                                            <td>{{ $individuelle->demandeur->user->adresse }}</td>
+                                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                                            <td>{{ $individuelle?->user->adresse }}</td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline"><a
                                                                         href="{{ route('individuelles.show', $individuelle->id) }}"

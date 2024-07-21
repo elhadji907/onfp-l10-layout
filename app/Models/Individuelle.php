@@ -251,85 +251,85 @@ class Individuelle extends Model
 
 	public function antenne()
 	{
-		return $this->belongsTo(Antenne::class, 'antennes_id');
+		return $this->belongsTo(Antenne::class, 'antennes_id')->latest();
 	}
 
 	public function arrondissement()
 	{
-		return $this->belongsTo(Arrondissement::class, 'arrondissements_id');
+		return $this->belongsTo(Arrondissement::class, 'arrondissements_id')->latest();
 	}
 
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'users_id');
+		return $this->belongsTo(User::class, 'users_id')->latest();
 	}
 	public function commune()
 	{
-		return $this->belongsTo(Commune::class, 'communes_id');
+		return $this->belongsTo(Commune::class, 'communes_id')->latest();
 	}
 
 	public function convention()
 	{
-		return $this->belongsTo(Convention::class, 'conventions_id');
+		return $this->belongsTo(Convention::class, 'conventions_id')->latest();
 	}
 
 	public function demandeur()
 	{
-		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
+		return $this->belongsTo(Demandeur::class, 'demandeurs_id')->latest();
 	}
 
 	public function departement()
 	{
-		return $this->belongsTo(Departement::class, 'departements_id');
+		return $this->belongsTo(Departement::class, 'departements_id')->latest();
 	}
 
 	public function diplome()
 	{
-		return $this->belongsTo(Diplome::class, 'diplomes_id');
+		return $this->belongsTo(Diplome::class, 'diplomes_id')->latest();
 	}
 
 	public function diplomespro()
 	{
-		return $this->belongsTo(Diplomespro::class, 'diplomespros_id');
+		return $this->belongsTo(Diplomespro::class, 'diplomespros_id')->latest();
 	}
 
 	public function etude()
 	{
-		return $this->belongsTo(Etude::class, 'etudes_id');
+		return $this->belongsTo(Etude::class, 'etudes_id')->latest();
 	}
 
 	public function formation()
 	{
-		return $this->belongsTo(Formation::class, 'formations_id');
+		return $this->belongsTo(Formation::class, 'formations_id')->latest();
 	}
 
 	public function localite()
 	{
-		return $this->belongsTo(Localite::class, 'localites_id');
+		return $this->belongsTo(Localite::class, 'localites_id')->latest();
 	}
 
 	public function module()
 	{
-		return $this->belongsTo(Module::class, 'modules_id');
+		return $this->belongsTo(Module::class, 'modules_id')->latest();
 	}
 
 	public function programme()
 	{
-		return $this->belongsTo(Programme::class, 'programmes_id');
+		return $this->belongsTo(Programme::class, 'programmes_id')->latest();
 	}
 
 	public function projet()
 	{
-		return $this->belongsTo(Projet::class, 'projets_id');
+		return $this->belongsTo(Projet::class, 'projets_id')->latest();
 	}
 
 	public function region()
 	{
-		return $this->belongsTo(Region::class, 'regions_id');
+		return $this->belongsTo(Region::class, 'regions_id')->latest();
 	}
 
 	public function zone()
 	{
-		return $this->belongsTo(Zone::class, 'zones_id');
+		return $this->belongsTo(Zone::class, 'zones_id')->latest();
 	}
 }

@@ -25,16 +25,7 @@
             <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
             </h4>
             <p>
-                @if ($validationindividuelle->action == 'Attente')
-                    <span class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                @elseif ($validationindividuelle->action == 'Validée')
-                    <span class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                @elseif ($validationindividuelle->action == 'Rejetée')
-                    <span class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
-                    @else
-                    <span class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                @endif
-                {{-- {{ $validationindividuelle->action }} --}}
+                <span class="{{ $validationindividuelle->action }}">{{ $validationindividuelle->action }}</span>
             </p>
         </div>
         {{-- @endif --}}

@@ -225,8 +225,11 @@ class UserController extends Controller
             $user_create_name = $user_create->firstname . " " . $user_create->firstname;
             $user_update_name = $user_update->firstname . " " . $user_update->firstname;
         }
+        
+        $roles = Role::pluck('name', 'name')->all();
+        $userRoles = $user->roles->pluck('name', 'name')->all();
 
-        return view("user.show", compact("user", "user_create_name", "user_update_name"));
+        return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles"));
     }
 
     public function destroy($userId)

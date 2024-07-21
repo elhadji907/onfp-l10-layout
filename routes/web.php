@@ -161,7 +161,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
 
-
     Route::post('/addIndividuelle', [IndividuelleController::class, 'addIndividuelle'])->name('addIndividuelle');
     Route::post('/addCollective', [CollectiveController::class, 'addCollective'])->name('addCollective');
 

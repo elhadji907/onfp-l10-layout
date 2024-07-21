@@ -82,7 +82,7 @@
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td><a href="#">{{ $formation?->statut }}</a></td>
+                                        <td><a href="#"><span class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a></td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('formations.show', $formation->id) }}"

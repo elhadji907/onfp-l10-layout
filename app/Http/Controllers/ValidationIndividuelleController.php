@@ -13,23 +13,28 @@ class ValidationIndividuelleController extends Controller
     public function update($id)
     {
         $individuelle   = Individuelle::findOrFail($id);
+        if ($individuelle->statut == 'accepter') {
+            Alert::warning('Désolez !', 'demande déjà validée');
+        } elseif ($individuelle->statut == 'programmer') {
+            Alert::warning('Désolez !', 'demande déjà programmée');
+        } else {
+            $individuelle->update([
+                'statut'             => 'accepter',
+                'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+            ]);
 
-        $individuelle->update([
-            'statut'             => 'accepter',
-            'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
-        ]);
+            $individuelle->save();
 
-        $individuelle->save();
+            $validated_by = new Validationindividuelle([
+                'validated_id'       =>       Auth::user()->id,
+                'action'             =>      'accepter',
+                'individuelles_id'   =>      $individuelle->id
+            ]);
 
-        $validated_by = new Validationindividuelle([
-            'validated_id'       =>       Auth::user()->id,
-            'action'             =>      'accepter',
-            'individuelles_id'   =>      $individuelle->id
-        ]);
+            $validated_by->save();
 
-        $validated_by->save();
-
-        Alert::success('La demande de ' . $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name, 'est acceptée');
+            Alert::success('Félicitation !', 'demande acceptée');
+        }
 
         /* return redirect()->back()->with("status", "Demande validée"); */
         return redirect()->back();
@@ -43,25 +48,33 @@ class ValidationIndividuelleController extends Controller
 
         $individuelle   = Individuelle::findOrFail($id);
 
-        $individuelle->update([
-            'statut'                => 'rejeter',
-            'canceled_by'           =>  Auth::user()->firstname . ' ' . Auth::user()->name,
-        ]);
+        if ($individuelle->statut == 'rejeter') {
+            Alert::warning('Désolez !', 'demande déjà rejetée');
+        }  elseif ($individuelle->statut == 'programmer') {
+            Alert::warning('Désolez !', 'demande déjà programmée');
+        } else {
+            $individuelle->update([
+                'statut'                => 'rejeter',
+                'canceled_by'           =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+            ]);
 
-        $individuelle->save();
+            $individuelle->save();
 
-        $validated_by = new Validationindividuelle([
-            'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'rejeter',
-            'motif'              =>      $request->input('motif'),
-            'individuelles_id'   =>      $individuelle->id
-        ]);
+            $validated_by = new Validationindividuelle([
+                'validated_id'       =>      Auth::user()->id,
+                'action'             =>      'rejeter',
+                'motif'              =>      $request->input('motif'),
+                'individuelles_id'   =>      $individuelle->id
+            ]);
 
-        $validated_by->save();
+            $validated_by->save();
 
-        Alert::success('La demande de ' . $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name, 'est rejetée');
+            Alert::success('Fait ! ', 'demande rejetée');
+        }
+
+
+
 
         return redirect()->back();
     }
-
 }

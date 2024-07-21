@@ -1,7 +1,6 @@
 @extends('layout.user-layout')
 @section('title', 'ONFP - demandes individuelles')
 @section('space-work')
-
     <div class="pagetitle">
         {{-- <h1>Data Tables</h1> --}}
         <nav>
@@ -44,7 +43,7 @@
                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                             @else
                                 <a class="btn btn-primary float-end btn-rounded"
-                                    href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}"><i
+                                    href="{{ route('demandeurs.show', Auth::user()->id) }}"><i
                                         class="bi bi-person-plus" title="Ajouter"></i> </a></a>
                             @endif --}}
                             <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
@@ -75,33 +74,21 @@
                                         <tr>
                                             <td>{{ $individuelle?->numero }}
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
+                                            <td>{{ $individuelle->user?->cin }}</td>
+                                            <td>{{ $individuelle->user?->firstname . ' ' . $individuelle->user?->name }}
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
+                                            <td>{{ $individuelle->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->user->lieu_naissance }}
                                             </td>
                                             <td>{{ $individuelle->module?->name }}</td>
                                             <td>{{ $individuelle->region?->nom }}</td>
                                             <td>
-                                                @isset($individuelle?->statut)
-                                                    @if ($individuelle?->statut == 'attente')
-                                                        <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @elseif ($individuelle?->statut == 'accepter')
-                                                        <span class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @elseif ($individuelle?->statut == 'rejeter')
-                                                        <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @else
-                                                        <span class="badge bg-warning text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @endif
-                                                @endisset
+                                                <span class="{{ $individuelle?->statut }}">
+                                                    {{ $individuelle?->statut }}
+                                                </span>
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
+                                                        href="{{ route('individuelles.show', $individuelle->id) }}"
                                                         class="btn btn-primary btn-sm" title="voir détails"><i
                                                             class="bi bi-eye"></i></a>
                                                     <div class="filter">
@@ -743,9 +730,9 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
-            "order": [
-                [0, 'desc']
-            ],
+            /*  "order": [
+                 [0, 'asc']
+             ], */
             language: {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",

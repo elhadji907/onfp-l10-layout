@@ -62,7 +62,7 @@ class CreateCollectivesTable extends Migration
             $table->string('telephone_responsable', 45)->nullable();
             $table->string('email_responsable', 45)->nullable();
             $table->string('fonction_responsable', 200)->nullable();
-            $table->unsignedInteger('demandeurs_id');
+            $table->unsignedInteger('demandeurs_id')->nullable();
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('formations_id')->nullable();
             $table->unsignedInteger('departements_id')->nullable();

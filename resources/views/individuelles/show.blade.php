@@ -21,8 +21,7 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="d-flex mt-2 align-items-baseline"><a
-                                        href="{{ route('demandeurs.show', $individuelle->demandeur->id) }}"
+                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('demandesIndividuelle') }}"
                                         class="btn btn-secondary btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Détails</p>
@@ -31,57 +30,20 @@
                                     <nav class="header-nav ms-auto">
                                         <ul class="d-flex align-items-center">
                                             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                                {{--  @if ($individuelle?->statut == 'attente')
-                                                    <span
-                                                        class="badge bg-warning badge-number">{{ $individuelle?->statut }}</span>
-                                                @endif --}}
                                                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                                                     <i class="bi bi-chat-left-text m-1"></i>
                                                     <span class="badge bg-success badge-number"
                                                         title="{{ $individuelle?->statut }}">{{ $individuelle->validationindividuelles->count() }}</span>
                                                 </a>
-
-                                                {{-- @if ($individuelle?->statut == 'accepter')
-                                                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                                        <i class="bi bi-chat-left-text"></i>
-                                                        <span class="badge bg-success badge-number">3</span>
-                                                    </a> --}}
-                                                <!-- End Messages Icon -->
-                                                {{-- <button type="submit" class="btn btn-success btn-sm text-white"><i
-                                                            class="bi bi-eye"></i>
-                                                        {{ $individuelle?->statut }}
-                                                    </button> --}}
-                                                {{--  <span
-                                                        class="badge bg-info badge-number">{{ $individuelle?->statut }}</span> --}}
-                                                {{-- @endif --}}
-                                                {{-- @if ($individuelle?->statut == 'rejeter')
-                                                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                                        <i class="bi bi-chat-left-text m-1"></i>
-                                                        <span class="badge bg-success badge-number"
-                                                            title="{{ $individuelle?->statut }}">{{ $individuelle->validationindividuelles->count() }}</span>
-                                                    </a> --}}
-                                                <!-- End Messages Icon -->
-                                                {{-- <span
-                                                        class="badge bg-danger badge-number">{{ $individuelle?->statut }}</span> --}}
-                                                {{-- <button type="submit" class="btn btn-danger btn-sm text-white"><i
-                                                            class="bi bi-eye"></i>
-                                                        {{ $individuelle?->statut }}</button> --}}
-                                                {{-- @endif --}}
-                                            </a><!-- End Notification Icon -->
-
+                                            </a>
+                                            <!-- End Notification Icon -->
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                                                 <li class="dropdown-header">
-                                                    @if ($individuelle->validationindividuelles->count() == '0')
-                                                        Aucune validation pour le moment
-                                                    @else
-                                                        Vous avez
-                                                        {{ $individuelle->validationindividuelles->count() . ' validation(s)' }}
-                                                    @endif
-                                                    @if ($individuelle->validationindividuelles->count() != '0')
-                                                        <a href="{{ url('validationsRejetMessage/' . $individuelle->id) }}"><span
-                                                                class="badge rounded-pill bg-primary p-2 ms-2">Voir
-                                                                toutes</span></a>
-                                                    @endif
+                                                    Vous avez
+                                                    {{ $individuelle->validationindividuelles->count() . ' validation(s)' }}
+                                                    <a href="{{ url('validationsRejetMessage/' . $individuelle->id) }}"><span
+                                                            class="badge rounded-pill bg-primary p-2 ms-2">Voir
+                                                            toutes</span></a>
                                                 </li>
                                                 <li>
                                                     <hr class="dropdown-divider">
@@ -90,7 +52,6 @@
                                                 @foreach ($individuelle->validationindividuelles as $count => $validationindividuelle)
                                                     @if ($count < 2)
                                                         <li class="message-item">
-                                                            {{-- <i class="bi bi-exclamation-circle text-warning"></i> --}}
                                                             <a
                                                                 href="{{ url('validationsRejetMessage/' . $individuelle->id) }}">
                                                                 <img src="{{ asset($validationindividuelle->user->getImage()) }}"
@@ -98,8 +59,10 @@
                                                                 <div>
                                                                     <h4>{{ $validationindividuelle->user->firstname . ' ' . $validationindividuelle->user->name }}
                                                                     </h4>
-                                                                    <p>
-                                                                        @if ($validationindividuelle->action == 'attente')
+                                                                    <p><span class="{{ $validationindividuelle->action }}">
+                                                                            {{ $validationindividuelle->action }}
+                                                                        </span>
+                                                                        {{-- @if ($validationindividuelle->action == 'attente')
                                                                             <span
                                                                                 class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
                                                                         @elseif ($validationindividuelle->action == 'accepter')
@@ -112,8 +75,7 @@
                                                                         @else
                                                                             <span
                                                                                 class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
-                                                                        @endif
-                                                                        {{-- {{ $validationindividuelle->action }} --}}
+                                                                        @endif --}}
                                                                     </p>
                                                                     <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
                                                                 </div>
@@ -136,64 +98,26 @@
                                     </nav>
                                 </span>
                                 @if (auth()->user()->hasRole('super-admin'))
-                                    {{-- @if ($individuelle?->statut == 'accepter')
-                                        <button type="button" class="btn btn-danger btn-sm text-white"
-                                            data-bs-toggle="modal" data-bs-target="#AddRegionModal"><i
-                                                class="bi bi-x"></i>Rejeter
-                                        </button>
-                                    @elseif($individuelle?->statut == 'rejeter')
-                                        <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
-                                            method="post">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="button"
-                                                class="btn btn-success btn-sm text-white show_confirm_valider"><i
-                                                    class="bi bi-x"></i>Accepter</button>
-                                        </form>
-                                    @elseif($individuelle?->statut == 'attente')
-                                        <form action="{{ route('validation-individuelles.update', $individuelle->id) }}"
-                                            method="post">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="button"
-                                                class="btn btn-success btn-sm text-white show_confirm_valider"><i
-                                                    class="bi bi-x"></i>Accepter</button>
-                                        </form>
-                                    @else
-                                        <form action="#"
-                                            method="post">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="button"
-                                                class="btn btn-warning btn-sm text-white"><i
-                                                    class="bi bi-x"></i>Retirer</button>
-                                        </form>
-                                    @endif --}}
-
                                     <span class="d-flex align-items-baseline">
-                                        @if ($individuelle?->statut == 'accepter')
-                                            <button
-                                                class="btn btn-success btn-sm text-white">{{ $individuelle->statut }}</button>
-                                        @elseif($individuelle?->statut == 'rejeter')
-                                            <button
-                                                class="btn btn-danger btn-sm text-white">{{ $individuelle->statut }}</button>
-                                        @elseif($individuelle?->statut == 'attente')
-                                            <button
-                                                class="btn btn-secondary btn-sm text-white">{{ $individuelle->statut }}</button>
-                                        @else
-                                            <button
-                                                class="btn btn-warning btn-sm text-white">{{ $individuelle->statut }}</button>
-                                        @endif
+                                        <span class="{{ $individuelle->statut }}">{{ $individuelle->statut }}</span>
                                         <div class="filter">
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                     class="bi bi-three-dots"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                @if ($individuelle?->statut == 'accepter')
-                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                        data-bs-target="#AddRegionModal">Rejeter
-                                                    </button>
-                                                @elseif($individuelle?->statut == 'rejeter')
-                                                    <form
+                                                <form
+                                                    action="{{ route('validation-individuelles.update', $individuelle->id) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
+                                                </form>
+                                                {{-- @if ($individuelle?->statut == 'accepter') --}}
+                                                <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                    data-bs-target="#RejetDemandeModal">Rejeter
+                                                </button>
+                                                {{-- @elseif($individuelle?->statut == 'rejeter') --}}
+                                                {{--  @elseif($individuelle?->statut == 'attente') --}}
+                                                {{-- <form
                                                         action="{{ route('validation-individuelles.update', $individuelle->id) }}"
                                                         method="post">
                                                         @csrf
@@ -201,22 +125,13 @@
                                                         <button
                                                             class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
                                                     </form>
-                                                @elseif($individuelle?->statut == 'attente')
-                                                    <form
-                                                        action="{{ route('validation-individuelles.update', $individuelle->id) }}"
-                                                        method="post">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button
-                                                            class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
-                                                    </form>
                                                     <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                        data-bs-target="#AddRegionModal">Rejeter
-                                                    </button>
-                                                @else
-                                                    <button class="btn btn-sm mx-1">Aucune action
-                                                        possible</button>
-                                                @endif
+                                                        data-bs-target="#RejetDemandeModal">Rejeter
+                                                    </button> --}}
+                                                {{-- @else --}}
+                                                {{-- <button class="btn btn-sm mx-1">Aucune action
+                                                        possible</button> --}}
+                                                {{-- @endif --}}
                                             </ul>
                                         </div>
                                     </span>
@@ -229,52 +144,52 @@
                                     @method('PUT')
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Civilité</div>
-                                        <div>{{ $individuelle->demandeur->user?->civilite }}</div>
+                                        <div>{{ $individuelle->user?->civilite }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">N° CIN</div>
-                                        <div>{{ $individuelle->demandeur->user?->cin }}</div>
+                                        <div>{{ $individuelle->user?->cin }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Prénom</div>
-                                        <div>{{ $individuelle->demandeur->user->firstname }}</div>
+                                        <div>{{ $individuelle->user->firstname }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Nom</div>
-                                        <div>{{ $individuelle->demandeur->user->name }}</div>
+                                        <div>{{ $individuelle->user->name }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div for="date_naissance" class="label">Date naissance</div>
-                                        <div>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}</div>
+                                        <div>{{ $individuelle->user->date_naissance?->format('d/m/Y') }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Lieu naissance</div>
-                                        <div>{{ $individuelle->demandeur->user->lieu_naissance }}</div>
+                                        <div>{{ $individuelle->user->lieu_naissance }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Adresse</div>
-                                        <div>{{ $individuelle->demandeur->user->adresse }}</div>
+                                        <div>{{ $individuelle->user->adresse }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Email</div>
-                                        <div>{{ $individuelle->demandeur->user->email }}</div>
+                                        <div>{{ $individuelle->user->email }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Téléphone personnel</div>
-                                        <div>{{ $individuelle->demandeur->user->telephone }}</div>
+                                        <div>{{ $individuelle->user->telephone }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Téléphone secondaire</div>
-                                        <div>{{ $individuelle->demandeur->user->telephone_secondaire }}</div>
+                                        <div>{{ $individuelle->fixe }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
@@ -294,12 +209,12 @@
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Situation familiale</div>
-                                        <div>{{ $individuelle->demandeur->user->situation_familiale }}</div>
+                                        <div>{{ $individuelle->user->situation_familiale }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Situation professionnelle</div>
-                                        <div>{{ $individuelle->demandeur->user->situation_professionnelle }}</div>
+                                        <div>{{ $individuelle->user->situation_professionnelle }}</div>
                                     </div>
 
 
@@ -377,17 +292,14 @@
                                     </div>
                                 </form>
                             </div>
-                            {{-- @include('demandes.individuelles.validationModal') --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="AddRegionModal" tabindex="-1">
+        <div class="modal fade" id="RejetDemandeModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {{-- <form method="POST" action="{{ route('addRegion') }}">
-                        @csrf --}}
                     <form method="post" action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"
                         enctype="multipart/form-data" class="row">
                         @csrf

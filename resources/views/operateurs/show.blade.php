@@ -279,6 +279,8 @@
                                                             <td>{{ $operateurmodule->niveau_qualification }}</td>
                                                             <td>{{ $operateurmodule->domaine }}</td>
                                                             <td>
+                                                                <span
+                                                                    class="{{ $operateurmodule->statut }}">{{ $operateurmodule->statut }}</span>
                                                                 {{-- @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
                                                                     @if ($loop->last)
                                                                         <span
@@ -286,7 +288,7 @@
                                                                     @endif
                                                                 @endforeach --}}
 
-                                                                @if ($operateurmodule?->statut == 'agréer')
+                                                                {{-- @if ($operateurmodule?->statut == 'agréer')
                                                                     <button
                                                                         class="btn btn-success btn-sm text-white">{{ $operateurmodule->statut }}</button>
                                                                 @elseif($operateurmodule?->statut == 'rejeter')
@@ -298,7 +300,7 @@
                                                                 @else
                                                                     <button
                                                                         class="btn btn-warning btn-sm text-white">{{ $operateurmodule->statut }}</button>
-                                                                @endif
+                                                                @endif --}}
                                                             </td>
                                                             {{--     <td>
                                                                 @isset($individuelle?->statut)
@@ -339,40 +341,39 @@
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
                                                                             </button>
-                                                                            @if ($operateurmodule?->statut == 'agréer')
+                                                                            <form
+                                                                                action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('PUT')
                                                                                 <button
-                                                                                    class="dropdown-item btn btn-sm mx-1"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
-                                                                                </button>
-                                                                            @elseif($operateurmodule?->statut == 'rejeter')
-                                                                                <form
+                                                                                    class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
+                                                                            </form>
+                                                                            {{--  @if ($operateurmodule?->statut == 'agréer') --}}
+                                                                            <button class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
+                                                                            </button>
+                                                                            {{-- @elseif($operateurmodule?->statut == 'rejeter') --}}
+                                                                            {{-- @elseif($operateurmodule?->statut == 'attente') --}}
+                                                                            {{-- <form
                                                                                     action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                     method="post">
                                                                                     @csrf
                                                                                     @method('PUT')
                                                                                     <button
                                                                                         class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
-                                                                                </form>
-                                                                            @elseif($operateurmodule?->statut == 'attente')
-                                                                                <form
-                                                                                    action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('PUT')
-                                                                                    <button
-                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
-                                                                                </form>
-                                                                                <button
+                                                                                </form> --}}
+                                                                            {{-- <button
                                                                                     class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
                                                                                     data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
-                                                                                </button>
-                                                                            @else
-                                                                                {{-- <button class="btn btn-sm mx-1">Aucune
+                                                                                </button> --}}
+                                                                            {{-- @else --}}
+                                                                            {{-- <button class="btn btn-sm mx-1">Aucune
                                                                                     action
                                                                                     possible</button> --}}
-                                                                            @endif
+                                                                            {{--  @endif --}}
                                                                             {{-- <li>
                                                                                 <button type="button"
                                                                                     class="dropdown-item btn btn-sm mx-1"
@@ -432,7 +433,11 @@
                                                             @endif
                                                         @endforeach
                                                     </td>
-                                                    <td><a href="#">{{ $formation?->statut }}</a></td>
+                                                    <td><a href="#">
+                                                            <span
+                                                                class="{{ $formation?->statut }}">{{ $formation?->statut }}</span>
+                                                        </a>
+                                                    </td>
                                                     <td>
                                                         <span class="d-flex align-items-baseline"><a
                                                                 href="{{ route('formations.show', $formation->id) }}"

@@ -231,7 +231,7 @@ class FormationController extends Controller
             $individuelle = Individuelle::findOrFail($individuelle);
             $individuelle->update([
                 "formations_id"      =>  $idformation,
-                "statut"             =>  'Programmer',
+                "statut"             =>  'programmer',
             ]);
 
             $individuelle->save();
@@ -239,7 +239,7 @@ class FormationController extends Controller
 
         $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'Programmer',
+            'action'             =>      'programmer',
             'individuelles_id'   =>      $individuelle->id
         ]);
 
@@ -322,7 +322,7 @@ class FormationController extends Controller
 
         $formation->update([
             "operateurs_id"      =>  $request->input('operateur'),
-            "statut"             =>  'Programmer',
+            "statut"             =>  'programmer',
         ]);
 
         $formation->save();
@@ -359,7 +359,7 @@ class FormationController extends Controller
 
         $formation->update([
             "modules_id"      =>  $request->input('module'),
-            "statut"             =>  'Programmer',
+            "statut"             =>  'programmer',
         ]);
 
         $formation->save();
@@ -395,7 +395,7 @@ class FormationController extends Controller
 
         $formation->update([
             "modules_id"      =>  $request->input('module'),
-            "statut"          =>  'Programmer',
+            "statut"          =>  'programmer',
         ]);
 
         $formation->save();

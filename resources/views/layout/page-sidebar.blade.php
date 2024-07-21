@@ -224,11 +224,7 @@
             </a>
             <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 @if (auth()->user()->hasRole('super-admin'))
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandeurs') }}">
-                            <span>Demandeurs</span>
-                        </a>
-                    </li><!-- End individuelles Nav -->
+                   
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('individuelles') }}">
                             <span>Individuelles</span>

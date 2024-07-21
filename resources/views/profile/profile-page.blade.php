@@ -23,7 +23,13 @@
                             <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}"
                                 width="50" height="auto">
 
-                            <h2>{{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}</h2>
+                            <h2>
+                                @if (isset(Auth::user()->name))
+                                    {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
+                                @else
+                                    {{ Auth::user()->username }}
+                                @endif
+                            </h2>
                             <span><a href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a></span>
                             {{-- <h3>
                             @foreach (Auth::user()->roles as $role)
@@ -33,7 +39,7 @@
                             <div class="social-links mt-2">
                                 @isset(Auth::user()->twitter)
                                     <a href="{{ Auth::user()->twitter }}" class="twitter" target="_blank"><i
-                                            class="bi bi-twitter"></i></a>
+                                            class="bi bi-x-twitter"></i></a>
                                 @endisset
                                 @isset(Auth::user()->facebook)
                                     <a href="{{ Auth::user()->facebook }}" class="facebook" target="_blank"><i
@@ -188,7 +194,21 @@
                                             jamais modifié
                                         @endif --}}
                                     </p>
-                                    <h5 class="card-title">Détail du profils</h5>
+                                    <h5 class="card-title">Informations personnelles :
+                                        @if (isset(Auth::user()->cin))
+                                            <span class="badge bg-success text-white">Complètes</span>
+                                        @else
+                                            <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
+                                            modifier profil pour complèter
+                                        @endif
+                                    </h5>
+
+                                    @isset(Auth::user()->cin)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">CIN</div>
+                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->cin }}</div>
+                                        </div>
+                                    @endisset
 
                                     @isset(Auth::user()->username)
                                         <div class="row">
@@ -273,6 +293,43 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {{-- CIN --}}
+                                        <div class="row mb-3">
+                                            <label for="cin" class="col-md-4 col-lg-3 col-form-label">CIN<span
+                                                    class="text-danger mx-1">*</span>
+                                            </label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="pt-2">
+                                                    <input name="cin" type="text"
+                                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                                        id="cin" value="{{ $user->cin ?? old('cin') }}"
+                                                        autocomplete="cin" placeholder="Votre cin">
+                                                </div>
+                                                @error('cin')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- Username --}}
+                                        <div class="row mb-3">
+                                            <label for="username" class="col-md-4 col-lg-3 col-form-label">Username<span
+                                                    class="text-danger mx-1">*</span>
+                                            </label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="pt-2">
+                                                    <input name="username" type="text"
+                                                        class="form-control form-control-sm @error('username') is-invalid @enderror"
+                                                        id="username" value="{{ $user->username ?? old('username') }}"
+                                                        autocomplete="username" placeholder="Votre username">
+                                                </div>
+                                                @error('username')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                         {{-- Civilité --}}
                                         <div class="row mb-3">
                                             <label for="Civilité" class="col-md-4 col-lg-3 col-form-label">Civilité<span
