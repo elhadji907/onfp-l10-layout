@@ -189,6 +189,12 @@ class IndividuelleController extends Controller
 
         $user->save();
 
+        $user->update([
+            'username'                          => $request->input('name').''.$user->id,
+        ]);
+
+        $user->save();
+
         $user->assignRole('Demandeur');
 
         $individuelle = new Individuelle([
@@ -216,8 +222,6 @@ class IndividuelleController extends Controller
         ]);
 
         $individuelle->save();
-
-        $demandeur = $individuelle->demandeur;
 
         Alert::success('Enregistrée ! ', 'demande ajoutée avec succès');
 

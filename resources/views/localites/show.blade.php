@@ -32,14 +32,15 @@
                                         <tr>
                                             <td><span class="badge bg-default text-dark">{{ $individuelle?->numero }}</span>
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
+                                            <td>{{ $individuelle?->user?->cin }}</td>
+                                            <td>{{ $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
+                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle?->user->lieu_naissance }}
                                             </td>
                                             <td>{{ $individuelle->module?->name }}</td>
                                             <td>
-                                                @isset($individuelle?->statut)
+                                                <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                               {{--  @isset($individuelle?->statut)
                                                     @if ($individuelle?->statut == 'Attente')
                                                     <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
                                                         </span>
@@ -52,7 +53,7 @@
                                                         <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
                                                         </span>
                                                     @endif
-                                                @endisset
+                                                @endisset --}}
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a

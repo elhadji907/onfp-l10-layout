@@ -22,7 +22,7 @@ class CollectiveController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $communes = Commune::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
-        return view('demandes.collectives.index', compact('collectives', 'departements', 'communes', 'modules'));
+        return view('collectives.index', compact('collectives', 'departements', 'communes', 'modules'));
     }
     public function store(Request $request)
     {
@@ -345,7 +345,7 @@ class CollectiveController extends Controller
         $collective = Collective::findOrFail($id);
         $departements = Departement::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
-        return view("demandes.collectives.update", compact("collective", "departements", "modules"));
+        return view("collectives.update", compact("collective", "departements", "modules"));
     }
     public function show($id)
     {

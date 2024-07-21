@@ -66,11 +66,12 @@
                                             </td>
                                             <td>{{ $collective?->name }}</td>
                                             <td>{{ $collective?->sigle }}</td>
-                                            <td>{{ $collective?->demandeur?->user?->telephone }}</td>
+                                            <td>{{ $collective?->user?->telephone }}</td>
                                             <td>{{ $collective->module?->name }}</td>
                                             <td>{{ $collective->departement?->region?->nom }}</td>
                                             <td>
-                                                @isset($collective?->statut_demande)
+                                                <span class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
+                                                {{-- @isset($collective?->statut_demande)
                                                     @if ($collective?->statut_demande == 'attente')
                                                         <span class="badge bg-secondary text-white">{{ $collective?->statut_demande }}
                                                         </span>
@@ -84,7 +85,7 @@
                                                         <span class="badge bg-warning text-white">{{ $collective?->statut_demande }}
                                                         </span>
                                                     @endif
-                                                @endisset
+                                                @endisset --}}
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a

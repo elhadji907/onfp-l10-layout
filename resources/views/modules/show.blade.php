@@ -34,10 +34,10 @@
                                         <tr>
                                             <td>{{ $individuelle?->numero }}
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->firstname . ' ' . $individuelle->demandeur->user?->name }}
+                                            <td>{{ $individuelle?->user?->cin }}</td>
+                                            <td>{{ $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->demandeur->user->lieu_naissance }}
+                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle?->user->lieu_naissance }}
                                             </td>
                                             <td><a
                                                     href="{{ url('modulelocalite', ['$idlocalite' => $individuelle->departement->id, '$idmodule' => $module?->id]) }}">{{ $individuelle->departement->nom }}</a>
@@ -45,7 +45,8 @@
                                             <td>
                                                 <a href="{{ url('modulestatut', ['$statut' => $individuelle->statut, '$idmodule' => $module?->id]) }}">
                                                     @isset($individuelle?->statut)
-                                                        @if ($individuelle?->statut == 'Attente')
+                                                    <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                                       {{--  @if ($individuelle?->statut == 'Attente')
                                                             {{ $individuelle?->statut }}
                                                         @endif
                                                         @if ($individuelle?->statut == 'Validée')
@@ -53,7 +54,7 @@
                                                         @endif
                                                         @if ($individuelle?->statut == 'Rejetée')
                                                             {{ $individuelle?->statut }}
-                                                        @endif
+                                                        @endif --}}
                                                     @endisset
                                                 </a>
                                             </td>

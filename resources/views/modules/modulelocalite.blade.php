@@ -37,8 +37,8 @@
                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                             @else
                                 <a class="btn btn-primary float-end btn-rounded"
-                                    href="{{ route('demandeurs.show', Auth::user()->demandeur->id) }}"><i
-                                        class="bi bi-person-plus" title="Ajouter"></i> </a></a>
+                                    href="{{ route('demandeurs.show', Auth::user()?->id) }}"><i class="bi bi-person-plus"
+                                        title="Ajouter"></i> </a></a>
                             @endif
                         </div>
                         <h5 class="card-title">{{ $localite->nom . ': ' . $module->name }}</h5>
@@ -66,19 +66,21 @@
                                         <tr>
                                             <td>{{ $individuelle?->numero }}
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->firstname }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->name }}</td>
-                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}</td>
-                                            <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->adresse }}</td>
+                                            <td>{{ $individuelle?->user?->cin }}</td>
+                                            <td>{{ $individuelle?->user?->firstname }}</td>
+                                            <td>{{ $individuelle?->user?->name }}</td>
+                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</td>
+                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                            <td>{{ $individuelle?->user?->adresse }}</td>
                                             <td><a
-                                                    href="tel:+221{{ $individuelle->demandeur->user->telephone }}">{{ $individuelle->demandeur->user->telephone }}</a>
+                                                    href="tel:+221{{ $individuelle?->user->telephone }}">{{ $individuelle?->user->telephone }}</a>
                                             </td>
                                             <td>
                                                 <a
                                                     href="{{ url('modulelocalitestatut', ['$idlocalite' => $individuelle->departement->id, '$idmodule' => $module?->id, '$statut' => $individuelle->statut]) }}">
-                                                    @isset($individuelle?->statut)
+                                                    <span
+                                                        class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                                    {{--   @isset($individuelle?->statut)
                                                         @if ($individuelle?->statut == 'Attente')
                                                             {{ $individuelle?->statut }}
                                                         @endif
@@ -88,7 +90,7 @@
                                                         @if ($individuelle?->statut == 'Rejetée')
                                                             {{ $individuelle?->statut }}
                                                         @endif
-                                                    @endisset
+                                                    @endisset --}}
                                                 </a>
                                             </td>
                                             <td>

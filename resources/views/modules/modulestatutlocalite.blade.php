@@ -31,7 +31,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-end">
-                            @if ($statut == 'Attente')
+                            <span class="{{ $statut }}">{{ $statut }}</span>
+                           {{--  @if ($statut == 'Attente')
                                 <span class="badge bg-secondary text-white">{{ $statut }}
                                 </span>
                             @endif
@@ -42,7 +43,7 @@
                             @if ($statut == 'Rejetée')
                                 <span class="badge bg-danger text-white">{{ $statut }}
                                 </span>
-                            @endif
+                            @endif --}}
                         </div>
                         <h5 class="card-title">{{ $localite->nom . ': ' . $module->name }}</h5>
                         {{-- <p>Le tableau des demandes individuelles</p> --}}
@@ -68,14 +69,14 @@
                                         <tr>
                                             <td>{{ $individuelle?->numero }}
                                             </td>
-                                            <td>{{ $individuelle->demandeur->user?->cin }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->firstname }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->name }}</td>
-                                            <td>{{ $individuelle->demandeur->user->date_naissance?->format('d/m/Y') }}</td>
-                                            <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
-                                            <td>{{ $individuelle->demandeur->user?->adresse }}</td>
+                                            <td>{{ $individuelle?->user?->cin }}</td>
+                                            <td>{{ $individuelle?->user?->firstname }}</td>
+                                            <td>{{ $individuelle?->user?->name }}</td>
+                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</td>
+                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                            <td>{{ $individuelle?->user?->adresse }}</td>
                                             <td><a
-                                                    href="tel:+221{{ $individuelle->demandeur->user->telephone }}">{{ $individuelle->demandeur->user->telephone }}</a>
+                                                    href="tel:+221{{ $individuelle?->user->telephone }}">{{ $individuelle?->user->telephone }}</a>
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
