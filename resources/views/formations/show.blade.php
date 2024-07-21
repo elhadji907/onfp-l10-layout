@@ -77,7 +77,9 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5 class="card-title">Détails formation</h5>
+                                        <h5>Détails formation : <span class="{{ $formation?->statut }}">
+                                                {{ $formation?->statut }}</span>
+                                        </h5>
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Intitulé formation</div>
                                             <div>{{ $formation?->name }}</div>

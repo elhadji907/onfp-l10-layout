@@ -349,7 +349,8 @@ class CollectiveController extends Controller
     }
     public function show($id)
     {
-        //
+        $collective = Collective::findOrFail($id);
+        return view('collectives.show', compact('collective'));
     }
 
     public function destroy($id)

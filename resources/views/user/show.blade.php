@@ -450,6 +450,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="newPassword" value="{{ $user->password }}">
                                         {{-- Roles --}}
                                         <div class="row mb-3">
                                             <label for="roles" class="col-md-4 col-lg-3 col-form-label">Roles</label>

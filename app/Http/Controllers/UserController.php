@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -158,10 +159,10 @@ class UserController extends Controller
                 'image' => $imagePath
             ]);
         }
-        if ($request->password) {
+        if (isset($request->password)) {
             $password = Hash::make($request->password);
             $user->update([
-                'password'                  => $password,
+                'password'                  =>  $password,
                 'civilite'                  =>  $request->civilite,
                 'firstname'                 =>  $request->firstname,
                 'name'                      =>  $request->name,
@@ -190,7 +191,7 @@ class UserController extends Controller
                 'email'                     =>  $request->email,
                 'telephone'                 =>  $request->telephone,
                 'adresse'                   =>  $request->adresse,
-                'password'                  =>  $request->newPassword,
+                /* 'password'                  =>  $request->newPassword, */
                 'twitter'                   =>  $request->twitter,
                 'facebook'                  =>  $request->facebook,
                 'instagram'                 =>  $request->instagram,
@@ -203,9 +204,12 @@ class UserController extends Controller
 
         $user->syncRoles($request->roles);
 
-        $status = 'Mise à jour effectuée avec succès';
+        Alert::success('Effectuée ! ', 'Mise à jour effectuée');
+        
+       /*  $status = 'Mise à jour effectuée avec succès'; */
 
-        return Redirect::route('user.index')->with('status', $status);
+        /* return Redirect::route('user.index')->with('status', $status); */
+        return Redirect::route('user.index');
     }
 
     public function show($id)
@@ -237,7 +241,12 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
         $user->roles()->detach();
         $user->delete();
-        $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
-        return redirect()->back()->with("danger", $mesage);
+
+        /* $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
+        return redirect()->back()->with("danger", $mesage); */
+        
+        Alert::success('Fait ! '.$user->firstname . ' ' . $user->name , 'a été(e) supprimé(e)');
+
+        return redirect()->back();
     }
 }
