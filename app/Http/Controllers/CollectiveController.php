@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collective;
+use App\Models\Collectivemodule;
 use App\Models\Commune;
 use App\Models\Demandeur;
 use App\Models\Departement;
@@ -367,7 +368,8 @@ class CollectiveController extends Controller
     public function show($id)
     {
         $collective = Collective::findOrFail($id);
-        return view('collectives.show', compact('collective'));
+        $collectivemodules = Collectivemodule::where("collectives_id", $id)->get();
+        return view('collectives.show', compact('collective', 'collectivemodules'));
     }
 
     public function destroy($id)

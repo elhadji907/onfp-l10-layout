@@ -45,7 +45,7 @@
                         {{-- @endcan --}}
                         <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                             data-bs-target="#AddIndividuelModal">
-                            <i class="bi bi-person-plus" title="Ajouter"></i>
+                            <i class="bi bi-plus" title="Ajouter"></i>
                         </button>
                         <h5 class="card-title">Modules</h5>
                         <table class="table datatables align-middle justify-content-center" id="table-modules">

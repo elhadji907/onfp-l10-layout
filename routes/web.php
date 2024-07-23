@@ -5,6 +5,7 @@ use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CollectiveController;
+use App\Http\Controllers\CollectivemoduleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CourrierController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\FormationController;
 use App\Http\Controllers\IndemniteController;
 use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\InterneController;
+use App\Http\Controllers\ListecollectiveController;
 use App\Http\Controllers\LocaliteController;
 use App\Http\Controllers\LoiController;
 use App\Http\Controllers\ModuleController;
@@ -175,6 +177,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/addDomaine', [DomaineController::class, 'addDomaine'])->name('addDomaine');
 
+    Route::post('/addcollectiveModule', [CollectivemoduleController::class, 'addcollectiveModule'])->name('addcollectiveModule');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -213,6 +217,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/domaines', DomaineController::class);
     Route::resource('/secteurs', SecteurController::class);
+    Route::resource('/collectivemodules', CollectivemoduleController::class);
+    Route::resource('/listecollectives', ListecollectiveController::class);
 });
 
 

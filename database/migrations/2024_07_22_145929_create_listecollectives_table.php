@@ -22,11 +22,13 @@ return new class extends Migration
             $table->string('date_naissance')->nullable();
             $table->string('lieu_naissance')->nullable();
             $table->string('niveau_etude')->nullable();
+            $table->string('telephone')->nullable();
             $table->string('experience')->nullable();
             $table->string('autre_experience')->nullable();
             $table->longText('details')->nullable();
             $table->string('statut')->nullable();
             $table->unsignedInteger('collectives_id')->nullable();
+            $table->unsignedInteger('collectivemodules_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
@@ -44,7 +46,6 @@ return new class extends Migration
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
-
         });
     }
 

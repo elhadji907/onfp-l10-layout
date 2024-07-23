@@ -170,6 +170,16 @@ class Collective extends Model
 		'modules_id'
 	];
 
+	
+	public function collectivemodules()
+	{
+		return $this->hasMany(Collectivemodule::class, 'collectives_id');
+	}
+	
+	public function listecollectives()
+	{
+		return $this->hasMany(Listecollective::class, 'collectives_id');
+	}
 	public function antenne()
 	{
 		return $this->belongsTo(Antenne::class, 'antennes_id');
