@@ -224,7 +224,6 @@
             </a>
             <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 @if (auth()->user()->hasRole('super-admin'))
-                   
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('individuelles') }}">
                             <span>Individuelles</span>
@@ -245,8 +244,7 @@
                 @endif
                 @if (auth()->user()->hasRole('Demandeur'))
                     <li class="nav-item">
-                        <a class="nav-link collapsed"
-                            href="{{ route('demandesIndividuelle') }}">
+                        <a class="nav-link collapsed" href="{{ route('demandesIndividuelle') }}">
                             <span>Individuelles</span>
                         </a>
                     </li><!-- End individuelles Nav -->
@@ -308,42 +306,56 @@
             </li><!-- End Courriers Nav -->
         @endif
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('modules') }}">
-                <i class="bi bi-layers-half"></i>
-                <span>Modules</span>
-            </a>
-        </li><!-- End utilisateurs Nav -->
+        @if (auth()->user()->hasRole('super-admin'))
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('modules') }}">
+                    <i class="bi bi-layers-half"></i>
+                    <span>Modules</span>
+                </a>
+            </li><!-- End utilisateurs Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('domaines') }}">
+                    <i class="bi bi-layers-half"></i>
+                    <span>Domaines</span>
+                </a>
+            </li><!-- End utilisateurs Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('secteurs') }}">
+                    <i class="bi bi-layers-half"></i>
+                    <span>Secteurs</span>
+                </a>
+            </li><!-- End utilisateurs Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('formations') }}">
-                <i class="bi bi-folder-symlink-fill"></i>
-                <span>Formations</span>
-            </a>
-        </li><!-- End Formations Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('formations') }}">
+                    <i class="bi bi-folder-symlink-fill"></i>
+                    <span>Formations</span>
+                </a>
+            </li><!-- End Formations Nav -->
 
-        <li class="nav-heading">Opérateurs</li>
-        {{-- Formations --}}
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-people-fill"></i><span>Opérateurs</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="operateur-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('operateurs') }}">
-                        <span>Opérateurs</span>
-                    </a>
-                </li><!-- End operateurs Nav -->
+            <li class="nav-heading">Opérateurs</li>
+            {{-- Formations --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-people-fill"></i><span>Opérateurs</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="operateur-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('operateurs') }}">
+                            <span>Opérateurs</span>
+                        </a>
+                    </li><!-- End operateurs Nav -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
-                        <span>Modules</span>
-                    </a>
-                </li><!-- End operateurmodules Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
+                            <span>Modules</span>
+                        </a>
+                    </li><!-- End operateurmodules Nav -->
 
-            </ul>
-        </li><!-- End Formations Nav -->
-
+                </ul>
+            </li><!-- End Formations Nav -->
+        @endif
         @if (auth()->user()->hasRole('super-admin'))
             <li class="nav-heading">EMPLOYES</li>
 

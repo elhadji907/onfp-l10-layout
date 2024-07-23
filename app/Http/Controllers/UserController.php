@@ -122,17 +122,19 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $this->validate($request, [
-            'civilite' => ['nullable', 'string', 'max:10'],
-            'firstname' => ['required', 'string', 'max:150'],
-            'name' => ['required', 'string', 'max:50'],
-            'date_naissance' => ['string', 'nullable'],
-            'lieu_naissance' => ['string', 'nullable'],
-            'image' => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'telephone' => ['required', 'string', 'max:25', 'min:9'],
-            'adresse' => ['required', 'string', 'max:255'],
-            'password' => ['string', 'max:255', 'nullable'],
-            'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
-            "email" => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
+            'civilite'         => ['nullable', 'string', 'max:10'],
+            'username'         => ['required', 'string', 'max:150'],
+            "cin"              => ["required", "string", "min:13", "max:15", Rule::unique(User::class)->ignore($id)],
+            'firstname'        => ['required', 'string', 'max:150'],
+            'name'             => ['required', 'string', 'max:50'],
+            'date_naissance'   => ['string', 'nullable'],
+            'lieu_naissance'   => ['string', 'nullable'],
+            'image'            => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'telephone'        => ['required', 'string', 'max:25', 'min:9'],
+            'adresse'          => ['required', 'string', 'max:255'],
+            'password'         => ['string', 'max:255', 'nullable'],
+            'roles.*'          => ['string', 'max:255', 'nullable', 'max:255'],
+            "email"            => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
         ]);
 
         if (request('image')) {
@@ -164,6 +166,8 @@ class UserController extends Controller
             $user->update([
                 'password'                  =>  $password,
                 'civilite'                  =>  $request->civilite,
+                'username'                  =>  $request->username,
+                'cin'                       =>  $request->cin,
                 'firstname'                 =>  $request->firstname,
                 'name'                      =>  $request->name,
                 'date_naissance'            =>  $request->date_naissance,
@@ -182,6 +186,8 @@ class UserController extends Controller
         } else {
             $user->update([
                 'civilite'                  =>  $request->civilite,
+                'username'                  =>  $request->username,
+                'cin'                       =>  $request->cin,
                 'firstname'                 =>  $request->firstname,
                 'name'                      =>  $request->name,
                 'date_naissance'            =>  $request->date_naissance,

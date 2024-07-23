@@ -136,12 +136,12 @@
                             {{-- <a href="{{ route('individuelles.create') }}"
                                 class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
-                            @isset(Auth::user()->cin)
+                            {{-- @isset(Auth::user()->cin)
                                 <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                     data-bs-target="#AddIndividuelModal">
                                     <i class="bi bi-person-plus" title="Ajouter"></i>
                                 </button>
-                            @endisset
+                            @endisset --}}
                             @if (isset(Auth::user()->cin))
                                 <h5 class="card-title">Aucune demande individuelle pour le moment !!</h5>
                             @else

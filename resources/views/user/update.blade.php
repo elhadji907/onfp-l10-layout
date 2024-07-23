@@ -54,6 +54,33 @@
                                         </span>
                                     @enderror
                                 </div>
+                                
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="cin" class="form-label">CIN<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="cin" value="{{ $user->cin }}"
+                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                        id="cin" placeholder="cin">
+                                    @error('cin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="username" class="form-label">Username<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="username" value="{{ $user->username }}"
+                                        class="form-control form-control-sm @error('username') is-invalid @enderror"
+                                        id="username" placeholder="username">
+                                    @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="firstname" class="form-label">Prénom<span
                                             class="text-danger mx-1">*</span></label>

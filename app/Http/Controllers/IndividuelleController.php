@@ -142,17 +142,11 @@ class IndividuelleController extends Controller
 
         $cin  =   $request->input('cin');
         $cin  =   str_replace(' ', '', $cin);
+
         $annee = date('y');
-        $cin  =   $request->input('cin');
-        $cin  =   str_replace(' ', '', $cin);
-        $date_depot =   date('Y-m-d');
-
         $rand = rand(0, 999);
-
         $letter = chr(rand(65, 90));
-
         $random = $rand . '' . $letter;
-
         $longueur = strlen($random);
 
         if ($longueur == 1) {
@@ -249,7 +243,7 @@ class IndividuelleController extends Controller
         ]);
 
         $individuelle   = Individuelle::findOrFail($id);
-        $user           = Auth::user();
+        $user_id           = $individuelle?->users_id;
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
 
@@ -271,7 +265,7 @@ class IndividuelleController extends Controller
             "regions_id"                        =>  $regionid,
             "modules_id"                        =>  $request->input("module"),
             'autre_module'                      =>  $request->input('autre_module'),
-            'users_id'                          =>  $user->id,
+            'users_id'                          =>  $user_id,
         ]);
 
         $individuelle->save();

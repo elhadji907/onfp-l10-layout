@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des modules')
+@section('title', 'ONFP - Liste des domaines')
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -36,52 +36,38 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        {{-- @can('role-create') --}}
-                        {{-- <div class="pt-1">
-                            <a href="{{ route('modules.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                        </div> --}}
-                        {{-- @endcan --}}
                         <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                             data-bs-target="#AddIndividuelModal">
                             <i class="bi bi-person-plus" title="Ajouter"></i>
                         </button>
-                        <h5 class="card-title">Modules</h5>
-                        <table class="table datatables align-middle justify-content-center" id="table-modules">
+                        <h5 class="card-title">Domaines</h5>
+                        <table class="table datatables align-middle justify-content-center" id="table-domaines">
                             <thead>
                                 <tr>
-                                    <th>Modules</th>
-                                    <th>Domaines</th>
+                                    <th>Domaine</th>
+                                    <th>Secteur</th>
                                     <th class="text-center" scope="col">Effectif</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($modules as $module)
+                                @foreach ($domaines as $domaine)
                                     <tr>
-                                        <td>{{ $module->name }}</td>
-                                        <td>{{ $module->domaine->name }}</td>
+                                        <td>{{ $domaine->name }}</td>
+                                        <td>{{ $domaine?->secteur?->name }}</td>
                                         <td style="text-align: center;">
-                                            @foreach ($module->individuelles as $individuelle)
+                                            @foreach ($domaine->modules as $module)
                                                 @if ($loop->last)
-                                                    <a href="{{ url('modules/' . $module->id) }}"><span
+                                                    <a href="{{ url('domaines/' . $domaine->id) }}"><span
                                                             class="badge bg-info">{{ $loop->count }}</span></a>
                                                 @endif
                                             @endforeach
                                         </td>
-                                        {{-- <td style="text-align: center;">
-                                            <span class="d-flex mt-2 align-items-baseline">
-                                                <a href="{{ url('modules/' . $module->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="Voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                            </span>
-                                        </td> --}}
 
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ url('modules/' . $module->id) }}"
+                                                    href="{{ url('domaines/' . $domaine->id) }}"
                                                     class="btn btn-success btn-sm mx-1" title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
                                                 <div class="filter">
@@ -91,12 +77,12 @@
                                                         <li>
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#EditRegionModal{{ $module->id }}">
+                                                                data-bs-target="#EditRegionModal{{ $domaine->id }}">
                                                                 <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('modules', $module->id) }}"
+                                                            <form action="{{ url('domaines', $domaine->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -117,76 +103,13 @@
             </div>
         </div>
 
-        {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
-            <div class="modal fade" id="AddIndividuelModal" tabindex="-1">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <form method="post" action="{{ route('addModule') }}" enctype="multipart/form-data">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau module
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row g-3">
-
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
-                                        <label for="name" class="form-label">Module</label>
-                                        <input type="text" name="name" value="{{ old('name') }}"
-                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                            id="name" placeholder="Module">
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0 pb-5">
-                                        <label for="domaine" class="form-label">Domaine<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-domaine-indiv"
-                                            data-placeholder="Choisir domaine">
-                                            <option value="">
-                                                {{ old('domaine') }}
-                                            </option>
-                                            @foreach ($domaines as $domaine)
-                                                <option value="{{ $domaine->id }}">
-                                                    {{ $domaine->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('domaine')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Enregistrer</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
         <div class="modal fade" id="AddIndividuelModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="post" action="{{ url('addModule') }}" enctype="multipart/form-data" class="row g-3">
+                    <form method="post" action="{{ url('addDomaine') }}" enctype="multipart/form-data" class="row g-3">
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau module
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau domaine
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -194,32 +117,32 @@
                             <div class="form-floating mb-3">
                                 <input type="text" name="name" value="{{ old('name') }}"
                                     class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                    placeholder="Nom du module" autofocus>
+                                    placeholder="Nom du domaine" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Module</label>
+                                <label for="floatingInput">Domaine</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
-                                    aria-label="Select" id="select-field-domaine-indiv" data-placeholder="Choisir domaine">
+                                <select name="secteur" class="form-select  @error('secteur') is-invalid @enderror"
+                                    aria-label="Select" id="select-field-secteur-indiv" data-placeholder="Choisir secteur">
                                     <option value="">
-                                        {{ old('domaine') }}
+                                        {{ old('secteur') }}
                                     </option>
-                                    @foreach ($domaines as $domaine)
-                                        <option value="{{ $domaine->id }}">
-                                            {{ $domaine->name }}
+                                    @foreach ($secteurs as $secteur)
+                                        <option value="{{ $secteur->id }}">
+                                            {{ $secteur->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('domaine')
+                                @error('secteur')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Domaine</label>
+                                <label for="floatingInput">Secteur</label>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -233,52 +156,52 @@
         </div>
 
         <!-- Edit Module -->
-        @foreach ($modules as $module)
-            <div class="modal fade" id="EditRegionModal{{ $module->id }}" tabindex="-1" role="dialog"
-                aria-labelledby="EditRegionModalLabel{{ $module->id }}" aria-hidden="true">
+        @foreach ($domaines as $domaine)
+            <div class="modal fade" id="EditRegionModal{{ $domaine->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditRegionModalLabel{{ $domaine->id }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('modules.update', $module->id) }}"
+                        <form method="post" action="{{ route('domaines.update', $domaine->id) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="modal-header" id="EditRegionModalLabel{{ $module->id }}">
-                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module</h5>
+                            <div class="modal-header" id="EditRegionModalLabel{{ $domaine->id }}">
+                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier domaine</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <input type="hidden" name="id" value="{{ $module->id }}">
+                                <input type="hidden" name="id" value="{{ $domaine->id }}">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="name" value="{{ $module->name ?? old('name') }}"
+                                    <input type="text" name="name" value="{{ $domaine->name ?? old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                        id="name" placeholder="Module" autofocus>
+                                        id="name" placeholder="domaine" autofocus>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Module</label>
+                                    <label for="floatingInput">domaine</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-domaine-module"
+                                    <select name="secteur" class="form-select  @error('secteur') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-domaine"
                                         data-placeholder="Choisir domaine">
-                                        <option value="{{ $module->domaine->id }}">
-                                            {{ $module->domaine->name ?? old('domaine') }}
+                                        <option value="{{ $domaine?->secteur?->id }}">
+                                            {{ $domaine?->secteur?->name ?? old('secteur') }}
                                         </option>
-                                        @foreach ($domaines as $domaine)
-                                            <option value="{{ $domaine->id }}">
-                                                {{ $domaine->name }}
+                                        @foreach ($secteurs as $secteur)
+                                            <option value="{{ $secteur->id }}">
+                                                {{ $secteur->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('domaine')
+                                    @error('secteur')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Domaine</label>
+                                    <label for="floatingInput">Secteur</label>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -296,7 +219,7 @@
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-modules', {
+        new DataTable('#table-domaines', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

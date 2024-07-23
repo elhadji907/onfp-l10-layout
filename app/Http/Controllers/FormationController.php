@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departement;
+use App\Models\Domaine;
 use App\Models\Formation;
 use App\Models\Indisponible;
 use App\Models\Individuelle;
@@ -22,7 +23,7 @@ class FormationController extends Controller
 {
     public function index()
     {
-        $formations = Formation::where('statut','!=', 'Supprimée')->orderBy('created_at', 'desc')->get();
+        $formations = Formation::where('statut', '!=', 'Supprimée')->orderBy('created_at', 'desc')->get();
         $modules = Module::orderBy("created_at", "desc")->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
         $regions = Region::orderBy("created_at", "desc")->get();
@@ -163,7 +164,6 @@ class FormationController extends Controller
         Alert::success("Formation", "modifiée avec succès");
 
         return redirect()->back();
-
     }
 
     public function show($id)
@@ -331,8 +331,6 @@ class FormationController extends Controller
 
         return redirect()->back();
     }
-
-
     public function addformationmodules($idformation, $idlocalite)
     {
         $formation = Formation::findOrFail($idformation);
@@ -383,7 +381,9 @@ class FormationController extends Controller
             ->pluck('modules_id', 'modules_id')
             ->all();
 
-        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation'));
+        $domaines = Domaine::orderBy("created_at", "desc")->get();
+
+        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
     }
     public function givemoduleformations($idformation, $idlocalite, Request $request)
     {

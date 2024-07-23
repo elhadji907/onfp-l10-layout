@@ -57,11 +57,11 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-12 col-md-12 col-lg-12">
+                <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
 
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Demandes <span>| Toutes</span></h5>
+                            <h5 class="card-title">Demandes <span>| Personnelles</span></h5>
 
                             <table class="table table-borderless">
                                 <thead>
@@ -73,35 +73,35 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="text-primary fw-bold">Individuelle</td>
+                                        <td class="text-primary">Individuelle</td>
                                         <td class="text-center">
                                             @foreach (Auth::user()->individuelles as $individuelle)
                                                 @if (isset($individuelle->numero) && isset($individuelle->modules_id))
                                                     @if ($loop->last)
-                                                        <a class="text-primary fw-bold"
-                                                            href="{{ route('showIndividuelle', Auth::user()->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                        <a class="text-primary"
+                                                            href="{{ route('demandesIndividuelle') }}">{!! $loop->count ?? '0' !!}</a>
                                                     @endif
                                                 @else
-                                                    <span class="text-primary fw-bold">0</span>
+                                                    <span class="text-primary">0</span>
                                                 @endif
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('showIndividuelle', Auth::user()->id) }}"
+                                            <a href="{{ route('demandesIndividuelle') }}"
                                                 class="btn btn-success btn-sm" title="voir"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-primary fw-bold">Collective</td>
+                                        <td class="text-primary">Collective</td>
                                         <td class="text-center">
                                             @foreach (Auth::user()->collectives as $collective)
                                                 @if (isset($collective->numero) && isset($collective->modules_id))
                                                     @if ($loop->last)
-                                                        <a class="text-primary fw-bold"
+                                                        <a class="text-primary"
                                                             href="{{ route('showCollective', Auth::user()->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                     @endif
                                                 @else
-                                                    <span class="text-primary fw-bold">0</span>
+                                                    <span class="text-primary">0</span>
                                                 @endif
                                             @endforeach
                                         </td>
@@ -111,7 +111,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-primary fw-bold">Prise en charge</td>
+                                        <td class="text-primary">Prise en charge</td>
                                         <td class="text-center"></td>
                                         <td class="text-center">
                                             <a href="#" class="btn btn-success btn-sm" title="voir"><i
@@ -123,7 +123,7 @@
 
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
             {{-- Fin Photo de profil --}}
 

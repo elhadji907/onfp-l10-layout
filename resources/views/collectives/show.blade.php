@@ -68,21 +68,26 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5>Détails formation : <span class="{{ $collective?->statut_demande }}">
-                                                {{ $collective?->statut_demande }}</span>
+                                        <h5>Détails formation 
+                                            {{-- : <span class="{{ $collective?->statut_demande }}">
+                                                {{ $collective?->statut_demande }}</span> --}}
                                         </h5>
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <div class="label">Intitulé formation</div>
+                                        <div class="col-12 col-md-9 col-lg-9 mb-0">
+                                            <div class="label">Nom structure</div>
                                             <div>{{ $collective?->name }}</div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                            <div class="label">Code</div>
-                                            <div>{{ $collective?->code }}</div>
+                                            <div class="label">Sigle</div>
+                                            <div>{{ $collective?->sigle }}</div>
                                         </div>
-                                        {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                            <div class="label">Module</div>
-                                            <div>{{ $collective?->module?->name }}</div>
-                                        </div> --}}
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Numéro dossier</div>
+                                            <div>{{ $collective?->numero }}</div>
+                                        </div>
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Statut juridique</div>
+                                            <div>{{ $collective?->statut_juridique }}</div>
+                                        </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Région</div>
                                             <div>{{ $collective?->departement->region->nom }}</div>
@@ -94,33 +99,50 @@
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Adresse exacte</div>
-                                            <div>{{ $collective?->lieu }}
+                                            <div>{{ $collective?->adresse }}
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                            <div class="label">Type formation</div>
-                                            <div>{{ $collective?->types_formation?->name }}</div>
+                                            <div class="label">Téléphone</div>
+                                            <div>{{ $collective?->telephone }}</div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                            <div class="label">Statut juridique</div>
-                                            <div>{{ $collective?->statut }}</div>
+                                            <div class="label">Fixe</div>
+                                            <div>{{ $collective?->fixe }}</div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                            <div class="label">Niveau qualification</div>
-                                            <div>{{ $collective->niveau_qualification }}</div>
+                                            <div class="label">Email</div>
+                                            <div>{{ $collective?->email1 }}</div>
                                         </div>
-                                        @isset($collective?->date_debut)
-                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                                <div class="label">Date début</div>
-                                                <div>{{ $collective?->date_debut->format('d/m/Y') }}</div>
-                                            </div>
-                                        @endisset
-                                        @isset($collective?->date_fin)
-                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                                <div class="label">Date fin</div>
-                                                <div>{{ $collective?->date_fin->format('d/m/Y') }}</div>
-                                            </div>
-                                        @endisset
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <div class="label">Projet professionnel</div>
+                                            <div>{{ $collective?->projetprofessionnel }}</div>
+                                        </div>
+                                        <hr>
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Civilité responsable</div>
+                                            <div>{{ $collective?->civilite_responsable }}</div>
+                                        </div>
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Prénom responsable</div>
+                                            <div>{{ $collective?->prenom_responsable }}</div>
+                                        </div>
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Nom responsable</div>
+                                            <div>{{ $collective?->nom_responsable }}</div>
+                                        </div>
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Téléphone responsable</div>
+                                            <div>{{ $collective?->telephone_responsable }}</div>
+                                        </div>
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Email responsable</div>
+                                            <div>{{ $collective?->email_responsable }}</div>
+                                        </div>
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Fonction responsable</div>
+                                            <div>{{ $collective?->fonction_responsable }}</div>
+                                        </div>
                                     </form>
 
                                 </div>

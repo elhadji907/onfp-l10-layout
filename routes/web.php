@@ -14,6 +14,7 @@ use App\Http\Controllers\DemandeurController;
 use App\Http\Controllers\DepartController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\FormationController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SecteurController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
@@ -169,6 +171,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/demandesIndividuelles', [IndividuelleController::class, 'demandesIndividuelle'])->name('demandesIndividuelle');
 
+    Route::post('/addModule', [ModuleController::class, 'addModule'])->name('addModule');
+
+    Route::post('/addDomaine', [DomaineController::class, 'addDomaine'])->name('addDomaine');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -205,6 +211,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/operateurmodules', OperateurmoduleController::class);
     Route::resource('/validation-operateur-modules', ValidationmoduleController::class);
     Route::resource('/collectives', CollectiveController::class);
+    Route::resource('/domaines', DomaineController::class);
+    Route::resource('/secteurs', SecteurController::class);
 });
 
 

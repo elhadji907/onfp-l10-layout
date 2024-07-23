@@ -24,7 +24,7 @@
                             <div class="row">
                                 <div class="col-sm-12 pt-2">
                                     <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('showCollective', $collective->demandeur->id) }}"
+                                            href="{{ route('showCollective', $collective->id) }}"
                                             class="btn btn-success btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | Dossier personnel</p>
@@ -314,13 +314,13 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                    <label for="telephone1" class="form-label">Téléphone responsable<span
+                                    <label for="telephone_responsable" class="form-label">Téléphone responsable<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone1"
-                                        value="{{ $collective->telephone1 ?? old('telephone1') }}"
-                                        class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
-                                        id="telephone1" placeholder="Telephone responsable">
-                                    @error('telephone1')
+                                    <input type="text" name="telephone_responsable"
+                                        value="{{ $collective->telephone_responsable ?? old('telephone_responsable') }}"
+                                        class="form-control form-control-sm @error('telephone_responsable') is-invalid @enderror"
+                                        id="telephone_responsable" placeholder="Telephone responsable">
+                                    @error('telephone_responsable')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>

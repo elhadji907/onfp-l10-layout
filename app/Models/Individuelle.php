@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $numero
+ * @property string|null $users_id
  * @property string|null $experience
  * @property string|null $projetprofessionnel
  * @property string|null $prerequis

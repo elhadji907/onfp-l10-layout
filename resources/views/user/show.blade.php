@@ -251,6 +251,40 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {{-- CIN --}}
+                                        <div class="row mb-3">
+                                            <label for="cin" class="col-md-4 col-lg-3 col-form-label">CIN<span
+                                                    class="text-danger mx-1">*</span>
+                                            </label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="pt-2">
+                                                    <input name="cin" type="text"
+                                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                                        id="cin" value="{{ $user->cin ?? old('cin') }}"
+                                                        autocomplete="cin" placeholder="Votre cin">
+                                                </div>
+                                                @error('cin')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        {{-- username --}}
+                                        <div class="row mb-3">
+                                            <label for="username" class="col-md-4 col-lg-3 col-form-label">Username<span
+                                                    class="text-danger mx-1">*</span>
+                                            </label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="pt-2">
+                                                    <input name="username" type="text"
+                                                        class="form-control form-control-sm @error('username') is-invalid @enderror"
+                                                        id="username" value="{{ $user->username ?? old('username') }}"
+                                                        autocomplete="username" placeholder="Votre username">
+                                                </div>
+                                                @error('username')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         {{-- Prénom --}}
                                         <div class="row mb-3">
                                             <label for="firstname" class="col-md-4 col-lg-3 col-form-label">Prénom<span

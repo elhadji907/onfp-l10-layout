@@ -21,17 +21,20 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 pt-0">
-                                <span class="d-flex mt-0 align-items-baseline"><a href="{{ route('formations.show', $formation->id) }}"
-                                        class="btn btn-success btn-sm" title="retour"><i
-                                            class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                <span class="d-flex mt-0 align-items-baseline"><a
+                                        href="{{ route('formations.show', $formation->id) }}" class="btn btn-success btn-sm"
+                                        title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Détails formation</p>
                                 </span>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                            data-bs-target="#AddIndividuelModal">
+                            <i class="bi bi-plus" title="Ajouter"></i>
+                        </button>
                         <h5><u><b>MODULE</b>:</u> {{ $formation->module?->name }}</h5>
                         <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
-                        <form method="post"
-                            action="{{ url('formationmodules', ['$idformation' => $formation->id]) }}"
+                        <form method="post" action="{{ url('formationmodules', ['$idformation' => $formation->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT')
@@ -74,14 +77,48 @@
                                                             @endif
                                                         @endforeach
                                                     </td>
-                                                    <td style="text-align: center;">
+                                                    {{-- <td style="text-align: center;">
                                                         <span class="d-flex mt-2 align-items-baseline">
                                                             <a href="{{ url('modules/' . $module->id) }}"
                                                                 class="btn btn-success btn-sm mx-1" title="Voir détails"><i
                                                                     class="bi bi-eye"></i></a>
                                                         </span>
-                                                    </td>
+                                                    </td> --}}
 
+                                                    <td style="text-align: center;">
+                                                        <span class="d-flex mt-2 align-items-baseline"><a
+                                                                href="{{ url('modules/' . $module->id) }}"
+                                                                class="btn btn-success btn-sm mx-1" title="Voir détails">
+                                                                <i class="bi bi-eye"></i></a>
+                                                            <div class="filter">
+                                                                <a class="icon" href="#"
+                                                                    data-bs-toggle="dropdown"><i
+                                                                        class="bi bi-three-dots"></i></a>
+                                                                <ul
+                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                    <li>
+                                                                        <button type="button"
+                                                                            class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditRegionModal{{ $module->id }}">
+                                                                            <i class="bi bi-pencil" title="Modifier"></i>
+                                                                            Modifier
+                                                                        </button>
+                                                                    </li>
+                                                                    {{-- <li>
+                                                                        <form action="{{ url('modules', $module->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li> --}}
+                                                                </ul>
+                                                            </div>
+                                                        </span>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -95,6 +132,119 @@
                 </div>
             </div>
         </div>
+        {{-- Add module --}}
+        <div class="modal fade" id="AddIndividuelModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{{ url('addModule') }}" enctype="multipart/form-data" class="row g-3">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau module
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="name" value="{{ old('name') }}"
+                                    class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
+                                    placeholder="Nom du module" autofocus>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Module</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
+                                    aria-label="Select" id="select-field-domaine-indiv"
+                                    data-placeholder="Choisir domaine">
+                                    <option value="">
+                                        {{ old('domaine') }}
+                                    </option>
+                                    @foreach ($domaines as $domaine)
+                                        <option value="{{ $domaine->id }}">
+                                            {{ $domaine->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('domaine')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Domaine</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Module -->
+        @foreach ($modules as $module)
+            <div class="modal fade" id="EditRegionModal{{ $module->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditRegionModalLabel{{ $module->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="{{ route('modules.update', $module->id) }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
+                            <div class="modal-header" id="EditRegionModalLabel{{ $module->id }}">
+                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="{{ $module->id }}">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="name" value="{{ $module->name ?? old('name') }}"
+                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                        id="name" placeholder="Module" autofocus>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Module</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-domaine-module"
+                                        data-placeholder="Choisir domaine">
+                                        <option value="{{ $module->domaine->id }}">
+                                            {{ $module->domaine->name ?? old('domaine') }}
+                                        </option>
+                                        @foreach ($domaines as $domaine)
+                                            <option value="{{ $domaine->id }}">
+                                                {{ $domaine->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('domaine')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Domaine</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 @endsection
 @push('scripts')
