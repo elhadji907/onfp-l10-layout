@@ -51,6 +51,7 @@ class Listecollective extends Model
     protected $casts = [
         'collectives_id' => 'int',
         'collectivemodules_id' => 'int',
+		'date_naissance' => 'datetime',
         'modules_id' => 'int'
     ];
 

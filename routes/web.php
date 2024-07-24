@@ -179,6 +179,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/addcollectiveModule', [CollectivemoduleController::class, 'addcollectiveModule'])->name('addcollectiveModule');
 
+    Route::get('/demandesCollectives', [CollectiveController::class, 'demandesCollective'])->name('demandesCollective');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

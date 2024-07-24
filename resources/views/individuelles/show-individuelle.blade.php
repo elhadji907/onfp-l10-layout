@@ -38,12 +38,12 @@
                                     <span class="badge bg-white text-info">{{ $individuelle_total }}/5</span>
                                 </button>
                             @endif
-                            {{-- @if ($individuelle_total > 0) --}}
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddIndividuelleModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
-                            </button>
-                            {{-- @endif --}}
+                            @isset(Auth::user()->cin)
+                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                    data-bs-target="#AddIndividuelleModal">
+                                    <i class="bi bi-person-plus" title="Ajouter"></i>
+                                </button>
+                            @endisset
                         </div>
                         @if ($individuelle_total > 0)
                             <h5 class="card-title">
@@ -74,7 +74,8 @@
                                                     <td>{{ $individuelle?->module?->name }}</td>
                                                     <td>{{ $individuelle?->region?->nom }}</td>
                                                     <td>
-                                                        <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}
+                                                        <span
+                                                            class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}
                                                         </span>
                                                         {{-- @isset($individuelle?->statut)
                                                             @if ($individuelle?->statut == 'attente')
@@ -146,7 +147,8 @@
                                 <h5 class="card-title">Aucune demande individuelle pour le moment !!</h5>
                             @else
                                 <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
-                                            class="badge bg-warning text-white">Incomplètes</span></a></h5>
+                                            class="badge bg-warning text-white">Incomplètes</span></a>, cliquez <a
+                                        href="{{ route('profil') }}">ici</a> pour modifier votre profil</h5>
                             @endif
                         @endif
                         <!-- End demande -->

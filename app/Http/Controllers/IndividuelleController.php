@@ -47,9 +47,9 @@ class IndividuelleController extends Controller
 
         $user = Auth::user();
 
-        $total_individuelle = Individuelle::where('users_id', $user->id)->count();
+        $individuelle_total = Individuelle::where('users_id', $user->id)->count();
 
-        if ($total_individuelle >= 5) {
+        if ($individuelle_total >= 5) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
             return redirect()->back();
         } else {

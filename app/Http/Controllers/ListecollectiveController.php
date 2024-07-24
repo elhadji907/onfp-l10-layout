@@ -11,7 +11,7 @@ class ListecollectiveController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "cin"                  =>      "required|string|unique:listecollectives,cin,except,id",
+            "cin"                  =>      "required|string|min:13|max:15|unique:listecollectives,cin,except,id",
             "civilite"             =>      "required|string",
             "firstname"            =>      "required|string",
             "name"                 =>      "required|string",
@@ -33,13 +33,39 @@ class ListecollectiveController extends Controller
             'telephone'                 =>      $request->input('telephone'),
             'experience'                =>      $request->input('experience'),
             'autre_experience'          =>      $request->input('autre_experience'),
+            'statut'                    =>      'attente',
             'collectivemodules_id'      =>      $request->input('module'),
-            'collectives_id'           =>      $request->input('collective'),
+            'collectives_id'            =>      $request->input('collective'),
         ]);
 
         $membre->save();
-        
+
         Alert::success("Ajouté !", "avec succès");
+
+        return redirect()->back();
+    }
+
+    public function edit($id)
+    {
+        $listecollective   = Listecollective::find($id);
+        dd($listecollective);
+
+    }
+
+    public function show($id)
+    {
+        $listecollective   = Listecollective::find($id);
+        dd($listecollective);
+
+    }
+
+    public function destroy($id)
+    {
+        $listecollective   = Listecollective::find($id);
+
+        $listecollective->delete();
+
+        Alert::success('module', 'supprimé');
 
         return redirect()->back();
     }

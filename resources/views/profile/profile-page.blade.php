@@ -39,7 +39,7 @@
                             <div class="social-links mt-2">
                                 @isset(Auth::user()->twitter)
                                     <a href="{{ Auth::user()->twitter }}" class="twitter" target="_blank"><i
-                                            class="bi bi-x-twitter"></i></a>
+                                            class="bi bi-twitter"></i></a>
                                 @endisset
                                 @isset(Auth::user()->facebook)
                                     <a href="{{ Auth::user()->facebook }}" class="facebook" target="_blank"><i
@@ -87,18 +87,18 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('demandesIndividuelle') }}"
-                                                class="btn btn-success btn-sm" title="voir"><i class="bi bi-eye"></i></a>
+                                            <a href="{{ route('demandesIndividuelle') }}" class="btn btn-success btn-sm"
+                                                title="voir"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-primary">Collective</td>
                                         <td class="text-center">
                                             @foreach (Auth::user()->collectives as $collective)
-                                                @if (isset($collective->numero) && isset($collective->modules_id))
+                                                @if (isset($collective->numero))
                                                     @if ($loop->last)
                                                         <a class="text-primary"
-                                                            href="{{ route('showCollective', Auth::user()->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                            href="{{ route('demandesCollective') }}">{!! $loop->count ?? '0' !!}</a>
                                                     @endif
                                                 @else
                                                     <span class="text-primary">0</span>
@@ -106,8 +106,8 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('showCollective', Auth::user()->id) }}" class="btn btn-success btn-sm" title="voir"><i
-                                                    class="bi bi-eye"></i></a>
+                                            <a href="{{ route('demandesCollective') }}" class="btn btn-success btn-sm"
+                                                title="voir"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -541,23 +541,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        {{-- twitter --}}
-                                        <div class="row mb-3">
-                                            <label for="twitter" class="col-md-4 col-lg-3 col-form-label">Twitter
-                                                profil</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="twitter"
-                                                    class="form-control form-control-sm @error('twitter') is-invalid @enderror"
-                                                    id="twitter" value="{{ $user->twitter ?? old('twitter') }}"
-                                                    autocomplete="twitter"
-                                                    placeholder="lien de votre compte x (ex twitter)">
-                                                @error('twitter')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
                                         {{-- facebook --}}
                                         <div class="row mb-3">
                                             <label for="facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
@@ -568,6 +551,23 @@
                                                     id="facebook" value="{{ $user->facebook ?? old('facebook') }}"
                                                     autocomplete="facebook" placeholder="lien de votre compte facebook">
                                                 @error('facebook')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        {{-- twitter --}}
+                                        <div class="row mb-3">
+                                            <label for="twitter" class="col-md-4 col-lg-3 col-form-label">X profil (ex
+                                                twitter)</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="twitter" type="twitter"
+                                                    class="form-control form-control-sm @error('twitter') is-invalid @enderror"
+                                                    id="twitter" value="{{ $user->twitter ?? old('twitter') }}"
+                                                    autocomplete="twitter"
+                                                    placeholder="lien de votre compte x (ex twitter)">
+                                                @error('twitter')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>

@@ -42,7 +42,7 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <span class="nav-link"><a href="{{ route('operateurs.index', $collective->id) }}"
+                                    <span class="nav-link"><a href="{{ route('demandesCollective') }}"
                                             class="btn btn-secondary btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>
                                     </span>
@@ -154,13 +154,14 @@
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Email</div>
-                                            <div><a href="mailto:{{ $collective->email2 }}">{{ $collective->email2 }}</a>
+                                            <div><a
+                                                    href="mailto:{{ $collective->email_responsable }}">{{ $collective->email_responsable }}</a>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Téléphone</div>
                                             <div><a
-                                                    href="tel:+221{{ $collective->telephone2 }}">{{ $collective->telephone2 }}</a>
+                                                    href="tel:+221{{ $collective->telephone_responsable }}">{{ $collective->telephone_responsable }}</a>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
@@ -206,7 +207,8 @@
                                                             <td>{{ $listecollective?->civilite }}</td>
                                                             <td>{{ $listecollective?->prenom }}</td>
                                                             <td>{{ $listecollective?->nom }}</td>
-                                                            <td>{{ $listecollective?->date_naissance }}</td>
+                                                            <td>{{ $listecollective?->date_naissance->format('d/m/Y') }}
+                                                            </td>
                                                             <td>{{ $listecollective?->lieu_naissance }}</td>
                                                             <td>{{ $listecollective?->niveau_etude }}</td>
                                                             <td>{{ $listecollective?->collectivemodule?->module }}</td>
@@ -216,7 +218,7 @@
                                                             </td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline">
-                                                                    <a href="{{ route('operateurmodules.show', $listecollective?->id) }}"
+                                                                    <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
                                                                         class="btn btn-primary btn-sm"
                                                                         title="voir détails"><i class="bi bi-eye"></i></a>
                                                                     <div class="filter">
@@ -225,22 +227,21 @@
                                                                                 class="bi bi-three-dots"></i></a>
                                                                         <ul
                                                                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <button class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#EditOperateurmoduleModal{{ $listecollective?->id }}">Modifier
-                                                                            </button>
+                                                                            <li><a class="dropdown-item btn btn-sm"
+                                                                                    href="{{ route('listecollectives.edit', $listecollective->id) }}"
+                                                                                    class="mx-1" title="Modifier"><i
+                                                                                        class="bi bi-pencil"></i>Modifier</a>
+                                                                            </li>
                                                                             <form
-                                                                                action="{{ route('validation-operateur-modules.update', $listecollective?->id) }}"
+                                                                                action="{{ route('listecollectives.destroy', $listecollective->id) }}"
                                                                                 method="post">
                                                                                 @csrf
-                                                                                @method('PUT')
-                                                                                <button
-                                                                                    class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"
+                                                                                    title="Supprimer"><i
+                                                                                        class="bi bi-trash"></i>Supprimer</button>
                                                                             </form>
-                                                                            <button class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#AddRegionModal{{ $listecollective?->id }}">Rejeter
-                                                                            </button>
                                                                         </ul>
                                                                     </div>
                                                                 </span>
@@ -267,7 +268,7 @@
                                             <tr>
                                                 <th>N°</th>
                                                 <th>Module</th>
-                                                <th>Demandes</th>
+                                                <th>Demandeurs</th>
                                                 <th class="float-end"><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
@@ -296,11 +297,18 @@
                                                                         class="bi bi-three-dots"></i></a>
                                                                 <ul
                                                                     class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    <li><a class="dropdown-item btn btn-sm"
+                                                                    {{-- <li><a class="dropdown-item btn btn-sm"
                                                                             href="{{ route('collectivemodules.edit', $collectivemodule->id) }}"
                                                                             class="mx-1" title="Modifier"><i
                                                                                 class="bi bi-pencil"></i>Modifier</a>
-                                                                    </li>
+                                                                    </li> --}}
+                                                                    <button type="button"
+                                                                        class="dropdown-item btn btn-sm mx-1"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#EditRegionModal{{ $collectivemodule->id }}">
+                                                                        <i class="bi bi-pencil" title="Modifier"></i>
+                                                                        Modifier
+                                                                    </button>
                                                                     <li>
                                                                         <form
                                                                             action="{{ route('collectivemodules.destroy', $collectivemodule->id) }}"
@@ -428,6 +436,7 @@
                 </div>
             </div>
         </div>
+        
         {{-- Add member --}}
         <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
@@ -648,6 +657,49 @@
                 </div>
             </div>
         </div>
+
+        @foreach ($collectivemodules as $collectivemodule)
+            <div class="modal fade" id="EditRegionModal{{ $collectivemodule->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditRegionModalLabel{{ $collectivemodule->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {{-- <form method="POST" action="{{ route('updateRegion') }}">
+                            @csrf --}}
+                        <form method="post" action="{{ route('collectivemodules.update', $collectivemodule->id) }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
+                            <div class="modal-header" id="EditRegionModalLabel{{ $collectivemodule->id }}">
+                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="{{ $collectivemodule->id }}">
+                                <input type="hidden" name="collective" value="{{ $collective->id }}">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="module_name" value="{{ $collectivemodule->module ?? old('module_name') }}"
+                                        class="form-control form-control-sm @error('module_name') is-invalid @enderror"
+                                        id="module_name" placeholder="Module" autofocus>
+                                    @error('module_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Module</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
     </section>
 @endsection
 

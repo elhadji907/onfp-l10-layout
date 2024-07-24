@@ -106,7 +106,7 @@ class Collective extends Model
 		'conventions_id' => 'int',
 		'fcollectives_id' => 'int',
 		'users_id' => 'int',
-		'modules_id' => 'int'
+		'modules_id' => 'int',
 	];
 
 	protected $dates = [

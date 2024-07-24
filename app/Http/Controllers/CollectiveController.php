@@ -28,7 +28,6 @@ class CollectiveController extends Controller
     }
     public function store(Request $request)
     {
-        dd("store");
         $this->validate($request, [
             "name"                  =>      "required|string|unique:collectives,name,except,id",
             "sigle"                 =>      "required|string|unique:collectives,sigle,except,id",
@@ -45,92 +44,77 @@ class CollectiveController extends Controller
             "prenom"                =>      "required|string",
             "nom"                   =>      "required|string",
             "fonction_responsable"  =>      "required|string",
-            "telephone1"            =>      "required|string",
+            "telephone_responsable" =>      "required|string",
             "email_responsable"     =>      "required|string",
         ]);
 
-        $annee = date('y');
-        $count_collective = Collective::get()->count();
+        $user = Auth::user();
 
-        if ($count_collective > 0) {
-            $id         = Collective::get()->last()->id;
-            $collective = Collective::findOrFail($id);
-            $numero     = $collective?->numero;
-            $numero_collective  = ++$numero;
+        $collective_total = Collective::where('users_id', $user->id)->count();
+
+        if ($collective_total >= 3) {
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
+            return redirect()->back();
         } else {
-            $count_collective = ++$count_collective;
-            $longueur = strlen($count_collective);
+
+            $annee = date('y');
+            $rand = rand(0, 999);
+            $letter = chr(rand(65, 90));
+            $random = $rand . '' . $letter;
+            $longueur = strlen($random);
+
             if ($longueur == 1) {
-                $numero_collective   =   strtolower("0000" . $count_collective);
+                $numero_collective   =   strtoupper("0000" . $random);
             } elseif ($longueur >= 2 && $longueur < 3) {
-                $numero_collective   =   strtolower("000" . $count_collective);
+                $numero_collective   =   strtoupper("000" . $random);
             } elseif ($longueur >= 3 && $longueur < 4) {
-                $numero_collective   =   strtolower("00" . $count_collective);
+                $numero_collective   =   strtoupper("00" . $random);
             } elseif ($longueur >= 4 && $longueur < 5) {
-                $numero_collective   =   strtolower("0" . $count_collective);
+                $numero_collective   =   strtoupper("0" . $random);
             } else {
-                $numero_collective   =   strtolower($count_collective);
+                $numero_collective   =   strtoupper($random);
             }
-            $numero_collective = 'C' . $annee . '' . $numero_collective;
+            $numero_collective = 'C' . $annee . $numero_collective;
+
+            $departement = Departement::findOrFail($request->input("departement"));
+            $regionid = $departement->region->id;
+
+            $departement = Departement::findOrFail($request->input("departement"));
+            $regionid = $departement->region->id;
+
+            $collective = Collective::create([
+                "name"                      =>       $request->input("name"),
+                "sigle"                     =>       $request->input("sigle"),
+                "numero"                    =>       $numero_collective,
+                "description"               =>       $request->input("description"),
+                "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
+                "telephone"                 =>       $request->input("telephone"),
+                "email1"                    =>       $request->input("email"),
+                "email_responsable"         =>       $request->input("email_responsable"),
+                "fixe"                      =>       $request->input("fixe"),
+                "adresse"                   =>       $request->input("adresse"),
+                "bp"                        =>       $request->input("bp"),
+                "statut_juridique"          =>       $request->input("statut"),
+                "autre_statut_juridique"    =>       $request->input("autre_statut"),
+                "statut_demande"            =>       'attente',
+                "civilite_responsable"      =>       $request->input("civilite"),
+                "prenom_responsable"        =>       $request->input("prenom"),
+                "nom_responsable"           =>       $request->input("nom"),
+                "telephone_responsable"     =>       $request->input("telephone_responsable"),
+                "fonction_responsable"      =>       $request->input("fonction_responsable"),
+                "departements_id"           =>       $request->input("departement"),
+                "modules_id"                =>       $request->input("module"),
+                "regions_id"                =>       $regionid,
+                /* "demandeurs_id"             =>       $demandeur->id, */
+                'users_id'                  =>       $user->id,
+            ]);
+
+            $collective->save();
+
+            Alert::success("Enregistrée !", "avec succès");
+
+            return redirect()->back();
         }
-
-        $numero_Demande = 'D' . '' . $numero_collective;
-
-        $departement = Departement::findOrFail($request->input("departement"));
-        $regionid = $departement->region->id;
-
-        /*$user = new User([
-            'firstname'             =>      $request->input("name"),
-            'name'                  =>      $request->input("sigle"),
-            'email'                 =>      $request->input('email'),
-            "fixe"                  =>      $request->input("fixe"),
-            "telephone"             =>      $request->input("telephone"),
-            "adresse"               =>      $request->input("adresse"),
-            'password'              =>      Hash::make($request->input('email')),
-            "bp"                    =>      $request->input("bp"),
-            'created_by'            =>      Auth::user()->id,
-            'updated_by'            =>      Auth::user()->id
-        ]);
-        $user->save(); */
-
-        /* $demandeur = new Demandeur([
-            'numero_dossier'                 =>  $numero_Demande,
-            'type'                           =>  'collective',
-            "departements_id"                =>  $request->input("departement"),
-            "regions_id"                     =>  $regionid,
-            'users_id'                       =>  Auth::user()->id,
-        ]);
-
-        $demandeur->save(); */
-
-        $collective = Collective::create([
-            "name"                      =>       $request->input("name"),
-            "sigle"                     =>       $request->input("sigle"),
-            "numero"                    =>       $numero_collective,
-            "description"               =>       $request->input("description"),
-            "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
-            "telephone"                 =>      $request->input("telephone"),
-            "email1"                    =>       $request->input("email_responsable"),
-            "fixe"                      =>       $request->input("fixe"),
-            "telephone1"                =>       $request->input("telephone1"),
-            "statut_juridique"          =>       $request->input("statut"),
-            "autre_statut_juridique"    =>       $request->input("autre_statut"),
-            "statut_demande"            =>       'attente',
-            "prenom_responsable"        =>       $request->input("prenom"),
-            "nom_responsable"           =>       $request->input("nom"),
-            "fonction_responsable"      =>       $request->input("fonction_responsable"),
-            "departements_id"           =>       $request->input("departement"),
-            "modules_id"                =>       $request->input("module"),
-            "regions_id"                =>       $regionid,
-            /* "demandeurs_id"             =>       $demandeur->id, */
-            "users_id"                  =>       Auth::user()->id
-        ]);
-
-        $collective->save();
-
-        Alert::success("Enregistrée !", "avec succès");
-
-        return redirect()->back();
     }
     public function addCollective(Request $request)
     {
@@ -153,7 +137,7 @@ class CollectiveController extends Controller
             "telephone1"            =>      "required|string",
             "email_responsable"     =>      "required|string",
         ]);
-        
+
         $annee = date('y');
         $rand = rand(0, 999);
         $letter = chr(rand(65, 90));
@@ -176,34 +160,6 @@ class CollectiveController extends Controller
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
 
-        $departement = Departement::findOrFail($request->input("departement"));
-        $regionid = $departement->region->id;
-
-        /* $user = new User([
-            'firstname'             =>      $request->input("name"),
-            'name'                  =>      $request->input("sigle"),
-            'email'                 =>      $request->input('email'),
-            "fixe"                  =>      $request->input("fixe"),
-            "telephone"             =>      $request->input("telephone"),
-            "adresse"               =>      $request->input("adresse"),
-            'password'              =>      Hash::make($request->input('email')),
-            "bp"                    =>      $request->input("bp"),
-            'created_by'            =>      Auth::user()->id,
-            'updated_by'            =>      Auth::user()->id
-        ]);
-
-        $user->save(); */
-
-       /*  $demandeur = new Demandeur([
-            'numero_dossier'                 =>  $numero_Demande,
-            'type'                           =>  'collective',
-            "departements_id"                =>  $request->input("departement"),
-            "regions_id"                     =>  $regionid,
-            'users_id'                       =>  Auth::user()->id,
-        ]);
-
-        $demandeur->save(); */
-
         $user = User::create([
             'name'          =>  $request->input('name'),
             'sigle'         =>  $request->input('sigle'),
@@ -216,7 +172,7 @@ class CollectiveController extends Controller
         $user->save();
 
         $user->update([
-            'username'                          => $request->input('name').''.$user->id,
+            'username'                          => $request->input('name') . '' . $user->id,
         ]);
 
         $user->save();
@@ -241,7 +197,7 @@ class CollectiveController extends Controller
             "civilite_responsable"      =>       $request->input("civilite"),
             "prenom_responsable"        =>       $request->input("prenom"),
             "nom_responsable"           =>       $request->input("nom"),
-            "telephone_responsable"     =>       $request->input("telephone1"),
+            "telephone_responsable"     =>       $request->input("telephone_responsable"),
             "fonction_responsable"      =>       $request->input("fonction_responsable"),
             "departements_id"           =>       $request->input("departement"),
             "modules_id"                =>       $request->input("module"),
@@ -261,7 +217,7 @@ class CollectiveController extends Controller
     {
         $collective = Collective::findOrFail($id);
         $user_id = $collective?->users_id;
-       /*  $demandeur = $collective->demandeur; */
+        /*  $demandeur = $collective->demandeur; */
 
         $this->validate($request, [
             "name"                  =>      ["required", "string", Rule::unique(Collective::class)->ignore($id)],
@@ -283,50 +239,12 @@ class CollectiveController extends Controller
             "email_responsable"     =>      ["required", "string"],
         ]);
 
-        $annee = date('y');
-        $count_collective = Collective::get()->count();
-        $id         = Collective::get()->last()->id;
-        $collective = Collective::findOrFail($id);
-        $numero     = $collective?->numero;
-
-        if ($count_collective > 0 && isset($numero)) {
-            $numero_collective  = ++$numero;
-        } else {
-            $count_collective = ++$count_collective;
-            $longueur = strlen($count_collective);
-            if ($longueur == 1) {
-                $numero_collective   =   strtolower("0000" . $count_collective);
-            } elseif ($longueur >= 2 && $longueur < 3) {
-                $numero_collective   =   strtolower("000" . $count_collective);
-            } elseif ($longueur >= 3 && $longueur < 4) {
-                $numero_collective   =   strtolower("00" . $count_collective);
-            } elseif ($longueur >= 4 && $longueur < 5) {
-                $numero_collective   =   strtolower("0" . $count_collective);
-            } else {
-                $numero_collective   =   strtolower($count_collective);
-            }
-            $numero_collective = 'C' . $annee . '' . $numero_collective;
-        }
-
-        $numero_Demande = 'D' . '' . $annee . '' . $numero_collective;
-
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
-
-     /*    $demandeur->update([
-            'numero_dossier'                 =>  $numero_Demande,
-            'type'                           =>  'collective',
-            "departements_id"                =>  $request->input("departement"),
-            "regions_id"                     =>  $regionid,
-            'users_id'                       =>  Auth::user()->id,
-        ]);
-
-        $demandeur->save(); */
-
+        
         $collective->update([
             "name"                      =>       $request->input("name"),
             "sigle"                     =>       $request->input("sigle"),
-            "numero"                    =>       $numero_collective,
             "description"               =>       $request->input("description"),
             "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
             "telephone"                 =>       $request->input("telephone"),
@@ -352,10 +270,9 @@ class CollectiveController extends Controller
 
         $collective->save();
 
-        Alert::success("Enregistrée !", "avec succès");
+        Alert::success("Modifier !", "avec succès");
 
-        return Redirect::route("collectives.index");
-
+        return Redirect::route("demandesCollective");
     }
 
     public function edit($id)
@@ -376,18 +293,28 @@ class CollectiveController extends Controller
     {
         $collective   = Collective::find($id);
 
-        $date = date('dmYHis');
+        /* $date = date('dmYHis');
 
         $collective->update([
-            'numero'    => $collective->numero.'-'.$date,
+            'numero'    => $collective->numero . '-' . $date,
         ]);
 
-        $collective->save();
+        $collective->save(); */
 
         $collective->delete();
 
         Alert::success('Demande', 'supprimée');
 
         return redirect()->back();
+    }
+    public function demandesCollective()
+    {
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        $user = Auth::user();
+        $collective = Collective::where('users_id', $user->id)->get();
+        $collective_total = $collective->count();
+
+        return view("collectives.show-collective", compact("collective_total", "departements", "modules"));
     }
 }

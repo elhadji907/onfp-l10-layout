@@ -12,7 +12,8 @@ class CollectivemoduleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "module_name"             => "required|string|unique:collectivemodules,module,except,id",
+            /* "module_name"             => "required|string|unique:collectivemodules,module,except,id", */
+            "module_name"   => "required|string",
         ]);
 
 
@@ -27,5 +28,41 @@ class CollectivemoduleController extends Controller
 
         return redirect()->back();
     }
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            /* "module_name"             => "required|string|unique:collectivemodules,module,except,id", */
+            "module_name"   => "required|string",
+        ]);
 
+        $collectivemodule   = Collectivemodule::find($id);
+
+        $collectivemodule->update([
+            'module'            => $request->input('module_name'),
+            'collectives_id'    => $request->input('collective'),
+        ]);
+
+        $collectivemodule->save();
+
+        Alert::success('Fait ! ', 'module modifié avec succès');
+
+        return redirect()->back();
+    }
+
+    public function show($id)
+    {
+        $collectivemodule   = Collectivemodule::find($id);
+        return view("collectives.showliste", compact('collectivemodule'));
+    }
+
+    public function destroy($id)
+    {
+        $collectivemodule   = Collectivemodule::find($id);
+
+        $collectivemodule->delete();
+
+        Alert::success('module', 'supprimé');
+
+        return redirect()->back();
+    }
 }
