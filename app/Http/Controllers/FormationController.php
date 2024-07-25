@@ -335,6 +335,7 @@ class FormationController extends Controller
     {
         $formation = Formation::findOrFail($idformation);
         $module = $formation?->module?->name;
+        $domaines = Domaine::orderBy("created_at", "desc")->get();
         $localite = Region::findOrFail($idlocalite);
 
         $modules = Module::get();
@@ -344,7 +345,7 @@ class FormationController extends Controller
             ->pluck('modules_id', 'modules_id')
             ->all();
 
-        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation'));
+        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
     }
 
     public function giveformationmodules($idformation, Request $request)

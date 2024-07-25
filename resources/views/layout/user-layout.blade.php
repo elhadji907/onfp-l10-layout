@@ -199,6 +199,35 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+
+            $('#module_name').keyup(function() {
+                var query = $(this).val();
+                if (query != '') {
+                    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{ route('autocomplete.fetch') }}",
+                        method: "POST",
+                        data: {
+                            query: query,
+                            _token: _token
+                        },
+                        success: function(data) {
+                            $('#countryList').fadeIn();
+                            $('#countryList').html(data);
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', 'li', function() {
+                $('#module_name').val($(this).text());
+                $('#countryList').fadeOut();
+            });
+
+        });
+    </script>
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>

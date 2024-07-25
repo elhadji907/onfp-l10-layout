@@ -181,6 +181,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/demandesCollectives', [CollectiveController::class, 'demandesCollective'])->name('demandesCollective');
 
+    Route::post('/autocomplete/fetch', [OperateurController::class, 'fetch'])->name('autocomplete.fetch');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

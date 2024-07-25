@@ -210,38 +210,21 @@
                                                     <th>Modules<span class="text-danger mx-1">*</span></th>
                                                     <th>Niveau qualification<span class="text-danger mx-1">*</span></th>
                                                     <th>Domaines<span class="text-danger mx-1">*</span></th>
-                                                    {{-- <th width="5%"><i class="bi bi-gear"></i></th> --}}
                                                 </tr>
-                                                {{-- <tr>
-                                                    <td><input type="text" name="modules[0][module]"
-                                                            placeholder="Entrer un module"
-                                                            class="form-control form-control-sm" autofocus /></td>
-                                                    <td><input type="text" name="niveau_qualifications[0][niveau_qualification]"
-                                                            placeholder="Entrer niveau qualification"
-                                                            class="form-control form-control-sm" /></td>
-                                                    <td><input type="text" name="domaines[0][domaine]"
-                                                            placeholder="Entrer un domaine"
-                                                            class="form-control form-control-sm" /></td>
-                                                    <td><button type="button" name="add" id="add-btn"
-                                                            class="btn btn-success btn-sm" title="Ajouter une ligne"><i
-                                                                class="bi bi-plus-lg"></i></button>
-                                                    </td>
-                                                </tr> --}}
                                                 <tr>
                                                     <input type="hidden" name="operateur" value="{{ $operateur->id }}">
-                                                    <td><input type="text" name="module"
-                                                            placeholder="Entrer un module"
-                                                            class="form-control form-control-sm" autofocus /></td>
+                                                    <td>
+                                                        <input type="text" name="module" id="module_name"
+                                                            class="form-control form-control-sm" placeholder="Enter module" />
+                                                        <div id="countryList"></div>
+                                                        {{ csrf_field() }}
+                                                    </td>
                                                     <td><input type="text" name="niveau_qualification"
                                                             placeholder="Entrer niveau qualification"
                                                             class="form-control form-control-sm" /></td>
                                                     <td><input type="text" name="domaine"
                                                             placeholder="Entrer un domaine"
                                                             class="form-control form-control-sm" /></td>
-                                                    {{-- <td><button type="button" name="add" id="add-btn"
-                                                            class="btn btn-success btn-sm" title="Ajouter une ligne"><i
-                                                                class="bi bi-plus-lg"></i></button>
-                                                    </td> --}}
                                                 </tr>
                                             </table>
                                             <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
@@ -627,22 +610,6 @@
     </section>
 
 @endsection
-{{-- @push('scripts')
-    <script type="text/javascript">
-        var i = 0;
-        $("#add-btn").click(function() {
-            ++i;
-            $("#dynamicAddRemove").append('<tr><td><input type="text" name="modules[' + i +
-                '][module]" placeholder="Entrer module" class="form-control" /></td> <td><input type="text" name="niveau_qualifications[' + i +
-                '][niveau_qualification]" placeholder="Entrer niveau de qualification" class="form-control" /></td><td><input type="text" name="domaines[' + i +
-                '][domaine]" placeholder="Entrer domaine" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="bi bi-trash"></i></button></td></tr>'
-            );
-        });
-        $(document).on('click', '.remove-tr', function() {
-            $(this).parents('tr').remove();
-        });
-    </script>
-@endpush --}}
 @push('scripts')
     <script>
         new DataTable('#table-operateurModules', {

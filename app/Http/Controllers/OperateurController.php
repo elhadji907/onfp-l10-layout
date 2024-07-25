@@ -7,6 +7,7 @@ use App\Models\Operateur;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -176,5 +177,24 @@ class OperateurController extends Controller
 
         Alert::success("L'opérateur " . $operateur->name, 'a été supprimé avec succès');
         return redirect()->back();
+    }
+    function fetch(Request $request)
+    {
+        if($request->get('query'))
+        {
+            $query = $request->get('query');
+            $data = DB::table('modules')
+                ->where('name', 'LIKE', "%{$query}%")
+                ->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            foreach($data as $row)
+            {
+                $output .= '
+                <li><a class="dropdown-item" href="#">'.$row->name.'</a></li>
+                ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 }

@@ -293,13 +293,7 @@ class CollectiveController extends Controller
     {
         $collective   = Collective::find($id);
 
-        /* $date = date('dmYHis');
-
-        $collective->update([
-            'numero'    => $collective->numero . '-' . $date,
-        ]);
-
-        $collective->save(); */
+        dd($collective);
 
         $collective->delete();
 

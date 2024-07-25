@@ -25,7 +25,7 @@ class ArriveStoreRequest extends FormRequest
             'date_arrivee'              =>  ["required", "date"],
             'date_correspondance'       =>  ["required", "date"],
             'numero_arrive'             =>  ["required", "string", "min:4", "max:6", "unique:arrives,numero,Null,id,deleted_at,NULL"],
-            'numero_correspondance'     =>  ["nullable", "string", "min:4", "max:6", "unique:courriers,numero,Null,id,deleted_at,NULL"],
+            'numero_correspondance'     =>  ["required", "string", "min:4", "max:6", "unique:courriers,numero,Null,id,deleted_at,NULL"],
             'annee'                     =>  ['required','numeric','min:2022'],
             'expediteur'                =>  ['required','string','max:200'],
             'objet'                     =>  ['required','string','max:200'],
