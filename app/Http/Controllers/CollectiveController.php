@@ -11,6 +11,7 @@ use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -124,7 +125,7 @@ class CollectiveController extends Controller
             "email"                 =>      "required|email|unique:users,email,except,id",
             "fixe"                  =>      "required|string|unique:collectives,fixe,except,id",
             "telephone"             =>      "required|string|unique:collectives,telephone,except,id",
-            "module"                =>      "required|string",
+            /* "module"                =>      "required|string", */
             "adresse"               =>      "required|string",
             "statut"                =>      "required|string",
             "description"           =>      "required|string",
@@ -134,7 +135,7 @@ class CollectiveController extends Controller
             "prenom"                =>      "required|string",
             "nom"                   =>      "required|string",
             "fonction_responsable"  =>      "required|string",
-            "telephone1"            =>      "required|string",
+            "telephone_responsable" =>      "required|string",
             "email_responsable"     =>      "required|string",
         ]);
 
@@ -200,7 +201,6 @@ class CollectiveController extends Controller
             "telephone_responsable"     =>       $request->input("telephone_responsable"),
             "fonction_responsable"      =>       $request->input("fonction_responsable"),
             "departements_id"           =>       $request->input("departement"),
-            "modules_id"                =>       $request->input("module"),
             "regions_id"                =>       $regionid,
             /* "demandeurs_id"             =>       $demandeur->id, */
             'users_id'                  =>  $user->id,
@@ -225,7 +225,7 @@ class CollectiveController extends Controller
             "email"                 =>      ["required", "email", Rule::unique(User::class)->ignore($id)],
             "fixe"                  =>      ["required", "string", "unique:collectives,fixe,{$id}"],
             "telephone"             =>      ["required", "string", "unique:collectives,telephone,{$id}"],
-            "module"                =>      ["required", "string"],
+            /* "module"                =>      ["required", "string"], */
             "adresse"               =>      ["required", "string"],
             "statut"                =>      ["required", "string"],
             "description"           =>      ["required", "string"],
@@ -259,10 +259,10 @@ class CollectiveController extends Controller
             "civilite_responsable"      =>       $request->input("civilite"),
             "prenom_responsable"        =>       $request->input("prenom"),
             "nom_responsable"           =>       $request->input("nom"),
-            "telephone_responsable"     =>       $request->input("telephone1"),
+            "telephone_responsable"     =>       $request->input("telephone_responsable"),
             "fonction_responsable"      =>       $request->input("fonction_responsable"),
             "departements_id"           =>       $request->input("departement"),
-            "modules_id"                =>       $request->input("module"),
+            /* "modules_id"                =>       $request->input("module"), */
             "regions_id"                =>       $regionid,
             /* "demandeurs_id"             =>       $demandeur->id, */
             "users_id"                  =>       $user_id
@@ -286,7 +286,8 @@ class CollectiveController extends Controller
     {
         $collective = Collective::findOrFail($id);
         $collectivemodules = Collectivemodule::where("collectives_id", $id)->get();
-        return view('collectives.show', compact('collective', 'collectivemodules'));
+        $collectives    = Collective::where('users_id', $collective?->users_id)->get();
+        return view('collectives.show', compact('collective', 'collectivemodules', 'collectives'));
     }
 
     public function destroy($id)

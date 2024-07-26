@@ -205,7 +205,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
                                     <input type="text" name="autre_module"
                                         value="{{ $individuelle->autre_module ?? old('autre_module') }}"
@@ -216,7 +216,7 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="departement" class="form-label">Lieu de formation<span

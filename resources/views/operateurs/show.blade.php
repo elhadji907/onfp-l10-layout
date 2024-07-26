@@ -264,53 +264,9 @@
                                                             <td>
                                                                 <span
                                                                     class="{{ $operateurmodule->statut }}">{{ $operateurmodule->statut }}</span>
-                                                                {{-- @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
-                                                                    @if ($loop->last)
-                                                                        <span
-                                                                            class="badge bg-info">{{ $moduleoperateurstatut->statut }}</span>
-                                                                    @endif
-                                                                @endforeach --}}
-
-                                                                {{-- @if ($operateurmodule?->statut == 'agréer')
-                                                                    <button
-                                                                        class="btn btn-success btn-sm text-white">{{ $operateurmodule->statut }}</button>
-                                                                @elseif($operateurmodule?->statut == 'rejeter')
-                                                                    <button
-                                                                        class="btn btn-danger btn-sm text-white">{{ $operateurmodule->statut }}</button>
-                                                                @elseif($operateurmodule?->statut == 'attente')
-                                                                    <button
-                                                                        class="btn btn-secondary btn-sm text-white">{{ $operateurmodule->statut }}</button>
-                                                                @else
-                                                                    <button
-                                                                        class="btn btn-warning btn-sm text-white">{{ $operateurmodule->statut }}</button>
-                                                                @endif --}}
                                                             </td>
-                                                            {{--     <td>
-                                                                @isset($individuelle?->statut)
-                                                                    @if ($individuelle?->statut == 'Attente')
-                                                                        <span
-                                                                            class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                                        </span>
-                                                                    @endif
-                                                                    @if ($individuelle?->statut == 'Validée')
-                                                                        <span
-                                                                            class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                                        </span>
-                                                                    @endif
-                                                                    @if ($individuelle?->statut == 'Rejetée')
-                                                                        <span
-                                                                            class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                                        </span>
-                                                                    @endif
-                                                                @endisset
-                                                            </td> --}}
                                                             <td>
                                                                 <span class="d-flex align-items-baseline">
-                                                                    {{--  <a class="btn btn-success btn-sm"
-                                                                        href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                                        class="mx-1" title="Modifier"><i class="bi bi-pencil"></i></a> --}}
-
-                                                                    {{-- <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}" --}}
                                                                     <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
                                                                         class="btn btn-primary btn-sm"
                                                                         title="voir détails"><i class="bi bi-eye"></i></a>
@@ -332,40 +288,10 @@
                                                                                 <button
                                                                                     class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
                                                                             </form>
-                                                                            {{--  @if ($operateurmodule?->statut == 'agréer') --}}
                                                                             <button class="dropdown-item btn btn-sm mx-1"
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
                                                                             </button>
-                                                                            {{-- @elseif($operateurmodule?->statut == 'rejeter') --}}
-                                                                            {{-- @elseif($operateurmodule?->statut == 'attente') --}}
-                                                                            {{-- <form
-                                                                                    action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('PUT')
-                                                                                    <button
-                                                                                        class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
-                                                                                </form> --}}
-                                                                            {{-- <button
-                                                                                    class="dropdown-item btn btn-sm mx-1"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
-                                                                                </button> --}}
-                                                                            {{-- @else --}}
-                                                                            {{-- <button class="btn btn-sm mx-1">Aucune
-                                                                                    action
-                                                                                    possible</button> --}}
-                                                                            {{--  @endif --}}
-                                                                            {{-- <li>
-                                                                                <button type="button"
-                                                                                    class="dropdown-item btn btn-sm mx-1"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#myModal{{ $operateurmodule->id }}">
-                                                                                    <i class="bi bi-trash"
-                                                                                        title="Supprimer"></i> Supprimer
-                                                                                </button>
-                                                                            </li> --}}
                                                                         </ul>
                                                                     </div>
                                                                 </span>

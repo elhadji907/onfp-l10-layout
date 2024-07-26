@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $numero
+ * @property string|null $statut_demande
  * @property string|null $users_id
  * @property string|null $email1
  * @property string|null $email2

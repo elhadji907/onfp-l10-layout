@@ -14,14 +14,14 @@ class TypeformationSeeder extends Seeder
     public function run(): void
     {
         DB::table('types_formations')->insert([
-            'name' => "Individuelle",
+            'name' => "individuelle",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid"=>Str::uuid(),
         ]);
 
         DB::table('types_formations')->insert([
-            'name' => "Collective",
+            'name' => "collective",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid"=>Str::uuid(),

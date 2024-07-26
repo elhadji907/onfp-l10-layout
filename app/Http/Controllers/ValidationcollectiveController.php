@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Individuelle;
-use App\Models\Validationindividuelle;
+use App\Models\Collective;
+use App\Models\Validationcollective;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class ValidationIndividuelleController extends Controller
+class ValidationcollectiveController extends Controller
 {
     public function update($id)
     {
-        $individuelle   = Individuelle::findOrFail($id);
-        if ($individuelle->statut == 'accepter') {
+        $collective   = Collective::findOrFail($id);
+        if ($collective->statut_demande == 'accepter') {
             Alert::warning('Désolez !', 'demande déjà validée');
-        } elseif ($individuelle->statut == 'programmer') {
-            Alert::warning('Désolez !', 'demande déjà programmée');
+        } elseif ($collective->statut_demande == 'retenue') {
+            Alert::warning('Désolez !', 'demande déjà retenue');
         } else {
-            $individuelle->update([
-                'statut'             => 'accepter',
+            $collective->update([
+                'statut_demande'             => 'accepter',
                 'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
             ]);
 
-            $individuelle->save();
+            $collective->save();
 
-            $validated_by = new Validationindividuelle([
+            $validated_by = new Validationcollective([
                 'validated_id'       =>       Auth::user()->id,
                 'action'             =>      'accepter',
-                'individuelles_id'   =>      $individuelle->id
+                'collectives_id'   =>      $collective->id
             ]);
 
             $validated_by->save();
@@ -46,25 +46,25 @@ class ValidationIndividuelleController extends Controller
             "motif" => "required|string",
         ]);
 
-        $individuelle   = Individuelle::findOrFail($id);
+        $collective   = Collective::findOrFail($id);
 
-        if ($individuelle->statut == 'rejeter') {
+        if ($collective->statut_demande == 'rejeter') {
             Alert::warning('Désolez !', 'demande déjà rejetée');
-        }  elseif ($individuelle->statut == 'programmer') {
-            Alert::warning('Désolez !', 'demande déjà programmée');
+        }  elseif ($collective->statut_demande == 'retenue') {
+            Alert::warning('Désolez !', 'demande déjà retenue');
         } else {
-            $individuelle->update([
-                'statut'                => 'rejeter',
+            $collective->update([
+                'statut_demande'                => 'rejeter',
                 'canceled_by'           =>  Auth::user()->firstname . ' ' . Auth::user()->name,
             ]);
 
-            $individuelle->save();
+            $collective->save();
 
-            $validated_by = new Validationindividuelle([
+            $validated_by = new Validationcollective([
                 'validated_id'       =>      Auth::user()->id,
                 'action'             =>      'rejeter',
                 'motif'              =>      $request->input('motif'),
-                'individuelles_id'   =>      $individuelle->id
+                'collectives_id'   =>      $collective->id
             ]);
 
             $validated_by->save();

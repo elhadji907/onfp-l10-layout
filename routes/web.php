@@ -37,6 +37,8 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ValidationcollectiveController;
+use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use Illuminate\Support\Facades\Route;
@@ -183,6 +185,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/autocomplete/fetch', [OperateurController::class, 'fetch'])->name('autocomplete.fetch');
 
+    Route::post('/formationTerminer', [FormationController::class, 'formationTerminer'])->name('formationTerminer');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -211,7 +215,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/pcharges', PchargeController::class);
     Route::resource('/validation-individuelles', ValidationIndividuelleController::class);
-    Route::resource('/validation-individuelles', ValidationIndividuelleController::class);
+    Route::resource('/validation-collectives', ValidationcollectiveController::class);
+    Route::resource('/validation-formations', ValidationformationController::class);
     Route::resource('/localites', LocaliteController::class);
     Route::resource('/modules', ModuleController::class);
     Route::resource('/formations', FormationController::class);

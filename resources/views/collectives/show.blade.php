@@ -48,8 +48,8 @@
                                     </span>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-overview">Demande</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Info
+                                        demande</button>
                                 </li>
 
                                 <li class="nav-item">
@@ -71,6 +71,13 @@
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#foration-overview">Formations</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#autres-demandes-overview">Demandes totales
+                                        <span class="badge bg-success badge-number">{{ $collectives->count() }}</span>
+                                    </button>
                                 </li>
 
                             </ul>
@@ -173,14 +180,43 @@
                             </div>
                             {{-- Détail membres --}}
                             {{-- class show et active pour l'affichage par défaut --}}
-                            <div class="tab-content pt-2">
-                                <div class="tab-pane fade show active profile-overview pt-3" id="membres-overview">
+                            <div class="tab-content pt-0">
+                                <div class="tab-pane fade show active profile-overview" id="membres-overview">
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <button type="button" class="btn btn-primary float-end btn-rounded"
-                                            data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
-                                            <i class="bi bi-person-plus" title="Ajouter module"></i>
-                                        </button>
-                                        <h5 class="card-title">Liste des membres</h5>
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <span class="card-title d-flex align-items-baseline">N° demande :&nbsp;
+                                                <span class="badge bg-info text-white">
+                                                    {{ $collective?->numero }}</span>
+                                            </span>
+                                            @if (auth()->user()->hasRole('super-admin'))
+                                                <span class="card-title d-flex align-items-baseline">Statut demande :&nbsp;
+                                                    <span class="{{ $collective?->statut_demande }} text-white">
+                                                        {{ $collective?->statut_demande }}</span>
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <form
+                                                                action="{{ route('validation-collectives.update', $collective?->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button
+                                                                    class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
+                                                            </form>
+                                                            <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                data-bs-target="#RejetDemandeModal">Rejeter
+                                                            </button>
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                            @endif
+                                            <button type="button" class="btn btn-primary float-end btn-rounded"
+                                                data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
+                                                <i class="bi bi-person-plus" title="Ajouter module"></i>
+                                            </button>
+                                        </div>
+                                        <p>Liste des membres</p>
                                         <div class="row g-3">
                                             <table
                                                 class="table datatables align-middle justify-content-center table-borderless"
@@ -395,10 +431,87 @@
                                     <!-- End Table with stripped rows -->
                                 </div>
                             </div>
+                            {{-- Détail Formations --}}
+                            <div class="tab-content">
+                                <div class="tab-pane fade profile-overview pt-1" id="autres-demandes-overview">
+
+                                    <h5 class="card-title">Mes demandes collectives</h5>
+                                    <table class="table datatables align-middle" id="table-collectives">
+                                        <thead>
+                                            <tr>
+                                                <th>N° DEM.</th>
+                                                <th>Structure</th>
+                                                <th>Sigle</th>
+                                                <th>Téléphone</th>
+                                                <th>E-mail</th>
+                                                <th>Localité</th>
+                                                <th>Statut</th>
+                                                <th class="text-center">#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1; ?>
+                                            @foreach ($collectives as $collective)
+                                                @isset($collective?->numero)
+                                                    <tr>
+                                                        <td>{{ $collective?->numero }}
+                                                        </td>
+                                                        <td>{{ $collective?->name }}</td>
+                                                        <td>{{ $collective?->sigle }}</td>
+                                                        <td>{{ $collective?->user?->telephone }}</td>
+                                                        <td><a
+                                                                href="mailto:{{ $collective?->user?->email }}">{{ $collective?->user?->email }}</a>
+                                                        </td>
+                                                        <td>{{ $collective->departement?->region?->nom }}</td>
+                                                        <td>
+                                                            <span
+                                                                class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="d-flex align-items-baseline"><a
+                                                                    href="{{ route('collectives.show', $collective->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                        class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <li><a class="dropdown-item btn btn-sm"
+                                                                                href="{{ route('collectives.edit', $collective->id) }}"
+                                                                                class="mx-1" title="Modifier"><i
+                                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                action="{{ route('collectives.destroy', $collective->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"
+                                                                                    title="Supprimer"><i
+                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endisset
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <!-- End Table with stripped rows -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         {{-- Ajouter module collective --}}
         <div class="modal fade" id="AddcollectiveModuleModal" tabindex="-1">
@@ -418,6 +531,8 @@
                                 <input type="text" name="module_name" value="{{ old('module_name') }}"
                                     class="form-control form-control-sm @error('module_name') is-invalid @enderror"
                                     id="module_name" placeholder="Nom du module" autofocus>
+                                <div id="countryList"></div>
+                                {{ csrf_field() }}
                                 @error('module_name')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -436,7 +551,7 @@
                 </div>
             </div>
         </div>
-        
+
         {{-- Add member --}}
         <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
@@ -678,7 +793,8 @@
                                 <input type="hidden" name="id" value="{{ $collectivemodule->id }}">
                                 <input type="hidden" name="collective" value="{{ $collective->id }}">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="module_name" value="{{ $collectivemodule->module ?? old('module_name') }}"
+                                    <input type="text" name="module_name"
+                                        value="{{ $collectivemodule->module ?? old('module_name') }}"
                                         class="form-control form-control-sm @error('module_name') is-invalid @enderror"
                                         id="module_name" placeholder="Module" autofocus>
                                     @error('module_name')
@@ -699,7 +815,38 @@
                 </div>
             </div>
         @endforeach
-
+        <div class="modal fade" id="RejetDemandeModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{{ route('validation-collectives.destroy', $collective?->id) }}"
+                        enctype="multipart/form-data" class="row">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet demande</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="motif" class="form-label">Motifs du rejet</label>
+                            <textarea name="motif" id="motif" rows="5"
+                                class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                            @error('motif')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
+                                Rejeter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 

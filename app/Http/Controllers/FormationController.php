@@ -13,6 +13,7 @@ use App\Models\Operateurmodule;
 use App\Models\Region;
 use App\Models\Statut;
 use App\Models\TypesFormation;
+use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class FormationController extends Controller
 {
     public function index()
     {
-        $formations = Formation::where('statut', '!=', 'Supprimée')->orderBy('created_at', 'desc')->get();
+        $formations = Formation::where('statut', '!=', 'supprimer')->orderBy('created_at', 'desc')->get();
         $modules = Module::orderBy("created_at", "desc")->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
         $regions = Region::orderBy("created_at", "desc")->get();
@@ -102,7 +103,7 @@ class FormationController extends Controller
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
-            "statut"                =>   "Attente",
+            "statut"                =>   "attente",
             "annee"                 =>   $annee,
 
         ]);
@@ -111,7 +112,7 @@ class FormationController extends Controller
 
 
         $statut = new Statut([
-            "statut"                =>   "Attente",
+            "statut"                =>   "attente",
             "formations_id"         =>   $formation->id,
         ]);
 
@@ -169,10 +170,11 @@ class FormationController extends Controller
     public function show($id)
     {
         $formation  = Formation::findOrFail($id);
+        $type_formation = $formation->types_formation->name;
         $operateur  = $formation->operateur;
         $module     = $formation->module;
 
-        return view("formations.show", compact("formation", "operateur", "module"));
+        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation"));
     }
 
     public function destroy($id)
@@ -182,20 +184,20 @@ class FormationController extends Controller
         /* $formation->delete(); */
 
         $formation->update([
-            "statut"       =>   "Supprimée",
+            "statut"       =>   "supprimer",
         ]);
 
         $formation->save();
 
 
         $statut = new Statut([
-            "statut"                =>   "Supprimée",
+            "statut"                =>   "supprimer",
             "formations_id"         =>   $formation->id,
         ]);
 
         $statut->save();
 
-        Alert::success('La formation ' . $formation->name, 'a été supprimée');
+        Alert::success('La formation ' . $formation->name, 'a été supprimer');
 
         return redirect()->back();
     }
@@ -210,6 +212,7 @@ class FormationController extends Controller
             ->where('modules_id', $idmodule)
             ->where('statut', 'accepter')
             ->orWhere('statut', 'retirer')
+            ->orWhere('statut', 'programmer')
             ->get();
 
 
@@ -231,7 +234,7 @@ class FormationController extends Controller
             $individuelle = Individuelle::findOrFail($individuelle);
             $individuelle->update([
                 "formations_id"      =>  $idformation,
-                "statut"             =>  'programmer',
+                "statut"             =>  'retenue',
             ]);
 
             $individuelle->save();
@@ -239,7 +242,7 @@ class FormationController extends Controller
 
         $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'programmer',
+            'action'             =>      'retenue',
             'individuelles_id'   =>      $individuelle->id
         ]);
 
@@ -322,7 +325,6 @@ class FormationController extends Controller
 
         $formation->update([
             "operateurs_id"      =>  $request->input('operateur'),
-            "statut"             =>  'programmer',
         ]);
 
         $formation->save();
@@ -358,7 +360,6 @@ class FormationController extends Controller
 
         $formation->update([
             "modules_id"      =>  $request->input('module'),
-            "statut"             =>  'programmer',
         ]);
 
         $formation->save();
@@ -396,13 +397,44 @@ class FormationController extends Controller
 
         $formation->update([
             "modules_id"      =>  $request->input('module'),
-            "statut"          =>  'programmer',
         ]);
 
         $formation->save();
 
         Alert::success('Module', 'ajouté avec succès');
 
+        return redirect()->back();
+    }
+
+    public function formationTerminer(Request $request)
+    {
+        $formation = Formation::findOrFail($request->input('id'));
+
+        if ($formation->statut == 'terminer') {
+            Alert::warning('Désolez !', 'formation déjà exécutée');
+        } elseif ($formation->statut == 'annuler') {
+            Alert::warning('Désolez !', 'formation déjà annulée');
+        } else {
+
+            $formation->update([
+                'statut'             => 'terminer',
+                'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+            ]);
+
+            $formation->save();
+
+            $validated_by = new Validationformation([
+                'validated_id'       =>       Auth::user()->id,
+                'action'             =>      'terminer',
+                'formations_id'      =>      $formation->id
+            ]);
+
+            $validated_by->save();
+
+            Alert::success('Félicitation !', 'formation terminée');
+        }
+
+        /* return redirect()->back()->with("status", "Demande validée"); */
         return redirect()->back();
     }
 }

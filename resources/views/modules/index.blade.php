@@ -62,7 +62,7 @@
                                 @foreach ($modules as $module)
                                     <tr>
                                         <td>{{ $module->name }}</td>
-                                        <td>{{ $module->domaine->name }}</td>
+                                        <td>{{ $module?->domaine?->name }}</td>
                                         <td style="text-align: center;">
                                             @foreach ($module->individuelles as $individuelle)
                                                 @if ($loop->last)
@@ -209,8 +209,8 @@
                                         {{ old('domaine') }}
                                     </option>
                                     @foreach ($domaines as $domaine)
-                                        <option value="{{ $domaine->id }}">
-                                            {{ $domaine->name }}
+                                        <option value="{{ $domaine?->id }}">
+                                            {{ $domaine?->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -264,12 +264,12 @@
                                     <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
                                         aria-label="Select" id="select-field-domaine-module"
                                         data-placeholder="Choisir domaine">
-                                        <option value="{{ $module->domaine->id }}">
-                                            {{ $module->domaine->name ?? old('domaine') }}
+                                        <option value="{{ $module?->domaine?->id }}">
+                                            {{ $module?->domaine?->name ?? old('domaine') }}
                                         </option>
                                         @foreach ($domaines as $domaine)
-                                            <option value="{{ $domaine->id }}">
-                                                {{ $domaine->name }}
+                                            <option value="{{ $domaine?->id }}">
+                                                {{ $domaine?->name }}
                                             </option>
                                         @endforeach
                                     </select>

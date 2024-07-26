@@ -51,7 +51,7 @@
                                     <th>Structure</th>
                                     <th>Sigle</th>
                                     <th>Téléphone</th>
-                                    <th>Module</th>
+                                    <th>E-mail</th>
                                     <th>Localité</th>
                                     <th>Statut</th>
                                     <th class="text-center">#</th>
@@ -67,7 +67,7 @@
                                             <td>{{ $collective?->name }}</td>
                                             <td>{{ $collective?->sigle }}</td>
                                             <td>{{ $collective?->user?->telephone }}</td>
-                                            <td>{{ $collective->module?->name }}</td>
+                                            <td><a href="mailto:{{ $collective?->user?->email }}">{{ $collective?->user?->email }}</a></td>
                                             <td>{{ $collective->departement?->region?->nom }}</td>
                                             <td>
                                                 <span class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
@@ -297,7 +297,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    {{-- <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
@@ -317,7 +317,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="description" class="form-label">Description de l'organisation<span
@@ -412,12 +412,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="telephone1" class="form-label">Téléphone responsable<span
+                                        <label for="telephone_responsable" class="form-label">Téléphone responsable<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone1" value="{{ old('telephone1') }}"
-                                            class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
-                                            id="telephone1" placeholder="Telephone responsable">
-                                        @error('telephone1')
+                                        <input type="text" name="telephone_responsable" value="{{ old('telephone_responsable') }}"
+                                            class="form-control form-control-sm @error('telephone_responsable') is-invalid @enderror"
+                                            id="telephone_responsable" placeholder="Telephone responsable">
+                                        @error('telephone_responsable')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

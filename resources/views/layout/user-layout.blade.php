@@ -65,6 +65,14 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+        .annuler {
+            background-color: red;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
 
         .attente {
             background-color: #6C757D;
@@ -82,6 +90,22 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+        .démarrer {
+            background-color: #28a745;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+        .terminer {
+            background-color: #239b56;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
 
         .agréer {
             background-color: #28a745;
@@ -93,6 +117,15 @@
         }
 
         .programmer {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .retenue {
             background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;
