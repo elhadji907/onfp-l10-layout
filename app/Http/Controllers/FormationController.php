@@ -437,4 +437,44 @@ class FormationController extends Controller
         /* return redirect()->back()->with("status", "Demande validée"); */
         return redirect()->back();
     }
+
+    
+    public function givenotedemandeurs($idformation, Request $request)
+    {
+        $request->validate([
+            'notes' => ['required']
+        ]);
+        
+        $individuelles = $request->individuelles;
+        $notes = $request->notes;
+
+        $individuelles_notes = array_combine($individuelles, $notes);
+        
+        /* foreach ($individuelles_notes as $key => $value) {
+            dd($key);
+        } */
+
+        foreach ($individuelles_notes as $key => $value) {
+            $individuelle = Individuelle::findOrFail($key);
+            $individuelle->update([
+                "formations_id"      =>  $idformation,
+                "note"               =>  $value,
+                "statut"             =>  'terminer',
+            ]);
+
+            $individuelle->save();
+        }
+
+        $validated_by = new Validationindividuelle([
+            'validated_id'       =>      Auth::user()->id,
+            'action'             =>      'terminer',
+            'individuelles_id'   =>      $individuelle->id
+        ]);
+
+        $validated_by->save();
+
+        Alert::success('Félicitations !', 'Evaluation terminée');
+
+        return redirect()->back();
+    }
 }

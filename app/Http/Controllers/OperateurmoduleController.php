@@ -28,7 +28,9 @@ class OperateurmoduleController extends Controller
             'domaine'               => 'required|string',
             'niveau_qualification'  => 'required|string',
         ]);
+        
         $total_module = Operateurmodule::where('operateurs_id', $request->input('operateur'))->count();
+        
         if ($total_module >= 10) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
             return redirect()->back();

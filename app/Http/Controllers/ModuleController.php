@@ -93,12 +93,12 @@ class ModuleController extends Controller
     {
         $this->validate($request, [
             "name"             => ["required", "string", Rule::unique(Module::class)],
-            "domaine"          => ["required", "string"],
+            /* "domaine"          => ["required", "string"], */
         ]);
 
         $module = Module::create([
             'name'            => $request->input('name'),
-            'domaines_id'     => $request->input('domaine'),
+            /* 'domaines_id'     => $request->input('domaine'), */
         ]);
 
         $module->save();

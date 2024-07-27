@@ -68,7 +68,7 @@
                                                         @enderror
                                                         {{ $module->name }}
                                                     </td>
-                                                    <td>{{ $module->domaine->name }}</td>
+                                                    <td>{{ $module?->domaine?->name }}</td>
                                                     <td style="text-align: center;">
                                                         @foreach ($module->individuelles as $individuelle)
                                                             @if ($loop->last)
@@ -125,7 +125,8 @@
                                     </table>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    <button type="submit" class="btn btn-outline-primary"><i
+                                            class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                 </div>
                         </form>
                     </div>
@@ -145,9 +146,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-floating mb-3">
-                                <input type="text" name="name" value="{{ old('name') }}"
+                                {{-- <input type="text" name="name" value="{{ old('name') }}"
                                     class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                    placeholder="Nom du module" autofocus>
+                                    placeholder="Nom du module" autofocus> --}}
+
+                                <input type="text" name="name" id="module_name" class="form-control form-control-sm"
+                                    placeholder="Enter module" />
+                                <div id="countryList"></div>
+                                {{ csrf_field() }}
+
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -218,8 +225,8 @@
                                     <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
                                         aria-label="Select" id="select-field-domaine-module"
                                         data-placeholder="Choisir domaine">
-                                        <option value="{{ $module->domaine->id }}">
-                                            {{ $module->domaine->name ?? old('domaine') }}
+                                        <option value="{{ $module?->domaine?->id }}">
+                                            {{ $module?->domaine?->name ?? old('domaine') }}
                                         </option>
                                         @foreach ($domaines as $domaine)
                                             <option value="{{ $domaine->id }}">
@@ -255,9 +262,9 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
-            "lengthMenu": [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "Tout"]
+            lengthMenu: [
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "Tout"]
             ],
             "order": [
                 [2, 'desc']

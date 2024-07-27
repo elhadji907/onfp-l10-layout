@@ -187,6 +187,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/formationTerminer', [FormationController::class, 'formationTerminer'])->name('formationTerminer');
 
+    Route::put('notedemandeurs/{idformation}', [FormationController::class, 'givenotedemandeurs']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

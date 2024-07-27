@@ -69,6 +69,12 @@
                                     </button>
                                 </li>
 
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#evaluation-overview">Évaluation
+                                    </button>
+                                </li>
+
                             </ul>
                             <div class="d-flex justify-content-between align-items-center">
                             </div>
@@ -313,6 +319,7 @@
                                                             <th>Date naissance</th>
                                                             <th>Lieu de naissance</th>
                                                             <th>Adresse</th>
+                                                            <th>Note</th>
                                                             {{-- <th class="col"><i class="bi bi-backspace-reverse"></i></th> --}}
                                                             <th class="col"><i class="bi bi-gear"></i></th>
                                                         </tr>
@@ -331,13 +338,7 @@
                                                                 </td>
                                                                 <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                                                 <td>{{ $individuelle?->user->adresse }}</td>
-                                                                {{--  <td>
-                                                                <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                                    data-bs-target="#indiponibleModal{{ $individuelle->id }}"
-                                                                    title="retirer"><i
-                                                                        class="bi bi-arrow-right-circle"></i>
-                                                                </a>
-                                                            </td> --}}
+                                                                <td>{{ $individuelle?->note ?? '' }}</td>
                                                                 <td>
                                                                     <span class="d-flex align-items-baseline"><a
                                                                             href="{{ route('individuelles.show', $individuelle->id) }}"
@@ -406,10 +407,9 @@
                                     @endif
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($operateur)
-                                            <div class="card-header">
-                                                <i class="bi bi-table"></i>
+                                            <h1 class="card-title">
                                                 Liste des formations
-                                            </div>
+                                            </h1>
                                             <div class="row g-3">
                                                 <table class="table datatables" id="table-formations">
                                                     <thead>
@@ -491,6 +491,92 @@
 
                                 </div>
                             </div>
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade module-overview pt-3" id="evaluation-overview">
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+
+                                        <form method="post"
+                                            action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
+                                            enctype="multipart/form-data" class="row g-3">
+                                            @csrf
+                                            @method('PUT')
+                                            @isset($operateur)
+                                                <h1 class="card-title"> Liste des formations</h1>
+                                                <div class="row g-3">
+                                                    <table class="table datatables" id="table-evaluation">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N°</th>
+                                                                <th>Numéro</th>
+                                                                <th>Civilité</th>
+                                                                <th>CIN</th>
+                                                                <th>Prénom</th>
+                                                                <th>NOM</th>
+                                                                <th>Date naissance</th>
+                                                                <th>Lieu de naissance</th>
+                                                                <th>Adresse</th>
+                                                                <th>Note</th>
+                                                                {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php $i = 1; ?>
+                                                            @foreach ($formation->individuelles as $individuelle)
+                                                                <tr>
+                                                                    <td>{{ $i++ }}</td>
+                                                                    <td>{{ $individuelle?->numero }}</td>
+                                                                    <td>{{ $individuelle?->user?->civilite }}</td>
+                                                                    <td>{{ $individuelle?->user?->cin }}</td>
+                                                                    <td>{{ $individuelle?->user?->firstname }}</td>
+                                                                    <td>{{ $individuelle?->user?->name }}</td>
+                                                                    <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                                    </td>
+                                                                    <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                                                    <td>{{ $individuelle?->user->adresse }}</td>
+                                                                    <td><input type="number"
+                                                                            value="{{ $individuelle?->note }}" name="notes[]"
+                                                                            placeholder="note" step="0.01" min="0" max="20">
+                                                                            <input type="hidden" name="individuelles[]" value="{{ $individuelle?->id }}">
+                                                                        </td>
+                                                                    {{-- <td>
+                                                                    <span class="d-flex align-items-baseline"><a
+                                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                            class="btn btn-primary btn-sm"
+                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li>
+                                                                                    <a class="btn btn-danger btn-sm"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#indiponibleModal{{ $individuelle->id }}"
+                                                                                        title="retirer">Retirer de cette
+                                                                                        formation
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td> --}}
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                    </table>
+                                                </div>
+                                            @endisset
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-outline-primary"><i
+                                                        class="bi bi-check2-circle"></i>&nbsp;Valider</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -532,7 +618,8 @@
                     </div>
                 </div>
             </div>
-        @endforeach<div class="modal fade" id="RejetDemandeModal" tabindex="-1">
+        @endforeach
+        <div class="modal fade" id="RejetDemandeModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form method="post" action="{{ route('validation-formations.destroy', $formation->id) }}"
