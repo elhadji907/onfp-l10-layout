@@ -234,7 +234,7 @@
                 </div>
             </div>
         @endforeach
-        <!-- End Add Region-->
+        <!-- End Edit Region-->
     </section>
 
 @endsection

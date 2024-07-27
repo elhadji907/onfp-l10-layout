@@ -77,9 +77,9 @@ class CreateIndividuellesTable extends Migration
             $table->integer('nbre_enfants')->nullable();
             $table->double('note_obtenue')->nullable();
             $table->string('niveau_maitrise', 200)->nullable();
-            $table->string('observations', 200)->nullable();
+            $table->longText('observations')->nullable();
             $table->string('appreciation', 200)->nullable();
-            $table->string('motif_rejet', 200)->nullable();
+            $table->longText('motif_rejet')->nullable();
             $table->string('created_by', 200)->nullable();
             $table->string('updated_by', 200)->nullable();
             $table->string('deleted_by', 200)->nullable();

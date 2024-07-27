@@ -338,7 +338,7 @@
                                                                 </td>
                                                                 <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                                                 <td>{{ $individuelle?->user->adresse }}</td>
-                                                                <td>{{ $individuelle?->note ?? '' }}</td>
+                                                                <td>{{ $individuelle?->note_obtenue ?? '' }}</td>
                                                                 <td>
                                                                     <span class="d-flex align-items-baseline"><a
                                                                             href="{{ route('individuelles.show', $individuelle->id) }}"
@@ -501,21 +501,22 @@
                                             @csrf
                                             @method('PUT')
                                             @isset($operateur)
-                                                <h1 class="card-title"> Liste des formations</h1>
+                                                <h1 class="card-title"> Liste des bénéficiaires :
+                                                    {{ $formation->individuelles->count() }}</h1>
                                                 <div class="row g-3">
                                                     <table class="table datatables" id="table-evaluation">
                                                         <thead>
                                                             <tr>
                                                                 <th>N°</th>
-                                                                <th>Numéro</th>
+                                                                {{-- <th>Numéro</th> --}}
                                                                 <th>Civilité</th>
                                                                 <th>CIN</th>
                                                                 <th>Prénom</th>
                                                                 <th>NOM</th>
                                                                 <th>Date naissance</th>
                                                                 <th>Lieu de naissance</th>
-                                                                <th>Adresse</th>
-                                                                <th>Note</th>
+                                                                <th>Note<span class="text-danger mx-1">*</span></th>
+                                                                <th>Observations</th>
                                                                 {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
                                                             </tr>
                                                         </thead>
@@ -524,7 +525,7 @@
                                                             @foreach ($formation->individuelles as $individuelle)
                                                                 <tr>
                                                                     <td>{{ $i++ }}</td>
-                                                                    <td>{{ $individuelle?->numero }}</td>
+                                                                    {{-- <td>{{ $individuelle?->numero }}</td> --}}
                                                                     <td>{{ $individuelle?->user?->civilite }}</td>
                                                                     <td>{{ $individuelle?->user?->cin }}</td>
                                                                     <td>{{ $individuelle?->user?->firstname }}</td>
@@ -532,12 +533,21 @@
                                                                     <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
                                                                     </td>
                                                                     <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                                                    <td>{{ $individuelle?->user->adresse }}</td>
                                                                     <td><input type="number"
-                                                                            value="{{ $individuelle?->note }}" name="notes[]"
-                                                                            placeholder="note" step="0.01" min="0" max="20">
-                                                                            <input type="hidden" name="individuelles[]" value="{{ $individuelle?->id }}">
-                                                                        </td>
+                                                                            value="{{ $individuelle?->note_obtenue }}"
+                                                                            name="notes[]" placeholder="note" step="0.01"
+                                                                            min="0" max="20">
+                                                                        <input type="hidden" name="individuelles[]"
+                                                                            value="{{ $individuelle?->id }}">
+                                                                    </td>
+                                                                    <td style="text-align: center; vertical-align: middle;">
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-primary btn-sm"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditDemandeurModal{{ $individuelle->id }}">
+                                                                            <i class="bi bi-plus" title="Observations"></i>
+                                                                        </button>
+                                                                    </td>
                                                                     {{-- <td>
                                                                     <span class="d-flex align-items-baseline"><a
                                                                             href="{{ route('individuelles.show', $individuelle->id) }}"
@@ -570,7 +580,7 @@
                                             @endisset
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-outline-primary"><i
-                                                        class="bi bi-check2-circle"></i>&nbsp;Valider</button>
+                                                        class="bi bi-check2-circle"></i>&nbsp;Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -651,6 +661,44 @@
                 </div>
             </div>
         </div>
+        {{-- Observations --}}
+        @foreach ($individuelles as $individuelle)
+            <div class="modal fade" id="EditDemandeurModal{{ $individuelle->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditDemandeurModalLabel{{ $individuelle->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="{{ route('individuelles.updateObservations') }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
+                            <div class="modal-header" id="EditDemandeurModalLabel{{ $individuelle->id }}">
+                                <h5 class="modal-title">Ajouter un commentaire ou une observation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="{{ $individuelle->id }}">
+                                <label for="floatingInput" class="mb-3">Observation<span
+                                        class="text-danger mx-1">*</span></label>
+                                <textarea name="observations" id="observations" cols="30" rows="5"
+                                    class="form-control form-control-sm @error('observations') is-invalid @enderror" placeholder="Observations"
+                                    autofocus>{{ $individuelle->observations ?? old('observations') }}</textarea>
+                                @error('observations')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 @endsection
 @push('scripts')

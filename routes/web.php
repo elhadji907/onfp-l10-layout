@@ -189,6 +189,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::put('notedemandeurs/{idformation}', [FormationController::class, 'givenotedemandeurs']);
 
+    Route::patch('/updateObservations', [FormationController::class, 'updateObservations'])->name('individuelles.updateObservations');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

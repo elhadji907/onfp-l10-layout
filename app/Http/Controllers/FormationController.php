@@ -174,7 +174,9 @@ class FormationController extends Controller
         $operateur  = $formation->operateur;
         $module     = $formation->module;
 
-        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation"));
+        $individuelles = Individuelle::orderBy("created_at", "desc")->get();
+
+        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation","individuelles"));
     }
 
     public function destroy($id)
@@ -437,28 +439,21 @@ class FormationController extends Controller
         /* return redirect()->back()->with("status", "Demande validée"); */
         return redirect()->back();
     }
-
-    
     public function givenotedemandeurs($idformation, Request $request)
     {
         $request->validate([
             'notes' => ['required']
         ]);
-        
+
         $individuelles = $request->individuelles;
         $notes = $request->notes;
 
         $individuelles_notes = array_combine($individuelles, $notes);
-        
-        /* foreach ($individuelles_notes as $key => $value) {
-            dd($key);
-        } */
 
         foreach ($individuelles_notes as $key => $value) {
             $individuelle = Individuelle::findOrFail($key);
             $individuelle->update([
-                "formations_id"      =>  $idformation,
-                "note"               =>  $value,
+                "note_obtenue"       =>  $value,
                 "statut"             =>  'terminer',
             ]);
 
@@ -476,5 +471,25 @@ class FormationController extends Controller
         Alert::success('Félicitations !', 'Evaluation terminée');
 
         return redirect()->back();
+    }
+
+    public function updateObservations(Request $request)
+    {
+        $request->validate([
+            'observations' => 'required', 'string'
+        ]);
+
+        $individuelle = Individuelle::findOrFail($request->input('id'));
+        
+        $individuelle->update([
+            "observations"       =>  $request->input('observations'),
+        ]);
+
+        $individuelle->save();
+        
+        Alert::success('Fait !', 'Observations ajoutées');
+
+        return redirect()->back();
+
     }
 }
