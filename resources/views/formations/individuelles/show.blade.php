@@ -350,14 +350,18 @@
                                                                                     class="bi bi-three-dots"></i></a>
                                                                             <ul
                                                                                 class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                <li>
+                                                                                {{-- <li>
                                                                                     <a class="btn btn-danger btn-sm"
                                                                                         data-bs-toggle="modal"
                                                                                         data-bs-target="#indiponibleModal{{ $individuelle->id }}"
                                                                                         title="retirer">Retirer de cette
                                                                                         formation
                                                                                     </a>
-                                                                                </li>
+                                                                                </li> --}}
+                                                                                <button class="btn btn-sm mx-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#indiponibleModal{{ $individuelle->id }}">Retirer
+                                                                                </button>
                                                                                 {{-- <li>
                                                                                     <form
                                                                                         action="{{ route('individuelles.destroy', $individuelle->id) }}"
@@ -577,11 +581,11 @@
                                                     </table>
                                                     </table>
                                                 </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-outline-primary"><i
+                                                            class="bi bi-check2-circle"></i>&nbsp;Save</button>
+                                                </div>
                                             @endisset
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-outline-primary"><i
-                                                        class="bi bi-check2-circle"></i>&nbsp;Save</button>
-                                            </div>
                                         </form>
                                     </div>
 

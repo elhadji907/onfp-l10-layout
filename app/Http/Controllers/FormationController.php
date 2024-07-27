@@ -176,7 +176,7 @@ class FormationController extends Controller
 
         $individuelles = Individuelle::orderBy("created_at", "desc")->get();
 
-        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation","individuelles"));
+        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation", "individuelles"));
     }
 
     public function destroy($id)
@@ -262,33 +262,38 @@ class FormationController extends Controller
         ]);
 
         $individuelle = Individuelle::findOrFail($request->input('individuelleid'));
+        $formation   = Formation::findOrFail($idformation);
 
-        $individuelle->update([
-            "formations_id"      =>  null,
-            "statut"             =>  'retirer',
-        ]);
+        if ($formation->statut == 'terminer' && $individuelle->note_obtenue != null) {
+            Alert::warning('Attention !', 'impossible de retirer ce demandeur');
+        } else {
 
-        $individuelle->save();
+            $individuelle->update([
+                "formations_id"      =>  null,
+                "statut"             =>  'retirer',
+            ]);
 
-        $indisponible = new Indisponible([
-            "motif"             => $request->input('motif'),
-            "individuelles_id"  => $request->input('individuelleid'),
-            "formations_id"     => $idformation,
-        ]);
+            $individuelle->save();
 
-        $indisponible->save();
+            $indisponible = new Indisponible([
+                "motif"             => $request->input('motif'),
+                "individuelles_id"  => $request->input('individuelleid'),
+                "formations_id"     => $idformation,
+            ]);
 
-        $validated_by = new Validationindividuelle([
-            'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'retirer',
-            'motif'              =>      $request->input('motif'),
-            'individuelles_id'   =>      $individuelle->id
-        ]);
+            $indisponible->save();
 
-        $validated_by->save();
+            $validated_by = new Validationindividuelle([
+                'validated_id'       =>      Auth::user()->id,
+                'action'             =>      'retirer',
+                'motif'              =>      $request->input('motif'),
+                'individuelles_id'   =>      $individuelle->id
+            ]);
 
-        Alert::success('Effectué', 'demandeur retiré de cette formation');
+            $validated_by->save();
 
+            Alert::success('Effectué', 'demandeur retiré de cette formation');
+        }
         return redirect()->back();
     }
 
@@ -416,6 +421,8 @@ class FormationController extends Controller
             Alert::warning('Désolez !', 'formation déjà exécutée');
         } elseif ($formation->statut == 'annuler') {
             Alert::warning('Désolez !', 'formation déjà annulée');
+        } elseif ($formation->statut == 'attente') {
+            Alert::warning('Désolez !', 'la formation n\'a pas encore démarrée');
         } else {
 
             $formation->update([
@@ -480,16 +487,15 @@ class FormationController extends Controller
         ]);
 
         $individuelle = Individuelle::findOrFail($request->input('id'));
-        
+
         $individuelle->update([
             "observations"       =>  $request->input('observations'),
         ]);
 
         $individuelle->save();
-        
+
         Alert::success('Fait !', 'Observations ajoutées');
 
         return redirect()->back();
-
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('uuid', 36);
             $table->longText('motif')->nullable();
             $table->unsignedInteger('individuelles_id')->nullable();
-            $table->unsignedInteger('formationss_id')->nullable();
+            $table->unsignedInteger('formations_id')->nullable();
 
             $table->softDeletes();
             $table->nullableTimestamps();

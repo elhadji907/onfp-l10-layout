@@ -53,6 +53,7 @@
                                                 <th>Date naissance</th>
                                                 <th>Lieu de naissance</th>
                                                 <th>Adresse</th>
+                                                <th>Statut</th>
                                                 <th><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
@@ -80,10 +81,11 @@
                                                             </td>
                                                             <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                                             <td>{{ $individuelle?->user->adresse }}</td>
+                                                            <td><span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span></td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline"><a
                                                                         href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                        class="btn btn-primary btn-sm" title="voir détails" target="_blanck"><i
                                                                             class="bi bi-eye"></i></a>
                                                                     <div class="filter">
                                                                         <a class="icon" href="#"
