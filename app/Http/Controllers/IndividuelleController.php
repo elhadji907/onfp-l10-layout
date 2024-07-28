@@ -168,7 +168,6 @@ class IndividuelleController extends Controller
 
         $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
 
-
         $user = User::create([
             'civilite'                          => $request->input('civilite'),
             'cin'                               => $cin,
@@ -215,8 +214,8 @@ class IndividuelleController extends Controller
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $request->input("departement"),
                 "regions_id"                        =>  $regionid,
-                "modules_id"                        =>  $request->input("module"),
-                'autre_module'                      =>  $request->input('autre_module'),
+                "modules_id"                        =>  $module_find->id,
+                /* 'autre_module'                      =>  $request->input('autre_module'), */
                 'statut'                            => 'attente',
                 'users_id'                          =>  $user->id,
             ]);
@@ -247,7 +246,7 @@ class IndividuelleController extends Controller
                 "departements_id"                   =>  $request->input("departement"),
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module->id,
-                'autre_module'                      =>  $request->input('autre_module'),
+                /* 'autre_module'                      =>  $request->input('autre_module'), */
                 'statut'                            => 'attente',
                 'users_id'                          =>  $user->id,
             ]);

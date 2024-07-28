@@ -13,27 +13,34 @@ class ValidationformationController extends Controller
     public function update($id)
     {
         $formation   = Formation::findOrFail($id);
-        if ($formation->statut == 'terminer') {
-            Alert::warning('Désolez !', 'formation déjà exécutée');
-        } elseif ($formation->statut == 'démarrer') {
-            Alert::warning('Désolez !', 'formation en cours...');
+
+        $count = $formation->individuelles->count();
+        
+        if ($count == '0' || empty($formation->operateur)) {
+            Alert::warning('Désolez !', 'action non autorisée');
         } else {
-            $formation->update([
-                'statut'             => 'démarrer',
-                'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
-            ]);
+            if ($formation->statut == 'terminer') {
+                Alert::warning('Désolez !', 'formation déjà exécutée');
+            } elseif ($formation->statut == 'démarrer') {
+                Alert::warning('Désolez !', 'formation en cours...');
+            } else {
+                $formation->update([
+                    'statut'             => 'démarrer',
+                    'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+                ]);
 
-            $formation->save();
+                $formation->save();
 
-            $validated_by = new Validationformation([
-                'validated_id'       =>       Auth::user()->id,
-                'action'             =>      'démarrer',
-                'formations_id'      =>      $formation->id
-            ]);
+                $validated_by = new Validationformation([
+                    'validated_id'       =>       Auth::user()->id,
+                    'action'             =>      'démarrer',
+                    'formations_id'      =>      $formation->id
+                ]);
 
-            $validated_by->save();
+                $validated_by->save();
 
-            Alert::success('Félicitation !', 'la formation est lancée');
+                Alert::success('Félicitation !', 'la formation est lancée');
+            }
         }
 
         /* return redirect()->back()->with("status", "Demande validée"); */

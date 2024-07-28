@@ -28,8 +28,9 @@
                                 </span>
                             </div>
                         </div>
-                        <h5><u><b>MODULE</b>:</u> {{ $module->name }}</h5>
-                        <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
+                        <h5><u><b>MODULE</b></u> : {{ $module->name }}</h5>
+                        <h5><u><b>REGION</b></u> : {{ $localite->nom }}</h5>
+                        <h5><u><b>Candisdats éligibles</b></u> : {{ $individuelles->count() ?? '' }}</h5>
                         <form method="post"
                             action="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
@@ -81,12 +82,14 @@
                                                             </td>
                                                             <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                                             <td>{{ $individuelle?->user->adresse }}</td>
-                                                            <td><span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span></td>
+                                                            <td><span
+                                                                    class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                                            </td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline"><a
                                                                         href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                                        class="btn btn-primary btn-sm" title="voir détails" target="_blanck"><i
-                                                                            class="bi bi-eye"></i></a>
+                                                                        class="btn btn-primary btn-sm" title="voir détails"
+                                                                        target="_blanck"><i class="bi bi-eye"></i></a>
                                                                     <div class="filter">
                                                                         <a class="icon" href="#"
                                                                             data-bs-toggle="dropdown"><i
@@ -118,11 +121,11 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-outline-primary"><i
+                                                    class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-outline-primary"><i
-                                        class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                 </div>
                             </form>
                         </div>

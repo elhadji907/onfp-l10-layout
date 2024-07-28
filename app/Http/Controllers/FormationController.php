@@ -232,25 +232,33 @@ class FormationController extends Controller
             'individuelles' => ['required']
         ]);
 
-        foreach ($request->individuelles as $individuelle) {
-            $individuelle = Individuelle::findOrFail($individuelle);
-            $individuelle->update([
-                "formations_id"      =>  $idformation,
-                "statut"             =>  'retenue',
+        $formation = Formation::findOrFail($idformation);
+
+        if ($formation->statut == 'terminer') {
+            Alert::warning('Désolez !', 'formation déjà exécutée');
+        } elseif ($formation->statut == 'annuler') {
+            Alert::warning('Désolez !', 'formation annulée');
+        } else {
+            foreach ($request->individuelles as $individuelle) {
+                $individuelle = Individuelle::findOrFail($individuelle);
+                $individuelle->update([
+                    "formations_id"      =>  $idformation,
+                    "statut"             =>  'retenue',
+                ]);
+
+                $individuelle->save();
+            }
+
+            $validated_by = new Validationindividuelle([
+                'validated_id'       =>      Auth::user()->id,
+                'action'             =>      'retenue',
+                'individuelles_id'   =>      $individuelle->id
             ]);
 
-            $individuelle->save();
+            $validated_by->save();
+
+            Alert::success('Effectuée !', 'Candidat(s) ajouté(s)');
         }
-
-        $validated_by = new Validationindividuelle([
-            'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'retenue',
-            'individuelles_id'   =>      $individuelle->id
-        ]);
-
-        $validated_by->save();
-
-        Alert::success('Modifications', 'prises en charge');
 
         return redirect()->back();
     }
@@ -417,30 +425,36 @@ class FormationController extends Controller
     {
         $formation = Formation::findOrFail($request->input('id'));
 
-        if ($formation->statut == 'terminer') {
-            Alert::warning('Désolez !', 'formation déjà exécutée');
-        } elseif ($formation->statut == 'annuler') {
-            Alert::warning('Désolez !', 'formation déjà annulée');
-        } elseif ($formation->statut == 'attente') {
-            Alert::warning('Désolez !', 'la formation n\'a pas encore démarrée');
+        $count = $formation->individuelles->count();
+
+        if ($count == '0' || empty($formation->operateur)) {
+            Alert::warning('Désolez !', 'action non autorisée');
         } else {
+            if ($formation->statut == 'terminer') {
+                Alert::warning('Désolez !', 'formation déjà exécutée');
+            } elseif ($formation->statut == 'annuler') {
+                Alert::warning('Désolez !', 'formation déjà annulée');
+            } elseif ($formation->statut == 'attente') {
+                Alert::warning('Désolez !', 'la formation n\'a pas encore démarrée');
+            } else {
 
-            $formation->update([
-                'statut'             => 'terminer',
-                'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
-            ]);
+                $formation->update([
+                    'statut'             => 'terminer',
+                    'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+                ]);
 
-            $formation->save();
+                $formation->save();
 
-            $validated_by = new Validationformation([
-                'validated_id'       =>       Auth::user()->id,
-                'action'             =>      'terminer',
-                'formations_id'      =>      $formation->id
-            ]);
+                $validated_by = new Validationformation([
+                    'validated_id'       =>       Auth::user()->id,
+                    'action'             =>      'terminer',
+                    'formations_id'      =>      $formation->id
+                ]);
 
-            $validated_by->save();
+                $validated_by->save();
 
-            Alert::success('Félicitation !', 'formation terminée');
+                Alert::success('Félicitation !', 'formation terminée');
+            }
         }
 
         /* return redirect()->back()->with("status", "Demande validée"); */
