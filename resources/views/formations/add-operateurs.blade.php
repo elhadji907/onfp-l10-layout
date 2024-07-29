@@ -130,7 +130,8 @@
                                         </table>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                        <button type="submit" class="btn btn-outline-primary"><i
+                                                class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                     </div>
                             </form>
                         </div>
@@ -142,11 +143,11 @@
     @push('scripts')
         <script>
             new DataTable('#table-operateurs', {
-                layout: {
+                /* layout: {
                     topStart: {
                         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                     }
-                },
+                }, */
                 "lengthMenu": [
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "Tout"]

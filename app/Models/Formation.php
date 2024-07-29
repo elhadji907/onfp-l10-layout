@@ -64,6 +64,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $projets_id
  * @property int|null $choixoperateurs_id
  * @property int|null $modules_id
+ * @property int|null $collectivemodules_id
+ * @property int|null $collectives_id
  * @property int|null $regions_id
  * @property int|null $departements_id
  * @property int|null $arrondissements_id
@@ -86,6 +88,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Ingenieur|null $ingenieur
  * @property Localite|null $localite
  * @property Module|null $module
+ * @property Collectivemodule|null $collectivemodule
+ * @property Collective|null $collective
  * @property Niveaux|null $niveaux
  * @property Operateur|null $operateur
  * @property Programme|null $programme
@@ -144,6 +148,8 @@ class Formation extends Model
 		'projets_id' => 'int',
 		'choixoperateurs_id' => 'int',
 		'modules_id' => 'int',
+		'collectivemodules_id' => 'int',
+		'collectives_id' => 'int',
 		'regions_id' => 'int',
 		'departements_id' => 'int',
 		'arrondissements_id' => 'int',
@@ -212,6 +218,8 @@ class Formation extends Model
 		'projets_id',
 		'choixoperateurs_id',
 		'modules_id',
+		'collectivemodules_id',
+		'collectives_id',
 		'regions_id',
 		'departements_id',
 		'arrondissements_id',
@@ -290,6 +298,16 @@ class Formation extends Model
 		return $this->belongsTo(Module::class, 'modules_id');
 	}
 
+	public function collectivemodule()
+	{
+		return $this->belongsTo(Collectivemodule::class, 'collectivemodules_id');
+	}
+
+	public function collective()
+	{
+		return $this->belongsTo(Collective::class, 'collectives_id');
+	}
+
 	public function niveaux()
 	{
 		return $this->belongsTo(Niveaux::class, 'niveauxs_id');
@@ -340,11 +358,11 @@ class Formation extends Model
 		return $this->belongsTo(Zone::class, 'zones_id');
 	}
 
-	public function collectives()
+/* 	public function collectives()
 	{
 		return $this->hasMany(Collective::class, 'formations_id');
 	}
-
+ */
 	public function coments()
 	{
 		return $this->hasMany(Coment::class, 'formations_id');

@@ -72,6 +72,8 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('choixoperateurs_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();
+            $table->unsignedInteger('collectivemodules_id')->nullable();
+            $table->unsignedInteger('collectives_id')->nullable();
             $table->unsignedInteger('regions_id')->nullable();
             $table->unsignedInteger('departements_id')->nullable();
             $table->unsignedInteger('arrondissements_id')->nullable();
@@ -111,6 +113,10 @@ class CreateFormationsTable extends Migration
             $table->index(["choixoperateurs_id"], 'fk_formations_choixoperateurs1_idx');
 
             $table->index(["modules_id"], 'fk_formations_modules1_idx');
+
+            $table->index(["collectivemodules_id"], 'fk_formations_collectivemodules1_idx');
+
+            $table->index(["collectives_id"], 'fk_formations_collectives1_idx');
 
             $table->index(["regions_id"], 'fk_formations_regions1_idx');
 

@@ -64,7 +64,7 @@ class CreateCollectivesTable extends Migration
             $table->string('fonction_responsable', 200)->nullable();
             $table->unsignedInteger('demandeurs_id')->nullable();
             $table->unsignedInteger('ingenieurs_id')->nullable();
-            $table->unsignedInteger('formations_id')->nullable();
+            /* $table->unsignedInteger('formations_id')->nullable(); */
             $table->unsignedInteger('departements_id')->nullable();
             $table->unsignedInteger('regions_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
@@ -81,7 +81,7 @@ class CreateCollectivesTable extends Migration
 
             $table->index(["ingenieurs_id"], 'fk_collectives_ingenieurs1_idx');
 
-            $table->index(["formations_id"], 'fk_collectives_formations1_idx');
+            /* $table->index(["formations_id"], 'fk_collectives_formations1_idx'); */
 
             $table->index(["departements_id"], 'fk_collectives_departements1_idx');
 
@@ -119,10 +119,10 @@ class CreateCollectivesTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('formations_id', 'fk_collectives_formations1_idx')
+            /* $table->foreign('formations_id', 'fk_collectives_formations1_idx')
                 ->references('id')->on('formations')
                 ->onDelete('no action')
-                ->onUpdate('no action');
+                ->onUpdate('no action'); */
 
             $table->foreign('departements_id', 'fk_collectives_departements1_idx')
                 ->references('id')->on('departements')

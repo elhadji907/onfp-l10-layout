@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Collective;
+use App\Models\Collectivemodule;
 use App\Models\Departement;
 use App\Models\Domaine;
 use App\Models\Formation;
@@ -176,7 +178,14 @@ class FormationController extends Controller
 
         $individuelles = Individuelle::orderBy("created_at", "desc")->get();
 
-        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation", "individuelles"));
+        $collectivemodule = Collectivemodule::where('collectives_id', $formation->collectives_id)->get();
+
+        $collectiveFormation = DB::table('formations')
+            ->where('collectivemodules_id', $formation->collectivemodules_id)
+            ->pluck('collectivemodules_id', 'collectivemodules_id')
+            ->all();
+
+        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation", "individuelles", "collectiveFormation"));
     }
 
     public function destroy($id)
@@ -223,7 +232,7 @@ class FormationController extends Controller
             ->pluck('formations_id', 'formations_id')
             ->all();
 
-        return view("formations.add-demandeurs", compact('formation', 'individuelles', 'individuelleFormation', 'module', 'localite'));
+        return view("formations.individuelles.add-individuelles", compact('formation', 'individuelles', 'individuelleFormation', 'module', 'localite'));
     }
 
     public function giveformationdemandeurs($idformation, $idmodule, $idlocalite, Request $request)
@@ -272,10 +281,9 @@ class FormationController extends Controller
         $individuelle = Individuelle::findOrFail($request->input('individuelleid'));
         $formation   = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminer' && $individuelle->note_obtenue != null) {
+        if ($formation->statut == 'terminer' || $individuelle->note_obtenue != null) {
             Alert::warning('Attention !', 'impossible de retirer ce demandeur');
         } else {
-
             $individuelle->update([
                 "formations_id"      =>  null,
                 "statut"             =>  'retirer',
@@ -362,7 +370,7 @@ class FormationController extends Controller
             ->pluck('modules_id', 'modules_id')
             ->all();
 
-        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
+        return view("formations.individuelles.add-modules-individuelles", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
     }
 
     public function giveformationmodules($idformation, Request $request)
@@ -400,8 +408,78 @@ class FormationController extends Controller
 
         $domaines = Domaine::orderBy("created_at", "desc")->get();
 
-        return view("formations.add-modules", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
+        return view("formations.individuelles.add-modules-individuelles", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
     }
+
+    public function addcollectiveformations($idformation, $idlocalite)
+    {
+
+        $formation = Formation::findOrFail($idformation);
+
+        $collectives = Collective::get();
+
+        $collectiveFormation = DB::table('formations')
+            ->where('collectives_id', $formation->collectives_id)
+            ->pluck('collectives_id', 'collectives_id')
+            ->all();
+
+        return view("formations.collectives.add-modules-collectives", compact('formation', 'collectives', 'collectiveFormation'));
+    }
+
+
+    public function giveformationcollectives($idformation, Request $request)
+    {
+        $request->validate([
+            'collective' => ['required']
+        ]);
+
+        $formation = Formation::findOrFail($idformation);
+
+        if (isset($formation->collectives_id)) {
+            $collective = Collective::findOrFail($formation->collectives_id);
+            $collective->update([
+                "statut_demande"      =>  'accepter',
+            ]);
+            $collective->save();
+        }
+        $collective = Collective::findOrFail($request->input("collective"));
+        $collective->update([
+            "statut_demande"      =>  'retenue',
+        ]);
+
+        $collective->save();
+
+        $formation->update([
+            "collectives_id"      =>  $request->input("collective"),
+        ]);
+
+        $formation->save();
+
+        Alert::success('Fait !', 'ajouté avec succès');
+
+        return redirect()->back();
+    }
+
+    public function givemoduleformationcollectives($idformation, Request $request)
+    {
+        $request->validate([
+            'collectivemodule' => ['required']
+        ]);
+        
+        $formation = Formation::findOrFail($idformation);
+
+        $formation->update([
+            "collectivemodules_id"      =>  $request->input("collectivemodule"),
+        ]);
+
+        $formation->save();
+
+        Alert::success('Fait !', 'ajouté avec succès');
+
+        return redirect()->back();
+    }
+
+
     public function givemoduleformations($idformation, $idlocalite, Request $request)
     {
         $request->validate([

@@ -83,9 +83,9 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5>Détails formation : <span class="{{ $formation?->statut }}">
+                                        <span class="card-title">Détails formation : <span class="{{ $formation?->statut }} text-white">
                                                 {{ $formation?->statut }}</span>
-                                        </h5>
+                                        </span>
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Intitulé formation</div>
                                             <div>{{ $formation?->name }}</div>
@@ -165,10 +165,9 @@
                                     @endif
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($operateur)
-                                            <div class="card-header">
-                                                <i class="bi bi-table"></i>
+                                            <h1 class="card-title">
                                                 Liste des formations
-                                            </div>
+                                            </h1>
                                             <div class="row g-3">
                                                 <table class="table datatables" id="table-formations">
                                                     <thead>
@@ -301,9 +300,6 @@
 
                                             </div>
 
-
-
-
                                             <div class="row g-3 pt-3">
                                                 <table
                                                     class="table datatables align-middle justify-content-center table-borderless"
@@ -406,7 +402,7 @@
                                         <div class="pt-1">
                                             <a href="{{ url('moduleformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
-                                                <i class="bi bi-person-plus-fill" title="Ajouter module"></i> </a>
+                                                <i class="bi bi-plus" title="Ajouter module"></i> </a>
                                         </div>
                                     @endif
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
@@ -659,7 +655,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
-                                Rejeter</button>
+                                Annuler</button>
                         </div>
                     </form>
                 </div>

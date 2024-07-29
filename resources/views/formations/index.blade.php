@@ -59,9 +59,9 @@
                                     <th>Localité</th>
                                     <th>Modules</th>
                                     {{-- <th>Niveau qualification</th> --}}
-                                    <th>Effectif</th>
+                                    {{-- <th>Effectif</th> --}}
                                     <th class="text-center">Statut</th>
-                                    <th class="text-center">#</th>
+                                    <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,15 +74,15 @@
                                         <td>{{ $formation->departement?->region?->nom }}</td>
                                         <td>{{ $formation->module?->name }}</td>
                                         {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
-                                        <td class="text-center">
+                                      {{--   <td class="text-center">
                                             @foreach ($formation->individuelles as $individuelle)
                                                 @if ($loop->last)
                                                     <a class="text-primary fw-bold"
                                                         href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                 @endif
                                             @endforeach
-                                        </td>
-                                        <td><a href="#"><span class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a></td>
+                                        </td> --}}
+                                        <td class="text-center"><a href="#"><span class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a></td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('formations.show', $formation->id) }}"

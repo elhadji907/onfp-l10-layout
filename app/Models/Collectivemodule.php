@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property Specialite|null $specialite
  * @property Statut|null $statut
  * @property Collection|Collective[] $collectives
+ * @property Collection|Formation[] $formations
  *
  * @package App\Models
  */
@@ -71,5 +72,10 @@ class Collectivemodule extends Model
 	public function listecollectives()
 	{
 		return $this->hasMany(Listecollective::class, 'collectivemodules_id');
+	}
+    
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'modules_id');
 	}
 }

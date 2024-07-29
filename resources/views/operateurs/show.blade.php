@@ -86,7 +86,9 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5 class="card-title">Opérateur</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">Opérateur</h5>
+                                        </div>
                                         <div class="col-12 col-md-9 col-lg-9 mb-0">
                                             <div class="label">Raison sociale</div>
                                             <div>{{ $operateur?->name }}</div>
@@ -215,7 +217,8 @@
                                                     <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                                                     <td>
                                                         <input type="text" name="module" id="module_name"
-                                                            class="form-control form-control-sm" placeholder="Enter module" />
+                                                            class="form-control form-control-sm"
+                                                            placeholder="Enter module" />
                                                         <div id="countryList"></div>
                                                         {{ csrf_field() }}
                                                     </td>
@@ -227,8 +230,8 @@
                                                             class="form-control form-control-sm" /></td>
                                                 </tr>
                                             </table>
-                                            <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
-                                                <button type="submit" class="btn btn-success btn-sm"><i
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-outline-success btn-sm"><i
                                                         class="bi bi-printer"></i> Enregistrer</button>
                                             </div>
                                         </div>

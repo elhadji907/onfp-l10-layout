@@ -65,6 +65,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+        
         .annuler {
             background-color: red;
             color: white;
@@ -73,6 +74,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .retirer {
             background-color: red;
             color: white;
@@ -98,14 +100,16 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .démarrer {
-            background-color: #28a745;
+            background-color: #00d5ff;
             color: white;
             padding: 4px 8px;
             text-align: center;
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .terminer {
             background-color: #239b56;
             color: white;
@@ -125,7 +129,7 @@
         }
 
         .programmer {
-            background-color: #0DCAF0;
+            background-color: #00d5ff;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -134,7 +138,7 @@
         }
 
         .retenue {
-            background-color: #0DCAF0;
+            background-color: #00d5ff;
             color: white;
             padding: 4px 8px;
             text-align: center;

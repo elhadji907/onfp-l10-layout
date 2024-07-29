@@ -162,8 +162,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('formationmodules/{idformation}/{idlocalite}', [FormationController::class, 'addformationmodules']);
     Route::put('formationmodules/{idformation}', [FormationController::class, 'giveformationmodules']);
 
+    Route::get('formationcollectives/{idformation}/{idlocalite}', [FormationController::class, 'addformationcollectives']);
+    Route::put('formationcollectives/{idformation}', [FormationController::class, 'giveformationcollectives']);
+
+    Route::get('moduleformationcollectives/{idformation}/{idlocalite}', [FormationController::class, 'addmoduleformationcollectives']);
+    Route::put('moduleformationcollectives/{idformation}', [FormationController::class, 'givemoduleformationcollectives']);
+
     Route::get('moduleformations/{idformation}/{idlocalite}', [FormationController::class, 'addmoduleformations']);
     Route::put('moduleformations/{idformation}/{idlocalite}', [FormationController::class, 'givemoduleformations']);
+
+    Route::get('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'addcollectiveformations']);
+    Route::put('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'givecollectiveformations']);
 
     Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
 

@@ -73,7 +73,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Demandeur $demandeur
  * @property Etude|null $etude
  * @property Fcollective|null $fcollective
- * @property Formation|null $formation
  * @property Ingenieur|null $ingenieur
  * @property Module $module
  * @property Programme|null $programme
@@ -81,6 +80,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Programme[] $programmes
  * @property Collection|Projet[] $projets
  * @property Collection|Membre[] $membres
+ * @property Collection|Formation[] $formations
  *
  * @package App\Models
  */
@@ -171,7 +171,11 @@ class Collective extends Model
 		'modules_id'
 	];
 
-	
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'modules_id');
+	}
+
 	public function collectivemodules()
 	{
 		return $this->hasMany(Collectivemodule::class, 'collectives_id');
