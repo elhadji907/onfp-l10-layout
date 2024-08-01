@@ -14,12 +14,18 @@
                                     | Liste des courriers arrivés
                                 </span>
 
-                                <small>
+                                {{-- <small>
                                     <a href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class='btn btn-primary btn-sm'
                                         title="télécharger le coupon" target="_blank">
                                         <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
                                     </a>
-                                </small>
+                                </small> --}}
+                                <form action="{{ route('couponArrive') }}" method="post" target="_blank">
+                                    @csrf
+                                    {{-- @method('PUT') --}}
+                                    <input type="hidden" name="id" value="{{ $arrive->id }}">
+                                    <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print" aria-hidden="true"></i>Télécharger coupon</button>
+                                </form>
                             </div>
                             @csrf
                             <div class="row form-row pt-3">

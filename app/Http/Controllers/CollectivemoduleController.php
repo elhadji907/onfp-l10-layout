@@ -16,15 +16,23 @@ class CollectivemoduleController extends Controller
             "module_name"   => "required|string",
         ]);
 
+        $module_collective_total = Collectivemodule::where('collectives_id', $request->input('collectiveid'))->count();
 
-        $module = Collectivemodule::create([
-            'module'            => $request->input('module_name'),
-            'collectives_id'    => $request->input('collective'),
-        ]);
+        if ($module_collective_total >= 2) {
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autoriés');
+            return redirect()->back();
+        } else {
+            $module = Collectivemodule::create([
+                'module'            => $request->input('module_name'),
+                'collectives_id'    => $request->input('collective'),
+            ]);
+    
+            $module->save();
+    
+            Alert::success('Fait ! ', 'module ajouté avec succès');
+        }
 
-        $module->save();
 
-        Alert::success('Fait ! ', 'module ajouté avec succès');
 
         return redirect()->back();
     }

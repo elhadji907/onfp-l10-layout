@@ -35,7 +35,7 @@
                             </span>
                             @if ($collective_total > 0)
                                 <button type="button" class="btn btn-info btn-sm">
-                                    <span class="badge bg-white text-info">{{ $collective_total }}/3</span>
+                                    <span class="badge bg-white text-info">{{ $collective_total }}/1</span>
                                 </button>
                             @endif
                             @isset(Auth::user()->cin)

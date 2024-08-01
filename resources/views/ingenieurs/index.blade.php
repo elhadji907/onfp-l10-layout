@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des régions')
+@section('title', 'ONFP - Liste des ingénieurs')
 @section('space-work')
 
     <section class="section register">
@@ -39,23 +39,23 @@
                     <div class="card-body">
                         {{-- @can('role-create') --}}
                         <div class="pt-1">
-                            {{-- <a href="{{ route('regions.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            {{-- <a href="{{ route('ingenieurs.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
 
                             <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddRegionModal">
+                                data-bs-target="#AddingenieurModal">
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
                             </button>
                         </div>
                         {{-- @endcan --}}
-                        <h5 class="card-title">Régions</h5>
+                        <h5 class="card-title">Ingénieurs</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center" id="table-regions">
+                        <table class="table datatables align-middle justify-content-center" id="table-ingenieurs">
                             <thead>
                                 <tr>
                                     <th class="text-center" scope="col">N°</th>
-                                    <th>Régions</th>
+                                    <th>ingénieurs</th>
                                     <th>Code</th>
                                     <th class="text-center" scope="col">Départements</th>
                                     <th class="text-center" scope="col">#</th>
@@ -63,13 +63,13 @@
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($regions as $region)
+                                @foreach ($ingenieurs as $ingenieur)
                                     <tr>
                                         <td style="text-align: center;">{{ $i++ }}</td>
-                                        <td>{{ $region->nom }}</td>
-                                        <td>{{ $region->sigle }}</td>
+                                        <td>{{ $ingenieur->nom }}</td>
+                                        <td>{{ $ingenieur->sigle }}</td>
                                         <td style="text-align: center;">
-                                            @foreach ($region->departements as $departement)
+                                            @foreach ($ingenieur->departements as $departement)
                                                 @if ($loop->last)
                                                     <span class="badge bg-info">{{ $loop->count }}</span>
                                                 @endif
@@ -77,7 +77,7 @@
                                         </td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('regions.show', $region->id) }}"
+                                                    href="{{ route('ingenieurs.show', $ingenieur->id) }}"
                                                     class="btn btn-warning btn-sm mx-1" title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
                                                 <div class="filter">
@@ -86,16 +86,16 @@
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li>
                                                             {{-- <a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ url('regions/' . $region->id . '/edit') }}"
+                                                                href="{{ url('ingenieurs/' . $ingenieur->id . '/edit') }}"
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a> --}}
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#EditRegionModal{{ $region->id }}">
+                                                                data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
                                                                 <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('regions', $region->id) }}"
+                                                            <form action="{{ url('ingenieurs', $ingenieur->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -118,13 +118,13 @@
 
             </div>
         </div>
-        <!-- Add Region -->
-        <div class="modal fade" id="AddRegionModal" tabindex="-1">
+        <!-- Add ingenieur -->
+        <div class="modal fade" id="AddingenieurModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {{-- <form method="POST" action="{{ route('addRegion') }}">
+                    {{-- <form method="POST" action="{{ route('addingenieur') }}">
                         @csrf --}}
-                    <form method="post" action="{{ url('regions') }}" enctype="multipart/form-data" class="row g-3">
+                    <form method="post" action="{{ url('ingenieurs') }}" enctype="multipart/form-data" class="row g-3">
                         @csrf
                         <div class="modal-header">
                             <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
@@ -133,10 +133,10 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-floating mb-3">
-                                <input type="text" name="region" value="{{ old('region') }}"
-                                    class="form-control form-control-sm @error('region') is-invalid @enderror"
-                                    id="region" placeholder="Nom region" autofocus>
-                                @error('region')
+                                <input type="text" name="ingenieur" value="{{ old('ingenieur') }}"
+                                    class="form-control form-control-sm @error('ingenieur') is-invalid @enderror"
+                                    id="ingenieur" placeholder="Nom ingenieur" autofocus>
+                                @error('ingenieur')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
@@ -146,7 +146,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" name="sigle" value="{{ old('sigle') }}"
                                     class="form-control form-control-sm @error('sigle') is-invalid @enderror"
-                                    id="sigle" placeholder="Code region">
+                                    id="sigle" placeholder="Code ingenieur">
                                 @error('sigle')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -164,31 +164,31 @@
                 </div>
             </div>
         </div>
-        <!-- End Add Region-->
+        <!-- End Add ingenieur-->
 
-        <!-- Edit Region -->
-        @foreach ($regions as $region)
-            <div class="modal fade" id="EditRegionModal{{ $region->id }}" tabindex="-1" role="dialog"
-                aria-labelledby="EditRegionModalLabel{{ $region->id }}" aria-hidden="true">
+        <!-- Edit ingenieur -->
+        @foreach ($ingenieurs as $ingenieur)
+            <div class="modal fade" id="EditingenieurModal{{ $ingenieur->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditingenieurModalLabel{{ $ingenieur->id }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        {{-- <form method="POST" action="{{ route('updateRegion') }}">
+                        {{-- <form method="POST" action="{{ route('updateingenieur') }}">
                             @csrf --}}
-                        <form method="post" action="{{ route('regions.update', $region->id) }}"
+                        <form method="post" action="{{ route('ingenieurs.update', $ingenieur->id) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="modal-header" id="EditRegionModalLabel{{ $region->id }}">
+                            <div class="modal-header" id="EditingenieurModalLabel{{ $ingenieur->id }}">
                                 <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier région</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <input type="hidden" name="id" value="{{ $region->id }}">
+                                <input type="hidden" name="id" value="{{ $ingenieur->id }}">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="nom" value="{{ $region->nom ?? old('nom') }}"
+                                    <input type="text" name="nom" value="{{ $ingenieur->nom ?? old('nom') }}"
                                         class="form-control form-control-sm @error('nom') is-invalid @enderror"
-                                        id="nom" placeholder="Nom region" autofocus>
+                                        id="nom" placeholder="Nom ingenieur" autofocus>
                                     @error('nom')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -197,9 +197,9 @@
                                     <label for="floatingInput">Région</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="sigle" value="{{ $region->sigle ?? old('sigle') }}"
+                                    <input type="text" name="sigle" value="{{ $ingenieur->sigle ?? old('sigle') }}"
                                         class="form-control form-control-sm @error('sigle') is-invalid @enderror"
-                                        id="sigle" placeholder="Code region">
+                                        id="sigle" placeholder="Code ingenieur">
                                     @error('sigle')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -218,13 +218,13 @@
                 </div>
             </div>
         @endforeach
-        <!-- End Edit Region-->
+        <!-- End Edit ingenieur-->
     </section>
 
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-regions', {
+        new DataTable('#table-ingenieurs', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

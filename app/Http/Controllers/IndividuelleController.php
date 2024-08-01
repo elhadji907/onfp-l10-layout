@@ -84,34 +84,70 @@ class IndividuelleController extends Controller
 
             $regionid = $departement->region->id;
 
-            $individuelle = new Individuelle([
-                'date_depot'                        =>  $date_depot,
-                'numero'                            =>  $numero_individuelle,
-                'adresse'                           =>  $request->input('adresse'),
-                'fixe'                              =>  $request->input('telephone_secondaire'),
-                'niveau_etude'                      =>  $request->input('niveau_etude'),
-                'diplome_academique'                =>  $request->input('diplome_academique'),
-                'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
-                'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
-                'etablissement_academique'          =>  $request->input('etablissement_academique'),
-                'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
-                'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
-                'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
-                'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
-                'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
-                'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
-                'qualification'                     =>  $request->input('qualification'),
-                'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
-                "regions_id"                        =>  $regionid,
-                "modules_id"                        =>  $request->input("module"),
-                'autre_module'                      =>  $request->input('autre_module'),
-                'statut'                            => 'attente',
-                'users_id'                          =>  $user->id,
-            ]);
+            $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
 
-            $individuelle->save();
+            if (isset($module_find)) {
+                $individuelle = new Individuelle([
+                    'date_depot'                        =>  $date_depot,
+                    'numero'                            =>  $numero_individuelle,
+                    'adresse'                           =>  $request->input('adresse'),
+                    'fixe'                              =>  $request->input('telephone_secondaire'),
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $request->input("departement"),
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $module_find->id,
+                    /* 'autre_module'                      =>  $request->input('autre_module'), */
+                    'statut'                            => 'attente',
+                    'users_id'                          =>  $user->id,
+                ]);
+            } else {
+                $module = new Module([
+                    'name'            => $request->input('module'),
+                ]);
+
+                $module->save();
+
+                $individuelle = new Individuelle([
+                    'date_depot'                        =>  $date_depot,
+                    'numero'                            =>  $numero_individuelle,
+                    'adresse'                           =>  $request->input('adresse'),
+                    'fixe'                              =>  $request->input('telephone_secondaire'),
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $request->input("departement"),
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $module->id,
+                    /* 'autre_module'                      =>  $request->input('autre_module'), */
+                    'statut'                            => 'attente',
+                    'users_id'                          =>  $user->id,
+                ]);
+            }
         }
+
+        $individuelle->save();
 
         Alert::success('Enregistrée ! ', 'demande ajoutée avec succès');
 
@@ -309,7 +345,6 @@ class IndividuelleController extends Controller
         $individuelle->save();
 
         Alert::success('Modification ! ', 'demande modifié avec succès');
-
         return Redirect::route("demandesIndividuelle");
     }
 

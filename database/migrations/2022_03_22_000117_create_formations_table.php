@@ -40,12 +40,12 @@ class CreateFormationsTable extends Migration
             $table->double('frais_add')->nullable();
             $table->double('autes_frais')->nullable();
             $table->double('frais_total')->nullable();
-            $table->string('suivi_dossier', 200)->nullable();
+            $table->longText('suivi_dossier')->nullable();
             $table->string('lieu', 200)->nullable();
             $table->string('convention_col', 200)->nullable();
             $table->string('decret', 200)->nullable();
             $table->string('beneficiaires', 200)->nullable();
-            $table->string('membres_jury', 200)->nullable();
+            $table->longText('membres_jury')->nullable();
             $table->string('niveau_qualification', 200)->nullable();
             $table->integer('effectif_prevu')->nullable();
             $table->integer('prevue_h')->nullable();

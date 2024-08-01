@@ -72,9 +72,16 @@
                                         <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
                                         <td>{{ $formation?->name }}</td>
                                         <td>{{ $formation->departement?->region?->nom }}</td>
-                                        <td>{{ $formation->module?->name }}</td>
+                                        <td>
+                                            @isset($formation?->module?->name)
+                                                {{ $formation?->module?->name }}
+                                            @endisset
+                                            @isset($formation?->collectivemodule?->module)
+                                                {{ $formation?->collectivemodule?->module }}
+                                            @endisset
+                                        </td>
                                         {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
-                                      {{--   <td class="text-center">
+                                        {{--   <td class="text-center">
                                             @foreach ($formation->individuelles as $individuelle)
                                                 @if ($loop->last)
                                                     <a class="text-primary fw-bold"
@@ -82,7 +89,9 @@
                                                 @endif
                                             @endforeach
                                         </td> --}}
-                                        <td class="text-center"><a href="#"><span class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a></td>
+                                        <td class="text-center"><a href="#"><span
+                                                    class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
+                                        </td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('formations.show', $formation->id) }}"
@@ -359,7 +368,7 @@
         </div>
 
         <!-- Edit Formation -->
-       {{--  @foreach ($formations as $formation)
+        {{--  @foreach ($formations as $formation)
             <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                 <div class="modal fade" id="EditFormationModal{{ $formation->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="EditFormationModalLabel{{ $formation->id }}" aria-hidden="true">

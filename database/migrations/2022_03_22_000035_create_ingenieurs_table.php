@@ -26,6 +26,7 @@ class CreateIngenieursTable extends Migration
             $table->char('uuid', 36);
             $table->string('matricule', 200)->nullable();
             $table->string('name', 200);
+            $table->string('sigle', 200);
             $table->string('telephone', 200)->nullable();
             $table->string('email', 200)->nullable();
             $table->string('specialite', 200)->nullable();

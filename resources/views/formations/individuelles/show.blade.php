@@ -288,6 +288,23 @@
                                                                 <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                                     data-bs-target="#RejetDemandeModal">Annuler
                                                                 </button>
+                                                                <hr>                                                                
+                                                                <form action="{{ route('ficheSuivi') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Fiche de suivi</button>
+                                                                </form>
+                                                                <form action="{{ route('pvEvaluation') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">PV Evaluation</button>
+                                                                </form>
                                                             </ul>
                                                         </div>
                                                     </span>

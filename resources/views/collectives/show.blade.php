@@ -528,6 +528,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-floating mb-3">
+                                <input type="hidden" name="collectiveid" value="{{ $collective->id }}">
                                 <input type="text" name="module_name" value="{{ old('module_name') }}"
                                     class="form-control form-control-sm @error('module_name') is-invalid @enderror"
                                     id="module_name" placeholder="Nom du module" autofocus>

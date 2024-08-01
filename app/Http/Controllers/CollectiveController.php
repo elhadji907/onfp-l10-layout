@@ -53,7 +53,7 @@ class CollectiveController extends Controller
 
         $collective_total = Collective::where('users_id', $user->id)->count();
 
-        if ($collective_total >= 3) {
+        if ($collective_total >= 1) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
             return redirect()->back();
         } else {
@@ -293,8 +293,6 @@ class CollectiveController extends Controller
     public function destroy($id)
     {
         $collective   = Collective::find($id);
-
-        dd($collective);
 
         $collective->delete();
 

@@ -757,7 +757,19 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <select name="module" class="form-select  @error('module') is-invalid @enderror"
+
+                                        <input type="text" name="module" value="{{ old('module_name') }}"
+                                            class="form-control form-control-sm @error('module_name') is-invalid @enderror"
+                                            id="module_name" placeholder="Nom du module" autofocus>
+                                        <div id="countryList"></div>
+                                        {{ csrf_field() }}
+                                        @error('module')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+
+                                        {{-- <select name="module" class="form-select  @error('module') is-invalid @enderror"
                                             aria-label="Select" id="select-field-module-ind"
                                             data-placeholder="Choisir formation">
                                             <option value="">
@@ -773,10 +785,10 @@
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
                                         <input type="text" name="autre_module" value="{{ old('autre_module') }}"
                                             class="form-control form-control-sm @error('autre_module') is-invalid @enderror"
@@ -786,7 +798,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="departement" class="form-label">Lieu de formation<span

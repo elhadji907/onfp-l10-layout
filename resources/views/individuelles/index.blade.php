@@ -170,7 +170,7 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="cin" class="form-label">N° CIN<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="cin" value="{{ old('cin') }}"
+                                        <input minlength="13" maxlength="14" type="text" name="cin" value="{{ old('cin') }}"
                                             class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                             id="cin" placeholder="Numéro carte d'identité nationale">
                                         @error('cin')

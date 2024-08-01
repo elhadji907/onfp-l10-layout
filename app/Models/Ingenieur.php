@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $uuid
  * @property string|null $matricule
  * @property string $name
+ * @property string $sigle
  * @property string|null $telephone
  * @property string|null $email
  * @property string|null $specialite
@@ -52,6 +53,7 @@ class Ingenieur extends Model
 		'uuid',
 		'matricule',
 		'name',
+		'sigle',
 		'telephone',
 		'email',
 		'specialite',

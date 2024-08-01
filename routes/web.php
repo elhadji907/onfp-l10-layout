@@ -141,8 +141,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
 
-    Route::get('coupon-arrive/{id}', [ArriveController::class, 'couponArrive'])->name('coupon-arrive');
+    Route::post('couponArrive', [ArriveController::class, 'couponArrive'])->name('couponArrive');
     Route::get('file-decision/{id}', [EmployeController::class, 'fileDecision'])->name('file-decision');
+
+    Route::post('pvEvaluation', [FormationController::class, 'pvEvaluation'])->name('pvEvaluation');
+    Route::post('ficheSuivi', [FormationController::class, 'ficheSuivi'])->name('ficheSuivi');
 
     Route::get('notifications/', [CourrierController::class, 'notifications'])->name('notifications');
     Route::get('validationsRejetMessage/{id}', [IndividuelleController::class, 'validationsRejetMessage'])->name('validationsRejetMessage');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Collective;
 use App\Models\Collectivemodule;
 use App\Models\Departement;
+use App\Models\Direction;
 use App\Models\Domaine;
 use App\Models\Formation;
 use App\Models\Indisponible;
@@ -17,6 +18,7 @@ use App\Models\Statut;
 use App\Models\TypesFormation;
 use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -69,7 +71,7 @@ class FormationController extends Controller
             $code_formation   =   strtolower($count_formation);
         }
 
-        if ($types_formation->name == "Individuelle") {
+        if ($types_formation->name == "individuelle") {
             $for = "F";
             $fin = "I";
         } else {
@@ -153,7 +155,6 @@ class FormationController extends Controller
             "regions_id"            =>   $request->input('region'),
             "departements_id"       =>   $request->input('departement'),
             "lieu"                  =>   $request->input('lieu'),
-            "operateurs_id"         =>   $request->input('operateur'),
             "types_formations_id"   =>   $request->input('types_formation'),
             "niveau_qualification"  =>   $request->input('niveau_qualification'),
             "titre"                 =>   $request->input('titre'),
@@ -465,7 +466,7 @@ class FormationController extends Controller
         $request->validate([
             'collectivemodule' => ['required']
         ]);
-        
+
         $formation = Formation::findOrFail($idformation);
 
         $formation->update([
@@ -551,8 +552,25 @@ class FormationController extends Controller
 
         foreach ($individuelles_notes as $key => $value) {
             $individuelle = Individuelle::findOrFail($key);
+            if ($value <= 4) {
+                $appreciation = "Médiocre";
+            } elseif ($value <= 8) {
+                $appreciation = "Insuffisant ";
+            } elseif ($value <= 11) {
+                $appreciation = "Passable ";
+            } elseif ($value <= 13) {
+                $appreciation = "Assez bien";
+            } elseif ($value <= 16) {
+                $appreciation = "Bien";
+            } elseif ($value <= 19) {
+                $appreciation = "Très bien";
+            } elseif ($value = 20) {
+                $appreciation = "Excellent ";
+            }
+
             $individuelle->update([
                 "note_obtenue"       =>  $value,
+                "appreciation"       =>  $appreciation,
                 "statut"             =>  'terminer',
             ]);
 
@@ -589,5 +607,80 @@ class FormationController extends Controller
         Alert::success('Fait !', 'Observations ajoutées');
 
         return redirect()->back();
+    }
+
+
+    public function ficheSuivi(Request $request)
+    {
+
+        $formation = Formation::find($request->input('id'));
+
+        $title = 'Fiche de suivi de la formation en  ' . $formation->name;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+
+        $dompdf->loadHtml(view('formations.individuelles.fichesuivi', compact(
+            'formation',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        /* $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's'; */
+
+        $name = 'Fiche de suivi de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
+    public function pvEvaluation(Request $request)
+    {
+
+        $formation = Formation::find($request->input('id'));
+
+        $title = 'PV Evaluation de la formation en  ' . $formation->name;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+
+        $dompdf->loadHtml(view('formations.individuelles.pvevaluation', compact(
+            'formation',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        /*  $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's'; */
+
+        $name = 'PV Evaluation de la formation en  ' .$formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
     }
 }

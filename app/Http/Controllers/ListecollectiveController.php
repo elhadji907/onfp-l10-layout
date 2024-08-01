@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listecollective;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ListecollectiveController extends Controller
@@ -33,6 +34,7 @@ class ListecollectiveController extends Controller
             'telephone'                 =>      $request->input('telephone'),
             'experience'                =>      $request->input('experience'),
             'autre_experience'          =>      $request->input('autre_experience'),
+            'details'                   =>      $request->input('details'),
             'statut'                    =>      'attente',
             'collectivemodules_id'      =>      $request->input('module'),
             'collectives_id'            =>      $request->input('collective'),
@@ -48,7 +50,36 @@ class ListecollectiveController extends Controller
     public function edit($id)
     {
         $listecollective   = Listecollective::find($id);
-        dd($listecollective);
+        return view("collectives.updateliste", compact("listecollective"));
+
+    }
+
+    public function update(Request $request, $id)
+    {
+        $listecollective   = Listecollective::find($id);
+
+        $listecollective->update([
+            'cin'                       =>      $request->input('cin'),
+            'civilite'                  =>      $request->input('civilite'),
+            'prenom'                    =>      $request->input('firstname'),
+            'nom'                       =>      $request->input('name'),
+            'date_naissance'            =>      $request->input('date_naissance'),
+            'lieu_naissance'            =>      $request->input('lieu_naissance'),
+            'niveau_etude'              =>      $request->input('niveau_etude'),
+            'telephone'                 =>      $request->input('telephone'),
+            'experience'                =>      $request->input('experience'),
+            'autre_experience'          =>      $request->input('autre_experience'),
+            'details'                   =>      $request->input('details'),
+            'statut'                    =>      'attente',
+            'collectivemodules_id'      =>      $request->input('module'),
+            'collectives_id'            =>      $request->input('collective'),
+        ]);
+
+        $listecollective->save();
+
+        Alert::success("Ajouté !", "avec succès");
+
+        return Redirect::route('collectivemodules.show', $request->input('module'));
 
     }
 

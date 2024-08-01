@@ -250,9 +250,9 @@ class ArriveController extends Controller
         }
     }
 
-    public function couponArrive($id)
+    public function couponArrive(Request $request)
     {
-        $arrive = Arrive::find($id);
+        $arrive = Arrive::find($request->input('id'));
         $courrier = $arrive->courrier;
 
         /*  $directions     = Direction::pluck('sigle', 'id'); */
