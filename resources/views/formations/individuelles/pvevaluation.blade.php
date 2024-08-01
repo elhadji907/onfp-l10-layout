@@ -188,7 +188,7 @@
                     </td>
                 </tr>
                 <tr class="heading" style="text-align: center;">
-                    <td colspan="7"><b></b>
+                    <td colspan="7"><b>{{ __('Ingénieur : ') }}</b>{{ $formation?->ingenieur?->name }}
                     </td>
                     <td colspan="3"><b>{{ __('DECISION DU JURY') }}</b>
                     </td>
@@ -218,7 +218,7 @@
                         <td>{{ $individuelle?->user?->telephone }}</td>
                         <td>{{ $individuelle?->note_obtenue ?? '' }}</td>
                         <td>{{ $individuelle?->appreciation }}</td>
-                        <td></td>
+                        <td>{{ $individuelle?->observations }}</td>
                     </tr>
                 @endforeach
             </tbody>

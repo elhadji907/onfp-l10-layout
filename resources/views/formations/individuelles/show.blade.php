@@ -71,6 +71,12 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#ingenieur-overview">ingenieur
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#evaluation-overview">Évaluation
                                     </button>
                                 </li>
@@ -83,7 +89,8 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <span class="card-title">Détails formation : <span class="{{ $formation?->statut }} text-white">
+                                        <span class="card-title">Détails formation : <span
+                                                class="{{ $formation?->statut }} text-white">
                                                 {{ $formation?->statut }}</span>
                                         </span>
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
@@ -288,17 +295,17 @@
                                                                 <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                                     data-bs-target="#RejetDemandeModal">Annuler
                                                                 </button>
-                                                                <hr>                                                                
-                                                                <form action="{{ route('ficheSuivi') }}"
-                                                                    method="post" target="_blank">
+                                                                <hr>
+                                                                <form action="{{ route('ficheSuivi') }}" method="post"
+                                                                    target="_blank">
                                                                     @csrf
                                                                     {{-- @method('PUT') --}}
                                                                     <input type="hidden" name="id"
                                                                         value="{{ $formation->id }}">
                                                                     <button class="btn btn-sm mx-1">Fiche de suivi</button>
                                                                 </form>
-                                                                <form action="{{ route('pvEvaluation') }}"
-                                                                    method="post" target="_blank">
+                                                                <form action="{{ route('pvEvaluation') }}" method="post"
+                                                                    target="_blank">
                                                                     @csrf
                                                                     {{-- @method('PUT') --}}
                                                                     <input type="hidden" name="id"
@@ -426,6 +433,9 @@
                                         @isset($operateur)
                                             <h1 class="card-title">
                                                 Liste des formations
+                                                @if (isset($module))
+                                                    en {{ $module?->name }}
+                                                @endif
                                             </h1>
                                             <div class="row g-3">
                                                 <table class="table datatables" id="table-formations">
@@ -497,6 +507,118 @@
                                                                         </div>
                                                                     </span>
                                                                 </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                </table>
+                                            </div>
+                                        @endisset
+                                    </div>
+
+                                </div>
+                            </div>
+                            {{-- Détail ingenieur --}}
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade ingenieur-overview pt-3" id="ingenieur-overview">
+                                    @if (isset($ingenieur))
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">
+                                                {{ $ingenieur?->name }}
+                                                <a class="btn btn-info btn-sm" title=""
+                                                    href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
+                                                        class="bi bi-eye"></i></a>&nbsp;
+                                                <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                                    class="btn btn-primary float-end btn-sm">
+                                                    <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
+                                            </h5>
+                                        </div>
+                                    @else
+                                        <div class="pt-1">
+                                             <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                                class="btn btn-primary float-end btn-sm">
+                                                <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
+
+                                           {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $formation->id }}">
+                                                <button class="btn btn-primary float-end btn-sm">Ajouter</button>
+                                            </form> --}}
+                                        </div>
+                                    @endif
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        @isset($ingenieur)
+                                            <h1 class="card-title">
+                                                Liste des formations
+                                                @if (isset($ingenieur))
+                                                    en {{ $ingenieur?->name }}
+                                                @endif
+                                            </h1>
+                                            <div class="row g-3">
+                                                <table class="table datatables" id="table-formations">
+                                                    <thead>
+                                                        <tr>
+                                                        <tr>
+                                                            <th class="text-center" scope="col">N°</th>
+                                                            <th>Matricule</th>
+                                                            <th>Name</th>
+                                                            <th>Sigle</th>
+                                                            <th>Spécialité</th>
+                                                            <th>Email</th>
+                                                            <th>Téléphone</th>
+                                                            <th class="text-center" scope="col">#</th>
+                                                        </tr>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $i = 1; ?>
+                                                        @foreach ($ingenieur?->formations as $formation)
+                                                            <tr>
+                                                                <td style="text-align: center;">{{ $i++ }}</td>
+                                                                <td>{{ $ingenieur->matricule }}</td>
+                                                                <td>{{ $ingenieur->name }}</td>
+                                                                <td>{{ $ingenieur->sigle }}</td>
+                                                                <td>{{ $ingenieur->specialite }}</td>
+                                                                <td>{{ $ingenieur->email }}</td>
+                                                                <td>{{ $ingenieur->telephone }}</td>
+
+                                                                <td style="text-align: center;">
+                                                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                                                            href="{{ route('ingenieurs.show', $ingenieur->id) }}"
+                                                                            class="btn btn-warning btn-sm mx-1"
+                                                                            title="Voir détails">
+                                                                            <i class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li>
+                                                                                    <button type="button"
+                                                                                        class="dropdown-item btn btn-sm mx-1"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
+                                                                                        <i class="bi bi-pencil"
+                                                                                            title="Modifier"></i> Modifier
+                                                                                    </button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <form
+                                                                                        action="{{ url('ingenieurs', $ingenieur->id) }}"
+                                                                                        method="post">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
+                                                                                        <button type="submit"
+                                                                                            class="dropdown-item show_confirm"><i
+                                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                                    </form>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+
                                                             </tr>
                                                         @endforeach
                                                     </tbody>

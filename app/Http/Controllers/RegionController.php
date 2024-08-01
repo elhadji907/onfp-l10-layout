@@ -68,6 +68,8 @@ class RegionController extends Controller
             'sigle'     => $request->sigle,
         ]);
 
+        $region->save();
+
         /* $mesage = 'La région ' . $region->nom . '  a été modifiée';
         return redirect()->route("regions.index")->with("status", $mesage); */
 

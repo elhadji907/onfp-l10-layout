@@ -327,6 +327,13 @@
             </li><!-- End utilisateurs Nav -->
 
             <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Ingénieurs</span>
+                </a>
+            </li><!-- End Formations Nav -->
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('formations') }}">
                     <i class="bi bi-folder-symlink-fill"></i>
                     <span>Formations</span>

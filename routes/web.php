@@ -21,6 +21,7 @@ use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\IndemniteController;
 use App\Http\Controllers\IndividuelleController;
+use App\Http\Controllers\IngenieurController;
 use App\Http\Controllers\InterneController;
 use App\Http\Controllers\ListecollectiveController;
 use App\Http\Controllers\LocaliteController;
@@ -165,6 +166,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('formationmodules/{idformation}/{idlocalite}', [FormationController::class, 'addformationmodules']);
     Route::put('formationmodules/{idformation}', [FormationController::class, 'giveformationmodules']);
 
+    Route::get('formationingenieurs/{idformation}', [FormationController::class, 'addformationingenieurs']);
+    Route::put('formationingenieurs/{idformation}', [FormationController::class, 'giveformationingenieurs']);
+
     Route::get('formationcollectives/{idformation}/{idlocalite}', [FormationController::class, 'addformationcollectives']);
     Route::put('formationcollectives/{idformation}', [FormationController::class, 'giveformationcollectives']);
 
@@ -244,6 +248,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/secteurs', SecteurController::class);
     Route::resource('/collectivemodules', CollectivemoduleController::class);
     Route::resource('/listecollectives', ListecollectiveController::class);
+    Route::resource('/ingenieurs', IngenieurController::class);
 });
 
 

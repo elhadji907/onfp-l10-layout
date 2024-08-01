@@ -10,6 +10,7 @@ use App\Models\Domaine;
 use App\Models\Formation;
 use App\Models\Indisponible;
 use App\Models\Individuelle;
+use App\Models\Ingenieur;
 use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Operateurmodule;
@@ -172,10 +173,11 @@ class FormationController extends Controller
 
     public function show($id)
     {
-        $formation  = Formation::findOrFail($id);
-        $type_formation = $formation->types_formation->name;
-        $operateur  = $formation->operateur;
-        $module     = $formation->module;
+        $formation          = Formation::findOrFail($id);
+        $type_formation     = $formation->types_formation->name;
+        $operateur          = $formation->operateur;
+        $module             = $formation->module;
+        $ingenieur          = $formation->ingenieur;
 
         $individuelles = Individuelle::orderBy("created_at", "desc")->get();
 
@@ -186,7 +188,7 @@ class FormationController extends Controller
             ->pluck('collectivemodules_id', 'collectivemodules_id')
             ->all();
 
-        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation", "individuelles", "collectiveFormation"));
+        return view('formations.' . $type_formation . "s.show", compact("formation", "operateur", "module", "type_formation", "individuelles", "collectiveFormation", "ingenieur"));
     }
 
     public function destroy($id)
@@ -410,6 +412,43 @@ class FormationController extends Controller
         $domaines = Domaine::orderBy("created_at", "desc")->get();
 
         return view("formations.individuelles.add-modules-individuelles", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
+    }
+
+    public function addformationingenieurs($idformation)
+    {
+        $formation = Formation::findOrFail($idformation);
+        $ingenieur = $formation?->ingenieur?->name;
+
+        $ingenieurs = Ingenieur::get();
+
+        $ingenieurFormation = DB::table('formations')
+            ->where('ingenieurs_id', $formation->ingenieurs_id)
+            ->pluck('ingenieurs_id', 'ingenieurs_id')
+            ->all();
+            
+        $domaines = Domaine::orderBy("created_at", "desc")->get();
+
+        return view("formations.individuelles.add-ingenieur", compact('formation', 'ingenieurs', 'ingenieur', 'ingenieurFormation', 'domaines'));
+    }
+
+    
+    public function giveformationingenieurs($idformation, Request $request)
+    {
+        $request->validate([
+            'ingenieur' => ['required']
+        ]);
+
+        $formation = Formation::findOrFail($idformation);
+
+        $formation->update([
+            "ingenieurs_id"      =>  $request->input('ingenieur'),
+        ]);
+
+        $formation->save();
+
+        Alert::success('Ingenieur', 'ajouté avec succès');
+
+        return redirect()->back();
     }
 
     public function addcollectiveformations($idformation, $idlocalite)
@@ -678,7 +717,7 @@ class FormationController extends Controller
         $anne = $anne . ' ' . date('i') . 'min';
         $anne = $anne . ' ' . date('s') . 's'; */
 
-        $name = 'PV Evaluation de la formation en  ' .$formation->name . ', code ' . $formation->code . '.pdf';
+        $name = 'PV Evaluation de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
