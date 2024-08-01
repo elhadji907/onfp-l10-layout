@@ -71,7 +71,7 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#ingenieur-overview">ingenieur
+                                        data-bs-target="#ingenieur-overview">Ingénieur
                                     </button>
                                 </li>
 
@@ -259,8 +259,6 @@
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     @isset($module)
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
-
-
                                             <div class="d-flex justify-content-between align-items-center mt-3">
                                                 <span class="card-title d-flex align-items-baseline">Code formation :&nbsp;
                                                     <span class="badge bg-info text-white">
@@ -532,14 +530,22 @@
                                                     class="btn btn-primary float-end btn-sm">
                                                     <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
                                             </h5>
+                                            <h5 class="card-title">
+                                                Agent de suivi
+                                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#EditAgentSuiviModal{{ $formation->id }}">
+                                                    <i class="bi bi-plus" title="Ajouter un agent de suivi"></i>
+                                                </button>
+                                            </h5>
                                         </div>
                                     @else
                                         <div class="pt-1">
-                                             <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                            <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
                                                 <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
 
-                                           {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
+                                            {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $formation->id }}">
                                                 <button class="btn btn-primary float-end btn-sm">Ajouter</button>
@@ -640,8 +646,18 @@
                                             @csrf
                                             @method('PUT')
                                             @isset($operateur)
-                                                <h1 class="card-title"> Liste des bénéficiaires :
-                                                    {{ $formation->individuelles->count() }}</h1>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h1 class="card-title"> Liste des bénéficiaires :
+                                                        {{ $formation->individuelles->count() }}</h1>
+                                                    <h5 class="card-title">
+                                                        Membres du jury
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
+                                                            <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                        </button>
+                                                    </h5>
+                                                </div>
                                                 <div class="row g-3">
                                                     <table class="table datatables" id="table-evaluation">
                                                         <thead>
@@ -831,13 +847,105 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Modifier</button>
+                                    Valider</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         @endforeach
+        {{-- Agent de suivi --}}
+        <div class="modal fade" id="EditAgentSuiviModal{{ $formation->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="EditAgentSuiviModalLabel{{ $formation->id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{{ route('formations.updateAgentSuivi') }}"
+                        enctype="multipart/form-data" class="row g-3">
+                        @csrf
+                        @method('patch')
+                        <div class="modal-header" id="EditAgentSuiviModalLabel{{ $formation->id }}">
+                            <h5 class="modal-title">Ajouter un agent de suivi</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="{{ $formation->id }}">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="suivi_dossier"
+                                    value="{{ $formation?->suivi_dossier ?? old('suivi_dossier') }}"
+                                    class="form-control form-control-sm @error('suivi_dossier') is-invalid @enderror"
+                                    id="suivi_dossier" placeholder="Nom de l'agent de suivi" autofocus>
+                                @error('suivi_dossier')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Agent suivi</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" name="date_suivi"
+                                    value="{{ $formation?->date_suivi?->format('Y-m-d') ?? old('date_suivi') }}"
+                                    class="form-control form-control-sm @error('date_suivi') is-invalid @enderror"
+                                    id="date_suivi" placeholder="Date suivi">
+                                @error('date_suivi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Date suivi</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                Vavilider</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- Membres du jury --}}
+        <div class="modal fade" id="EditMembresJuryModal{{ $formation->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="EditMembresJuryModalLabel{{ $formation->id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{{ route('formations.updateMembresJury') }}"
+                        enctype="multipart/form-data" class="row g-3">
+                        @csrf
+                        @method('patch')
+                        <div class="modal-header" id="EditMembresJuryModalLabel{{ $formation->id }}">
+                            <h5 class="modal-title">Ajouter les membres du jury</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="{{ $formation->id }}">
+
+                            <label for="membres_jury">Membres du jury</label>
+                                
+                                <textarea name="membres_jury" id="membres_jury" cols="30" rows="5"
+                                    class="form-control form-control-sm @error('membres_jury') is-invalid @enderror" placeholder="Ajouter les membres du jury"
+                                    autofocus>{{ $formation?->membres_jury ?? old('membres_jury') }}</textarea>
+
+                                {{-- <input type="text" name="membres_jury"
+                                    value="{{ $formation?->membres_jury ?? old('membres_jury') }}"
+                                    class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
+                                    id="membres_jury" placeholder="Ajouter membres du jury" autofocus> --}}
+                                @error('membres_jury')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                Vavilider</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 @push('scripts')

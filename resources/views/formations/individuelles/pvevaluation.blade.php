@@ -69,7 +69,7 @@
             margin: auto;
             /* padding: 30px; */
             font-size: 12px;
-            line-height: 18px;
+            line-height: 15px;
             color: color: rgb(0, 0, 0);
             ;
         }
@@ -187,8 +187,8 @@
                     <td colspan="5"><b>{{ __('Titre : ') }}</b> {{ $formation?->titre }}
                     </td>
                 </tr>
-                <tr class="heading" style="text-align: center;">
-                    <td colspan="7"><b>{{ __('Ingénieur : ') }}</b>{{ $formation?->ingenieur?->name }}
+                <tr class="heading">
+                    <td colspan="7"><b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name }}
                     </td>
                     <td colspan="3"><b>{{ __('DECISION DU JURY') }}</b>
                     </td>
@@ -223,9 +223,13 @@
                 @endforeach
             </tbody>
         </table>
-        <h6 valign="top">
-            <b>SIGNATURE DES MEMBRES DU JURY:<br></b>
-        </h6>
+        <h4 valign="top">
+            <b>SIGNATURE DES MEMBRES DU JURY:<br><br></b>
+            <?php $i = 1; ?>
+            @foreach ($membres_jury as $item)
+                {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br>
+            @endforeach
+        </h4>
     </div>
     {{-- <footer>
         {{ __("Cité SIPRES 1 lot 2 - 2 voies liberté 6 extension VDN  Tél. : 33 827 92 51- Fax : 33 827 92 55

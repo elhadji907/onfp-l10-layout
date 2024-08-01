@@ -143,9 +143,10 @@
 
             </tbody>
         </table>
-        <h6 valign="top">
+        <h4 valign="top">
             <b>AGENT DE SUIVI:<br></b>
-        </h6>
+            {{ $formation->suivi_dossier .', le '.$formation->date_suivi->format('d/m/Y') }}
+        </h4>
     </div>
     {{-- <footer>
         {{ __("Cité SIPRES 1 lot 2 - 2 voies liberté 6 extension VDN  Tél. : 33 827 92 51- Fax : 33 827 92 55

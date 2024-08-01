@@ -629,6 +629,46 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
+    public function updateAgentSuivi(Request $request)
+    {
+        $request->validate([
+            'suivi_dossier' => 'required', 'string',
+            'date_suivi' => 'required', 'date'
+        ]);
+
+        $formation = Formation::findOrFail($request->input('id'));
+
+        $formation->update([
+            "suivi_dossier"    =>  $request->input('suivi_dossier'),
+            "date_suivi"       =>  $request->input('date_suivi'),
+        ]);
+
+        $formation->save();
+
+        Alert::success('Fait !', 'enregistré avec succès');
+
+        return redirect()->back();
+    }
+
+    public function updateMembresJury(Request $request)
+    {
+        $request->validate([
+            'membres_jury' => 'required', 'string',
+        ]);
+
+        $formation = Formation::findOrFail($request->input('id'));
+
+        $formation->update([
+            "membres_jury"    =>  $request->input('membres_jury'),
+        ]);
+
+        $formation->save();
+
+        Alert::success('Fait !', 'enregistré avec succès');
+
+        return redirect()->back();
+    }
+
     public function updateObservations(Request $request)
     {
         $request->validate([
@@ -693,6 +733,10 @@ class FormationController extends Controller
 
         $title = 'PV Evaluation de la formation en  ' . $formation->name;
 
+        $membres_jury = explode(";",$formation->membres_jury);
+
+        $count_membres = count($membres_jury);
+
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
         $options->setDefaultFont('Formation');
@@ -701,7 +745,9 @@ class FormationController extends Controller
 
         $dompdf->loadHtml(view('formations.individuelles.pvevaluation', compact(
             'formation',
-            'title'
+            'title',
+            'membres_jury',
+            'count_membres',
         )));
 
         // (Optional) Setup the paper size and orientation (portrait ou landscape)
