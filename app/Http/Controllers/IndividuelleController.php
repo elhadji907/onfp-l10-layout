@@ -327,28 +327,70 @@ class IndividuelleController extends Controller
         $user_id           = $individuelle?->users_id;
         $departement = Departement::findOrFail($request->input("departement"));
         $regionid = $departement->region->id;
+        $user = Auth::user();
 
-        $individuelle->update([
-            'niveau_etude'                      =>  $request->input('niveau_etude'),
-            'fixe'                              =>  $request->input('telephone_secondaire'),
-            'diplome_academique'                =>  $request->input('diplome_academique'),
-            'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
-            'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
-            'etablissement_academique'          =>  $request->input('etablissement_academique'),
-            'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
-            'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
-            'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
-            'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
-            'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
-            'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
-            'qualification'                     =>  $request->input('qualification'),
-            'experience'                        =>  $request->input('experience'),
-            "departements_id"                   =>  $request->input("departement"),
-            "regions_id"                        =>  $regionid,
-            "modules_id"                        =>  $request->input("module"),
-            'autre_module'                      =>  $request->input('autre_module'),
-            'users_id'                          =>  $user_id,
-        ]);
+        $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
+
+        $demandeur_ind = Individuelle::where('users_id', $user->id)->get();
+
+        if (isset($module_find)) {
+            foreach ($demandeur_ind as $key => $value) {
+                if ($value->module->name == $module_find->name) {
+                    Alert::warning('Attention ! le module ' . $value->module->name, 'a déjà été choisi');
+                    return redirect()->back();
+                }
+            }
+            $individuelle->update([
+                'niveau_etude'                      =>  $request->input('niveau_etude'),
+                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'diplome_academique'                =>  $request->input('diplome_academique'),
+                'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                'qualification'                     =>  $request->input('qualification'),
+                'experience'                        =>  $request->input('experience'),
+                "departements_id"                   =>  $request->input("departement"),
+                "regions_id"                        =>  $regionid,
+                "modules_id"                        =>  $module_find->id,
+                /* 'autre_module'                      =>  $request->input('autre_module'), */
+                'users_id'                          =>  $user_id,
+            ]);
+        } else {
+
+            $module = new Module([
+                'name'            => $request->input('module'),
+            ]);
+
+            $module->save();
+
+            $individuelle->update([
+                'niveau_etude'                      =>  $request->input('niveau_etude'),
+                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'diplome_academique'                =>  $request->input('diplome_academique'),
+                'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                'qualification'                     =>  $request->input('qualification'),
+                'experience'                        =>  $request->input('experience'),
+                "departements_id"                   =>  $request->input("departement"),
+                "regions_id"                        =>  $regionid,
+                "modules_id"                        =>  $module->id,
+                /* 'autre_module'                      =>  $request->input('autre_module'), */
+                'users_id'                          =>  $user_id,
+            ]);
+        }
 
         $individuelle->save();
 

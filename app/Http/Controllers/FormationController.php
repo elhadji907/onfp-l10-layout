@@ -288,7 +288,7 @@ class FormationController extends Controller
         $individuelle = Individuelle::findOrFail($request->input('individuelleid'));
         $formation   = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminer' || $individuelle->note_obtenue != null) {
+        if ($formation->statut == 'terminer' && $individuelle->note_obtenue > 0) {
             Alert::warning('Attention !', 'impossible de retirer ce demandeur');
         } else {
             $individuelle->update([

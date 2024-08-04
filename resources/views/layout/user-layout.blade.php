@@ -58,7 +58,7 @@
   ======================================================== -->
     <style>
         .rejeter {
-            background-color: red;
+            background-color:  #DC3545;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -67,7 +67,7 @@
         }
         
         .annuler {
-            background-color: red;
+            background-color: #DC3545;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -76,7 +76,7 @@
         }
 
         .retirer {
-            background-color: red;
+            background-color: #DC3545;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -93,7 +93,7 @@
         }
 
         .accepter {
-            background-color: #28a745;
+            background-color: #0D6EFD;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -102,7 +102,7 @@
         }
 
         .démarrer {
-            background-color: #00d5ff;
+            background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -111,7 +111,7 @@
         }
 
         .terminer {
-            background-color: #239b56;
+            background-color: #198754;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -120,7 +120,7 @@
         }
 
         .agréer {
-            background-color: #28a745;
+            background-color: #198754;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -129,7 +129,7 @@
         }
 
         .programmer {
-            background-color: #00d5ff;
+            background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -138,7 +138,7 @@
         }
 
         .retenue {
-            background-color: #00d5ff;
+            background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;
             text-align: center;
