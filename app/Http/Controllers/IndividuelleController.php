@@ -50,7 +50,7 @@ class IndividuelleController extends Controller
 
         $individuelle_total = Individuelle::where('users_id', $user->id)->count();
 
-        if ($individuelle_total >= 5) {
+        if ($individuelle_total >= 3) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
             return redirect()->back();
         } else {
@@ -86,7 +86,15 @@ class IndividuelleController extends Controller
 
             $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
 
+            $demandeur_ind = Individuelle::where('users_id', $user->id)->get();
+
             if (isset($module_find)) {
+                foreach ($demandeur_ind as $key => $value) {
+                    if ($value->module->name == $module_find->name) {
+                        Alert::warning('Attention ! le module ' . $value->module->name, 'a déjà été choisi');
+                        return redirect()->back();
+                    }
+                }
                 $individuelle = new Individuelle([
                     'date_depot'                        =>  $date_depot,
                     'numero'                            =>  $numero_individuelle,

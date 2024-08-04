@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Demande individuelle')
+@section('title', 'Demande individuelle de '.Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name )
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -35,7 +35,7 @@
                             </span>
                             @if ($individuelle_total > 0)
                                 <button type="button" class="btn btn-info btn-sm">
-                                    <span class="badge bg-white text-info">{{ $individuelle_total }}/5</span>
+                                    <span class="badge bg-white text-info">{{ $individuelle_total }}/3</span>
                                 </button>
                             @endif
                             @isset(Auth::user()->cin)
