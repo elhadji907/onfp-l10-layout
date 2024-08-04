@@ -110,6 +110,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Fcollective[] $fcollectives
  * @property Collection|Findividuelle[] $findividuelles
  * @property Collection|Individuelle[] $individuelles
+ * @property Collection|Individuelle[] $listecollectives
  *
  * @package App\Models
  */
@@ -410,5 +411,10 @@ class Formation extends Model
 	public function individuelles()
 	{
 		return $this->hasMany(Individuelle::class, 'formations_id');
+	}
+
+	public function listecollectives()
+	{
+		return $this->hasMany(Listecollective::class, 'formations_id');
 	}
 }

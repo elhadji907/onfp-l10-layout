@@ -256,7 +256,7 @@
                                                                 <span class="d-flex align-items-baseline">
                                                                     <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
                                                                         class="btn btn-primary btn-sm"
-                                                                        title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                        title="voir détails" target="_blank"><i class="bi bi-eye"></i></a>
                                                                     <div class="filter">
                                                                         <a class="icon" href="#"
                                                                             data-bs-toggle="dropdown"><i

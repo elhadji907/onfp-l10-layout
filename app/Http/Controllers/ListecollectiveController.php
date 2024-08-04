@@ -86,7 +86,8 @@ class ListecollectiveController extends Controller
     public function show($id)
     {
         $listecollective   = Listecollective::find($id);
-        dd($listecollective);
+        return view("collectives.showlistecollective", compact("listecollective"));
+        
 
     }
 

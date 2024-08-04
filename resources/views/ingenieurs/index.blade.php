@@ -61,6 +61,7 @@
                                     <th>Spécialité</th>
                                     <th>Email</th>
                                     <th>Téléphone</th>
+                                    <th>Formations</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
@@ -75,6 +76,14 @@
                                         <td>{{ $ingenieur->specialite }}</td>
                                         <td>{{ $ingenieur->email }}</td>
                                         <td>{{ $ingenieur->telephone }}</td>
+                                        <td style="text-align: center;">
+                                            @foreach ($ingenieur->formations as $formation)
+                                                @if ($loop->last)
+                                                    <a class="text-primary fw-bold"
+                                                        href="#">{!! $loop->count ?? '0' !!}</a>
+                                                @endif
+                                            @endforeach
+                                        </td>
 
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a
@@ -142,8 +151,8 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" name="name" value="{{ old('name') }}"
-                                    class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                    id="name" placeholder="Ingénieur" autofocus>
+                                    class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
+                                    placeholder="Ingénieur" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -237,8 +246,7 @@
                                     <label for="floatingInput">Matricule<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="name"
-                                        value="{{ $ingenieur->name ?? old('name') }}"
+                                    <input type="text" name="name" value="{{ $ingenieur->name ?? old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         id="name" placeholder="Ingénieur" autofocus>
                                     @error('name')
@@ -260,7 +268,8 @@
                                     <label for="floatingInput">Sigle<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="specialite" value="{{ $ingenieur->specialite ?? old('specialite') }}"
+                                    <input type="text" name="specialite"
+                                        value="{{ $ingenieur->specialite ?? old('specialite') }}"
                                         class="form-control form-control-sm @error('specialite') is-invalid @enderror"
                                         id="specialite" placeholder="specialite">
                                     @error('specialite')

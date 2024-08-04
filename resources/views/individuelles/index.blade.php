@@ -79,8 +79,8 @@
                                             </td>
                                             <td>{{ $individuelle->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->user->lieu_naissance }}
                                             </td>
-                                            <td>{{ $individuelle->module?->name }}</td>
-                                            <td>{{ $individuelle->region?->nom }}</td>
+                                            <td>{{ $individuelle?->module?->name }}</td>
+                                            <td>{{ $individuelle?->departement?->nom }}</td>
                                             <td>
                                                 <span class="{{ $individuelle?->statut }}">
                                                     {{ $individuelle?->statut }}

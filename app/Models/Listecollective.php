@@ -25,8 +25,15 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string|null $autre_sexperience
  * @property string|null $details
  * @property string|null $statut
+ * @property string|null $nbre_enfants
+ * @property string|null $note_obtenue
+ * @property string|null $niveau_maitrise
+ * @property string|null $observations
+ * @property string|null $appreciation
+ * @property string|null $motif_rejet
  * @property int|null $collectives_id
  * @property int|null $collectivemodules_id
+ * @property int|null $formations_id
  * @property int|null $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
@@ -51,7 +58,8 @@ class Listecollective extends Model
     protected $casts = [
         'collectives_id' => 'int',
         'collectivemodules_id' => 'int',
-		'date_naissance' => 'datetime',
+        'formations_id' => 'int',
+        'date_naissance' => 'datetime',
         'modules_id' => 'int'
     ];
 
@@ -69,8 +77,15 @@ class Listecollective extends Model
         'autre_experience',
         'details',
         'statut',
+		'nbre_enfants',
+		'note_obtenue',
+		'niveau_maitrise',
+		'observations',
+		'appreciation',
+		'motif_rejet',
         'collectives_id',
         'collectivemodules_id',
+        'formations_id',
         'modules_id'
     ];
 
@@ -85,5 +100,9 @@ class Listecollective extends Model
     public function collectivemodule()
     {
         return $this->belongsTo(Collectivemodule::class, 'collectivemodules_id');
+    }
+    public function formation()
+    {
+        return $this->belongsTo(Formation::class, 'formations_id')->latest();
     }
 }

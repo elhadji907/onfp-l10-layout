@@ -27,9 +27,17 @@ return new class extends Migration
             $table->string('autre_experience')->nullable();
             $table->longText('details')->nullable();
             $table->string('statut')->nullable();
+            $table->integer('nbre_pieces')->nullable();
+            $table->integer('nbre_enfants')->nullable();
+            $table->double('note_obtenue')->nullable();
+            $table->string('niveau_maitrise', 200)->nullable();
+            $table->longText('observations')->nullable();
+            $table->string('appreciation', 200)->nullable();
+            $table->longText('motif_rejet')->nullable();
             $table->unsignedInteger('collectives_id')->nullable();
             $table->unsignedInteger('collectivemodules_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();
+            $table->unsignedInteger('formations_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
 

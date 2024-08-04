@@ -188,9 +188,10 @@
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="7"><b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name }}
+                    <td colspan="7">
+                        <b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name . '(' . $formation?->ingenieur?->sigle . ')' }}
                     </td>
-                    <td colspan="3"><b>{{ __('DECISION DU JURY') }}</b>
+                    <td colspan="3" style="text-align: center;"><b>{{ __('DECISION DU JURY') }}</b>
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">
@@ -224,7 +225,7 @@
             </tbody>
         </table>
         <h4 valign="top">
-            <b>SIGNATURE DES MEMBRES DU JURY:<br><br></b>
+            <b><u>SIGNATURE DES MEMBRES DU JURY</u>:<br><br></b>
             <?php $i = 1; ?>
             @foreach ($membres_jury as $item)
                 {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br>

@@ -70,7 +70,7 @@
                                                     </td>
                                                     <td>{{ $collective?->name }}</td>
                                                     <td>{{ $collective?->sigle }}</td>
-                                                    <td>{{ $collective?->user?->telephone }}</td>
+                                                    {{-- <td>{{ $collective?->user?->telephone }}</td> --}}
                                                     <td>{{ $collective->module?->name }}</td>
                                                     <td>{{ $collective->departement?->region?->nom }}</td>
                                                     <td>

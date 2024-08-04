@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collectivemodule;
+use App\Models\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -22,13 +24,29 @@ class CollectivemoduleController extends Controller
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autoriés');
             return redirect()->back();
         } else {
-            $module = Collectivemodule::create([
-                'module'            => $request->input('module_name'),
-                'collectives_id'    => $request->input('collective'),
-            ]);
-    
-            $module->save();
-    
+
+            $module_find    = DB::table('modules')->where('name', $request->input("module_name"))->first();
+
+            if (isset($module_find)) {
+                $collectivemodule = Collectivemodule::create([
+                    'module'            => $request->input('module_name'),
+                    'collectives_id'    => $request->input('collective'),
+                ]);
+            } else {
+
+                $module = new Module([
+                    'name'            => $request->input('module_name'),
+                ]);
+
+                $module->save();
+                $collectivemodule = Collectivemodule::create([
+                    'module'            => $request->input('module_name'),
+                    'collectives_id'    => $request->input('collective'),
+                ]);
+            }
+
+            $collectivemodule->save();
+
             Alert::success('Fait ! ', 'module ajouté avec succès');
         }
 

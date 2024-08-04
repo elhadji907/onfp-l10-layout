@@ -160,8 +160,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurs']);
     Route::put('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurs']);
 
+    Route::get('formationdemandeurscollectives/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurscollectives']);
+    Route::put('formationdemandeurscollectives/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurscollectives']);
+
     Route::get('formationoperateurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationoperateurs']);
     Route::put('formationoperateurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationoperateurs']);
+
+    Route::get('formationcollectiveoperateurs/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'addformationcollectiveoperateurs']);
+    Route::put('formationcollectiveoperateurs/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'giveformationcollectiveoperateurs']);
 
     Route::get('formationmodules/{idformation}/{idlocalite}', [FormationController::class, 'addformationmodules']);
     Route::put('formationmodules/{idformation}', [FormationController::class, 'giveformationmodules']);
@@ -203,11 +209,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/formationTerminer', [FormationController::class, 'formationTerminer'])->name('formationTerminer');
 
+    Route::post('/formationcollectiveTerminer', [FormationController::class, 'formationcollectiveTerminer'])->name('formationcollectiveTerminer');
+
     Route::put('notedemandeurs/{idformation}', [FormationController::class, 'givenotedemandeurs']);
+    Route::put('notedemandeurscollectives/{idformation}', [FormationController::class, 'givenotedemandeursCollective']);
 
     Route::patch('/updateObservations', [FormationController::class, 'updateObservations'])->name('individuelles.updateObservations');
     Route::patch('/updateAgentSuivi', [FormationController::class, 'updateAgentSuivi'])->name('formations.updateAgentSuivi');
     Route::patch('/updateMembresJury', [FormationController::class, 'updateMembresJury'])->name('formations.updateMembresJury');
+    Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

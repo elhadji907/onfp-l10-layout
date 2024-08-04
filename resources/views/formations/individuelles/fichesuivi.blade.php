@@ -144,8 +144,10 @@
             </tbody>
         </table>
         <h4 valign="top">
-            <b>AGENT DE SUIVI:<br></b>
-            {{ $formation->suivi_dossier .', le '.$formation->date_suivi->format('d/m/Y') }}
+            <b><u>AGENT DE SUIVI</u>:</b>
+            @isset($formation?->date_suivi)
+                {{ $formation?->suivi_dossier . ', le ' . $formation?->date_suivi?->format('d/m/Y') }}
+            @endisset
         </h4>
     </div>
     {{-- <footer>
