@@ -19,9 +19,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $uuid
  * @property string|null $matricule
  * @property string $name
- * @property string $sigle
+ * @property string $initiale
  * @property string|null $telephone
  * @property string|null $email
+ * @property string|null $fonction
  * @property string|null $specialite
  * @property Carbon|null $date
  * @property string|null $items1
@@ -53,13 +54,13 @@ class Ingenieur extends Model
 		'uuid',
 		'matricule',
 		'name',
-		'sigle',
+		'initiale',
 		'telephone',
 		'email',
+		'fonction',
 		'specialite',
 		'date',
 		'items1',
-		'items2'
 	];
 
 	public function collectives()

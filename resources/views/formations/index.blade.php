@@ -328,7 +328,7 @@
                                         @enderror
                                     </div>
 
-                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="date_fin" class="form-label">Date fin</label>
                                         <input type="date" name="date_fin" value="{{ old('date_fin') }}"
                                             class="form-control form-control-sm @error('date_fin') is-invalid @enderror"
@@ -338,7 +338,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div> --}}
+                                    </div>
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="titre" class="form-label">Titre (convention)</label>
@@ -347,6 +347,149 @@
                                             id="titre"
                                             placeholder="Ex: 4ème catégorie de la convention collective ...">
                                         @error('titre')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="effectif_prevu" class="form-label">Effectif prévu</label>
+                                        <input type="number" name="effectif_prevu" min="0" max="25"
+                                            value="{{ old('effectif_prevu') }}"
+                                            class="form-control form-control-sm @error('effectif_prevu') is-invalid @enderror"
+                                            id="effectif_prevu" placeholder="Effectif prévu">
+                                        @error('effectif_prevu')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="prevue_h" class="form-label">Effectif homme</label>
+                                        <input type="number" name="prevue_h" min="0" max="25"
+                                            value="{{ old('prevue_h') }}"
+                                            class="form-control form-control-sm @error('prevue_h') is-invalid @enderror"
+                                            id="prevue_h" placeholder="Effectif homme">
+                                        @error('prevue_h')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="prevue_f" class="form-label">Effectif femme</label>
+                                        <input type="number" name="prevue_f" min="0" max="25"
+                                            value="{{ old('prevue_f') }}"
+                                            class="form-control form-control-sm @error('prevue_f') is-invalid @enderror"
+                                            id="prevue_f" placeholder="Effectif femme">
+                                        @error('prevue_f')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="frais_operateurs" class="form-label">Frais opérateur</label>
+                                        <input type="number" name="frais_operateurs" min="0" step="0.001"
+                                            value="{{ old('frais_operateurs') }}"
+                                            class="form-control form-control-sm @error('frais_operateurs') is-invalid @enderror"
+                                            id="frais_operateurs" placeholder="Frais opérateur">
+                                        @error('frais_operateurs')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="frais_add" class="form-label">Frais additionels</label>
+                                        <input type="number" name="frais_add" min="0" step="0.001"
+                                            value="{{ old('frais_add') }}"
+                                            class="form-control form-control-sm @error('frais_add') is-invalid @enderror"
+                                            id="frais_add" placeholder="Frais additionels">
+                                        @error('frais_add')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="autes_frais" class="form-label">Autres frais</label>
+                                        <input type="number" name="autes_frais" min="0" step="0.001"
+                                            value="{{ old('autes_frais') }}"
+                                            class="form-control form-control-sm @error('autes_frais') is-invalid @enderror"
+                                            id="autes_frais" placeholder="Autres frais">
+                                        @error('autes_frais')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="projet" class="form-label">Projet</label>
+                                        <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-projet"
+                                            data-placeholder="Choisir projet">
+                                            <option value="">
+                                                {{ old('projet') }}
+                                            </option>
+                                            @foreach ($projets as $projet)
+                                                <option value="{{ $projet?->id }}">
+                                                    {{ $projet?->sigle }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('projet')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="programme" class="form-label">Programme</label>
+                                        <select name="programme"
+                                            class="form-select  @error('programme') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-programme"
+                                            data-placeholder="Choisir programme">
+                                            <option value="">
+                                                {{ old('programme') }}
+                                            </option>
+                                            @foreach ($programmes as $programme)
+                                                <option value="{{ $programme?->id }}">
+                                                    {{ $programme?->sigle }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('programme')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="choixoperateur" class="form-label">Choix opérateurs</label>
+                                        <select name="choixoperateur"
+                                            class="form-select  @error('choixoperateur') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-choixoperateurs"
+                                            data-placeholder="Choisir choix operateurs">
+                                            <option value="">
+                                                {{ old('choixoperateur') }}
+                                            </option>
+                                            @foreach ($choixoperateurs as $choixoperateur)
+                                                <option value="{{ $choixoperateur?->id }}">
+                                                    {{ $choixoperateur?->description }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('choixoperateur')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

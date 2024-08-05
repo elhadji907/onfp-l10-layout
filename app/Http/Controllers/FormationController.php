@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Choixoperateur;
 use App\Models\Collective;
 use App\Models\Collectivemodule;
 use App\Models\Departement;
@@ -15,6 +16,8 @@ use App\Models\Listecollective;
 use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Operateurmodule;
+use App\Models\Programme;
+use App\Models\Projet;
 use App\Models\Region;
 use App\Models\Statut;
 use App\Models\TypesFormation;
@@ -36,8 +39,11 @@ class FormationController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $regions = Region::orderBy("created_at", "desc")->get();
         $operateurs = Operateur::orderBy("created_at", "desc")->get();
+        $projets = Projet::orderBy("created_at", "desc")->get();
+        $programmes = Programme::orderBy("created_at", "desc")->get();
+        $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
         $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
-        return view("formations.index", compact("formations", "modules", "departements", "regions", "operateurs", 'types_formations'));
+        return view("formations.index", compact("formations", "modules", "departements", "regions", "operateurs", 'types_formations', 'projets', 'programmes', 'choixoperateurs'));
     }
 
 
@@ -110,6 +116,15 @@ class FormationController extends Controller
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
+            "effectif_prevu"        =>   $request->input('effectif_prevu'),
+            "prevue_h"              =>   $request->input('prevue_h'),
+            "prevue_f"              =>   $request->input('prevue_f'),
+            "frais_operateurs"      =>   $request->input('frais_operateurs'),
+            "frais_add"             =>   $request->input('frais_add'),
+            "autes_frais"           =>   $request->input('autes_frais'),
+            "projets_id"            =>   $request->input('projet'),
+            "programmes_id"         =>   $request->input('programme'),
+            "choixoperateurs_id"    =>   $request->input('choixoperateur'),
             "statut"                =>   "attente",
             "annee"                 =>   $annee,
 
@@ -136,7 +151,10 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($id);
         $departements = Departement::orderBy("created_at", "desc")->get();
         $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
-        return view("formations.update", compact("formation", "departements", "types_formations"));
+        $projets = Projet::orderBy("created_at", "desc")->get();
+        $programmes = Programme::orderBy("created_at", "desc")->get();
+        $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
+        return view("formations.update", compact("formation", "departements", "types_formations", 'projets', 'programmes', 'choixoperateurs'));
     }
 
     public function update(Request $request, $id)
@@ -163,6 +181,15 @@ class FormationController extends Controller
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
+            "effectif_prevu"        =>   $request->input('effectif_prevu'),
+            "prevue_h"              =>   $request->input('prevue_h'),
+            "prevue_f"              =>   $request->input('prevue_f'),
+            "frais_operateurs"      =>   $request->input('frais_operateurs'),
+            "frais_add"             =>   $request->input('frais_add'),
+            "autes_frais"           =>   $request->input('autes_frais'),
+            "projets_id"            =>   $request->input('projet'),
+            "programmes_id"         =>   $request->input('programme'),
+            "choixoperateurs_id"    =>   $request->input('choixoperateur'),
 
         ]);
 
@@ -589,7 +616,7 @@ class FormationController extends Controller
 
         if ($type == 'collective') {
             $count = $formation->collective->count();
-        } elseif($type == 'individuelle') {
+        } elseif ($type == 'individuelle') {
             $count = $formation->individuelles->count();
         } else {
             $count = 0;
@@ -633,7 +660,7 @@ class FormationController extends Controller
         $formation   = Formation::findOrFail($request->input('id'));
 
         $count = $formation->listecollectives->count();
-        
+
         if ($count == '0' || empty($formation->operateur)) {
             Alert::warning('Désolez !', 'action non autorisée');
         } else {
@@ -753,7 +780,7 @@ class FormationController extends Controller
             $listecollective->save();
         }
 
-       /*  $validated_by = new Validationindividuelle([
+        /*  $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,
             'action'             =>      'terminer',
             'listecollectives_id'   =>      $listecollective->id

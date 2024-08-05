@@ -42,9 +42,10 @@
                                     <table class="table datatables align-middle" id="table-modules">
                                         <thead>
                                             <tr>
-                                                <th>Matricule</th>
-                                                <th>Name</th>
-                                                <th>Sigle</th>
+                                                {{-- <th>Matricule</th> --}}
+                                                <th>Ingénieur</th>
+                                                <th>Initiale</th>
+                                                <th>Fonction</th>
                                                 <th>Spécialité</th>
                                                 <th>Email</th>
                                                 <th>Téléphone</th>
@@ -64,10 +65,11 @@
                                                                 <div>{{ $message }}</div>
                                                             </span>
                                                         @enderror
-                                                        {{ $ingenieur->matricule }}
+                                                        {{ $ingenieur->name }}
                                                     </td>
-                                                    <td>{{ $ingenieur->name }}</td>
-                                                    <td>{{ $ingenieur->sigle }}</td>
+                                                   {{--  <td>{{ $ingenieur->name }}</td> --}}
+                                                    <td>{{ $ingenieur->initiale }}</td>
+                                                    <td>{{ $ingenieur->fonction }}</td>
                                                     <td>{{ $ingenieur->specialite }}</td>
                                                     <td>{{ $ingenieur->email }}</td>
                                                     <td>{{ $ingenieur->telephone }}</td>
