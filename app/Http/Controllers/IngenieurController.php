@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departement;
 use App\Models\Ingenieur;
+use App\Models\Module;
+use App\Models\Operateur;
+use App\Models\Region;
+use App\Models\TypesFormation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -29,7 +34,7 @@ class IngenieurController extends Controller
             "matricule" => $request->input("matricule"),
             "name"      => $request->input("name"),
             "sigle"     => $request->input("sigle"),
-            "specialite"=> $request->input("specialite"),
+            "specialite" => $request->input("specialite"),
             "email"     => $request->input("email"),
             "telephone" => $request->input("telephone"),
         ]);
@@ -57,7 +62,7 @@ class IngenieurController extends Controller
             "matricule" => $request->input("matricule"),
             "name"      => $request->input("name"),
             "sigle"     => $request->input("sigle"),
-            "specialite"=> $request->input("specialite"),
+            "specialite" => $request->input("specialite"),
             "email"     => $request->input("email"),
             "telephone" => $request->input("telephone"),
         ]);
@@ -67,6 +72,17 @@ class IngenieurController extends Controller
         Alert::success('Fait ! ', 'modification effectuée');
 
         return redirect()->back();
+    }
+
+    public function show($id)
+    {
+        $ingenieur = Ingenieur::findOrFail($id);
+        $modules = Module::orderBy("created_at", "desc")->get();
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        $regions = Region::orderBy("created_at", "desc")->get();
+        $operateurs = Operateur::orderBy("created_at", "desc")->get();
+        $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
+        return view('ingenieurs.show', compact('ingenieur', 'departements', 'modules', 'regions', 'operateurs', 'types_formations'));
     }
 
     public function destroy($id)
