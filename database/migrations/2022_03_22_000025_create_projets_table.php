@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProjetsTable extends Migration
 {
@@ -31,6 +32,7 @@ class CreateProjetsTable extends Migration
             $table->dateTime('fin')->nullable();
             $table->double('budjet')->nullable();
             $table->longText('budjet_lettre')->nullable();
+            $table->string('duree', 200)->nullable();
             $table->timestamp('date_signature')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
             $table->nullableTimestamps();

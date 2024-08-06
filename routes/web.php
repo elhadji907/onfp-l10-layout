@@ -34,6 +34,7 @@ use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
@@ -218,6 +219,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/updateAgentSuivi', [FormationController::class, 'updateAgentSuivi'])->name('formations.updateAgentSuivi');
     Route::patch('/updateMembresJury', [FormationController::class, 'updateMembresJury'])->name('formations.updateMembresJury');
     Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
+    
+    Route::post('/addProjet', [ProjetController::class, 'addProjet'])->name('addProjet');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
@@ -261,6 +264,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/collectivemodules', CollectivemoduleController::class);
     Route::resource('/listecollectives', ListecollectiveController::class);
     Route::resource('/ingenieurs', IngenieurController::class);
+    Route::resource('/projets', ProjetController::class);
 });
 
 

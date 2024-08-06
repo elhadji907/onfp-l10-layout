@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $debut
  * @property Carbon|null $fin
  * @property float|null $budjet
+ * @property string|null $duree
  * @property string|null $budjet_lettre
  * @property Carbon|null $date_signature
  * @property string|null $deleted_at
@@ -52,7 +53,10 @@ class Projet extends Model
 	protected $table = 'projets';
 
 	protected $casts = [
-		'budjet' => 'float'
+		'budjet' => 'float',
+		'date_signature' => 'datetime',
+		'debut' => 'datetime',
+		'fin' => 'datetime',
 	];
 
 	protected $dates = [
@@ -69,6 +73,7 @@ class Projet extends Model
 		'debut',
 		'fin',
 		'budjet',
+		'duree',
 		'budjet_lettre',
 		'date_signature'
 	];

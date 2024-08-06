@@ -95,9 +95,9 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5>Détails formation : <span class="{{ $formation?->statut }}">
+                                        <span>Détails formation : <span class="{{ $formation?->statut }}">
                                                 {{ $formation?->statut }}</span>
-                                        </h5>
+                                        </span>
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Intitulé formation</div>
                                             <div>{{ $formation?->name }}</div>
@@ -106,10 +106,12 @@
                                             <div class="label">Code</div>
                                             <div>{{ $formation?->code }}</div>
                                         </div>
-                                        {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                            <div class="label">Module</div>
-                                            <div>{{ $formation?->module?->name }}</div>
-                                        </div> --}}
+                                        @isset($formation?->module?->name)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Module</div>
+                                                <div>{{ $formation?->module?->name }}</div>
+                                            </div>
+                                        @endisset
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Région</div>
                                             <div>{{ $formation?->departement->region->nom }}</div>
@@ -146,6 +148,60 @@
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Date fin</div>
                                                 <div>{{ $formation?->date_fin->format('d/m/Y') }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->effectif_prevu)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Effectif prévu</div>
+                                                <div>{{ $formation?->effectif_prevu }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->prevue_h)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Prévu homme</div>
+                                                <div>{{ $formation?->prevue_h }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->prevue_f)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Prévu femmes</div>
+                                                <div>{{ $formation?->prevue_f }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->frais_operateurs)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Frais opérateur</div>
+                                                <div>{{ number_format($formation?->frais_operateurs, 2, ',', ' ') }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->frais_add)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Frais additionels</div>
+                                                <div>{{ number_format($formation?->frais_add, 2, ',', ' ') }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->autes_frais)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Autres frais</div>
+                                                <div>{{ number_format($formation?->autes_frais, 2, ',', ' ') }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->projets_id)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Projet</div>
+                                                <div>{{ $formation?->projet?->name }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->programmes_id)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Programme</div>
+                                                <div>{{ $formation?->programme?->name }}</div>
+                                            </div>
+                                        @endisset
+                                        @isset($formation?->choixoperateur?->description)
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Choix opérateur</div>
+                                                <div>{{ $formation?->choixoperateur?->description }}</div>
                                             </div>
                                         @endisset
                                     </form>

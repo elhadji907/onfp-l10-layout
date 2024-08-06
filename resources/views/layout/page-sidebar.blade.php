@@ -339,7 +339,12 @@
                     <span>Formations</span>
                 </a>
             </li><!-- End Formations Nav -->
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('projets') }}">
+                    <i class="bi bi-layers-half"></i>
+                    <span>Projets</span>
+                </a>
+            </li><!-- End utilisateurs Nav -->
             <li class="nav-heading">Opérateurs</li>
             {{-- Formations --}}
             <li class="nav-item">
