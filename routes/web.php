@@ -35,6 +35,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetController;
+use App\Http\Controllers\ProjetmoduleController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
@@ -44,6 +45,7 @@ use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -257,6 +259,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/formations', FormationController::class);
     Route::resource('/operateurs', OperateurController::class);
     Route::resource('/operateurmodules', OperateurmoduleController::class);
+    Route::resource('/projetmodules', ProjetmoduleController::class);
     Route::resource('/validation-operateur-modules', ValidationmoduleController::class);
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/domaines', DomaineController::class);

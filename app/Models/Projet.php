@@ -78,6 +78,12 @@ class Projet extends Model
 		'date_signature'
 	];
 
+	
+	public function projetmodules()
+	{
+		return $this->hasMany(Projetmodule::class, 'projets_id')->latest();
+	}
+
 	public function collectives()
 	{
 		return $this->belongsToMany(Collective::class, 'collectivesprojets', 'projets_id', 'collectives_id')

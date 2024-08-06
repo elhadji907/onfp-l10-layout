@@ -43,13 +43,13 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab"
+                                    <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Projet
                                     </button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
+                                    <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#modules-overview">Modules</button>
                                 </li>
 
@@ -57,7 +57,7 @@
 
                             <div class="tab-content">
 
-                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <div class="tab-pane fade profile-overview" id="profile-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
@@ -106,11 +106,98 @@
                                         @endisset
                                     </form>
                                 </div>
-
-                                <div class="tab-pane fade show profile-overview" id="modules-overview">
-
+                                <div class="tab-pane fade show active profile-overview" id="modules-overview">
+                                    <form method="post" action="{{ url('projetmodules') }}"
+                                        enctype="multipart/form-data" class="row g-3">
+                                        @csrf
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <h5 class="card-title">Ajouter nouveau module</h5>
+                                            <table class="table table-bordered" id="dynamicAddRemove">
+                                                <tr>
+                                                    <th>Modules<span class="text-danger mx-1">*</span></th>
+                                                    <th>Domaines<span class="text-danger mx-1">*</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <input type="hidden" name="projet" value="{{ $projet->id }}">
+                                                    <td>
+                                                        <input type="text" name="module" id="module_name"
+                                                            class="form-control form-control-sm"
+                                                            placeholder="Enter module" />
+                                                        <div id="countryList"></div>
+                                                        {{ csrf_field() }}
+                                                    </td>
+                                                    <td><input type="text" name="domaine" placeholder="Entrer un domaine"
+                                                            class="form-control form-control-sm" /></td>
+                                                </tr>
+                                            </table>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-outline-success btn-sm"><i
+                                                        class="bi bi-printer"></i> Enregistrer</button>
+                                            </div>
+                                        </div>
+                                    </form><!-- End module -->
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <h5 class="card-title">Modules</h5>
+                                        {{-- <form method="post" action="#" enctype="multipart/form-data"
+                                                    class="row g-3"> --}}
+                                        <div class="row g-3">
+                                            <table
+                                                class="table datatables align-middle justify-content-center table-borderless"
+                                                id="table-operateurModules">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">N°</th>
+                                                        <th scope="col">Module</th>
+                                                        <th scope="col">Domaines</th>
+                                                        <th class="col"><i class="bi bi-gear"></i></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 1; ?>
+                                                    @foreach ($projet->projetmodules as $projetmodule)
+                                                        <tr>
+                                                            <td style="text-align: center;">{{ $i++ }}</td>
+                                                            <td>{{ $projetmodule->module }}</td>
+                                                            <td>{{ $projetmodule->domaine }}</td>
+                                                            <td>
+                                                                <span class="d-flex align-items-baseline">
+                                                                    <a href="{{ route('projetmodules.show', $projetmodule->id) }}"
+                                                                        class="btn btn-primary btn-sm"
+                                                                        title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                    <div class="filter">
+                                                                        <a class="icon" href="#"
+                                                                            data-bs-toggle="dropdown"><i
+                                                                                class="bi bi-three-dots"></i></a>
+                                                                        <ul
+                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                            <button class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditprojetmoduleModal{{ $projetmodule->id }}">Modifier
+                                                                            </button>
+                                                                            {{-- <form
+                                                                                action="{{ route('validation-projet-modules.update', $projetmodule->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <button
+                                                                                    class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
+                                                                            </form> --}}
+                                                                            <button class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#AddRegionModal{{ $projetmodule->id }}">Rejeter
+                                                                            </button>
+                                                                        </ul>
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {{-- </form> --}}
+                                    </div>
                                 </div>
-
                             </div><!-- End Bordered Tabs -->
                         </div>
                     </div>
