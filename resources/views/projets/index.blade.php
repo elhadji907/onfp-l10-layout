@@ -49,6 +49,8 @@
                                     <th>Projet / Programme</th>
                                     <th>Sigle</th>
                                     <th>Description</th>
+                                    <th>Reçues</th>
+                                    <th>Prévues</th>
                                     <th class="text-center">#</th>
                                 </tr>
                             </thead>
@@ -59,7 +61,16 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $projet?->name }}</td>
                                         <td>{{ $projet?->sigle }}</td>
-                                        <td>{{ substr($projet?->description, 0, 100) }}</td>
+                                        <td>{{ substr($projet?->description, 0, 50) . '...' }}</td>
+                                        <td class="text-center">
+                                            @foreach ($projet?->individuelles as $individuelle)
+                                                @if ($loop->last)
+                                                    <a href="#"><span
+                                                            class="badge bg-info">{{ $loop->count }}</span></a>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $projet?->effectif }}</td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('projets.show', $projet->id) }}"
@@ -69,10 +80,16 @@
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm"
+                                                        <li>
+                                                            {{-- <a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('projets.edit', $projet->id) }}"
                                                                 class="mx-1" title="Modifier"><i
-                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                                    class="bi bi-pencil"></i>Modifier</a> --}}
+                                                            <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#EditProjetModal{{ $projet->id }}">
+                                                                <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                            </button>
                                                         </li>
                                                         <li>
                                                             <form action="{{ route('projets.destroy', $projet->id) }}"
@@ -169,7 +186,8 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="budjet" class="form-label">Budjet (F CFA)</label>
-                                        <input type="number" name="budjet" value="{{ old('budjet') }}" min="0" step="0.001"
+                                        <input type="number" name="budjet" value="{{ old('budjet') }}" min="0"
+                                            step="0.001"
                                             class="form-control form-control-sm @error('budjet') is-invalid @enderror"
                                             id="budjet" placeholder="Budjet total">
                                         @error('budjet')
@@ -203,6 +221,19 @@
                                         @enderror
                                     </div>
 
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="effectif" class="form-label">Effectif à former</label>
+                                        <input type="number" name="effectif" value="{{ old('effectif') }}" min="0"
+                                            step="5"
+                                            class="form-control form-control-sm @error('effectif') is-invalid @enderror"
+                                            id="effectif" placeholder="effectif total à former">
+                                        @error('effectif')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="description" class="form-label">Description<span
                                                 class="text-danger mx-1">*</span></label>
@@ -229,6 +260,159 @@
                 </div>
             </div>
         </div>
+
+        <!-- Edit Projet -->
+        @foreach ($projets as $projet)
+            <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
+                <div class="modal fade" id="EditProjetModal{{ $projet->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="EditProjetModalLabel{{ $projet->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            {{-- <form method="POST" action="{{ route('updateRegion') }}">
+                         @csrf --}}
+                            <form method="post" action="{{ route('projets.update', $projet->id) }}"
+                                enctype="multipart/form-data" class="row g-3">
+                                @csrf
+                                @method('patch')
+                                <div class="modal-header" id="EditProjetModalLabel{{ $projet->id }}">
+                                    <h5 class="modal-title">Modification du projet {{ $projet?->sigle }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-3">
+
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <label for="name" class="form-label">Partenaire<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <textarea name="name" id="name" rows="1"
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Nom du projet ou programme">{{ $projet->name ?? old('name') }}</textarea>
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="sigle" class="form-label">Sigle<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <input type="text" name="sigle" value="{{ $projet->sigle ?? old('sigle') }}"
+                                                class="form-control form-control-sm @error('sigle') is-invalid @enderror"
+                                                id="sigle" placeholder="sigle">
+                                            @error('sigle')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="date_signature" class="form-label">Date signature<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <input type="date" name="date_signature"
+                                                value="{{ $projet->date_signature->format('Y-m-d') ?? old('date_signature') }}"
+                                                class="form-control form-control-sm @error('date_signature') is-invalid @enderror"
+                                                id="date_signature" placeholder="Date signature">
+                                            @error('date_signature')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="duree" class="form-label">Durée<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <input type="number" name="duree" value="{{ $projet->duree ?? old('duree') }}"
+                                                min="1" max="84"
+                                                class="form-control form-control-sm @error('duree') is-invalid @enderror"
+                                                id="duree" placeholder="durée en mois">
+                                            @error('duree')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="budjet" class="form-label">Budjet (F CFA)</label>
+                                            <input type="number" name="budjet" value="{{ $projet->budjet ?? old('budjet') }}"
+                                                min="0" step="0.001"
+                                                class="form-control form-control-sm @error('budjet') is-invalid @enderror"
+                                                id="budjet" placeholder="Budjet total">
+                                            @error('budjet')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="debut" class="form-label">Date début</label>
+                                            <input type="date" name="debut" value="{{ $projet->debut?->format('Y-m-d') ?? old('debut') }}"
+                                                class="form-control form-control-sm @error('debut') is-invalid @enderror"
+                                                id="debut" placeholder="Date début">
+                                            @error('debut')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="fin" class="form-label">Date fin</label>
+                                            <input type="date" name="fin" value="{{ $projet?->fin?->format('Y-m-d') ?? old('fin') }}"
+                                                class="form-control form-control-sm @error('fin') is-invalid @enderror"
+                                                id="fin" placeholder="Date fin">
+                                            @error('fin')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="effectif" class="form-label">Effectif à former</label>
+                                            <input type="number" name="effectif" value="{{ $projet?->effectif ?? old('effectif') }}" min="0"
+                                                step="5"
+                                                class="form-control form-control-sm @error('effectif') is-invalid @enderror"
+                                                id="effectif" placeholder="effectif total à former">
+                                            @error('effectif')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <label for="description" class="form-label">Description<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <textarea name="description" id="description" rows="3"
+                                                class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                                placeholder="Description du projet ou programme">{{ $projet?->description ?? old('description') }}</textarea>
+                                            @error('description')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fermer</button>
+                                        <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                            Modifier</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 
 @endsection

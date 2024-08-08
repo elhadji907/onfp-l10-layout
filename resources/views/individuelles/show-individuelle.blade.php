@@ -253,21 +253,6 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="name" class="form-label">Lieu naissance<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <input name="lieu_naissance" type="text"
-                                            class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
-                                            id="lieu_naissance"
-                                            value="{{ Auth::user()?->lieu_naissance ?? old('lieu_naissance') }}"
-                                            autocomplete="lieu_naissance" placeholder="Lieu naissance">
-                                        @error('lieu_naissance')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="adresse" class="form-label">Adresse<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="adresse"
@@ -839,10 +824,10 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone_secondaire"
+                                        <input type="number" name="telephone_secondaire" min="0"
                                             value="{{ Auth::user()?->telephone_secondaire ?? old('telephone_secondaire') }}"
                                             class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                            id="telephone_secondaire" placeholder="téléphone secondaire">
+                                            id="telephone_secondaire" placeholder="7x xxx xx xx">
                                         @error('telephone_secondaire')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

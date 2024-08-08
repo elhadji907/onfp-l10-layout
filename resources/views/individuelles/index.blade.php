@@ -196,7 +196,7 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="name" class="form-label">Nom<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="name" value="{{ old('name') }}"
+                                        <input type="text" name="lastname" value="{{ old('name') }}"
                                             class="form-control form-control-sm @error('name') is-invalid @enderror"
                                             id="name" placeholder="nom">
                                         @error('name')
@@ -265,9 +265,9 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone personnel<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone" value="{{ old('telephone') }}"
+                                        <input type="number" min="0" name="telephone" value="{{ old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                            id="telephone" placeholder="téléphone">
+                                            id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -278,10 +278,10 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone_secondaire"
+                                        <input type="number" min="0" name="telephone_secondaire"
                                             value="{{ old('telephone_secondaire') }}"
                                             class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                            id="telephone_secondaire" placeholder="téléphone secondaire">
+                                            id="telephone_secondaire" placeholder="7xxxxxxxx">
                                         @error('telephone_secondaire')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

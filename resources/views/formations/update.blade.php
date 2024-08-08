@@ -17,8 +17,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 pt-2">
-                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('formations.index') }}"
+                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('formations.index') }}"
                                             class="btn btn-success btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | Formations</p>
@@ -246,8 +245,8 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
-                                    
+
+
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="frais_operateurs" class="form-label">Frais opérateur</label>
                                     <input type="number" name="frais_operateurs" min="0" step="0.001"
@@ -260,7 +259,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="frais_add" class="form-label">Frais additionels</label>
                                     <input type="number" name="frais_add" min="0" step="0.001"
@@ -273,7 +272,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="autes_frais" class="form-label">Autres frais</label>
                                     <input type="number" name="autes_frais" min="0" step="0.001"
@@ -290,10 +289,9 @@
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="projet" class="form-label">Projet</label>
                                     <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-projet"
-                                        data-placeholder="Choisir projet">
-                                        <option value="">
-                                            {{ old('projet') }}
+                                        aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
+                                        <option>
+                                            {{ $formation?->projet?->sigle ?? old('projet') }}
                                         </option>
                                         @foreach ($projets as $projet)
                                             <option value="{{ $projet?->id }}">
@@ -311,11 +309,10 @@
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="programme" class="form-label">Programme</label>
                                     <select name="programme"
-                                        class="form-select  @error('programme') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-programme"
-                                        data-placeholder="Choisir programme">
+                                        class="form-select  @error('programme') is-invalid @enderror" aria-label="Select"
+                                        id="select-field-programme" data-placeholder="Choisir programme">
                                         <option value="">
-                                            {{ old('programme') }}
+                                            {{ $formation?->programme?->sigle ?? old('programme') }}
                                         </option>
                                         @foreach ($programmes as $programme)
                                             <option value="{{ $programme?->id }}">
@@ -341,7 +338,7 @@
                                         </option>
                                         @foreach ($choixoperateurs as $choixoperateur)
                                             <option value="{{ $choixoperateur?->id }}">
-                                                {{ $choixoperateur?->description }}
+                                                {{ $formation?->choixoperateur?->description }}
                                             </option>
                                         @endforeach
                                     </select>

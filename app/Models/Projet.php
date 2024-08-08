@@ -74,6 +74,8 @@ class Projet extends Model
 		'fin',
 		'budjet',
 		'duree',
+		'effectif',
+		'statut',
 		'budjet_lettre',
 		'date_signature'
 	];
@@ -82,6 +84,11 @@ class Projet extends Model
 	public function projetmodules()
 	{
 		return $this->hasMany(Projetmodule::class, 'projets_id')->latest();
+	}
+	
+	public function projetlocalites()
+	{
+		return $this->hasMany(Projetlocalite::class, 'projets_id')->latest();
 	}
 
 	public function collectives()

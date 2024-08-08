@@ -33,6 +33,8 @@ class CreateProjetsTable extends Migration
             $table->double('budjet')->nullable();
             $table->longText('budjet_lettre')->nullable();
             $table->string('duree', 200)->nullable();
+            $table->string('effectif', 200)->nullable();
+            $table->string('statut', 200)->nullable();//ouvert, fermer
             $table->timestamp('date_signature')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
             $table->nullableTimestamps();

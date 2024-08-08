@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projetmodules', function (Blueprint $table) {
+        Schema::create('projetlocalites', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
             $table->char('uuid', 36);
-            $table->string('module')->nullable();
-            $table->string('domaine')->nullable();
+            $table->string('localite')->nullable();
             $table->string('effectif')->nullable();
             $table->unsignedInteger('projets_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
+            
+            $table->index(["projets_id"], 'fk_projetlocalites_projets1_idx');
 
-            $table->index(["projets_id"], 'fk_projetmodules_projets1_idx');
-
-            $table->foreign('projets_id', 'fk_projetmodules_projets1_idx')
+            $table->foreign('projets_id', 'fk_projetlocalites_projets1_idx')
                 ->references('id')->on('projets')
                 ->onDelete('no action')
                 ->onUpdate('no action');
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projetmodules');
+        Schema::dropIfExists('projetlocalites');
     }
 };

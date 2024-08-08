@@ -578,39 +578,41 @@
                             {{-- Détail ingenieur --}}
                             <div class="tab-content">
                                 <div class="tab-pane fade ingenieur-overview" id="ingenieur-overview">
-                                    @if (isset($ingenieur))
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h5 class="card-title">
-                                                {{ $ingenieur?->name }}
-                                                <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
-                                                        class="bi bi-eye"></i></a>&nbsp;
+                                    @isset($module)
+                                        @if (isset($ingenieur))
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title">
+                                                    {{ $ingenieur?->name }}
+                                                    <a class="btn btn-info btn-sm" title=""
+                                                        href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
+                                                            class="bi bi-eye"></i></a>&nbsp;
+                                                    <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                                        class="btn btn-primary float-end btn-sm">
+                                                        <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
+                                                </h5>
+                                                <h5 class="card-title">
+                                                    Agent de suivi
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#EditAgentSuiviModal{{ $formation->id }}">
+                                                        <i class="bi bi-plus" title="Ajouter un agent de suivi"></i>
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        @else
+                                            <div class="pt-1">
                                                 <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
                                                     class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
-                                            </h5>
-                                            <h5 class="card-title">
-                                                Agent de suivi
-                                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#EditAgentSuiviModal{{ $formation->id }}">
-                                                    <i class="bi bi-plus" title="Ajouter un agent de suivi"></i>
-                                                </button>
-                                            </h5>
-                                        </div>
-                                    @else
-                                        <div class="pt-1">
-                                            <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
-                                                class="btn btn-primary float-end btn-sm">
-                                                <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
+                                                    <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
 
-                                            {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
+                                                {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $formation->id }}">
                                                 <button class="btn btn-primary float-end btn-sm">Ajouter</button>
                                             </form> --}}
-                                        </div>
-                                    @endif
+                                            </div>
+                                        @endif
+                                    @endisset
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($ingenieur)
                                             <h1 class="card-title">
@@ -702,71 +704,71 @@
                             </div>
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade module-overview pt-3" id="evaluation-overview">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-
-                                        <form method="post"
-                                            action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
-                                            enctype="multipart/form-data" class="row g-3">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h1 class="card-title"> Liste des bénéficiaires :
-                                                    {{ $count_demandes }}</h1>
-                                                <h5 class="card-title">
-                                                    Membres du jury
-                                                    <button type="button" class="btn btn-outline-primary btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
-                                                        <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div class="row g-3">
-                                                <table class="table datatables" id="table-evaluation">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>N°</th>
-                                                            {{-- <th>Numéro</th> --}}
-                                                            <th>Civilité</th>
-                                                            <th>CIN</th>
-                                                            <th>Prénom</th>
-                                                            <th>NOM</th>
-                                                            <th>Date naissance</th>
-                                                            <th>Lieu de naissance</th>
-                                                            <th>Note<span class="text-danger mx-1">*</span></th>
-                                                            <th>Observations</th>
-                                                            {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php $i = 1; ?>
-                                                        @foreach ($formation->individuelles as $individuelle)
+                                    @isset($module)
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <form method="post"
+                                                action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
+                                                enctype="multipart/form-data" class="row g-3">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h1 class="card-title"> Liste des bénéficiaires :
+                                                        {{ $count_demandes }}</h1>
+                                                    <h5 class="card-title">
+                                                        Membres du jury
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
+                                                            <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                        </button>
+                                                    </h5>
+                                                </div>
+                                                <div class="row g-3">
+                                                    <table class="table datatables" id="table-evaluation">
+                                                        <thead>
                                                             <tr>
-                                                                <td>{{ $i++ }}</td>
-                                                                {{-- <td>{{ $individuelle?->numero }}</td> --}}
-                                                                <td>{{ $individuelle?->user?->civilite }}</td>
-                                                                <td>{{ $individuelle?->user?->cin }}</td>
-                                                                <td>{{ $individuelle?->user?->firstname }}</td>
-                                                                <td>{{ $individuelle?->user?->name }}</td>
-                                                                <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
-                                                                </td>
-                                                                <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                                                <td><input type="number"
-                                                                        value="{{ $individuelle?->note_obtenue }}"
-                                                                        name="notes[]" placeholder="note" step="0.01"
-                                                                        min="0" max="20">
-                                                                    <input type="hidden" name="individuelles[]"
-                                                                        value="{{ $individuelle?->id }}">
-                                                                </td>
-                                                                <td style="text-align: center; vertical-align: middle;">
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-primary btn-sm"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#EditDemandeurModal{{ $individuelle->id }}">
-                                                                        <i class="bi bi-plus" title="Observations"></i>
-                                                                    </button>
-                                                                </td>
-                                                                {{-- <td>
+                                                                <th>N°</th>
+                                                                {{-- <th>Numéro</th> --}}
+                                                                <th>Civilité</th>
+                                                                <th>CIN</th>
+                                                                <th>Prénom</th>
+                                                                <th>NOM</th>
+                                                                <th>Date naissance</th>
+                                                                <th>Lieu de naissance</th>
+                                                                <th>Note<span class="text-danger mx-1">*</span></th>
+                                                                <th>Observations</th>
+                                                                {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php $i = 1; ?>
+                                                            @foreach ($formation->individuelles as $individuelle)
+                                                                <tr>
+                                                                    <td>{{ $i++ }}</td>
+                                                                    {{-- <td>{{ $individuelle?->numero }}</td> --}}
+                                                                    <td>{{ $individuelle?->user?->civilite }}</td>
+                                                                    <td>{{ $individuelle?->user?->cin }}</td>
+                                                                    <td>{{ $individuelle?->user?->firstname }}</td>
+                                                                    <td>{{ $individuelle?->user?->name }}</td>
+                                                                    <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                                    </td>
+                                                                    <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                                                    <td><input type="number"
+                                                                            value="{{ $individuelle?->note_obtenue }}"
+                                                                            name="notes[]" placeholder="note" step="0.01"
+                                                                            min="0" max="20">
+                                                                        <input type="hidden" name="individuelles[]"
+                                                                            value="{{ $individuelle?->id }}">
+                                                                    </td>
+                                                                    <td style="text-align: center; vertical-align: middle;">
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-primary btn-sm"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditDemandeurModal{{ $individuelle->id }}">
+                                                                            <i class="bi bi-plus" title="Observations"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                    {{-- <td>
                                                                     <span class="d-flex align-items-baseline"><a
                                                                             href="{{ route('individuelles.show', $individuelle->id) }}"
                                                                             class="btn btn-primary btn-sm"
@@ -789,19 +791,19 @@
                                                                         </div>
                                                                     </span>
                                                                 </td> --}}
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                </table>
-                                            </div>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-outline-primary"><i
-                                                        class="bi bi-check2-circle"></i>&nbsp;Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
-
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                    </table>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-outline-primary"><i
+                                                            class="bi bi-check2-circle"></i>&nbsp;Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endisset
                                 </div>
                             </div>
                         </div>

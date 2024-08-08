@@ -6,20 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Projetmodule extends Model
+class Projetlocalite extends Model
 {
     use HasFactory;
     use SoftDeletes;
     use \App\Helpers\UuidForKey;
-    protected $table = 'projetmodules';
-
+    protected $table = 'projetlocalites';
     protected $casts = [
         'projets_id' => 'int',
     ];
     protected $fillable = [
         'uuid',
-        'module',
-        'domaine',
+        'localite',
         'effectif',
         'projets_id'
     ];

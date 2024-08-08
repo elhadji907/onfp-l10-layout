@@ -35,6 +35,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetController;
+use App\Http\Controllers\ProjetlocaliteController;
 use App\Http\Controllers\ProjetmoduleController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
@@ -45,6 +46,7 @@ use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -223,6 +225,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
     
     Route::post('/addProjet', [ProjetController::class, 'addProjet'])->name('addProjet');
+    
+    Route::get('/showLocalites/{id}', [ProjetlocaliteController::class, 'showLocalites'])->name('showLocalites');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
@@ -268,6 +272,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/listecollectives', ListecollectiveController::class);
     Route::resource('/ingenieurs', IngenieurController::class);
     Route::resource('/projets', ProjetController::class);
+    Route::resource('/projetlocalites', ProjetlocaliteController::class);
 });
 
 

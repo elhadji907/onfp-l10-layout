@@ -7,6 +7,7 @@ use App\Models\Demandeur;
 use App\Models\Departement;
 use App\Models\Individuelle;
 use App\Models\Module;
+use App\Models\Projet;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class IndividuelleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9'],
+            'telephone_secondaire'          => ['required', 'string', 'max:9', 'min:9'],
             'adresse'                       => ['required', 'string', 'max:255'],
             'departement'                   => ['required', 'string', 'max:255'],
             'module'                        => ['required', 'string', 'max:255'],
@@ -169,9 +170,9 @@ class IndividuelleController extends Controller
             'date_depot'                    => ["required", "date"],
             "cin"                           => ["required", "string", "min:13", "max:15", Rule::unique(User::class)],
             'firstname'                     => ['required', 'string', 'max:50'],
-            'name'                          => ['required', 'string', 'max:25'],
-            'telephone'                     => ['required', 'string', 'max:25', 'min:9'],
-            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9'],
+            'lastname'                      => ['required', 'string', 'max:25'],
+            'telephone'                     => ['required', 'string', 'max:25', 'min:9', 'max:9'],
+            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9', 'max:9'],
             'date_naissance'                => ['required', 'date'],
             'lieu_naissance'                => ['string', 'required'],
             'adresse'                       => ['required', 'string', 'max:255'],
@@ -216,7 +217,7 @@ class IndividuelleController extends Controller
             'civilite'                          => $request->input('civilite'),
             'cin'                               => $cin,
             'firstname'                         => $request->input('firstname'),
-            'name'                              => $request->input('name'),
+            'name'                              => $request->input('lastname'),
             'date_naissance'                    => $request->input('date_naissance'),
             'lieu_naissance'                    => $request->input('lieu_naissance'),
             'email'                             => $request->input('email'),
@@ -231,7 +232,7 @@ class IndividuelleController extends Controller
         $user->save();
 
         $user->update([
-            'username'                          => $request->input('name') . '' . $user->id,
+            'username'                          => $request->input('lastname') . '' . $user->id,
         ]);
 
         $user->save();
@@ -305,15 +306,16 @@ class IndividuelleController extends Controller
 
     public function edit($id)
     {
-        $individuelle = Individuelle::findOrFail($id);
-        $departements = Departement::orderBy("created_at", "desc")->get();
-        $modules = Module::orderBy("created_at", "desc")->get();
-        return view("individuelles.update", compact("individuelle", "departements", "modules"));
+        $individuelle       = Individuelle::findOrFail($id);
+        $departements       = Departement::orderBy("created_at", "desc")->get();
+        $modules            = Module::orderBy("created_at", "desc")->get();
+        $projets            = Projet::orderBy("created_at", "desc")->get();
+        return view("individuelles.update", compact("individuelle", "departements", "modules", "projets"));
     }
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9'],
+            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9', 'max:9'],
             'adresse'                       => ['required', 'string', 'max:255'],
             'departement'                   => ['required', 'string', 'max:255'],
             'module'                        => ['required', 'string', 'max:255'],
@@ -323,18 +325,39 @@ class IndividuelleController extends Controller
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ]);
 
-        $individuelle   = Individuelle::findOrFail($id);
-        $user_id           = $individuelle?->users_id;
-        $departement = Departement::findOrFail($request->input("departement"));
-        $regionid = $departement->region->id;
-        $user = Auth::user();
+        $individuelle       = Individuelle::findOrFail($id);
+        $user_id            = $individuelle?->users_id;
+        $departement        = Departement::findOrFail($request->input("departement"));
+        $regionid           = $departement->region->id;
+        $user               = Auth::user();
 
         $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
 
-        $demandeur_ind = Individuelle::where('users_id', $user->id)->get();
+        $demandeur_ind  = Individuelle::where('users_id', $user->id)->get();
 
-        if (isset($module_find)) {
-            foreach ($demandeur_ind as $key => $value) {
+        if ($individuelle->module->name == $module_find->name) {
+            $individuelle->update([
+                'niveau_etude'                      =>  $request->input('niveau_etude'),
+                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'diplome_academique'                =>  $request->input('diplome_academique'),
+                'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                'qualification'                     =>  $request->input('qualification'),
+                'experience'                        =>  $request->input('experience'),
+                "departements_id"                   =>  $request->input("departement"),
+                "projets_id"                        =>  $request->input("projet"),
+                "regions_id"                        =>  $regionid,
+                'users_id'                          =>  $user_id,
+            ]);
+        } elseif (isset($module_find)) {
+            foreach ($demandeur_ind as $value) {
                 if ($value->module->name == $module_find->name) {
                     Alert::warning('Attention ! le module ' . $value->module->name, 'a déjà été choisi');
                     return redirect()->back();
@@ -356,6 +379,7 @@ class IndividuelleController extends Controller
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $request->input("departement"),
+                "projets_id"                        =>  $request->input("projet"),
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module_find->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
@@ -385,6 +409,7 @@ class IndividuelleController extends Controller
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $request->input("departement"),
+                "projets_id"                        =>  $request->input("projet"),
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */

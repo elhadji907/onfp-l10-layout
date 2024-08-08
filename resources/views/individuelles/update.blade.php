@@ -208,10 +208,10 @@
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone_secondaire"
+                                    <input type="number" min="0" name="telephone_secondaire"
                                         value="{{ $individuelle?->fixe ?? old('telephone_secondaire') }}"
                                         class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                        id="telephone_secondaire" placeholder="téléphone secondaire">
+                                        id="telephone_secondaire" placeholder="7xxxxxxxx">
                                     @error('telephone_secondaire')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -571,6 +571,25 @@
                                     @enderror
                                 </div>
 
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="projet" class="form-label">Projet</label>
+                                    <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
+                                        <option>
+                                            {{ $individuelle?->projet?->sigle ?? old('projet') }}
+                                        </option>
+                                        @foreach ($projets as $projet)
+                                            <option value="{{ $projet?->id }}">
+                                                {{ $projet?->sigle }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('projet')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="experience" class="form-label">Expériences et stages</label>
                                     <textarea name="experience" id="experience" rows="1"

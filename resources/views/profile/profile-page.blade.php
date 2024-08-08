@@ -341,7 +341,7 @@
                                                         class="form-select form-select-sm @error('civilite') is-invalid @enderror"
                                                         aria-label="Select" id="select-field-civilite"
                                                         data-placeholder="Choisir civilité">
-                                                        <option value="{{ $user->civilite }}">
+                                                        <option value="{{ $user->civilite ?? old('civilite') }}">
                                                             {{ $user->civilite ?? old('civilite') }}
                                                         </option>
                                                         <option value="Monsieur">
@@ -480,7 +480,8 @@
                                                     class="form-select form-select-sm @error('situation_familiale') is-invalid @enderror"
                                                     aria-label="Select" id="select-field-familiale"
                                                     data-placeholder="Choisir situation familiale">
-                                                    <option value="{{ $user->situation_familiale }}">
+                                                    <option
+                                                        value="{{ $user->situation_familiale ?? old('situation_familiale') }}">
                                                         {{ $user->situation_familiale ?? old('situation_familiale') }}
                                                     </option>
                                                     <option value="Marié(e)">
@@ -512,7 +513,8 @@
                                                     class="form-select  @error('situation_professionnelle') is-invalid @enderror"
                                                     aria-label="Select" id="select-field-professionnelle"
                                                     data-placeholder="Choisir situation professionnelle">
-                                                    <option value="{{ $user->situation_professionnelle }}">
+                                                    <option
+                                                        value="{{ $user->situation_professionnelle ?? old('situation_professionnelle') }}">
                                                         {{ $user->situation_professionnelle ?? old('situation_professionnelle') }}
                                                     </option>
                                                     <option value="Employé(e)">
@@ -707,6 +709,84 @@
                                     </form><!-- End Change Password Form -->
                                 </div>
                             </div><!-- End Bordered Tabs -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Sales Card -->
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="{{ route('demandesIndividuelle') }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Demandes <span>| Individuelles</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-person-plus-fill"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                @foreach (Auth::user()->individuelles as $individuelle)
+                                                    @if (isset($individuelle->numero) && isset($individuelle->modules_id))
+                                                        @if ($loop->last)
+                                                            {!! $loop->count ?? '0' !!}
+                                                        @endif
+                                                    @else
+                                                        <span class="text-primary">0</span>
+                                                    @endif
+                                                @endforeach
+                                            </h6>
+                                            {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                                class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="{{ route('demandesCollective') }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Demandes <span>| collectives</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-person-plus-fill"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                @foreach (Auth::user()->collectives as $collective)
+                                                    @if (isset($collective->numero))
+                                                        @if ($loop->last)
+                                                            {!! $loop->count ?? '0' !!}
+                                                        @endif
+                                                    @else
+                                                        <span class="text-primary">0</span>
+                                                    @endif
+                                                @endforeach
+                                            </h6>
+                                            {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                                class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>

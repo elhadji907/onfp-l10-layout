@@ -26,24 +26,26 @@ class ProjetController extends Controller
             "date_signature"    => ["date", "string", Rule::unique('projets')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "description"    => ["required", "string", Rule::unique('projets')->where(function ($query) {
+            "description"       => ["required", "string", Rule::unique('projets')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "duree"    => ["nullable", "string"],
-            "budjet"    => ["nullable", "string"],
-            "debut"    => ["nullable", "date"],
-            "fin"    => ["nullable", "date"],
+            "duree"             => ["nullable", "string"],
+            "budjet"            => ["nullable", "string"],
+            "effectif"          => ["nullable", "string"],
+            "debut"             => ["nullable", "date"],
+            "fin"               => ["nullable", "date"],
         ]);
 
         $projet = new Projet([
-            'name'                  =>  $request->input('name'),
-            'sigle'                 =>  $request->input('sigle'),
-            'date_signature'        =>  $request->input('date_signature'),
-            'description'           =>  $request->input('description'),
-            'duree'                 =>  $request->input('duree'),
-            'budjet'                =>  $request->input('budjet'),
-            'fin'                   =>  $request->input('fin'),
-            'debut'                 =>  $request->input('debut'),
+            'name'               =>  $request->input('name'),
+            'sigle'              =>  $request->input('sigle'),
+            'date_signature'     =>  $request->input('date_signature'),
+            'description'        =>  $request->input('description'),
+            'duree'              =>  $request->input('duree'),
+            'budjet'             =>  $request->input('budjet'),
+            'fin'                =>  $request->input('fin'),
+            'debut'              =>  $request->input('debut'),
+            'effectif'           =>  $request->input('effectif'),
 
         ]);
 
@@ -54,6 +56,50 @@ class ProjetController extends Controller
         return redirect()->back();
     }
 
+    public function show($id)
+    {
+        $projet = Projet::findOrFail($id);
+        return view('projets.show', compact('projet'));
+    }
+    public function update(Request $request, $id)
+    {
+        $projet = Projet::find($id);
+        $this->validate($request, [
+            "name"              => ["required", "string", Rule::unique('projets')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "sigle"             => ["required", "string", Rule::unique('projets')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "date_signature"    => ["date", "string"],
+            "description"    => ["required", "string", Rule::unique('projets')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "duree"    => ["nullable", "string"],
+            "budjet"    => ["nullable", "string"],
+            "effectif"    => ["nullable", "string"],
+            "debut"    => ["nullable", "date"],
+            "fin"    => ["nullable", "date"],
+        ]);
+
+        $projet->update([
+            'name'                  =>  $request->input('name'),
+            'sigle'                 =>  $request->input('sigle'),
+            'date_signature'        =>  $request->input('date_signature'),
+            'description'           =>  $request->input('description'),
+            'duree'                 =>  $request->input('duree'),
+            'budjet'                =>  $request->input('budjet'),
+            'fin'                   =>  $request->input('fin'),
+            'debut'                 =>  $request->input('debut'),
+            'effectif'              =>  $request->input('effectif'),
+        ]);
+
+        $projet->save();
+
+        Alert::success('Modification effectuée', 'avec succès');
+
+        return redirect()->back();
+    }
     public function destroy($id)
     {
         $projet = Projet::findOrFail($id);
@@ -63,11 +109,5 @@ class ProjetController extends Controller
         Alert::success('Fait !', 'supprimer avec succès');
 
         return redirect()->back();
-    }
-
-    public function show($id)
-    {
-        $projet = Projet::findOrFail($id);
-        return view('projets.show', compact('projet'));
     }
 }

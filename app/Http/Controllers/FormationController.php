@@ -693,6 +693,7 @@ class FormationController extends Controller
     }
     public function givenotedemandeurs($idformation, Request $request)
     {
+
         $request->validate([
             'notes' => ['required']
         ]);
@@ -720,14 +721,19 @@ class FormationController extends Controller
                 $appreciation = "Excellent ";
             }
 
-            $individuelle->update([
-                "note_obtenue"       =>  $value,
-                "appreciation"       =>  $appreciation,
-                "statut"             =>  'terminer',
-            ]);
-
-            $individuelle->save();
+            if ($individuelle->formation->statut == 'terminer') {
+                $individuelle->update([
+                    "note_obtenue"       =>  $value,
+                    "appreciation"       =>  $appreciation,
+                    "statut"             =>  'terminer',
+                ]);
+            } else {
+                Alert::warning('Désolez !', 'la formation n\'est pas encore terminée');
+                return redirect()->back();
+            }
         }
+
+        $individuelle->save();
 
         $validated_by = new Validationindividuelle([
             'validated_id'       =>      Auth::user()->id,

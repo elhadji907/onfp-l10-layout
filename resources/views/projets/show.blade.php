@@ -43,8 +43,7 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-overview">Projet
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Projet
                                     </button>
                                 </li>
 
@@ -53,6 +52,13 @@
                                         data-bs-target="#modules-overview">Modules</button>
                                 </li>
 
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"><a
+                                            href="{{ route('showLocalites', ['id' => $projet->id]) }}" target="_blank"
+                                            rel="noopener noreferrer">Localités</a>
+
+                                    </button>
+                                </li>
                             </ul>
 
                             <div class="tab-content">
@@ -107,8 +113,8 @@
                                     </form>
                                 </div>
                                 <div class="tab-pane fade show active profile-overview" id="modules-overview">
-                                    <form method="post" action="{{ url('projetmodules') }}"
-                                        enctype="multipart/form-data" class="row g-3">
+                                    <form method="post" action="{{ url('projetmodules') }}" enctype="multipart/form-data"
+                                        class="row g-3">
                                         @csrf
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <h5 class="card-title">Ajouter nouveau module</h5>
@@ -116,6 +122,7 @@
                                                 <tr>
                                                     <th>Modules<span class="text-danger mx-1">*</span></th>
                                                     <th>Domaines<span class="text-danger mx-1">*</span></th>
+                                                    <th>Effectif<span class="text-danger mx-1">*</span></th>
                                                 </tr>
                                                 <tr>
                                                     <input type="hidden" name="projet" value="{{ $projet->id }}">
@@ -128,6 +135,8 @@
                                                     </td>
                                                     <td><input type="text" name="domaine" placeholder="Entrer un domaine"
                                                             class="form-control form-control-sm" /></td>
+                                                    <td><input type="text" name="effectif" placeholder="Entrer effectif"
+                                                            class="form-control form-control-sm" /></td>
                                                 </tr>
                                             </table>
                                             <div class="text-center">
@@ -137,7 +146,10 @@
                                         </div>
                                     </form><!-- End module -->
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <h5 class="card-title">Modules</h5>
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <h5 class="card-title">Modules</h5>
+                                            <h5 class="card-title">Effectif total: {{ $projet?->effectif }}</h5>
+                                        </div>
                                         {{-- <form method="post" action="#" enctype="multipart/form-data"
                                                     class="row g-3"> --}}
                                         <div class="row g-3">
@@ -149,6 +161,7 @@
                                                         <th scope="col">N°</th>
                                                         <th scope="col">Module</th>
                                                         <th scope="col">Domaines</th>
+                                                        <th scope="col">Effectif</th>
                                                         <th class="col"><i class="bi bi-gear"></i></th>
                                                     </tr>
                                                 </thead>
@@ -159,6 +172,7 @@
                                                             <td style="text-align: center;">{{ $i++ }}</td>
                                                             <td>{{ $projetmodule->module }}</td>
                                                             <td>{{ $projetmodule->domaine }}</td>
+                                                            <td>{{ $projetmodule->effectif }}</td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline">
                                                                     <a href="{{ route('projetmodules.show', $projetmodule->id) }}"
@@ -203,6 +217,73 @@
                     </div>
                 </div>
             </div>
+            @foreach ($projet->projetmodules as $projetmodule)
+                <div class="modal fade" id="EditprojetmoduleModal{{ $projetmodule->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="EditprojetmoduleModalLabel{{ $projetmodule->id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            {{-- <form method="POST" action="#">
+                            @csrf --}}
+                            <form method="post" action="{{ route('projetmodules.update', $projetmodule->id) }}"
+                                enctype="multipart/form-data" class="row g-3">
+                                @csrf
+                                @method('patch')
+                                <div class="modal-header" id="EditprojetmoduleModalLabel{{ $projetmodule->id }}">
+                                    <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="id" value="{{ $projetmodule->id }}">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="module"
+                                            value="{{ $projetmodule?->module ?? old('module') }}"
+                                            class="form-control form-control-sm @error('module') is-invalid @enderror"
+                                            placeholder="Module" autofocus>
+                                        @error('module')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                        <label for="floatingInput">Module</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="domaine"
+                                            value="{{ $projetmodule->domaine ?? old('domaine') }}"
+                                            class="form-control form-control-sm @error('domaine') is-invalid @enderror"
+                                            id="domaine" placeholder="Domaine">
+                                        @error('domaine')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                        <label for="floatingInput">Domaine</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="number" name="effectif" min="0" step="1"
+                                            value="{{ $projetmodule->effectif ?? old('effectif') }}"
+                                            class="form-control form-control-sm @error('effectif') is-invalid @enderror"
+                                            id="effectif" placeholder="effectif">
+                                        @error('effectif')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                        <label for="floatingInput">effectif</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                        Modifier</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </section>
 @endsection

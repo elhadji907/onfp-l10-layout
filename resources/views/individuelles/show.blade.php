@@ -273,6 +273,18 @@
                                         <div>{{ $individuelle->qualification }}</div>
                                     </div>
 
+                                    @isset($individuelle->formations_id)
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Note</div>
+                                            <div>{{ $individuelle->note_obtenue }}</div>
+                                        </div>
+
+                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                            <div class="label">Appréciation</div>
+                                            <div>{{ $individuelle->appreciation }}</div>
+                                        </div>
+                                    @endisset
+
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="label">Expériences et stages</div>
                                         <div>{{ $individuelle->experience }}</div>

@@ -114,13 +114,7 @@ class ModuleSeeder extends Seeder
           'updated_at' => now(),
           "uuid"=>Str::uuid(),
       ]);
-        DB::table('modules')->insert([
-          "name"=>"Carrelage",
-          "domaines_id"=>"7",
-          'created_at' => now(),
-          'updated_at' => now(),
-          "uuid"=>Str::uuid(),
-      ]);
+  
         DB::table('modules')->insert([
           "name"=>"Plomberie (Installations sanitaires)",
           "domaines_id"=>"7",
@@ -128,13 +122,7 @@ class ModuleSeeder extends Seeder
           'updated_at' => now(),
           "uuid"=>Str::uuid(),
       ]);
-        DB::table('modules')->insert([
-          "name"=>"Maçonnerie",
-          "domaines_id"=>"7",
-          'created_at' => now(),
-          'updated_at' => now(),
-          "uuid"=>Str::uuid(),
-      ]);
+  
         DB::table('modules')->insert([
           "name"=>"Ferraillage",
           "domaines_id"=>"7",
@@ -158,7 +146,7 @@ class ModuleSeeder extends Seeder
       ]);
 
         DB::table('modules')->insert([
-          "name"=>"Conduite d’engins de TP",
+          "name"=>"Conduite d'engins de TP",
           "domaines_id"=>"7",
           'created_at' => now(),
           'updated_at' => now(),
@@ -197,6 +185,142 @@ class ModuleSeeder extends Seeder
 
     DB::table('modules')->insert([
       "name"=>"Coupe et Couture",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Pavage",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Électricité et entretien de l'éclairage public solaire",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Maçonnerie et Bétonnage",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Peinture bâtiment",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Carrelage",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Entretien routier (route et ouvrage)",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Conduite d'engins (Tracteurs, moissonneuses…)",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Mécanique entretien et réparation matériels agricoles",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Maraîchage (par système d'aspersion goutte à goutte)",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Transformation céréales locales (étuvage et décorticage du riz)",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Hôtellerie-Cuisine-Restauration",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Coupe-Couture",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Guide Tourisme",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Transformation, conditionnement et conservation des produits halieutiques",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Embouche ovine",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Aviculture",
+      "domaines_id"=>"25",
+      'created_at' => now(),
+      'updated_at' => now(),
+      "uuid"=>Str::uuid(),
+  ]);
+
+    DB::table('modules')->insert([
+      "name"=>"Transformation, conditionnement et conservation des produits laitiers",
       "domaines_id"=>"25",
       'created_at' => now(),
       'updated_at' => now(),
