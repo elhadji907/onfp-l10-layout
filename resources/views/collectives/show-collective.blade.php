@@ -54,9 +54,9 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">N° demande</th>
-                                            <th scope="col">CIN</th>
-                                            <th scope="col">Prénom & Nom</th>
-                                            <th scope="col">Module</th>
+                                            <th scope="col">Nom structure</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Téléphone</th>
                                             <th scope="col">Localité</th>
                                             <th scope="col">Statut</th>
                                             <th class="col"><i class="bi bi-gear"></i></th>
@@ -68,10 +68,9 @@
                                                 <tr>
                                                     <td>{{ $collective?->numero }}
                                                     </td>
-                                                    <td>{{ $collective?->name }}</td>
-                                                    <td>{{ $collective?->sigle }}</td>
-                                                    {{-- <td>{{ $collective?->user?->telephone }}</td> --}}
-                                                    <td>{{ $collective->module?->name }}</td>
+                                                    <td>{{ $collective?->name . ' (' . $collective?->sigle.')' }}</td>
+                                                    <td>{{ $collective->email1 }}</td>
+                                                    <td>{{ $collective->telephone }}</td>
                                                     <td>{{ $collective->departement?->region?->nom }}</td>
                                                     <td>
                                                         <span
@@ -169,12 +168,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="email" class="form-label">Email<span
+                                        <label for="email1" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="email" name="email" value="{{ old('email') }}"
-                                            class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                            id="email" placeholder="Adresse email">
-                                        @error('email')
+                                        <input type="email" name="email1" value="{{ old('email1') }}"
+                                            class="form-control form-control-sm @error('email1') is-invalid @enderror"
+                                            id="email1" placeholder="Adresse email">
+                                        @error('email1')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -184,9 +183,9 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="fixe" class="form-label">Téléphone fixe<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="fixe" value="{{ old('fixe') }}"
+                                        <input type="number" name="fixe" value="{{ old('fixe') }}"
                                             class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                            id="fixe" placeholder="Téléphone fixe">
+                                            id="fixe" placeholder="3xxxxxxxx">
                                         @error('fixe')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -197,9 +196,10 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone" value="{{ old('telephone') }}"
+                                        <input type="number" min="0" name="telephone"
+                                            value="{{ old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                            id="telephone" placeholder="Téléphone portable">
+                                            id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -273,9 +273,9 @@
                                             class="form-select form-select-sm @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement-col"
                                             data-placeholder="Choisir">
-                                            <option value=""></option>
+                                            <option>{{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
-                                                <option value="{{ $departement->id }}">
+                                                <option value="{{ $departement->nom }}">
                                                     {{ $departement->nom }}
                                                 </option>
                                             @endforeach
@@ -300,27 +300,20 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    {{-- <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <select name="module" class="form-select  @error('module') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-module-col"
-                                            data-placeholder="Choisir formation">
-                                            <option value="">
-                                                {{ old('module') }}
-                                            </option>
-                                            @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}">
-                                                    {{ $module->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" name="module" value="{{ old('module_name') }}"
+                                            class="form-control form-control-sm @error('module_name') is-invalid @enderror"
+                                            id="module_name" placeholder="Nom du module" autofocus>
+                                        <div id="countryList"></div>
+                                        {{ csrf_field() }}
                                         @error('module')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="description" class="form-label">Description de l'organisation<span
@@ -357,9 +350,9 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="civilite"
                                             class="form-select form-select-sm @error('civilite') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-civilite-col"
+                                            aria-label="Select" id="select-field-civilite"
                                             data-placeholder="Choisir civilité">
-                                            <option value="">
+                                            <option value="{{ old('civilite') }}">
                                                 {{ old('civilite') }}
                                             </option>
                                             <option value="Monsieur">
@@ -418,9 +411,10 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone_responsable" class="form-label">Téléphone responsable<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone_responsable" value="{{ old('telephone_responsable') }}"
+                                        <input type="number" min="0" name="telephone_responsable"
+                                            value="{{ old('telephone_responsable') }}"
                                             class="form-control form-control-sm @error('telephone_responsable') is-invalid @enderror"
-                                            id="telephone_responsable" placeholder="Telephone responsable">
+                                            id="telephone_responsable" placeholder="7xxxxxxxx">
                                         @error('telephone_responsable')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

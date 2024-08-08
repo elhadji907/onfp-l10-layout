@@ -682,9 +682,9 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone</label>
-                                        <input type="text" name="telephone" value="{{ old('telephone') }}"
+                                        <input type="number" min="0" name="telephone" value="{{ old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                            id="telephone" placeholder="téléphone">
+                                            id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

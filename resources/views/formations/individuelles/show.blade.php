@@ -386,7 +386,7 @@
                                                     id="table-operateurModules">
                                                     <thead>
                                                         <tr>
-                                                            <th>N°</th>
+                                                            {{-- <th>N°</th> --}}
                                                             <th>Numéro</th>
                                                             <th>Civilité</th>
                                                             <th>CIN</th>
@@ -394,8 +394,9 @@
                                                             <th>NOM</th>
                                                             <th>Date naissance</th>
                                                             <th>Lieu de naissance</th>
-                                                            <th>Adresse</th>
-                                                            <th>Note</th>
+                                                            {{-- <th>Adresse</th> --}}
+                                                            <th class="text-center">Note</th>
+                                                            {{-- <th>Appréciation</th> --}}
                                                             {{-- <th class="col"><i class="bi bi-backspace-reverse"></i></th> --}}
                                                             <th class="col"><i class="bi bi-gear"></i></th>
                                                         </tr>
@@ -404,7 +405,7 @@
                                                         <?php $i = 1; ?>
                                                         @foreach ($formation->individuelles as $individuelle)
                                                             <tr>
-                                                                <td>{{ $i++ }}</td>
+                                                                {{-- <td>{{ $i++ }}</td> --}}
                                                                 <td>{{ $individuelle?->numero }}</td>
                                                                 <td>{{ $individuelle?->user?->civilite }}</td>
                                                                 <td>{{ $individuelle?->user?->cin }}</td>
@@ -412,12 +413,13 @@
                                                                 <td>{{ $individuelle?->user?->name }}</td>
                                                                 <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
                                                                 </td>
-                                                                <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                                                <td>{{ $individuelle?->user->adresse }}</td>
-                                                                <td>{{ $individuelle?->note_obtenue ?? '' }}</td>
+                                                                <td>{{ $individuelle?->user?->lieu_naissance }}</td>
+                                                                {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
+                                                                <td class="text-center">{{ $individuelle?->note_obtenue ?? '' }}</td>
+                                                                {{-- <td>{{ $individuelle?->appreciation }}</td> --}}
                                                                 <td>
                                                                     <span class="d-flex align-items-baseline"><a
-                                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                            href="{{ route('individuelles.show', $individuelle?->id) }}"
                                                                             class="btn btn-primary btn-sm"
                                                                             title="voir détails"><i class="bi bi-eye"></i></a>
                                                                         <div class="filter">

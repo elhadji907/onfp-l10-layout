@@ -30,12 +30,22 @@ class CollectiveController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "name"                  =>      "required|string|unique:collectives,name,except,id",
-            "sigle"                 =>      "required|string|unique:collectives,sigle,except,id",
-            "email"                 =>      "required|email|unique:users,email,except,id",
-            "fixe"                  =>      "required|string|unique:collectives,fixe,except,id",
-            "telephone"             =>      "required|string|unique:collectives,telephone,except,id",
-            "module"                =>      "required|string",
+            "name"                  => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "sigle"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "email1"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "fixe"                  => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "telephone"             => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            /* "module"                =>      "required|string", */
             "adresse"               =>      "required|string",
             "statut"                =>      "required|string",
             "description"           =>      "required|string",
@@ -45,7 +55,7 @@ class CollectiveController extends Controller
             "prenom"                =>      "required|string",
             "nom"                   =>      "required|string",
             "fonction_responsable"  =>      "required|string",
-            "telephone_responsable" =>      "required|string",
+            "telephone_responsable" =>      "required|string|min:9|max:9",
             "email_responsable"     =>      "required|string",
         ]);
 
@@ -75,13 +85,13 @@ class CollectiveController extends Controller
             } else {
                 $numero_collective   =   strtoupper($random);
             }
+
             $numero_collective = 'C' . $annee . $numero_collective;
 
-            $departement = Departement::findOrFail($request->input("departement"));
+            $departement = Departement::where('nom', $request->input("departement"))->get()->first();
             $regionid = $departement->region->id;
 
-            $departement = Departement::findOrFail($request->input("departement"));
-            $regionid = $departement->region->id;
+            /* $module_find    = DB::table('modules')->where('name', $request->input("module"))->first(); */
 
             $collective = Collective::create([
                 "name"                      =>       $request->input("name"),
@@ -90,7 +100,7 @@ class CollectiveController extends Controller
                 "description"               =>       $request->input("description"),
                 "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
                 "telephone"                 =>       $request->input("telephone"),
-                "email1"                    =>       $request->input("email"),
+                "email1"                    =>       $request->input("email1"),
                 "email_responsable"         =>       $request->input("email_responsable"),
                 "fixe"                      =>       $request->input("fixe"),
                 "adresse"                   =>       $request->input("adresse"),
@@ -103,8 +113,8 @@ class CollectiveController extends Controller
                 "nom_responsable"           =>       $request->input("nom"),
                 "telephone_responsable"     =>       $request->input("telephone_responsable"),
                 "fonction_responsable"      =>       $request->input("fonction_responsable"),
-                "departements_id"           =>       $request->input("departement"),
-                "modules_id"                =>       $request->input("module"),
+                "departements_id"           =>       $departement->id,
+                /* "modules_id"                =>       $module_find->id, */
                 "regions_id"                =>       $regionid,
                 /* "demandeurs_id"             =>       $demandeur->id, */
                 'users_id'                  =>       $user->id,
@@ -124,7 +134,7 @@ class CollectiveController extends Controller
             "sigle"                 =>      "required|string|unique:collectives,sigle,except,id",
             "email"                 =>      "required|email|unique:users,email,except,id",
             "fixe"                  =>      "required|string|unique:collectives,fixe,except,id",
-            "telephone"             =>      "required|string|unique:collectives,telephone,except,id",
+            "telephone"             =>      "required|min:9|max:9|string|unique:collectives,telephone,except,id",
             /* "module"                =>      "required|string", */
             "adresse"               =>      "required|string",
             "statut"                =>      "required|string",
@@ -135,7 +145,7 @@ class CollectiveController extends Controller
             "prenom"                =>      "required|string",
             "nom"                   =>      "required|string",
             "fonction_responsable"  =>      "required|string",
-            "telephone_responsable" =>      "required|string",
+            "telephone_responsable" =>      "required|string|min:9|max:9|",
             "email_responsable"     =>      "required|string",
         ]);
 
@@ -220,11 +230,21 @@ class CollectiveController extends Controller
         /*  $demandeur = $collective->demandeur; */
 
         $this->validate($request, [
-            "name"                  =>      ["required", "string", Rule::unique(Collective::class)->ignore($id)],
-            "sigle"                 =>      ["required", "string", Rule::unique(Collective::class)->ignore($id)],
-            "email"                 =>      ["required", "email", Rule::unique(User::class)->ignore($id)],
-            "fixe"                  =>      ["required", "string", "unique:collectives,fixe,{$id}"],
-            "telephone"             =>      ["required", "string", "unique:collectives,telephone,{$id}"],
+            "name"                  => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "sigle"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "email1"                => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "fixe"                  => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "telephone"             => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
             /* "module"                =>      ["required", "string"], */
             "adresse"               =>      ["required", "string"],
             "statut"                =>      ["required", "string"],
@@ -235,20 +255,20 @@ class CollectiveController extends Controller
             "prenom"                =>      ["required", "string"],
             "nom"                   =>      ["required", "string"],
             "fonction_responsable"  =>      ["required", "string"],
-            "telephone_responsable" =>      ["required", "string"],
+            "telephone_responsable" =>      ["required", "string", "min:9", "max:9"],
             "email_responsable"     =>      ["required", "string"],
         ]);
 
-        $departement = Departement::findOrFail($request->input("departement"));
+        $departement = Departement::where('nom', $request->input("departement"))->first();
         $regionid = $departement->region->id;
-        
+
         $collective->update([
             "name"                      =>       $request->input("name"),
             "sigle"                     =>       $request->input("sigle"),
             "description"               =>       $request->input("description"),
             "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
             "telephone"                 =>       $request->input("telephone"),
-            "email1"                    =>       $request->input("email"),
+            "email1"                    =>       $request->input("email1"),
             "email_responsable"         =>       $request->input("email_responsable"),
             "fixe"                      =>       $request->input("fixe"),
             "adresse"                   =>       $request->input("adresse"),

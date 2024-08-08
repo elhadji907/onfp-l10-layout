@@ -33,15 +33,15 @@
                                                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                                                     <i class="bi bi-chat-left-text m-1"></i>
                                                     <span class="badge bg-success badge-number"
-                                                        title="{{ $individuelle?->statut }}">{{ $individuelle->validationindividuelles->count() }}</span>
+                                                        title="{{ $individuelle?->statut }}">{{ $individuelle?->validationindividuelles->count() }}</span>
                                                 </a>
                                             </a>
                                             <!-- End Notification Icon -->
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                                                 <li class="dropdown-header">
                                                     Vous avez
-                                                    {{ $individuelle->validationindividuelles->count() . ' validation(s)' }}
-                                                    <a href="{{ url('validationsRejetMessage/' . $individuelle->id) }}"><span
+                                                    {{ $individuelle?->validationindividuelles->count() . ' validation(s)' }}
+                                                    <a href="{{ url('validationsRejetMessage/' . $individuelle?->id) }}"><span
                                                             class="badge rounded-pill bg-primary p-2 ms-2">Voir
                                                             toutes</span></a>
                                                 </li>
@@ -49,11 +49,11 @@
                                                     <hr class="dropdown-divider">
                                                 </li>
                                                 <?php $i = 1; ?>
-                                                @foreach ($individuelle->validationindividuelles as $count => $validationindividuelle)
+                                                @foreach ($individuelle?->validationindividuelles as $count => $validationindividuelle)
                                                     @if ($count < 2)
                                                         <li class="message-item">
                                                             <a
-                                                                href="{{ url('validationsRejetMessage/' . $individuelle->id) }}">
+                                                                href="{{ url('validationsRejetMessage/' . $individuelle?->id) }}">
                                                                 <img src="{{ asset($validationindividuelle->user->getImage()) }}"
                                                                     alt="" class="rounded-circle">
                                                                 <div>
@@ -86,10 +86,10 @@
                                                         </li>
                                                     @endif
                                                 @endforeach
-                                                @if ($individuelle->validationindividuelles->count() != '0')
+                                                @if ($individuelle?->validationindividuelles->count() != '0')
                                                     <li class="dropdown-footer">
                                                         <a
-                                                            href="{{ url('validationsRejetMessage/' . $individuelle->id) }}">Voir
+                                                            href="{{ url('validationsRejetMessage/' . $individuelle?->id) }}">Voir
                                                             toutes les validations</a>
                                                     </li>
                                                 @endif
@@ -99,13 +99,13 @@
                                 </span>
                                 @if (auth()->user()->hasRole('super-admin'))
                                     <span class="d-flex align-items-baseline">
-                                        <span class="{{ $individuelle->statut }}">{{ $individuelle->statut }}</span>
+                                        <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                         <div class="filter">
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                     class="bi bi-three-dots"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                 <form
-                                                    action="{{ route('validation-individuelles.update', $individuelle->id) }}"
+                                                    action="{{ route('validation-individuelles.update', $individuelle?->id) }}"
                                                     method="post">
                                                     @csrf
                                                     @method('PUT')
@@ -118,7 +118,7 @@
                                                 {{-- @elseif($individuelle?->statut == 'rejeter') --}}
                                                 {{--  @elseif($individuelle?->statut == 'attente') --}}
                                                 {{-- <form
-                                                        action="{{ route('validation-individuelles.update', $individuelle->id) }}"
+                                                        action="{{ route('validation-individuelles.update', $individuelle?->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('PUT')
@@ -138,58 +138,63 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                <form method="post" action="{{ url('individuelles/' . $individuelle->id) }}"
+                                <form method="post" action="{{ url('individuelles/' . $individuelle?->id) }}"
                                     enctype="multipart/form-data" class="row g-3">
                                     @csrf
                                     @method('PUT')
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Numéro</div>
+                                        <div>{{ $individuelle?->numero }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Civilité</div>
-                                        <div>{{ $individuelle->user?->civilite }}</div>
+                                        <div>{{ $individuelle?->user?->civilite }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">N° CIN</div>
-                                        <div>{{ $individuelle->user?->cin }}</div>
+                                        <div>{{ $individuelle?->user?->cin }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Prénom</div>
-                                        <div>{{ $individuelle->user->firstname }}</div>
+                                        <div>{{ $individuelle?->user->firstname }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Nom</div>
-                                        <div>{{ $individuelle->user->name }}</div>
+                                        <div>{{ $individuelle?->user->name }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div for="date_naissance" class="label">Date naissance</div>
-                                        <div>{{ $individuelle->user->date_naissance?->format('d/m/Y') }}</div>
+                                        <div>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Lieu naissance</div>
-                                        <div>{{ $individuelle->user->lieu_naissance }}</div>
+                                        <div>{{ $individuelle?->user->lieu_naissance }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Adresse</div>
-                                        <div>{{ $individuelle->user->adresse }}</div>
+                                        <div>{{ $individuelle?->user->adresse }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Email</div>
-                                        <div>{{ $individuelle->user->email }}</div>
+                                        <div>{{ $individuelle?->user->email }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Téléphone personnel</div>
-                                        <div>{{ $individuelle->user->telephone }}</div>
+                                        <div>{{ $individuelle?->user->telephone }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Téléphone secondaire</div>
-                                        <div>{{ $individuelle->fixe }}</div>
+                                        <div>{{ $individuelle?->fixe }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
@@ -199,7 +204,7 @@
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Si autre formation ? précisez</div>
-                                        <div>{{ $individuelle->autre_module }}</div>
+                                        <div>{{ $individuelle?->autre_module }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
@@ -209,96 +214,96 @@
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Situation familiale</div>
-                                        <div>{{ $individuelle->user->situation_familiale }}</div>
+                                        <div>{{ $individuelle?->user->situation_familiale }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Situation professionnelle</div>
-                                        <div>{{ $individuelle->user->situation_professionnelle }}</div>
+                                        <div>{{ $individuelle?->user->situation_professionnelle }}</div>
                                     </div>
 
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Niveau étude</div>
-                                        <div>{{ $individuelle->niveau_etude }}</div>
+                                        <div>{{ $individuelle?->niveau_etude }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Diplôme académique</div>
-                                        <div>{{ $individuelle->diplome_academique }}</div>
+                                        <div>{{ $individuelle?->diplome_academique }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Si autre ? précisez</div>
-                                        <div>{{ $individuelle->autre_diplome_academique }}</div>
+                                        <div>{{ $individuelle?->autre_diplome_academique }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Option du diplôme</div>
-                                        <div>{{ $individuelle->option_diplome_academique }}</div>
+                                        <div>{{ $individuelle?->option_diplome_academique }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Etablissement académique</div>
-                                        <div>{{ $individuelle->etablissement_academique }}</div>
+                                        <div>{{ $individuelle?->etablissement_academique }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Diplôme professionnel</div>
-                                        <div>{{ $individuelle->diplome_professionnel }}</div>
+                                        <div>{{ $individuelle?->diplome_professionnel }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Si autre ? précisez</div>
-                                        <div>{{ $individuelle->autre_diplome_professionnel }}</div>
+                                        <div>{{ $individuelle?->autre_diplome_professionnel }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Etablissement professionnel</div>
-                                        <div>{{ $individuelle->etablissement_professionnel }}</div>
+                                        <div>{{ $individuelle?->etablissement_professionnel }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Spécialité</div>
-                                        <div>{{ $individuelle->specialite_diplome_professionnel }}</div>
+                                        <div>{{ $individuelle?->specialite_diplome_professionnel }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Votre projet après la formation</div>
-                                        <div>{{ $individuelle->projet_poste_formation }}</div>
+                                        <div>{{ $individuelle?->projet_poste_formation }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 mb-0">
                                         <div class="label">Qualification et autres diplômes</div>
-                                        <div>{{ $individuelle->qualification }}</div>
+                                        <div>{{ $individuelle?->qualification }}</div>
                                     </div>
 
-                                    @isset($individuelle->formations_id)
+                                    @isset($individuelle?->formations_id)
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Note</div>
-                                            <div>{{ $individuelle->note_obtenue }}</div>
+                                            <div>{{ $individuelle?->note_obtenue }}</div>
                                         </div>
 
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Appréciation</div>
-                                            <div>{{ $individuelle->appreciation }}</div>
+                                            <div>{{ $individuelle?->appreciation }}</div>
                                         </div>
                                     @endisset
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-9 col-lg-9 mb-0">
                                         <div class="label">Expériences et stages</div>
-                                        <div>{{ $individuelle->experience }}</div>
+                                        <div>{{ $individuelle?->experience }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="label">Informations complémentaires sur
                                             le projet
                                             professionnel</div>
-                                        <div>{{ $individuelle->projetprofessionnel }}</div>
+                                        <div>{{ $individuelle?->projetprofessionnel }}</div>
                                     </div>
 
                                     <div class="text-center">
-                                        <a href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                        <a href="{{ route('individuelles.edit', $individuelle?->id) }}"
                                             class="btn btn-primary btn-sm text-white" title="voir détails"><i
                                                 class="bi bi-pencil"></i>&nbsp;Modifier</a>
                                     </div>
@@ -312,7 +317,7 @@
         <div class="modal fade" id="RejetDemandeModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="post" action="{{ route('validation-individuelles.destroy', $individuelle->id) }}"
+                    <form method="post" action="{{ route('validation-individuelles.destroy', $individuelle?->id) }}"
                         enctype="multipart/form-data" class="row">
                         @csrf
                         @method('DELETE')

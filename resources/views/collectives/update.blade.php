@@ -63,12 +63,12 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                    <label for="email" class="form-label">Email<span
+                                    <label for="email1" class="form-label">Email<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="email" name="email" value="{{ $collective?->email1 ?? old('email') }}"
-                                        class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                        id="email" placeholder="Adresse email">
-                                    @error('email')
+                                    <input type="email" name="email1" value="{{ $collective?->email1 ?? old('email1') }}"
+                                        class="form-control form-control-sm @error('email1') is-invalid @enderror"
+                                        id="email1" placeholder="Adresse email">
+                                    @error('email1')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -167,10 +167,10 @@
                                     <select name="departement"
                                         class="form-select form-select-sm @error('departement') is-invalid @enderror"
                                         aria-label="Select" id="select-field-departement" data-placeholder="Choisir">
-                                        <option value="{{ $collective?->departement?->id }}">
+                                        <option value="{{ $collective?->departement?->nom }}">
                                             {{ $collective?->departement?->nom }}</option>
                                         @foreach ($departements as $departement)
-                                            <option value="{{ $departement->id }}">
+                                            <option value="{{ $departement->nom }}">
                                                 {{ $departement->nom }}
                                             </option>
                                         @endforeach
