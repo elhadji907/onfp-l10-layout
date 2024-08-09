@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listecollective;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ListecollectiveController extends Controller
@@ -12,7 +13,9 @@ class ListecollectiveController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "cin"                  =>      "required|string|min:13|max:15|unique:listecollectives,cin,except,id",
+            "cin"                  =>      ["required", "string", Rule::unique('listecollectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
             "civilite"             =>      "required|string",
             "firstname"            =>      "required|string",
             "name"                 =>      "required|string",
@@ -20,7 +23,7 @@ class ListecollectiveController extends Controller
             "lieu_naissance"       =>      "required|string",
             "module"               =>      "required|string",
             "niveau_etude"         =>      "nullable|string",
-            "telephone"            =>      "nullable|string",
+            "telephone"            =>      "nullable|string|min:9|max:9",
         ]);
 
         $membre = Listecollective::create([
@@ -56,6 +59,20 @@ class ListecollectiveController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            "cin"                  =>      ["required", "string", Rule::unique('listecollectives')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($id)],
+            "civilite"             =>      "required|string",
+            "firstname"            =>      "required|string",
+            "name"                 =>      "required|string",
+            "date_naissance"       =>      "date|string",
+            "lieu_naissance"       =>      "required|string",
+            "module"               =>      "required|string",
+            "niveau_etude"         =>      "nullable|string",
+            "telephone"            =>      "nullable|string|min:9|max:9",
+        ]);
+
         $listecollective   = Listecollective::find($id);
 
         $listecollective->update([

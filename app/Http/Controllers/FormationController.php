@@ -525,14 +525,22 @@ class FormationController extends Controller
 
         $formation = Formation::findOrFail($idformation);
 
-        $collectives = Collective::get();
+        $collectives = Collective::where('statut_demande', 'accepter')
+        ->orwhere('statut_demande', 'retenue')
+        ->get();
 
         $collectiveFormation = DB::table('formations')
             ->where('collectives_id', $formation->collectives_id)
             ->pluck('collectives_id', 'collectives_id')
             ->all();
 
-        return view("formations.collectives.add-modules-collectives", compact('formation', 'collectives', 'collectiveFormation'));
+        $collectiveFormationCheck = DB::table('formations')
+            ->where('collectives_id', '!=', null)
+            ->where('collectives_id', '!=', $formation->collectives_id)
+            ->pluck('collectives_id', 'collectives_id')
+            ->all();
+
+        return view("formations.collectives.add-collectives", compact('formation', 'collectives', 'collectiveFormation', 'collectiveFormationCheck'));
     }
 
 

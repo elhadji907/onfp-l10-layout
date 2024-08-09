@@ -68,9 +68,17 @@
                                                 <tr>
                                                     <td>{{ $collective?->numero }}
                                                     </td>
-                                                    <td>{{ $collective?->name . ' (' . $collective?->sigle.')' }}</td>
-                                                    <td>{{ $collective->email1 }}</td>
-                                                    <td>{{ $collective->telephone }}</td>
+                                                    <td>{{ $collective?->name }}
+                                                        @isset($collective?->sigle)
+                                                            {{ '(' . $collective?->sigle . ')' }}
+                                                        @endisset
+                                                    </td>
+                                                    <td><a
+                                                            href="mailto:{{ $collective->email1 }}">{{ $collective->email1 }}</a>
+                                                    </td>
+                                                    <td><a
+                                                            href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
+                                                    </td>
                                                     <td>{{ $collective->departement?->region?->nom }}</td>
                                                     <td>
                                                         <span

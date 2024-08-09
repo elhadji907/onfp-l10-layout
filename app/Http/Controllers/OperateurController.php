@@ -49,6 +49,7 @@ class OperateurController extends Controller
             /* 'civilite'              =>      $request->input("civilite"), */
             'firstname'             =>      $request->input("name"),
             'name'                  =>      $request->input("sigle"),
+            'username'              =>      $request->input("email1"),
             'email'                 =>      $request->input('email1'),
             "telephone"             =>      $request->input("telephone1"),
             'lieu_naissance'        =>      $request->input("adresse"),

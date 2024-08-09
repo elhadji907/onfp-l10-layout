@@ -73,12 +73,12 @@
                                         data-bs-target="#foration-overview">Formations</button>
                                 </li>
 
-                                <li class="nav-item">
+                               {{--  <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#autres-demandes-overview">Demandes totales
                                         <span class="badge bg-success badge-number">{{ $collectives->count() }}</span>
                                     </button>
-                                </li>
+                                </li> --}}
 
                             </ul>
                             <div class="d-flex justify-content-between align-items-center">
@@ -89,7 +89,8 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5 class="card-title">Détails</h5>
+                                        <h5 class="card-title">Détails: <span class="{{ $collective?->statut_demande }} text-white">
+                                            {{ $collective?->statut_demande }}</span></h5>
                                         <div class="col-12 col-md-9 col-lg-9 mb-0">
                                             <div class="label">Nom structure</div>
                                             <div>{{ $collective?->name }}</div>
@@ -432,7 +433,7 @@
                                 </div>
                             </div>
                             {{-- Détail Formations --}}
-                            <div class="tab-content">
+                            {{-- <div class="tab-content">
                                 <div class="tab-pane fade profile-overview pt-1" id="autres-demandes-overview">
 
                                     <h5 class="card-title">Mes demandes collectives</h5>
@@ -506,7 +507,7 @@
                                     </table>
                                     <!-- End Table with stripped rows -->
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

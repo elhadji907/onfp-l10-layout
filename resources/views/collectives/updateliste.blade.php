@@ -31,7 +31,7 @@
                                         <label for="cin" class="form-label">CIN<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="cin"
-                                            value="{{ $listecollective?->cin ?? old('cin') }}"
+                                            value="{{ old('cin') ?? $listecollective?->cin  }}"
                                             class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                             id="cin" placeholder="CIN">
                                         @error('cin')
@@ -126,10 +126,10 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone</label>
-                                        <input type="text" name="telephone"
+                                        <input type="number" min="0" name="telephone"
                                             value="{{ $listecollective?->telephone ?? old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                            id="telephone" placeholder="téléphone">
+                                            id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

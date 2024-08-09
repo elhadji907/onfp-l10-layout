@@ -21,16 +21,27 @@
                     <div class="card mb-3">
 
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-12 pt-2">
-                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('showCollective', $collective->id) }}"
-                                            class="btn btn-success btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | Dossier personnel</p>
-                                    </span>
+                            @if (auth()->user()->hasRole('super-admin|admin'))
+                                <div class="row">
+                                    <div class="col-sm-12 pt-2">
+                                        <span class="d-flex mt-2 align-items-baseline"><a
+                                                href="{{ route('collectives.index') }}" class="btn btn-success btn-sm"
+                                                title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                            <p> | Dossier personnel</p>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="row">
+                                    <div class="col-sm-12 pt-2">
+                                        <span class="d-flex mt-2 align-items-baseline"><a
+                                                href="{{ route('demandesCollective') }}" class="btn btn-success btn-sm"
+                                                title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                            <p> | Dossier personnel</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
                             <form method="post" action="{{ url('collectives/' . $collective->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
@@ -50,8 +61,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                    <label for="sigle" class="form-label">Sigle<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="sigle" class="form-label">Sigle</label>
                                     <input type="text" name="sigle" value="{{ $collective?->sigle ?? old('sigle') }}"
                                         class="form-control form-control-sm @error('sigle') is-invalid @enderror"
                                         id="sigle" placeholder="Sigle ou abréviation">
@@ -78,9 +88,10 @@
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="fixe" class="form-label">Téléphone fixe<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="fixe" value="{{ $collective?->fixe ?? old('fixe') }}"
+                                    <input type="number" min="0" name="fixe"
+                                        value="{{ $collective?->fixe ?? old('fixe') }}"
                                         class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                        id="fixe" placeholder="Téléphone fixe">
+                                        id="fixe" placeholder="3xxxxxxxx">
                                     @error('fixe')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -91,10 +102,10 @@
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone"
+                                    <input type="number" min="0" name="telephone"
                                         value="{{ $collective?->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="Téléphone portable">
+                                        id="telephone" placeholder="7xxxxxxxx">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -196,7 +207,7 @@
                                     @enderror
                                 </div>
 
-                               {{--  <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                {{--  <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="module" class="form-label">Formation sollicitée<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="module" class="form-select  @error('module') is-invalid @enderror"
@@ -316,7 +327,7 @@
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="telephone_responsable" class="form-label">Téléphone responsable<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone_responsable"
+                                    <input type="number" min="0" name="telephone_responsable"
                                         value="{{ $collective->telephone_responsable ?? old('telephone_responsable') }}"
                                         class="form-control form-control-sm @error('telephone_responsable') is-invalid @enderror"
                                         id="telephone_responsable" placeholder="Telephone responsable">

@@ -77,7 +77,7 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#collectives-overview">Demandes collectives
+                                        data-bs-target="#collectives-overview">Structure
                                     </button>
                                 </li>
 
@@ -328,7 +328,7 @@
                             </div>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
-                                    {{-- @isset($collectivemodule) --}}
+                                    @isset($collectivemodule)
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="d-flex justify-content-between align-items-center mt-3">
                                             <span class="card-title d-flex align-items-baseline">Code formation :&nbsp;
@@ -450,7 +450,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    {{-- @endisset --}}
+                                    @endisset
                                 </div>
                             </div>
                             {{-- Détail Modules --}}
@@ -701,7 +701,7 @@
                                         <h5 class="card-title">
                                             {{ $formation?->collective->name . ' (' . $formation?->collective->sigle . ')' }}
                                             <a class="btn btn-info btn-sm" title=""
-                                                href="{{ route('collectives.show', $formation->collective->id) }}"><i
+                                                href="{{ route('collectives.show', $formation->collective->id) }}" target="_blank"><i
                                                     class="bi bi-eye"></i></a>&nbsp;
                                             <a href="{{ url('collectiveformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
