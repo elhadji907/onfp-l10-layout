@@ -526,18 +526,18 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($idformation);
 
         $collectives = Collective::where('statut_demande', 'accepter')
-        ->orwhere('statut_demande', 'retenue')
-        ->get();
+            ->orwhere('statut_demande', 'retenue')
+            ->get();
 
-        $collectiveFormation = DB::table('formations')
-            ->where('collectives_id', $formation->collectives_id)
-            ->pluck('collectives_id', 'collectives_id')
+        $collectiveFormation = DB::table('collectives')
+            ->where('formations_id', $idformation)
+            ->pluck('formations_id', 'formations_id')
             ->all();
 
-        $collectiveFormationCheck = DB::table('formations')
-            ->where('collectives_id', '!=', null)
-            ->where('collectives_id', '!=', $formation->collectives_id)
-            ->pluck('collectives_id', 'collectives_id')
+        $collectiveFormationCheck = DB::table('collectives')
+            ->where('formations_id', '!=', null)
+            ->where('formations_id', '!=', $idformation)
+            ->pluck('formations_id', 'formations_id')
             ->all();
 
         return view("formations.collectives.add-collectives", compact('formation', 'collectives', 'collectiveFormation', 'collectiveFormationCheck'));
@@ -550,27 +550,24 @@ class FormationController extends Controller
             'collective' => ['required']
         ]);
 
-        $formation = Formation::findOrFail($idformation);
+        $collective = Collective::findOrFail($request->collective);
 
-        if (isset($formation->collectives_id)) {
-            $collective = Collective::findOrFail($formation->collectives_id);
-            $collective->update([
-                "statut_demande"      =>  'accepter',
+        if (isset($request->formationcollective)) {
+            $formationcollective = Collective::findOrFail($request->formationcollective);
+            $formationcollective->update([
+                "formations_id"      =>  null,
+                "statut_demande"     =>  'accepter',
             ]);
-            $collective->save();
+
+            $formationcollective->save();
         }
-        $collective = Collective::findOrFail($request->input("collective"));
+
         $collective->update([
-            "statut_demande"      =>  'retenue',
+            "formations_id"      =>  $idformation,
+            "statut_demande"     =>  'retenue',
         ]);
 
         $collective->save();
-
-        $formation->update([
-            "collectives_id"      =>  $request->input("collective"),
-        ]);
-
-        $formation->save();
 
         Alert::success('Fait !', 'ajouté avec succès');
 
@@ -810,8 +807,10 @@ class FormationController extends Controller
     public function updateAgentSuivi(Request $request)
     {
         $request->validate([
-            'suivi_dossier' => 'required', 'string',
-            'date_suivi' => 'required', 'date'
+            'suivi_dossier' => 'required',
+            'string',
+            'date_suivi' => 'required',
+            'date'
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
@@ -831,7 +830,8 @@ class FormationController extends Controller
     public function updateMembresJury(Request $request)
     {
         $request->validate([
-            'membres_jury' => 'required', 'string',
+            'membres_jury' => 'required',
+            'string',
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
@@ -849,7 +849,8 @@ class FormationController extends Controller
     public function updateObservations(Request $request)
     {
         $request->validate([
-            'observations' => 'required', 'string'
+            'observations' => 'required',
+            'string'
         ]);
 
         $individuelle = Individuelle::findOrFail($request->input('id'));
@@ -868,7 +869,8 @@ class FormationController extends Controller
     public function updateObservationsCollective(Request $request)
     {
         $request->validate([
-            'observations' => 'required', 'string'
+            'observations' => 'required',
+            'string'
         ]);
 
         $listecollective = Listecollective::findOrFail($request->input('id'));

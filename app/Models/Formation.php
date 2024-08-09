@@ -100,7 +100,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Traitement|null $traitement
  * @property TypesFormation|null $types_formation
  * @property Zone|null $zone
- * @property Collection|Collective[] $collectives
  * @property Collection|Coment[] $coments
  * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Detail[] $details
@@ -150,7 +149,7 @@ class Formation extends Model
 		'choixoperateurs_id' => 'int',
 		'modules_id' => 'int',
 		'collectivemodules_id' => 'int',
-		'collectives_id' => 'int',
+		/* 'collectives_id' => 'int', */
 		'regions_id' => 'int',
 		'departements_id' => 'int',
 		'arrondissements_id' => 'int',
@@ -220,7 +219,7 @@ class Formation extends Model
 		'choixoperateurs_id',
 		'modules_id',
 		'collectivemodules_id',
-		'collectives_id',
+		/* 'collectives_id', */
 		'regions_id',
 		'departements_id',
 		'arrondissements_id',
@@ -304,10 +303,10 @@ class Formation extends Model
 		return $this->belongsTo(Collectivemodule::class, 'collectivemodules_id');
 	}
 
-	public function collective()
+	/* public function collective()
 	{
 		return $this->belongsTo(Collective::class, 'collectives_id');
-	}
+	} */
 
 	public function niveaux()
 	{
@@ -411,6 +410,11 @@ class Formation extends Model
 	public function individuelles()
 	{
 		return $this->hasMany(Individuelle::class, 'formations_id');
+	}
+
+	public function collective()
+	{
+		return $this->hasOne(Collective::class, 'formations_id');
 	}
 
 	public function listecollectives()

@@ -398,7 +398,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td>
-                                                    @isset($collective?->formation?->code)
+                                                    @isset($collective )
                                                         <span class="d-flex align-items-baseline"><a href="#"
                                                                 class="btn btn-primary btn-sm" title="voir détails"><i
                                                                     class="bi bi-eye"></i></a>

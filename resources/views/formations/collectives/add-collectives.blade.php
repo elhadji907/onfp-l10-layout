@@ -28,11 +28,20 @@
                                 </span>
                             </div>
                         </div>
+                        @isset($formation?->collective?->name)
+                            <h5><b><u>BENEFICIAIRES</u></b> : {{ $formation?->collective?->name }}
+                                @isset($formation?->collective?->name)
+                                    {{ '(' . $formation?->collective?->sigle . ')' }}
+                                @endisset
+                            </h5>
+                        @endisset
                         <h5>Liste des demandes collectives</h5>
                         <form method="post" action="{{ url('formationcollectives', ['$idformation' => $formation->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" value="{{ $formation?->collective?->id }}"
+                                name="formationcollective">
                             <div class="row mb-3">
                                 <div class="form-check col-md-12 pt-5">
                                     <table class="table datatables align-middle" id="table-modules">
@@ -56,8 +65,8 @@
                                                     <td>
                                                         <input type="radio" name="collective"
                                                             value="{{ $collective?->id }}"
-                                                            {{ in_array($collective->id, $collectiveFormation) ? 'checked' : '' }}
-                                                            {{ in_array($collective->id, $collectiveFormationCheck) ? "disabled" : '' }}
+                                                            {{ in_array($collective->formations_id, $collectiveFormation) ? 'checked' : '' }}
+                                                            {{ in_array($collective->formations_id, $collectiveFormationCheck) ? 'disabled' : '' }}
                                                             class="form-check-input @error('collective') is-invalid @enderror">
                                                         @error('collective')
                                                             <span class="invalid-feedback" role="alert">

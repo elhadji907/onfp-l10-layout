@@ -208,7 +208,7 @@ class CollectiveController extends Controller
         $user->save(); */
 
         $user->assignRole('Demandeur');
-        $user->assignRole('Collective');
+        /* $user->assignRole('Collective'); */
 
         $collective = Collective::create([
             "name"                      =>       $request->input("name"),

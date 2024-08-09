@@ -74,6 +74,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Etude|null $etude
  * @property Fcollective|null $fcollective
  * @property Ingenieur|null $ingenieur
+ * @property Formation|null $formation
  * @property Module $module
  * @property Programme|null $programme
  * @property Projet|null $projet

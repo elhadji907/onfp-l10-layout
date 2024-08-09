@@ -218,12 +218,12 @@
         @endif
         <li class="nav-heading">Demandes</li>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-folder-plus"></i><span>Demandes</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                @if (auth()->user()->hasRole('super-admin'))
+        @if (auth()->user()->hasRole('super-admin'))
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-folder-plus"></i><span>Demandes</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('individuelles') }}">
                             <span>Individuelles</span>
@@ -241,13 +241,13 @@
                             <span>Prise en charge</span>
                         </a>
                     </li><!-- End Prise en charges Nav -->
-                @endif
-            </ul>
-        </li><!-- End demandes Nav -->
+                </ul>
+            </li><!-- End demandes Nav -->
+        @endif
         @if (auth()->user()->hasRole('Demandeur'))
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demandeurs-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-folder-plus"></i><span>Demandes</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-folder-plus"></i><span>Mes demandes</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="demandeurs-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li class="nav-item">
