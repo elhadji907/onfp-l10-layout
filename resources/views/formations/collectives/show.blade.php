@@ -328,7 +328,7 @@
                             </div>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
-                                    @isset($collectivemodule)
+                                    @if (isset($formation?->collectivemodule))
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="d-flex justify-content-between align-items-center mt-3">
                                             <span class="card-title d-flex align-items-baseline">Code formation :&nbsp;
@@ -456,29 +456,10 @@
                             {{-- Détail Modules --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade module-overview pt-3" id="module-overview">
-                                    @if (isset($formation?->collective?->numero))
-                                        {{-- <div class="d-flex justify-content-between align-items-center">
-                                            <h5 class="card-title">
-                                                {{ $formation?->collective?->numero }}
-                                                <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('collectives.show', $formation?->collective?->id) }}"><i
-                                                        class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer module"></i> </a>
-                                            </h5>
-                                        </div> --}}
-                                    @else
-                                        {{-- <div class="pt-1">
-                                            <a href="{{ url('moduleformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                class="btn btn-primary float-end btn-sm">
-                                                <i class="bi bi-person-plus-fill" title="Ajouter module"></i> </a>
-                                        </div> --}}
-                                    @endif
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        @if (isset($formation?->collective?->numero))
+                                        @if (isset($formation?->collectivemodule))
                                             <h1 class="card-title">
-                                                Liste des modules demandés
+                                                Modules
                                             </h1>
                                             <form method="post"
                                                 action="{{ url('moduleformationcollectives', ['$idformation' => $formation->id]) }}"
@@ -489,7 +470,6 @@
                                                     <table class="table datatables" id="table-formations">
                                                         <thead>
                                                             <tr>
-                                                                <th>N°</th>
                                                                 <th>Module</th>
                                                                 <th>Demandeurs</th>
                                                                 <th class="float-end"><i class="bi bi-gear"></i></th>
@@ -497,22 +477,10 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php $i = 1; ?>
-                                                            @foreach ($formation?->collective?->collectivemodules as $collectivemodule)
                                                                 <tr>
+                                                                    <td>{{ $formation?->collectivemodule?->module }}</td>
                                                                     <td>
-                                                                        <input type="radio" name="collectivemodule"
-                                                                            value="{{ $collectivemodule?->id }}"
-                                                                            {{ in_array($collectivemodule->id, $collectiveFormation) ? 'checked' : '' }}
-                                                                            class="form-check-input @error('collectivemodule') is-invalid @enderror">
-                                                                        @error('collectivemodule')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <div>{{ $message }}</div>
-                                                                            </span>
-                                                                        @enderror
-                                                                    </td>
-                                                                    <td>{{ $collectivemodule?->module }}</td>
-                                                                    <td>
-                                                                        @foreach ($collectivemodule->listecollectives as $listecollective)
+                                                                        @foreach ($formation?->collectivemodule->listecollectives as $listecollective)
                                                                             @if ($loop->last)
                                                                                 <a href="#"><span
                                                                                         class="badge bg-info">{{ $loop->count }}</span></a>
@@ -522,7 +490,7 @@
                                                                     <td>
                                                                         <span
                                                                             class="d-flex align-items-baseline float-end"><a
-                                                                                href="{{ route('collectivemodules.show', $collectivemodule->id) }}"
+                                                                                href="{{ route('collectivemodules.show', $formation?->collectivemodule->id) }}"
                                                                                 class="btn btn-primary btn-sm"
                                                                                 title="voir détails"><i
                                                                                     class="bi bi-eye"></i></a>
@@ -535,14 +503,14 @@
                                                                                     <button type="button"
                                                                                         class="dropdown-item btn btn-sm mx-1"
                                                                                         data-bs-toggle="modal"
-                                                                                        data-bs-target="#EditRegionModal{{ $collectivemodule->id }}">
+                                                                                        data-bs-target="#EditRegionModal{{ $formation?->collectivemodule->id }}">
                                                                                         <i class="bi bi-pencil"
                                                                                             title="Modifier"></i>
                                                                                         Modifier
                                                                                     </button>
                                                                                     <li>
                                                                                         {{-- <form
-                                                                                            action="{{ route('collectivemodules.destroy', $collectivemodule->id) }}"
+                                                                                            action="{{ route('collectivemodules.destroy', $formation?->collectivemodule->id) }}"
                                                                                             method="post">
                                                                                             @csrf
                                                                                             @method('DELETE')
@@ -557,14 +525,9 @@
                                                                         </span>
                                                                     </td>
                                                                 </tr>
-                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                     </table>
-                                                </div>
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary"><i
-                                                            class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                                 </div>
                                             </form>
                                         @endisset
@@ -696,12 +659,12 @@
                         {{-- Détail Demandes collectives --}}
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade collectives-overview pt-3" id="collectives-overview">
-                                @if (isset($formation?->collective?->numero))
+                                @if (isset($formation?->collectivemodule))
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="card-title">
-                                            {{ $formation?->collective->name . ' (' . $formation?->collective->sigle . ')' }}
+                                            {{ $formation?->collectivemodule?->collective->name . ' (' . $formation?->collectivemodule?->collective->sigle . ')' }}
                                             <a class="btn btn-info btn-sm" title=""
-                                                href="{{ route('collectives.show', $formation->collective->id) }}" target="_blank"><i
+                                                href="{{ route('collectives.show', $formation->collectivemodule?->collective->id) }}" target="_blank"><i
                                                     class="bi bi-eye"></i></a>&nbsp;
                                             <a href="{{ url('collectiveformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                 class="btn btn-primary float-end btn-sm">
@@ -722,7 +685,6 @@
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade module-overview pt-3" id="evaluation-overview">
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
-
                                     <form method="post"
                                         action="{{ url('notedemandeurscollectives', ['$idformation' => $formation->id]) }}"
                                         enctype="multipart/form-data" class="row g-3">

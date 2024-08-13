@@ -207,7 +207,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="effectif_prevu" class="form-label">Effectif prévu</label>
                                     <input type="number" name="effectif_prevu" min="0" max="25"
                                         value="{{ $formation?->effectif_prevu ?? old('effectif_prevu') }}"
@@ -218,7 +218,7 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="prevue_h" class="form-label">Effectif homme</label>

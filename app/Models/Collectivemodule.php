@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string|null $statut
  * @property int|null $collectives_id
  * @property int|null $departements_id
+ * @property int|null $formations_id
  * @property int|null $regions_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
@@ -47,6 +48,7 @@ class Collectivemodule extends Model
     protected $casts = [
         'collectives_id' => 'int',
         'departements_id' => 'int',
+		'formations_id' => 'int',
         'regions_id' => 'int'
     ];
 
@@ -61,10 +63,15 @@ class Collectivemodule extends Model
         'contact',
         'statut',
         'collectives_id',
+		'formations_id',
         'departements_id',
         'regions_id'
     ];
 
+	public function formation()
+	{
+		return $this->belongsTo(Formation::class, 'formations_id')->latest();
+	}
     public function collective()
     {
         return $this->belongsTo(Collective::class, 'collectives_id');
@@ -74,8 +81,8 @@ class Collectivemodule extends Model
 		return $this->hasMany(Listecollective::class, 'collectivemodules_id');
 	}
     
-	public function formations()
+/* 	public function formations()
 	{
 		return $this->hasMany(Formation::class, 'modules_id');
-	}
+	} */
 }

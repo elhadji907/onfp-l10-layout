@@ -30,6 +30,7 @@ class CollectivemoduleController extends Controller
             if (isset($module_find)) {
                 $collectivemodule = Collectivemodule::create([
                     'module'            => $request->input('module_name'),
+                    'statut'            => 'attente',
                     'collectives_id'    => $request->input('collective'),
                 ]);
             } else {
@@ -41,6 +42,7 @@ class CollectivemoduleController extends Controller
                 $module->save();
                 $collectivemodule = Collectivemodule::create([
                     'module'            => $request->input('module_name'),
+                    'statut'            => 'attente',
                     'collectives_id'    => $request->input('collective'),
                 ]);
             }

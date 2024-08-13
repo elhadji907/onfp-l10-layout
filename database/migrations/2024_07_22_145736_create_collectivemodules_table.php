@@ -26,10 +26,13 @@ return new class extends Migration
             $table->unsignedInteger('collectives_id')->nullable();
             $table->unsignedInteger('departements_id')->nullable();
             $table->unsignedInteger('regions_id')->nullable();
+            $table->unsignedInteger('formations_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
 
             $table->index(["collectives_id"], 'fk_collectivemodules_collectives1_idx');
+            
+            $table->index(["formations_id"], 'fk_collectivemodules_formations1_idx');
 
             $table->foreign('collectives_id', 'fk_collectivemodules_collectives1_idx')
                 ->references('id')->on('collectives')
@@ -49,6 +52,11 @@ return new class extends Migration
                 ->references('id')->on('regions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
+                
+            $table->foreign('formations_id', 'fk_collectivemodules_formations1_idx')
+            ->references('id')->on('formations')
+            ->onDelete('no action')
+            ->onUpdate('no action');
 
         });
     }

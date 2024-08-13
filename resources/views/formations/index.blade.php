@@ -353,7 +353,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="effectif_prevu" class="form-label">Effectif prévu</label>
                                         <input type="number" name="effectif_prevu" min="0" max="25"
                                             value="{{ old('effectif_prevu') }}"
@@ -364,10 +364,10 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
     
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="prevue_h" class="form-label">Effectif homme</label>
+                                        <label for="prevue_h" class="form-label">Effectif prévu homme</label>
                                         <input type="number" name="prevue_h" min="0" max="25"
                                             value="{{ old('prevue_h') }}"
                                             class="form-control form-control-sm @error('prevue_h') is-invalid @enderror"
@@ -380,7 +380,7 @@
                                     </div>
     
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="prevue_f" class="form-label">Effectif femme</label>
+                                        <label for="prevue_f" class="form-label">Effectif prévu femme</label>
                                         <input type="number" name="prevue_f" min="0" max="25"
                                             value="{{ old('prevue_f') }}"
                                             class="form-control form-control-sm @error('prevue_f') is-invalid @enderror"
@@ -431,7 +431,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="projet" class="form-label">Projet</label>
                                         <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
                                             aria-label="Select" id="select-field-projet"
@@ -450,9 +450,9 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="programme" class="form-label">Programme</label>
                                         <select name="programme"
                                             class="form-select  @error('programme') is-invalid @enderror"
@@ -472,7 +472,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="choixoperateur" class="form-label">Choix opérateurs</label>

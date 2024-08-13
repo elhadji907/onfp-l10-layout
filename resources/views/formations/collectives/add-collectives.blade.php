@@ -34,61 +34,64 @@
                                     {{ '(' . $formation?->collective?->sigle . ')' }}
                                 @endisset
                             </h5>
+                            <h5><b><u>MODULE</u></b> :{{ $formation?->collectivemodule?->module }}</h5>
                         @endisset
-                        <h5>Liste des demandes collectives</h5>
+                        <h5 class="pt-2">Liste des demandes collectives</h5>
                         <form method="post" action="{{ url('formationcollectives', ['$idformation' => $formation->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" value="{{ $formation?->collective?->id }}"
-                                name="formationcollective">
+                            <input type="hidden" value="{{ $formation?->collectivemodule?->id }}"
+                                name="collectivemoduleformation">
                             <div class="row mb-3">
                                 <div class="form-check col-md-12 pt-5">
                                     <table class="table datatables align-middle" id="table-modules">
                                         <thead>
                                             <tr>
-                                                <th>N° DEM.</th>
+                                                <th>N°</th>
                                                 <th>Structure</th>
                                                 {{-- <th>Sigle</th> --}}
                                                 <th>Téléphone</th>
-                                                <th>E-mail</th>
+                                                {{-- <th>E-mail</th> --}}
                                                 <th>Localité</th>
-                                                <th style="text-align: center;">Modules</th>
+                                                <th>Modules</th>
+                                                <th style="text-align: center;">Effectif</th>
                                                 <th>Statut</th>
                                                 <th class="text-center">#</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; ?>
-                                            @foreach ($collectives as $collective)
+                                            @foreach ($collectivemodules as $collectivemodule)
                                                 <tr>
                                                     <td>
-                                                        <input type="radio" name="collective"
-                                                            value="{{ $collective?->id }}"
-                                                            {{ in_array($collective->formations_id, $collectiveFormation) ? 'checked' : '' }}
-                                                            {{ in_array($collective->formations_id, $collectiveFormationCheck) ? 'disabled' : '' }}
+                                                        <input type="radio" name="collectivemodule"
+                                                            value="{{ $collectivemodule?->id }}"
+                                                            {{ in_array($collectivemodule->formations_id, $collectiveModule) ? 'checked' : '' }}
+                                                            {{ in_array($collectivemodule->formations_id, $collectiveModuleCheck) ? 'disabled' : '' }}
                                                             class="form-check-input @error('collective') is-invalid @enderror">
-                                                        @error('collective')
+                                                        @error('collectivemodule')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <div>{{ $message }}</div>
                                                             </span>
                                                         @enderror
-                                                        {{ $collective->numero }}
+                                                        {{ $collectivemodule?->collective->numero }}
                                                     </td>
 
-                                                    <td>{{ $collective?->name }}
-                                                        @isset($collective?->sigle)
-                                                            {{ '(' . $collective?->sigle . ')' }}
+                                                    <td>{{ $collectivemodule?->collective?->name }}
+                                                        @isset($collectivemodule->collective?->sigle)
+                                                            {{ '(' . $collectivemodule->collective?->sigle . ')' }}
                                                         @endisset
                                                     </td>
-                                                    {{-- <td>{{ $collective?->sigle }}</td> --}}
-                                                    <td>{{ $collective?->user?->telephone }}</td>
-                                                    <td><a
-                                                            href="mailto:{{ $collective?->user?->email }}">{{ $collective?->user?->email }}</a>
-                                                    </td>
-                                                    <td>{{ $collective->departement?->region?->nom }}</td>
+                                                    {{-- <td>{{ $collectivemodule->collective?->sigle }}</td> --}}
+                                                    <td>{{ $collectivemodule->collective?->user?->telephone }}</td>
+                                                    {{-- <td><a
+                                                            href="mailto:{{ $collectivemodule->collective?->user?->email }}">{{ $collectivemodule->collective?->user?->email }}</a>
+                                                    </td> --}}
+                                                    <td>{{ $collectivemodule->collective->departement?->region?->nom }}</td>
+                                                    <td>{{ $collectivemodule?->module }}</td>
                                                     <td style="text-align: center;">
-                                                        @foreach ($collective->collectivemodules as $collectivemodule)
+                                                        @foreach ($collectivemodule->listecollectives as $listecollective)
                                                             @if ($loop->last)
                                                                 <span class="badge bg-info">{{ $loop->count }}</span>
                                                             @endif
@@ -96,11 +99,11 @@
                                                     </td>
                                                     <td>
                                                         <span
-                                                            class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
+                                                            class="{{ $collectivemodule?->statut }}">{{ $collectivemodule?->statut }}</span>
                                                     </td>
                                                     <td>
                                                         <span class="d-flex align-items-baseline"><a
-                                                                href="{{ route('collectives.show', $collective->id) }}"
+                                                                href="{{ route('collectives.show', $collectivemodule->collective->id) }}"
                                                                 class="btn btn-primary btn-sm" title="voir détails"><i
                                                                     class="bi bi-eye"></i></a>
                                                             <div class="filter">
@@ -110,7 +113,7 @@
                                                                 <ul
                                                                     class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                                     <li><a class="dropdown-item btn btn-sm"
-                                                                            href="{{ route('collectives.edit', $collective->id) }}"
+                                                                            href="{{ route('collectives.edit', $collectivemodule->collective->id) }}"
                                                                             class="mx-1" title="Modifier"><i
                                                                                 class="bi bi-pencil"></i>Modifier</a>
                                                                     </li>

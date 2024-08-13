@@ -54,6 +54,17 @@ class FormationController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            "name"                  =>   "required|string|unique:formations,name",
+            "departement"           =>   "required|string",
+            "lieu"                  =>   "required|string",
+            "niveau_qualification"  =>   "required|string",
+            "types_formation"       =>   "required|string",
+            "titre"                 =>   "nullable|string",
+            "date_debut"            =>   "nullable|date",
+            "date_fin"              =>   "nullable|date",
+        ]);
+
         $annee = date('y');
 
         /* $mois = date('m');
@@ -102,7 +113,7 @@ class FormationController extends Controller
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
         ]);
-
+        $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
         $formation = new Formation([
             "code"                  =>   $code_formation,
             "name"                  =>   $request->input('name'),
@@ -116,7 +127,7 @@ class FormationController extends Controller
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
-            "effectif_prevu"        =>   $request->input('effectif_prevu'),
+            "effectif_prevu"        =>   $effectif_prevu,
             "prevue_h"              =>   $request->input('prevue_h'),
             "prevue_f"              =>   $request->input('prevue_f'),
             "frais_operateurs"      =>   $request->input('frais_operateurs'),
@@ -171,6 +182,8 @@ class FormationController extends Controller
             "date_fin"              =>   "nullable|date",
         ]);
 
+        $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
+
         $formation->update([
             "name"                  =>   $request->input('name'),
             "regions_id"            =>   $request->input('region'),
@@ -181,7 +194,7 @@ class FormationController extends Controller
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
-            "effectif_prevu"        =>   $request->input('effectif_prevu'),
+            "effectif_prevu"        =>   $effectif_prevu,
             "prevue_h"              =>   $request->input('prevue_h'),
             "prevue_f"              =>   $request->input('prevue_f'),
             "frais_operateurs"      =>   $request->input('frais_operateurs'),
@@ -525,49 +538,67 @@ class FormationController extends Controller
 
         $formation = Formation::findOrFail($idformation);
 
-        $collectives = Collective::where('statut_demande', 'accepter')
+        /* $collectives = Collective::where('statut_demande', 'accepter')
             ->orwhere('statut_demande', 'retenue')
+            ->get(); */
+
+        $collectivemodules = Collectivemodule::where('statut', 'retenue')
+            ->orwhere('statut', 'accepter')
+            ->orwhere('statut', 'attente')
             ->get();
 
-        $collectiveFormation = DB::table('collectives')
+        /* $collectiveFormation = DB::table('collectives')
+            ->where('formations_id', $idformation)
+            ->pluck('formations_id', 'formations_id')
+            ->all(); */
+
+        $collectiveModule = DB::table('collectivemodules')
             ->where('formations_id', $idformation)
             ->pluck('formations_id', 'formations_id')
             ->all();
 
-        $collectiveFormationCheck = DB::table('collectives')
+        /* $collectiveFormationCheck = DB::table('collectives')
+            ->where('formations_id', '!=', null)
+            ->where('formations_id', '!=', $idformation)
+            ->pluck('formations_id', 'formations_id')
+            ->all(); */
+
+        $collectiveModuleCheck = DB::table('collectivemodules')
             ->where('formations_id', '!=', null)
             ->where('formations_id', '!=', $idformation)
             ->pluck('formations_id', 'formations_id')
             ->all();
 
-        return view("formations.collectives.add-collectives", compact('formation', 'collectives', 'collectiveFormation', 'collectiveFormationCheck'));
+        return view("formations.collectives.add-collectives", compact('formation', 'collectivemodules', 'collectiveModule', 'collectiveModuleCheck'));
     }
 
 
     public function giveformationcollectives($idformation, Request $request)
     {
         $request->validate([
-            'collective' => ['required']
+            'collectivemodule' => ['required']
         ]);
 
-        $collective = Collective::findOrFail($request->collective);
 
-        if (isset($request->formationcollective)) {
-            $formationcollective = Collective::findOrFail($request->formationcollective);
-            $formationcollective->update([
+        $collectivemodule = Collectivemodule::findOrFail($request->collectivemodule);
+
+        if (isset($request->collectivemoduleformation) && $request->collectivemoduleformation != $collectivemodule->id) {
+            $collectivemoduleformation = Collectivemodule::findOrFail($request->collectivemoduleformation);
+
+            $collectivemoduleformation->update([
                 "formations_id"      =>  null,
-                "statut_demande"     =>  'accepter',
+                "statut"             =>  'accepter',
             ]);
 
-            $formationcollective->save();
+            $collectivemoduleformation->save();
         }
 
-        $collective->update([
+        $collectivemodule->update([
             "formations_id"      =>  $idformation,
-            "statut_demande"     =>  'retenue',
+            "statut"             =>  'retenue',
         ]);
 
-        $collective->save();
+        $collectivemodule->save();
 
         Alert::success('Fait !', 'ajouté avec succès');
 
