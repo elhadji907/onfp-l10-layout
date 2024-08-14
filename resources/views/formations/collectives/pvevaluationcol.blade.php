@@ -4,6 +4,61 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ $title }}</title>
+    {{-- <style>
+        @page {
+            margin: 0cm 0cm;
+        }
+
+        .invoice-box {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px;
+            font-size: 12px;
+            line-height: 20px;
+            color: color: rgb(0, 0, 0);
+            ;
+        }
+
+        .rtl {
+            imputation: rtl;
+        }
+
+        .invoice-box table tr.heading td {
+            background: rgb(255, 255, 255);
+            border: 1px solid #000000;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.total td {
+            border-top: 2px solid #eee;
+            border-bottom: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            background: #eee;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.item td {
+            border: 1px solid #000000;
+        }
+
+        table {
+            border-left: 0px solid rgb(0, 0, 0);
+            border-right: 0;
+            border-top: 0px solid rgb(0, 0, 0);
+            border-bottom: 0;
+            width: 100%;
+            border-spacing: 0px;
+        }
+
+        table td,
+        table th {
+            border-left: 0;
+            border-right: 0px solid rgb(0, 0, 0);
+            border-top: 0;
+            border-bottom: 0px solid rgb(0, 0, 0);
+        }
+    </style> --}}
     <style>
         @page {
             margin: 0cm 0cm;
@@ -14,7 +69,7 @@
             margin: auto;
             /* padding: 30px; */
             font-size: 12px;
-            line-height: 18px;
+            line-height: 15px;
             color: color: rgb(0, 0, 0);
             ;
         }
@@ -30,7 +85,6 @@
             border-collapse: collapse;
             font-weight: bold;
         }
-
 
         .invoice-box table tr.total td {
             /* border-top: 2px solid #eee;
@@ -102,36 +156,43 @@
         <table class="table table-responsive">
             <thead>
                 <tr class="heading" style="text-align: center;">
-                    <td colspan="8"><b>{{ __('FICHE DE SUIVI') }}</b>
+                    <td colspan="10"><b>{{ __("PROCES VERBAL D'EVALUATION DE FORMATION") }}</b>
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="4">{{ __('Code formation : ') }}
-                        {{ $formation->code }}
-                    </td>
-                    <td colspan="4"><b>{{ __('Suivi : ') }}</b>
-                        @isset($formation?->date_suivi)
-                            {{ $formation?->suivi_dossier . ', le ' . $formation?->date_suivi?->format('d/m/Y') }}
+                    <td colspan="5"><b>{{ __('Période : ') }}</b>
+                        @isset($formation?->date_debut)
+                            {{ 'Du ' . $formation?->date_debut?->format('d/m/Y') }}
                         @endisset
+                        @isset($formation?->date_fin)
+                            {{ ' au ' . $formation?->date_fin?->format('d/m/Y') }}
+                        @endisset
+                    </td>
+                    <td colspan="5"><b>{{ __('Intitulé formation : ') }}</b>
+                        {{ $formation?->collectivemodule?->module }}
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="4">{{ __('Intitulé formation : ') }}
-                        {{ $formation->module->name }};
-                        @isset($formation?->lieu)
-                            {{ ' Lieu: ' . $formation?->lieu }}
-                        @endisset
+                    <td colspan="5"><b>{{ __('Lieu : ') }}</b> {{ $formation?->lieu }}
                     </td>
-                    <td colspan="4"><b>{{ __('Opérateur : ') }}</b>
+                    <td colspan="5"><b>{{ __('Opérateur : ') }}</b>
                         {{ $formation?->operateur?->name . ' (' . $formation?->operateur?->sigle . ')' }}
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="4">{{ __('Adresse : ') }}
-                        {{ $formation?->lieu }}
+                    <td colspan="2"><b>{{ __('Code formation : ') }}</b> {{ $formation?->code }}
                     </td>
-                    <td colspan="4"><b>{{ __('Contact : ') }}</b>
-                        {{ $formation?->operateur?->telephone1 }}
+                    <td colspan="3"><b>{{ __('Niveau de qualification : ') }}</b>
+                        {{ $formation?->niveau_qualification }}
+                    </td>
+                    <td colspan="5"><b>{{ __('Titre : ') }}</b> {{ $formation?->titre }}
+                    </td>
+                </tr>
+                <tr class="heading">
+                    <td colspan="7">
+                        <b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name . '(' . $formation?->ingenieur?->sigle . ')' }}
+                    </td>
+                    <td colspan="3" style="text-align: center;"><b>{{ __('DECISION DU JURY') }}</b>
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">
@@ -142,31 +203,40 @@
                     <td><b>Date naissance</b></td>
                     <td><b>Lieu de naissance</b></td>
                     <td><b>Téléphone</b></td>
-                    <td><b>Emargement</b></td>
+                    <td><b>Note</b></td>
+                    <td><b>Niveau de maitrise</b></td>
+                    <td><b>Observations</b></td>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formation->individuelles as $individuelle)
+                @foreach ($formation->listecollectives as $listecollective)
                     <tr class="item" style="text-align: center;">
-                        <td>{{ $individuelle->user->cin }}</td>
-                        <td>{{ $individuelle?->user?->civilite }}</td>
-                        <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->name) }}</td>
-                        <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
-                        <td>{{ $individuelle?->user?->telephone }}</td>
-                        <td></td>
+                        <td>{{ $listecollective?->cin }}</td>
+                        <td>{{ $listecollective->civilite }}</td>
+                        <td>{{ ucwords($listecollective?->prenom) }}</td>
+                        <td>{{ strtoupper($listecollective?->nom) }}</td>
+                        <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</td>
+                        <td>{{ strtoupper($listecollective?->lieu_naissance) }}</td>
+                        <td>{{ $listecollective?->telephone }}</td>
+                        <td>{{ $listecollective?->note_obtenue ?? '' }}</td>
+                        <td>{{ $listecollective?->appreciation }}</td>
+                        <td>{{ $listecollective?->observations }}</td>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
-       {{--  <h4 valign="top">
-            <b><u>AGENT DE SUIVI</u>:</b>
-            @isset($formation?->date_suivi)
-                {{ $formation?->suivi_dossier . ', le ' . $formation?->date_suivi?->format('d/m/Y') }}
+        <h4 valign="top">
+            <b><u>SIGNATURE DES MEMBRES DU JURY</u>:<br><br></b>
+            <?php $i = 1; ?>
+            @isset($membres_jury)
+                @foreach ($membres_jury as $item)
+                    @isset($item)
+                        {{ $item }} <br><br>
+                        {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
+                    @endisset
+                @endforeach
             @endisset
-        </h4> --}}
+        </h4>
     </div>
     {{-- <footer>
         {{ __("Cité SIPRES 1 lot 2 - 2 voies liberté 6 extension VDN  Tél. : 33 827 92 51- Fax : 33 827 92 55

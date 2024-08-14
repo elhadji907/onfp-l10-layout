@@ -227,9 +227,14 @@
         <h4 valign="top">
             <b><u>SIGNATURE DES MEMBRES DU JURY</u>:<br><br></b>
             <?php $i = 1; ?>
-            @foreach ($membres_jury as $item)
-                {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br>
-            @endforeach
+            @isset($membres_jury)
+                @foreach ($membres_jury as $item)
+                    @isset($item)
+                        {{ $item }} <br><br>
+                        {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
+                    @endisset
+                @endforeach
+            @endisset
         </h4>
     </div>
     {{-- <footer>

@@ -510,7 +510,7 @@ class FormationController extends Controller
 
         $domaines = Domaine::orderBy("created_at", "desc")->get();
 
-        return view("formations.individuelles.add-ingenieur", compact('formation', 'ingenieurs', 'ingenieur', 'ingenieurFormation', 'domaines'));
+        return view("formations.add-ingenieur", compact('formation', 'ingenieurs', 'ingenieur', 'ingenieurFormation', 'domaines'));
     }
 
 
@@ -651,7 +651,7 @@ class FormationController extends Controller
         $type = $formation->types_formation->name;
 
         if ($type == 'collective') {
-            $count = $formation->collective->count();
+            $count = $formation->listecollectives->count();
         } elseif ($type == 'individuelle') {
             $count = $formation->individuelles->count();
         } else {
@@ -992,6 +992,76 @@ class FormationController extends Controller
         $anne = $anne . ' à ' . date('H') . 'h';
         $anne = $anne . ' ' . date('i') . 'min';
         $anne = $anne . ' ' . date('s') . 's'; */
+
+            $name = 'PV Evaluation de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+            // Output the generated PDF to Browser
+            $dompdf->stream($name, ['Attachment' => false]);
+        } else {
+            Alert::warning('Désolez !', "la formation n'est pas encore terminée");
+            return redirect()->back();
+        }
+    }
+
+    public function ficheSuiviCol(Request $request)
+    {
+
+        $formation = Formation::find($request->input('id'));
+
+        $title = 'Fiche de suivi de la formation en  ' . $formation->name;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+
+        $dompdf->loadHtml(view('formations.collectives.fichesuivicol', compact(
+            'formation',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $name = 'Fiche de suivi de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+    public function pvEvaluationCol(Request $request)
+    {
+
+        $formation = Formation::find($request->input('id'));
+
+        if ($formation->statut == 'terminer') {
+
+            $title = 'PV Evaluation de la formation en  ' . $formation->name;
+
+            $membres_jury = explode(";", $formation->membres_jury);
+            $count_membres = count($membres_jury);
+
+            $dompdf = new Dompdf();
+            $options = $dompdf->getOptions();
+            $options->setDefaultFont('Formation');
+            $dompdf->setOptions($options);
+
+
+            $dompdf->loadHtml(view('formations.collectives.pvevaluationcol', compact(
+                'formation',
+                'title',
+                'membres_jury',
+                'count_membres',
+            )));
+
+            // (Optional) Setup the paper size and orientation (portrait ou landscape)
+            $dompdf->setPaper('A4', 'landscape');
+
+            // Render the HTML as PDF
+            $dompdf->render();
 
             $name = 'PV Evaluation de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
 

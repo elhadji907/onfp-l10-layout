@@ -49,6 +49,7 @@
                                                 <th>Spécialité</th>
                                                 <th>Email</th>
                                                 <th>Téléphone</th>
+                                                <th style="text-align: center;">Formations</th>
                                                 <th class="text-center" scope="col">#</th>
                                             </tr>
                                         </thead>
@@ -67,25 +68,36 @@
                                                         @enderror
                                                         {{ $ingenieur->name }}
                                                     </td>
-                                                   {{--  <td>{{ $ingenieur->name }}</td> --}}
+                                                    {{--  <td>{{ $ingenieur->name }}</td> --}}
                                                     <td>{{ $ingenieur->initiale }}</td>
                                                     <td>{{ $ingenieur->fonction }}</td>
                                                     <td>{{ $ingenieur->specialite }}</td>
-                                                    <td>{{ $ingenieur->email }}</td>
-                                                    <td>{{ $ingenieur->telephone }}</td>
+                                                    <td><a
+                                                            href="mailto:{{ $ingenieur->email }}">{{ $ingenieur->email }}</a>
+                                                    </td>
+                                                    <td><a
+                                                            href="tel:+221{{ $ingenieur->telephone }}">{{ $ingenieur->telephone }}</a>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        @foreach ($ingenieur->formations as $formation)
+                                                            @if ($loop->last)
+                                                                <span class="badge bg-info">{{ $loop->count }}</span>
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
 
                                                     <td style="text-align: center;">
                                                         <span class="d-flex mt-2 align-items-baseline"><a
                                                                 href="{{ route('ingenieurs.show', $ingenieur->id) }}"
                                                                 class="btn btn-warning btn-sm mx-1" title="Voir détails">
                                                                 <i class="bi bi-eye"></i></a>
-                                                            <div class="filter">
+                                                            {{-- <div class="filter">
                                                                 <a class="icon" href="#"
                                                                     data-bs-toggle="dropdown"><i
                                                                         class="bi bi-three-dots"></i></a>
                                                                 <ul
-                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    <li>
+                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"> --}}
+                                                            {{--  <li>
                                                                         <button type="button"
                                                                             class="dropdown-item btn btn-sm mx-1"
                                                                             data-bs-toggle="modal"
@@ -94,8 +106,8 @@
                                                                             Modifier
                                                                         </button>
                                                                     </li>
-                                                                    <li>
-                                                                        {{-- <form
+                                                                    <li> --}}
+                                                            {{-- <form
                                                                             action="{{ url('ingenieurs', $ingenieur->id) }}"
                                                                             method="post">
                                                                             @csrf
@@ -104,9 +116,9 @@
                                                                                 class="dropdown-item show_confirm"><i
                                                                                     class="bi bi-trash"></i>Supprimer</button>
                                                                         </form> --}}
-                                                                    </li>
+                                                            {{--      </li>
                                                                 </ul>
-                                                            </div>
+                                                            </div> --}}
                                                         </span>
                                                     </td>
                                                 </tr>

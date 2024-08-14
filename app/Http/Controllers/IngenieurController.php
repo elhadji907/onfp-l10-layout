@@ -98,7 +98,8 @@ class IngenieurController extends Controller
         $regions            = Region::orderBy("created_at", "desc")->get();
         $operateurs         = Operateur::orderBy("created_at", "desc")->get();
         $types_formations   = TypesFormation::orderBy("created_at", "desc")->get();
-        return view('ingenieurs.show', compact('ingenieur', 'departements', 'modules', 'regions', 'operateurs', 'types_formations'));
+        $ingenieurs         = Ingenieur::orderBy("created_at", "desc")->get();
+        return view('ingenieurs.show', compact('ingenieur', 'departements', 'modules', 'regions', 'operateurs', 'types_formations', 'ingenieurs'));
     }
 
     public function destroy($id)

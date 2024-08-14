@@ -153,6 +153,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('pvEvaluation', [FormationController::class, 'pvEvaluation'])->name('pvEvaluation');
     Route::post('ficheSuivi', [FormationController::class, 'ficheSuivi'])->name('ficheSuivi');
 
+    Route::post('pvEvaluationCol', [FormationController::class, 'pvEvaluationCol'])->name('pvEvaluationCol');
+    Route::post('ficheSuiviCol', [FormationController::class, 'ficheSuiviCol'])->name('ficheSuiviCol');
+
     Route::get('notifications/', [CourrierController::class, 'notifications'])->name('notifications');
     Route::get('validationsRejetMessage/{id}', [IndividuelleController::class, 'validationsRejetMessage'])->name('validationsRejetMessage');
 

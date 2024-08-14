@@ -76,8 +76,8 @@
                                         <td>{{ $ingenieur->initiale }}</td>
                                         <td>{{ $ingenieur->fonction }}</td>
                                         <td>{{ $ingenieur->specialite }}</td>
-                                        <td>{{ $ingenieur->email }}</td>
-                                        <td>{{ $ingenieur->telephone }}</td>
+                                        <td><a href="mailto:{{ $ingenieur->email }}">{{ $ingenieur->email }}</a></td>
+                                        <td><a href="tel:+221{{ $ingenieur->telephone }}">{{ $ingenieur->telephone }}</a></td>
                                         <td style="text-align: center;">
                                             @foreach ($ingenieur->formations as $formation)
                                                 @if ($loop->last)
@@ -207,9 +207,9 @@
                                 <label for="floatingInput">Email<span class="text-danger mx-1">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="telephone" value="{{ old('telephone') }}"
+                                <input type="number" name="telephone" min="0" value="{{ old('telephone') }}"
                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                    id="telephone" placeholder="Telephone">
+                                    id="telephone" placeholder="7xxxxxxxx">
                                 @error('telephone')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -270,7 +270,8 @@
                                     <label for="floatingInput">Ingénieur<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="initiale" value="{{ $ingenieur->initiale ?? old('initiale') }}"
+                                    <input type="text" name="initiale"
+                                        value="{{ $ingenieur->initiale ?? old('initiale') }}"
                                         class="form-control form-control-sm @error('initiale') is-invalid @enderror"
                                         id="initiale" placeholder="initiale">
                                     @error('initiale')
@@ -316,10 +317,10 @@
                                     <label for="floatingInput">Email<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="telephone"
+                                    <input type="number" min="0" name="telephone"
                                         value="{{ $ingenieur->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="Telephone">
+                                        id="telephone" placeholder="7xxxxxxxx">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>

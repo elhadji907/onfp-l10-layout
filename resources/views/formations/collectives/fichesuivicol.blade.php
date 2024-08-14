@@ -117,10 +117,7 @@
                 </tr>
                 <tr class="heading">
                     <td colspan="4">{{ __('Intitulé formation : ') }}
-                        {{ $formation->module->name }};
-                        @isset($formation?->lieu)
-                            {{ ' Lieu: ' . $formation?->lieu }}
-                        @endisset
+                        {{ $formation?->collectivemodule?->module }}
                     </td>
                     <td colspan="4"><b>{{ __('Opérateur : ') }}</b>
                         {{ $formation?->operateur?->name . ' (' . $formation?->operateur?->sigle . ')' }}
@@ -146,22 +143,22 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formation->individuelles as $individuelle)
+                @foreach ($formation->listecollectives as $listecollective)
                     <tr class="item" style="text-align: center;">
-                        <td>{{ $individuelle->user->cin }}</td>
-                        <td>{{ $individuelle?->user?->civilite }}</td>
-                        <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->name) }}</td>
-                        <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
-                        <td>{{ $individuelle?->user?->telephone }}</td>
+                        <td>{{ $listecollective?->cin }}</td>
+                        <td>{{ $listecollective->civilite }}</td>
+                        <td>{{ ucwords($listecollective?->prenom) }}</td>
+                        <td>{{ strtoupper($listecollective?->nom) }}</td>
+                        <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</td>
+                        <td>{{ strtoupper($listecollective?->lieu_naissance) }}</td>
+                        <td>{{ $listecollective?->telephone }}</td>
                         <td></td>
                     </tr>
                 @endforeach
 
             </tbody>
         </table>
-       {{--  <h4 valign="top">
+        {{-- <h4 valign="top">
             <b><u>AGENT DE SUIVI</u>:</b>
             @isset($formation?->date_suivi)
                 {{ $formation?->suivi_dossier . ', le ' . $formation?->date_suivi?->format('d/m/Y') }}

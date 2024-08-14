@@ -234,7 +234,7 @@
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($operateur)
                                             <h1 class="card-title">
-                                                Liste des formations
+                                                {{ __("Liste des formations de l'opérateur") }}
                                             </h1>
                                             <div class="row g-3">
                                                 <table class="table datatables" id="table-formations">
@@ -365,6 +365,23 @@
                                                             <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                                 data-bs-target="#RejetDemandeModal">Annuler
                                                             </button>
+                                                            <hr>
+                                                            <form action="{{ route('ficheSuiviCol') }}" method="post"
+                                                                target="_blank">
+                                                                @csrf
+                                                                {{-- @method('PUT') --}}
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $formation->id }}">
+                                                                <button class="btn btn-sm mx-1">Fiche de suivi</button>
+                                                            </form>
+                                                            <form action="{{ route('pvEvaluationCol') }}" method="post"
+                                                                target="_blank">
+                                                                @csrf
+                                                                {{-- @method('PUT') --}}
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $formation->id }}">
+                                                                <button class="btn btn-sm mx-1">PV Evaluation</button>
+                                                            </form>
                                                         </ul>
                                                     </div>
                                                 </span>

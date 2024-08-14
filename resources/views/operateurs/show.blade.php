@@ -313,10 +313,6 @@
                                                                                 class="bi bi-three-dots"></i></a>
                                                                         <ul
                                                                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <button class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
-                                                                            </button>
                                                                             <form
                                                                                 action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                 method="post">
@@ -328,6 +324,10 @@
                                                                             <button class="dropdown-item btn btn-sm mx-1"
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
+                                                                            </button>
+                                                                            <button class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
                                                                             </button>
                                                                             <form
                                                                                 action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"

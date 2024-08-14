@@ -85,7 +85,7 @@
                                         </td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('formations.show', $formation->id) }}"
+                                                    href="{{ route('ingenieurs.show', $ingenieur->id) }}"
                                                     class="btn btn-primary btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
@@ -93,14 +93,15 @@
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li>
-                                                            <a class="dropdown-item btn btn-sm"
-                                                                href="{{ route('formations.edit', $formation->id) }}"
-                                                                class="mx-1" title="Modifier"><i
-                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                            <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
+                                                                <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                            </button>
                                                         </li>
                                                         <li>
                                                             <form
-                                                                action="{{ route('formations.destroy', $formation->id) }}"
+                                                                action="{{ route('ingenieurs.destroy', $ingenieur->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -268,6 +269,117 @@
                 </div>
             </div>
         </div>
+
+        <!-- Edit ingenieur -->
+        @foreach ($ingenieurs as $ingenieur)
+            <div class="modal fade" id="EditingenieurModal{{ $ingenieur->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditingenieurModalLabel{{ $ingenieur->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="{{ route('ingenieurs.update', $ingenieur->id) }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
+                            <div class="modal-header" id="EditingenieurModalLabel{{ $ingenieur->id }}">
+                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier région</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <input type="hidden" name="id" value="{{ $ingenieur->id }}">
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="matricule"
+                                        value="{{ $ingenieur->matricule ?? old('matricule') }}"
+                                        class="form-control form-control-sm @error('matricule') is-invalid @enderror"
+                                        id="matricule" placeholder="Matricule" autofocus>
+                                    @error('matricule')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Matricule</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="name" value="{{ $ingenieur->name ?? old('name') }}"
+                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                        id="name" placeholder="Ingénieur" autofocus>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Ingénieur<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="initiale" value="{{ $ingenieur->initiale ?? old('initiale') }}"
+                                        class="form-control form-control-sm @error('initiale') is-invalid @enderror"
+                                        id="initiale" placeholder="initiale">
+                                    @error('initiale')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Initiale<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="specialite"
+                                        value="{{ $ingenieur->specialite ?? old('specialite') }}"
+                                        class="form-control form-control-sm @error('specialite') is-invalid @enderror"
+                                        id="specialite" placeholder="specialite">
+                                    @error('specialite')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Spécialité</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="fonction"
+                                        value="{{ $ingenieur->fonction ?? old('fonction') }}"
+                                        class="form-control form-control-sm @error('fonction') is-invalid @enderror"
+                                        id="fonction" placeholder="fonction">
+                                    @error('specialite')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Fonction<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="email" value="{{ $ingenieur->email ?? old('email') }}"
+                                        class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                        id="email" placeholder="email">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Email<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="telephone"
+                                        value="{{ $ingenieur->telephone ?? old('telephone') }}"
+                                        class="form-control form-control-sm @error('telephone') is-invalid @enderror"
+                                        id="telephone" placeholder="Telephone">
+                                    @error('telephone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Telephone<span class="text-danger mx-1">*</span></label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        <!-- End Edit ingenieur-->
     </section>
 
 @endsection
