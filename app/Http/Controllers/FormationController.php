@@ -224,6 +224,7 @@ class FormationController extends Controller
         $count_demandes = count($formation->individuelles);
 
         $individuelles = Individuelle::orderBy("created_at", "desc")->get();
+        $listecollectives = Listecollective::orderBy("created_at", "desc")->get();
 
         $collectivemodule = Collectivemodule::where('collectives_id', $formation->collectives_id)->get();
 
@@ -232,7 +233,7 @@ class FormationController extends Controller
             ->pluck('collectivemodules_id', 'collectivemodules_id')
             ->all();
 
-        return view('formations.' . $type_formation . "s.show", compact("formation", "count_demandes", "operateur", "module", "type_formation", "individuelles", "collectiveFormation", "ingenieur"));
+        return view('formations.' . $type_formation . "s.show", compact("formation", "count_demandes", "operateur", "module", "type_formation", "individuelles", "listecollectives", "collectiveFormation", "ingenieur"));
     }
 
     public function destroy($id)
@@ -861,13 +862,16 @@ class FormationController extends Controller
     public function updateMembresJury(Request $request)
     {
         $request->validate([
-            'membres_jury' => 'required',
+            'membres_jury'  => 'required',
             'string',
+            'date_pv'       => 'required',
+            'date',
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
         $formation->update([
             "membres_jury"    =>  $request->input('membres_jury'),
+            "date_pv"         =>  $request->input('date_pv'),
         ]);
 
         $formation->save();

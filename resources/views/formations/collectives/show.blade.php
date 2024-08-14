@@ -889,27 +889,27 @@
         </div>
     </div>
     {{-- Observations --}}
-    @foreach ($individuelles as $individuelle)
-        <div class="modal fade" id="EditDemandeurModal{{ $individuelle->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="EditDemandeurModalLabel{{ $individuelle->id }}" aria-hidden="true">
+    @foreach ($listecollectives as $listecollective)
+        <div class="modal fade" id="EditDemandeurModal{{ $listecollective->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="EditDemandeurModalLabel{{ $listecollective->id }}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form method="post" action="{{ route('listecollectives.updateObservationsCollective') }}"
                         enctype="multipart/form-data" class="row g-3">
                         @csrf
                         @method('patch')
-                        <div class="modal-header" id="EditDemandeurModalLabel{{ $individuelle->id }}">
+                        <div class="modal-header" id="EditDemandeurModalLabel{{ $listecollective->id }}">
                             <h5 class="modal-title">Ajouter un commentaire ou une observation</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" name="id" value="{{ $individuelle->id }}">
+                            <input type="hidden" name="id" value="{{ $listecollective->id }}">
                             <label for="floatingInput" class="mb-3">Observation<span
                                     class="text-danger mx-1">*</span></label>
                             <textarea name="observations" id="observations" cols="30" rows="5"
                                 class="form-control form-control-sm @error('observations') is-invalid @enderror" placeholder="Observations"
-                                autofocus>{{ $individuelle->observations ?? old('observations') }}</textarea>
+                                autofocus>{{ $listecollective->observations ?? old('observations') }}</textarea>
                             @error('observations')
                                 <span class="invalid-feedback" role="alert">
                                     <div>{{ $message }}</div>
@@ -928,7 +928,7 @@
     @endforeach
 
      {{-- Observations --}}
-     @foreach ($individuelles as $individuelle)
+     {{-- @foreach ($individuelles as $individuelle)
      <div class="modal fade" id="EditDemandeurModal{{ $individuelle->id }}" tabindex="-1" role="dialog"
          aria-labelledby="EditDemandeurModalLabel{{ $individuelle->id }}" aria-hidden="true">
          <div class="modal-dialog">
@@ -964,7 +964,7 @@
              </div>
          </div>
      </div>
- @endforeach
+ @endforeach --}}
  {{-- Agent de suivi --}}
  <div class="modal fade" id="EditAgentSuiviModal{{ $formation->id }}" tabindex="-1" role="dialog"
      aria-labelledby="EditAgentSuiviModalLabel{{ $formation->id }}" aria-hidden="true">
@@ -1031,6 +1031,17 @@
                  </div>
                  <div class="modal-body">
                      <input type="hidden" name="id" value="{{ $formation->id }}">
+                     <div class="form-floating mb-3">
+                         <input type="date" name="date_pv" value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
+                             class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
+                             id="date_pv" placeholder="date_pv">
+                         @error('date_pv')
+                             <span class="invalid-feedback" role="alert">
+                                 <div>{{ $message }}</div>
+                             </span>
+                         @enderror
+                         <label for="floatingInput">Date évaluation<span class="text-danger mx-1">*</span></label>
+                     </div>
 
                      <label for="membres_jury">Membres du jury</label>
                          

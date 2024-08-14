@@ -987,6 +987,18 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" value="{{ $formation->id }}">
+                            
+                            <div class="form-floating mb-3">
+                                <input type="date" name="date_pv" value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
+                                    class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
+                                    id="date_pv" placeholder="date_pv">
+                                @error('date_pv')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Date évaluation<span class="text-danger mx-1">*</span></label>
+                            </div>
 
                             <label for="membres_jury">Membres du jury</label>
 

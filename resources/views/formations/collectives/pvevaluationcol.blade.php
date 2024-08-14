@@ -226,14 +226,12 @@
             </tbody>
         </table>
         <h4 valign="top">
-            <b><u>SIGNATURE DES MEMBRES DU JURY</u>:<br><br></b>
+            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : <span style="float: right; font-style: italic">{{  $formation?->departement?->nom. ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span><br><br>
             <?php $i = 1; ?>
             @isset($membres_jury)
                 @foreach ($membres_jury as $item)
-                    @isset($item)
-                        {{ $item }} <br><br>
-                        {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
-                    @endisset
+                    {{ $item }} <br><br>
+                    {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
                 @endforeach
             @endisset
         </h4>
