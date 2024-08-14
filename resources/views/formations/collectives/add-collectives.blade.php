@@ -28,10 +28,10 @@
                                 </span>
                             </div>
                         </div>
-                        @isset($formation?->collective?->name)
-                            <h5><b><u>BENEFICIAIRES</u></b> : {{ $formation?->collective?->name }}
-                                @isset($formation?->collective?->name)
-                                    {{ '(' . $formation?->collective?->sigle . ')' }}
+                        @isset($formation?->collectivemodule?->collective?->name)
+                            <h5><b><u>BENEFICIAIRES</u></b> : {{ $formation?->collectivemodule?->collective?->name }}
+                                @isset($formation?->collectivemodule?->collective?->name)
+                                    {{ '(' . $formation?->collectivemodule?->collective?->sigle . ')' }}
                                 @endisset
                             </h5>
                             <h5><b><u>MODULE</u></b> :{{ $formation?->collectivemodule?->module }}</h5>

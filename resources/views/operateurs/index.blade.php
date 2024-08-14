@@ -195,9 +195,9 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="fixe" class="form-label">Téléphone fixe<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="fixe" value="{{ old('fixe') }}"
+                                        <input type="number" min="0" name="fixe" value="{{ old('fixe') }}"
                                             class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                            id="fixe" placeholder="Téléphone fixe">
+                                            id="fixe" placeholder="3xxxxxxxx">
                                         @error('fixe')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -208,9 +208,9 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone1" class="form-label">Téléphone<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone1" value="{{ old('telephone1') }}"
+                                        <input type="number" min="0" name="telephone1" value="{{ old('telephone1') }}"
                                             class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
-                                            id="telephone1" placeholder="Téléphone portable">
+                                            id="telephone1" placeholder="7xxxxxxxx">
                                         @error('telephone1')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -462,9 +462,9 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone2" class="form-label">Téléphone responsable<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="telephone2" value="{{ old('telephone2') }}"
+                                        <input type="number" min="0" name="telephone2" value="{{ old('telephone2') }}"
                                             class="form-control form-control-sm @error('telephone2') is-invalid @enderror"
-                                            id="telephone2" placeholder="Telephone responsable">
+                                            id="telephone2" placeholder="7xxxxxxxx">
                                         @error('telephone2')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -576,10 +576,10 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="fixe" class="form-label">Téléphone fixe<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="fixe"
+                                            <input type="number" min="0" name="fixe"
                                                 value="{{ $operateur->fixe ?? old('fixe') }}"
                                                 class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                                id="fixe" placeholder="Téléphone fixe">
+                                                id="fixe" placeholder="3xxxxxxxx">
                                             @error('fixe')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -590,10 +590,10 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="telephone1" class="form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="telephone1"
+                                            <input type="number" min="0" name="telephone1"
                                                 value="{{ $operateur->telephone1 ?? old('telephone1') }}"
                                                 class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
-                                                id="telephone1" placeholder="Téléphone portable">
+                                                id="telephone1" placeholder="7xxxxxxxx">
                                             @error('telephone1')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -859,10 +859,10 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="telephone2" class="form-label">Téléphone responsable<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="telephone2"
+                                            <input type="number" min="0" name="telephone2"
                                                 value="{{ $operateur?->telephone2 ?? old('telephone2') }}"
                                                 class="form-control form-control-sm @error('telephone2') is-invalid @enderror"
-                                                id="telephone2" placeholder="Telephone responsable">
+                                                id="telephone2" placeholder="7xxxxxxxx">
                                             @error('telephone2')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>

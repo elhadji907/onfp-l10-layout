@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $fonction_responsable
  * @property string|null $operateur_type
  * @property string|null $statut
+ * @property string|null $categorie
  * @property string|null $qualification
  * @property int|null $users_id
  * @property int|null $rccms_id

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Moduleoperateurstatut;
+use App\Models\Operateur;
 use App\Models\Operateurmodule;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -28,10 +29,14 @@ class OperateurmoduleController extends Controller
             'domaine'               => 'required|string',
             'niveau_qualification'  => 'required|string',
         ]);
-        
+
         $total_module = Operateurmodule::where('operateurs_id', $request->input('operateur'))->count();
-        
-        if ($total_module >= 10) {
+
+        $operateur = Operateur::findOrFail($request->input('operateur'));
+        if ($operateur->categorie == 'Privé' && $total_module >= 2) {
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
+            return redirect()->back();
+        } elseif ($total_module >= 10) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
             return redirect()->back();
         } else {
@@ -39,14 +44,14 @@ class OperateurmoduleController extends Controller
                 "module"                =>  $request->input("module"),
                 "domaine"               =>  $request->input("domaine"),
                 'niveau_qualification'  =>  $request->input('niveau_qualification'),
-                'statut'                =>  'attente',
+                'statut'                =>  'nouveau',
                 'operateurs_id'         =>  $request->input('operateur'),
             ]);
 
             $operateurmodule->save();
 
             $moduleoperateurstatut = new Moduleoperateurstatut([
-                'statut'                =>  "attente",
+                'statut'                =>  "nouveau",
                 'operateurmodules_id'   =>  $operateurmodule->id,
 
             ]);
@@ -89,7 +94,6 @@ class OperateurmoduleController extends Controller
         $operateurmodules   =   Operateurmodule::where('module', $modulename)->get();
 
         return view("operateurmodules.show", compact("operateurmodules", "modulename"));
-
     }
     public function destroy($id)
     {

@@ -57,6 +57,25 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
     <style>
+
+        .nouvelle {
+            background-color: #ff9966;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .nouveau {
+            background-color: #36e0e0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .rejeter {
             background-color: #DC3545;
             color: white;

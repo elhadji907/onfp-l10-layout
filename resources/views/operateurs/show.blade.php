@@ -206,28 +206,62 @@
                                         enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <h5 class="card-title">Ajouter nouveau module</h5>
                                             <table class="table table-bordered" id="dynamicAddRemove">
                                                 <tr>
-                                                    <th>Modules<span class="text-danger mx-1">*</span></th>
-                                                    <th>Niveau qualification<span class="text-danger mx-1">*</span></th>
-                                                    <th>Domaines<span class="text-danger mx-1">*</span></th>
+                                                    <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
+                                                    <th>QUALIFICATION CORRESPONDANTE
+                                                        <span class="text-danger mx-1">*</span>
+                                                    </th>
+                                                    <th>CATEGORIE PROFESSIONNELLE<span class="text-danger mx-1">*</span>
+                                                    </th>
                                                 </tr>
                                                 <tr>
                                                     <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                                                     <td>
                                                         <input type="text" name="module" id="module_name"
                                                             class="form-control form-control-sm"
-                                                            placeholder="Enter module" />
+                                                            placeholder="Module ou spécialité" />
                                                         <div id="countryList"></div>
                                                         {{ csrf_field() }}
+                                                        <p class="small fst-italic">
+                                                            <small>{{ __('Le nombre de modules est limité à deux') }}</small><br>
+                                                            <small>
+                                                                {{ __(' sauf pour les établissements publics ') }}</small>
+                                                        </p>
                                                     </td>
-                                                    <td><input type="text" name="niveau_qualification"
+                                                    <td>
+                                                        {{-- <input type="text" name="niveau_qualification"
                                                             placeholder="Entrer niveau qualification"
-                                                            class="form-control form-control-sm" /></td>
+                                                            class="form-control form-control-sm" /> --}}
+
+                                                        <select name="niveau_qualification"
+                                                            class="form-select form-select-sm @error('niveau_qualification') is-invalid @enderror"
+                                                            aria-label="Select" id="select-field-civilite"
+                                                            data-placeholder="Choisir qualification">
+                                                            <option value="">
+                                                                {{ old('niveau_qualification') }}
+                                                            </option>
+                                                            <option value="Initiation">
+                                                                Initiation
+                                                            </option>
+                                                            <option value="Pré-qualification">
+                                                                Pré-qualification
+                                                            </option>
+                                                            <option value="Qualification">
+                                                                Qualification
+                                                            </option>
+                                                        </select>
+                                                    </td>
                                                     <td><input type="text" name="domaine"
-                                                            placeholder="Entrer un domaine"
-                                                            class="form-control form-control-sm" /></td>
+                                                            placeholder="Catégorie professionnelle"
+                                                            class="form-control form-control-sm" />
+                                                        <p class="small fst-italic">
+                                                            <small>{{ __('Préciser la catégorie professionnelle,') }}</small><br>
+                                                            <small>
+                                                                {{ __("l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
+                                                            <small>{{ __("d'une pré-qualification ou qualification") }}</small>
+                                                        </p>
+                                                    </td>
                                                 </tr>
                                             </table>
                                             <div class="text-center">
@@ -239,7 +273,7 @@
                                     </form><!-- End module -->
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <h5 class="card-title">Modules</h5>
+                                        <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
                                         {{-- <form method="post" action="#" enctype="multipart/form-data"
                                             class="row g-3"> --}}
                                         <div class="row g-3">
@@ -249,10 +283,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">N°</th>
-                                                        <th scope="col">Module</th>
-                                                        <th scope="col">Niveau qualification</th>
-                                                        <th scope="col">Domaine</th>
-                                                        <th scope="col">Statut</th>
+                                                        <th scope="col">MODULE OU SPECIALITE</th>
+                                                        <th scope="col">QUALIFICATION CORRESPONDANTE</th>
+                                                        <th scope="col">CATEGORIE PROFESSIONNELLE</th>
+                                                        <th scope="col">STATUT</th>
                                                         <th class="col"><i class="bi bi-gear"></i></th>
                                                     </tr>
                                                 </thead>
@@ -295,6 +329,15 @@
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
                                                                             </button>
+                                                                            <form
+                                                                                action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"
+                                                                                    title="Supprimer">Supprimer</button>
+                                                                            </form>
                                                                         </ul>
                                                                     </div>
                                                                 </span>
