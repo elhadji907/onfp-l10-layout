@@ -86,7 +86,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Operateur extends Model
 {
-    use HasFactory;
+	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'operateurs';
@@ -101,7 +101,7 @@ class Operateur extends Model
 		'communes_id' => 'int',
 		'departements_id' => 'int',
 		'fin_quitus' => 'datetime',
-    	'debut_quitus' => 'datetime'
+		'debut_quitus' => 'datetime'
 	];
 
 	protected $dates = [
@@ -175,6 +175,26 @@ class Operateur extends Model
 	{
 		return $this->hasMany(Operateurmodule::class, 'operateurs_id')->latest();
 	}
+
+	public function operateurequipements()
+	{
+		return $this->hasMany(Operateurequipement::class, 'operateurs_id')->latest();
+	}
+
+	public function operateureferences()
+	{
+		return $this->hasMany(Operateureference::class, 'operateurs_id')->latest();
+	}
+
+	public function operateurformateurs()
+	{
+		return $this->hasMany(Operateurformateur::class, 'operateurs_id')->latest();
+	}
+
+	public function operateurzones()
+	{
+		return $this->hasMany(Operateurzone::class, 'operateurs_id')->latest();
+	}
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
@@ -233,22 +253,22 @@ class Operateur extends Model
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'modulesoperateurs', 'operateurs_id', 'modules_id')
-					->withPivot('id', 'moduleoperateurstatut_id', 'specialites', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'moduleoperateurstatut_id', 'specialites', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function niveauxes()
 	{
 		return $this->belongsToMany(Niveaux::class, 'operateursniveaux', 'operateurs_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function regions()
 	{
 		return $this->belongsToMany(Region::class, 'operateursregions', 'operateurs_id', 'regions_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function traitements()

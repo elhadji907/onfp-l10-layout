@@ -378,10 +378,10 @@
                                                     </td>
                                                     <td>{{ $formation?->name }}</td>
                                                     <td>{{ $formation->departement?->region?->nom }}</td>
-                                                    <td>{{ $formation->module?->name }}</td>
+                                                    <td>{{ $formation->collectivemodule->module }}</td>
                                                     {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
                                                     <td class="text-center">
-                                                        @foreach ($formation->individuelles as $individuelle)
+                                                        @foreach ($formation->listecollectives as $listecollective)
                                                             @if ($loop->last)
                                                                 <a class="text-primary fw-bold"
                                                                     href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>

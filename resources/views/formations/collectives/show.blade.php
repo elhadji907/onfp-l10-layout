@@ -383,15 +383,15 @@
                                                 <thead>
                                                     <tr>
                                                         <th>N°</th>
-                                                        <th scope="col">CIN</th>
-                                                        <th scope="col">Civilité</th>
-                                                        <th scope="col">Prénom</th>
-                                                        <th scope="col">Nom</th>
-                                                        <th scope="col">Date naissance</th>
-                                                        <th scope="col">Lieu naissance</th>
-                                                        <th scope="col">Niveau étude</th>
-                                                        <th scope="col">Module</th>
-                                                        <th scope="col">Statut</th>
+                                                        <th style="text-align: center;">CIN</th>
+                                                        <th style="text-align: center;">Civilité</th>
+                                                        <th style="text-align: center;">Prénom</th>
+                                                        <th style="text-align: center;">Nom</th>
+                                                        <th style="text-align: center;">Date naissance</th>
+                                                        <th style="text-align: center;">Lieu naissance</th>
+                                                        <th style="text-align: center;">Niveau étude</th>
+                                                        <th style="text-align: center;">Note</th>
+                                                        <th style="text-align: center;">Appréciation</th>
                                                         <th class="col"><i class="bi bi-gear"></i></th>
                                                     </tr>
                                                 </thead>
@@ -399,21 +399,18 @@
                                                     <?php $i = 1; ?>
                                                     @foreach ($formation->listecollectives as $listecollective)
                                                         <tr>
-                                                            <td>{{ $i++ }}</td>
-                                                            <td>{{ $listecollective?->cin }}</td>
-                                                            <td>{{ $listecollective?->civilite }}</td>
-                                                            <td>{{ $listecollective?->prenom }}</td>
-                                                            <td>{{ $listecollective?->nom }}</td>
-                                                            <td>{{ $listecollective?->date_naissance->format('d/m/Y') }}
+                                                            <td style="text-align: center;">{{ $i++ }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->cin }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->civilite }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->prenom }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->nom }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->date_naissance->format('d/m/Y') }}
                                                             </td>
-                                                            <td>{{ $listecollective?->lieu_naissance }}</td>
-                                                            <td>{{ $listecollective?->niveau_etude }}</td>
-                                                            <td>{{ $listecollective?->collectivemodule?->module }}</td>
-                                                            <td>
-                                                                <span
-                                                                    class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
-                                                            </td>
-                                                            <td>
+                                                            <td style="text-align: center;">{{ $listecollective?->lieu_naissance }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->niveau_etude }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->note_obtenue }}</td>
+                                                            <td style="text-align: center;">{{ $listecollective?->appreciation }}</td>
+                                                            <td style="text-align: center;">
                                                                 <span class="d-flex align-items-baseline">
                                                                     <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
                                                                         class="btn btn-primary btn-sm"
@@ -459,7 +456,7 @@
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @if (isset($formation?->collectivemodule))
                                             <h1 class="card-title">
-                                                Modules
+                                                Module
                                             </h1>
                                             <form method="post"
                                                 action="{{ url('moduleformationcollectives', ['$idformation' => $formation->id]) }}"
@@ -480,12 +477,12 @@
                                                                 <tr>
                                                                     <td>{{ $formation?->collectivemodule?->module }}</td>
                                                                     <td>
-                                                                        @foreach ($formation?->collectivemodule->listecollectives as $listecollective)
-                                                                            @if ($loop->last)
+                                                                        {{-- @foreach ($formation?->collectivemodule->listecollectives as $listecollective)
+                                                                            @if ($loop->last) --}}
                                                                                 <a href="#"><span
-                                                                                        class="badge bg-info">{{ $loop->count }}</span></a>
-                                                                            @endif
-                                                                        @endforeach
+                                                                                        class="badge bg-info">{{ count($formation?->collectivemodule->listecollectives) }}</span></a>
+                                                                          {{--   @endif
+                                                                        @endforeach --}}
                                                                     </td>
                                                                     <td>
                                                                         <span
@@ -577,75 +574,88 @@
                                             <h1 class="card-title">
                                                 Liste des formations
                                                 @if (isset($ingenieur))
-                                                    en {{ $ingenieur?->name }}
+                                                    de {{ $ingenieur?->name }}
                                                 @endif
                                             </h1>
                                             <div class="row g-3">
                                                 <table class="table datatables" id="table-formations">
                                                     <thead>
                                                         <tr>
-                                                        <tr>
-                                                            <th class="text-center" scope="col">N°</th>
-                                                            <th>Matricule</th>
-                                                            <th>Name</th>
-                                                            <th>Sigle</th>
-                                                            <th>Spécialité</th>
-                                                            <th>Email</th>
-                                                            <th>Téléphone</th>
-                                                            <th class="text-center" scope="col">#</th>
-                                                        </tr>
+                                                            <th>Code</th>
+                                                            <th>Type</th>
+                                                            <th>Intitulé formation</th>
+                                                            <th>Localité</th>
+                                                            <th>Modules</th>
+                                                            {{-- <th>Niveau qualification</th> --}}
+                                                            {{-- <th>Effectif</th> --}}
+                                                            <th class="text-center">Statut</th>
+                                                            <th>#</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <?php $i = 1; ?>
                                                         @foreach ($ingenieur?->formations as $formation)
-                                                            <tr>
-                                                                <td style="text-align: center;">{{ $i++ }}</td>
-                                                                <td>{{ $ingenieur->matricule }}</td>
-                                                                <td>{{ $ingenieur->name }}</td>
-                                                                <td>{{ $ingenieur->sigle }}</td>
-                                                                <td>{{ $ingenieur->specialite }}</td>
-                                                                <td>{{ $ingenieur->email }}</td>
-                                                                <td>{{ $ingenieur->telephone }}</td>
-
-                                                                <td style="text-align: center;">
-                                                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                                                            href="{{ route('ingenieurs.show', $ingenieur->id) }}"
-                                                                            class="btn btn-warning btn-sm mx-1"
-                                                                            title="Voir détails">
-                                                                            <i class="bi bi-eye"></i></a>
-                                                                        <div class="filter">
-                                                                            <a class="icon" href="#"
-                                                                                data-bs-toggle="dropdown"><i
-                                                                                    class="bi bi-three-dots"></i></a>
-                                                                            <ul
-                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                <li>
-                                                                                    <button type="button"
-                                                                                        class="dropdown-item btn btn-sm mx-1"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
-                                                                                        <i class="bi bi-pencil"
-                                                                                            title="Modifier"></i> Modifier
-                                                                                    </button>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <form
-                                                                                        action="{{ url('ingenieurs', $ingenieur->id) }}"
-                                                                                        method="post">
-                                                                                        @csrf
-                                                                                        @method('DELETE')
-                                                                                        <button type="submit"
-                                                                                            class="dropdown-item show_confirm"><i
-                                                                                                class="bi bi-trash"></i>Supprimer</button>
-                                                                                    </form>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </span>
-                                                                </td>
-
-                                                            </tr>
+                                                        <tr>
+                                                            <td>{{ $formation?->code }}</td>
+                                                            <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
+                                                            <td>{{ $formation?->name }}</td>
+                                                            <td>{{ $formation->departement?->region?->nom }}</td>
+                                                            <td>
+                                                                @isset($formation?->module?->name)
+                                                                    {{ $formation?->module?->name }}
+                                                                @endisset
+                                                                @isset($formation?->collectivemodule?->module)
+                                                                    {{ $formation?->collectivemodule?->module }}
+                                                                @endisset
+                                                            </td>
+                                                            {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
+                                                            {{--   <td class="text-center">
+                                                                @foreach ($formation->individuelles as $individuelle)
+                                                                    @if ($loop->last)
+                                                                        <a class="text-primary fw-bold"
+                                                                            href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                                    @endif
+                                                                @endforeach
+                                                            </td> --}}
+                                                            <td class="text-center"><a href="#"><span
+                                                                        class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
+                                                            </td>
+                                                            <td>
+                                                                <span class="d-flex align-items-baseline"><a
+                                                                        href="{{ route('formations.show', $formation->id) }}"
+                                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                            class="bi bi-eye"></i></a>
+                                                                    <div class="filter">
+                                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                                class="bi bi-three-dots"></i></a>
+                                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                            <li>
+                                                                                <a class="dropdown-item btn btn-sm"
+                                                                                    href="{{ route('formations.edit', $formation->id) }}"
+                                                                                    class="mx-1" title="Modifier"><i
+                                                                                        class="bi bi-pencil"></i>Modifier</a>
+                                                                                {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#EditFormationModal{{ $formation->id }}">
+                                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                                                </button> --}}
+                                                                            </li>
+                                                                            <li>
+                                                                                <form
+                                                                                    action="{{ route('formations.destroy', $formation->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit" class="dropdown-item show_confirm"
+                                                                                        title="Supprimer"><i
+                                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                                </form>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
@@ -728,8 +738,8 @@
                                                                 {{-- <td>{{ $individuelle?->numero }}</td> --}}
                                                                 <td>{{ $listecollective->civilite}}</td>
                                                                 <td>{{ $listecollective?->cin }}</td>
-                                                                <td>{{ $listecollective?->firstname }}</td>
-                                                                <td>{{ $listecollective?->name }}</td>
+                                                                <td>{{ $listecollective?->prenom }}</td>
+                                                                <td>{{ $listecollective?->nom }}</td>
                                                                 <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}
                                                                 </td>
                                                                 <td>{{ $listecollective?->lieu_naissance }}</td>
