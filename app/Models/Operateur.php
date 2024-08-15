@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $statut_agrement
  * @property string|null $statut
  * @property string|null $categorie
- * @property string|null $qualification
+ * @property string|null $motif
  * @property int|null $users_id
  * @property int|null $rccms_id
  * @property int|null $nineas_id
@@ -151,7 +151,7 @@ class Operateur extends Model
 		'autre_statut',
 		'web',
 		'categorie',
-		'qualification',
+		'motif',
 		'users_id',
 		'rccms_id',
 		'nineas_id',

@@ -460,14 +460,33 @@
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
-                                            <form action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
-                                                method="post">
-                                                @csrf
-                                                @method('PUT')
-                                                <button
-                                                    class="show_confirm_valider btn btn-outline-info text-white btn-info btn-sm mx-1"><i
-                                                        class="bi bi-check2-circle" title="AValider"></i>&nbsp;Valider</button>
-                                            </form>
+                                            <span class="card-title d-flex align-items-baseline">Statut formation
+                                                :&nbsp;
+                                                <span class="{{ $operateur->statut_agrement }} text-white">
+                                                    {{ $operateur?->statut_agrement }}</span>
+                                                <div class="filter">
+                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                            class="bi bi-three-dots"></i></a>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                        <form
+                                                            action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button class="show_confirm_valider btn btn-sm mx-1"><i
+                                                                    class="bi bi-check2-circle"
+                                                                    title="Valider"></i>&nbsp;Valider</button>
+                                                        </form>
+                                                        @isset($operateur->motif)
+                                                            <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                data-bs-target="#RejetDemandeModal"><i
+                                                                    class="bi bi-chat-square-text"
+                                                                    title="Justification"></i>&nbsp;Motif
+                                                            </button>
+                                                        @endisset
+                                                    </ul>
+                                                </div>
+                                            </span>
                                         </div>
                                         {{-- <form method="post" action="#" enctype="multipart/form-data"
                                             class="row g-3"> --}}

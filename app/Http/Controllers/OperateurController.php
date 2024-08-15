@@ -211,16 +211,22 @@ class OperateurController extends Controller
         $operateur = Operateur::findOrFail($id);
         $count_agreer = $operateur->operateurmodules->where('statut', 'agréer')->count();
         $count_rejeter = $operateur->operateurmodules->where('statut', 'rejeter')->count();
+        $count_nouveau = $operateur->operateurmodules->where('statut', 'nouveau')->count();
 
         if ($count_agreer > 0) {
             $operateur->update([
                 'statut_agrement'    => 'agréer',
+                'motif'              => null,
                 'date'               =>  date('Y-m-d'),
             ]);
             Alert::success("Effectué !", "l'opérateur " . $operateur->sigle . ' a été agréé');
+        } elseif ($count_nouveau > 0) {
+            Alert::warning('Désolez ! ', 'il reste des module à traiter');
+            return redirect()->back();
         } elseif ($count_rejeter > 0) {
             $operateur->update([
                 'statut_agrement'    => 'rejeter',
+                'motif'              => 'rejeter',
                 'date'               =>  date('Y-m-d'),
             ]);
             Alert::warning("Dommage !", "l'opérateur " . $operateur->sigle . " n'a pas été agréé");
