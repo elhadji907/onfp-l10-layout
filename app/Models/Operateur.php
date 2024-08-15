@@ -44,7 +44,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $telephone_responsable
  * @property string|null $email_responsable
  * @property string|null $fonction_responsable
- * @property string|null $operateur_type
+ * @property string|null $statut_agrement
  * @property string|null $statut
  * @property string|null $categorie
  * @property string|null $qualification
@@ -75,6 +75,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property TypesOperateur|null $types_operateur
  * @property User|null $user
  * @property Collection|Agrement[] $agrements
+ * @property Collection|Operateurmodule[] $operateurmodules
  * @property Collection|Commentere[] $commenteres
  * @property Collection|Formation[] $formations
  * @property Collection|Module[] $modules
@@ -145,7 +146,7 @@ class Operateur extends Model
 		'telephone_responsable',
 		'email_responsable',
 		'fonction_responsable',
-		'operateur_type',
+		'statut_agrement',
 		'statut',
 		'autre_statut',
 		'web',

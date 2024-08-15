@@ -53,7 +53,7 @@ class CreateOperateursTable extends Migration
             $table->string('telephone_responsable', 45)->nullable();
             $table->string('email_responsable', 45)->nullable();
             $table->string('fonction_responsable', 200)->nullable();
-            $table->string('operateur_type', 200)->nullable();
+            $table->string('statut_agrement', 200)->nullable();
             $table->string('statut', 200)->nullable();
             $table->string('autre_statut', 200)->nullable();
             $table->string('web', 200)->nullable();

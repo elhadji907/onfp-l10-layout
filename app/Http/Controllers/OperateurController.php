@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Departement;
 use App\Models\Operateur;
+use App\Models\Operateureference;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +78,7 @@ class OperateurController extends Controller
             "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
             "quitus"               =>       $request->input("quitus"),
             "debut_quitus"         =>       $request->input("date_quitus"),
+            "statut_agrement"      =>       'nouveau',
             "civilite_responsable" =>       $request->input("civilite"),
             "prenom_responsable"   =>       $request->input("prenom"),
             "nom_responsable"      =>       $request->input("nom"),
@@ -168,7 +170,8 @@ class OperateurController extends Controller
     public function show($id)
     {
         $operateur = Operateur::findOrFail($id);
-        return view("operateurs.show", compact("operateur"));
+        $operateureferences = Operateureference::get();
+        return view("operateurs.show", compact("operateur", "operateureferences"));
     }
 
     public function destroy($id)
@@ -181,21 +184,53 @@ class OperateurController extends Controller
     }
     function fetch(Request $request)
     {
-        if($request->get('query'))
-        {
+        if ($request->get('query')) {
             $query = $request->get('query');
             $data = DB::table('modules')
                 ->where('name', 'LIKE', "%{$query}%")
                 ->get();
             $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
-            foreach($data as $row)
-            {
+            foreach ($data as $row) {
                 $output .= '
-                <li><a class="dropdown-item" href="#">'.$row->name.'</a></li>
+                <li><a class="dropdown-item" href="#">' . $row->name . '</a></li>
                 ';
             }
             $output .= '</ul>';
             echo $output;
         }
+    }
+    public function showOperateur($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $operateureferences = Operateureference::get();
+
+        return view('operateureferences.show', compact('operateur', 'operateureferences'));
+    }
+    public function validateOperateur($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $count_agreer = $operateur->operateurmodules->where('statut', 'agréer')->count();
+        $count_rejeter = $operateur->operateurmodules->where('statut', 'rejeter')->count();
+
+        if ($count_agreer > 0) {
+            $operateur->update([
+                'statut_agrement'    => 'agréer',
+                'date'               =>  date('Y-m-d'),
+            ]);
+            Alert::success("Effectué !", "l'opérateur " . $operateur->sigle . ' a été agréé');
+        } elseif ($count_rejeter > 0) {
+            $operateur->update([
+                'statut_agrement'    => 'rejeter',
+                'date'               =>  date('Y-m-d'),
+            ]);
+            Alert::warning("Dommage !", "l'opérateur " . $operateur->sigle . " n'a pas été agréé");
+        } else {
+            Alert::warning('Désolez ! ', 'action impossible');
+            return redirect()->back();
+        }
+
+        $operateur->save();
+
+        return redirect()->back();
     }
 }

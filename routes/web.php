@@ -29,6 +29,7 @@ use App\Http\Controllers\LoiController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NomminationController;
 use App\Http\Controllers\OperateurController;
+use App\Http\Controllers\OperateureferenceController;
 use App\Http\Controllers\OperateurmoduleController;
 use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
@@ -230,6 +231,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/addProjet', [ProjetController::class, 'addProjet'])->name('addProjet');
     
     Route::get('/showLocalites/{id}', [ProjetlocaliteController::class, 'showLocalites'])->name('showLocalites');
+    
+    Route::get('/showOperateur/{id}', [OperateurController::class, 'showOperateur'])->name('showOperateur');
+    
+    Route::put('/validateOperateur/{id}', [OperateurController::class, 'validateOperateur'])->name('validateOperateur');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
@@ -276,6 +281,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/ingenieurs', IngenieurController::class);
     Route::resource('/projets', ProjetController::class);
     Route::resource('/projetlocalites', ProjetlocaliteController::class);
+    Route::resource('/operateureferences', OperateureferenceController::class);
 });
 
 

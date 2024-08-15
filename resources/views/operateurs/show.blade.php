@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Operateurs')
+@section('title', $operateur->sigle)
 @section('space-work')
 
     <section
@@ -48,19 +48,29 @@
                                     </span>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview"><i
-                                            class="bi bi-eye"></i> Opérateur</button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#responsable-overview"><i
-                                            class="bi bi-person"></i> Représentant</button>
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#profile-overview">Opérateur</button>
                                 </li>
 
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
-                                        data-bs-target="#module-overview">Modules
+                                        data-bs-target="#module-overview">Module
                                     </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#references-overview">Références</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#equipement-overview">Equipements</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#formateur-overview">Formateurs</button>
                                 </li>
 
                                 <li class="nav-item">
@@ -70,20 +80,11 @@
 
                             </ul>
                             <div class="d-flex justify-content-between align-items-center">
-                                {{-- <span class="d-flex align-items-baseline"><a
-                                    href="{{ route('operateurs.index', $operateur->id) }}" class="btn btn-secondary btn-sm"
-                                    title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Retour</p>
-                            </span> --}}
-                                {{-- <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddOperateurModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
-                            </button> --}}
                             </div>
                             {{-- Détail opérateur --}}
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade profile-overview pt-3" id="profile-overview">
-                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                    <form method="post" action="#" enctype="multipart/form-data" class="row">
                                         @csrf
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
@@ -158,13 +159,7 @@
                                             <div>{{ $operateur?->debut_quitus?->diffForHumans() }}</div>
                                         </div>
                                     </form>
-
-                                </div>
-                            </div>
-                            {{-- Détail représentant --}}
-                            <div class="tab-content pt-2">
-                                <div class="tab-pane fade profile-overview pt-3" id="responsable-overview">
-                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                    <form method="post" action="#" enctype="multipart/form-data" class="row">
                                         @csrf
                                         @method('PUT')
                                         <h5 class="card-title">Personne morale</h5>
@@ -195,6 +190,196 @@
                                             <div class="label">Fonction responsable</div>
                                             <div>{{ $operateur->fonction_responsable }}</div>
                                         </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {{-- Détail représentant --}}
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade profile-overview pt-3" id="references-overview">
+                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
+                                            <h5 class="card-title">
+                                                <a href="{{ route('showOperateur', ['id' => $operateur->id]) }}"
+                                                    class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                    target="_blank">
+                                                    <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
+                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
+                                                </button> --}}
+                                            </h5>
+                                        </div>
+
+                                        <table
+                                            class="table datatables align-middle justify-content-center table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">DENOMINATION L'ORGANISME</th>
+                                                    <th scope="col">CONTACTS</th>
+                                                    <th scope="col">PERIODES D'INTERVENTION</th>
+                                                    <th scope="col">DESCRIPTION DES INTERVENTIONS</th>
+                                                    {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($operateur->operateureferences as $operateureference)
+                                                    <tr>
+                                                        <td>{{ $operateureference?->organisme }}</td>
+                                                        <td>{{ $operateureference?->contact }}</td>
+                                                        <td>{{ $operateureference?->periode }}</td>
+                                                        <td>{{ $operateureference?->description }}</td>
+                                                        {{-- <td style="text-align: center;">
+                                                            <span class="d-flex mt-2 align-items-baseline"><a
+                                                                    href="#"
+                                                                    class="btn btn-warning btn-sm mx-1"
+                                                                    title="Voir détails">
+                                                                    <i class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <li>
+                                                                            <button type="button"
+                                                                                class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditoperateureferenceModal{{ $operateureference->id }}">
+                                                                                <i class="bi bi-pencil"
+                                                                                    title="Modifier"></i> Modifier
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        </td> --}}
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade profile-overview pt-3" id="equipement-overview">
+                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                        @csrf
+                                        @method('PUT')
+                                        <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
+                                        <table
+                                            class="table datatables align-middle justify-content-center table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">DESIGNATION</th>
+                                                    <th scope="col">QUANTITE</th>
+                                                    <th scope="col">ETAT</th>
+                                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($operateur->operateurequipements as $operateurequipement)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span class="d-flex align-items-baseline">
+                                                                <a href="{{ route('operateurequipements.show', $operateurequipement->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                        class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <button class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditoperateurequipementModal{{ $operateurequipement->id }}">Modifier
+                                                                        </button>
+                                                                        <form
+                                                                            action="{{ route('operateurequipements.destroy', $operateurequipement->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"
+                                                                                title="Supprimer">Supprimer</button>
+                                                                        </form>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade profile-overview pt-3" id="formateur-overview">
+                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                        @csrf
+                                        @method('PUT')
+                                        <h5 class="card-title">FORMATEURS</h5>
+                                        <table
+                                            class="table datatables align-middle justify-content-center table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">PRENOM(S) ET NOM</th>
+                                                    <th scope="col">CHAMPS PROFESSIONNELS</th>
+                                                    <th scope="col">NOMBRE D'ANNEES D'EXPERIENCE</th>
+                                                    <th scope="col">REFERENCES</th>
+                                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($operateur->operateurformateurs as $operateurformateur)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span class="d-flex align-items-baseline">
+                                                                <a href="{{ route('operateurformateurs.show', $operateurformateur->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                        class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <button class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditoperateurformateurModal{{ $operateurformateur->id }}">Modifier
+                                                                        </button>
+                                                                        <form
+                                                                            action="{{ route('operateurformateurs.destroy', $operateurformateur->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"
+                                                                                title="Supprimer">Supprimer</button>
+                                                                        </form>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </form>
                                 </div>
                             </div>
@@ -273,7 +458,17 @@
                                     </form><!-- End module -->
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
+                                            <form action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <button
+                                                    class="show_confirm_valider btn btn-outline-info text-white btn-info btn-sm mx-1"><i
+                                                        class="bi bi-check2-circle" title="AValider"></i>&nbsp;Valider</button>
+                                            </form>
+                                        </div>
                                         {{-- <form method="post" action="#" enctype="multipart/form-data"
                                             class="row g-3"> --}}
                                         <div class="row g-3">
@@ -579,6 +774,153 @@
                 </div>
             </div>
         @endforeach
+
+        <!-- Add References -->
+        {{-- <div class="modal fade" id="AddRefModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="post" action="{{ url('operateureferences') }}" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <input type="hidden" name="operateur" value="{{ $operateur->id }}">
+                        <div class="modal-body">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="organisme" value="{{ old('organisme') }}"
+                                    class="form-control form-control-sm @error('organisme') is-invalid @enderror"
+                                    id="organisme" placeholder="Dénomination de l'organisme" autofocus>
+                                @error('organisme')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Dénomination de l'organisme<span
+                                        class="text-danger mx-1">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="number" min="0" name="contact" value="{{ old('contact') }}"
+                                    class="form-control form-control-sm @error('contact') is-invalid @enderror"
+                                    id="contact" placeholder="Contact">
+                                @error('contact')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="periode" value="{{ old('periode') }}"
+                                    class="form-control form-control-sm @error('periode') is-invalid @enderror"
+                                    id="periode" placeholder="Période">
+                                @error('periode')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea name="description" id="description" cols="30" rows="5"
+                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                    placeholder="Ajouter les membres du jury">{{ old('description') }}</textarea>
+                                @error('description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> --}}
+        <!-- End Add References-->
+        <!-- Edit References -->
+        {{-- @foreach ($operateureferences as $operateureference)
+            <div class="modal fade" id="EditoperateureferenceModal{{ $operateureference->id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post" action="{{ route('operateureferences.update', $operateureference->id) }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
+                            <div class="modal-header">
+                                <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <input type="hidden" name="operateur" value="{{ $operateur->id }}">
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="organisme"
+                                        value="{{ $operateureference->organisme ?? old('organisme') }}"
+                                        class="form-control form-control-sm @error('organisme') is-invalid @enderror"
+                                        id="organisme" placeholder="Dénomination de l'organisme" autofocus>
+                                    @error('organisme')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Dénomination de l'organisme<span
+                                            class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" min="0" name="contact"
+                                        value="{{ $operateureference->contact ?? old('contact') }}"
+                                        class="form-control form-control-sm @error('contact') is-invalid @enderror"
+                                        id="contact" placeholder="Contact">
+                                    @error('contact')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="periode"
+                                        value="{{ $operateureference->periode ?? old('periode') }}"
+                                        class="form-control form-control-sm @error('periode') is-invalid @enderror"
+                                        id="periode" placeholder="Période">
+                                    @error('periode')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <textarea name="description" id="description" cols="30" rows="5"
+                                        class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                        placeholder="Ajouter les membres du jury">{{ $operateureference->description ?? old('description') }}</textarea>
+                                    @error('description')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach --}}
+        <!-- End Edit References-->
     </section>
 
 @endsection

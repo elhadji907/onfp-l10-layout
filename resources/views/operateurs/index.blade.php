@@ -52,6 +52,7 @@
                                     <th>Sigle</th>
                                     <th class="text-center">Modules</th>
                                     <th class="text-center">Formations</th>
+                                    <th class="text-center">Statut</th>
                                     <th><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
@@ -66,16 +67,21 @@
                                             <td style="text-align: center;">
                                                 @foreach ($operateur->operateurmodules as $operateurmodule)
                                                     @if ($loop->last)
-                                                        <a href="#"><span class="badge bg-info">{{ $loop->count }}</span></a>
+                                                        <a href="#"><span
+                                                                class="badge bg-info">{{ $loop->count }}</span></a>
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td class="text-center">
                                                 @foreach ($operateur->formations as $formation)
                                                     @if ($loop->last)
-                                                        <a href="#"><span class="badge bg-info">{{ $loop->count }}</span></a>
+                                                        <a href="#"><span
+                                                                class="badge bg-info">{{ $loop->count }}</span></a>
                                                     @endif
-                                                @endforeach</td>
+                                                @endforeach
+                                            </td>
+                                            <td><span class="{{ $operateur->statut_agrement }}">
+                                                    {{ $operateur?->statut_agrement }}</span></td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
                                                         href="{{ route('operateurs.show', $operateur->id) }}"
@@ -208,7 +214,8 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone1" class="form-label">Téléphone<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="telephone1" value="{{ old('telephone1') }}"
+                                        <input type="number" min="0" name="telephone1"
+                                            value="{{ old('telephone1') }}"
                                             class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
                                             id="telephone1" placeholder="7xxxxxxxx">
                                         @error('telephone1')
@@ -462,7 +469,8 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone2" class="form-label">Téléphone responsable<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="telephone2" value="{{ old('telephone2') }}"
+                                        <input type="number" min="0" name="telephone2"
+                                            value="{{ old('telephone2') }}"
                                             class="form-control form-control-sm @error('telephone2') is-invalid @enderror"
                                             id="telephone2" placeholder="7xxxxxxxx">
                                         @error('telephone2')
