@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('etat')->nullable();
             $table->longText('details')->nullable();
             $table->string('statut')->nullable();
+            $table->string('type')->nullable();
             $table->unsignedInteger('operateurs_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();

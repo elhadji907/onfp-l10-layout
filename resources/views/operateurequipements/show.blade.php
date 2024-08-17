@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', $operateur->sigle . ' - références et expériences professionnelles')
+@section('title', $operateur->sigle . ' - infrastructures et équipements')
 @section('space-work')
 
     <section class="section register">
@@ -11,7 +11,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                             <li class="breadcrumb-item">Tables</li>
-                            <li class="breadcrumb-item active">Références</li>
+                            <li class="breadcrumb-item active">Equipements</li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
+                            <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
                             <h5 class="card-title">
                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#AddRefModal">
@@ -50,21 +50,23 @@
                         <table class="table datatables align-middle justify-content-center table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">DENOMINATION L'ORGANISME</th>
-                                    <th scope="col">CONTACTS</th>
-                                    <th scope="col">PERIODES D'INTERVENTION</th>
-                                    <th scope="col">DESCRIPTION DES INTERVENTIONS</th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">DESIGNATION</th>
+                                    <th scope="col">QUANTITE</th>
+                                    <th scope="col">ETAT</th>
+                                    <th scope="col">TYPE</th>
                                     <th class="col"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($operateur->operateureferences as $operateureference)
+                                @foreach ($operateur->operateurequipements as $operateurequipement)
                                     <tr>
-                                        <td>{{ $operateureference?->organisme }}</td>
-                                        <td>{{ $operateureference?->contact }}</td>
-                                        <td>{{ $operateureference?->periode }}</td>
-                                        <td>{{ $operateureference?->description }}</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $operateurequipement->designation }}</td>
+                                        <td>{{ $operateurequipement->quantite }}</td>
+                                        <td>{{ $operateurequipement->etat }}</td>
+                                        <td>{{ $operateurequipement->type }}</td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a href=""
                                                     class="btn btn-outline-info btn-sm mx-1" title="Voir détails">
@@ -76,13 +78,13 @@
                                                         <li>
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#EditoperateureferenceModal{{ $operateureference->id }}">
+                                                                data-bs-target="#EditoperateurequipementModal{{ $operateurequipement->id }}">
                                                                 <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                             </button>
                                                         </li>
                                                         <li>
                                                             <form
-                                                                action="{{ route('operateureferences.destroy', $operateureference->id) }}"
+                                                                action="{{ route('operateurequipements.destroy', $operateurequipement->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -109,63 +111,86 @@
         <div class="modal fade" id="AddRefModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="post" action="{{ route('operateureferences.store') }}" enctype="multipart/form-data"
+                    <form method="post" action="{{ route('operateurequipements.store') }}" enctype="multipart/form-data"
                         class="row g-3">
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
+                            <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                         <div class="modal-body">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="organisme" value="{{ old('organisme') }}"
-                                    class="form-control form-control-sm @error('organisme') is-invalid @enderror"
-                                    id="organisme" placeholder="Dénomination de l'organisme" autofocus>
-                                @error('organisme')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Dénomination de l'organisme<span
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="designation" class="form-label">Désignation<span
                                         class="text-danger mx-1">*</span></label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="number" min="0" name="contact" value="{{ old('contact') }}"
-                                    class="form-control form-control-sm @error('contact') is-invalid @enderror"
-                                    id="contact" placeholder="Contact">
-                                @error('contact')
+                                <input type="text" name="designation" value="{{ old('designation') }}"
+                                    class="form-control form-control-sm @error('designation') is-invalid @enderror"
+                                    placeholder="Désignation">
+                                @error('designation')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" name="periode" value="{{ old('periode') }}"
-                                    class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                                    id="periode" placeholder="Période">
-                                @error('periode')
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="quantite" class="form-label">Quantité<span
+                                        class="text-danger mx-1">*</span></label>
+                                <input type="number" min="0" name="quantite" value="{{ old('quantite') }}"
+                                    class="form-control form-control-sm @error('quantite') is-invalid @enderror"
+                                    placeholder="Quantité">
+                                @error('quantite')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <textarea name="description" id="description" cols="30" rows="5"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    placeholder="Ajouter les membres du jury">{{ old('description') }}</textarea>
 
-                                {{-- <input type="text" name="description" value="{{ old('description') }}"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    id="description" placeholder="Description"> --}}
-                                @error('description')
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="etat" class="form-label">Etat<span
+                                        class="text-danger mx-1">*</span></label>
+                                <select name="etat" class="form-select selectpicker"
+                                    data-live-search="true @error('etat') is-invalid @enderror" aria-label="Select"
+                                    id="select-field-etat-add" data-placeholder="Choisir etat">
+                                    <option value="">
+                                        {{ old('etat') }}
+                                    </option>
+                                    <option value="Neuf(ve)">
+                                        Neuf(ve)
+                                    </option>
+                                    <option value="Bon etat">
+                                        Bon etat
+                                    </option>
+                                    <option value="Usé(e)">
+                                        Usé(e)
+                                    </option>
+                                </select>
+                                @error('etat')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="type" class="form-label">Type<span
+                                        class="text-danger mx-1">*</span></label>
+                                <select name="type" class="form-select selectpicker"
+                                    data-live-search="true @error('type') is-invalid @enderror" aria-label="Select"
+                                    id="select-field-type-add" data-placeholder="Choisir type">
+                                    <option value="">
+                                        {{ old('type') }}
+                                    </option>
+                                    <option value="Infrastructure">
+                                        Infrastructure
+                                    </option>
+                                    <option value="Equipement">
+                                        Equipement
+                                    </option>
+                                </select>
+                                @error('type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -179,11 +204,11 @@
         </div>
         <!-- End Add References-->
         <!-- Edit References -->
-        @foreach ($operateureferences as $operateureference)
-            <div class="modal fade" id="EditoperateureferenceModal{{ $operateureference->id }}" tabindex="-1">
+        @foreach ($operateurequipements as $operateurequipement)
+            <div class="modal fade" id="EditoperateurequipementModal{{ $operateurequipement->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('operateureferences.update', $operateureference->id) }}"
+                        <form method="post" action="{{ route('operateurequipements.update', $operateurequipement->id) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
@@ -194,57 +219,77 @@
                             </div>
                             <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                             <div class="modal-body">
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="organisme"
-                                        value="{{ $operateureference->organisme ?? old('organisme') }}"
-                                        class="form-control form-control-sm @error('organisme') is-invalid @enderror"
-                                        id="organisme" placeholder="Dénomination de l'organisme" autofocus>
-                                    @error('organisme')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Dénomination de l'organisme<span
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="designation" class="form-label">Désignation<span
                                             class="text-danger mx-1">*</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" min="0" name="contact"
-                                        value="{{ $operateureference->contact ?? old('contact') }}"
-                                        class="form-control form-control-sm @error('contact') is-invalid @enderror"
-                                        id="contact" placeholder="Contact">
-                                    @error('contact')
+                                    <input type="text" name="designation" value="{{ $operateurequipement->designation ?? old('designation') }}"
+                                        class="form-control form-control-sm @error('designation') is-invalid @enderror"
+                                        placeholder="Désignation">
+                                    @error('designation')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="periode"
-                                        value="{{ $operateureference->periode ?? old('periode') }}"
-                                        class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                                        id="periode" placeholder="Période">
-                                    @error('periode')
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="quantite" class="form-label">Quantité<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="number" min="0" name="quantite" value="{{ $operateurequipement->quantite ?? old('quantite') }}"
+                                        class="form-control form-control-sm @error('quantite') is-invalid @enderror"
+                                        placeholder="Quantité">
+                                    @error('quantite')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <textarea name="description" id="description" cols="30" rows="5"
-                                        class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                        placeholder="Ajouter les membres du jury">{{ $operateureference->description ?? old('description') }}</textarea>
 
-                                    {{-- <input type="text" name="description" value="{{ old('description') }}"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    id="description" placeholder="Description"> --}}
-                                    @error('description')
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="etat" class="form-label">Etat<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="etat" class="form-select selectpicker"
+                                        data-live-search="true @error('etat') is-invalid @enderror" aria-label="Select"
+                                        id="select-field-etat-update" data-placeholder="Choisir etat">
+                                        <option value="{{  $operateurequipement->etat }}">
+                                            {{ $operateurequipement->etat ?? old('etat') }}
+                                        </option>
+                                        <option value="Neuf(ve)">
+                                            Neuf(ve)
+                                        </option>
+                                        <option value="Bon etat">
+                                            Bon etat
+                                        </option>
+                                        <option value="Usé(e)">
+                                            Usé(e)
+                                        </option>
+                                    </select>
+                                    @error('etat')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="type" class="form-label">Type<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="type" class="form-select selectpicker"
+                                        data-live-search="true @error('type') is-invalid @enderror" aria-label="Select"
+                                        id="select-field-type-update" data-placeholder="Choisir type">
+                                        <option value="{{  $operateurequipement->type }}">
+                                            {{ $operateurequipement->type ?? old('type') }}
+                                        </option>
+                                        <option value="Infrastructure">
+                                            Infrastructure
+                                        </option>
+                                        <option value="Equipement">
+                                            Equipement
+                                        </option>
+                                    </select>
+                                    @error('type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="modal-footer">

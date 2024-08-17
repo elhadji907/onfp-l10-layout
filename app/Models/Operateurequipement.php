@@ -22,6 +22,7 @@ class Operateurequipement extends Model
         'quantite',
         'etat',
         'statut',
+        'type',
         'details',
         'operateurs_id'
     ];

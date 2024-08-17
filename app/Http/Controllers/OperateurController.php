@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Departement;
 use App\Models\Operateur;
 use App\Models\Operateureference;
+use App\Models\Operateurequipement;
+use App\Models\Operateurformateur;
 use App\Models\User;
 use App\Models\Validationoperateur;
 use Illuminate\Http\Request;
@@ -201,12 +203,26 @@ class OperateurController extends Controller
             echo $output;
         }
     }
-    public function showOperateur($id)
+    public function showReference($id)
     {
         $operateur = Operateur::findOrFail($id);
         $operateureferences = Operateureference::get();
 
         return view('operateureferences.show', compact('operateur', 'operateureferences'));
+    }
+    public function showEquipement($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $operateurequipements = Operateurequipement::get();
+
+        return view('operateurequipements.show', compact('operateur', 'operateurequipements'));
+    }
+    public function showFormateur($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $operateurformateurs = Operateurformateur::get();
+
+        return view('operateurformateurs.show', compact('operateur', 'operateurformateurs'));
     }
 
     /* Validation automatique */

@@ -30,6 +30,8 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NomminationController;
 use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\OperateureferenceController;
+use App\Http\Controllers\OperateurequipementController;
+use App\Http\Controllers\OperateurformateurController;
 use App\Http\Controllers\OperateurmoduleController;
 use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
@@ -48,6 +50,7 @@ use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -233,7 +236,9 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::get('/showLocalites/{id}', [ProjetlocaliteController::class, 'showLocalites'])->name('showLocalites');
     
-    Route::get('/showOperateur/{id}', [OperateurController::class, 'showOperateur'])->name('showOperateur');
+    Route::get('/showReference/{id}', [OperateurController::class, 'showReference'])->name('showReference');
+    Route::get('/showEquipement/{id}', [OperateurController::class, 'showEquipement'])->name('showEquipement');
+    Route::get('/showFormateur/{id}', [OperateurController::class, 'showFormateur'])->name('showFormateur');
     
     Route::put('/validateOperateur/{id}', [OperateurController::class, 'validateOperateur'])->name('validateOperateur');
     Route::put('/agreerOperateur/{id}', [OperateurController::class, 'agreerOperateur'])->name('agreerOperateur');
@@ -285,6 +290,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/projets', ProjetController::class);
     Route::resource('/projetlocalites', ProjetlocaliteController::class);
     Route::resource('/operateureferences', OperateureferenceController::class);
+    Route::resource('/operateurequipements', OperateurequipementController::class);
+    Route::resource('/operateurformateurs', OperateurformateurController::class);
 });
 
 

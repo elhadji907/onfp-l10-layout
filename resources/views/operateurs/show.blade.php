@@ -203,7 +203,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
                                             <h5 class="card-title">
-                                                <a href="{{ route('showOperateur', ['id' => $operateur->id]) }}"
+                                                <a href="{{ route('showReference', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
@@ -270,7 +270,19 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
+                                            <h5 class="card-title">
+                                                <a href="{{ route('showEquipement', ['id' => $operateur->id]) }}"
+                                                    class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                    target="_blank">
+                                                    <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
+                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
+                                                </button> --}}
+                                            </h5>
+                                        </div>
                                         <table
                                             class="table datatables align-middle justify-content-center table-borderless">
                                             <thead>
@@ -278,17 +290,19 @@
                                                     <th scope="col">DESIGNATION</th>
                                                     <th scope="col">QUANTITE</th>
                                                     <th scope="col">ETAT</th>
-                                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                                    <th scope="col">TYPE</th>
+                                                    {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
                                                 @foreach ($operateur->operateurequipements as $operateurequipement)
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>
+                                                        <td>{{ $operateurequipement->designation }}</td>
+                                                        <td>{{ $operateurequipement->quantite }}</td>
+                                                        <td>{{ $operateurequipement->etat }}</td>
+                                                        <td>{{ $operateurequipement->type }}</td>
+                                                        {{-- <td>
                                                             <span class="d-flex align-items-baseline">
                                                                 <a href="{{ route('operateurequipements.show', $operateurequipement->id) }}"
                                                                     class="btn btn-primary btn-sm" title="voir détails"><i
@@ -315,7 +329,7 @@
                                                                     </ul>
                                                                 </div>
                                                             </span>
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -328,7 +342,19 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5 class="card-title">FORMATEURS</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">FORMATEURS</h5>
+                                            <h5 class="card-title">
+                                                <a href="{{ route('showFormateur', ['id' => $operateur->id]) }}"
+                                                    class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                    target="_blank">
+                                                    <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
+                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
+                                                </button> --}}
+                                            </h5>
+                                        </div>
                                         <table
                                             class="table datatables align-middle justify-content-center table-borderless">
                                             <thead>
@@ -344,10 +370,10 @@
                                                 <?php $i = 1; ?>
                                                 @foreach ($operateur->operateurformateurs as $operateurformateur)
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>{{ $operateurformateur->name }}</td>
+                                                        <td>{{ $operateurformateur->domaine }}</td>
+                                                        <td>{{ $operateurformateur->nbre_annees_experience }}</td>
+                                                        <td>{{ $operateurformateur->references }}</td>
                                                         <td>
                                                             <span class="d-flex align-items-baseline">
                                                                 <a href="{{ route('operateurformateurs.show', $operateurformateur->id) }}"
@@ -500,7 +526,8 @@
                                                         </div>
                                                         {{-- @isset($operateur->motif) --}}
                                                         <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                            data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i class="bi bi-trash"
+                                                            data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i
+                                                                class="bi bi-trash"
                                                                 title="Justification"></i>&nbsp;Rejeter
                                                         </button>
                                                         {{-- @endisset --}}
@@ -827,7 +854,7 @@
                             </div>
                             <div class="modal-body">
                                 <label for="motif" class="form-label">Motifs du rejet<span
-                                    class="text-danger mx-1">*</span></label>
+                                        class="text-danger mx-1">*</span></label>
                                 <textarea name="motif" id="motif" rows="5"
                                     class="form-control form-control-sm @error('motif') is-invalid @enderror"
                                     placeholder="Enumérer les motifs du rejet">{{ $operateurmodule?->motif ?? old('motif') }}</textarea>
@@ -865,7 +892,7 @@
                             </div>
                             <div class="modal-body">
                                 <label for="motif" class="form-label">Motifs de la réserve<span
-                                    class="text-danger mx-1">*</span></label>
+                                        class="text-danger mx-1">*</span></label>
                                 <textarea name="motif" id="motif" rows="5"
                                     class="form-control form-control-sm @error('motif') is-invalid @enderror"
                                     placeholder="Enumérer les motifs de l'agrément sous réserve">{{ $operateur?->motif ?? old('motif') }}</textarea>
@@ -903,7 +930,7 @@
                             </div>
                             <div class="modal-body">
                                 <label for="motif" class="form-label">Motifs du rejet<span
-                                    class="text-danger mx-1">*</span></label>
+                                        class="text-danger mx-1">*</span></label>
                                 <textarea name="motif" id="motif" rows="5"
                                     class="form-control form-control-sm @error('motif') is-invalid @enderror"
                                     placeholder="Enumérer les motifs du rejet">{{ $operateur?->motif ?? old('motif') }}</textarea>

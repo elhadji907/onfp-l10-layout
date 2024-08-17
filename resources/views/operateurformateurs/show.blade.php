@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', $operateur->sigle . ' - références et expériences professionnelles')
+@section('title', $operateur->sigle . ' - formateurs')
 @section('space-work')
 
     <section class="section register">
@@ -11,7 +11,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                             <li class="breadcrumb-item">Tables</li>
-                            <li class="breadcrumb-item active">Références</li>
+                            <li class="breadcrumb-item active">Formateurs</li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
@@ -38,10 +38,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
+                            <h5 class="card-title">FORMATEURS</h5>
                             <h5 class="card-title">
                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#AddRefModal">
+                                    data-bs-target="#AddformateurModal">
                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                 </button>
                             </h5>
@@ -50,21 +50,23 @@
                         <table class="table datatables align-middle justify-content-center table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">DENOMINATION L'ORGANISME</th>
-                                    <th scope="col">CONTACTS</th>
-                                    <th scope="col">PERIODES D'INTERVENTION</th>
-                                    <th scope="col">DESCRIPTION DES INTERVENTIONS</th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">PRENOM(S) ET NOM</th>
+                                    <th scope="col">CHAMPS PROFESSIONNELS</th>
+                                    <th scope="col">NOMBRE D'ANNEES D'EXPERIENCE</th>
+                                    <th scope="col">REFERENCES</th>
                                     <th class="col"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($operateur->operateureferences as $operateureference)
+                                @foreach ($operateur->operateurformateurs as $operateurformateur)
                                     <tr>
-                                        <td>{{ $operateureference?->organisme }}</td>
-                                        <td>{{ $operateureference?->contact }}</td>
-                                        <td>{{ $operateureference?->periode }}</td>
-                                        <td>{{ $operateureference?->description }}</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $operateurformateur->name }}</td>
+                                        <td>{{ $operateurformateur->domaine }}</td>
+                                        <td>{{ $operateurformateur->nbre_annees_experience }}</td>
+                                        <td>{{ $operateurformateur->references }}</td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a href=""
                                                     class="btn btn-outline-info btn-sm mx-1" title="Voir détails">
@@ -76,13 +78,13 @@
                                                         <li>
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#EditoperateureferenceModal{{ $operateureference->id }}">
+                                                                data-bs-target="#EditoperateurformateurModal{{ $operateurformateur->id }}">
                                                                 <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                             </button>
                                                         </li>
                                                         <li>
                                                             <form
-                                                                action="{{ route('operateureferences.destroy', $operateureference->id) }}"
+                                                                action="{{ route('operateurformateurs.destroy', $operateurformateur->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -105,67 +107,67 @@
             </div>
         </div>
 
-        <!-- Add References -->
-        <div class="modal fade" id="AddRefModal" tabindex="-1">
+        <!-- Add Formateur -->
+        <div class="modal fade" id="AddformateurModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="post" action="{{ route('operateureferences.store') }}" enctype="multipart/form-data"
+                    <form method="post" action="{{ route('operateurformateurs.store') }}" enctype="multipart/form-data"
                         class="row g-3">
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
+                            <h5 class="modal-title">FORMATEURS</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                         <div class="modal-body">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="organisme" value="{{ old('organisme') }}"
-                                    class="form-control form-control-sm @error('organisme') is-invalid @enderror"
-                                    id="organisme" placeholder="Dénomination de l'organisme" autofocus>
-                                @error('organisme')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Dénomination de l'organisme<span
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="name" class="form-label">Prénom(s) et Nom formateur<span
                                         class="text-danger mx-1">*</span></label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="number" min="0" name="contact" value="{{ old('contact') }}"
-                                    class="form-control form-control-sm @error('contact') is-invalid @enderror"
-                                    id="contact" placeholder="Contact">
-                                @error('contact')
+                                <input type="text" name="name" value="{{ old('name') }}"
+                                    class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                    placeholder="Prénom(s) et Nom formateur">
+                                @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" name="periode" value="{{ old('periode') }}"
-                                    class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                                    id="periode" placeholder="Période">
-                                @error('periode')
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="domaine" class="form-label">Domaine<span
+                                        class="text-danger mx-1">*</span></label>
+                                <input type="text" name="domaine" value="{{ old('domaine') }}"
+                                    class="form-control form-control-sm @error('domaine') is-invalid @enderror"
+                                    placeholder="Domaine">
+                                @error('domaine')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <textarea name="description" id="description" cols="30" rows="5"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    placeholder="Ajouter les membres du jury">{{ old('description') }}</textarea>
-
-                                {{-- <input type="text" name="description" value="{{ old('description') }}"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    id="description" placeholder="Description"> --}}
-                                @error('description')
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="nbre_annees_experience" class="form-label">Nombre années expérience<span
+                                        class="text-danger mx-1">*</span></label>
+                                <input type="number" min="0" name="nbre_annees_experience"
+                                    value="{{ old('nbre_annees_experience') }}"
+                                    class="form-control form-control-sm @error('nbre_annees_experience') is-invalid @enderror"
+                                    placeholder="Nombre années expérience">
+                                @error('nbre_annees_experience')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                <label for="reference" class="form-label">Référence<span
+                                        class="text-danger mx-1">*</span></label>
+                                <input type="text" name="reference" value="{{ old('reference') }}"
+                                    class="form-control form-control-sm @error('reference') is-invalid @enderror"
+                                    placeholder="Référence">
+                                @error('reference')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -177,13 +179,13 @@
                 </div>
             </div>
         </div>
-        <!-- End Add References-->
-        <!-- Edit References -->
-        @foreach ($operateureferences as $operateureference)
-            <div class="modal fade" id="EditoperateureferenceModal{{ $operateureference->id }}" tabindex="-1">
+        <!-- End Add Formateur-->
+        <!-- Edit Formateur -->
+        @foreach ($operateurformateurs as $operateurformateur)
+            <div class="modal fade" id="EditoperateurformateurModal{{ $operateurformateur->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('operateureferences.update', $operateureference->id) }}"
+                        <form method="post" action="{{ route('operateurformateurs.update', $operateurformateur->id) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
@@ -194,57 +196,54 @@
                             </div>
                             <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                             <div class="modal-body">
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="organisme"
-                                        value="{{ $operateureference->organisme ?? old('organisme') }}"
-                                        class="form-control form-control-sm @error('organisme') is-invalid @enderror"
-                                        id="organisme" placeholder="Dénomination de l'organisme" autofocus>
-                                    @error('organisme')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Dénomination de l'organisme<span
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="name" class="form-label">Prénom(s) et Nom formateur<span
                                             class="text-danger mx-1">*</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" min="0" name="contact"
-                                        value="{{ $operateureference->contact ?? old('contact') }}"
-                                        class="form-control form-control-sm @error('contact') is-invalid @enderror"
-                                        id="contact" placeholder="Contact">
-                                    @error('contact')
+                                    <input type="text" name="name" value="{{ $operateurformateur->name ?? old('name') }}"
+                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                        placeholder="Prénom(s) et Nom formateur">
+                                    @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="periode"
-                                        value="{{ $operateureference->periode ?? old('periode') }}"
-                                        class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                                        id="periode" placeholder="Période">
-                                    @error('periode')
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="domaine" class="form-label">Domaine<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="domaine" value="{{ $operateurformateur->domaine ?? old('domaine') }}"
+                                        class="form-control form-control-sm @error('domaine') is-invalid @enderror"
+                                        placeholder="Domaine">
+                                    @error('domaine')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <textarea name="description" id="description" cols="30" rows="5"
-                                        class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                        placeholder="Ajouter les membres du jury">{{ $operateureference->description ?? old('description') }}</textarea>
-
-                                    {{-- <input type="text" name="description" value="{{ old('description') }}"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    id="description" placeholder="Description"> --}}
-                                    @error('description')
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="nbre_annees_experience" class="form-label">Nombre années expérience<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="number" min="0" name="nbre_annees_experience"
+                                        value="{{ $operateurformateur->nbre_annees_experience ?? old('nbre_annees_experience') }}"
+                                        class="form-control form-control-sm @error('nbre_annees_experience') is-invalid @enderror"
+                                        placeholder="Nombre années expérience">
+                                    @error('nbre_annees_experience')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="reference" class="form-label">Référence<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="reference" value="{{ $operateurformateur->references ?? old('reference') }}"
+                                        class="form-control form-control-sm @error('reference') is-invalid @enderror"
+                                        placeholder="Référence">
+                                    @error('reference')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -257,7 +256,7 @@
                 </div>
             </div>
         @endforeach
-        <!-- End Edit References-->
+        <!-- End Edit Formateur-->
 
     </section>
 
