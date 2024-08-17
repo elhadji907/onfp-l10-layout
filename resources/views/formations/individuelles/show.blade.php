@@ -368,6 +368,7 @@
                                                                         value="{{ $formation->id }}">
                                                                     <button class="btn btn-sm mx-1">PV Evaluation</button>
                                                                 </form>
+                                                                    <button class="btn btn-sm mx-1">ABE</button>
                                                             </ul>
                                                         </div>
                                                     </span>

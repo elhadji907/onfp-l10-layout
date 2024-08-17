@@ -17,11 +17,12 @@ return new class extends Migration
             $table->char('uuid', 36);
             $table->string('module')->nullable();
             $table->string('domaine')->nullable();
+            $table->string('categorie')->nullable();
             $table->string('niveau_qualification')->nullable();
-            $table->longText('details')->nullable();
+            $table->longText('motif')->nullable();
             $table->string('statut')->nullable();
             $table->unsignedInteger('operateurs_id')->nullable();
-            $table->unsignedInteger('modules_id')->nullable();
+            $table->unsignedInteger('users_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
             
@@ -33,11 +34,11 @@ return new class extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
             
-            $table->index(["modules_id"], 'fk_operateurmodules_modules1_idx');
+            $table->index(["users_id"], 'fk_operateurmodules_users1_idx');
             
 
-            $table->foreign('modules_id', 'fk_operateurmodules_modules1_idx')
-                ->references('id')->on('modules')
+            $table->foreign('users_id', 'fk_operateurmodules_users1_idx')
+                ->references('id')->on('users')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

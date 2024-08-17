@@ -27,6 +27,7 @@ class OperateurmoduleController extends Controller
         $this->validate($request, [
             'module'                => 'required|string',
             'domaine'               => 'required|string',
+            'categorie'             => 'required|string',
             'niveau_qualification'  => 'required|string',
         ]);
 
@@ -43,6 +44,7 @@ class OperateurmoduleController extends Controller
             $operateurmodule = new Operateurmodule([
                 "module"                =>  $request->input("module"),
                 "domaine"               =>  $request->input("domaine"),
+                "categorie"             =>  $request->input("categorie"),
                 'niveau_qualification'  =>  $request->input('niveau_qualification'),
                 'statut'                =>  'nouveau',
                 'operateurs_id'         =>  $request->input('operateur'),
@@ -78,6 +80,7 @@ class OperateurmoduleController extends Controller
         $operateurmodule->update([
             "module"                =>  $request->input("module"),
             "domaine"               =>  $request->input("domaine"),
+            "categorie"             =>  $request->input("categorie"),
             'niveau_qualification'  =>  $request->input('niveau_qualification'),
             'operateurs_id'         =>  $operateurmodule->operateurs_id,
         ]);

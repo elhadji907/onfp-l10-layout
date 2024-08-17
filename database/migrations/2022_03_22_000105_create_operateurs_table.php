@@ -31,6 +31,7 @@ class CreateOperateursTable extends Migration
             $table->string('categorie', 200)->nullable();
             $table->timestamp('date_depot')->nullable();
             $table->timestamp('annee_agrement')->nullable();
+            $table->timestamp('session_agrement')->nullable();
             $table->timestamp('date')->nullable();
             $table->timestamp('date_debut')->nullable();
             $table->timestamp('date_fin')->nullable();

@@ -19,13 +19,14 @@ class ValidationmoduleController extends Controller
         } else {
             $operateurmodule->update([
                 'statut'             => 'agréer',
-                'details'            =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+                'users_id'           =>  Auth::user()->id,
             ]);
 
             $operateurmodule->save();
 
             $moduleoperateurstatut = new Moduleoperateurstatut([
                 'statut'                =>  "agréer",
+                'validated_id'          =>  Auth::user()->id,
                 'operateurmodules_id'   =>  $operateurmodule->id,
 
             ]);
@@ -50,14 +51,17 @@ class ValidationmoduleController extends Controller
             Alert::warning('Désolez', 'déjà rejeté');
         } else {
             $operateurmodule->update([
-                'statut'                => 'rejeter',
-                'details'               =>  Auth::user()->id
+                'statut'             =>  'rejeter',
+                'motif'              =>  $request->input('motif'),
+                'users_id'           =>  Auth::user()->id,
             ]);
 
             $operateurmodule->save();
 
             $moduleoperateurstatut = new Moduleoperateurstatut([
                 'statut'                =>  "rejeter",
+                'motif'                 =>  $request->input('motif'),
+                'validated_id'          =>  Auth::user()->id,
                 'operateurmodules_id'   =>  $operateurmodule->id,
 
             ]);

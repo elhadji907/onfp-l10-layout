@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $typestructure
  * @property Carbon|null $date_depot
  * @property Carbon|null $annee_agrement
+ * @property string|null $session_agrement
  * @property Carbon|null $date
  * @property Carbon|null $date_debut
  * @property Carbon|null $date_fin
@@ -124,6 +125,7 @@ class Operateur extends Model
 		'typestructure',
 		'date_depot',
 		'annee_agrement',
+		'session_agrement',
 		'date',
 		'date_debut',
 		'date_fin',

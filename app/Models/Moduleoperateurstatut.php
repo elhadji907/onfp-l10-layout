@@ -34,12 +34,15 @@ class Moduleoperateurstatut extends Model
 	use \App\Helpers\UuidForKey;
 	protected $table = 'moduleoperateurstatut';
 	protected $casts = [
-		'operateurmodules_id'
+		'operateurmodules_id',
+		'validated_id'
 	];
 	protected $fillable = [
 		'uuid',
 		'statut',
-		'operateurmodules_id'
+		'motif',
+		'operateurmodules_id',
+		'validated_id'
 	];
 
 	public function modulesoperateurs()

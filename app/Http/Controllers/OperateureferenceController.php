@@ -13,7 +13,7 @@ class OperateureferenceController extends Controller
     {
         $this->validate($request, [
             "organisme"                =>      ["required", "string"],
-            "contact"                  =>      ["required", "string"],
+            "contact"                  =>      ["required", "string", "min:9", "max:9"],
             "periode"                  =>      ["required", "string"],
             "description"              =>      ["required", "string"],
         ]);
@@ -38,7 +38,7 @@ class OperateureferenceController extends Controller
     {
         $this->validate($request, [
             "organisme"                =>      ["required", "string"],
-            "contact"                  =>      ["required", "string"],
+            "contact"                  =>      ["required", "string", "min:9", "max:9"],
             "periode"                  =>      ["required", "string"],
             "description"              =>      ["required", "string"],
         ]);

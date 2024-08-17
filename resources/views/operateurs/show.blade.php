@@ -392,11 +392,9 @@
                                         @csrf
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <table class="table table-bordered" id="dynamicAddRemove">
+
                                                 <tr>
                                                     <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
-                                                    <th>QUALIFICATION CORRESPONDANTE
-                                                        <span class="text-danger mx-1">*</span>
-                                                    </th>
                                                     <th>CATEGORIE PROFESSIONNELLE<span class="text-danger mx-1">*</span>
                                                     </th>
                                                 </tr>
@@ -409,16 +407,32 @@
                                                         <div id="countryList"></div>
                                                         {{ csrf_field() }}
                                                         <p class="small fst-italic">
-                                                            <small>{{ __('Le nombre de modules est limité à deux') }}</small><br>
+                                                            <small>{{ __('Le nombre de modules est limité à deux') }}</small>
                                                             <small>
                                                                 {{ __(' sauf pour les établissements publics ') }}</small>
                                                         </p>
                                                     </td>
+                                                    <td><input type="text" name="categorie"
+                                                            placeholder="Catégorie professionnelle"
+                                                            class="form-control form-control-sm" />
+                                                        <p class="small fst-italic">
+                                                            <small>{{ __("Préciser la catégorie professionnelle,l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
+                                                            <small>{{ __("d'une pré-qualification ou qualification") }}</small>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>DOMAINE<span class="text-danger mx-1">*</span></th>
+                                                    <th>QUALIFICATION CORRESPONDANTE
+                                                        <span class="text-danger mx-1">*</span>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" name="domaine"
+                                                            placeholder="Domaine d'intervention"
+                                                            class="form-control form-control-sm" />
+                                                    </td>
                                                     <td>
-                                                        {{-- <input type="text" name="niveau_qualification"
-                                                            placeholder="Entrer niveau qualification"
-                                                            class="form-control form-control-sm" /> --}}
-
                                                         <select name="niveau_qualification"
                                                             class="form-select form-select-sm @error('niveau_qualification') is-invalid @enderror"
                                                             aria-label="Select" id="select-field-civilite"
@@ -436,16 +450,6 @@
                                                                 Qualification
                                                             </option>
                                                         </select>
-                                                    </td>
-                                                    <td><input type="text" name="domaine"
-                                                            placeholder="Catégorie professionnelle"
-                                                            class="form-control form-control-sm" />
-                                                        <p class="small fst-italic">
-                                                            <small>{{ __('Préciser la catégorie professionnelle,') }}</small><br>
-                                                            <small>
-                                                                {{ __("l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
-                                                            <small>{{ __("d'une pré-qualification ou qualification") }}</small>
-                                                        </p>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -468,7 +472,8 @@
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <form
+                                                        {{-- Validation automatique --}}
+                                                        {{--  <form
                                                             action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
                                                             method="post">
                                                             @csrf
@@ -476,14 +481,29 @@
                                                             <button class="show_confirm_valider btn btn-sm mx-1"><i
                                                                     class="bi bi-check2-circle"
                                                                     title="Valider"></i>&nbsp;Valider</button>
+                                                        </form> --}}
+                                                        <form
+                                                            action="{{ route('agreerOperateur', ['id' => $operateur->id]) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button class="show_confirm_valider btn btn-sm mx-1"><i
+                                                                    class="bi bi-check2-circle"
+                                                                    title="Valider"></i>&nbsp;Agréer</button>
                                                         </form>
-                                                        @isset($operateur->motif)
+                                                        <div>
                                                             <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                                data-bs-target="#RejetDemandeModal"><i
+                                                                data-bs-target="#ReserveAgrementModal{{ $operateur->id }}"><i
                                                                     class="bi bi-chat-square-text"
-                                                                    title="Justification"></i>&nbsp;Motif
+                                                                    title="Justification"></i>&nbsp;Sous réserve
                                                             </button>
-                                                        @endisset
+                                                        </div>
+                                                        {{-- @isset($operateur->motif) --}}
+                                                        <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                            data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i class="bi bi-trash"
+                                                                title="Justification"></i>&nbsp;Rejeter
+                                                        </button>
+                                                        {{-- @endisset --}}
                                                     </ul>
                                                 </div>
                                             </span>
@@ -497,9 +517,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">N°</th>
-                                                        <th scope="col">MODULE OU SPECIALITE</th>
-                                                        <th scope="col">QUALIFICATION CORRESPONDANTE</th>
-                                                        <th scope="col">CATEGORIE PROFESSIONNELLE</th>
+                                                        <th scope="col">DOMAINE</th>
+                                                        <th scope="col">MODULE</th>
+                                                        <th scope="col">CATEGORIE</th>
+                                                        <th scope="col">QUALIFICATION</th>
                                                         <th scope="col">STATUT</th>
                                                         <th class="col"><i class="bi bi-gear"></i></th>
                                                     </tr>
@@ -509,12 +530,13 @@
                                                     @foreach ($operateur->operateurmodules as $operateurmodule)
                                                         <tr>
                                                             <td style="text-align: center;">{{ $i++ }}</td>
-                                                            <td>{{ $operateurmodule->module }}</td>
-                                                            <td>{{ $operateurmodule->niveau_qualification }}</td>
-                                                            <td>{{ $operateurmodule->domaine }}</td>
+                                                            <td>{{ $operateurmodule?->domaine }}</td>
+                                                            <td>{{ $operateurmodule?->module }}</td>
+                                                            <td>{{ $operateurmodule?->categorie }}</td>
+                                                            <td>{{ $operateurmodule?->niveau_qualification }}</td>
                                                             <td>
                                                                 <span
-                                                                    class="{{ $operateurmodule->statut }}">{{ $operateurmodule->statut }}</span>
+                                                                    class="{{ $operateurmodule?->statut }}">{{ $operateurmodule?->statut }}</span>
                                                             </td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline">
@@ -658,7 +680,7 @@
             <div class="modal fade" id="EditOperateurmoduleModal{{ $operateurmodule->id }}" tabindex="-1"
                 role="dialog" aria-labelledby="EditOperateurmoduleModalLabel{{ $operateurmodule->id }}"
                 aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         {{-- <form method="POST" action="#">
                             @csrf --}}
@@ -667,48 +689,79 @@
                             @csrf
                             @method('patch')
                             <div class="modal-header" id="EditOperateurmoduleModalLabel{{ $operateurmodule->id }}">
-                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module
+                                <h5 class="modal-title">Modification module
                                     opérateur</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="id" value="{{ $operateurmodule->id }}">
-                                <div class="form-floating mb-3">
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="module" class="form-label">Module<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="module"
-                                        value="{{ $operateurmodule?->module ?? old('module') }}"
+                                        value="{{ $operateurmodule->module ?? old('module') }}"
                                         class="form-control form-control-sm @error('module') is-invalid @enderror"
-                                        placeholder="Module" autofocus>
+                                        placeholder="module">
                                     @error('module')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Module</label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="niveau_qualification"
-                                        value="{{ $operateurmodule->niveau_qualification ?? old('niveau_qualification') }}"
-                                        class="form-control form-control-sm @error('niveau_qualification') is-invalid @enderror"
-                                        id="niveau_qualification" placeholder="Niveau qualification">
-                                    @error('niveau_qualification')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Niveau qualification</label>
-                                </div>
-                                <div class="form-floating mb-3">
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="domaine" class="form-label">Domaine<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="domaine"
                                         value="{{ $operateurmodule->domaine ?? old('domaine') }}"
                                         class="form-control form-control-sm @error('domaine') is-invalid @enderror"
-                                        id="domaine" placeholder="Domaine">
+                                        placeholder="domaine">
                                     @error('domaine')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Domaine</label>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="categorie" class="form-label">Catégorie<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="categorie"
+                                        value="{{ $operateurmodule->categorie ?? old('categorie') }}"
+                                        class="form-control form-control-sm @error('categorie') is-invalid @enderror"
+                                        placeholder="categorie">
+                                    @error('categorie')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="niveau_qualification" class="form-label">Niveau de qualification<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="niveau_qualification" class="form-select selectpicker"
+                                        data-live-search="true @error('niveau_qualification') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-niveau_qualification-update"
+                                        data-placeholder="Choisir niveau qualification">
+                                        <option value="{{ $operateurmodule->niveau_qualification }}">
+                                            {{ $operateurmodule->niveau_qualification ?? old('niveau_qualification') }}
+                                        </option>
+                                        <option value="Initiation">
+                                            Initiation
+                                        </option>
+                                        <option value="Pré-qualification">
+                                            Pré-qualification
+                                        </option>
+                                        <option value="Qualification">
+                                            Qualification
+                                        </option>
+                                    </select>
+                                    @error('niveau_qualification')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -758,7 +811,7 @@
         @endforeach
         @foreach ($operateur->operateurmodules as $operateurmodule)
             <div class="modal fade" id="AddRegionModal{{ $operateurmodule->id }}" tabindex="-1">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         {{-- <form method="POST" action="{{ route('addRegion') }}">
                         @csrf --}}
@@ -768,15 +821,92 @@
                             @csrf
                             @method('DELETE')
                             <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet module</h5>
+                                <h5 class="modal-title">Rejet module</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <label for="motif" class="form-label">Motifs du rejet</label>
+                                <label for="motif" class="form-label">Motifs du rejet<span
+                                    class="text-danger mx-1">*</span></label>
                                 <textarea name="motif" id="motif" rows="5"
                                     class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                                    placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                                    placeholder="Enumérer les motifs du rejet">{{ $operateurmodule?->motif ?? old('motif') }}</textarea>
+                                @error('motif')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
+                                    Rejeter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        {{-- Agrément sous réserve --}}
+        @foreach ($operateurs as $operateur)
+            <div class="modal fade" id="ReserveAgrementModal{{ $operateur->id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        {{-- <form method="POST" action="{{ route('addRegion') }}">
+                        @csrf --}}
+                        <form method="post" action="{{ route('validation-operateur.update', $operateur->id) }}"
+                            enctype="multipart/form-data" class="row">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-header">
+                                <h5 class="modal-title">Rejet opérateur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="motif" class="form-label">Motifs de la réserve<span
+                                    class="text-danger mx-1">*</span></label>
+                                <textarea name="motif" id="motif" rows="5"
+                                    class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                    placeholder="Enumérer les motifs de l'agrément sous réserve">{{ $operateur?->motif ?? old('motif') }}</textarea>
+                                @error('motif')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
+                                    Rejeter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        {{-- Agrément rejeter --}}
+        @foreach ($operateurs as $operateur)
+            <div class="modal fade" id="RejetAgrementModal{{ $operateur->id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        {{-- <form method="POST" action="{{ route('addRegion') }}">
+                        @csrf --}}
+                        <form method="post" action="{{ route('validation-operateur.destroy', $operateur->id) }}"
+                            enctype="multipart/form-data" class="row">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-header">
+                                <h5 class="modal-title">Rejet opérateur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="motif" class="form-label">Motifs du rejet<span
+                                    class="text-danger mx-1">*</span></label>
+                                <textarea name="motif" id="motif" rows="5"
+                                    class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                    placeholder="Enumérer les motifs du rejet">{{ $operateur?->motif ?? old('motif') }}</textarea>
                                 @error('motif')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>

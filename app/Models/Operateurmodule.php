@@ -15,23 +15,24 @@ class Operateurmodule extends Model
 
     protected $casts = [
         'operateurs_id' => 'int',
-        'modules_id' => 'int',
+        'users_id' => 'int',
     ];
     protected $fillable = [
         'uuid',
         'module',
         'domaine',
+        'categorie',
         'niveau_qualification',
         'statut',
-        'details',
-        'modules_id',
+        'motif',
+        'users_id',
         'validated_id',
         'operateurs_id'
     ];
 
-    public function module()
+    public function user()
     {
-        return $this->belongsTo(Module::class, 'modules_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
 
     public function operateur()

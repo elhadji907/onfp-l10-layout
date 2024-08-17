@@ -46,6 +46,7 @@ use App\Http\Controllers\ValidationcollectiveController;
 use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
+use App\Http\Controllers\ValidationoperateurController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -235,6 +236,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/showOperateur/{id}', [OperateurController::class, 'showOperateur'])->name('showOperateur');
     
     Route::put('/validateOperateur/{id}', [OperateurController::class, 'validateOperateur'])->name('validateOperateur');
+    Route::put('/agreerOperateur/{id}', [OperateurController::class, 'agreerOperateur'])->name('agreerOperateur');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
@@ -273,6 +275,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/operateurmodules', OperateurmoduleController::class);
     Route::resource('/projetmodules', ProjetmoduleController::class);
     Route::resource('/validation-operateur-modules', ValidationmoduleController::class);
+    Route::resource('/validation-operateur', ValidationoperateurController::class);
     Route::resource('/collectives', CollectiveController::class);
     Route::resource('/domaines', DomaineController::class);
     Route::resource('/secteurs', SecteurController::class);

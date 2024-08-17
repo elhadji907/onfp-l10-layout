@@ -6,6 +6,7 @@ use App\Models\Departement;
 use App\Models\Operateur;
 use App\Models\Operateureference;
 use App\Models\User;
+use App\Models\Validationoperateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -170,8 +171,9 @@ class OperateurController extends Controller
     public function show($id)
     {
         $operateur = Operateur::findOrFail($id);
+        $operateurs = Operateur::get();
         $operateureferences = Operateureference::get();
-        return view("operateurs.show", compact("operateur", "operateureferences"));
+        return view("operateurs.show", compact("operateur", "operateureferences", "operateurs"));
     }
 
     public function destroy($id)
@@ -206,6 +208,8 @@ class OperateurController extends Controller
 
         return view('operateureferences.show', compact('operateur', 'operateureferences'));
     }
+
+    /* Validation automatique */
     public function validateOperateur($id)
     {
         $operateur = Operateur::findOrFail($id);
@@ -238,5 +242,37 @@ class OperateurController extends Controller
         $operateur->save();
 
         return redirect()->back();
+    }
+
+    public function agreerOperateur($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $count_nouveau = $operateur->operateurmodules->where('statut', 'nouveau')->count();
+
+        if ($count_nouveau > 0) {
+            Alert::warning('Désolez ! ', 'il reste des module à traiter');
+            return redirect()->back();
+        } else {
+            $operateur->update([
+                'statut_agrement'    => 'agréer',
+                'motif'              => null,
+                'date'               =>  date('Y-m-d'),
+            ]);
+
+            $operateur->save();
+
+            $validateoperateur = new Validationoperateur([
+                'validated_id'       =>       Auth::user()->id,
+                'action'             =>      'agréer',
+                'session'            =>      $operateur?->session_agrement,
+                'operateurs_id'      =>      $operateur?->id
+
+            ]);
+
+            $validateoperateur->save();
+
+            Alert::success("Effectué !", "l'opérateur " . $operateur?->sigle . ' a été agréé');
+            return redirect()->back();
+        }
     }
 }

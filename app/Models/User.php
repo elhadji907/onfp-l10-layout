@@ -105,6 +105,10 @@ class User extends Authenticatable
         return 'username';
     }
 
+	public function operateurmodules()
+	{
+		return $this->hasMany(Operateurmodule::class, 'users_id')->latest();
+	}
     public function administrateur()
     {
         return $this->hasOne(Administrateur::class, 'users_id');
