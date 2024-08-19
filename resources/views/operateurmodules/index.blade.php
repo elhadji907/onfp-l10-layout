@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des régions')
+@section('title', 'ONFP - Liste des opérateurs')
 @section('space-work')
 
     <section class="section register">
@@ -42,41 +42,31 @@
                         <table class="table datatables align-middle justify-content-center" id="table-operateurModules">
                             <thead>
                                 <tr>
-                                    <th>Modules</th>
-                                    <th>Niveau qualification</th>
-                                    <th>Domaine</th>
-                                    <th>Opérateur</th>
-                                    <th>Statut</th>
+                                    <th class="text-center">DOMAINE</th>
+                                    <th class="text-center">MODULE</th>
+                                    <th class="text-center">CATEGORIE</th>
+                                    <th class="text-center">QUALIFICATION</th>
+                                    <th class="text-center">OPERATEUR</th>
+                                    <th class="text-center">STATUT</th>
                                     {{-- <th>Formations</th> --}}
-                                    <th><i class="bi bi-gear"></i></th>
+                                    <th class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($operateurmodules as $operateurmodule)
                                     <tr>
-                                        <td>{{ $operateurmodule?->module }}</td>
-                                        <td>{{ $operateurmodule?->niveau_qualification }}</td>
-                                        <td>{{ $operateurmodule?->domaine }}</td>
-                                        <td>{{ $operateurmodule?->operateur?->sigle }}</td>
+                                        <td style="text-align: center;">{{ $operateurmodule?->domaine }}</td>
+                                        <td style="text-align: center;">{{ $operateurmodule?->module }}</td>
+                                        <td style="text-align: center;">{{ $operateurmodule?->categorie }}</td>
+                                        <td style="text-align: center;">{{ $operateurmodule?->niveau_qualification }}</td>
+                                        <td style="text-align: center;">{{ $operateurmodule?->operateur?->sigle }}</td>
+                                        <td style="text-align: center;">
+                                            <span
+                                                class="{{ $operateurmodule?->statut }}">{{ $operateurmodule?->statut }}</span>
+                                        </td>                                        
                                         <td>
-                                            {{--  @foreach ($operateurmodule->moduleoperateurstatuts as $moduleoperateurstatut)
-                                                @if ($loop->last)
-                                                    <span class="badge bg-info">{{ $moduleoperateurstatut->statut }}</span>
-                                                @endif
-                                            @endforeach --}}
-                                            @if ($operateurmodule?->statut == 'agréer')
-                                                <span class="badge bg-success">{{ $operateurmodule->statut }}</span>
-                                            @elseif($operateurmodule?->statut == 'rejeter')
-                                                <span class="badge bg-danger">{{ $operateurmodule->statut }}</span>
-                                            @elseif($operateurmodule?->statut == 'attente')
-                                                <span class="badge bg-secondary">{{ $operateurmodule->statut }}</span>
-                                            @else
-                                                {{ $operateurmodule->statut }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <span class="d-flex align-items-baseline"><a
+                                            <span class="d-flex align-items-baseline justify-content-center"><a
                                                     href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
                                                     class="btn btn-primary btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
@@ -117,7 +107,7 @@
         @foreach ($operateurmodules as $operateurmodule)
             <div class="modal fade" id="EditOperateurmoduleModal{{ $operateurmodule->id }}" tabindex="-1" role="dialog"
                 aria-labelledby="EditOperateurmoduleModalLabel{{ $operateurmodule->id }}" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         {{-- <form method="POST" action="#">
                             @csrf --}}
@@ -126,48 +116,79 @@
                             @csrf
                             @method('patch')
                             <div class="modal-header" id="EditOperateurmoduleModalLabel{{ $operateurmodule->id }}">
-                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module
+                                <h5 class="modal-title">Modification module
                                     opérateur</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="id" value="{{ $operateurmodule->id }}">
-                                <div class="form-floating mb-3">
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="module" class="form-label">Module<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="module"
-                                        value="{{ $operateurmodule?->module ?? old('module') }}"
+                                        value="{{ $operateurmodule->module ?? old('module') }}"
                                         class="form-control form-control-sm @error('module') is-invalid @enderror"
-                                        placeholder="Module" autofocus>
+                                        placeholder="module">
                                     @error('module')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Module</label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="niveau_qualification"
-                                        value="{{ $operateurmodule->niveau_qualification ?? old('niveau_qualification') }}"
-                                        class="form-control form-control-sm @error('niveau_qualification') is-invalid @enderror"
-                                        id="niveau_qualification" placeholder="Niveau qualification">
-                                    @error('niveau_qualification')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Niveau qualification</label>
-                                </div>
-                                <div class="form-floating mb-3">
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="domaine" class="form-label">Domaine<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="domaine"
                                         value="{{ $operateurmodule->domaine ?? old('domaine') }}"
                                         class="form-control form-control-sm @error('domaine') is-invalid @enderror"
-                                        id="domaine" placeholder="Domaine">
+                                        placeholder="domaine">
                                     @error('domaine')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Domaine</label>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="categorie" class="form-label">Catégorie<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="categorie"
+                                        value="{{ $operateurmodule->categorie ?? old('categorie') }}"
+                                        class="form-control form-control-sm @error('categorie') is-invalid @enderror"
+                                        placeholder="categorie">
+                                    @error('categorie')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="niveau_qualification" class="form-label">Niveau de qualification<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="niveau_qualification" class="form-select selectpicker"
+                                        data-live-search="true @error('niveau_qualification') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-niveau_qualification-update"
+                                        data-placeholder="Choisir niveau qualification">
+                                        <option value="{{ $operateurmodule->niveau_qualification }}">
+                                            {{ $operateurmodule->niveau_qualification ?? old('niveau_qualification') }}
+                                        </option>
+                                        <option value="Initiation">
+                                            Initiation
+                                        </option>
+                                        <option value="Pré-qualification">
+                                            Pré-qualification
+                                        </option>
+                                        <option value="Qualification">
+                                            Qualification
+                                        </option>
+                                    </select>
+                                    @error('niveau_qualification')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="modal-footer">

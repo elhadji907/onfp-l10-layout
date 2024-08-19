@@ -335,7 +335,7 @@ class IndividuelleController extends Controller
 
         $demandeur_ind  = Individuelle::where('users_id', $user->id)->get();
 
-        if ($individuelle->module->name == $module_find->name) {
+        if (isset($individuelle->module) && ($individuelle->module->name == $module_find->name)) {
             $individuelle->update([
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'fixe'                              =>  $request->input('telephone_secondaire'),

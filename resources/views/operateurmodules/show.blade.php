@@ -42,12 +42,12 @@
                         <table class="table datatables align-middle" id="table-operateurs">
                             <thead>
                                 <tr>
-                                    <th>N° agrément</th>
-                                    <th>Opérateurs</th>
-                                    <th>Sigle</th>
+                                    <th class="text-center">N° agrément</th>
+                                    <th class="text-center">Opérateurs</th>
+                                    <th class="text-center">Sigle</th>
                                     <th class="text-center">Modules</th>
                                     <th class="text-center">Formations</th>
-                                    <th><i class="bi bi-gear"></i></th>
+                                    <th class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,10 +55,10 @@
                                 @foreach ($operateurmodules as $operateurmodule)
                                     @isset($operateurmodule?->operateur?->numero_agrement)
                                         <tr>
-                                            <td>{{ $operateurmodule?->operateur?->numero_agrement }}
+                                            <td style="text-align: center;">{{ $operateurmodule?->operateur?->numero_agrement }}
                                             </td>
-                                            <td>{{ $operateurmodule?->operateur?->name }}</td>
-                                            <td>{{ $operateurmodule?->operateur?->sigle }}</td>
+                                            <td style="text-align: center;">{{ $operateurmodule?->operateur?->name }}</td>
+                                            <td style="text-align: center;">{{ $operateurmodule?->operateur?->sigle }}</td>
                                             <td style="text-align: center;">
                                                 @foreach ($operateurmodule?->operateur?->operateurmodules as $operateurmodule)
                                                     @if ($loop->last)
@@ -75,8 +75,8 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td>
-                                                <span class="d-flex align-items-baseline"><a
+                                            <td style="text-align: center;">
+                                                <span class="d-flex align-items-baseline justify-content-center"><a
                                                         href="{{ route('operateurs.show', $operateurmodule?->operateur?->id) }}"
                                                         class="btn btn-primary btn-sm" title="voir détails"><i
                                                             class="bi bi-eye"></i></a>

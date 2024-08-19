@@ -75,7 +75,7 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#foration-overview">Formations</button>
+                                        data-bs-target="#formation-overview">Formations</button>
                                 </li>
 
                             </ul>
@@ -215,7 +215,7 @@
                                         </div>
 
                                         <table
-                                            class="table datatables align-middle justify-content-center table-borderless">
+                                            class="table table-bordered datatables align-middle justify-content-center table-borderless">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">DENOMINATION L'ORGANISME</th>
@@ -284,14 +284,14 @@
                                             </h5>
                                         </div>
                                         <table
-                                            class="table datatables align-middle justify-content-center table-borderless">
+                                            class="table table-bordered datatables align-middle justify-content-center table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">DESIGNATION</th>
-                                                    <th scope="col">QUANTITE</th>
-                                                    <th scope="col">ETAT</th>
-                                                    <th scope="col">TYPE</th>
-                                                    {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
+                                                    <th>DESIGNATION</th>
+                                                    <th class="text-center">QUANTITE</th>
+                                                    <th class="text-center">ETAT</th>
+                                                    <th class="text-center">TYPE</th>
+                                                    {{-- <th class="text-center"><i class="bi bi-gear"></i></th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -299,9 +299,9 @@
                                                 @foreach ($operateur->operateurequipements as $operateurequipement)
                                                     <tr>
                                                         <td>{{ $operateurequipement->designation }}</td>
-                                                        <td>{{ $operateurequipement->quantite }}</td>
-                                                        <td>{{ $operateurequipement->etat }}</td>
-                                                        <td>{{ $operateurequipement->type }}</td>
+                                                        <td style="text-align: center;">{{ $operateurequipement->quantite }}</td>
+                                                        <td style="text-align: center;">{{ $operateurequipement->etat }}</td>
+                                                        <td style="text-align: center;">{{ $operateurequipement->type }}</td>
                                                         {{-- <td>
                                                             <span class="d-flex align-items-baseline">
                                                                 <a href="{{ route('operateurequipements.show', $operateurequipement->id) }}"
@@ -356,14 +356,14 @@
                                             </h5>
                                         </div>
                                         <table
-                                            class="table datatables align-middle justify-content-center table-borderless">
+                                            class="table table-bordered datatables align-middle justify-content-center">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">PRENOM(S) ET NOM</th>
-                                                    <th scope="col">CHAMPS PROFESSIONNELS</th>
-                                                    <th scope="col">NOMBRE D'ANNEES D'EXPERIENCE</th>
-                                                    <th scope="col">REFERENCES</th>
-                                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                                    <th>PRENOM(S) ET NOM</th>
+                                                    <th>CHAMPS PROFESSIONNELS</th>
+                                                    <th class="text-center">NOMBRE D'ANNEES D'EXPERIENCE</th>
+                                                    <th>REFERENCES</th>
+                                                    <th class="text-center"><i class="bi bi-gear"></i></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -372,9 +372,9 @@
                                                     <tr>
                                                         <td>{{ $operateurformateur->name }}</td>
                                                         <td>{{ $operateurformateur->domaine }}</td>
-                                                        <td>{{ $operateurformateur->nbre_annees_experience }}</td>
+                                                        <td style="text-align: center;">{{ $operateurformateur->nbre_annees_experience }}</td>
                                                         <td>{{ $operateurformateur->references }}</td>
-                                                        <td>
+                                                        <td style="text-align: center;">
                                                             <span class="d-flex align-items-baseline">
                                                                 <a href="{{ route('operateurformateurs.show', $operateurformateur->id) }}"
                                                                     class="btn btn-primary btn-sm" title="voir détails"><i
@@ -539,7 +539,7 @@
                                             class="row g-3"> --}}
                                         <div class="row g-3">
                                             <table
-                                                class="table datatables align-middle justify-content-center table-borderless"
+                                                class="table table-bordered datatables align-middle justify-content-center"
                                                 id="table-operateurModules">
                                                 <thead>
                                                     <tr>
@@ -548,8 +548,8 @@
                                                         <th scope="col">MODULE</th>
                                                         <th scope="col">CATEGORIE</th>
                                                         <th scope="col">QUALIFICATION</th>
-                                                        <th scope="col">STATUT</th>
-                                                        <th class="col"><i class="bi bi-gear"></i></th>
+                                                        <th class="text-center">STATUT</th>
+                                                        <th class="text-center"><i class="bi bi-gear"></i></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -561,12 +561,12 @@
                                                             <td>{{ $operateurmodule?->module }}</td>
                                                             <td>{{ $operateurmodule?->categorie }}</td>
                                                             <td>{{ $operateurmodule?->niveau_qualification }}</td>
-                                                            <td>
+                                                            <td style="text-align: center;">
                                                                 <span
                                                                     class="{{ $operateurmodule?->statut }}">{{ $operateurmodule?->statut }}</span>
                                                             </td>
-                                                            <td>
-                                                                <span class="d-flex align-items-baseline">
+                                                            <td style="text-align: center;">
+                                                                <span class="d-flex align-items-baseline justify-content-center">
                                                                     <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
                                                                         class="btn btn-primary btn-sm"
                                                                         title="voir détails"><i class="bi bi-eye"></i></a>
@@ -616,9 +616,10 @@
                             </div>
                             {{-- Détail Formations --}}
                             <div class="tab-content">
-                                <div class="tab-pane fade profile-overview pt-1" id="foration-overview">
-                                    <h5 class="card-title">Liste des formations</h5>
-                                    <table class="table datatables" id="table-formations">
+                                <div class="tab-pane fade profile-overview pt-0" id="formation-overview">
+                                    <h5 class="card-title">FORMATIONS</h5>
+                                    <table class="table table-bordered datatables  align-middle justify-content-center"
+                                        id="table-formations">
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
@@ -629,7 +630,7 @@
                                                 {{-- <th>Niveau qualification</th> --}}
                                                 <th>Effectif</th>
                                                 <th>Statut</th>
-                                                <th>#</th>
+                                                <th class="text-center"><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>

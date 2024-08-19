@@ -47,14 +47,14 @@
                             </h5>
                         </div>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center table-borderless">
+                        <table class="table table-bordered datatables align-middle justify-content-center table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">DENOMINATION L'ORGANISME</th>
-                                    <th scope="col">CONTACTS</th>
-                                    <th scope="col">PERIODES D'INTERVENTION</th>
-                                    <th scope="col">DESCRIPTION DES INTERVENTIONS</th>
-                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                    <th>DENOMINATION L'ORGANISME</th>
+                                    <th class="text-center">CONTACTS</th>
+                                    <th>PERIODES D'INTERVENTION</th>
+                                    <th>DESCRIPTION DES INTERVENTIONS</th>
+                                    <th class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,11 +62,11 @@
                                 @foreach ($operateur->operateureferences as $operateureference)
                                     <tr>
                                         <td>{{ $operateureference?->organisme }}</td>
-                                        <td>{{ $operateureference?->contact }}</td>
+                                        <td style="text-align: center;">{{ $operateureference?->contact }}</td>
                                         <td>{{ $operateureference?->periode }}</td>
                                         <td>{{ $operateureference?->description }}</td>
                                         <td style="text-align: center;">
-                                            <span class="d-flex mt-2 align-items-baseline"><a href=""
+                                            <span class="d-flex align-items-baseline justify-content-center"><a href=""
                                                     class="btn btn-outline-info btn-sm mx-1" title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
                                                 <div class="filter">

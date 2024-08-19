@@ -50,7 +50,7 @@
                                 Bienvenue {{ Auth::user()->civilite . ' ' . Auth::user()->name }}</h5>
                             <!-- demande -->
                             <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
-                                <table class="table table-borderless">
+                                <table class="table table-bordered table-borderless">
                                     <thead>
                                         <tr>
                                             <th scope="col">N° demande</th>

@@ -47,28 +47,28 @@
                             </h5>
                         </div>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center table-borderless">
+                        <table class="table table-bordered datatables align-middle justify-content-center table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">N°</th>
-                                    <th scope="col">PRENOM(S) ET NOM</th>
-                                    <th scope="col">CHAMPS PROFESSIONNELS</th>
-                                    <th scope="col">NOMBRE D'ANNEES D'EXPERIENCE</th>
-                                    <th scope="col">REFERENCES</th>
-                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                    <th class="text-center">N°</th>
+                                    <th>PRENOM(S) ET NOM</th>
+                                    <th>CHAMPS PROFESSIONNELS</th>
+                                    <th class="text-center">NOMBRE D'ANNEES D'EXPERIENCE</th>
+                                    <th>REFERENCES</th>
+                                    <th class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($operateur->operateurformateurs as $operateurformateur)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td style="text-align: center;">{{ $i++ }}</td>
                                         <td>{{ $operateurformateur->name }}</td>
                                         <td>{{ $operateurformateur->domaine }}</td>
-                                        <td>{{ $operateurformateur->nbre_annees_experience }}</td>
+                                        <td style="text-align: center;">{{ $operateurformateur->nbre_annees_experience }}</td>
                                         <td>{{ $operateurformateur->references }}</td>
                                         <td style="text-align: center;">
-                                            <span class="d-flex mt-2 align-items-baseline"><a href=""
+                                            <span class="d-flex align-items-baseline justify-content-center"><a href=""
                                                     class="btn btn-outline-info btn-sm mx-1" title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
                                                 <div class="filter">

@@ -47,28 +47,28 @@
                             </h5>
                         </div>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center table-borderless">
+                        <table class="table table-bordered datatables align-middle justify-content-center table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">N°</th>
-                                    <th scope="col">DESIGNATION</th>
-                                    <th scope="col">QUANTITE</th>
-                                    <th scope="col">ETAT</th>
-                                    <th scope="col">TYPE</th>
-                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                    <th class="text-center">N°</th>
+                                    <th>DESIGNATION</th>
+                                    <th class="text-center">QUANTITE</th>
+                                    <th class="text-center">ETAT</th>
+                                    <th class="text-center">TYPE</th>
+                                    <th class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($operateur->operateurequipements as $operateurequipement)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td style="text-align: center;">{{ $i++ }}</td>
                                         <td>{{ $operateurequipement->designation }}</td>
-                                        <td>{{ $operateurequipement->quantite }}</td>
-                                        <td>{{ $operateurequipement->etat }}</td>
-                                        <td>{{ $operateurequipement->type }}</td>
+                                        <td style="text-align: center;">{{ $operateurequipement->quantite }}</td>
+                                        <td style="text-align: center;">{{ $operateurequipement->etat }}</td>
+                                        <td style="text-align: center;">{{ $operateurequipement->type }}</td>
                                         <td style="text-align: center;">
-                                            <span class="d-flex mt-2 align-items-baseline"><a href=""
+                                            <span class="d-flex align-items-baseline justify-content-center"><a href=""
                                                     class="btn btn-outline-info btn-sm mx-1" title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
                                                 <div class="filter">
