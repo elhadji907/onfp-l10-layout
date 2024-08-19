@@ -194,6 +194,11 @@ class Operateur extends Model
 		return $this->hasMany(Operateurformateur::class, 'operateurs_id')->latest();
 	}
 
+	public function operateurlocalites()
+	{
+		return $this->hasMany(Operateurlocalite::class, 'operateurs_id')->latest();
+	}
+
 	public function operateurzones()
 	{
 		return $this->hasMany(Operateurzone::class, 'operateurs_id')->latest();

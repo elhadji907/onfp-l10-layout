@@ -47,7 +47,7 @@
                             </h5>
                         </div>
                         <!-- Table with stripped rows -->
-                        <table class="table table-bordered datatables align-middle justify-content-center table-borderless">
+                        <table class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
                             <thead>
                                 <tr>
                                     <th>DENOMINATION L'ORGANISME</th>

@@ -7,6 +7,8 @@ use App\Models\Operateur;
 use App\Models\Operateureference;
 use App\Models\Operateurequipement;
 use App\Models\Operateurformateur;
+use App\Models\Operateurlocalite;
+use App\Models\Region;
 use App\Models\User;
 use App\Models\Validationoperateur;
 use Illuminate\Http\Request;
@@ -223,6 +225,14 @@ class OperateurController extends Controller
         $operateurformateurs = Operateurformateur::get();
 
         return view('operateurformateurs.show', compact('operateur', 'operateurformateurs'));
+    }
+    public function showLocalite($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $operateurlocalites = Operateurlocalite::get();
+        $regions = Region::get();
+
+        return view('operateurlocalites.show', compact('operateur', 'operateurlocalites', 'regions'));
     }
 
     /* Validation automatique */

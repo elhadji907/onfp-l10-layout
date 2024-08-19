@@ -44,7 +44,7 @@
                             </button>
                         </div>
                         <h5 class="card-title">Liste des opérateurs</h5>
-                        <table class="table datatables align-middle table-striped" id="table-operateurs">
+                        <table class="table datatables table-bordered table-hover align-middle table-striped" id="table-operateurs">
                             <thead>
                                 <tr>
                                     <th>N° agrément</th>

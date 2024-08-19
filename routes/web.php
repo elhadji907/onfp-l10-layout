@@ -32,6 +32,7 @@ use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\OperateureferenceController;
 use App\Http\Controllers\OperateurequipementController;
 use App\Http\Controllers\OperateurformateurController;
+use App\Http\Controllers\OperateurlocaliteController;
 use App\Http\Controllers\OperateurmoduleController;
 use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
@@ -239,6 +240,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/showReference/{id}', [OperateurController::class, 'showReference'])->name('showReference');
     Route::get('/showEquipement/{id}', [OperateurController::class, 'showEquipement'])->name('showEquipement');
     Route::get('/showFormateur/{id}', [OperateurController::class, 'showFormateur'])->name('showFormateur');
+    Route::get('/showLocalite/{id}', [OperateurController::class, 'showLocalite'])->name('showLocalite');
     
     Route::put('/validateOperateur/{id}', [OperateurController::class, 'validateOperateur'])->name('validateOperateur');
     Route::put('/agreerOperateur/{id}', [OperateurController::class, 'agreerOperateur'])->name('agreerOperateur');
@@ -292,6 +294,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/operateureferences', OperateureferenceController::class);
     Route::resource('/operateurequipements', OperateurequipementController::class);
     Route::resource('/operateurformateurs', OperateurformateurController::class);
+    Route::resource('/operateurlocalites', OperateurlocaliteController::class);
 });
 
 

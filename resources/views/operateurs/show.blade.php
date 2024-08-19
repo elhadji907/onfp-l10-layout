@@ -75,6 +75,11 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#localites-overview">Localités</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#formation-overview">Formations</button>
                                 </li>
 
@@ -83,78 +88,80 @@
                             </div>
                             {{-- Détail opérateur --}}
                             <div class="tab-content pt-0">
-                                <div class="tab-pane fade profile-overview pt-3" id="profile-overview">
+                                <div class="tab-pane fade profile-overview" id="profile-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row">
                                         @csrf
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">Opérateur</h5>
                                         </div>
-                                        <div class="col-12 col-md-9 col-lg-9 mb-0">
+                                        <div class="col-12 col-md-12 col-lg-12 mb-2">
                                             <div class="label">Raison sociale</div>
                                             <div>{{ $operateur?->name }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Sigle</div>
                                             <div>{{ $operateur?->sigle }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Numéro agrément</div>
                                             <div>{{ $operateur?->numero_agrement }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Adresse email</div>
                                             <div><a href="mailto:{{ $operateur?->email1 }}">{{ $operateur?->email1 }}</a>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Téléphone fixe</div>
                                             <div><a href="tel:+221{{ $operateur?->fixe }}">{{ $operateur?->fixe }}</a>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Téléphone portable</div>
                                             <div><a
                                                     href="tel:+221{{ $operateur?->telephone1 }}">{{ $operateur?->telephone1 }}</a>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                            <div class="label">Boite postale</div>
-                                            <div>{{ $operateur?->user?->bp }}</div>
-                                        </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        @isset($operateur?->user?->bp)
+                                            <div class="col-12 col-md-4 col-lg-4 mb-2">
+                                                <div class="label">Boite postale</div>
+                                                <div>{{ $operateur?->user?->bp }}</div>
+                                            </div>
+                                        @endisset
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Catégorie</div>
                                             <div>{{ $operateur?->categorie }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Statut juridique</div>
                                             <div>{{ $operateur?->statut }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Autre statut</div>
                                             <div>{{ $operateur?->autre_statut }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Siège</div>
                                             <div>{{ $operateur?->departement?->nom }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Adrese</div>
                                             <div>{{ $operateur?->adresse }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">RCCM/Ninea</div>
                                             <div>{{ $operateur?->rccm }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">N° RCCM/Ninea</div>
                                             <div>{{ $operateur?->ninea }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Quitus</div>
                                             <div>{{ $operateur?->quitus }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4">
                                             <div class="label">Date délivrance quitus</div>
                                             <div>{{ $operateur?->debut_quitus?->diffForHumans() }}</div>
                                         </div>
@@ -163,30 +170,30 @@
                                         @csrf
                                         @method('PUT')
                                         <h5 class="card-title">Personne morale</h5>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4">
                                             <div class="label">Civilité</div>
                                             <div>{{ $operateur?->civilite_responsable }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Prénom</div>
                                             <div>{{ $operateur->prenom_responsable }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Nom</div>
                                             <div>{{ $operateur->nom_responsable }}</div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Email</div>
                                             <div><a href="mailto:{{ $operateur->email2 }}">{{ $operateur->email2 }}</a>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Téléphone</div>
                                             <div><a
                                                     href="tel:+221{{ $operateur->telephone2 }}">{{ $operateur->telephone2 }}</a>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Fonction responsable</div>
                                             <div>{{ $operateur->fonction_responsable }}</div>
                                         </div>
@@ -215,7 +222,7 @@
                                         </div>
 
                                         <table
-                                            class="table table-bordered datatables align-middle justify-content-center table-borderless">
+                                            class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">DENOMINATION L'ORGANISME</th>
@@ -284,7 +291,7 @@
                                             </h5>
                                         </div>
                                         <table
-                                            class="table table-bordered datatables align-middle justify-content-center table-borderless">
+                                            class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
                                             <thead>
                                                 <tr>
                                                     <th>DESIGNATION</th>
@@ -299,9 +306,12 @@
                                                 @foreach ($operateur->operateurequipements as $operateurequipement)
                                                     <tr>
                                                         <td>{{ $operateurequipement->designation }}</td>
-                                                        <td style="text-align: center;">{{ $operateurequipement->quantite }}</td>
-                                                        <td style="text-align: center;">{{ $operateurequipement->etat }}</td>
-                                                        <td style="text-align: center;">{{ $operateurequipement->type }}</td>
+                                                        <td style="text-align: center;">
+                                                            {{ $operateurequipement->quantite }}</td>
+                                                        <td style="text-align: center;">{{ $operateurequipement->etat }}
+                                                        </td>
+                                                        <td style="text-align: center;">{{ $operateurequipement->type }}
+                                                        </td>
                                                         {{-- <td>
                                                             <span class="d-flex align-items-baseline">
                                                                 <a href="{{ route('operateurequipements.show', $operateurequipement->id) }}"
@@ -355,15 +365,14 @@
                                                 </button> --}}
                                             </h5>
                                         </div>
-                                        <table
-                                            class="table table-bordered datatables align-middle justify-content-center">
+                                        <table class="table table-bordered table-hover datatables align-middle justify-content-center">
                                             <thead>
                                                 <tr>
                                                     <th>PRENOM(S) ET NOM</th>
                                                     <th>CHAMPS PROFESSIONNELS</th>
                                                     <th class="text-center">NOMBRE D'ANNEES D'EXPERIENCE</th>
                                                     <th>REFERENCES</th>
-                                                    <th class="text-center"><i class="bi bi-gear"></i></th>
+                                                    {{-- <th class="text-center"><i class="bi bi-gear"></i></th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -372,9 +381,10 @@
                                                     <tr>
                                                         <td>{{ $operateurformateur->name }}</td>
                                                         <td>{{ $operateurformateur->domaine }}</td>
-                                                        <td style="text-align: center;">{{ $operateurformateur->nbre_annees_experience }}</td>
-                                                        <td>{{ $operateurformateur->references }}</td>
                                                         <td style="text-align: center;">
+                                                            {{ $operateurformateur->nbre_annees_experience }}</td>
+                                                        <td>{{ $operateurformateur->references }}</td>
+                                                        {{-- <td style="text-align: center;">
                                                             <span class="d-flex align-items-baseline">
                                                                 <a href="{{ route('operateurformateurs.show', $operateurformateur->id) }}"
                                                                     class="btn btn-primary btn-sm" title="voir détails"><i
@@ -401,7 +411,47 @@
                                                                     </ul>
                                                                 </div>
                                                             </span>
-                                                        </td>
+                                                        </td> --}}
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade profile-overview pt-3" id="localites-overview">
+                                    <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">LOCALITES</h5>
+                                            <h5 class="card-title">
+                                                <a href="{{ route('showLocalite', ['id' => $operateur->id]) }}"
+                                                    class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                    target="_blank">
+                                                    <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
+                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
+                                                </button> --}}
+                                            </h5>
+                                        </div>
+                                        <table class="table table-bordered table-hover datatables align-middle justify-content-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">N°</th>
+                                                    <th>LOCALITE</th>
+                                                    <th>REGION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($operateur->operateurlocalites as $operateurlocalite)
+                                                    <tr>
+                                                        <td style="text-align: center;">{{ $i++ }}</td>
+                                                        <td>{{ $operateurlocalite->name }}</td>
+                                                        <td>{{ $operateurlocalite->region }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -417,7 +467,7 @@
                                         enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <table class="table table-bordered" id="dynamicAddRemove">
+                                            <table class="table table-bordered table-hover" id="dynamicAddRemove">
 
                                                 <tr>
                                                     <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
@@ -539,7 +589,7 @@
                                             class="row g-3"> --}}
                                         <div class="row g-3">
                                             <table
-                                                class="table table-bordered datatables align-middle justify-content-center"
+                                                class="table table-bordered table-hover datatables align-middle justify-content-center"
                                                 id="table-operateurModules">
                                                 <thead>
                                                     <tr>
@@ -566,7 +616,8 @@
                                                                     class="{{ $operateurmodule?->statut }}">{{ $operateurmodule?->statut }}</span>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <span class="d-flex align-items-baseline justify-content-center">
+                                                                <span
+                                                                    class="d-flex align-items-baseline justify-content-center">
                                                                     <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
                                                                         class="btn btn-primary btn-sm"
                                                                         title="voir détails"><i class="bi bi-eye"></i></a>
@@ -618,7 +669,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade profile-overview pt-0" id="formation-overview">
                                     <h5 class="card-title">FORMATIONS</h5>
-                                    <table class="table table-bordered datatables  align-middle justify-content-center"
+                                    <table class="table table-bordered table-hover datatables  align-middle justify-content-center"
                                         id="table-formations">
                                         <thead>
                                             <tr>

@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <h5 class="card-title">MODULE: {{ $modulename }}</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-operateurs">
+                        <table class="table datatables table-bordered table-hover align-middle" id="table-operateurs">
                             <thead>
                                 <tr>
                                     <th class="text-center">N° agrément</th>

@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Liste des modules opérateurs</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center" id="table-operateurModules">
+                        <table class="table datatables table-bordered table-hover align-middle justify-content-center" id="table-operateurModules">
                             <thead>
                                 <tr>
                                     <th class="text-center">DOMAINE</th>
