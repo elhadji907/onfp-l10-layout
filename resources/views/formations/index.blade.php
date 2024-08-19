@@ -69,7 +69,7 @@
                                 @foreach ($formations as $formation)
                                     <tr>
                                         <td>{{ $formation?->code }}</td>
-                                        <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
+                                        <td><a>{{ $formation->types_formation?->name }}</a></td>
                                         <td>{{ $formation?->name }}</td>
                                         <td>{{ $formation->departement?->region?->nom }}</td>
                                         <td>
@@ -89,7 +89,7 @@
                                                 @endif
                                             @endforeach
                                         </td> --}}
-                                        <td class="text-center"><a href="#"><span
+                                        <td class="text-center"><a><span
                                                     class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
                                         </td>
                                         <td>

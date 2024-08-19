@@ -6,6 +6,7 @@ use App\Models\Moduleoperateurstatut;
 use App\Models\Operateur;
 use App\Models\Operateurmodule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OperateurmoduleController extends Controller
@@ -32,9 +33,19 @@ class OperateurmoduleController extends Controller
         ]);
 
         $total_module = Operateurmodule::where('operateurs_id', $request->input('operateur'))->count();
+        $operateurmodule_find    = DB::table('operateurmodules')->where('module', $request->input("module"))->first();
+        $operateur_find = Operateurmodule::where('operateurs_id', $request->input('operateur'))->get();
 
         $operateur = Operateur::findOrFail($request->input('operateur'));
-        if ($operateur->categorie == 'Privé' && $total_module >= 2) {
+
+        if (isset($operateurmodule_find)) {
+            foreach ($operateur_find as $key => $value) {
+                if ($value->module == $operateurmodule_find->module) {
+                    Alert::warning('Attention ! ' . $value->module, 'a déjà été choisi');
+                    return redirect()->back();
+                }
+            }
+        } elseif ($operateur->categorie == 'Privé' && $total_module >= 2) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
             return redirect()->back();
         } elseif ($total_module >= 10) {
@@ -71,23 +82,49 @@ class OperateurmoduleController extends Controller
     {
         $operateurmodule = Operateurmodule::findOrFail($id);
 
+        $operateurmodule_find    = DB::table('operateurmodules')->where('module', $request->input("module"))->first();
+
+        $operateur_find  = Operateurmodule::where('operateurs_id', $operateurmodule->operateurs_id)->get();
+
         $this->validate($request, [
             'module'                => 'required|string',
             'domaine'               => 'required|string',
             'niveau_qualification'  => 'required|string',
         ]);
 
-        $operateurmodule->update([
-            "module"                =>  $request->input("module"),
-            "domaine"               =>  $request->input("domaine"),
-            "categorie"             =>  $request->input("categorie"),
-            'niveau_qualification'  =>  $request->input('niveau_qualification'),
-            'operateurs_id'         =>  $operateurmodule->operateurs_id,
-        ]);
 
-        Alert::success($operateurmodule->module, 'mis à jour');
+        if (isset($operateurmodule_find)) {
+            foreach ($operateur_find as $value) {
+                if (($value->module == $operateurmodule_find->module) && ($operateurmodule_find->id != $id)) {
+                    Alert::warning('Attention ! le module ' . $value->module, 'a déjà été choisi');
+                    return redirect()->back();
+                } else {
+                    $operateurmodule->update([
+                        "module"                =>  $request->input("module"),
+                        "domaine"               =>  $request->input("domaine"),
+                        "categorie"             =>  $request->input("categorie"),
+                        'niveau_qualification'  =>  $request->input('niveau_qualification'),
+                        'operateurs_id'         =>  $operateurmodule->operateurs_id,
+                    ]);
 
-        return redirect()->back();
+                    Alert::success($operateurmodule->module, 'mis à jour');
+
+                    return redirect()->back();
+                }
+            }
+        } else {
+            $operateurmodule->update([
+                "module"                =>  $request->input("module"),
+                "domaine"               =>  $request->input("domaine"),
+                "categorie"             =>  $request->input("categorie"),
+                'niveau_qualification'  =>  $request->input('niveau_qualification'),
+                'operateurs_id'         =>  $operateurmodule->operateurs_id,
+            ]);
+
+            Alert::success($operateurmodule->module, 'mis à jour');
+
+            return redirect()->back();
+        }
     }
 
     public function show($id)

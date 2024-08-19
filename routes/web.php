@@ -220,6 +220,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/demandesCollectives', [CollectiveController::class, 'demandesCollective'])->name('demandesCollective');
 
     Route::post('/autocomplete/fetch', [OperateurController::class, 'fetch'])->name('autocomplete.fetch');
+    Route::post('/autocomplete/fetchModuleOperateur', [OperateurController::class, 'fetchModuleOperateur'])->name('autocomplete.fetchModuleOperateur');
 
     Route::post('/formationTerminer', [FormationController::class, 'formationTerminer'])->name('formationTerminer');
 

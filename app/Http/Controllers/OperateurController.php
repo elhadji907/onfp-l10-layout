@@ -8,6 +8,7 @@ use App\Models\Operateureference;
 use App\Models\Operateurequipement;
 use App\Models\Operateurformateur;
 use App\Models\Operateurlocalite;
+use App\Models\Operateurmodule;
 use App\Models\Region;
 use App\Models\User;
 use App\Models\Validationoperateur;
@@ -167,7 +168,7 @@ class OperateurController extends Controller
             "users_id"             =>       $user->id
         ]);
 
-        Alert::success("L'opérateur " . $operateur->name, ' a été modifié avec succès');
+        Alert::success("L'opérateur " . $operateur->sigle, ' a été modifié avec succès');
 
         return redirect()->back();
     }
@@ -199,6 +200,40 @@ class OperateurController extends Controller
             foreach ($data as $row) {
                 $output .= '
                 <li><a class="dropdown-item" href="#">' . $row->name . '</a></li>
+                ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
+    }
+    function fetchModuleOperateur(Request $request)
+    {
+        if ($request->get('query')) {
+            $query = $request->get('query');
+            $data = DB::table('operateurmodules')
+                ->where('module', 'LIKE', "%{$query}%")
+                ->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            foreach ($data as $row) {
+                $output .= '
+                <li><a class="dropdown-item" href="#">' . $row->module . '</a></li>
+                ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
+    }
+    function fetchOperateurModule(Request $request)
+    {
+        if ($request->get('query')) {
+            $query = $request->get('query');
+            $data = DB::table('operateurmodules')
+                ->where('module', 'LIKE', "%{$query}%")
+                ->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            foreach ($data as $row) {
+                $output .= '
+                <li><a class="dropdown-item" href="#">' . $row->module . '</a></li>
                 ';
             }
             $output .= '</ul>';

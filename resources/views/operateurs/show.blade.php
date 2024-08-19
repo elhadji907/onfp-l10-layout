@@ -365,7 +365,8 @@
                                                 </button> --}}
                                             </h5>
                                         </div>
-                                        <table class="table table-bordered table-hover datatables align-middle justify-content-center">
+                                        <table
+                                            class="table table-bordered table-hover datatables align-middle justify-content-center">
                                             <thead>
                                                 <tr>
                                                     <th>PRENOM(S) ET NOM</th>
@@ -437,7 +438,8 @@
                                                 </button> --}}
                                             </h5>
                                         </div>
-                                        <table class="table table-bordered table-hover datatables align-middle justify-content-center">
+                                        <table
+                                            class="table table-bordered table-hover datatables align-middle justify-content-center">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">N°</th>
@@ -477,10 +479,10 @@
                                                 <tr>
                                                     <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                                                     <td>
-                                                        <input type="text" name="module" id="module_name"
+                                                        <input type="text" name="module" id="module_operateur"
                                                             class="form-control form-control-sm"
                                                             placeholder="Module ou spécialité" />
-                                                        <div id="countryList"></div>
+                                                        <div id="moduleList"></div>
                                                         {{ csrf_field() }}
                                                         <p class="small fst-italic">
                                                             <small>{{ __('Le nombre de modules est limité à deux') }}</small>
@@ -669,7 +671,8 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade profile-overview pt-0" id="formation-overview">
                                     <h5 class="card-title">FORMATIONS</h5>
-                                    <table class="table table-bordered table-hover datatables  align-middle justify-content-center"
+                                    <table
+                                        class="table table-bordered table-hover datatables  align-middle justify-content-center"
                                         id="table-formations">
                                         <thead>
                                             <tr>
@@ -693,16 +696,28 @@
                                                     </td>
                                                     <td>{{ $formation?->name }}</td>
                                                     <td>{{ $formation->departement?->region?->nom }}</td>
-                                                    <td>{{ $formation->collectivemodule->module }}</td>
-                                                    {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
-                                                    <td class="text-center">
-                                                        @foreach ($formation->listecollectives as $listecollective)
-                                                            @if ($loop->last)
-                                                                <a class="text-primary fw-bold"
-                                                                    href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
-                                                            @endif
-                                                        @endforeach
-                                                    </td>
+                                                    @isset($formation?->collectivemodule?->module)
+                                                        <td>{{ $formation->collectivemodule->module }}</td>
+                                                        <td class="text-center">
+                                                            @foreach ($formation->listecollectives as $listecollective)
+                                                                @if ($loop->last)
+                                                                    <a class="text-primary fw-bold"
+                                                                        href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                    @endisset
+                                                    @isset($formation?->module?->name)
+                                                        <td>{{ $formation->module->name }}</td>
+                                                        <td class="text-center">
+                                                            @foreach ($formation->individuelles as $individuelle)
+                                                                @if ($loop->last)
+                                                                    <a class="text-primary fw-bold"
+                                                                        href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                    @endisset
                                                     <td><a href="#">
                                                             <span
                                                                 class="{{ $formation?->statut }}">{{ $formation?->statut }}</span>
@@ -779,10 +794,12 @@
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="module" class="form-label">Module<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="module"
+                                    <input type="text" name="module" id="module_operateur_edit"
                                         value="{{ $operateurmodule->module ?? old('module') }}"
                                         class="form-control form-control-sm @error('module') is-invalid @enderror"
                                         placeholder="module">
+                                        <div id="moduleListEdit"></div>
+                                        {{ csrf_field() }}
                                     @error('module')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
