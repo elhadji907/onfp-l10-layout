@@ -43,16 +43,16 @@
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
                             </button>
                         </div>
-                        <h5 class="card-title">Liste des opérateurs</h5>
+                        <h5 class="card-title">Agrément opérateurs</h5>
                         <table class="table datatables table-bordered table-hover align-middle table-striped"
                             id="table-operateurs">
                             <thead>
                                 <tr>
-                                    <th width="15%">N° agrément</th>
-                                    <th width="45%">Opérateurs</th>
+                                    {{-- <th width="15%">N° courrier</th> --}}
+                                    <th width="5%" class="text-center">Année</th>
+                                    <th width="5%" class="text-center">Type</th>
+                                    <th width="60%">Opérateurs</th>
                                     <th width="10%">Sigle</th>
-                                    <th width="5%" class="text-center">Modules</th>
-                                    <th width="5%" class="text-center">Formations</th>
                                     <th width="15%" class="text-center">Statut</th>
                                     <th width="5%"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -62,30 +62,17 @@
                                 @foreach ($operateurs as $operateur)
                                     @isset($operateur?->numero_agrement)
                                         <tr>
-                                            <td>{{ $operateur?->numero_agrement }}</td>
+                                            {{-- <td>{{ $operateur?->courrier?->numero }}</td> --}}
+                                            <td style="text-align: center">{{ $operateur?->annee_agrement?->format('Y') }}</td>
+                                            <td style="text-align: center"><span class="{{ $operateur->type_demande }}">
+                                                    {{ $operateur?->type_demande }}</span></td>
                                             <td>{{ $operateur?->name }}</td>
                                             <td>{{ $operateur?->sigle }}</td>
-                                            <td style="text-align: center;">
-                                                @foreach ($operateur->operateurmodules as $operateurmodule)
-                                                    @if ($loop->last)
-                                                        <a href="#"><span
-                                                                class="badge bg-info">{{ $loop->count }}</span></a>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td class="text-center">
-                                                @foreach ($operateur->formations as $formation)
-                                                    @if ($loop->last)
-                                                        <a href="#"><span
-                                                                class="badge bg-info">{{ $loop->count }}</span></a>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td style="text-align: center;"><span class="{{ $operateur->statut_agrement }}">
+                                            <td style="text-align: center"><span class="{{ $operateur->statut_agrement }}">
                                                     {{ $operateur?->statut_agrement }}</span></td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('operateurs.show', $operateur->id) }}"
+                                                        href="{{ route('showAgrement', ['id' => $operateur->id]) }}"
                                                         class="btn btn-primary btn-sm" target="_blank" title="voir détails"><i
                                                             class="bi bi-eye"></i></a>
                                                     <div class="filter">
@@ -136,7 +123,7 @@
             <div class="modal fade" id="AddOperateurModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('addOperateur') }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('operateurs.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau
@@ -146,7 +133,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-8 col-lg-8 mb-0">
                                         <label for="name" class="form-label">Raison sociale opérateur<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="name" id="name" rows="1"
@@ -309,20 +296,6 @@
                                             </span>
                                         @enderror
                                     </div>
-
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="adresse" class="form-label">Adresse<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <textarea name="adresse" id="adresse" rows="1"
-                                            class="form-control form-control-sm @error('adresse') is-invalid @enderror"
-                                            placeholder="Adresse exacte de l'opérateur">{{ old('adresse') }}</textarea>
-                                        @error('adresse')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="departement" class="form-label">Siège social<span
                                                 class="text-danger mx-1">*</span></label>
@@ -337,6 +310,19 @@
                                             @endforeach
                                         </select>
                                         @error('departement')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="adresse" class="form-label">Adresse<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="adresse" value="{{ old('adresse') }}"
+                                            class="form-control form-control-sm @error('adresse') is-invalid @enderror"
+                                            id="adresse" placeholder="adresse">
+                                        @error('adresse')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -543,14 +529,15 @@
                                 @csrf
                                 @method('patch')
                                 <div class="modal-header">
-                                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Modification opérateur</h5>
+                                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau
+                                        opérateur</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="id" value="{{ $operateur->id }}">
                                     <div class="row g-3">
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <div class="col-12 col-md-8 col-lg-8 mb-0">
                                             <label for="name" class="form-label">Raison sociale opérateur<span
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="name" id="name" rows="1"
@@ -719,24 +706,6 @@
                                                 </span>
                                             @enderror
                                         </div>
-
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <label for="adresse" class="form-label">Adresse<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            {{-- <input type="text" name="adresse"
-                                                value="{{ $operateur?->adresse ?? old('adresse') }}"
-                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror"
-                                                id="adresse" placeholder="adresse"> --}}
-                                                <textarea name="adresse" id="adresse" rows="1"
-                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror"
-                                                placeholder="Adresse exacte opérateur">{{ $operateur->adresse ?? old('adresse') }}</textarea>
-                                            @error('adresse')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="departement" class="form-label">Siège social<span
                                                     class="text-danger mx-1">*</span></label>
@@ -754,6 +723,20 @@
                                                 @endforeach
                                             </select>
                                             @error('departement')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                            <label for="adresse" class="form-label">Adresse<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <input type="text" name="adresse"
+                                                value="{{ $operateur?->adresse ?? old('adresse') }}"
+                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror"
+                                                id="adresse" placeholder="adresse">
+                                            @error('adresse')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
@@ -969,7 +952,7 @@
                 }
             },
             "order": [
-                [0, 'desc']
+                [4, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

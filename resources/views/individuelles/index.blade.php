@@ -416,7 +416,7 @@
                                             data-placeholder="Choisir la localité">
                                             <option value="">{{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
-                                                <option value="{{ $departement->id }}">
+                                                <option value="{{ $departement->nom }}">
                                                     {{ $departement->nom }}
                                                 </option>
                                             @endforeach

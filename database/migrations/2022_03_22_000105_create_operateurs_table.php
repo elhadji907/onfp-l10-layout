@@ -47,6 +47,7 @@ class CreateOperateursTable extends Migration
             $table->string('email1', 200)->nullable();
             $table->string('email2', 200)->nullable();
             $table->string('adresse', 200)->nullable();
+            $table->string('commission', 200)->nullable();
             $table->string('civilite_responsable')->nullable(true);
             $table->string('nom_responsable', 200)->nullable();
             $table->string('prenom_responsable', 200)->nullable();
@@ -57,6 +58,7 @@ class CreateOperateursTable extends Migration
             $table->string('statut_agrement', 200)->nullable();
             $table->string('statut', 200)->nullable();
             $table->string('autre_statut', 200)->nullable();
+            $table->string('type_demande', 200)->nullable();
             $table->string('web', 200)->nullable();
             $table->longText('motif')->nullable();
             $table->unsignedInteger('users_id')->nullable();
@@ -67,6 +69,8 @@ class CreateOperateursTable extends Migration
             $table->unsignedInteger('courriers_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('departements_id')->nullable();
+            $table->unsignedInteger('commissionagrements_id')->nullable();
+            $table->unsignedInteger('historiqueagrements_id')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();
@@ -93,6 +97,7 @@ class CreateOperateursTable extends Migration
             $table->index(["communes_id"], 'fk_operateurs_communes1_idx');
 
             $table->index(["departements_id"], 'fk_operateurs_departements1_idx');
+
             $table->softDeletes();
             $table->nullableTimestamps();
 

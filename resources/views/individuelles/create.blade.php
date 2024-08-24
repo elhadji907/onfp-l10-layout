@@ -331,7 +331,7 @@
                                         <option value="{{ Auth::user()->demandeur?->departement?->id }}">
                                             {{ Auth::user()->demandeur?->departement?->nom }}</option>
                                         @foreach ($departements as $departement)
-                                            <option value="{{ $departement->id }}">
+                                            <option value="{{ $departement->nom }}">
                                                 {{ $departement->nom }}
                                             </option>
                                         @endforeach

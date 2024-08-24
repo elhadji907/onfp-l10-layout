@@ -209,16 +209,11 @@
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
-                                            <h5 class="card-title">
+                                            {{-- <h5 class="card-title">
                                                 <a href="{{ route('showReference', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
-                                                    <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                                    <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a> --}}
                                         </div>
 
                                         <table
@@ -279,16 +274,12 @@
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
-                                            <h5 class="card-title">
+                                            {{--  <h5 class="card-title">
                                                 <a href="{{ route('showEquipement', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                            </h5> --}}
                                         </div>
                                         <table
                                             class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
@@ -354,16 +345,12 @@
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">FORMATEURS</h5>
-                                            <h5 class="card-title">
+                                            {{-- <h5 class="card-title">
                                                 <a href="{{ route('showFormateur', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                            </h5> --}}
                                         </div>
                                         <table
                                             class="table table-bordered table-hover datatables align-middle justify-content-center">
@@ -427,16 +414,12 @@
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">LOCALITES</h5>
-                                            <h5 class="card-title">
+                                            {{-- <h5 class="card-title">
                                                 <a href="{{ route('showLocalite', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                            </h5> --}}
                                         </div>
                                         <table
                                             class="table table-bordered table-hover datatables align-middle justify-content-center">
@@ -465,7 +448,7 @@
                             {{-- class show et active pour l'affichage par défaut --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade show active profile-overview pt-3" id="module-overview">
-                                    <form method="post" action="{{ url('operateurmodules') }}"
+                                    {{-- <form method="post" action="{{ url('operateurmodules') }}"
                                         enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
@@ -537,31 +520,36 @@
                                             </div>
                                         </div>
 
-                                    </form><!-- End module -->
+                                    </form> --}}
+                                    <!-- End module -->
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
+                                            <h5>Type: <span
+                                                    class="{{ $operateur->type_demande }}">{{ $operateur->type_demande }}</span>
+                                            </h5>
                                             <span class="card-title d-flex align-items-baseline">Statut
                                                 :&nbsp;
                                                 <span class="{{ $operateur->statut_agrement }} text-white">
                                                     {{ $operateur?->statut_agrement }}</span>
-                                                {{-- <div class="filter">
+                                                <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"> --}}
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
-                                                {{-- Validation automatique --}}
-                                                {{--  <form
+                                                        {{-- Validation automatique --}}
+                                                        <form
                                                             action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('PUT')
                                                             <button class="show_confirm_valider btn btn-sm mx-1"><i
                                                                     class="bi bi-check2-circle"
-                                                                    title="Valider"></i>&nbsp;Valider</button>
-                                                        </form> --}}
-                                                {{--   <form
+                                                                    title="Valider"></i>&nbsp;Retenu</button>
+                                                        </form>
+
+                                                        {{--   <form
                                                             action="{{ route('agreerOperateur', ['id' => $operateur->id]) }}"
                                                             method="post">
                                                             @csrf
@@ -577,15 +565,15 @@
                                                                     title="Justification"></i>&nbsp;Sous réserve
                                                             </button>
                                                         </div> --}}
-                                                {{-- @isset($operateur->motif) --}}
-                                                {{-- <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                        {{-- @isset($operateur->motif) --}}
+                                                        <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                             data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i
-                                                                class="bi bi-trash"
-                                                                title="Justification"></i>&nbsp;Rejeter
-                                                        </button> --}}
-                                                {{-- @endisset --}}
-                                                {{--   </ul>
-                                                </div> --}}
+                                                                class="bi bi-trash" title="Justification"></i>&nbsp;Non
+                                                            retenu
+                                                        </button>
+                                                        {{-- @endisset --}}
+                                                    </ul>
+                                                </div>
                                             </span>
                                         </div>
                                         {{-- <form method="post" action="#" enctype="multipart/form-data"
@@ -979,21 +967,20 @@
             </div>
         @endforeach --}}
         {{-- Agrément rejeter --}}
-        {{-- @foreach ($operateurs as $operateur)
+        @foreach ($operateurs as $operateur)
             <div class="modal fade" id="RejetAgrementModal{{ $operateur->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('validation-operateur.destroy', $operateur->id) }}"
+                        <form method="post" action="{{ route('nonRetenu', ['id' => $operateur->id]) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
-                            @method('DELETE')
                             <div class="modal-header">
-                                <h5 class="modal-title">Rejet opérateur</h5>
+                                <h5 class="modal-title">Rejet demande agrément</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <label for="motif" class="form-label">Motifs du rejet<span
+                                <label for="motif" class="form-label">Motifs...<span
                                         class="text-danger mx-1">*</span></label>
                                 <textarea name="motif" id="motif" rows="5"
                                     class="form-control form-control-sm @error('motif') is-invalid @enderror"
@@ -1013,7 +1000,7 @@
                     </div>
                 </div>
             </div>
-        @endforeach --}}
+        @endforeach
 
         <!-- Add References -->
         {{-- <div class="modal fade" id="AddRefModal" tabindex="-1">

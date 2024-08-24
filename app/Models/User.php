@@ -190,9 +190,9 @@ class User extends Authenticatable
         return $this->hasOne(Gestionnaire::class, 'users_id');
     }
 
-    public function operateur()
+    public function operateurs()
     {
-        return $this->hasOne(Operateur::class, 'users_id')->latest();
+        return $this->hasMany(Operateur::class, 'users_id')->latest();
     }
 
     public function postes()

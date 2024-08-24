@@ -61,7 +61,7 @@
                                     {{-- <th>Niveau qualification</th> --}}
                                     {{-- <th>Effectif</th> --}}
                                     <th class="text-center">Statut</th>
-                                    <th>#</th>
+                                    <th><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>

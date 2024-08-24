@@ -795,7 +795,7 @@
                                             <option value="{{ old('departement') }}">
                                                 {{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
-                                                <option value="{{ $departement->id }}">
+                                                <option value="{{ $departement->nom }}">
                                                     {{ $departement->nom }}
                                                 </option>
                                             @endforeach

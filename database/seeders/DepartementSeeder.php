@@ -43,6 +43,13 @@ class DepartementSeeder extends Seeder
             'uuid' => Str::uuid(),
              ]);
         DB::table('departements')->insert([
+            "nom" => "Keur Massar",
+            "regions_id" =>"1",             
+            'created_at' => now(),
+            'updated_at' => now(),
+            'uuid' => Str::uuid(),
+             ]);
+        DB::table('departements')->insert([
             "nom" => "DIOURBEL",
             "regions_id" =>"2",             
             'created_at' => now(),

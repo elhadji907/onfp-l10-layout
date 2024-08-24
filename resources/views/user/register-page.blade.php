@@ -56,7 +56,7 @@
                                 </div>
 
                                 <!-- Slides with captions -->
-                                    @include('user.slide-image')
+                                @include('user.slide-image')
                                 <!-- End Slides with captions -->
 
                             </div>
@@ -104,7 +104,7 @@
                                         </div>
                                     </div> --}}
                                     <!-- Date naissance -->
-                                   {{--  <div class="col-6">
+                                    {{--  <div class="col-6">
                                         <label for="date_naissance" class="form-label">Date naissance</label>
                                         <input type="date" name="date_naissance"
                                             class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
@@ -130,10 +130,11 @@
                                             @enderror
                                         </div>
                                     </div> --}}
-                                    
+
                                     <!-- Username -->
                                     <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <label for="username" class="form-label">Username</label>
+                                        <label for="username" class="form-label">Username<span
+                                                class="text-danger mx-1">*</span></label>
                                         <input type="text" name="username"
                                             class="form-control form-control-sm @error('name') is-invalid @enderror"
                                             id="username" required placeholder="Votre username"
@@ -147,7 +148,8 @@
 
                                     <!-- Addresse E-mail -->
                                     <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <label for="email" class="form-label">E-mail</label>
+                                        <label for="email" class="form-label">E-mail<span
+                                                class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
                                             {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
                                             <input type="email" name="email"
@@ -163,7 +165,7 @@
                                     </div>
 
                                     <!-- Telephone -->
-                                   {{--  <div class="col-6">
+                                    {{--  <div class="col-6">
                                         <label for="telephone" class="form-label">Téléphone</label>
                                         <input type="text" name="telephone"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
@@ -194,7 +196,8 @@
 
                                     <!-- Mot de passe -->
                                     <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <label for="password" class="form-label">Mot de passe</label>
+                                        <label for="password" class="form-label">Mot de passe<span
+                                                class="text-danger mx-1">*</span></label>
                                         <input type="password" name="password"
                                             class="form-control form-control-sm @error('password') is-invalid @enderror"
                                             id="password" required placeholder="Votre mot de passe"
@@ -209,7 +212,7 @@
                                     <!-- Mot de passe de confirmation -->
                                     <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <label for="password_confirmation" class="form-label">Confirmez mot de
-                                            passe</label>
+                                            passe<span class="text-danger mx-1">*</span></label>
                                         <input type="password" name="password_confirmation"
                                             class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
                                             id="password_confirmation" required
@@ -229,7 +232,8 @@
                                                 value="" id="acceptTerms" required>
                                             <label class="form-check-label" for="acceptTerms">Je suis d'accord et
                                                 j'accepte les
-                                                <a href="#">termes et conditions</a></label>
+                                                <a href="#">termes et conditions</a><span
+                                                    class="text-danger mx-1">*</span></label>
                                             <div class="invalid-feedback">
                                                 @error('password_confirmation')
                                                     {{ $message }}

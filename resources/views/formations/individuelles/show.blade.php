@@ -234,7 +234,7 @@
                                                 Liste des formations
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables" id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -376,14 +376,14 @@
                                                 <div class="float-end">
                                                     <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                         class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
-                                                        <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                                        <i class="bi bi-person-plus" title="Ajouter demandeur"></i> </a>
                                                 </div>
 
                                             </div>
 
                                             <div class="row g-3 pt-3">
                                                 <table
-                                                    class="table datatables align-middle justify-content-center table-borderless"
+                                                    class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless"
                                                     id="table-operateurModules">
                                                     <thead>
                                                         <tr>
@@ -498,7 +498,7 @@
                                                 @endif
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables" id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -509,7 +509,7 @@
                                                             {{-- <th>Niveau qualification</th> --}}
                                                             <th>Effectif</th>
                                                             <th>Statut</th>
-                                                            <th class="text-center">#</th>
+                                                            {{-- <th class="text-center">#</th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -535,7 +535,7 @@
                                                                 <td><a href="#"><span
                                                                             class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
                                                                 </td>
-                                                                <td>
+                                                                {{-- <td>
                                                                     <span class="d-flex align-items-baseline"><a
                                                                             href="{{ route('formations.show', $formation->id) }}"
                                                                             class="btn btn-primary btn-sm"
@@ -566,7 +566,7 @@
                                                                             </ul>
                                                                         </div>
                                                                     </span>
-                                                                </td>
+                                                                </td> --}}
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -625,7 +625,7 @@
                                                 @endif
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables" id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -636,7 +636,7 @@
                                                             {{-- <th>Niveau qualification</th> --}}
                                                             <th>Effectif</th>
                                                             <th>Statut</th>
-                                                            <th class="text-center">#</th>
+                                                            <th class="text-center"><i class="bi bi-gear"></i></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -727,7 +727,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="row g-3">
-                                                    <table class="table datatables" id="table-evaluation">
+                                                    <table class="table table-bordered table-hover datatables" id="table-evaluation">
                                                         <thead>
                                                             <tr>
                                                                 <th>N°</th>

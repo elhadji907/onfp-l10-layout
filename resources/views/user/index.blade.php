@@ -43,7 +43,6 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    {{-- <th>N°</th> --}}
                                     <th>Username</th>
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
@@ -61,7 +60,6 @@
                                                     src="{{ asset($user->getImage()) }}" width="40" height="auto">
                                             </a>
                                         </th>
-                                        {{-- <td>{{ $i++ }}</td> --}}
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->telephone }}</td>

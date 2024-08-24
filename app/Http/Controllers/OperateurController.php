@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commissionagrement;
 use App\Models\Departement;
 use App\Models\Operateur;
 use App\Models\Operateureference;
@@ -23,19 +24,47 @@ class OperateurController extends Controller
 {
     public function index()
     {
-        $operateurs = Operateur::query()->orderBy('created_at', 'desc')->orderByDesc('created_at')->get();
+        $operateurs = Operateur::orderBy('created_at', 'desc')->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
         return view("operateurs.index", compact("operateurs", "departements"));
+    }
+
+    public function agrement()
+    {
+        $operateurs = Operateur::query()->orderBy('created_at', 'desc')->orderByDesc('created_at')->get();
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        return view("operateurs.agrements.index", compact("operateurs", "departements"));
+    }
+
+    //cette fonction permet de valider l'agrement des operateurs
+    public function agrements($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $operateurs = Operateur::get();
+        $operateureferences = Operateureference::get();
+        return view("operateurs.agrement", compact("operateurs", "operateur", "operateureferences"));
     }
     public function store(Request $request)
     {
         $this->validate($request, [
-            "name"                  =>      "required|string|unique:operateurs,name,except,id",
-            "sigle"                 =>      "required|string|unique:operateurs,sigle,except,id",
-            "numero_agrement"       =>      "required|string|unique:operateurs,numero_agrement,except,id",
-            "email1"                =>      "required|email|unique:operateurs,email1,except,id",
-            "fixe"                  =>      "required|string|unique:operateurs,fixe,except,id",
-            "telephone1"            =>      "required|string|unique:operateurs,telephone1,except,id",
+            "name"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "sigle"                 => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "numero_agrement"       => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "email1"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "fixe"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "telephone1"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
             "categorie"             =>      "required|string",
             "statut"                =>      "required|string",
             "departement"           =>      "required|string",
@@ -47,16 +76,19 @@ class OperateurController extends Controller
             "civilite"              =>      "required|string",
             "prenom"                =>      "required|string",
             "nom"                   =>      "required|string",
-            "email2"                =>      "required|email|unique:operateurs,email2,except,id",
-            "telephone2"            =>      "required|string|unique:operateurs,telephone2,except,id",
+            "email2"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "telephone2"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
             "fonction_responsable"  =>      "required|string",
         ]);
 
-        $user = new User([
-            /* 'civilite'              =>      $request->input("civilite"), */
-            'firstname'             =>      $request->input("name"),
-            'name'                  =>      $request->input("sigle"),
-            'username'              =>      $request->input("email1"),
+        /*  $user = new User([
+            'firstname'             =>      $request->input("prenom"),
+            'name'                  =>      $request->input("noms"),
+            'username'              =>      $request->input("sigle"),
             'email'                 =>      $request->input('email1'),
             "telephone"             =>      $request->input("telephone1"),
             'lieu_naissance'        =>      $request->input("adresse"),
@@ -67,7 +99,111 @@ class OperateurController extends Controller
             'updated_by'            =>      Auth::user()->id
         ]);
 
+        $user->save(); */
+
+        $user = Auth::user();
+
+        $operateur_total = Operateur::where('users_id', $user->id)->count();
+
+        if ($operateur_total >= 1) {
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
+            return redirect()->back();
+        } else {
+
+            $operateur = Operateur::create([
+                "name"                 =>       $request->input("name"),
+                "sigle"                =>       $request->input("sigle"),
+                "numero_agrement"      =>       $request->input("numero_agrement"),
+                "email1"               =>       $request->input("email1"),
+                "fixe"                 =>       $request->input("fixe"),
+                "telephone1"           =>       $request->input("telephone1"),
+                "categorie"            =>       $request->input("categorie"),
+                "statut"               =>       $request->input("statut"),
+                "autre_statut"         =>       $request->input("autre_statut"),
+                "type_demande"         =>       $request->input("type_demande"),
+                "adresse"              =>       $request->input("adresse"),
+                "rccm"                 =>       $request->input("registre_commerce"), /* choisir ninea ou rccm */
+                "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
+                "quitus"               =>       $request->input("quitus"),
+                "debut_quitus"         =>       $request->input("date_quitus"),
+                "bp"                   =>       $request->input("bp"),
+                "annee_agrement"       =>       date('Y-m-d'),
+                "statut_agrement"      =>       'nouveau',
+                "civilite_responsable" =>       $request->input("civilite"),
+                "prenom_responsable"   =>       $request->input("prenom"),
+                "nom_responsable"      =>       $request->input("nom"),
+                "email2"               =>       $request->input("email2"),
+                "telephone2"           =>       $request->input("telephone2"),
+                "fonction_responsable" =>       $request->input("fonction_responsable"),
+                "departements_id"      =>       $request->input("departement"),
+                "users_id"             =>       $user->id
+            ]);
+
+            $operateur->save();
+
+            Alert::success("L'opérateur "  . $operateur->sigle, " a été ajouté avec succès");
+
+            return redirect()->back();
+        }
+    }
+    public function addOperateur(Request $request)
+    {
+        $this->validate($request, [
+            "name"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "sigle"                 => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "numero_agrement"       => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "email1"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "fixe"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "telephone1"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "categorie"             =>      "required|string",
+            "statut"                =>      "required|string",
+            "departement"           =>      "required|string",
+            "adresse"               =>      "required|string",
+            "ninea"                 =>      "required|string",
+            "registre_commerce"     =>      "required|string",
+            "quitus"                =>      "required|string",
+            "date_quitus"           =>      "required|string",
+            "civilite"              =>      "required|string",
+            "prenom"                =>      "required|string",
+            "nom"                   =>      "required|string",
+            "email2"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "telephone2"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "fonction_responsable"  =>      "required|string",
+        ]);
+
+        $user = new User([
+            /* 'civilite'              =>      $request->input("civilite"), */
+            'firstname'             =>      $request->input("prenom"),
+            'name'                  =>      $request->input("noms"),
+            'username'              =>      $request->input("sigle"),
+            'email'                 =>      $request->input('email1'),
+            "telephone"             =>      $request->input("telephone1"),
+            'lieu_naissance'        =>      $request->input("adresse"),
+            "adresse"               =>      $request->input("adresse"),
+            'password'              =>      Hash::make($request->input('email1')),
+            'created_by'            =>      Auth::user()->id,
+            'updated_by'            =>      Auth::user()->id
+        ]);
+
         $user->save();
+
+        $user->assignRole('Demandeur');
 
         $operateur = Operateur::create([
             "name"                 =>       $request->input("name"),
@@ -79,11 +215,14 @@ class OperateurController extends Controller
             "categorie"            =>       $request->input("categorie"),
             "statut"               =>       $request->input("statut"),
             "autre_statut"         =>       $request->input("autre_statut"),
+            "type_demande"         =>       $request->input("type_demande"),
             "adresse"              =>       $request->input("adresse"),
             "rccm"                 =>       $request->input("registre_commerce"), /* choisir ninea ou rccm */
             "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
             "quitus"               =>       $request->input("quitus"),
+            "bp"                   =>       $request->input("bp"),
             "debut_quitus"         =>       $request->input("date_quitus"),
+            "annee_agrement"       =>       date('Y-m-d'),
             "statut_agrement"      =>       'nouveau',
             "civilite_responsable" =>       $request->input("civilite"),
             "prenom_responsable"   =>       $request->input("prenom"),
@@ -126,13 +265,13 @@ class OperateurController extends Controller
             "civilite"              =>      ['required', 'string'],
             "prenom"                =>      ['required', 'string'],
             "nom"                   =>      ['required', 'string'],
+            "type_demande"          =>      ['required', 'string'],
             "email2"                =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "telephone2"            =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "fonction_responsable"  =>      ['required', 'string'],
         ]);
 
-        $user->update([
-            /* 'civilite'              =>      $request->input("civilite"), */
+     /*    $user->update([
             'firstname'             =>      $request->input("name"),
             'name'                  =>      $request->input("sigle"),
             "telephone"             =>      $request->input("telephone1"),
@@ -141,7 +280,7 @@ class OperateurController extends Controller
             "adresse"               =>      $request->input("adresse"),
             "bp"                    =>      $request->input("bp"),
             'updated_by'            =>      Auth::user()->id
-        ]);
+        ]); */
 
         $operateur->update([
             "name"                 =>       $request->input("name"),
@@ -153,11 +292,13 @@ class OperateurController extends Controller
             "categorie"            =>       $request->input("categorie"),
             "statut"               =>       $request->input("statut"),
             "autre_statut"         =>       $request->input("autre_statut"),
+            "type_demande"         =>       $request->input("type_demande"),
             "adresse"              =>       $request->input("adresse"),
             "rccm"                 =>       $request->input("registre_commerce"), /* choisir ninea ou rccm */
             "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
             "quitus"               =>       $request->input("quitus"),
             "debut_quitus"         =>       $request->input("date_quitus"),
+            "bp"                   =>       $request->input("bp"),
             "civilite_responsable" =>       $request->input("civilite"),
             "prenom_responsable"   =>       $request->input("prenom"),
             "nom_responsable"      =>       $request->input("nom"),
@@ -181,12 +322,20 @@ class OperateurController extends Controller
         return view("operateurs.show", compact("operateur", "operateureferences", "operateurs"));
     }
 
+    public function showAgrement($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $operateurs = Operateur::get();
+        $operateureferences = Operateureference::get();
+        return view("operateurs.agrements.show", compact("operateur", "operateureferences", "operateurs"));
+    }
+
     public function destroy($id)
     {
         $operateur = Operateur::find($id);
         $operateur->delete();
 
-        Alert::success("L'opérateur " . $operateur->name, 'a été supprimé avec succès');
+        Alert::success("Fait " . $operateur->sigle, 'a été supprimé');
         return redirect()->back();
     }
     function fetch(Request $request)
@@ -195,6 +344,7 @@ class OperateurController extends Controller
             $query = $request->get('query');
             $data = DB::table('modules')
                 ->where('name', 'LIKE', "%{$query}%")
+                ->distinct()
                 ->get();
             $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
             foreach ($data as $row) {
@@ -212,7 +362,8 @@ class OperateurController extends Controller
             $query = $request->get('query');
             $data = DB::table('operateurmodules')
                 ->where('module', 'LIKE', "%{$query}%")
-                ->get();
+                ->get()
+                ->unique('module');
             $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
             foreach ($data as $row) {
                 $output .= '
@@ -229,7 +380,8 @@ class OperateurController extends Controller
             $query = $request->get('query');
             $data = DB::table('operateurmodules')
                 ->where('module', 'LIKE', "%{$query}%")
-                ->get();
+                ->get()
+                ->unique('module');
             $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
             foreach ($data as $row) {
                 $output .= '
@@ -274,7 +426,31 @@ class OperateurController extends Controller
     public function validateOperateur($id)
     {
         $operateur = Operateur::findOrFail($id);
-        $count_agreer = $operateur->operateurmodules->where('statut', 'agréer')->count();
+
+        $moduleoperateur_count = $operateur->operateurmodules->count();
+
+        if ($moduleoperateur_count > 0) {
+            $operateur->update([
+                'statut_agrement'    => 'retenu',
+            ]);
+
+            $operateur->save();
+
+            Alert::success("Effectué !", "l'opérateur " . $operateur->sigle . ' a été retenu');
+
+            return redirect()->back();
+        } else {
+            Alert::warning('Désolez ! ', 'action impossible');
+            return redirect()->back();
+        }
+
+
+
+
+
+        /* Cette partie consistait à faire une validation automatique */
+
+        /* $count_agreer = $operateur->operateurmodules->where('statut', 'agréer')->count();
         $count_rejeter = $operateur->operateurmodules->where('statut', 'rejeter')->count();
         $count_nouveau = $operateur->operateurmodules->where('statut', 'nouveau')->count();
 
@@ -302,16 +478,53 @@ class OperateurController extends Controller
 
         $operateur->save();
 
+        return redirect()->back(); */
+    }
+    public function nonRetenu(Request $request, $id)
+    {
+        $this->validate($request, [
+            "motif" => "required|string",
+        ]);
+
+        $operateur   = Operateur::findOrFail($id);
+
+        $operateur->update([
+            'statut_agrement'    =>  'non retenu',
+            'motif'              =>  $request->input('motif'),
+        ]);
+
+        $operateur->save();
+
+        $validationoperateur = new Validationoperateur([
+            'action'                =>  "non retenu",
+            'motif'                 =>  $request->input('motif'),
+            'validated_id'          =>  Auth::user()->id,
+            'session'               =>  $operateur?->session_agrement,
+            'operateurs_id'         =>  $operateur->id,
+
+        ]);
+
+        $validationoperateur->save();
+
+        Alert::success('Effectué !', $operateur->sigle . " n'a pas été retenu");
+
+
         return redirect()->back();
     }
+
 
     public function agreerOperateur($id)
     {
         $operateur = Operateur::findOrFail($id);
+        $moduleoperateur_count = $operateur->operateurmodules->count();
+
         $count_nouveau = $operateur->operateurmodules->where('statut', 'nouveau')->count();
 
         if ($count_nouveau > 0) {
             Alert::warning('Désolez ! ', 'il reste des module à traiter');
+            return redirect()->back();
+        } elseif ($moduleoperateur_count <= '0') {
+            Alert::warning('Désolez ! ', 'aucun module disponible pour cet opérateur');
             return redirect()->back();
         } else {
             $operateur->update([
@@ -335,5 +548,41 @@ class OperateurController extends Controller
             Alert::success("Effectué !", "l'opérateur " . $operateur?->sigle . ' a été agréé');
             return redirect()->back();
         }
+    }
+
+    public function retirerOperateur($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+
+        $operateur->update([
+            'statut_agrement'    => 'retirer',
+            'commissionagrements_id'    => null,
+        ]);
+
+        $operateur->save();
+
+        $validateoperateur = new Validationoperateur([
+            'validated_id'       =>       Auth::user()->id,
+            'action'             =>      'retirer',
+            'session'            =>      $operateur?->session_agrement,
+            'operateurs_id'      =>      $operateur?->id
+
+        ]);
+
+        $validateoperateur->save();
+
+        Alert::success("Effectué !", "l'opérateur " . $operateur->sigle . ' a été retiré');
+
+        return redirect()->back();
+    }
+    public function devenirOperateur()
+    {
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        $user = Auth::user();
+        $operateur = Operateur::where('users_id', $user->id)->get();
+        $operateurs = Operateur::get();
+        $operateur_total = $operateur->count();
+
+        return view("operateurs.show-operateur", compact("operateur_total", "departements", "operateur", "operateurs"));
     }
 }

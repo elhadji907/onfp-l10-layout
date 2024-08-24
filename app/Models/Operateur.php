@@ -56,6 +56,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $specialites_id
  * @property int|null $courriers_id
  * @property int|null $communes_id
+ * @property int|null $commissionagrements_id
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
@@ -102,8 +103,10 @@ class Operateur extends Model
 		'courriers_id' => 'int',
 		'communes_id' => 'int',
 		'departements_id' => 'int',
+		'commissionagrements_id' => 'int',
 		'fin_quitus' => 'datetime',
-		'debut_quitus' => 'datetime'
+		'debut_quitus' => 'datetime',
+		'annee_agrement' => 'datetime'
 	];
 
 	protected $dates = [
@@ -151,9 +154,11 @@ class Operateur extends Model
 		'statut_agrement',
 		'statut',
 		'autre_statut',
+		'bp',
 		'web',
 		'categorie',
 		'motif',
+		'type_demande',
 		'users_id',
 		'rccms_id',
 		'nineas_id',
@@ -162,6 +167,7 @@ class Operateur extends Model
 		'courriers_id',
 		'communes_id',
 		'departements_id',
+		'commissionagrements_id',
 		'file1',
 		'file2',
 		'file3',
@@ -173,6 +179,15 @@ class Operateur extends Model
 		'file9',
 		'file10'
 	];
+	public function historiqueagrements()
+	{
+		return $this->hasMany(Historiqueagrement::class, 'historiqueagrements_id')->latest();
+	}
+
+	public function validationoperateurs()
+	{
+		return $this->hasMany(Validationoperateur::class, 'validationoperateurs_id')->latest();
+	}
 
 	public function operateurmodules()
 	{
@@ -211,6 +226,11 @@ class Operateur extends Model
 	public function departement()
 	{
 		return $this->belongsTo(Departement::class, 'departements_id');
+	}
+
+	public function commissionagrement()
+	{
+		return $this->belongsTo(Commissionagrement::class, 'commissionagrements_id')->latest();
 	}
 
 	public function courrier()

@@ -7,6 +7,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\CollectivemoduleController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CommissionagrementController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CourrierController;
 use App\Http\Controllers\DecisionController;
@@ -245,6 +246,22 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::put('/validateOperateur/{id}', [OperateurController::class, 'validateOperateur'])->name('validateOperateur');
     Route::put('/agreerOperateur/{id}', [OperateurController::class, 'agreerOperateur'])->name('agreerOperateur');
+    Route::get('/agrement', [OperateurController::class, 'agrement'])->name('agrement');
+
+    Route::get('commisionagrement/{idcommissionagrement}', [CommissionagrementController::class, 'addcommisionagrement']);
+    Route::put('commisionagrement/{idcommissionagrement}', [CommissionagrementController::class, 'givecommisionagrement']);
+
+    Route::get('/addopCommission/{id}', [CommissionagrementController::class, 'addopCommission'])->name('addopCommission');
+    Route::get('/agrements/{id}', [OperateurController::class, 'agrements'])->name('agrements');
+    Route::get('/showAgrement/{id}', [OperateurController::class, 'showAgrement'])->name('showAgrement');
+    Route::put('/nonRetenu/{id}', [OperateurController::class, 'nonRetenu'])->name('nonRetenu');
+    Route::get('/showAgreer/{id}', [CommissionagrementController::class, 'showAgreer'])->name('showAgreer');
+    Route::get('/showReserve/{id}', [CommissionagrementController::class, 'showReserve'])->name('showReserve');
+    Route::get('/showRejeter/{id}', [CommissionagrementController::class, 'showRejeter'])->name('showRejeter');
+    Route::put('/retirerOperateur/{id}', [OperateurController::class, 'retirerOperateur'])->name('retirerOperateur');
+
+    Route::get('/devenirOperateurs', [OperateurController::class, 'devenirOperateur'])->name('devenirOperateur');
+    Route::post('/addOperateur', [OperateurController::class, 'addOperateur'])->name('addOperateur');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
@@ -296,6 +313,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/operateurequipements', OperateurequipementController::class);
     Route::resource('/operateurformateurs', OperateurformateurController::class);
     Route::resource('/operateurlocalites', OperateurlocaliteController::class);
+    Route::resource('/commissionagrements', CommissionagrementController::class);
 });
 
 

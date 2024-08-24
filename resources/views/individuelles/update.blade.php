@@ -241,7 +241,7 @@
                                         <option value="{{ $individuelle?->departement?->id }}">
                                             {{ $individuelle?->departement?->nom }}</option>
                                         @foreach ($departements as $departement)
-                                            <option value="{{ $departement->id }}">
+                                            <option value="{{ $departement->nom }}">
                                                 {{ $departement->nom }}
                                             </option>
                                         @endforeach

@@ -78,15 +78,10 @@
                                         data-bs-target="#localites-overview">Localités</button>
                                 </li>
 
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#formation-overview">Formations</button>
-                                </li>
 
                             </ul>
                             <div class="d-flex justify-content-between align-items-center">
                             </div>
-                            {{-- Détail opérateur --}}
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade profile-overview" id="profile-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row">
@@ -201,7 +196,7 @@
                                 </div>
                             </div>
                             {{-- Détail représentant --}}
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-0">
                                 <div class="tab-pane fade profile-overview pt-3" id="references-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
@@ -209,16 +204,12 @@
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
-                                            <h5 class="card-title">
+                                           {{--  <h5 class="card-title">
                                                 <a href="{{ route('showReference', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                            </h5> --}}
                                         </div>
 
                                         <table
@@ -229,7 +220,6 @@
                                                     <th scope="col">CONTACTS</th>
                                                     <th scope="col">PERIODES D'INTERVENTION</th>
                                                     <th scope="col">DESCRIPTION DES INTERVENTIONS</th>
-                                                    {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -240,31 +230,6 @@
                                                         <td>{{ $operateureference?->contact }}</td>
                                                         <td>{{ $operateureference?->periode }}</td>
                                                         <td>{{ $operateureference?->description }}</td>
-                                                        {{-- <td style="text-align: center;">
-                                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                                    href="#"
-                                                                    class="btn btn-warning btn-sm mx-1"
-                                                                    title="Voir détails">
-                                                                    <i class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#"
-                                                                        data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        <li>
-                                                                            <button type="button"
-                                                                                class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#EditoperateureferenceModal{{ $operateureference->id }}">
-                                                                                <i class="bi bi-pencil"
-                                                                                    title="Modifier"></i> Modifier
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </span>
-                                                        </td> --}}
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -272,23 +237,19 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-0">
                                 <div class="tab-pane fade profile-overview pt-3" id="equipement-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
-                                            <h5 class="card-title">
+                                           {{--  <h5 class="card-title">
                                                 <a href="{{ route('showEquipement', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                            </h5> --}}
                                         </div>
                                         <table
                                             class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
@@ -312,34 +273,6 @@
                                                         </td>
                                                         <td style="text-align: center;">{{ $operateurequipement->type }}
                                                         </td>
-                                                        {{-- <td>
-                                                            <span class="d-flex align-items-baseline">
-                                                                <a href="{{ route('operateurequipements.show', $operateurequipement->id) }}"
-                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                        class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#"
-                                                                        data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        <button class="dropdown-item btn btn-sm mx-1"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#EditoperateurequipementModal{{ $operateurequipement->id }}">Modifier
-                                                                        </button>
-                                                                        <form
-                                                                            action="{{ route('operateurequipements.destroy', $operateurequipement->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit"
-                                                                                class="dropdown-item show_confirm"
-                                                                                title="Supprimer">Supprimer</button>
-                                                                        </form>
-                                                                    </ul>
-                                                                </div>
-                                                            </span>
-                                                        </td> --}}
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -347,23 +280,19 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-0">
                                 <div class="tab-pane fade profile-overview pt-3" id="formateur-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">FORMATEURS</h5>
-                                            <h5 class="card-title">
+                                            {{-- <h5 class="card-title">
                                                 <a href="{{ route('showFormateur', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                            </h5> --}}
                                         </div>
                                         <table
                                             class="table table-bordered table-hover datatables align-middle justify-content-center">
@@ -373,7 +302,6 @@
                                                     <th>CHAMPS PROFESSIONNELS</th>
                                                     <th class="text-center">NOMBRE D'ANNEES D'EXPERIENCE</th>
                                                     <th>REFERENCES</th>
-                                                    {{-- <th class="text-center"><i class="bi bi-gear"></i></th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -385,34 +313,6 @@
                                                         <td style="text-align: center;">
                                                             {{ $operateurformateur->nbre_annees_experience }}</td>
                                                         <td>{{ $operateurformateur->references }}</td>
-                                                        {{-- <td style="text-align: center;">
-                                                            <span class="d-flex align-items-baseline">
-                                                                <a href="{{ route('operateurformateurs.show', $operateurformateur->id) }}"
-                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                        class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#"
-                                                                        data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        <button class="dropdown-item btn btn-sm mx-1"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#EditoperateurformateurModal{{ $operateurformateur->id }}">Modifier
-                                                                        </button>
-                                                                        <form
-                                                                            action="{{ route('operateurformateurs.destroy', $operateurformateur->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit"
-                                                                                class="dropdown-item show_confirm"
-                                                                                title="Supprimer">Supprimer</button>
-                                                                        </form>
-                                                                    </ul>
-                                                                </div>
-                                                            </span>
-                                                        </td> --}}
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -420,23 +320,19 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-0">
                                 <div class="tab-pane fade profile-overview pt-3" id="localites-overview">
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">LOCALITES</h5>
-                                            <h5 class="card-title">
+                                           {{--  <h5 class="card-title">
                                                 <a href="{{ route('showLocalite', ['id' => $operateur->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                            </h5>
+                                            </h5> --}}
                                         </div>
                                         <table
                                             class="table table-bordered table-hover datatables align-middle justify-content-center">
@@ -461,84 +357,8 @@
                                     </form>
                                 </div>
                             </div>
-                            {{-- Détail Modules --}}
-                            {{-- class show et active pour l'affichage par défaut --}}
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview pt-3" id="module-overview">
-                                    <form method="post" action="{{ url('operateurmodules') }}"
-                                        enctype="multipart/form-data" class="row g-3">
-                                        @csrf
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <table class="table table-bordered table-hover" id="dynamicAddRemove">
-
-                                                <tr>
-                                                    <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
-                                                    <th>CATEGORIE PROFESSIONNELLE<span class="text-danger mx-1">*</span>
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <input type="hidden" name="operateur" value="{{ $operateur->id }}">
-                                                    <td>
-                                                        <input type="text" name="module" id="module_operateur"
-                                                            class="form-control form-control-sm"
-                                                            placeholder="Module ou spécialité" />
-                                                        <div id="moduleList"></div>
-                                                        {{ csrf_field() }}
-                                                        <p class="small fst-italic">
-                                                            <small>{{ __('Le nombre de modules est limité à deux') }}</small>
-                                                            <small>
-                                                                {{ __(' sauf pour les établissements publics ') }}</small>
-                                                        </p>
-                                                    </td>
-                                                    <td><input type="text" name="categorie"
-                                                            placeholder="Catégorie professionnelle"
-                                                            class="form-control form-control-sm" />
-                                                        <p class="small fst-italic">
-                                                            <small>{{ __("Préciser la catégorie professionnelle,l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
-                                                            <small>{{ __("d'une pré-qualification ou qualification") }}</small>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>DOMAINE<span class="text-danger mx-1">*</span></th>
-                                                    <th>QUALIFICATION CORRESPONDANTE
-                                                        <span class="text-danger mx-1">*</span>
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" name="domaine"
-                                                            placeholder="Domaine d'intervention"
-                                                            class="form-control form-control-sm" />
-                                                    </td>
-                                                    <td>
-                                                        <select name="niveau_qualification"
-                                                            class="form-select form-select-sm @error('niveau_qualification') is-invalid @enderror"
-                                                            aria-label="Select" id="select-field-civilite"
-                                                            data-placeholder="Choisir qualification">
-                                                            <option value="">
-                                                                {{ old('niveau_qualification') }}
-                                                            </option>
-                                                            <option value="Initiation">
-                                                                Initiation
-                                                            </option>
-                                                            <option value="Pré-qualification">
-                                                                Pré-qualification
-                                                            </option>
-                                                            <option value="Qualification">
-                                                                Qualification
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-outline-success btn-sm"><i
-                                                        class="bi bi-printer"></i> Enregistrer</button>
-                                            </div>
-                                        </div>
-
-                                    </form><!-- End module -->
-
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
@@ -546,22 +366,11 @@
                                                 :&nbsp;
                                                 <span class="{{ $operateur->statut_agrement }} text-white">
                                                     {{ $operateur?->statut_agrement }}</span>
-                                                {{-- <div class="filter">
+                                                <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"> --}}
-
-                                                {{-- Validation automatique --}}
-                                                {{--  <form
-                                                            action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button class="show_confirm_valider btn btn-sm mx-1"><i
-                                                                    class="bi bi-check2-circle"
-                                                                    title="Valider"></i>&nbsp;Valider</button>
-                                                        </form> --}}
-                                                {{--   <form
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                        <form
                                                             action="{{ route('agreerOperateur', ['id' => $operateur->id]) }}"
                                                             method="post">
                                                             @csrf
@@ -576,20 +385,16 @@
                                                                     class="bi bi-chat-square-text"
                                                                     title="Justification"></i>&nbsp;Sous réserve
                                                             </button>
-                                                        </div> --}}
-                                                {{-- @isset($operateur->motif) --}}
-                                                {{-- <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                        </div>
+                                                        <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                             data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i
                                                                 class="bi bi-trash"
                                                                 title="Justification"></i>&nbsp;Rejeter
-                                                        </button> --}}
-                                                {{-- @endisset --}}
-                                                {{--   </ul>
-                                                </div> --}}
+                                                        </button>
+                                                    </ul>
+                                                </div>
                                             </span>
                                         </div>
-                                        {{-- <form method="post" action="#" enctype="multipart/form-data"
-                                            class="row g-3"> --}}
                                         <div class="row g-3">
                                             <table
                                                 class="table table-bordered table-hover datatables align-middle justify-content-center"
@@ -630,18 +435,18 @@
                                                                                 class="bi bi-three-dots"></i></a>
                                                                         <ul
                                                                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            {{--  <form
+                                                                            <form
                                                                                 action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                 method="post">
                                                                                 @csrf
                                                                                 @method('PUT')
                                                                                 <button
                                                                                     class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
-                                                                            </form> --}}
-                                                                            {{-- <button class="dropdown-item btn btn-sm mx-1"
+                                                                            </form>
+                                                                            <button class="dropdown-item btn btn-sm mx-1"
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
-                                                                            </button> --}}
+                                                                            </button>
                                                                             <button class="dropdown-item btn btn-sm mx-1"
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
@@ -664,104 +469,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        {{-- </form> --}}
                                     </div>
-                                </div>
-                            </div>
-                            {{-- Détail Formations --}}
-                            <div class="tab-content">
-                                <div class="tab-pane fade profile-overview pt-0" id="formation-overview">
-                                    <h5 class="card-title">FORMATIONS</h5>
-                                    <table
-                                        class="table table-bordered table-hover datatables  align-middle justify-content-center"
-                                        id="table-formations">
-                                        <thead>
-                                            <tr>
-                                                <th>Code</th>
-                                                <th>Type</th>
-                                                <th>Intitulé formation</th>
-                                                <th>Localité</th>
-                                                <th>Modules</th>
-                                                {{-- <th>Niveau qualification</th> --}}
-                                                <th>Effectif</th>
-                                                <th>Statut</th>
-                                                <th class="text-center"><i class="bi bi-gear"></i></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1; ?>
-                                            @foreach ($operateur?->formations as $formation)
-                                                <tr>
-                                                    <td>{{ $formation?->code }}</td>
-                                                    <td><a href="#">{{ $formation->types_formation?->name }}</a>
-                                                    </td>
-                                                    <td>{{ $formation?->name }}</td>
-                                                    <td>{{ $formation->departement?->region?->nom }}</td>
-                                                    @isset($formation?->collectivemodule?->module)
-                                                        <td>{{ $formation->collectivemodule->module }}</td>
-                                                        <td class="text-center">
-                                                            @foreach ($formation->listecollectives as $listecollective)
-                                                                @if ($loop->last)
-                                                                    <a class="text-primary fw-bold"
-                                                                        href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                    @endisset
-                                                    @isset($formation?->module?->name)
-                                                        <td>{{ $formation->module->name }}</td>
-                                                        <td class="text-center">
-                                                            @foreach ($formation->individuelles as $individuelle)
-                                                                @if ($loop->last)
-                                                                    <a class="text-primary fw-bold"
-                                                                        href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                    @endisset
-                                                    <td><a href="#">
-                                                            <span
-                                                                class="{{ $formation?->statut }}">{{ $formation?->statut }}</span>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="d-flex align-items-baseline"><a
-                                                                href="{{ route('formations.show', $formation->id) }}"
-                                                                class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                    class="bi bi-eye"></i></a>
-                                                            <div class="filter">
-                                                                <a class="icon" href="#"
-                                                                    data-bs-toggle="dropdown"><i
-                                                                        class="bi bi-three-dots"></i></a>
-                                                                <ul
-                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    <li><a class="dropdown-item btn btn-sm"
-                                                                            href="{{ route('formations.edit', $formation->id) }}"
-                                                                            class="mx-1" title="Modifier"><i
-                                                                                class="bi bi-pencil"></i>Modifier</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form
-                                                                            action="{{ route('formations.destroy', $formation->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit"
-                                                                                class="dropdown-item show_confirm"
-                                                                                title="Supprimer"><i
-                                                                                    class="bi bi-trash"></i>Supprimer</button>
-                                                                        </form>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-
-                                        </tbody>
-                                    </table>
-                                    <!-- End Table with stripped rows -->
                                 </div>
                             </div>
                         </div>
@@ -799,8 +507,8 @@
                                         value="{{ $operateurmodule->module ?? old('module') }}"
                                         class="form-control form-control-sm @error('module') is-invalid @enderror"
                                         placeholder="module">
-                                    <div id="moduleListEdit"></div>
-                                    {{ csrf_field() }}
+                                        <div id="moduleListEdit"></div>
+                                        {{ csrf_field() }}
                                     @error('module')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -906,10 +614,12 @@
                 </div>
             </div>
         @endforeach
-        {{-- @foreach ($operateur->operateurmodules as $operateurmodule)
+        @foreach ($operateur->operateurmodules as $operateurmodule)
             <div class="modal fade" id="AddRegionModal{{ $operateurmodule->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
+                        {{-- <form method="POST" action="{{ route('addRegion') }}">
+                        @csrf --}}
                         <form method="post"
                             action="{{ route('validation-operateur-modules.destroy', $operateurmodule->id) }}"
                             enctype="multipart/form-data" class="row">
@@ -941,12 +651,14 @@
                     </div>
                 </div>
             </div>
-        @endforeach --}}
+        @endforeach
         {{-- Agrément sous réserve --}}
-        {{--  @foreach ($operateurs as $operateur)
+        @foreach ($operateurs as $operateur)
             <div class="modal fade" id="ReserveAgrementModal{{ $operateur->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
+                        {{-- <form method="POST" action="{{ route('addRegion') }}">
+                        @csrf --}}
                         <form method="post" action="{{ route('validation-operateur.update', $operateur->id) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
@@ -970,19 +682,21 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
-                                    Rejeter</button>
+                                <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-printer"></i>
+                                    Sous réserve</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        @endforeach --}}
+        @endforeach
         {{-- Agrément rejeter --}}
-        {{-- @foreach ($operateurs as $operateur)
+        @foreach ($operateurs as $operateur)
             <div class="modal fade" id="RejetAgrementModal{{ $operateur->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
+                        {{-- <form method="POST" action="{{ route('addRegion') }}">
+                        @csrf --}}
                         <form method="post" action="{{ route('validation-operateur.destroy', $operateur->id) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
@@ -1013,154 +727,8 @@
                     </div>
                 </div>
             </div>
-        @endforeach --}}
+        @endforeach
 
-        <!-- Add References -->
-        {{-- <div class="modal fade" id="AddRefModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form method="post" action="{{ url('operateureferences') }}" enctype="multipart/form-data"
-                        class="row g-3">
-                        @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <input type="hidden" name="operateur" value="{{ $operateur->id }}">
-                        <div class="modal-body">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="organisme" value="{{ old('organisme') }}"
-                                    class="form-control form-control-sm @error('organisme') is-invalid @enderror"
-                                    id="organisme" placeholder="Dénomination de l'organisme" autofocus>
-                                @error('organisme')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Dénomination de l'organisme<span
-                                        class="text-danger mx-1">*</span></label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="number" min="0" name="contact" value="{{ old('contact') }}"
-                                    class="form-control form-control-sm @error('contact') is-invalid @enderror"
-                                    id="contact" placeholder="Contact">
-                                @error('contact')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" name="periode" value="{{ old('periode') }}"
-                                    class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                                    id="periode" placeholder="Période">
-                                @error('periode')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <textarea name="description" id="description" cols="30" rows="5"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    placeholder="Ajouter les membres du jury">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                Ajouter</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> --}}
-        <!-- End Add References-->
-        <!-- Edit References -->
-        {{-- @foreach ($operateureferences as $operateureference)
-            <div class="modal fade" id="EditoperateureferenceModal{{ $operateureference->id }}" tabindex="-1">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form method="post" action="{{ route('operateureferences.update', $operateureference->id) }}"
-                            enctype="multipart/form-data" class="row g-3">
-                            @csrf
-                            @method('patch')
-                            <div class="modal-header">
-                                <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <input type="hidden" name="operateur" value="{{ $operateur->id }}">
-                            <div class="modal-body">
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="organisme"
-                                        value="{{ $operateureference->organisme ?? old('organisme') }}"
-                                        class="form-control form-control-sm @error('organisme') is-invalid @enderror"
-                                        id="organisme" placeholder="Dénomination de l'organisme" autofocus>
-                                    @error('organisme')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Dénomination de l'organisme<span
-                                            class="text-danger mx-1">*</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="number" min="0" name="contact"
-                                        value="{{ $operateureference->contact ?? old('contact') }}"
-                                        class="form-control form-control-sm @error('contact') is-invalid @enderror"
-                                        id="contact" placeholder="Contact">
-                                    @error('contact')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Contact<span class="text-danger mx-1">*</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="periode"
-                                        value="{{ $operateureference->periode ?? old('periode') }}"
-                                        class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                                        id="periode" placeholder="Période">
-                                    @error('periode')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Période<span class="text-danger mx-1">*</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <textarea name="description" id="description" cols="30" rows="5"
-                                        class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                        placeholder="Ajouter les membres du jury">{{ $operateureference->description ?? old('description') }}</textarea>
-                                    @error('description')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Description<span class="text-danger mx-1">*</span></label>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Modifier</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach --}}
-        <!-- End Edit References-->
     </section>
 
 @endsection

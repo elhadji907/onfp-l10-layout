@@ -215,6 +215,40 @@
                     </li><!-- End internes Nav -->
                 </ul>
             </li><!-- End Courriers Nav -->
+            
+            <li class="nav-heading">Opérateurs</li>
+            {{-- Formations --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-people-fill"></i><span>Opérateurs</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="operateur-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('operateurs') }}">
+                            <span>Opérateurs</span>
+                        </a>
+                    </li><!-- End operateurs Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('commissionagrements.index') }}">
+                            <span>Commissions</span>
+                        </a>
+                    </li><!-- End operateurs Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('agrement') }}">
+                            <span>Agrements</span>
+                        </a>
+                    </li><!-- End operateurs Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
+                            <span>Modules</span>
+                        </a>
+                    </li><!-- End operateurmodules Nav -->
+
+                </ul>
+            </li><!-- End Formations Nav -->
         @endif
         <li class="nav-heading">Demandes</li>
 
@@ -259,6 +293,12 @@
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ route('demandesCollective') }}">
                             <span>Collectives</span>
+                        </a>
+                    </li><!-- End collectives Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('devenirOperateur') }}">
+                            <span>Devenir Opérateur</span>
                         </a>
                     </li><!-- End collectives Nav -->
                     <li class="nav-item">
@@ -352,28 +392,6 @@
                     <span>Projets</span>
                 </a>
             </li><!-- End utilisateurs Nav -->
-            <li class="nav-heading">Opérateurs</li>
-            {{-- Formations --}}
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-people-fill"></i><span>Opérateurs</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="operateur-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('operateurs') }}">
-                            <span>Opérateurs</span>
-                        </a>
-                    </li><!-- End operateurs Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
-                            <span>Modules</span>
-                        </a>
-                    </li><!-- End operateurmodules Nav -->
-
-                </ul>
-            </li><!-- End Formations Nav -->
         @endif
         @if (auth()->user()->hasRole('super-admin'))
             <li class="nav-heading">EMPLOYES</li>

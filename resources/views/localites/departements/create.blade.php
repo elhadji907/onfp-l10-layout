@@ -44,7 +44,7 @@
                                 <label for="region" class="form-label">Région<span
                                         class="text-danger mx-1">*</span></label>
                                 <select name="region" class="form-select  @error('region') is-invalid @enderror"
-                                    aria-label="Select" id="select-field-region" data-placeholder="Choisir la région">
+                                    aria-label="Select" id="select-field" data-placeholder="Choisir la région">
                                     <option value="">--Choisir la région--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}">

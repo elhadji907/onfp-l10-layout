@@ -81,7 +81,7 @@ class IndividuelleController extends Controller
             }
             $numero_individuelle = 'I' . $annee . $numero_individuelle;
 
-            $departement = Departement::findOrFail($request->input("departement"));
+            $departement = Departement::where('nom', $request->input("departement"))->first();
 
             $regionid = $departement->region->id;
 
@@ -114,7 +114,7 @@ class IndividuelleController extends Controller
                     'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                     'qualification'                     =>  $request->input('qualification'),
                     'experience'                        =>  $request->input('experience'),
-                    "departements_id"                   =>  $request->input("departement"),
+                    "departements_id"                   =>  $departement->id,
                     "regions_id"                        =>  $regionid,
                     "modules_id"                        =>  $module_find->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
@@ -146,7 +146,7 @@ class IndividuelleController extends Controller
                     'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                     'qualification'                     =>  $request->input('qualification'),
                     'experience'                        =>  $request->input('experience'),
-                    "departements_id"                   =>  $request->input("departement"),
+                    "departements_id"                   =>  $departement->id,
                     "regions_id"                        =>  $regionid,
                     "modules_id"                        =>  $module->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
@@ -208,7 +208,7 @@ class IndividuelleController extends Controller
         }
         $numero_individuelle = 'I' . $annee . $numero_individuelle;
 
-        $departement = Departement::findOrFail($request->input("departement"));
+        $departement = Departement::where('nom', $request->input("departement"))->first();
         $regionid = $departement->region->id;
 
         $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
@@ -257,7 +257,7 @@ class IndividuelleController extends Controller
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
+                "departements_id"                   =>  $departement->id,
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module_find->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
@@ -288,7 +288,7 @@ class IndividuelleController extends Controller
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
+                "departements_id"                   =>  $departement->id,
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
@@ -327,7 +327,7 @@ class IndividuelleController extends Controller
 
         $individuelle       = Individuelle::findOrFail($id);
         $user_id            = $individuelle?->users_id;
-        $departement        = Departement::findOrFail($request->input("departement"));
+        $departement        = Departement::where('nom', $request->input("departement"))->first();
         $regionid           = $departement->region->id;
         $user               = Auth::user();
 
@@ -351,7 +351,7 @@ class IndividuelleController extends Controller
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
+                "departements_id"                   =>  $departement->id,
                 "projets_id"                        =>  $request->input("projet"),
                 "regions_id"                        =>  $regionid,
                 'users_id'                          =>  $user_id,
@@ -378,7 +378,7 @@ class IndividuelleController extends Controller
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
+                "departements_id"                   =>  $departement->id,
                 "projets_id"                        =>  $request->input("projet"),
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module_find->id,
@@ -408,7 +408,7 @@ class IndividuelleController extends Controller
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $request->input("departement"),
+                "departements_id"                   =>  $departement->id,
                 "projets_id"                        =>  $request->input("projet"),
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module->id,

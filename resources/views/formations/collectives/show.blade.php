@@ -237,7 +237,7 @@
                                                 {{ __("Liste des formations de l'opérateur") }}
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables" id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -396,7 +396,7 @@
                                         </div>
                                         <div class="row g-3 pt-3">
                                             <table
-                                                class="table datatables align-middle justify-content-center table-borderless"
+                                                class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless"
                                                 id="table-operateurModules">
                                                 <thead>
                                                     <tr>
@@ -482,7 +482,7 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="row g-3">
-                                                    <table class="table datatables" id="table-formations">
+                                                    <table class="table table-bordered table-hover datatables" id="table-formations">
                                                         <thead>
                                                             <tr>
                                                                 <th>Module</th>
@@ -596,7 +596,7 @@
                                                 @endif
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables" id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -732,7 +732,7 @@
                                                 </h5>
                                             </div>
                                             <div class="row g-3">
-                                                <table class="table datatables" id="table-evaluation">
+                                                <table class="table table-bordered table-hover datatables" id="table-evaluation">
                                                     <thead>
                                                         <tr>
                                                             <th>N°</th>

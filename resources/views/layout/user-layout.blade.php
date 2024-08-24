@@ -95,7 +95,7 @@
         }
 
         .retirer {
-            background-color: #DC3545;
+            background-color: #ffcc00;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -119,7 +119,17 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .réserve {
+            background-color: #ffcc00;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .renew {
             background-color: #ffcc00;
             color: white;
             padding: 4px 8px;
@@ -166,6 +176,33 @@
 
         .retenue {
             background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .retenu {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .new {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+        
+        .non {
+            background-color: #DC3545;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -390,6 +427,24 @@
             event.preventDefault();
             swal({
                     title: `Êtes-vous sûr de vouloir valider ?`,
+                    text: "Si oui, cliquer sur ok.",
+                    icon: "success",
+                    buttons: true,
+                })
+                .then((willValide) => {
+                    if (willValide) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
+    <script type="text/javascript">
+        $('.show_confirm_retirer').click(function(event) {
+            var form = $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                    title: `Êtes-vous sûr de vouloir retirer ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
                     buttons: true,
@@ -662,6 +717,66 @@
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
             dropdownParent: $('#AddFormationModal'),
+        });
+    </script>
+    
+    <script>
+        $('#select-field_type_demande').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddoperateurModal'),
+        });
+    </script>
+
+    <script>
+        $('#select-field_categorie_op').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddoperateurModal'),
+        });
+    </script>
+
+    <script>
+        $('#select-field-statut_op').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddoperateurModal'),
+        });
+    </script>
+
+    <script>
+        $('#select-field-registre_op').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddoperateurModal'),
+        });
+    </script>
+
+    <script>
+        $('#select-field-departement_op').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#AddoperateurModal'),
         });
     </script>
 

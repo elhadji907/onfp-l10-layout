@@ -45,6 +45,17 @@ class OperateurmoduleController extends Controller
                     return redirect()->back();
                 }
             }
+
+            $operateurmodule = new Operateurmodule([
+                "module"                =>  $request->input("module"),
+                "domaine"               =>  $request->input("domaine"),
+                "categorie"             =>  $request->input("categorie"),
+                'niveau_qualification'  =>  $request->input('niveau_qualification'),
+                'statut'                =>  'nouveau',
+                'operateurs_id'         =>  $request->input('operateur'),
+            ]);
+
+            $operateurmodule->save();
         } elseif ($operateur->categorie == 'Privé' && $total_module >= 2) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
             return redirect()->back();
@@ -84,6 +95,11 @@ class OperateurmoduleController extends Controller
 
         $operateurmodule_find    = DB::table('operateurmodules')->where('module', $request->input("module"))->first();
 
+        $operateurmodule_count    = DB::table('operateurmodules')
+            ->where('module', $request->input("module"))
+            ->where('operateurs_id', $operateurmodule->operateurs_id)
+            ->count();
+
         $operateur_find  = Operateurmodule::where('operateurs_id', $operateurmodule->operateurs_id)->get();
 
         $this->validate($request, [
@@ -92,23 +108,18 @@ class OperateurmoduleController extends Controller
             'niveau_qualification'  => 'required|string',
         ]);
 
-
-        if (isset($operateurmodule_find)) {
+        if (isset($operateurmodule_find) && $operateurmodule_find->module == $operateurmodule->module) {
+            $operateurmodule->update([
+                "module"                =>  $request->input("module"),
+                "domaine"               =>  $request->input("domaine"),
+                "categorie"             =>  $request->input("categorie"),
+                'niveau_qualification'  =>  $request->input('niveau_qualification'),
+                'operateurs_id'         =>  $operateurmodule->operateurs_id,
+            ]);
+        } elseif (isset($operateurmodule_find)) {
             foreach ($operateur_find as $value) {
-                if (($value->module == $operateurmodule_find->module) && ($operateurmodule_find->id != $id)) {
-                    Alert::warning('Attention ! le module ' . $value->module, 'a déjà été choisi');
-                    return redirect()->back();
-                } else {
-                    $operateurmodule->update([
-                        "module"                =>  $request->input("module"),
-                        "domaine"               =>  $request->input("domaine"),
-                        "categorie"             =>  $request->input("categorie"),
-                        'niveau_qualification'  =>  $request->input('niveau_qualification'),
-                        'operateurs_id'         =>  $operateurmodule->operateurs_id,
-                    ]);
-
-                    Alert::success($operateurmodule->module, 'mis à jour');
-
+                if (($value->module == $operateurmodule_find->module)) {
+                    Alert::warning('Attention !' . $value->module, 'a déjà été choisi');
                     return redirect()->back();
                 }
             }
@@ -121,10 +132,13 @@ class OperateurmoduleController extends Controller
                 'operateurs_id'         =>  $operateurmodule->operateurs_id,
             ]);
 
-            Alert::success($operateurmodule->module, 'mis à jour');
-
-            return redirect()->back();
         }
+
+        Alert::success($operateurmodule->module, 'mis à jour');
+
+        $operateurmodule->save();
+        
+        return redirect()->back();
     }
 
     public function show($id)
