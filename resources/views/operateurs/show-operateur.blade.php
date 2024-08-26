@@ -46,43 +46,40 @@
                         @if ($operateur_total > 0)
                             <h5 class="card-title">
                                 Bienvenue {{ Auth::user()->civilite . ' ' . Auth::user()->name }}</h5>
+                            {{-- <span class="badge bg-danger mb-5">
+                                {{ $staut_demande }}
+                            </span> --}}
                             <!-- demande -->
-                           {{--  <form method="post" action="#" enctype="multipart/form-data" class="row g-3"> --}}
-                                <table class="table table-bordered table-hover table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th width="15%">N° agrément</th>
-                                            {{-- <th width="45%">Opérateurs</th> --}}
-                                            <th width="10%">Email</th>
-                                            <th width="10%">Sigle</th>
-                                            <th width="10%">Type demande</th>
-                                            <th width="5%" class="text-center">Modules</th>
-                                            {{-- <th width="5%" class="text-center">Formations</th> --}}
-                                            <th width="15%" class="text-center">Statut</th>
-                                            <th width="5%"><i class="bi bi-gear"></i></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (Auth::user()?->operateurs as $operateur)
-                                            @isset($operateur?->sigle)
-                                                <tr>
-                                                    <td>{{ $operateur?->numero_agrement }}</td>
-                                                    {{--  <td>{{ $operateur?->name }}</td> --}}
-                                                    <td>{{ $operateur?->email1 }}</td>
-                                                    <td>{{ $operateur?->sigle }}</td>
-                                                    <td style="text-align: center;"><span
-                                                            class="{{ $operateur?->type_demande }}">{{ $operateur?->type_demande }}</span>
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                       {{--  @foreach ($operateur->operateurmodules as $operateurmodule)
-                                                            @if ($loop->last)
-                                                                <a href="#"><span
-                                                                        class="badge bg-info">{{ $loop->count }}</span></a>
-                                                            @endif
-                                                        @endforeach --}}
-                                                        {{ count($operateur->operateurmodules) }}
-                                                    </td>
-                                                    {{--  <td class="text-center">
+                            {{--  <form method="post" action="#" enctype="multipart/form-data" class="row g-3"> --}}
+                            <table class="table table-bordered table-hover table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th width="15%">N° agrément</th>
+                                        {{-- <th width="45%">Opérateurs</th> --}}
+                                        <th width="10%">Email</th>
+                                        <th width="10%">Sigle</th>
+                                        <th width="10%">Type demande</th>
+                                        {{-- <th width="5%" class="text-center">Modules</th> --}}
+                                        {{-- <th width="5%" class="text-center">Formations</th> --}}
+                                        <th width="15%" class="text-center">Statut</th>
+                                        <th class="text-center" width="5%"><i class="bi bi-gear"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($operateur as $operateur)
+                                        @isset($operateur?->sigle)
+                                            <tr>
+                                                <td>{{ $operateur?->numero_agrement }}</td>
+                                                {{--  <td>{{ $operateur?->name }}</td> --}}
+                                                <td>{{ $operateur?->email1 }}</td>
+                                                <td>{{ $operateur?->sigle }}</td>
+                                                <td style="text-align: center;"><span
+                                                        class="{{ $operateur?->type_demande }}">{{ $operateur?->type_demande }}</span>
+                                                </td>
+                                                {{-- <td style="text-align: center;">
+                                                    {{ count($operateur->operateurmodules) }}
+                                                </td> --}}
+                                                {{--  <td class="text-center">
                                                         @foreach ($operateur->formations as $formation)
                                                             @if ($loop->last)
                                                                 <a href="#"><span
@@ -90,52 +87,86 @@
                                                             @endif
                                                         @endforeach
                                                     </td> --}}
-                                                    <td style="text-align: center;"><span
-                                                            class="{{ $operateur->statut_agrement }}">
-                                                            {{ $operateur?->statut_agrement }}</span></td>
-                                                    <td>
-                                                        <span class="d-flex align-items-baseline"><a
-                                                                href="{{ route('operateurs.show', $operateur->id) }}"
-                                                                class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                    class="bi bi-eye"></i></a>
-                                                            <div class="filter">
-                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                        class="bi bi-three-dots"></i></a>
-                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    <li>
-                                                                        {{-- <a class="dropdown-item btn btn-sm"
+                                                <td style="text-align: center;"><span
+                                                        class="{{ $operateur->statut_agrement }}">
+                                                        {{ $operateur?->statut_agrement }}</span></td>
+                                                <td style="text-align: center;">
+                                                    <span class="d-flex align-items-baseline"><a
+                                                            href="{{ route('operateurs.show', $operateur->id) }}"
+                                                            class="btn btn-primary btn-sm" target="_blank" title="voir détails"><i
+                                                                class="bi bi-eye"></i></a>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                <li>
+                                                                    {{-- <a class="dropdown-item btn btn-sm"
                                                                             href="{{ route('operateurs.edit', $operateur->id) }}"
                                                                             class="mx-1" title="Modifier"><i
                                                                                 class="bi bi-pencil"></i>Modifier</a> --}}
-                                                                        <button type="button"
-                                                                            class="dropdown-item btn btn-sm mx-1"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#EditOperateurModal{{ $operateur->id }}">
-                                                                            <i class="bi bi-pencil" title="Modifier"></i>
-                                                                            Modifier
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form
-                                                                            action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit"
-                                                                                class="dropdown-item show_confirm"
-                                                                                title="Supprimer"><i
-                                                                                    class="bi bi-trash"></i>Supprimer</button>
-                                                                        </form>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            @endisset
-                                        @endforeach
-                                    </tbody>
+                                                                    <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#EditOperateurModal{{ $operateur->id }}">
+                                                                        <i class="bi bi-pencil" title="Modifier"></i>
+                                                                        Modifier
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="dropdown-item show_confirm"
+                                                                            title="Supprimer"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endisset
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <table class="table table-bordered table-hover table-borderless">
+                                    <tr>
+                                        <th>Module</th>
+                                        <td><span
+                                                class="{{ 'message' . count($operateur->operateurmodules) }}">{{ count($operateur->operateurmodules) }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Références professionnelles</th>
+                                        <td><span
+                                                class="{{ 'message' . count($operateur->operateureferences) }}">{{ count($operateur->operateureferences) }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Infrastructures et Equipements</th>
+                                        <td><span
+                                                class="{{ 'message' . count($operateur->operateurequipements) }}">{{ count($operateur->operateurequipements) }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Formateurs</th>
+                                        <td><span
+                                                class="{{ 'message' . count($operateur->operateurformateurs) }}">{{ count($operateur->operateurformateurs) }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Localités</th>
+                                        <td><span
+                                                class="{{ 'message' . count($operateur->operateurlocalites) }}">{{ count($operateur->operateurlocalites) }}</span>
+                                        </td>
+                                    </tr>
                                 </table>
+                            </div>
                             {{-- </form> --}}
                         @else
                             @if (isset(Auth::user()->cin))
@@ -658,8 +689,7 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="bp" class="form-label">Boite postal</label>
-                                        <input type="text" name="bp"
-                                            value="{{ $operateur?->bp ?? old('bp') }}"
+                                        <input type="text" name="bp" value="{{ $operateur?->bp ?? old('bp') }}"
                                             class="form-control form-control-sm @error('bp') is-invalid @enderror"
                                             id="bp" placeholder="Boite postal">
                                         @error('bp')
@@ -873,98 +903,98 @@
 
                                     <hr class="dropdown-divider mt-3">
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="civilite" class="form-label">Civilité responsable<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <select name="civilite"
-                                                class="form-select form-select-sm @error('civilite') is-invalid @enderror"
-                                                aria-label="Select" id="select-field-civilite-update"
-                                                data-placeholder="Choisir civilité">
-                                                <option value="{{ $operateur?->civilite_responsable }}">
-                                                    {{ $operateur?->civilite_responsable ?? old('civilite') }}
-                                                </option>
-                                                <option value="Monsieur">
-                                                    Monsieur
-                                                </option>
-                                                <option value="Madame">
-                                                    Madame
-                                                </option>
-                                            </select>
-                                            @error('civilite')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="prenom" class="form-label">Prénom responsable<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="prenom"
-                                                value="{{ $operateur?->prenom_responsable ?? old('prenom') }}"
-                                                class="form-control form-control-sm @error('prenom') is-invalid @enderror"
-                                                id="prenom" placeholder="Prénom responsable">
-                                            @error('prenom')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="civilite" class="form-label">Civilité responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="civilite"
+                                            class="form-select form-select-sm @error('civilite') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-civilite-update"
+                                            data-placeholder="Choisir civilité">
+                                            <option value="{{ $operateur?->civilite_responsable }}">
+                                                {{ $operateur?->civilite_responsable ?? old('civilite') }}
+                                            </option>
+                                            <option value="Monsieur">
+                                                Monsieur
+                                            </option>
+                                            <option value="Madame">
+                                                Madame
+                                            </option>
+                                        </select>
+                                        @error('civilite')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="prenom" class="form-label">Prénom responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="prenom"
+                                            value="{{ $operateur?->prenom_responsable ?? old('prenom') }}"
+                                            class="form-control form-control-sm @error('prenom') is-invalid @enderror"
+                                            id="prenom" placeholder="Prénom responsable">
+                                        @error('prenom')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="nom" class="form-label">Nom responsable<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="nom"
-                                                value="{{ $operateur?->nom_responsable ?? old('nom') }}"
-                                                class="form-control form-control-sm @error('nom') is-invalid @enderror"
-                                                id="nom" placeholder="Nom responsable">
-                                            @error('nom')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="nom" class="form-label">Nom responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="nom"
+                                            value="{{ $operateur?->nom_responsable ?? old('nom') }}"
+                                            class="form-control form-control-sm @error('nom') is-invalid @enderror"
+                                            id="nom" placeholder="Nom responsable">
+                                        @error('nom')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="email2" class="form-label">Adresse e-mail<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <input type="email" name="email2"
-                                                value="{{ $operateur?->email2 ?? old('email2') }}"
-                                                class="form-control form-control-sm @error('email2') is-invalid @enderror"
-                                                id="email2" placeholder="Adresse email responsable">
-                                            @error('email2')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="email2" class="form-label">Adresse e-mail<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="email" name="email2"
+                                            value="{{ $operateur?->email2 ?? old('email2') }}"
+                                            class="form-control form-control-sm @error('email2') is-invalid @enderror"
+                                            id="email2" placeholder="Adresse email responsable">
+                                        @error('email2')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="telephone2" class="form-label">Téléphone responsable<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="telephone2"
-                                                value="{{ $operateur?->telephone2 ?? old('telephone2') }}"
-                                                class="form-control form-control-sm @error('telephone2') is-invalid @enderror"
-                                                id="telephone2" placeholder="7xxxxxxxx">
-                                            @error('telephone2')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="telephone2" class="form-label">Téléphone responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="number" min="0" name="telephone2"
+                                            value="{{ $operateur?->telephone2 ?? old('telephone2') }}"
+                                            class="form-control form-control-sm @error('telephone2') is-invalid @enderror"
+                                            id="telephone2" placeholder="7xxxxxxxx">
+                                        @error('telephone2')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="fonction_responsable" class="form-label">Fonction responsable<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="fonction_responsable"
-                                                value="{{ $operateur?->fonction_responsable ?? old('fonction_responsable') }}"
-                                                class="form-control form-control-sm @error('fonction_responsable') is-invalid @enderror"
-                                                id="fonction_responsable" placeholder="Fonction responsable">
-                                            @error('fonction_responsable')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="fonction_responsable" class="form-label">Fonction responsable<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="fonction_responsable"
+                                            value="{{ $operateur?->fonction_responsable ?? old('fonction_responsable') }}"
+                                            class="form-control form-control-sm @error('fonction_responsable') is-invalid @enderror"
+                                            id="fonction_responsable" placeholder="Fonction responsable">
+                                        @error('fonction_responsable')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="modal-footer mt-3">
                                     <button type="button" class="btn btn-secondary"

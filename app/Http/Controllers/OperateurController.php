@@ -271,7 +271,7 @@ class OperateurController extends Controller
             "fonction_responsable"  =>      ['required', 'string'],
         ]);
 
-     /*    $user->update([
+        /*    $user->update([
             'firstname'             =>      $request->input("name"),
             'name'                  =>      $request->input("sigle"),
             "telephone"             =>      $request->input("telephone1"),
@@ -582,6 +582,17 @@ class OperateurController extends Controller
         $operateur = Operateur::where('users_id', $user->id)->get();
         $operateurs = Operateur::get();
         $operateur_total = $operateur->count();
+
+    /*     foreach ($user->operateurs as $key => $op) {
+            $count_modules = $op->operateurmodules->count();
+        }
+        if ($count_modules <= 0) {
+            $statut_demande = 'invalide';
+            $class_message = 'invalide';
+        } elseif ($count_modules >= 1) {
+            $statut_demande = 'valide';
+            $class_message = 'valide';
+        } */
 
         return view("operateurs.show-operateur", compact("operateur_total", "departements", "operateur", "operateurs"));
     }

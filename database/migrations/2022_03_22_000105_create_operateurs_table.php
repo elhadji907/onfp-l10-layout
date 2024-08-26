@@ -60,6 +60,7 @@ class CreateOperateursTable extends Migration
             $table->string('autre_statut', 200)->nullable();
             $table->string('type_demande', 200)->nullable();
             $table->string('web', 200)->nullable();
+            $table->string('bp', 200)->nullable();
             $table->longText('motif')->nullable();
             $table->unsignedInteger('users_id')->nullable();
             $table->unsignedInteger('rccms_id')->nullable();
