@@ -28,9 +28,10 @@
                                 </span>
                             </div>
                         </div>
-                        <h5><u><b>MODULE</b></u> : {{ $module->name }}</h5>
-                        <h5><u><b>REGION</b></u> : {{ $localite->nom }}</h5>
+                        <h5><u><b>Région</b></u> : {{ $localite->nom }}</h5>
+                        <h5><u><b>Module formation</b></u> : {{ $module->name }}</h5>
                         <h5><u><b>Candisdats éligibles</b></u> : {{ $individuelles->count() ?? '' }}</h5>
+                        <h5><u><b>Candisdats sélectionnés</b></u> : {{ $candidatsretenus?->count() ?? '' }}</h5>
                         <form method="post"
                             action="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
@@ -54,6 +55,8 @@
                                                 <th>Date naissance</th>
                                                 <th>Lieu de naissance</th>
                                                 <th>Adresse</th>
+                                                <th>Département</th>
+                                                <th>Module</th>
                                                 <th>Statut</th>
                                                 <th><i class="bi bi-gear"></i></th>
                                             </tr>
@@ -67,6 +70,7 @@
                                                             <input type="checkbox" name="individuelles[]"
                                                                 value="{{ $individuelle->id }}"
                                                                 {{ in_array($individuelle->formations_id, $individuelleFormation) ? 'checked' : '' }}
+                                                                {{ in_array($individuelle->formations_id, $individuelleFormationCheck) ? 'disabled' : '' }}
                                                                 class="form-check-input @error('individuelles') is-invalid @enderror">
                                                             @error('individuelles')
                                                                 <span class="invalid-feedback" role="alert">
@@ -82,6 +86,8 @@
                                                             </td>
                                                             <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                                             <td>{{ $individuelle?->user->adresse }}</td>
+                                                            <td>{{ $individuelle?->departement->nom }}</td>
+                                                            <td>{{ $individuelle?->module->name }}</td>
                                                             <td><span
                                                                     class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                                             </td>

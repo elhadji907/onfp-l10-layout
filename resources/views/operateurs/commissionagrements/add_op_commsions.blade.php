@@ -68,7 +68,7 @@
                                                             <input type="checkbox" name="operateurs[]"
                                                                 value="{{ $operateur?->id }}"
                                                                 {{ in_array($operateur?->id, $operateurAgrement) ? 'checked' : '' }}
-                                                                {{ in_array($operateur->id, $operateurAgrementCheck) ? 'disabled' : '' }}
+                                                                {{ in_array($operateur?->id, $operateurAgrementCheck) ? 'disabled' : '' }}
                                                                 {{-- hidden or disabled --}}
                                                                 class="form-check-input @error('operateurs') is-invalid @enderror">
                                                             {{ $operateur?->numero_agrement }}

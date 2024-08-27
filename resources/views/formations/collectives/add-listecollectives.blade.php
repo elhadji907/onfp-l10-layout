@@ -28,9 +28,9 @@
                                 </span>
                             </div>
                         </div>
-                        <h5><u><b>MODULE</b></u> : {{ $collectivemodule?->module }}</h5>
-                        <h5><u><b>REGION</b></u> : {{ $localite?->nom }}</h5>
-                        <h5><u><b>SELECTIONES</b></u> : {{ $candidatsretenus?->count() ?? '' }}</h5>
+                        <h5><u><b>Module</b></u> : {{ $collectivemodule?->module }}</h5>
+                        <h5><u><b>Région</b></u> : {{ $localite?->nom }}</h5>
+                        <h5><u><b>Sélectionnés</b></u> : {{ $candidatsretenus?->count() ?? '' }}</h5>
                         <form method="post"
                             action="{{ url('formationdemandeurscollectives', ['$idformation' => $formation->id, '$idcollectivemodule' => $formation->collectivemodule->id, '$idlocalite' => $formation->departement->region->id]) }}"
                             enctype="multipart/form-data" class="row g-3">

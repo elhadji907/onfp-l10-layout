@@ -267,20 +267,43 @@ class FormationController extends Controller
         $module = Module::findOrFail($idmodule);
         $localite = Region::findOrFail($idlocalite);
 
-        $individuelles = Individuelle::where('regions_id', $idlocalite)
+        /* $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
             ->where('statut', 'accepter')
             ->orWhere('statut', 'retirer')
             ->orWhere('statut', 'programmer')
+            ->get(); */
+        /* $individuelles = Individuelle::where('regions_id', $idlocalite)
+            ->where('statut', 'attente')
+            ->orWhere('statut', 'retirer')
+            ->orWhere('statut', 'programmer')
+            ->get(); */
+
+        $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+            ->select('individuelles.*')
+            ->where('modules.name', 'LIKE', "%{$module->name}%")
+            ->where('regions_id', $idlocalite)
+            ->where('statut', 'attente')
+            ->orWhere('statut', 'retirer')
+            ->orWhere('statut', 'retenue')
+            ->orWhere('statut', 'programmer')
             ->get();
 
+        $candidatsretenus = Individuelle::where('formations_id', $idformation)
+            ->get();
 
         $individuelleFormation = DB::table('individuelles')
             ->where('formations_id', $idformation)
             ->pluck('formations_id', 'formations_id')
             ->all();
 
-        return view("formations.individuelles.add-individuelles", compact('formation', 'individuelles', 'individuelleFormation', 'module', 'localite'));
+        $individuelleFormationCheck = DB::table('individuelles')
+            ->where('formations_id', '!=', null)
+            ->where('formations_id', '!=', $idformation)
+            ->pluck('formations_id', 'formations_id')
+            ->all();
+
+        return view("formations.individuelles.add-individuelles", compact('formation', 'individuelles', 'individuelleFormation', 'module', 'localite', 'candidatsretenus', 'individuelleFormationCheck'));
     }
 
     public function giveformationdemandeurs($idformation, $idmodule, $idlocalite, Request $request)

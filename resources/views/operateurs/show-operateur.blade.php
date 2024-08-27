@@ -51,35 +51,49 @@
                             </span> --}}
                             <!-- demande -->
                             {{--  <form method="post" action="#" enctype="multipart/form-data" class="row g-3"> --}}
-                            <table class="table table-bordered table-hover table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th width="15%">N° agrément</th>
-                                        {{-- <th width="45%">Opérateurs</th> --}}
-                                        <th width="10%">Email</th>
-                                        <th width="10%">Sigle</th>
-                                        <th width="10%">Type demande</th>
-                                        {{-- <th width="5%" class="text-center">Modules</th> --}}
-                                        {{-- <th width="5%" class="text-center">Formations</th> --}}
-                                        <th width="15%" class="text-center">Statut</th>
-                                        <th class="text-center" width="5%"><i class="bi bi-gear"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($operateur as $operateur)
-                                        @isset($operateur?->sigle)
-                                            <tr>
-                                                <td>{{ $operateur?->numero_agrement }}</td>
-                                                {{--  <td>{{ $operateur?->name }}</td> --}}
-                                                <td>{{ $operateur?->email1 }}</td>
-                                                <td>{{ $operateur?->sigle }}</td>
-                                                <td style="text-align: center;"><span
-                                                        class="{{ $operateur?->type_demande }}">{{ $operateur?->type_demande }}</span>
-                                                </td>
-                                                {{-- <td style="text-align: center;">
-                                                    {{ count($operateur->operateurmodules) }}
-                                                </td> --}}
-                                                {{--  <td class="text-center">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" width="2%">Info</th>
+                                            <th width="5%">N° agrément</th>
+                                            {{-- <th width="45%">Opérateurs</th> --}}
+                                            <th width="10%">Email</th>
+                                            <th width="10%" class="text-center">Téléphone</th>
+                                            <th width="10%" class="text-center">Sigle</th>
+                                            <th width="10%" class="text-center">Type demande</th>
+                                            <th width="5%" class="text-center">Modules</th>
+                                            {{-- <th width="5%" class="text-center">Formations</th> --}}
+                                            <th width="10%" class="text-center">Statut</th>
+                                            <th class="text-center" width="5%">Détails</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($operateur as $operateur)
+                                            @isset($operateur?->sigle)
+                                                <tr>
+                                                    <td style="text-align: center;">
+                                                        <button type="button" class="btn btn-outline-info btn-sm btn-rounded"
+                                                            data-bs-toggle="modal" data-bs-target="#validationViewModal">
+                                                            <i class="bi bi-info" title="Détails validation"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>{{ $operateur?->numero_agrement }}</td>
+                                                    {{--  <td>{{ $operateur?->name }}</td> --}}
+                                                    <td><a
+                                                            href="mailto:{{ $operateur?->email1 }}">{{ $operateur?->email1 }}</a>
+                                                    </td>
+                                                    <td style="text-align: center;"><a
+                                                            href="tel:+221{{ $operateur?->telephone1 }}">{{ $operateur?->telephone1 }}</a>
+                                                    </td>
+                                                    <td style="text-align: center;">{{ $operateur?->sigle }}</td>
+                                                    <td style="text-align: center;"><span
+                                                            class="{{ $operateur?->type_demande }}">{{ $operateur?->type_demande }}</span>
+                                                    </td>
+                                                    <td style="text-align: center;"><span
+                                                            class="{{ 'message' . count($operateur->operateurmodules) }}">{{ count($operateur->operateurmodules) }}</span>
+                                                    </td>
+                                                    {{--  <td class="text-center">
                                                         @foreach ($operateur->formations as $formation)
                                                             @if ($loop->last)
                                                                 <a href="#"><span
@@ -87,85 +101,133 @@
                                                             @endif
                                                         @endforeach
                                                     </td> --}}
-                                                <td style="text-align: center;"><span
-                                                        class="{{ $operateur->statut_agrement }}">
-                                                        {{ $operateur?->statut_agrement }}</span></td>
-                                                <td style="text-align: center;">
-                                                    <span class="d-flex align-items-baseline"><a
-                                                            href="{{ route('operateurs.show', $operateur->id) }}"
-                                                            class="btn btn-primary btn-sm" target="_blank" title="voir détails"><i
-                                                                class="bi bi-eye"></i></a>
-                                                        <div class="filter">
-                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                    class="bi bi-three-dots"></i></a>
-                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                <li>
-                                                                    {{-- <a class="dropdown-item btn btn-sm"
+                                                    <td style="text-align: center;"><span
+                                                            class="{{ $operateur->statut_agrement }}">
+                                                            {{ $operateur?->statut_agrement }}</span></td>
+                                                    <td style="text-align: center;">
+                                                        <span class="d-flex align-items-baseline"><a
+                                                                href="{{ route('operateurs.show', $operateur->id) }}"
+                                                                class="btn btn-success btn-sm" target="_blank"
+                                                                title="voir détails"><i class="bi bi-eye"></i></a>
+                                                            <div class="filter">
+                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                        class="bi bi-three-dots"></i></a>
+                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                    <li>
+                                                                        {{-- <a class="dropdown-item btn btn-sm"
                                                                             href="{{ route('operateurs.edit', $operateur->id) }}"
                                                                             class="mx-1" title="Modifier"><i
                                                                                 class="bi bi-pencil"></i>Modifier</a> --}}
-                                                                    <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#EditOperateurModal{{ $operateur->id }}">
-                                                                        <i class="bi bi-pencil" title="Modifier"></i>
-                                                                        Modifier
-                                                                    </button>
-                                                                </li>
-                                                                <li>
-                                                                    <form
-                                                                        action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                        method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="dropdown-item show_confirm"
-                                                                            title="Supprimer"><i
-                                                                                class="bi bi-trash"></i>Supprimer</button>
-                                                                    </form>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @endisset
-                                    @endforeach
-                                </tbody>
-                            </table>
-
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <table class="table table-bordered table-hover table-borderless">
-                                    <tr>
-                                        <th>Module</th>
-                                        <td><span
-                                                class="{{ 'message' . count($operateur->operateurmodules) }}">{{ count($operateur->operateurmodules) }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Références professionnelles</th>
-                                        <td><span
-                                                class="{{ 'message' . count($operateur->operateureferences) }}">{{ count($operateur->operateureferences) }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Infrastructures et Equipements</th>
-                                        <td><span
-                                                class="{{ 'message' . count($operateur->operateurequipements) }}">{{ count($operateur->operateurequipements) }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Formateurs</th>
-                                        <td><span
-                                                class="{{ 'message' . count($operateur->operateurformateurs) }}">{{ count($operateur->operateurformateurs) }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Localités</th>
-                                        <td><span
-                                                class="{{ 'message' . count($operateur->operateurlocalites) }}">{{ count($operateur->operateurlocalites) }}</span>
-                                        </td>
-                                    </tr>
+                                                                        <button type="button"
+                                                                            class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditOperateurModal{{ $operateur->id }}">
+                                                                            <i class="bi bi-pencil" title="Modifier"></i>
+                                                                            Modifier
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"
+                                                                                title="Supprimer"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endisset
+                                        @endforeach
+                                    </tbody>
                                 </table>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
+                                <div class="modal fade" id="validationViewModal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="col-12 col-md-12 col-lg-12">
+                                                <table
+                                                    class="table table-bordered table-hover table-borderless table-stripped">
+                                                    {{-- <thead>
+                                                        <tr>
+                                                            <th>A</th>
+                                                            <th>B</th>
+                                                            <th>C</th>
+                                                        </tr>
+                                                    </thead> --}}
+                                                    <tr>
+                                                        <td>Modules</td>
+                                                        <td style="text-align: center;"><span
+                                                                class="{{ 'message' . count($operateur->operateurmodules) }}">{{ count($operateur->operateurmodules) }}</span>
+                                                        </td>
+                                                        <td style="text-align: center;"><a
+                                                                href="{{ route('operateurs.show', $operateur->id) }}"
+                                                                class="btn btn-outline-primary btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus"
+                                                                    title="Ajouter, Modifier, Supprimer"></i> </a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Références professionnelles</td>
+                                                        <td style="text-align: center;"><span
+                                                                class="{{ 'message' . count($operateur->operateureferences) }}">{{ count($operateur->operateureferences) }}</span>
+                                                        </td>
+                                                        <td style="text-align: center;"><a
+                                                                href="{{ route('showReference', ['id' => $operateur->id]) }}"
+                                                                class="btn btn-outline-primary btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus"
+                                                                    title="Ajouter, Modifier, Supprimer"></i> </a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Infrastructures et Equipements</td>
+                                                        <td style="text-align: center;"><span
+                                                                class="{{ 'message' . count($operateur->operateurequipements) }}">{{ count($operateur->operateurequipements) }}</span>
+                                                        </td>
+                                                        <td style="text-align: center;"><a
+                                                                href="{{ route('showEquipement', ['id' => $operateur->id]) }}"
+                                                                class="btn btn-outline-primary btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus"
+                                                                    title="Ajouter, Modifier, Supprimer"></i> </a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Formateurs</td>
+                                                        <td style="text-align: center;"><span
+                                                                class="{{ 'message' . count($operateur->operateurformateurs) }}">{{ count($operateur->operateurformateurs) }}</span>
+                                                        </td>
+                                                        <td style="text-align: center;"><a
+                                                                href="{{ route('showFormateur', ['id' => $operateur->id]) }}"
+                                                                class="btn btn-outline-primary btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus"
+                                                                    title="Ajouter, Modifier, Supprimer"></i> </a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Localités</td>
+                                                        <td style="text-align: center;"><span
+                                                                class="{{ 'message' . count($operateur->operateurlocalites) }}">{{ count($operateur->operateurlocalites) }}</span>
+                                                        </td>
+                                                        <td style="text-align: center;"><a
+                                                                href="{{ route('showLocalite', ['id' => $operateur->id]) }}"
+                                                                class="btn btn-outline-primary btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus"
+                                                                    title="Ajouter, Modifier, Supprimer"></i> </a></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             {{-- </form> --}}
                         @else

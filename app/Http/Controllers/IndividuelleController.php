@@ -118,7 +118,7 @@ class IndividuelleController extends Controller
                     "regions_id"                        =>  $regionid,
                     "modules_id"                        =>  $module_find->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
-                    'statut'                            => 'attente',
+                    'statut'                            => 'nouvelle',
                     'users_id'                          =>  $user->id,
                 ]);
             } else {
@@ -150,7 +150,7 @@ class IndividuelleController extends Controller
                     "regions_id"                        =>  $regionid,
                     "modules_id"                        =>  $module->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
-                    'statut'                            => 'attente',
+                    'statut'                            => 'nouvelle',
                     'users_id'                          =>  $user->id,
                 ]);
             }
@@ -261,7 +261,7 @@ class IndividuelleController extends Controller
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module_find->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
-                'statut'                            => 'attente',
+                'statut'                            => 'nouvelle',
                 'users_id'                          =>  $user->id,
             ]);
         } else {
@@ -292,7 +292,7 @@ class IndividuelleController extends Controller
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
-                'statut'                            => 'attente',
+                'statut'                            => 'nouvelle',
                 'users_id'                          =>  $user->id,
             ]);
         }
@@ -328,6 +328,7 @@ class IndividuelleController extends Controller
         $individuelle       = Individuelle::findOrFail($id);
         $user_id            = $individuelle?->users_id;
         $departement        = Departement::where('nom', $request->input("departement"))->first();
+       
         $regionid           = $departement->region->id;
         $user               = Auth::user();
 

@@ -238,7 +238,7 @@
                                     <select name="departement"
                                         class="form-select  @error('departement') is-invalid @enderror" aria-label="Select"
                                         id="select-field-departement" data-placeholder="Choisir localité">
-                                        <option value="{{ $individuelle?->departement?->id }}">
+                                        <option value="{{ $individuelle?->departement?->nom }}">
                                             {{ $individuelle?->departement?->nom }}</option>
                                         @foreach ($departements as $departement)
                                             <option value="{{ $departement->nom }}">
