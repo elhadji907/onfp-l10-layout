@@ -103,7 +103,7 @@ class SnNameGenerator
 
     public static $situation = array(
         "Agriculteur exploitant",
-        "Salarié de l’agriculture",
+        "Salarié de l'agriculture",
         "Industriel, artisan ou commerçant",
         "Profession libérale",
         "Cadre moyen ou supérieur",
@@ -159,7 +159,7 @@ class SnNameGenerator
         "ILEA (UCAD) - Langues étrangères appliquées au Tourisme et aux Affaires - Dakar",
         "ESMT - École supérieure multinationale des télécommunications - Dakar",
         "ESG Dakar - École supérieure de gestion - Dakar - commerce et management",
-        "IST (UCAD) - formation d’ingénieurs géologues - Dakar",
+        "IST (UCAD) - formation d'ingénieurs géologues - Dakar",
         "ISE (UCAD) - environnement - Dakar",
         "ISED (UCAD) - santé et développement - Dakar",
         "IPDSR (UCAD) - population / développement / santé de la reproduction -Dakar",
@@ -175,13 +175,13 @@ class SnNameGenerator
         "ESTHOS-IMED",
         "Institut Privé de Gestion IPG",
         "SUN Hi-Tech3 Africa",
-        "Académie Internationale de Coiffure et d’Esthétique (EXOCOIF)",
+        "Académie Internationale de Coiffure et d'Esthétique (EXOCOIF)",
         "Alliance Générale des Informaticiens Formateurs (AGIF Informatique",
         "AND BOOLO XAMLE (ABX)",
         "Association des Retraités du Matériel des Armées ARMATA",
         "ATELIER DES DELICES",
         "CALEBASSE DOREE",
-        "Centre d’Accompagnement et de Mise à Niveau (CAMAN)",
+        "Centre d'Accompagnement et de Mise à Niveau (CAMAN)",
         "CENTRE D'APPUI A L'INITIATIVE FEMINIE  (CAIF)",
         "CENTRE DE TECHNOLOGIE ET  d'INGENIERIE/ECOLE DES SCIENCES DU COMMERCE ET DE  l'INFORMATION (CTI/ESCI)",
         "Centre européenne de formation en énergie renouvelable (CEFER)",
@@ -196,8 +196,8 @@ class SnNameGenerator
         "Ecole Privée Maritime (EPRIM)",
         "ECOLE SUPERIEUR DES TECHNIQUES DE GESTION ESTG",
         "ECOLE SUPERIEUR INTERNATIONALE DE TOURISME ET D'HOTELLERIE / ESITH",
-        "Ecole Supérieure d’Electricité, de Bâtiment et des Travaux Publics (ESEBAT)",
-        "Ecole Supérieure d’Informatique Appliquée ESIA",
+        "Ecole Supérieure d'Electricité, de Bâtiment et des Travaux Publics (ESEBAT)",
+        "Ecole Supérieure d'Informatique Appliquée ESIA",
         "Ecole Supérieure de  Commerce et de  Gestion ESUP",
         "ECOLE SUPERIEURE DE GENIES ESGE",
         "Ecole supérieure de management stratégique (ESMS)",
@@ -210,7 +210,7 @@ class SnNameGenerator
         "Institut  de Formation en Assurances  et Gestion des Entreprises IFAGE",
         "Institut  de Management et de Technologie IMTECH",
         "INSTITUT CESAR",
-        "Institut Communautaire  Africain de gestion  et d’ingénierie ICAGI",
+        "Institut Communautaire  Africain de gestion  et d'ingénierie ICAGI",
         "Institut de Formation Aux Métiers Des Sports (IFM-SPORTS)",
         "INSTITUT DE FORMATION EN ADMINISTRATION DES AFFAIRES",
         "INSTITUT DE FORMATION EN TOURISME ET DE RESTAURATION (IFTR)",
@@ -219,15 +219,15 @@ class SnNameGenerator
         "Institut des Sciences et Métiers de la Mode ISMOD",
         "institut professionnel d'entreprise (IPE)",
         "Institut Sénégalais de Boulangerie et de Pâtisserie (ISBP)",
-        "Institut Supérieur d’Entrepreneurship et de Gestion ISEG",
+        "Institut Supérieur d'Entrepreneurship et de Gestion ISEG",
         "INSTITUT SUPERIEUR DE COMMERCE ET DE MANAGEMENT (ISCOM)",
         "Institut Supérieur de Formation aux Nouveaux Métiers Informatique et Communication ( UP TECH)",
         "Institut Supérieur de Formation aux nouveaux Métiers informatique et communication (UNIPRO",
-        "Institut Supérieur de Formation et d’Appui à l’Insertion (ISFAP)",
+        "Institut Supérieur de Formation et d'Appui à l'Insertion (ISFAP)",
         "INSTITUT SUPERIEUR DE TECHNOLOGIES (SUPTECH)",
-        "Institut Supérieur d'Informatique « ISI»",
-        "Institut Supérieur Privé de Management et d’Etude Commerciales(ISMEC)",
-        "Institut Universitaire de l’Entreprise et du Développement (IUED)",
+        "Institut Supérieur d'Informatique «ISI»",
+        "Institut Supérieur Privé de Management et d'Etude Commerciales(ISMEC)",
+        "Institut Universitaire de l'Entreprise et du Développement (IUED)",
         "IPD Thomas Sankara",
         "IPROSI",
         "LA SOURCE",
@@ -271,7 +271,7 @@ class SnNameGenerator
         "Institut de santé FIDELIA",
         "Institut de Santé et des Etudes Paramédicales",
         "Institut de Santé Plus Privé (ISPP)",
-        "Institut Socio- Sanitaire d’Apprentissage Professionnel ISSAP",
+        "Institut Socio- Sanitaire d'Apprentissage Professionnel ISSAP",
         "EFO SANTE",
         "Institut Universitaire Professionnelle en Santé",
         "IASM",
@@ -303,7 +303,7 @@ class SnNameGenerator
         "Mirador Formation",
         "Ecole Internationale des Affaires (EIA)",
         "Institut de Formation Professionnelle en Esthétique (IFPE)",
-        "Centre Social d’Entraide et d’Information (CSEI)",
+        "Centre Social d'Entraide et d'Information (CSEI)",
         "Institut de Formation Hôtelière de Ouakam (IFHO)",
         "Complexe Sokhna Assiétou/Excellence",
         "Enda Graf Sahel",
@@ -315,7 +315,7 @@ class SnNameGenerator
         "Centre Socio-Educatif Keur Don Bosco (CSE-KDB)",
         "Centre Trainamar de Dakar (CTD)",
         "Dakar Air Academy (DAA)",
-        "Institut Supérieur d’Ingénierie  et de Formation-Business School (ISIF-BS)",
+        "Institut Supérieur d'Ingénierie  et de Formation-Business School (ISIF-BS)",
         "Lycée d'Excellence Mahmady (LEM)",
         "Centre Technique d' Apprentissage Saint Montfort (CTASM)",
         "Ecole Supérieure  de Commerce et des Affaires(ESCA)",
@@ -331,7 +331,7 @@ class SnNameGenerator
         "AMDI INGENIERIE",
         "Institut de Commerce et Management (ICM)",
         "Institut de Formation de Secrétaires et de Comptables",
-        "« Ecole Supérieur de l’Immobilier»(SUP-IMMO",
+        "«Ecole Supérieur de l'Immobilier»(SUP-IMMO",
         "African Aviation Incoporation (2AI)",
         "African Business School",
         "américan institute for english language and entreneurship",
@@ -1515,12 +1515,6 @@ class SnNameGenerator
     "Yacine",
     );
 
-    /**
-     *  Name generator
-     *  
-     * @function to generate random name
-     * @return   name(String)
-     */
     static function getName()
     {
         $dimension=count(self::$name);
@@ -1529,12 +1523,7 @@ class SnNameGenerator
 
 
     }
-    /**
-     * FirstName generator
-     * 
-     * @function to generate random firstName
-     * @return   firstName(String)
-     */
+ 
     static function getFirstName()
     {
         $dimension=count(self::$firstName);

@@ -519,7 +519,7 @@ class OperateurController extends Controller
         $moduleoperateur_count = $operateur->operateurmodules->count();
 
         $count_nouveau = $operateur->operateurmodules->where('statut', 'nouveau')->count();
-
+        
         if ($count_nouveau > 0) {
             Alert::warning('Désolez ! ', 'il reste des module à traiter');
             return redirect()->back();

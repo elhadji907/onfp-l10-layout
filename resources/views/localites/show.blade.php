@@ -13,13 +13,16 @@
                                 <p> | Liste des localités</p>
                             </span>
                         </div>
-                        <table class="table datatables align-middle" id="table-individuelles">
+                        <h5 class="card-title">Région : {{ $localite?->region?->nom }}</h5>
+                        <table class="table datatables align-middle justify-content-center" id="table-modules">
                             <thead>
                                 <tr>
                                     <th class="text-center">N°</th>
                                     <th class="text-center">CIN</th>
-                                    <th>Prénom et NOM</th>
-                                    <th>Date et lieu de naissance</th>
+                                    <th>Prénom</th>
+                                    <th>NOM</th>
+                                    <th>Date naissance</th>
+                                    <th>Lieu naissance</th>
                                     <th>Module</th>
                                     <th class="text-center">Statut</th>
                                     <th class="text-center">#</th>
@@ -30,13 +33,14 @@
                                 @foreach ($localite->individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                            <td><span class="badge bg-default text-dark">{{ $individuelle?->numero }}</span>
+                                            {{-- <span class="badge bg-default text-dark"></span> --}}
+                                            <td>{{ $individuelle?->numero }}
                                             </td>
                                             <td>{{ $individuelle?->user?->cin }}</td>
-                                            <td>{{ $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
-                                            </td>
-                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle?->user->lieu_naissance }}
-                                            </td>
+                                            <td>{{ $individuelle?->user?->firstname }}</td>
+                                            <td>{{ $individuelle?->user?->name }}</td>
+                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</td>
+                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                             <td>{{ $individuelle->module?->name }}</td>
                                             <td>
                                                 <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
@@ -99,3 +103,47 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        new DataTable('#table-modules', {
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                }
+            },
+            "order": [
+                [2, 'desc']
+            ],
+            language: {
+                "sProcessing": "Traitement en cours...",
+                "sSearch": "Rechercher&nbsp;:",
+                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix": "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst": "Premier",
+                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                    "sNext": "Suivant",
+                    "sLast": "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                },
+                "select": {
+                    "rows": {
+                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
+                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
+                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
+                    }
+                }
+            }
+        });
+    </script>
+@endpush

@@ -338,8 +338,8 @@
                                             <option value="Elève ou étudiant">
                                                 Elève ou étudiant
                                             </option>
-                                            <option value="chercheur emploi">
-                                                chercheur emploi
+                                            <option value="Chercheur emploi">
+                                                Chercheur emploi
                                             </option>
                                             <option value="Stage ou période essai">
                                                 Stage ou période essai

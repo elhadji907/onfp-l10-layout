@@ -74,8 +74,9 @@ class CollectiveController extends Controller
 
             $annee = date('y');
             $rand = rand(0, 999);
-            $letter = chr(rand(65, 90));
-            $random = $rand . '' . $letter;
+            $letter1 = chr(rand(65, 90));
+            $letter2 = chr(rand(65, 90));
+            $random = $letter1.''.$rand . '' . $letter2;
             $longueur = strlen($random);
 
             if ($longueur == 1) {
@@ -169,8 +170,9 @@ class CollectiveController extends Controller
 
         $annee = date('y');
         $rand = rand(0, 999);
-        $letter = chr(rand(65, 90));
-        $random = $rand . '' . $letter;
+        $letter1 = chr(rand(65, 90));
+        $letter2 = chr(rand(65, 90));
+        $random = $letter1.''.$rand . '' . $letter2;
         $longueur = strlen($random);
 
         if ($longueur == 1) {

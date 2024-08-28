@@ -112,6 +112,7 @@ class DatabaseSeeder extends Seeder
             IndemniteSeeder::class,
             TypeformationSeeder::class,
             ProjetSeeder::class,
+            IndividuelleSeeder::class,
         ]);
     }
 }

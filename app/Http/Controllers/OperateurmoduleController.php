@@ -116,10 +116,12 @@ class OperateurmoduleController extends Controller
                 'niveau_qualification'  =>  $request->input('niveau_qualification'),
                 'operateurs_id'         =>  $operateurmodule->operateurs_id,
             ]);
+            Alert::success($operateurmodule->module, 'mis à jour');
+            $operateurmodule->save();
         } elseif (isset($operateurmodule_find)) {
             foreach ($operateur_find as $value) {
                 if (($value->module == $operateurmodule_find->module)) {
-                    Alert::warning('Attention !' . $value->module, 'a déjà été choisi');
+                    Alert::warning('Attention ! ' . $value->module, 'a déjà été choisi');
                     return redirect()->back();
                 }
             }
@@ -132,12 +134,10 @@ class OperateurmoduleController extends Controller
                 'operateurs_id'         =>  $operateurmodule->operateurs_id,
             ]);
 
+            Alert::success($operateurmodule->module, 'mis à jour');
+            $operateurmodule->save();
         }
 
-        Alert::success($operateurmodule->module, 'mis à jour');
-
-        $operateurmodule->save();
-        
         return redirect()->back();
     }
 

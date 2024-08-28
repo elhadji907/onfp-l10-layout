@@ -234,7 +234,8 @@
                                                 Liste des formations
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table table-bordered table-hover datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -368,7 +369,7 @@
                                                                         value="{{ $formation->id }}">
                                                                     <button class="btn btn-sm mx-1">PV Evaluation</button>
                                                                 </form>
-                                                                    <button class="btn btn-sm mx-1">ABE</button>
+                                                                <button class="btn btn-sm mx-1">ABE</button>
                                                             </ul>
                                                         </div>
                                                     </span>
@@ -396,7 +397,9 @@
                                                             <th>Date naissance</th>
                                                             <th>Lieu de naissance</th>
                                                             {{-- <th>Adresse</th> --}}
-                                                            <th class="text-center">Note</th>
+                                                            @isset($individuelle?->note_obtenue)
+                                                                <th class="text-center">Note</th>
+                                                            @endisset
                                                             {{-- <th>Appréciation</th> --}}
                                                             {{-- <th class="col"><i class="bi bi-backspace-reverse"></i></th> --}}
                                                             <th class="col"><i class="bi bi-gear"></i></th>
@@ -416,7 +419,10 @@
                                                                 </td>
                                                                 <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                                 {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
-                                                                <td class="text-center">{{ $individuelle?->note_obtenue ?? '' }}</td>
+                                                                @isset($individuelle?->note_obtenue)
+                                                                    <td class="text-center">
+                                                                        {{ $individuelle?->note_obtenue ?? '' }}</td>
+                                                                @endisset
                                                                 {{-- <td>{{ $individuelle?->appreciation }}</td> --}}
                                                                 <td>
                                                                     <span class="d-flex align-items-baseline"><a
@@ -498,7 +504,8 @@
                                                 @endif
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table table-bordered table-hover datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -625,7 +632,8 @@
                                                 @endif
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table table-bordered table-hover datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -727,7 +735,8 @@
                                                     </h5>
                                                 </div>
                                                 <div class="row g-3">
-                                                    <table class="table table-bordered table-hover datatables" id="table-evaluation">
+                                                    <table class="table table-bordered table-hover datatables"
+                                                        id="table-evaluation">
                                                         <thead>
                                                             <tr>
                                                                 <th>N°</th>
@@ -988,9 +997,10 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" value="{{ $formation->id }}">
-                            
+
                             <div class="form-floating mb-3">
-                                <input type="date" name="date_pv" value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
+                                <input type="date" name="date_pv"
+                                    value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
                                     class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
                                     id="date_pv" placeholder="date_pv">
                                 @error('date_pv')

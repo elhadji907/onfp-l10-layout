@@ -399,7 +399,7 @@ class FormationController extends Controller
             ->pluck('module', 'module')
             ->all(); */
 
-        $operateurmodules   =   Operateurmodule::where('module', $modulename)->where('statut', 'agréer')->get();
+        $operateurmodules   =   Operateurmodule::where('module', 'LIKE', "%{$modulename}%")->where('statut', 'agréer')->get();
 
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)

@@ -44,7 +44,7 @@
                         <h5 class="card-title">{{ $localite->nom . ': ' . $module->name }}</h5>
                         {{-- <p>Le tableau des demandes individuelles</p> --}}
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-individuelles">
+                        <table class="table datatables align-middle justify-content-center" id="table-modules">
                             <thead>
                                 <tr>
                                     <th class="text-center">N°</th>
@@ -137,9 +137,10 @@
     </section>
 
 @endsection
+
 @push('scripts')
     <script>
-        new DataTable('#table-individuelles', {
+        new DataTable('#table-modules', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

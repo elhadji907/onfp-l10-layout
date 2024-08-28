@@ -61,8 +61,8 @@
                                             </a>
                                         </th>
                                         <td>{{ $user->username }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->telephone }}</td>
+                                        <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
+                                        <td><a href="tel:+221{{ $user->telephone }}">{{ $user->telephone }}</a></td>
                                         <td>
                                             @if (!empty($user->getRoleNames()))
                                                 @foreach ($user->getRoleNames() as $roleName)

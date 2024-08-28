@@ -14,15 +14,16 @@
                             </span>
                         </div>
                         <h5 class="card-title">Module : {{ $module?->name }}</h5>
-
-                        <table class="table datatables align-middle" id="table-individuelles">
+                        <table class="table datatables align-middle justify-content-center" id="table-modules">
                             <thead>
                                 <tr>
                                     <th>N°</th>
-                                    <th>CIN</th>
-                                    <th>Prénom et NOM</th>
-                                    <th>Date et lieu de naissance</th>
-                                    <th>Localité</th>
+                                    <th class="text-center">CIN</th>
+                                    <th>Prénom</th>
+                                    <th>NOM</th>
+                                    <th>Date naissance</th>
+                                    <th>Lieu naissance</th>
+                                    <th>Régions</th>
                                     <th>Statut</th>
                                     <th class="text-center">#</th>
                                 </tr>
@@ -35,18 +36,20 @@
                                             <td>{{ $individuelle?->numero }}
                                             </td>
                                             <td>{{ $individuelle?->user?->cin }}</td>
-                                            <td>{{ $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
-                                            </td>
-                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle?->user->lieu_naissance }}
-                                            </td>
+                                            <td>{{ $individuelle?->user?->firstname }}</td>
+                                            <td>{{ $individuelle?->user?->name }}</td>
+                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</td>
+                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                             <td><a
-                                                    href="{{ url('modulelocalite', ['$idlocalite' => $individuelle->departement->id, '$idmodule' => $module?->id]) }}">{{ $individuelle->departement->nom }}</a>
+                                                    href="{{ url('modulelocalite', ['$idlocalite' => $individuelle->departement->region->id, '$idmodule' => $module?->id]) }}">{{ $individuelle->departement->region->nom }}</a>
                                             </td>
                                             <td>
-                                                <a href="{{ url('modulestatut', ['$statut' => $individuelle->statut, '$idmodule' => $module?->id]) }}">
+                                                <a
+                                                    href="{{ url('modulestatut', ['$statut' => $individuelle->statut, '$idmodule' => $module?->id]) }}">
                                                     @isset($individuelle?->statut)
-                                                    <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
-                                                       {{--  @if ($individuelle?->statut == 'Attente')
+                                                        <span
+                                                            class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                                        {{--  @if ($individuelle?->statut == 'Attente')
                                                             {{ $individuelle?->statut }}
                                                         @endif
                                                         @if ($individuelle?->statut == 'Validée')
@@ -102,3 +105,47 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        new DataTable('#table-modules', {
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                }
+            },
+            "order": [
+                [2, 'desc']
+            ],
+            language: {
+                "sProcessing": "Traitement en cours...",
+                "sSearch": "Rechercher&nbsp;:",
+                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix": "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst": "Premier",
+                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                    "sNext": "Suivant",
+                    "sLast": "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                },
+                "select": {
+                    "rows": {
+                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
+                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
+                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
+                    }
+                }
+            }
+        });
+    </script>
+@endpush

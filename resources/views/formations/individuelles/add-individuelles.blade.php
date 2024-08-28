@@ -29,25 +29,25 @@
                             </div>
                         </div>
                         <h5><u><b>Région</b></u> : {{ $localite->nom }}</h5>
-                        <h5><u><b>Module formation</b></u> : {{ $module->name }}</h5>
-                        <h5><u><b>Candisdats éligibles</b></u> : {{ $individuelles->count() ?? '' }}</h5>
-                        <h5><u><b>Candisdats sélectionnés</b></u> : {{ $candidatsretenus?->count() ?? '' }}</h5>
+                        <h5><u><b>Module</b></u> : {{ $module->name }}</h5>
+                        <h5><u><b>Candisdats</b></u> : {{ $individuelles->count() ?? '' }}</h5>
+                        <h5><u><b>Effectif</b></u> : {{ $candidatsretenus?->count() ?? '' }}</h5>
                         <form method="post"
                             action="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
-                                <div class="form-check col-md-2 pt-5">
+                                {{-- <div class="form-check col-md-2 pt-5">
                                     <label for="#">Choisir tout</label>
                                     <input type="checkbox" class="form-check-input" id="checkAll">
                                 </div>
-                                <div></div>
+                                <div></div> --}}
                                 <div class="form-check col-md-12">
                                     <table class="table datatables align-middle" id="table-individuelles">
                                         <thead>
                                             <tr>
-                                                <th>N°</th>
+                                                <th><input type="checkbox" class="form-check-input" id="checkAll">N°</th>
                                                 <th>Civilité</th>
                                                 <th>CIN</th>
                                                 <th>Prénom</th>
