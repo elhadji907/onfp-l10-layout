@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', $commissionagrement?->commission)
+@section('title', 'Oprérateur non agréés, ' . $commissionagrement?->commission)
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -30,7 +30,7 @@
                         <h5> Statut:
                             <span class="badge bg-danger">rejeter</span>
                         </h5>
-                        <h5> Effectif:
+                        <h5> Opérateurs:
                             <span class="badge bg-secondary">{{ count($operateurs) }}</span>
                         </h5>
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
@@ -41,9 +41,12 @@
                                     <table class="table datatables align-middle" id="table-operateurs">
                                         <thead>
                                             <tr>
-                                                <th>N° agrément</th>
-                                                <th>Opérateurs</th>
-                                                <th class="text-center">Sigle</th>
+                                                <th width="45%">Opérateurs</th>
+                                                <th width="25%">Adresse</th>
+                                                {{-- <th>Domaine</th>
+                                                <th>Niveau qualification</th> --}}
+                                                {{-- <th>Modules</th> --}}
+                                                {{-- <th>N° agrément</th> --}}
                                                 {{-- <th class="text-center">Modules</th> --}}
                                                 {{-- <th width="15%" class="text-center">Statut</th> --}}
                                                 <th width="25%">Motif</th>
@@ -55,9 +58,10 @@
                                             @foreach ($operateurs as $operateur)
                                                 @isset($operateur?->numero_agrement)
                                                     <tr>
-                                                        <td>{{ $operateur?->numero_agrement }}</td>
-                                                        <td>{{ $operateur?->name }}</td>
-                                                        <td style="text-align: center;">{{ $operateur?->sigle }}</td>
+                                                        <td>{{ $operateur?->name . ' (' . $operateur?->sigle . ')' }}</td>
+                                                        <td>{{ $operateur?->adresse }}</td>
+                                                        {{-- <td>{{ count($operateur?->operateurmodules) }}</td> --}}
+                                                        {{-- <td>{{ $operateur?->numero_agrement }}</td> --}}
                                                         {{-- <td style="text-align: center;">
                                                             @foreach ($operateur?->operateurmodules as $operateurmodule)
                                                                 @if ($loop->last)
@@ -94,11 +98,11 @@
 @push('scripts')
     <script>
         new DataTable('#table-operateurs', {
-            /* layout: {
+            layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
-            }, */
+            },
             "lengthMenu": [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "Tout"]

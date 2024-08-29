@@ -53,7 +53,7 @@ class OperateurController extends Controller
             "sigle"                 => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "numero_agrement"       => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "numero_agrement"       => ["nullable", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "email1"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
@@ -113,7 +113,7 @@ class OperateurController extends Controller
             $operateur = Operateur::create([
                 "name"                 =>       $request->input("name"),
                 "sigle"                =>       $request->input("sigle"),
-                "numero_agrement"      =>       $request->input("numero_agrement"),
+                "numero_agrement"      =>       null,
                 "email1"               =>       $request->input("email1"),
                 "fixe"                 =>       $request->input("fixe"),
                 "telephone1"           =>       $request->input("telephone1"),
@@ -519,7 +519,7 @@ class OperateurController extends Controller
         $moduleoperateur_count = $operateur->operateurmodules->count();
 
         $count_nouveau = $operateur->operateurmodules->where('statut', 'nouveau')->count();
-        
+
         if ($count_nouveau > 0) {
             Alert::warning('Désolez ! ', 'il reste des module à traiter');
             return redirect()->back();
@@ -583,7 +583,7 @@ class OperateurController extends Controller
         $operateurs = Operateur::get();
         $operateur_total = $operateur->count();
 
-    /*     foreach ($user->operateurs as $key => $op) {
+        /*     foreach ($user->operateurs as $key => $op) {
             $count_modules = $op->operateurmodules->count();
         }
         if ($count_modules <= 0) {

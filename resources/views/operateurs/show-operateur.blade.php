@@ -37,9 +37,9 @@
                                 <span class="badge bg-white text-info">{{ $operateur_total }}/1</span>
                             </button>
                             {{-- @isset(Auth::user()->cin) --}}
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-primary btn-sm float-end btn-rounded" data-bs-toggle="modal"
                                 data-bs-target="#AddoperateurModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
+                                <i class="bi bi-plus" title="Ajouter demande"></i>
                             </button>
                             {{-- @endisset --}}
                         </div>
@@ -232,7 +232,7 @@
                             {{-- </form> --}}
                         @else
                             @if (isset(Auth::user()->cin))
-                                <h5 class="card-title">Aucune demande operateur pour le moment !!</h5>
+                                <h5 class="card-title">Aucune demande operateur pour le moment !</h5>
                             @else
                                 <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
                                             class="badge bg-warning text-white">Incomplètes</span></a>, cliquez <a
@@ -285,7 +285,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="numero_agrement" class="form-label">Numéro agrément<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="numero_agrement"
@@ -297,7 +297,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="email1" class="form-label">Email<span
@@ -423,7 +423,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="adresse" class="form-label">Adresse<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="adresse" id="adresse" rows="1"
@@ -463,7 +463,7 @@
                                         <select name="registre_commerce"
                                             class="form-select form-select-sm @error('registre_commerce') is-invalid @enderror"
                                             aria-label="Select" id="select-field-registre_op" data-placeholder="Choisir">
-                                            <option value="">
+                                            <option value="{{ old('registre_commerce') }}">
                                                 {{ old('registre_commerce') }}
                                             </option>
                                             <option value="Registre de commerce">
@@ -524,7 +524,7 @@
                                             class="form-select form-select-sm @error('type_demande') is-invalid @enderror"
                                             aria-label="Select" id="select-field_type_demande"
                                             data-placeholder="Choisir type de demande">
-                                            <option value="">
+                                            <option value="{{ old('type_demande') }}">
                                                 {{ old('type_demande') }}
                                             </option>
                                             <option value="new">
@@ -541,7 +541,7 @@
                                         @enderror
                                     </div>
 
-                                    <hr class="dropdown-divider mt-5">
+                                    <hr class="dropdown-divider mt-3">
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="civilite" class="form-label">Civilité<span
@@ -550,7 +550,7 @@
                                             class="form-select form-select-sm @error('civilite') is-invalid @enderror"
                                             aria-label="Select" id="select-field-civilite"
                                             data-placeholder="Choisir civilité">
-                                            <option value="">
+                                            <option value="{{ old('civilite') }}">
                                                 {{ old('civilite') }}
                                             </option>
                                             <option value="Monsieur">

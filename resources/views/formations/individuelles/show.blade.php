@@ -376,12 +376,10 @@
                                                 @endif
                                                 <div class="float-end">
                                                     <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                        class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
-                                                        <i class="bi bi-person-plus" title="Ajouter demandeur"></i> </a>
+                                                        class="btn btn-outline-primary btn-rounded btn-sm">
+                                                        <i class="bi bi-plus" title="Ajouter demandeur"></i> </a>
                                                 </div>
-
                                             </div>
-
                                             <div class="row g-3 pt-3">
                                                 <table
                                                     class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless"

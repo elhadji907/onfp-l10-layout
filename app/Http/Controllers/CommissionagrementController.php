@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Commissionagrement;
 use App\Models\Historiqueagrement;
 use App\Models\Operateur;
+use App\Models\Operateurmodule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -124,7 +125,7 @@ class CommissionagrementController extends Controller
 
         $operateur_deja_retenus = Operateur::where('commissionagrements_id', $idcommissionagrement)->get();
 
-      /*   foreach ($operateur_deja_retenus as $key => $value) {
+        /*   foreach ($operateur_deja_retenus as $key => $value) {
 
             $value->update([
                 "commissionagrements_id"        =>  null,
@@ -178,7 +179,7 @@ class CommissionagrementController extends Controller
             ->where('commissionagrements_id', '!=', $id)
             ->pluck('id', 'id')
             ->all();
-            
+
         return view('operateurs.commissionagrements.add_op_commsions', compact('commissionagrement', 'operateurs', 'operateurAgrement', 'operateurAgrementCheck'));
     }
 
@@ -190,7 +191,13 @@ class CommissionagrementController extends Controller
             ->where('statut_agrement', 'agréer')
             ->get();
 
-        return view('operateurs.agrements.show_agreer', compact('operateurs', 'commissionagrement'));
+        $operateurmodules = Operateurmodule::join('operateurs', 'operateurs.id', 'operateurmodules.operateurs_id')
+            ->select('operateurmodules.*')
+            ->where('operateurs.commissionagrements_id', $commissionagrement->id)
+            ->where('operateurmodules.statut', "agréer")
+            ->get();
+
+        return view('operateurs.agrements.show_agreer', compact('operateurs', 'commissionagrement', 'operateurmodules'));
     }
 
     public function showReserve($id)
@@ -201,7 +208,13 @@ class CommissionagrementController extends Controller
             ->where('statut_agrement', 'sous réserve')
             ->get();
 
-        return view('operateurs.agrements.show_reserve', compact('operateurs', 'commissionagrement'));
+        $operateurmodules = Operateurmodule::join('operateurs', 'operateurs.id', 'operateurmodules.operateurs_id')
+            ->select('operateurmodules.*')
+            ->where('operateurs.commissionagrements_id', $commissionagrement->id)
+            ->where('operateurmodules.statut', "sous réserve")
+            ->get();
+
+        return view('operateurs.agrements.show_reserve', compact('operateurs', 'commissionagrement', 'operateurmodules'));
     }
 
     public function showRejeter($id)
@@ -214,5 +227,4 @@ class CommissionagrementController extends Controller
 
         return view('operateurs.agrements.show_rejeter', compact('operateurs', 'commissionagrement'));
     }
-
 }

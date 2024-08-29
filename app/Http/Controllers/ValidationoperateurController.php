@@ -22,7 +22,6 @@ class ValidationoperateurController extends Controller
         $operateur->update([
             'statut_agrement'    =>  'sous réserve',
             'motif'              =>  $request->input('motif'),
-            'users_id'           =>  Auth::user()->id,
         ]);
 
         $operateur->save();
@@ -54,7 +53,6 @@ class ValidationoperateurController extends Controller
         $operateur->update([
             'statut_agrement'    =>  'rejeter',
             'motif'              =>  $request->input('motif'),
-            'users_id'           =>  Auth::user()->id,
         ]);
 
         $operateur->save();
