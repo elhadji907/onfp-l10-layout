@@ -59,10 +59,10 @@ class OperateurController extends Controller
             "email1"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "fixe"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "fixe"                  => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "telephone1"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "telephone1"            => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "categorie"             =>      "required|string",
@@ -79,7 +79,7 @@ class OperateurController extends Controller
             "email2"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "telephone2"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "telephone2"            => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "fonction_responsable"  =>      "required|string",
@@ -161,10 +161,10 @@ class OperateurController extends Controller
             "email1"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "fixe"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "fixe"                  => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "telephone1"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "telephone1"            => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "categorie"             =>      "required|string",
@@ -181,7 +181,7 @@ class OperateurController extends Controller
             "email2"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "telephone2"            => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "telephone2"            => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "fonction_responsable"  =>      "required|string",
@@ -250,7 +250,7 @@ class OperateurController extends Controller
         $this->validate($request, [
             "name"                  =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "sigle"                 =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
-            "numero_agrement"       =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
+            "numero_agrement"       =>      ['nullable', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "email1"                =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "fixe"                  =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],
             "telephone1"            =>      ['required', 'string', Rule::unique(Operateur::class)->ignore($id)->whereNull('deleted_at')],

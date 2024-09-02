@@ -389,10 +389,10 @@
                                                             {{-- <th>N°</th> --}}
                                                             <th>Numéro</th>
                                                             <th>Civilité</th>
-                                                            <th>CIN</th>
+                                                            <th class="text-center">CIN</th>
                                                             <th>Prénom</th>
                                                             <th>NOM</th>
-                                                            <th>Date naissance</th>
+                                                            <th class="text-center">Date naissance</th>
                                                             <th>Lieu de naissance</th>
                                                             {{-- <th>Adresse</th> --}}
                                                             @isset($individuelle?->note_obtenue)
@@ -410,10 +410,10 @@
                                                                 {{-- <td>{{ $i++ }}</td> --}}
                                                                 <td>{{ $individuelle?->numero }}</td>
                                                                 <td>{{ $individuelle?->user?->civilite }}</td>
-                                                                <td>{{ $individuelle?->user?->cin }}</td>
+                                                                <td style="text-align: center;">{{ $individuelle?->user?->cin }}</td>
                                                                 <td>{{ $individuelle?->user?->firstname }}</td>
                                                                 <td>{{ $individuelle?->user?->name }}</td>
-                                                                <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                                <td style="text-align: center;">{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
                                                                 </td>
                                                                 <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                                 {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}

@@ -25,7 +25,9 @@ class CollectiveController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $communes = Commune::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
-        return view('collectives.index', compact('collectives', 'departements', 'communes', 'modules'));
+        $today = date('Y-m-d');
+        $count_today = Collective::where("created_at", "LIKE",  "{$today}%")->count();
+        return view('collectives.index', compact('collectives', 'departements', 'communes', 'modules', 'count_today'));
     }
     public function store(Request $request)
     {
@@ -71,9 +73,7 @@ class CollectiveController extends Controller
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
             return redirect()->back();
         } else {
-
-            $annee = date('y');
-            $rand = rand(0, 999);
+            /*   $rand = rand(0, 999);
             $letter1 = chr(rand(65, 90));
             $letter2 = chr(rand(65, 90));
             $random = $letter1.''.$rand . '' . $letter2;
@@ -89,9 +89,30 @@ class CollectiveController extends Controller
                 $numero_collective   =   strtoupper("0" . $random);
             } else {
                 $numero_collective   =   strtoupper($random);
+            } */
+            $annee = date('y');
+            $numero_collective = Collective::get()->last();
+            if (isset($numero_collective)) {
+                $numero_collective = Collective::get()->last()->numero;
+                $numero_collective = ++$numero_collective;
+                $longueur = strlen($numero_collective);
+                if ($longueur <= 1) {
+                    $numero_collective   =   strtolower("0000" . $numero_collective);
+                } elseif ($longueur >= 2 && $longueur < 3) {
+                    $numero_collective   =   strtolower("000" . $numero_collective);
+                } elseif ($longueur >= 3 && $longueur < 4) {
+                    $numero_collective   =   strtolower("00" . $numero_collective);
+                } elseif ($longueur >= 4 && $longueur < 5) {
+                    $numero_collective   =   strtolower("0" . $numero_collective);
+                } else {
+                    $numero_collective   =   strtolower($numero_collective);
+                }
+            } else {
+                $numero_collective = "00001";
+                $numero_collective = 'C' . $annee . $numero_collective;
             }
 
-            $numero_collective = 'C' . $annee . $numero_collective;
+            $numero_collective = strtoupper($numero_collective);
 
             $departement = Departement::where('nom', $request->input("departement"))->get()->first();
             $regionid = $departement->region->id;
@@ -112,7 +133,7 @@ class CollectiveController extends Controller
                 "bp"                        =>       $request->input("bp"),
                 "statut_juridique"          =>       $request->input("statut"),
                 "autre_statut_juridique"    =>       $request->input("autre_statut"),
-                "statut_demande"            =>       'attente',
+                "statut_demande"            =>       'nouvelle',
                 "civilite_responsable"      =>       $request->input("civilite"),
                 "prenom_responsable"        =>       $request->input("prenom"),
                 "nom_responsable"           =>       $request->input("nom"),
@@ -168,7 +189,7 @@ class CollectiveController extends Controller
             })],
         ]);
 
-        $annee = date('y');
+        /* $annee = date('y');
         $rand = rand(0, 999);
         $letter1 = chr(rand(65, 90));
         $letter2 = chr(rand(65, 90));
@@ -185,8 +206,31 @@ class CollectiveController extends Controller
             $numero_collective   =   strtoupper("0" . $random);
         } else {
             $numero_collective   =   strtoupper($random);
+        } */
+
+        $annee = date('y');
+        $numero_collective = Collective::get()->last();
+        if (isset($numero_collective)) {
+            $numero_collective = Collective::get()->last()->numero;
+            $numero_collective = ++$numero_collective;
+            $longueur = strlen($numero_collective);
+            if ($longueur <= 1) {
+                $numero_collective   =   strtolower("0000" . $numero_collective);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numero_collective   =   strtolower("000" . $numero_collective);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numero_collective   =   strtolower("00" . $numero_collective);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numero_collective   =   strtolower("0" . $numero_collective);
+            } else {
+                $numero_collective   =   strtolower($numero_collective);
+            }
+        } else {
+            $numero_collective = "00001";
+            $numero_collective = 'C' . $annee . $numero_collective;
         }
-        $numero_collective = 'C' . $annee . $numero_collective;
+
+        $numero_collective = strtoupper($numero_collective);
 
         $departement = Departement::where("nom", $request->input("departement"))->first();
         $regionid = $departement->region->id;
@@ -203,7 +247,7 @@ class CollectiveController extends Controller
 
         $user->save();
 
-       /*  $user->update([
+        /*  $user->update([
             'username'                          => $request->input('name') . '' . $user->id,
         ]);
 
@@ -226,7 +270,7 @@ class CollectiveController extends Controller
             "bp"                        =>       $request->input("bp"),
             "statut_juridique"          =>       $request->input("statut"),
             "autre_statut_juridique"    =>       $request->input("autre_statut"),
-            "statut_demande"            =>       'attente',
+            "statut_demande"            =>       'nouvelle',
             "civilite_responsable"      =>       $request->input("civilite"),
             "prenom_responsable"        =>       $request->input("prenom"),
             "nom_responsable"           =>       $request->input("nom"),
@@ -301,7 +345,6 @@ class CollectiveController extends Controller
             "bp"                        =>       $request->input("bp"),
             "statut_juridique"          =>       $request->input("statut"),
             "autre_statut_juridique"    =>       $request->input("autre_statut"),
-            "statut_demande"            =>       'attente',
             "civilite_responsable"      =>       $request->input("civilite"),
             "prenom_responsable"        =>       $request->input("prenom"),
             "nom_responsable"           =>       $request->input("nom"),

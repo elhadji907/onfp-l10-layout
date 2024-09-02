@@ -8,10 +8,94 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Données</li>
+                <li class="breadcrumb-item active">Liste des courriers arrivés</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                @if ($message = Session::get('status'))
+                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if ($message = Session::get('danger'))
+                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <!-- Sales Card -->
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Courriers<span> | aujourd'hui</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-calendar-check-fill"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ $count_today ?? '0' }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">Aujourd'hui</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Courriers <span>| tous</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-file-earmark-text"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ count($arrives) ?? '0' }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">Tous</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -31,21 +115,26 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
+                        {{-- <div class="pt-1">
                             <a href="{{ route('arrives.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                        </div>
+                        </div> --}}
+
+                        <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
+                            data-bs-target="#addCourrierArrive">
+                            <i class="bi bi-plus" title="Ajouter un nouveau courrier"></i>
+                        </button>
                         <h5 class="card-title">Liste des courriers arrivés</h5>
                         {{-- <p>Le tableau des courriers arrivés</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-arrives">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
-                                    <th>Date arrivé</th>
-                                    <th>N° correspondance</th>
-                                    <th>Date correspondance</th>
+                                    <th class="text-center">N°</th>
+                                    <th class="text-center">Date arrivé</th>
+                                    <th class="text-center">N° correspondance</th>
+                                    <th class="text-center">Date correspondance</th>
                                     <th>Expéditeur</th>
                                     <th>Objet</th>
                                     <th>#</th>
@@ -55,11 +144,11 @@
                                 <?php $i = 1; ?>
                                 @foreach ($arrives as $arrive)
                                     <tr>
-                                        <td>{{ $arrive->numero }}</td>
+                                        <td style="text-align: center;">{{ $arrive->numero }}</td>
                                         {{-- Date reception = date arrivée --}}
-                                        <td>{{ $arrive->courrier->date_recep?->format('d/m/Y') }} </td>
-                                        <td>{{ $arrive->courrier->numero }}</td>
-                                        <td>{{ $arrive->courrier->date_cores?->format('d/m/Y') }} </td>
+                                        <td style="text-align: center;">{{ $arrive->courrier->date_recep?->format('d/m/Y') }} </td>
+                                        <td style="text-align: center;">{{ $arrive->courrier->numero }}</td>
+                                        <td style="text-align: center;">{{ $arrive->courrier->date_cores?->format('d/m/Y') }} </td>
                                         {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
                                         <td>{{ $arrive->courrier->expediteur }}</td>
                                         <td>{{ $arrive->courrier->objet }}</td>
@@ -90,7 +179,8 @@
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"><i
+                                                                <button type="submit"
+                                                                    class="dropdown-item show_confirm"><i
                                                                         class="bi bi-trash"></i></button>
                                                             </form>
                                                         </li>
@@ -108,6 +198,183 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="modal fade" id="addCourrierArrive" tabindex="-1" role="dialog"
+            aria-labelledby="addCourrierArriveLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="pt-0 pb-0">
+                        <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
+                        <p class="text-center small">enregister un nouveau courrier arrivé</p>
+                    </div>
+                    <form method="post" action="{{ route('arrives.store') }}" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+
+                        {{--  <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
+                                demande
+                                individuelle</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div> --}}
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="date_arrivee" class="form-label">Date arrivée<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_arrivee" value="{{ old('date_arrivee') }}"
+                                        class="form-control form-control-sm @error('date_arrivee') is-invalid @enderror"
+                                        id="date_arrivee" placeholder="Date arrivée">
+                                    @error('date_arrivee')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="numero_arrive" class="form-label">Numéro<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="number" min="0" name="numero_arrive"
+                                            value="{{ $numCourrier ?? old('numero_arrive') }}"
+                                            class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
+                                            id="numero_arrive" placeholder="Numéro de correspondance">
+                                        @error('numero_arrive')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="date_correspondance" class="form-label">Date correspondance<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_correspondance"
+                                        value="{{ old('date_correspondance') }}"
+                                        class="form-control form-control-sm @error('date_correspondance') is-invalid @enderror"
+                                        id="date_correspondance" placeholder="nom">
+                                    @error('date_correspondance')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="text" min="0" name="numero_correspondance"
+                                            value="{{ old('numero_correspondance') }}"
+                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
+                                            id="numero_correspondance" placeholder="Numéro de correspondance">
+                                        @error('numero_correspondance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-34 mb-0">
+                                    <label for="annee" class="form-label">Année<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="number" min="2024" name="annee"
+                                        value="{{ $anneeEnCours ?? old('annee') }}"
+                                        class="form-control form-control-sm @error('annee') is-invalid @enderror"
+                                        id="annee" placeholder="Année">
+                                    @error('annee')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="expediteur" class="form-label">Expéditeur<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="expediteur" id="expediteur" rows="1"
+                                        class="form-control form-control-sm @error('expediteur') is-invalid @enderror" placeholder="Expéditeur">{{ old('expediteur') }}</textarea>
+                                    @error('expediteur')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="objet" class="form-label">Objet<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="objet" id="objet" rows="1"
+                                        class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet') }}</textarea>
+                                    @error('objet')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="reference" class="form-label">Référence</label>
+                                    <input type="text" name="reference" value="{{ old('reference') }}"
+                                        class="form-control form-control-sm @error('reference') is-invalid @enderror"
+                                        id="reference" placeholder="Référence">
+                                    @error('reference')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="numero_reponse" class="form-label">Numéro réponse</label>
+                                    <input type="number" min="0" name="numero_reponse"
+                                        value="{{ old('numero_reponse') }}"
+                                        class="form-control form-control-sm @error('numero_reponse') is-invalid @enderror"
+                                        id="numero_reponse" placeholder="Numéro réponse">
+                                    @error('numero_reponse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="date_reponse" class="form-label">Date réponse</label>
+                                    <input type="date" min="0" name="date_reponse"
+                                        value="{{ old('date_reponse') }}"
+                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror"
+                                        id="date_reponse" placeholder="Numéro réponse">
+                                    @error('date_reponse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="observation" class="form-label">Observations</label>
+                                    <textarea name="observation" id="observation" rows="1"
+                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
+                                    @error('observation')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

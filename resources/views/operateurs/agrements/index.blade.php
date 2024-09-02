@@ -60,7 +60,7 @@
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($operateurs as $operateur)
-                                    @isset($operateur?->numero_agrement)
+                                    {{-- @isset($operateur?->numero_agrement) --}}
                                         <tr>
                                             {{-- <td>{{ $operateur?->courrier?->numero }}</td> --}}
                                             <td style="text-align: center">{{ $operateur?->annee_agrement?->format('Y') }}</td>
@@ -107,7 +107,7 @@
                                                 </span>
                                             </td>
                                         </tr>
-                                    @endisset
+                                    {{-- @endisset --}}
                                 @endforeach
 
                             </tbody>

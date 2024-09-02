@@ -71,6 +71,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $arrondissements_id
  * @property int|null $localites_id
  * @property int|null $zones_id
+ * @property int|null $evaluateurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -100,6 +101,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Traitement|null $traitement
  * @property TypesFormation|null $types_formation
  * @property Zone|null $zone
+ * @property Evaluateur|null $evaluateur
  * @property Collection|Coment[] $coments
  * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Detail[] $details
@@ -122,6 +124,8 @@ class Formation extends Model
 	protected $table = 'formations';
 
 	protected $casts = [
+		'frais_evaluation' => 'float',
+		'frais_evaluateur' => 'float',
 		'frais_operateurs' => 'float',
 		'frais_add' => 'float',
 		'autes_frais' => 'float',
@@ -156,6 +160,7 @@ class Formation extends Model
 		'arrondissements_id' => 'int',
 		'localites_id' => 'int',
 		'zones_id' => 'int',
+		'evaluateurs_id' => 'int',
 		'date_pv' => 'datetime',
 		'date_suivi' => 'datetime',
 		'date_debut' => 'datetime',
@@ -184,6 +189,8 @@ class Formation extends Model
 		'titre',
 		'attestation',
 		'frais_operateurs',
+		'frais_evaluation',
+		'frais_evaluateur',
 		'frais_add',
 		'autes_frais',
 		'frais_total',
@@ -225,7 +232,8 @@ class Formation extends Model
 		'departements_id',
 		'arrondissements_id',
 		'localites_id',
-		'zones_id'
+		'zones_id',
+		'evaluateurs_id'
 	];
 
 	

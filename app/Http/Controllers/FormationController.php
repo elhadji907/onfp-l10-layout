@@ -35,6 +35,23 @@ class FormationController extends Controller
     public function index()
     {
         $formations = Formation::where('statut', '!=', 'supprimer')->orderBy('created_at', 'desc')->get();
+
+        $individuelles_formations_count = Formation::join('types_formations', 'types_formations.id', 'formations.types_formations_id')
+            ->select('formations.*')
+            ->where('types_formations.name', "individuelle")
+            ->where('statut', '!=', 'supprimer')
+            ->count();
+
+        $collectives_formations_count = Formation::join('types_formations', 'types_formations.id', 'formations.types_formations_id')
+            ->select('formations.*')
+            ->where('types_formations.name', "collective")
+            ->where('statut', '!=', 'supprimer')
+            ->count();
+
+            
+        $today = date('Y-m-d');
+        $count_today = Formation::where("created_at", "LIKE",  "{$today}%")->count();
+
         $modules = Module::orderBy("created_at", "desc")->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
         $regions = Region::orderBy("created_at", "desc")->get();
@@ -43,7 +60,7 @@ class FormationController extends Controller
         $programmes = Programme::orderBy("created_at", "desc")->get();
         $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
         $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
-        return view("formations.index", compact("formations", "modules", "departements", "regions", "operateurs", 'types_formations', 'projets', 'programmes', 'choixoperateurs'));
+        return view("formations.index", compact("count_today","collectives_formations_count","individuelles_formations_count","formations", "modules", "departements", "regions", "operateurs", 'types_formations', 'projets', 'programmes', 'choixoperateurs'));
     }
 
 
@@ -136,7 +153,7 @@ class FormationController extends Controller
             "projets_id"            =>   $request->input('projet'),
             "programmes_id"         =>   $request->input('programme'),
             "choixoperateurs_id"    =>   $request->input('choixoperateur'),
-            "statut"                =>   "attente",
+            "statut"                =>   "nouvelle",
             "annee"                 =>   $annee,
 
         ]);
@@ -145,7 +162,7 @@ class FormationController extends Controller
 
 
         $statut = new Statut([
-            "statut"                =>   "attente",
+            "statut"                =>   "nouvelle",
             "formations_id"         =>   $formation->id,
         ]);
 

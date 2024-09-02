@@ -193,6 +193,7 @@ class CommissionagrementController extends Controller
 
         $operateurmodules = Operateurmodule::join('operateurs', 'operateurs.id', 'operateurmodules.operateurs_id')
             ->select('operateurmodules.*')
+            ->where('operateurs.statut_agrement', "agréer")
             ->where('operateurs.commissionagrements_id', $commissionagrement->id)
             ->where('operateurmodules.statut', "agréer")
             ->get();
@@ -210,6 +211,7 @@ class CommissionagrementController extends Controller
 
         $operateurmodules = Operateurmodule::join('operateurs', 'operateurs.id', 'operateurmodules.operateurs_id')
             ->select('operateurmodules.*')
+            ->where('operateurs.statut_agrement', "sous réserve")
             ->where('operateurs.commissionagrements_id', $commissionagrement->id)
             ->where('operateurmodules.statut', "sous réserve")
             ->get();

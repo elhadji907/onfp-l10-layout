@@ -127,7 +127,6 @@
             </div>
             {{-- Fin Photo de profil --}}
 
-
             {{-- Début aperçu --}}
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="flex items-center gap-4">
@@ -344,10 +343,10 @@
                                                         <option value="{{ $user->civilite ?? old('civilite') }}">
                                                             {{ $user->civilite ?? old('civilite') }}
                                                         </option>
-                                                        <option value="Monsieur">
+                                                        <option value="M.">
                                                             Monsieur
                                                         </option>
-                                                        <option value="Madame">
+                                                        <option value="Mme">
                                                             Madame
                                                         </option>
                                                     </select>

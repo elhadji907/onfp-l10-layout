@@ -14,13 +14,37 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ArriveController extends Controller
 {
     public function index()
     {
+        $anneeEnCours = date('Y');
+        $numCourrier = Arrive::get()->last();
+        if (isset($numCourrier)) {
+            $numCourrier = Arrive::get()->last()->numero;
+            $numCourrier = ++$numCourrier;
+        } else {
+            $numCourrier = "0001";
+        }
+
+        $longueur = strlen($numCourrier);
+
+        if ($longueur <= 1) {
+            $numCourrier   =   strtolower("000" . $numCourrier);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numCourrier   =   strtolower("00" . $numCourrier);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("0" . $numCourrier);
+        } else {
+            $numCourrier   =   strtolower($numCourrier);
+        }
+
         $arrives = Arrive::orderBy('created_at', 'desc')->get();
-        return view("courriers.arrives.index", compact("arrives"));
+        $today = date('Y-m-d');
+        $count_today = Arrive::where("created_at", "LIKE",  "{$today}%")->count();
+        return view("courriers.arrives.index", compact("arrives", "count_today", "anneeEnCours", "numCourrier"));
     }
 
     public function create()
@@ -75,9 +99,10 @@ class ArriveController extends Controller
         ]);
 
         $arrive->save();
-
-        $status = "Enregistrement effectué avec succès";
-        return redirect()->back()->with("status", $status);
+        Alert::success("Félicitations !", "Courrier ajouté avec succès");
+        /* $status = "Enregistrement effectué avec succès"; */
+        /* return redirect()->back()->with("status", $status); */
+        return redirect()->back();
     }
 
 
@@ -103,9 +128,13 @@ class ArriveController extends Controller
             $courrier->date_imp    =  $request->input('date_imp');
             $courrier->save();
 
-            $status = 'Courrier imputé avec succès';
+            /*  $status = 'Courrier imputé avec succès';
 
-            return Redirect::route('arrives.index')->with('status', $status);
+            return Redirect::route('arrives.index')->with('status', $status); */
+
+            Alert::success('Félicitations !', 'courrier imputé');
+
+            return redirect()->back();
 
             //solution, récuper l'id à partir de blade avec le mode hidden
         }
@@ -215,6 +244,8 @@ class ArriveController extends Controller
     {
         $arrive = Arrive::findOrFail($id);
         $courrier = $arrive->courrier;
+
+        Alert::success('Félicitations !', 'courrier imputé');
 
         return view("courriers.arrives.imputation-arrive", compact("arrive", "courrier"));
     }

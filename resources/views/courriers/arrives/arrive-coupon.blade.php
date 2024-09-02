@@ -56,6 +56,15 @@
             border-top: 0;
             border-bottom: 0px solid rgb(0, 0, 0);
         }
+
+        .X {
+            background-color: #DC3545;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//db.onlinewebfonts.com/c/dd79278a2e4c4a2090b763931f2ada53?family=ArialW02-Regular" rel="stylesheet"

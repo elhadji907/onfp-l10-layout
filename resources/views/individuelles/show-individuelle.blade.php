@@ -39,9 +39,9 @@
                                 </button>
                             @endif
                             @isset(Auth::user()->cin)
-                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded" data-bs-toggle="modal"
                                     data-bs-target="#AddIndividuelleModal">
-                                    <i class="bi bi-person-plus" title="Ajouter"></i>
+                                    <i class="bi bi-plus" title="Ajouter"></i>
                                 </button>
                             @endisset
                         </div>
@@ -49,7 +49,7 @@
                             <h5 class="card-title">
                                 Bienvenue {{ Auth::user()->civilite . ' ' . Auth::user()->name }}</h5>
                             <!-- demande -->
-                            <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                            {{-- s --}}
                                 <table class="table table-bordered table-hover table-borderless">
                                     <thead>
                                         <tr>
@@ -132,7 +132,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </form>
+                            {{-- </form> --}}
                         @else
                             {{-- <a href="{{ route('individuelles.create') }}"
                                 class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
@@ -739,7 +739,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-8 col-lg-8 mb-0">
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
 

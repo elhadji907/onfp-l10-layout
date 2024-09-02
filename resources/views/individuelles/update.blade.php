@@ -42,10 +42,10 @@
                                         <option value="{{ $individuelle?->user->civilite }}">
                                             {{ $individuelle?->user->civilite ?? old('civilite') }}
                                         </option>
-                                        <option value="Monsieur">
+                                        <option value="M.">
                                             Monsieur
                                         </option>
-                                        <option value="Madame">
+                                        <option value="Mme">
                                             Madame
                                         </option>
                                     </select>
@@ -128,7 +128,7 @@
                                 </div> --}}
 
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-6 mb-0">
 
                                     <label for="module" class="form-label">Formation sollicitée<span
                                             class="text-danger mx-1">*</span></label>
@@ -161,7 +161,7 @@
                                         </span>
                                     @enderror --}}
                                 </div>
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-6 mb-0">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse"
@@ -559,9 +559,9 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-6 mb-0">
                                     <label for="qualification" class="form-label">Qualification et autres diplômes</label>
-                                    <textarea name="qualification" id="qualification" rows="1"
+                                    <textarea name="qualification" id="qualification" rows="2"
                                         class="form-control form-control-sm @error('qualification') is-invalid @enderror"
                                         placeholder="Qualification et autres diplômes">{{ $individuelle->qualification ?? old('qualification') }}</textarea>
                                     @error('qualification')
@@ -571,7 +571,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="projet" class="form-label">Projet</label>
                                     <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
                                         aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
@@ -589,10 +589,10 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                </div> --}}
+                                <div class="col-12 col-md-6 col-lg-6 mb-0">
                                     <label for="experience" class="form-label">Expériences et stages</label>
-                                    <textarea name="experience" id="experience" rows="1"
+                                    <textarea name="experience" id="experience" rows="2"
                                         class="form-control form-control-sm @error('experience') is-invalid @enderror"
                                         placeholder="Expériences ou stages">{{ $individuelle->experience ?? old('experience') }}</textarea>
                                     @error('experience')

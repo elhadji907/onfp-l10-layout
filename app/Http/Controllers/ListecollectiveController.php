@@ -38,7 +38,7 @@ class ListecollectiveController extends Controller
             'experience'                =>      $request->input('experience'),
             'autre_experience'          =>      $request->input('autre_experience'),
             'details'                   =>      $request->input('details'),
-            'statut'                    =>      'attente',
+            'statut'                    =>      'nouveau',
             'collectivemodules_id'      =>      $request->input('module'),
             'collectives_id'            =>      $request->input('collective'),
         ]);
@@ -54,7 +54,6 @@ class ListecollectiveController extends Controller
     {
         $listecollective   = Listecollective::find($id);
         return view("collectives.updateliste", compact("listecollective"));
-
     }
 
     public function update(Request $request, $id)
@@ -87,7 +86,6 @@ class ListecollectiveController extends Controller
             'experience'                =>      $request->input('experience'),
             'autre_experience'          =>      $request->input('autre_experience'),
             'details'                   =>      $request->input('details'),
-            'statut'                    =>      'attente',
             'collectivemodules_id'      =>      $request->input('module'),
             'collectives_id'            =>      $request->input('collective'),
         ]);
@@ -97,15 +95,12 @@ class ListecollectiveController extends Controller
         Alert::success("Ajouté !", "avec succès");
 
         return Redirect::route('collectivemodules.show', $request->input('module'));
-
     }
 
     public function show($id)
     {
         $listecollective   = Listecollective::find($id);
         return view("collectives.showlistecollective", compact("listecollective"));
-        
-
     }
 
     public function destroy($id)
@@ -116,6 +111,18 @@ class ListecollectiveController extends Controller
 
         Alert::success('module', 'supprimé');
 
+        return redirect()->back();
+    }
+
+    public function Validatelistecollective($id)
+    {
+        $listecollective = Listecollective::findOrFail($id);
+
+        $listecollective->update([
+            'statut'    =>  'attente',
+        ]);
+        $listecollective->save();
+        Alert::success('Félicitations !', 'demande validée');
         return redirect()->back();
     }
 }

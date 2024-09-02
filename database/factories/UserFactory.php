@@ -36,11 +36,11 @@ class UserFactory extends Factory
         $nombre6 = rand(0, 9);
         $nombre7 = rand(0, 9);
         $nombre8 = rand(0, 9);
-        $nombre9 = rand(0, 9);
+        /* $nombre9 = rand(0, 9); */
 
         $departements_id   =   Departement::all()->random()->id;
         $departement       =   Departement::findOrFail($departements_id);
-        $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8.$nombre9;
+        $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8;
 
 
         return [
@@ -50,7 +50,7 @@ class UserFactory extends Factory
             /* 'telephone' => $this->faker->unique(true)->numberBetween(70, 79) . rand(10, 99) . rand(10, 99) . rand(0, 9) . rand(0, 9) . rand(0, 9),
             'adresse' => fake()->address(),
             'lieu_naissance' => fake()->address(), */
-            'civilite'                          => $this->faker->randomElement($array = array('Monsieur', 'Madame')),
+            'civilite'                          => $this->faker->randomElement($array = array('M.', 'Mme')),
             'cin'                               => $cin,
             'firstname'                         => SnmG::getFirstName(),
             'name'                              => SnmG::getName(),

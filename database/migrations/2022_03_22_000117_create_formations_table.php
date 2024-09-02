@@ -46,6 +46,8 @@ class CreateFormationsTable extends Migration
             $table->string('decret', 200)->nullable();
             $table->string('beneficiaires', 200)->nullable();
             $table->longText('membres_jury')->nullable();
+            $table->double('frais_evaluateur')->nullable();
+            $table->double('frais_evaluation')->nullable();
             $table->string('niveau_qualification', 200)->nullable();
             $table->integer('effectif_prevu')->nullable();
             $table->integer('prevue_h')->nullable();
@@ -53,6 +55,11 @@ class CreateFormationsTable extends Migration
             $table->integer('forme_h')->nullable();
             $table->integer('forme_f')->nullable();
             $table->integer('total')->nullable();
+            $table->string('statut')->nullable();
+            $table->string('file1', 200)->nullable();
+            $table->string('file2', 200)->nullable();
+            $table->string('file3', 200)->nullable();
+            $table->string('file4', 200)->nullable();
             $table->string('appreciations', 200)->nullable();
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('agents_id')->nullable();
@@ -65,7 +72,6 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('specialites_id')->nullable();
             $table->unsignedInteger('courriers_id')->nullable();
             $table->unsignedInteger('statuts_id')->nullable();
-            $table->string('statut')->nullable();
             $table->unsignedInteger('types_formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
@@ -79,6 +85,7 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('arrondissements_id')->nullable();
             $table->unsignedInteger('localites_id')->nullable();
             $table->unsignedInteger('zones_id')->nullable();
+            $table->unsignedInteger('evaluateurs_id')->nullable();
 
             $table->index(["agents_id"], 'fk_consommations_agents1_idx');
 
@@ -127,6 +134,8 @@ class CreateFormationsTable extends Migration
             $table->index(["localites_id"], 'fk_formations_localites1_idx');
 
             $table->index(["zones_id"], 'fk_formations_zones1_idx');
+
+            $table->index(["evaluateurs_id"], 'fk_formations_evaluateurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -238,6 +247,11 @@ class CreateFormationsTable extends Migration
 
             $table->foreign('zones_id', 'fk_formations_zones1_idx')
                 ->references('id')->on('zones')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('evaluateurs_id', 'fk_formations_evaluateurs1_idx')
+                ->references('id')->on('evaluateurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

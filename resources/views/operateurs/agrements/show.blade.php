@@ -42,7 +42,7 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <span class="nav-link"><a href="{{ route('operateurs.index', $operateur->id) }}"
+                                    <span class="nav-link"><a href="{{ route('agrement') }}"
                                             class="btn btn-secondary btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>
                                     </span>

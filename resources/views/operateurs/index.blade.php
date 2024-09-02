@@ -60,7 +60,7 @@
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($operateurs as $operateur)
-                                    @isset($operateur?->numero_agrement)
+                                    {{-- @isset($operateur?->numero_agrement) --}}
                                         <tr>
                                             <td>{{ $operateur?->numero_agrement }}</td>
                                             <td>{{ $operateur?->name }}</td>
@@ -120,7 +120,7 @@
                                                 </span>
                                             </td>
                                         </tr>
-                                    @endisset
+                                    {{-- @endisset --}}
                                 @endforeach
 
                             </tbody>
@@ -349,7 +349,7 @@
                                         <select name="registre_commerce"
                                             class="form-select form-select-sm @error('registre_commerce') is-invalid @enderror"
                                             aria-label="Select" id="select-field-registre" data-placeholder="Choisir">
-                                            <option value="">
+                                            <option value="{{ old('registre_commerce') }}">
                                                 {{ old('registre_commerce') }}
                                             </option>
                                             <option value="Registre de commerce">
@@ -410,7 +410,7 @@
                                             class="form-select form-select-sm @error('type_demande') is-invalid @enderror"
                                             aria-label="Select" id="select-field"
                                             data-placeholder="Choisir type de demande">
-                                            <option value="">
+                                            <option value="{{ old('type_demande') }}">
                                                 {{ old('type_demande') }}
                                             </option>
                                             <option value="new">
@@ -436,7 +436,7 @@
                                             class="form-select form-select-sm @error('civilite') is-invalid @enderror"
                                             aria-label="Select" id="select-field-civilite"
                                             data-placeholder="Choisir civilité">
-                                            <option value="">
+                                            <option value="{{ old('civilite') }}">
                                                 {{ old('civilite') }}
                                             </option>
                                             <option value="Monsieur">

@@ -73,7 +73,7 @@
                                         data-bs-target="#foration-overview">Formations</button>
                                 </li>
 
-                               {{--  <li class="nav-item">
+                                {{--  <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#autres-demandes-overview">Demandes totales
                                         <span class="badge bg-success badge-number">{{ $collectives->count() }}</span>
@@ -89,8 +89,9 @@
                                     <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <h5 class="card-title">Détails: <span class="{{ $collective?->statut_demande }} text-white">
-                                            {{ $collective?->statut_demande }}</span></h5>
+                                        <h5 class="card-title">Détails: <span
+                                                class="{{ $collective?->statut_demande }} text-white">
+                                                {{ $collective?->statut_demande }}</span></h5>
                                         <div class="col-12 col-md-9 col-lg-9 mb-0">
                                             <div class="label">Nom structure</div>
                                             <div>{{ $collective?->name }}</div>
@@ -212,10 +213,14 @@
                                                     </div>
                                                 </span>
                                             @endif
-                                            <button type="button" class="btn btn-primary float-end btn-rounded"
-                                                data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
-                                                <i class="bi bi-person-plus" title="Ajouter module"></i>
-                                            </button>
+                                            @foreach ($collective->collectivemodules as $collectivemodule)
+                                            @endforeach
+                                            @isset($collectivemodule)
+                                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
+                                                    data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
+                                                    <i class="bi bi-person-plus" title="Ajouter module"></i>
+                                                </button>
+                                            @endisset
                                         </div>
                                         <p>Liste des membres</p>
                                         <div class="row g-3">
@@ -257,7 +262,8 @@
                                                                 <span class="d-flex align-items-baseline">
                                                                     <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
                                                                         class="btn btn-primary btn-sm"
-                                                                        title="voir détails" target="_blank"><i class="bi bi-eye"></i></a>
+                                                                        title="voir détails" target="_blank"><i
+                                                                            class="bi bi-eye"></i></a>
                                                                     <div class="filter">
                                                                         <a class="icon" href="#"
                                                                             data-bs-toggle="dropdown"><i
@@ -295,7 +301,7 @@
                             {{-- Détail modules --}}
                             <div class="tab-content">
                                 <div class="tab-pane fade modules-overview pt-1" id="modules-overview">
-                                    <button type="button" class="btn btn-primary float-end btn-rounded"
+                                    <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                         data-bs-toggle="modal" data-bs-target="#AddcollectiveModuleModal">
                                         <i class="bi bi-plus" title="Ajouter module"></i>
                                     </button>
@@ -398,7 +404,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td>
-                                                    @isset($collective )
+                                                    @isset($collective)
                                                         <span class="d-flex align-items-baseline"><a href="#"
                                                                 class="btn btn-primary btn-sm" title="voir détails"><i
                                                                     class="bi bi-eye"></i></a>
@@ -665,7 +671,7 @@
                                         <select name="module" class="form-select  @error('module') is-invalid @enderror"
                                             aria-label="Select" id="select-field-module-ind"
                                             data-placeholder="Choisir formation">
-                                            <option value="">
+                                            <option value="{{ old('module') }}">
                                                 {{ old('module') }}
                                             </option>
                                             @foreach ($collectivemodules as $module)
@@ -683,7 +689,8 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone</label>
-                                        <input type="number" min="0" name="telephone" value="{{ old('telephone') }}"
+                                        <input type="number" min="0" name="telephone"
+                                            value="{{ old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                             id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')

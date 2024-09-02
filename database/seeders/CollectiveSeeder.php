@@ -2,18 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Individuelle;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class IndividuelleSeeder extends Seeder
+class CollectiveSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Individuelle::factory()
-            ->count(500)
-            ->create();
+        //
     }
 }

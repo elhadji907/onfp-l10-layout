@@ -10,7 +10,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                             <li class="breadcrumb-item">Tables</li>
-                            <li class="breadcrumb-item active">Données</li>
+                            <li class="breadcrumb-item active">{{ $collectivemodule->module }}</li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
@@ -84,18 +84,28 @@
                                         </td>
                                         <td>
                                             <span class="d-flex align-items-baseline">
-                                                {{-- {{ route('listecollectives.show', $listecollective?->id) }} --}}
-                                                <a href="#"
+                                                {{-- <a href="{{ route('listecollectives.show', $listecollective?->id) }} "
                                                     class="btn btn-primary btn-sm" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
+                                                        class="bi bi-eye"></i></a> --}}
+                                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#EditlistecollectiveModal{{ $listecollective->id }}">
+                                                    <i class="bi bi-eye" title="voir détails"></i>
+                                                </button>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                        <form
+                                                            action="{{ route('Validatelistecollective', ['id' => $listecollective?->id]) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button
+                                                                class="show_confirm_valider btn btn-sm mx-1">Valider</button>
+                                                        </form>
                                                         <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('listecollectives.edit', $listecollective->id) }}"
-                                                                class="mx-1" title="Modifier"><i
-                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                                class="mx-1" title="Modifier">Modifier</a>
                                                         </li>
                                                         <form
                                                             action="{{ route('listecollectives.destroy', $listecollective->id) }}"
@@ -103,8 +113,7 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="dropdown-item show_confirm"
-                                                                title="Supprimer"><i
-                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                title="Supprimer">Supprimer</button>
                                                         </form>
                                                     </ul>
                                                 </div>
@@ -228,7 +237,8 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone</label>
-                                        <input type="number" min="0" name="telephone" value="{{ old('telephone') }}"
+                                        <input type="number" min="0" name="telephone"
+                                            value="{{ old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                             id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')
@@ -319,6 +329,102 @@
                 </div>
             </div>
         </div>
+        @foreach ($collectivemodule->listecollectives as $listecollective)
+            <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
+                <div class="modal fade" id="EditlistecollectiveModal{{ $listecollective->id }}" tabindex="-1"
+                    role="dialog" aria-labelledby="EditlistecollectiveModalLabel{{ $listecollective->id }}"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            {{-- <form method="post" action="{{ route('formations.update', $listecollective->id) }}"
+                                enctype="multipart/form-data" class="row g-3">
+                                @csrf
+                                @method('patch') --}}
+                            <div class="modal-header" id="EditlistecollectiveModalLabel{{ $listecollective->id }}">
+                                <h5 class="modal-title text-center">Détails</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-3">
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">N° CIN</div>
+                                        <div>{{ $listecollective?->cin }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Civilité</div>
+                                        <div>{{ $listecollective?->civilite }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Prénom</div>
+                                        <div>{{ $listecollective?->prenom }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Nom</div>
+                                        <div>{{ $listecollective?->nom }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div for="date_naissance" class="label">Date naissance</div>
+                                        <div>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Lieu naissance</div>
+                                        <div>{{ $listecollective?->lieu_naissance }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Telephone</div>
+                                        <div>{{ $listecollective?->telephone }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Niveau étude</div>
+                                        <div>{{ $listecollective?->niveau_etude }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Expérience</div>
+                                        <div>{{ $listecollective?->experience }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Autres experience</div>
+                                        <div>{{ $listecollective?->autre_experience }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Statut</div>
+                                        <div><span
+                                                class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Détails</div>
+                                        <div>{{ $listecollective?->details }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="label">Formation demandée</div>
+                                        <div>{{ $listecollective?->collectivemodule?->module }}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        @endforeach
     </section>
 
 @endsection

@@ -39,9 +39,9 @@
                                 </button>
                             @endif
                             @isset(Auth::user()->cin)
-                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded" data-bs-toggle="modal"
                                     data-bs-target="#AddCollectiveModal">
-                                    <i class="bi bi-person-plus" title="Ajouter"></i>
+                                    <i class="bi bi-plus" title="Ajouter"></i>
                                 </button>
                             @endisset
                         </div>
@@ -49,7 +49,7 @@
                             <h5 class="card-title">
                                 Bienvenue {{ Auth::user()->civilite . ' ' . Auth::user()->name }}</h5>
                             <!-- demande -->
-                            <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
+                            {{-- <form method="post" action="#" enctype="multipart/form-data" class="row g-3"> --}}
                                 <table class="table table-bordered table-hover table-borderless">
                                     <thead>
                                         <tr>
@@ -119,7 +119,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </form>
+                            {{-- </form> --}}
                         @else
                             @if (isset(Auth::user()->cin))
                                 <h5 class="card-title">Aucune demande collective pour le moment !!</h5>

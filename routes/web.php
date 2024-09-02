@@ -262,6 +262,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/devenirOperateurs', [OperateurController::class, 'devenirOperateur'])->name('devenirOperateur');
     Route::post('/addOperateur', [OperateurController::class, 'addOperateur'])->name('addOperateur');
+    
+    Route::put('/Validatelistecollective/{id}', [ListecollectiveController::class, 'Validatelistecollective'])->name('Validatelistecollective');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

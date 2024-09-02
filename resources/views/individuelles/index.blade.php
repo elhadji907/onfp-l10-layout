@@ -7,10 +7,343 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Données</li>
+                <li class="breadcrumb-item active">Demandes individuelles</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
+
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            {{-- <div class="col-lg-12">
+                <div class="row">
+                    <h1>{{ $chart1->options['chart_title'] }}</h1>
+                    {!! $chart1->renderHtml() !!}
+                </div>
+            </div> --}}
+            {{-- <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $annee_lettre }}</h5>
+
+                        <canvas id="barChart" style="max-height: 400px;"></canvas>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new Chart(document.querySelector('#barChart'), {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août',
+                                            'Septembre', 'Octobre', 'Novembre', 'Décembre'
+                                        ],
+                                        datasets: [{
+                                            label: 'Diagramme à barres',
+                                            data: [{{ $janvier }}, {{ $fevrier }}, {{ $mars }},
+                                                {{ $avril }}, {{ $mai }}, {{ $juin }},
+                                                {{ $juillet }}, {{ $aout }}, {{ $septembre }},
+                                                {{ $octobre }}, {{ $novembre }}, {{ $decembre }}
+                                            ],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)',
+                                                'rgba(255, 205, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(201, 203, 207, 0.2)',
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)',
+                                                'rgba(255, 205, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                            ],
+                                            borderColor: [
+                                                'rgb(255, 99, 132)',
+                                                'rgb(255, 159, 64)',
+                                                'rgb(255, 205, 86)',
+                                                'rgb(75, 192, 192)',
+                                                'rgb(54, 162, 235)',
+                                                'rgb(153, 102, 255)',
+                                                'rgb(201, 203, 207)',
+                                                'rgb(255, 99, 132)',
+                                                'rgb(255, 159, 64)',
+                                                'rgb(255, 205, 86)',
+                                                'rgb(75, 192, 192)',
+                                                'rgb(54, 162, 235)',
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div> --}}
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Graphique linéaire</h5>
+
+                        <canvas id="lineChart" style="max-height: 400px;"></canvas>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new Chart(document.querySelector('#lineChart'), {
+                                    type: 'line',
+                                    data: {
+                                        labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août',
+                                            'Septembre', 'Octobre', 'Novembre', 'Décembre'
+                                        ],
+                                        datasets: [{
+                                            label: 'Graphique linéaire',
+                                            data: [{{ $janvier }}, {{ $fevrier }}, {{ $mars }},
+                                                {{ $avril }}, {{ $mai }}, {{ $juin }},
+                                                {{ $juillet }}, {{ $aout }}, {{ $septembre }},
+                                                {{ $octobre }}, {{ $novembre }}, {{ $decembre }}
+                                            ],
+                                            fill: false,
+                                            borderColor: 'rgb(75, 192, 192)',
+                                            tension: 0.1
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Diagramme circulaire</h5>
+
+                        <canvas id="pieChart" style="max-height: 365px;"></canvas>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new Chart(document.querySelector('#pieChart'), {
+                                    type: 'pie',
+                                    data: {
+                                        labels: [
+                                            'Masculin',
+                                            'Féminin',
+                                        ],
+                                        datasets: [{
+                                            label: 'Diagramme circulaire',
+                                            data: [{{ $masculin }}, {{ $feminin }}],
+                                            backgroundColor: [
+                                                'rgb(255, 205, 86)',
+                                                'rgb(54, 162, 235)',
+                                            ],
+                                            hoverOffset: 4
+                                        }]
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div> --}}
+            <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Diagramme circulaire</h5>
+      
+                    <!-- Donut Chart -->
+                    <div id="donutChart" style="min-height: 365px;" class="echart"></div>
+      
+                    <script>
+                      document.addEventListener("DOMContentLoaded", () => {
+                        echarts.init(document.querySelector("#donutChart")).setOption({
+                          tooltip: {
+                            trigger: 'item'
+                          },
+                          legend: {
+                            top: '5%',
+                            left: 'center'
+                          },
+                          series: [{
+                            name: 'Access From',
+                            type: 'pie',
+                            radius: ['40%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                              show: false,
+                              position: 'center'
+                            },
+                            emphasis: {
+                              label: {
+                                show: true,
+                                fontSize: '18',
+                                fontWeight: 'bold'
+                              }
+                            },
+                            labelLine: {
+                              show: false
+                            },
+                            data: [{
+                                value: {{ $attente }},
+                                name: 'Attente'
+                              },
+                              {
+                                value: {{ $nouvelle }},
+                                name: 'Nouvelles'
+                              },
+                              {
+                                value: {{ $retenue }},
+                                name: 'Retenues'
+                              },
+                              {
+                                value: {{ $terminer }},
+                                name: 'Terminées'
+                              },
+                              {
+                                value: {{ $rejeter }},
+                                name: 'Rejetées'
+                              }
+                            ]
+                          }]
+                        });
+                      });
+                    </script>
+                    <!-- End Donut Chart -->
+      
+                  </div>
+                </div>
+              </div>
+        </div>
+    </section>
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Sales Card -->
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Individuelles<span> | aujourd'hui</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-calendar-check-fill"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ $count_today ?? '0' }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">Aujourd'hui</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Individuelles <span>| toutes</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-file-earmark-text"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ count($individuelles) ?? '0' }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">Toutes</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Individuelles <span>| hommes</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-file-earmark-text"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ $masculin }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_hommes, 2, ',', ' ') .'%' }}</span>
+                                            <span class="text-muted small pt-2 ps-1">Hommes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Individuelles <span>| femmes</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-file-earmark-text"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ $feminin }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes, 2, ',', ' ') .'%' }}</span>
+                                            <span class="text-muted small pt-2 ps-1">Femmes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -46,25 +379,31 @@
                                     href="{{ route('demandeurs.show', Auth::user()->id) }}"><i
                                         class="bi bi-person-plus" title="Ajouter"></i> </a></a>
                             @endif --}}
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                            {{--  <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                 data-bs-target="#AddIndividuelModal">
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
+                            </button> --}}
+
+                            <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
+                                data-bs-target="#AddIndividuelModal">
+                                <i class="bi bi-plus" title="Ajouter une nouvelle demande"></i>
                             </button>
                         </div>
-                        <h5 class="card-title">Liste demandes individuelles</h5>
+                        <h5 class="card-title">Liste de toutes les demandes individuelles</h5>
                         {{-- <p>Le tableau des demandes individuelles</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
-                                    <th>CIN</th>
-                                    <th>Prénom et NOM</th>
-                                    <th>Date et lieu de naissance</th>
-                                    <th>Module</th>
-                                    <th>Localité</th>
-                                    <th class="text-center">Statut</th>
-                                    <th class="text-center">#</th>
+                                    <th class="text-center">N°</th>
+                                    <th class="text-center">CIN</th>
+                                    <th>Prénom</th>
+                                    <th>NOM</th>
+                                    <th>Date naissance</th>
+                                    <th>Lieu naissance</th>
+                                    <th width="20%">Module</th>
+                                    <{{-- th>Localité</th> --}} <th class="text-center">Statut</th>
+                                        <th class="text-center">#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,15 +411,15 @@
                                 @foreach ($individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                            <td>{{ $individuelle?->numero }}
+                                            <td style="text-align: center">{{ $individuelle?->numero }}
                                             </td>
-                                            <td>{{ $individuelle->user?->cin }}</td>
-                                            <td>{{ $individuelle->user?->firstname . ' ' . $individuelle->user?->name }}
-                                            </td>
-                                            <td>{{ $individuelle->user->date_naissance?->format('d/m/Y') . ' à ' . $individuelle->user->lieu_naissance }}
-                                            </td>
+                                            <td style="text-align: center">{{ $individuelle->user?->cin }}</td>
+                                            <td>{{ $individuelle->user?->firstname }}</td>
+                                            <td>{{ $individuelle->user?->name }}</td>
+                                            <td>{{ $individuelle->user->date_naissance?->format('d/m/Y') }}</td>
+                                            <td>{{ $individuelle->user->lieu_naissance }}</td>
                                             <td>{{ $individuelle?->module?->name }}</td>
-                                            <td>{{ $individuelle?->departement?->nom }}</td>
+                                            {{-- <td>{{ $individuelle?->departement?->nom }}</td> --}}
                                             <td>
                                                 <span class="{{ $individuelle?->statut }}">
                                                     {{ $individuelle?->statut }}
@@ -144,6 +483,32 @@
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="module" class="form-label">Formation sollicitée<span
+                                                class="text-danger mx-1">*</span></label>
+                                        {{-- <select name="module" class="form-select  @error('module') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-module-indiv"
+                                            data-placeholder="Choisir formation">
+                                            <option value="">
+                                                {{ old('module') }}
+                                            </option>
+                                            @foreach ($modules as $module)
+                                                <option value="{{ $module->id }}">
+                                                    {{ $module->name }}
+                                                </option>
+                                            @endforeach
+                                        </select> --}}
+                                        <input type="text" name="module" value="{{ old('module_name') }}"
+                                            class="form-control form-control-sm @error('module_name') is-invalid @enderror"
+                                            id="module_name" placeholder="Nom du module" autofocus>
+                                        <div id="countryList"></div>
+                                        {{ csrf_field() }}
+                                        @error('module')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="civilite" class="form-label">Civilité<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="civilite"
@@ -153,10 +518,10 @@
                                             <option value="{{ old('civilite') }}">
                                                 {{ old('civilite') }}
                                             </option>
-                                            <option value="Monsieur">
+                                            <option value="M.">
                                                 Monsieur
                                             </option>
-                                            <option value="Madame">
+                                            <option value="Mme">
                                                 Madame
                                             </option>
                                         </select>
@@ -170,7 +535,8 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="cin" class="form-label">N° CIN<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input minlength="13" maxlength="14" type="text" name="cin" value="{{ old('cin') }}"
+                                        <input minlength="13" maxlength="14" type="text" name="cin"
+                                            value="{{ old('cin') }}"
                                             class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                             id="cin" placeholder="Numéro carte d'identité nationale">
                                         @error('cin')
@@ -194,12 +560,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="name" class="form-label">Nom<span
+                                        <label for="lastname" class="form-label">Nom<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="lastname" value="{{ old('name') }}"
-                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                            id="name" placeholder="nom">
-                                        @error('name')
+                                        <input type="text" name="lastname" value="{{ old('lastname') }}"
+                                            class="form-control form-control-sm @error('lastname') is-invalid @enderror"
+                                            id="lastname" placeholder="nom">
+                                        @error('lastname')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -265,7 +631,8 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone personnel<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="telephone" value="{{ old('telephone') }}"
+                                        <input type="number" min="0" name="telephone"
+                                            value="{{ old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                             id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')
@@ -368,33 +735,6 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="module" class="form-label">Formation sollicitée<span
-                                                class="text-danger mx-1">*</span></label>
-                                        {{-- <select name="module" class="form-select  @error('module') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-module-indiv"
-                                            data-placeholder="Choisir formation">
-                                            <option value="">
-                                                {{ old('module') }}
-                                            </option>
-                                            @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}">
-                                                    {{ $module->name }}
-                                                </option>
-                                            @endforeach
-                                        </select> --}}
-                                        <input type="text" name="module" value="{{ old('module_name') }}"
-                                            class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                            id="module_name" placeholder="Nom du module" autofocus>
-                                        <div id="countryList"></div>
-                                        {{ csrf_field() }}
-                                        @error('module')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
                                     {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
                                         <input type="text" name="autre_module" value="{{ old('autre_module') }}"
@@ -414,7 +754,7 @@
                                             class="form-select  @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement-indiv"
                                             data-placeholder="Choisir la localité">
-                                            <option value="">{{ old('departement') }}</option>
+                                            <option value="{{ old('departement') }}">{{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
                                                 <option value="{{ $departement->nom }}">
                                                     {{ $departement->nom }}
@@ -727,6 +1067,10 @@
     </section>
 
 @endsection
+{{-- @section('javascript')
+{!! $chart1->renderChartJsLibrary() !!}
+{!! $chart1->renderJs() !!}
+@endsection --}}
 @push('scripts')
     <script>
         new DataTable('#table-individuelles', {
@@ -735,9 +1079,9 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
-            /*  "order": [
-                 [0, 'asc']
-             ], */
+            "order": [
+                [0, 'desc']
+            ],
             language: {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",

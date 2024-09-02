@@ -13,13 +13,13 @@ class ValidationcollectiveController extends Controller
     public function update($id)
     {
         $collective   = Collective::findOrFail($id);
-        if ($collective->statut_demande == 'accepter') {
+        if ($collective->statut_demande == 'attente') {
             Alert::warning('Désolez !', 'demande déjà validée');
         } elseif ($collective->statut_demande == 'retenue') {
             Alert::warning('Désolez !', 'demande déjà retenue');
         } else {
             $collective->update([
-                'statut_demande'             => 'accepter',
+                'statut_demande'             => 'attente',
                 'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
             ]);
 
@@ -27,7 +27,7 @@ class ValidationcollectiveController extends Controller
 
             $validated_by = new Validationcollective([
                 'validated_id'       =>       Auth::user()->id,
-                'action'             =>      'accepter',
+                'action'             =>      'attente',
                 'collectives_id'   =>      $collective->id
             ]);
 
