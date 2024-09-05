@@ -1,20 +1,45 @@
 @extends('layout.user-layout')
-@section('title', 'Détails localités')
+@section('title', 'ONFP - Liste des régions')
 @section('space-work')
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
+
+    <section class="section register">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="pagetitle">
+                    {{-- <h1>Data Tables</h1> --}}
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                            <li class="breadcrumb-item">Tables</li>
+                            <li class="breadcrumb-item active">{{ $localite->nom }}</li>
+                        </ol>
+                    </nav>
+                </div><!-- End Page Title -->
+                @if ($message = Session::get('status'))
+                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if ($message = Session::get('danger'))
+                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
-                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('localites.index') }}"
-                                    class="btn btn-success btn-sm" title="retour"><i
-                                        class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Liste des localités</p>
-                            </span>
-                        </div>
-                        <h5 class="card-title">Région : {{ $localite?->nom }}</h5>
-                        <table class="table datatables align-middle justify-content-center" id="table-modules">
+                        <h5 class="card-title">Régions: {{ $localite?->nom }}</h5>
+                        <!-- Table with stripped rows -->
+                        <table class="table datatables align-middle justify-content-center" id="table-regions">
                             <thead>
                                 <tr>
                                     <th class="text-center">N°</th>
@@ -23,46 +48,31 @@
                                     <th>NOM</th>
                                     <th>Date naissance</th>
                                     <th>Lieu naissance</th>
-                                    <th>Module</th>
+                                    <th width="20%">Module</th>
                                     <th class="text-center">Statut</th>
                                     <th class="text-center">#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($localite->individuelles as $individuelle)
+                                @foreach ($individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                            {{-- <span class="badge bg-default text-dark"></span> --}}
-                                            <td>{{ $individuelle?->numero }}
+                                            <td style="text-align: center">{{ $individuelle?->numero }}
                                             </td>
-                                            <td>{{ $individuelle?->user?->cin }}</td>
-                                            <td>{{ $individuelle?->user?->firstname }}</td>
-                                            <td>{{ $individuelle?->user?->name }}</td>
-                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</td>
-                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                            <td>{{ $individuelle->module?->name }}</td>
+                                            <td style="text-align: center">{{ $individuelle->user?->cin }}</td>
+                                            <td>{{ $individuelle->user?->firstname }}</td>
+                                            <td>{{ $individuelle->user?->name }}</td>
+                                            <td>{{ $individuelle->user->date_naissance?->format('d/m/Y') }}</td>
+                                            <td>{{ $individuelle->user->lieu_naissance }}</td>
+                                            <td>{{ $individuelle?->module?->name }}</td>
+                                            {{-- <td>{{ $individuelle?->departement?->nom }}</td> --}}
                                             <td>
-                                                
                                                 <a
                                                     href="{{ url('regionstatut', ['$idlocalite' => $individuelle->departement->region->id, 'statut' => $individuelle?->statut]) }}">
                                                     <span
                                                         class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                                 </a>
-                                               {{--  @isset($individuelle?->statut)
-                                                    @if ($individuelle?->statut == 'Attente')
-                                                    <span class="badge bg-secondary text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @endif
-                                                    @if ($individuelle?->statut == 'Validée')
-                                                        <span class="badge bg-success text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @endif
-                                                    @if ($individuelle?->statut == 'Rejetée')
-                                                        <span class="badge bg-danger text-white">{{ $individuelle?->statut }}
-                                                        </span>
-                                                    @endif
-                                                @endisset --}}
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
@@ -96,29 +106,27 @@
                                         </tr>
                                     @endisset
                                 @endforeach
-
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
-@endsection
 
+@endsection
 @push('scripts')
     <script>
-        new DataTable('#table-modules', {
+        new DataTable('#table-regions', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
             "order": [
-                [2, 'desc']
+                [0, 'asc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

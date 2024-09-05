@@ -83,4 +83,5 @@ class CourrierController extends Controller
     {
         return view("courriers.notifications");
     }
+    
 }

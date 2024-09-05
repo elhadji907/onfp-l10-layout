@@ -39,6 +39,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $decret
  * @property string|null $beneficiaires
  * @property string|null $membres_jury
+ * @property string|null $type_formation
  * @property string|null $niveau_qualification
  * @property int|null $effectif_prevu
  * @property int|null $prevue_h
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $total
  * @property string|null $appreciations
  * @property int|null $ingenieurs_id
+ * @property int|null $evaluateurs_id
  * @property int|null $agents_id
  * @property int|null $detfs_id
  * @property int|null $conventions_id
@@ -71,7 +73,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $arrondissements_id
  * @property int|null $localites_id
  * @property int|null $zones_id
- * @property int|null $evaluateurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -137,6 +138,7 @@ class Formation extends Model
 		'forme_f' => 'int',
 		'total' => 'int',
 		'ingenieurs_id' => 'int',
+		'evaluateurs_id' => 'int',
 		'agents_id' => 'int',
 		'detfs_id' => 'int',
 		'conventions_id' => 'int',
@@ -160,7 +162,6 @@ class Formation extends Model
 		'arrondissements_id' => 'int',
 		'localites_id' => 'int',
 		'zones_id' => 'int',
-		'evaluateurs_id' => 'int',
 		'date_pv' => 'datetime',
 		'date_suivi' => 'datetime',
 		'date_debut' => 'datetime',
@@ -208,8 +209,16 @@ class Formation extends Model
 		'forme_f',
 		'total',
 		'statut',
+		'categorie_professionnelle',
+		'type_formation',
+		'evaluateur_onfp',
+		'numero_convention',
+		'initiale_evaluateur_onfp',
+		'type_certificat',
+		'recommandations',
 		'appreciations',
 		'ingenieurs_id',
+		'evaluateurs_id',
 		'agents_id',
 		'detfs_id',
 		'conventions_id',
@@ -233,7 +242,6 @@ class Formation extends Model
 		'arrondissements_id',
 		'localites_id',
 		'zones_id',
-		'evaluateurs_id'
 	];
 
 	
@@ -295,6 +303,11 @@ class Formation extends Model
 	public function ingenieur()
 	{
 		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
+	}
+
+	public function evaluateur()
+	{
+		return $this->belongsTo(Evaluateur::class, 'evaluateurs_id');
 	}
 
 	public function localite()

@@ -237,7 +237,8 @@
                                                 {{ __("Liste des formations de l'opérateur") }}
                                             </h1>
                                             <div class="row g-3">
-                                                <table class="table table-bordered table-hover datatables" id="table-formations">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-formations">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -329,123 +330,150 @@
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     @if (isset($formation?->collectivemodule))
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <div class="d-flex justify-content-between align-items-center mt-3">
-                                            <span class="card-title d-flex align-items-baseline">Code formation :&nbsp;
-                                                <span class="badge bg-info text-white">
-                                                    {{ $formation?->code }}</span>
-                                            </span>
-                                            @if (auth()->user()->hasRole('super-admin'))
-                                                <span class="card-title d-flex align-items-baseline">Statut formation
-                                                    :&nbsp;
-                                                    <span class="{{ $formation?->statut }} text-white">
-                                                        {{ $formation?->statut }}</span>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <form action="{{ route('formationcollectiveTerminer') }}"
-                                                                method="post">
-                                                                @csrf
-                                                                {{-- @method('PUT') --}}
-                                                                <input type="hidden" name="id"
-                                                                    value="{{ $formation->id }}">
-                                                                <button
-                                                                    class="show_confirm_valider btn btn-sm mx-1">Démarrer</button>
-                                                            </form>
-                                                            <form action="{{ route('formationTerminer') }}"
-                                                                method="post">
-                                                                @csrf
-                                                                {{-- @method('PUT') --}}
-                                                                <input type="hidden" name="id"
-                                                                    value="{{ $formation->id }}">
-                                                                <button
-                                                                    class="show_confirm_valider btn btn-sm mx-1">Terminer</button>
-                                                            </form>
-                                                            <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                                data-bs-target="#RejetDemandeModal">Annuler
-                                                            </button>
-                                                            <hr>
-                                                            <form action="{{ route('ficheSuiviCol') }}" method="post"
-                                                                target="_blank">
-                                                                @csrf
-                                                                {{-- @method('PUT') --}}
-                                                                <input type="hidden" name="id"
-                                                                    value="{{ $formation->id }}">
-                                                                <button class="btn btn-sm mx-1">Fiche de suivi</button>
-                                                            </form>
-                                                            <form action="{{ route('pvEvaluationCol') }}" method="post"
-                                                                target="_blank">
-                                                                @csrf
-                                                                {{-- @method('PUT') --}}
-                                                                <input type="hidden" name="id"
-                                                                    value="{{ $formation->id }}">
-                                                                <button class="btn btn-sm mx-1">PV Evaluation</button>
-                                                            </form>
-                                                            <button class="btn btn-sm mx-1">ABE</button>
-                                                        </ul>
-                                                    </div>
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                                <span class="card-title d-flex align-items-baseline">Code formation :&nbsp;
+                                                    <span class="badge bg-info text-white">
+                                                        {{ $formation?->code }}</span>
                                                 </span>
-                                            @endif
-                                            <div class="float-end">
-                                                <a href="{{ url('formationdemandeurscollectives', ['$idformation' => $formation->id, '$idcollectivemodule' => $formation?->collectivemodule?->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                    class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
-                                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                                            </div>
+                                                @if (auth()->user()->hasRole('super-admin'))
+                                                    <span class="card-title d-flex align-items-baseline">Statut formation
+                                                        :&nbsp;
+                                                        <span class="{{ $formation?->statut }} text-white">
+                                                            {{ $formation?->statut }}</span>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul
+                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                <form action="{{ route('formationcollectiveTerminer') }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button
+                                                                        class="show_confirm_valider btn btn-sm mx-1">Démarrer</button>
+                                                                </form>
+                                                                <form action="{{ route('formationTerminer') }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button
+                                                                        class="show_confirm_valider btn btn-sm mx-1">Terminer</button>
+                                                                </form>
+                                                                <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                    data-bs-target="#RejetDemandeModal">Annuler
+                                                                </button>
+                                                                <hr>
+                                                                <form action="{{ route('ficheSuiviCol') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Fiche de suivi</button>
+                                                                </form>
+                                                                <form action="{{ route('pvEvaluationCol') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">PV Evaluation</button>
+                                                                </form>
+                                                                <hr>
+                                                                <form action="{{ route('lettreEvaluation') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Lettre mission</button>
+                                                                </form>
+                                                                <form action="{{ route('abeEvaluation') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">A B E</button>
+                                                                </form>
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                @endif
+                                                <div class="float-end">
+                                                    <a href="{{ url('formationdemandeurscollectives', ['$idformation' => $formation->id, '$idcollectivemodule' => $formation?->collectivemodule?->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                        class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
+                                                        <i class="bi bi-person-plus" title="Ajouter bénéficiaires"></i>
+                                                    </a>
+                                                </div>
 
-                                        </div>
-                                        <div class="row g-3 pt-3">
-                                            <table
-                                                class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless"
-                                                id="table-operateurModules">
-                                                <thead>
-                                                    <tr>
-                                                        <th>N°</th>
-                                                        <th style="text-align: center;">CIN</th>
-                                                        <th style="text-align: center;">Civilité</th>
-                                                        <th style="text-align: center;">Prénom</th>
-                                                        <th style="text-align: center;">Nom</th>
-                                                        <th style="text-align: center;">Date naissance</th>
-                                                        <th style="text-align: center;">Lieu naissance</th>
-                                                        <th style="text-align: center;">Niveau étude</th>
-                                                        <th style="text-align: center;">Note</th>
-                                                        <th style="text-align: center;">Appréciation</th>
-                                                        <th class="col"><i class="bi bi-gear"></i></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php $i = 1; ?>
-                                                    @foreach ($formation->listecollectives as $listecollective)
+                                            </div>
+                                            <div class="row g-3 pt-3">
+                                                <table
+                                                    class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless"
+                                                    id="table-operateurModules">
+                                                    <thead>
                                                         <tr>
-                                                            <td style="text-align: center;">{{ $i++ }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->cin }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->civilite }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->prenom }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->nom }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->date_naissance->format('d/m/Y') }}
-                                                            </td>
-                                                            <td style="text-align: center;">{{ $listecollective?->lieu_naissance }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->niveau_etude }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->note_obtenue }}</td>
-                                                            <td style="text-align: center;">{{ $listecollective?->appreciation }}</td>
-                                                            <td style="text-align: center;">
-                                                                <span class="d-flex align-items-baseline">
-                                                                    <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
-                                                                        class="btn btn-primary btn-sm"
-                                                                        title="voir détails" target="_blank"><i
-                                                                            class="bi bi-eye"></i></a>
-                                                                    <div class="filter">
-                                                                        <a class="icon" href="#"
-                                                                            data-bs-toggle="dropdown"><i
-                                                                                class="bi bi-three-dots"></i></a>
-                                                                        <ul
-                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <li><a class="dropdown-item btn btn-sm"
-                                                                                    href="{{ route('listecollectives.edit', $listecollective->id) }}"
-                                                                                    class="mx-1" title="Modifier"><i
-                                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                                            </li>
-                                                                            {{-- <form
+                                                            <th>N°</th>
+                                                            <th style="text-align: center;">CIN</th>
+                                                            <th style="text-align: center;">Civilité</th>
+                                                            <th style="text-align: center;">Prénom</th>
+                                                            <th style="text-align: center;">Nom</th>
+                                                            <th style="text-align: center;">Date naissance</th>
+                                                            <th style="text-align: center;">Lieu naissance</th>
+                                                            <th style="text-align: center;">Niveau étude</th>
+                                                            <th style="text-align: center;">Note</th>
+                                                            <th style="text-align: center;">Appréciation</th>
+                                                            <th class="col"><i class="bi bi-gear"></i></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $i = 1; ?>
+                                                        @foreach ($formation->listecollectives as $listecollective)
+                                                            <tr>
+                                                                <td style="text-align: center;">{{ $i++ }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->cin }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->civilite }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->prenom }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->nom }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->date_naissance->format('d/m/Y') }}
+                                                                </td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->lieu_naissance }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->niveau_etude }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->note_obtenue }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $listecollective?->appreciation }}</td>
+                                                                <td style="text-align: center;">
+                                                                    <span class="d-flex align-items-baseline">
+                                                                        <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
+                                                                            class="btn btn-primary btn-sm"
+                                                                            title="voir détails" target="_blank"><i
+                                                                                class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                                        href="{{ route('listecollectives.edit', $listecollective->id) }}"
+                                                                                        class="mx-1" title="Modifier"><i
+                                                                                            class="bi bi-pencil"></i>Modifier</a>
+                                                                                </li>
+                                                                                {{-- <form
                                                                                 action="{{ route('listecollectives.destroy', $listecollective->id) }}"
                                                                                 method="post">
                                                                                 @csrf
@@ -455,76 +483,79 @@
                                                                                     title="Supprimer"><i
                                                                                         class="bi bi-trash"></i>Supprimer</button>
                                                                             </form> --}}
-                                                                        </ul>
-                                                                    </div>
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    @endisset
-                                </div>
-                            </div>
-                            {{-- Détail Modules --}}
-                            <div class="tab-content pt-2">
-                                <div class="tab-pane fade module-overview pt-3" id="module-overview">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        @if (isset($formation?->collectivemodule))
-                                            <h1 class="card-title">
-                                                Module
-                                            </h1>
-                                            <form method="post"
-                                                action="{{ url('moduleformationcollectives', ['$idformation' => $formation->id]) }}"
-                                                enctype="multipart/form-data" class="row g-3">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="row g-3">
-                                                    <table class="table table-bordered table-hover datatables" id="table-formations">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Module</th>
-                                                                <th>Demandeurs</th>
-                                                                <th class="float-end"><i class="bi bi-gear"></i></th>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php $i = 1; ?>
-                                                                <tr>
-                                                                    <td>{{ $formation?->collectivemodule?->module }}</td>
-                                                                    <td>
-                                                                        {{-- @foreach ($formation?->collectivemodule->listecollectives as $listecollective)
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    @endisset
+                            </div>
+                        </div>
+                        {{-- Détail Modules --}}
+                        <div class="tab-content pt-2">
+                            <div class="tab-pane fade module-overview pt-3" id="module-overview">
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    @if (isset($formation?->collectivemodule))
+                                        <h1 class="card-title">
+                                            @if (isset($formation?->collectivemodule?->module))
+
+                                                Liste des formations en {{ $formation?->collectivemodule?->module }}
+                                            @endif
+                                        </h1>
+                                        <form method="post"
+                                            action="{{ url('moduleformationcollectives', ['$idformation' => $formation->id]) }}"
+                                            enctype="multipart/form-data" class="row g-3">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row g-3">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-formations">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Module</th>
+                                                            <th>Demandeurs</th>
+                                                            <th class="float-end"><i class="bi bi-gear"></i></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $i = 1; ?>
+                                                        <tr>
+                                                            <td>{{ $formation?->collectivemodule?->module }}</td>
+                                                            <td>
+                                                                {{-- @foreach ($formation?->collectivemodule->listecollectives as $listecollective)
                                                                             @if ($loop->last) --}}
-                                                                                <a href="#"><span
-                                                                                        class="badge bg-info">{{ count($formation?->collectivemodule->listecollectives) }}</span></a>
-                                                                          {{--   @endif
+                                                                <a href="#"><span
+                                                                        class="badge bg-info">{{ count($formation?->collectivemodule->listecollectives) }}</span></a>
+                                                                {{--   @endif
                                                                         @endforeach --}}
-                                                                    </td>
-                                                                    <td>
-                                                                        <span
-                                                                            class="d-flex align-items-baseline float-end"><a
-                                                                                href="{{ route('collectivemodules.show', $formation?->collectivemodule->id) }}"
-                                                                                class="btn btn-primary btn-sm"
-                                                                                title="voir détails"><i
-                                                                                    class="bi bi-eye"></i></a>
-                                                                            <div class="filter">
-                                                                                <a class="icon" href="#"
-                                                                                    data-bs-toggle="dropdown"><i
-                                                                                        class="bi bi-three-dots"></i></a>
-                                                                                <ul
-                                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                    <button type="button"
-                                                                                        class="dropdown-item btn btn-sm mx-1"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#EditRegionModal{{ $formation?->collectivemodule->id }}">
-                                                                                        <i class="bi bi-pencil"
-                                                                                            title="Modifier"></i>
-                                                                                        Modifier
-                                                                                    </button>
-                                                                                    <li>
-                                                                                        {{-- <form
+                                                            </td>
+                                                            <td>
+                                                                <span class="d-flex align-items-baseline float-end"><a
+                                                                        href="{{ route('collectivemodules.show', $formation?->collectivemodule->id) }}"
+                                                                        class="btn btn-primary btn-sm"
+                                                                        title="voir détails"><i
+                                                                            class="bi bi-eye"></i></a>
+                                                                    <div class="filter">
+                                                                        <a class="icon" href="#"
+                                                                            data-bs-toggle="dropdown"><i
+                                                                                class="bi bi-three-dots"></i></a>
+                                                                        <ul
+                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                            <button type="button"
+                                                                                class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditRegionModal{{ $formation?->collectivemodule->id }}">
+                                                                                <i class="bi bi-pencil"
+                                                                                    title="Modifier"></i>
+                                                                                Modifier
+                                                                            </button>
+                                                                            <li>
+                                                                                {{-- <form
                                                                                             action="{{ route('collectivemodules.destroy', $formation?->collectivemodule->id) }}"
                                                                                             method="post">
                                                                                             @csrf
@@ -534,100 +565,103 @@
                                                                                                 title="Supprimer"><i
                                                                                                     class="bi bi-trash"></i>Supprimer</button>
                                                                                         </form> --}}
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    </table>
-                                                </div>
-                                            </form>
-                                        @endisset
-                                </div>
-
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </table>
+                                            </div>
+                                        </form>
+                                    @endisset
                             </div>
-                        </div>
-                        
-                            {{-- Détail ingenieur --}}
-                            <div class="tab-content pt-2">
-                                <div class="tab-pane fade ingenieur-overview pt-3" id="ingenieur-overview">
-                                    @if (isset($ingenieur))
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h5 class="card-title">
-                                                {{ $ingenieur?->name }}
-                                                <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
-                                                        class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
-                                            </h5>
-                                            <h5 class="card-title">
-                                                Agent de suivi
-                                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#EditAgentSuiviModal{{ $formation->id }}">
-                                                    <i class="bi bi-plus" title="Ajouter un agent de suivi"></i>
-                                                </button>
-                                            </h5>
-                                        </div>
-                                    @else
-                                        <div class="pt-1">
-                                            <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
-                                                class="btn btn-primary float-end btn-sm">
-                                                <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
 
-                                            {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
+                        </div>
+                    </div>
+
+                    {{-- Détail ingenieur --}}
+                    <div class="tab-content pt-2">
+                        <div class="tab-pane fade ingenieur-overview pt-3" id="ingenieur-overview">
+                            @if (isset($ingenieur))
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title">
+                                        {{ $ingenieur?->name }}
+                                        <a class="btn btn-info btn-sm" title=""
+                                            href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
+                                                class="bi bi-eye"></i></a>&nbsp;
+                                        <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                            class="btn btn-primary float-end btn-sm">
+                                            <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
+                                    </h5>
+                                    <h5 class="card-title">
+                                        Agent de suivi
+                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#EditAgentSuiviModal{{ $formation->id }}">
+                                            <i class="bi bi-plus" title="Ajouter un agent de suivi"></i>
+                                        </button>
+                                    </h5>
+                                </div>
+                            @else
+                                <div class="pt-1">
+                                    <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                        class="btn btn-primary float-end btn-sm">
+                                        <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
+
+                                    {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $formation->id }}">
                                                 <button class="btn btn-primary float-end btn-sm">Ajouter</button>
                                             </form> --}}
-                                        </div>
-                                    @endif
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        @isset($ingenieur)
-                                            <h1 class="card-title">
-                                                Liste des formations
-                                                @if (isset($ingenieur))
-                                                    de {{ $ingenieur?->name }}
-                                                @endif
-                                            </h1>
-                                            <div class="row g-3">
-                                                <table class="table table-bordered table-hover datatables" id="table-formations">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Code</th>
-                                                            <th>Type</th>
-                                                            <th>Intitulé formation</th>
-                                                            <th>Localité</th>
-                                                            <th>Modules</th>
-                                                            {{-- <th>Niveau qualification</th> --}}
-                                                            {{-- <th>Effectif</th> --}}
-                                                            <th class="text-center">Statut</th>
-                                                            <th>#</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php $i = 1; ?>
-                                                        @foreach ($ingenieur?->formations as $formation)
-                                                        <tr>
-                                                            <td>{{ $formation?->code }}</td>
-                                                            <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
-                                                            <td>{{ $formation?->name }}</td>
-                                                            <td>{{ $formation->departement?->region?->nom }}</td>
-                                                            <td>
-                                                                @isset($formation?->module?->name)
-                                                                    {{ $formation?->module?->name }}
-                                                                @endisset
-                                                                @isset($formation?->collectivemodule?->module)
-                                                                    {{ $formation?->collectivemodule?->module }}
-                                                                @endisset
-                                                            </td>
-                                                            {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
-                                                            {{--   <td class="text-center">
+                                </div>
+                            @endif
+                            <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                @isset($ingenieur)
+                                    <h1 class="card-title">
+                                        Liste des formations
+                                        @if (isset($ingenieur))
+                                            de {{ $ingenieur?->name }}
+                                        @endif
+                                    </h1>
+                                    <div class="row g-3">
+                                        <table class="table table-bordered table-hover datatables"
+                                            id="table-formations">
+                                            <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Type</th>
+                                                    <th>Intitulé formation</th>
+                                                    <th>Localité</th>
+                                                    <th>Modules</th>
+                                                    {{-- <th>Niveau qualification</th> --}}
+                                                    {{-- <th>Effectif</th> --}}
+                                                    <th class="text-center">Statut</th>
+                                                    <th>#</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($ingenieur?->formations as $formation)
+                                                    <tr>
+                                                        <td>{{ $formation?->code }}</td>
+                                                        <td><a
+                                                                href="#">{{ $formation->types_formation?->name }}</a>
+                                                        </td>
+                                                        <td>{{ $formation?->name }}</td>
+                                                        <td>{{ $formation->departement?->region?->nom }}</td>
+                                                        <td>
+                                                            @isset($formation?->module?->name)
+                                                                {{ $formation?->module?->name }}
+                                                            @endisset
+                                                            @isset($formation?->collectivemodule?->module)
+                                                                {{ $formation?->collectivemodule?->module }}
+                                                            @endisset
+                                                        </td>
+                                                        {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
+                                                        {{--   <td class="text-center">
                                                                 @foreach ($formation->individuelles as $individuelle)
                                                                     @if ($loop->last)
                                                                         <a class="text-primary fw-bold"
@@ -635,148 +669,152 @@
                                                                     @endif
                                                                 @endforeach
                                                             </td> --}}
-                                                            <td class="text-center"><a href="#"><span
-                                                                        class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
-                                                            </td>
-                                                            <td>
-                                                                <span class="d-flex align-items-baseline"><a
-                                                                        href="{{ route('formations.show', $formation->id) }}"
-                                                                        class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                            class="bi bi-eye"></i></a>
-                                                                    <div class="filter">
-                                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                                class="bi bi-three-dots"></i></a>
-                                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <li>
-                                                                                <a class="dropdown-item btn btn-sm"
-                                                                                    href="{{ route('formations.edit', $formation->id) }}"
-                                                                                    class="mx-1" title="Modifier"><i
-                                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                                                {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                        <td class="text-center"><a href="#"><span
+                                                                    class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
+                                                        </td>
+                                                        <td>
+                                                            <span class="d-flex align-items-baseline"><a
+                                                                    href="{{ route('formations.show', $formation->id) }}"
+                                                                    class="btn btn-primary btn-sm"
+                                                                    title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <li>
+                                                                            <a class="dropdown-item btn btn-sm"
+                                                                                href="{{ route('formations.edit', $formation->id) }}"
+                                                                                class="mx-1" title="Modifier"><i
+                                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                                            {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
                                                                                     data-bs-target="#EditFormationModal{{ $formation->id }}">
                                                                                     <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                                                 </button> --}}
-                                                                            </li>
-                                                                            <li>
-                                                                                <form
-                                                                                    action="{{ route('formations.destroy', $formation->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit" class="dropdown-item show_confirm"
-                                                                                        title="Supprimer"><i
-                                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                                </form>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                </table>
-                                            </div>
-                                        @endisset
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                action="{{ route('formations.destroy', $formation->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"
+                                                                                    title="Supprimer"><i
+                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        </table>
                                     </div>
-
-                                </div>
+                                @endisset
                             </div>
-                        {{-- Détail Demandes collectives --}}
-                        <div class="tab-content pt-2">
-                            <div class="tab-pane fade collectives-overview pt-3" id="collectives-overview">
-                                @if (isset($formation?->collectivemodule))
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title">
-                                            {{ $formation?->collectivemodule?->collective->name . ' (' . $formation?->collectivemodule?->collective->sigle . ')' }}
-                                            <a class="btn btn-info btn-sm" title=""
-                                                href="{{ route('collectives.show', $formation->collectivemodule?->collective->id) }}" target="_blank"><i
-                                                    class="bi bi-eye"></i></a>&nbsp;
-                                            <a href="{{ url('collectiveformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                class="btn btn-primary float-end btn-sm">
-                                                <i class="bi bi-pencil" title="Changer module"></i> </a>
-                                        </h5>
-                                    </div>
-                                @else
-                                    <div class="pt-1">
+
+                        </div>
+                    </div>
+                    {{-- Détail Demandes collectives --}}
+                    <div class="tab-content pt-2">
+                        <div class="tab-pane fade collectives-overview pt-3" id="collectives-overview">
+                            @if (isset($formation?->collectivemodule))
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title">
+                                        {{ $formation?->collectivemodule?->collective->name . ' (' . $formation?->collectivemodule?->collective->sigle . ')' }}
+                                        <a class="btn btn-info btn-sm" title=""
+                                            href="{{ route('collectives.show', $formation->collectivemodule?->collective->id) }}"
+                                            target="_blank"><i class="bi bi-eye"></i></a>&nbsp;
                                         <a href="{{ url('collectiveformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                             class="btn btn-primary float-end btn-sm">
-                                            <i class="bi bi-person-plus-fill" title="ajouter demande collective"></i>
-                                        </a>
-                                    </div>
-                                @endif
-                            </div>
+                                            <i class="bi bi-pencil" title="Changer module"></i> </a>
+                                    </h5>
+                                </div>
+                            @else
+                                <div class="pt-1">
+                                    <a href="{{ url('collectiveformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                        class="btn btn-primary float-end btn-sm">
+                                        <i class="bi bi-person-plus-fill" title="ajouter demande collective"></i>
+                                    </a>
+                                </div>
+                            @endif
                         </div>
+                    </div>
 
-                        <div class="tab-content pt-2">
-                            <div class="tab-pane fade module-overview pt-3" id="evaluation-overview">
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                    <form method="post"
-                                        action="{{ url('notedemandeurscollectives', ['$idformation' => $formation->id]) }}"
-                                        enctype="multipart/form-data" class="row g-3">
-                                        @csrf
-                                        @method('PUT')
-                                        @isset($operateur)
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h1 class="card-title"> Liste des bénéficiaires :
-                                                    {{ $formation->listecollectives->count() }}</h1>
-                                                <h5 class="card-title">
-                                                    Membres du jury
-                                                    <button type="button" class="btn btn-outline-primary btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
-                                                        <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div class="row g-3">
-                                                <table class="table table-bordered table-hover datatables" id="table-evaluation">
-                                                    <thead>
+                    <div class="tab-content pt-2">
+                        <div class="tab-pane fade module-overview pt-3" id="evaluation-overview">
+                            <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                <form method="post"
+                                    action="{{ url('notedemandeurscollectives', ['$idformation' => $formation->id]) }}"
+                                    enctype="multipart/form-data" class="row g-3">
+                                    @csrf
+                                    @method('PUT')
+                                    @isset($operateur)
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h1 class="card-title"> Liste des bénéficiaires :
+                                                {{ $formation->listecollectives->count() }}</h1>
+                                            <h5 class="card-title">
+                                                Membres du jury
+                                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
+                                                    <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="row g-3">
+                                            <table class="table table-bordered table-hover datatables"
+                                                id="table-evaluation">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        {{-- <th>Numéro</th> --}}
+                                                        <th>Civilité</th>
+                                                        <th>CIN</th>
+                                                        <th>Prénom</th>
+                                                        <th>NOM</th>
+                                                        <th>Date naissance</th>
+                                                        <th>Lieu de naissance</th>
+                                                        <th>Note<span class="text-danger mx-1">*</span></th>
+                                                        <th>Observations</th>
+                                                        {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 1; ?>
+                                                    @foreach ($formation->listecollectives as $listecollective)
                                                         <tr>
-                                                            <th>N°</th>
-                                                            {{-- <th>Numéro</th> --}}
-                                                            <th>Civilité</th>
-                                                            <th>CIN</th>
-                                                            <th>Prénom</th>
-                                                            <th>NOM</th>
-                                                            <th>Date naissance</th>
-                                                            <th>Lieu de naissance</th>
-                                                            <th>Note<span class="text-danger mx-1">*</span></th>
-                                                            <th>Observations</th>
-                                                            {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php $i = 1; ?>
-                                                        @foreach ($formation->listecollectives as $listecollective)
-                                                            <tr>
-                                                                <td>{{ $i++ }}</td>
-                                                                {{-- <td>{{ $individuelle?->numero }}</td> --}}
-                                                                <td>{{ $listecollective->civilite}}</td>
-                                                                <td>{{ $listecollective?->cin }}</td>
-                                                                <td>{{ $listecollective?->prenom }}</td>
-                                                                <td>{{ $listecollective?->nom }}</td>
-                                                                <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}
-                                                                </td>
-                                                                <td>{{ $listecollective?->lieu_naissance }}</td>
-                                                                <td><input type="number"
-                                                                        value="{{ $listecollective?->note_obtenue }}"
-                                                                        name="notes[]" placeholder="note" step="0.01"
-                                                                        min="0" max="20">
-                                                                    <input type="hidden" name="listecollectives[]"
-                                                                        value="{{ $listecollective?->id }}">
-                                                                </td>
-                                                                <td style="text-align: center; vertical-align: middle;">
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-primary btn-sm"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#EditDemandeurModal{{ $listecollective->id }}">
-                                                                        <i class="bi bi-plus" title="Observations"></i>
-                                                                    </button>
-                                                                </td>
-                                                                {{-- <td>
+                                                            <td>{{ $i++ }}</td>
+                                                            {{-- <td>{{ $individuelle?->numero }}</td> --}}
+                                                            <td>{{ $listecollective->civilite }}</td>
+                                                            <td>{{ $listecollective?->cin }}</td>
+                                                            <td>{{ $listecollective?->prenom }}</td>
+                                                            <td>{{ $listecollective?->nom }}</td>
+                                                            <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}
+                                                            </td>
+                                                            <td>{{ $listecollective?->lieu_naissance }}</td>
+                                                            <td><input type="number"
+                                                                    value="{{ $listecollective?->note_obtenue }}"
+                                                                    name="notes[]" placeholder="note" step="0.01"
+                                                                    min="0" max="20">
+                                                                <input type="hidden" name="listecollectives[]"
+                                                                    value="{{ $listecollective?->id }}">
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-primary btn-sm"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#EditDemandeurModal{{ $listecollective->id }}">
+                                                                    <i class="bi bi-plus" title="Observations"></i>
+                                                                </button>
+                                                            </td>
+                                                            {{-- <td>
                                                                 <span class="d-flex align-items-baseline"><a
                                                                         href="{{ route('individuelles.show', $individuelle->id) }}"
                                                                         class="btn btn-primary btn-sm"
@@ -799,81 +837,47 @@
                                                                     </div>
                                                                 </span>
                                                             </td> --}}
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                </table>
-                                            </div>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-outline-primary"><i
-                                                        class="bi bi-check2-circle"></i>&nbsp;Save</button>
-                                            </div>
-                                        @endisset
-                                    </form>
-                                </div>
-
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            </table>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-outline-primary"><i
+                                                    class="bi bi-check2-circle"></i>&nbsp;Save</button>
+                                        </div>
+                                    @endisset
+                                </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Edit Operateur-->
-    @foreach ($formation->individuelles as $individuelle)
-        <div class="modal fade" id="indiponibleModal{{ $individuelle->id }}" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="post" action="{{ url('indisponibles', ['$idformation' => $formation->id]) }}"
-                        enctype="multipart/form-data" class="row">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-header">
-                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Retirer demandeur</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="individuelleid" value="{{ $individuelle->id }}">
-                            <label for="motif" class="form-label">Justification du retrait</label>
-                            <textarea name="motif" id="motif" rows="5"
-                                class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                                placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ old('motif') }}</textarea>
-                            @error('motif')
-                                <span class="invalid-feedback" role="alert">
-                                    <div>{{ $message }}</div>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-danger btn-sm"><i
-                                    class="bi bi-arrow-right-circle"></i>
-                                Retirer</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endforeach
-    <div class="modal fade" id="RejetDemandeModal" tabindex="-1">
+</div>
+<!-- End Edit Operateur-->
+@foreach ($formation->individuelles as $individuelle)
+    <div class="modal fade" id="indiponibleModal{{ $individuelle->id }}" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="{{ route('validation-formations.destroy', $formation->id) }}"
+                <form method="post" action="{{ url('indisponibles', ['$idformation' => $formation->id]) }}"
                     enctype="multipart/form-data" class="row">
                     @csrf
-                    @method('DELETE')
+                    @method('PUT')
                     <div class="modal-header">
-                        <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet demande</h5>
+                        <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Retirer demandeur</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label for="motif" class="form-label">Motifs du rejet</label>
+                        <input type="hidden" name="individuelleid" value="{{ $individuelle->id }}">
+                        <label for="motif" class="form-label">Justification du retrait</label>
                         <textarea name="motif" id="motif" rows="5"
                             class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                            placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                            placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ old('motif') }}</textarea>
                         @error('motif')
                             <span class="invalid-feedback" role="alert">
                                 <div>{{ $message }}</div>
@@ -882,54 +886,88 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
-                            Rejeter</button>
+                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                class="bi bi-arrow-right-circle"></i>
+                            Retirer</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    {{-- Observations --}}
-    @foreach ($listecollectives as $listecollective)
-        <div class="modal fade" id="EditDemandeurModal{{ $listecollective->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="EditDemandeurModalLabel{{ $listecollective->id }}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="post" action="{{ route('listecollectives.updateObservationsCollective') }}"
-                        enctype="multipart/form-data" class="row g-3">
-                        @csrf
-                        @method('patch')
-                        <div class="modal-header" id="EditDemandeurModalLabel{{ $listecollective->id }}">
-                            <h5 class="modal-title">Ajouter un commentaire ou une observation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="id" value="{{ $listecollective->id }}">
-                            <label for="floatingInput" class="mb-3">Observation<span
-                                    class="text-danger mx-1">*</span></label>
-                            <textarea name="observations" id="observations" cols="30" rows="5"
-                                class="form-control form-control-sm @error('observations') is-invalid @enderror" placeholder="Observations"
-                                autofocus>{{ $listecollective->observations ?? old('observations') }}</textarea>
-                            @error('observations')
-                                <span class="invalid-feedback" role="alert">
-                                    <div>{{ $message }}</div>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                Modifier</button>
-                        </div>
-                    </form>
+@endforeach
+<div class="modal fade" id="RejetDemandeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{{ route('validation-formations.destroy', $formation->id) }}"
+                enctype="multipart/form-data" class="row">
+                @csrf
+                @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet demande</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <label for="motif" class="form-label">Motifs du rejet</label>
+                    <textarea name="motif" id="motif" rows="5"
+                        class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                        placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                    @error('motif')
+                        <span class="invalid-feedback" role="alert">
+                            <div>{{ $message }}</div>
+                        </span>
+                    @enderror
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
+                        Rejeter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- Observations --}}
+@foreach ($listecollectives as $listecollective)
+    <div class="modal fade" id="EditDemandeurModal{{ $listecollective->id }}" tabindex="-1" role="dialog"
+        aria-labelledby="EditDemandeurModalLabel{{ $listecollective->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{{ route('listecollectives.updateObservationsCollective') }}"
+                    enctype="multipart/form-data" class="row g-3">
+                    @csrf
+                    @method('patch')
+                    <div class="modal-header" id="EditDemandeurModalLabel{{ $listecollective->id }}">
+                        <h5 class="modal-title">Ajouter un commentaire ou une observation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="{{ $listecollective->id }}">
+                        <label for="floatingInput" class="mb-3">Observation<span
+                                class="text-danger mx-1">*</span></label>
+                        <textarea name="observations" id="observations" cols="30" rows="5"
+                            class="form-control form-control-sm @error('observations') is-invalid @enderror" placeholder="Observations"
+                            autofocus>{{ $listecollective->observations ?? old('observations') }}</textarea>
+                        @error('observations')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                            Modifier</button>
+                    </div>
+                </form>
             </div>
         </div>
-    @endforeach
+    </div>
+@endforeach
 
-     {{-- Observations --}}
-     {{-- @foreach ($individuelles as $individuelle)
+{{-- Observations --}}
+{{-- @foreach ($individuelles as $individuelle)
      <div class="modal fade" id="EditDemandeurModal{{ $individuelle->id }}" tabindex="-1" role="dialog"
          aria-labelledby="EditDemandeurModalLabel{{ $individuelle->id }}" aria-hidden="true">
          <div class="modal-dialog">
@@ -966,109 +1004,213 @@
          </div>
      </div>
  @endforeach --}}
- {{-- Agent de suivi --}}
- <div class="modal fade" id="EditAgentSuiviModal{{ $formation->id }}" tabindex="-1" role="dialog"
-     aria-labelledby="EditAgentSuiviModalLabel{{ $formation->id }}" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <form method="post" action="{{ route('formations.updateAgentSuivi') }}"
-                 enctype="multipart/form-data" class="row g-3">
-                 @csrf
-                 @method('patch')
-                 <div class="modal-header" id="EditAgentSuiviModalLabel{{ $formation->id }}">
-                     <h5 class="modal-title">Ajouter un agent de suivi</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                         aria-label="Close"></button>
-                 </div>
-                 <div class="modal-body">
-                     <input type="hidden" name="id" value="{{ $formation->id }}">
-                     <div class="form-floating mb-3">
-                         <input type="text" name="suivi_dossier"
-                             value="{{ $formation?->suivi_dossier ?? old('suivi_dossier') }}"
-                             class="form-control form-control-sm @error('suivi_dossier') is-invalid @enderror"
-                             id="suivi_dossier" placeholder="Nom de l'agent de suivi" autofocus>
-                         @error('suivi_dossier')
-                             <span class="invalid-feedback" role="alert">
-                                 <div>{{ $message }}</div>
-                             </span>
-                         @enderror
-                         <label for="floatingInput">Agent suivi</label>
-                     </div>
-                     <div class="form-floating mb-3">
-                         <input type="date" name="date_suivi"
-                             value="{{ $formation?->date_suivi?->format('Y-m-d') ?? old('date_suivi') }}"
-                             class="form-control form-control-sm @error('date_suivi') is-invalid @enderror"
-                             id="date_suivi" placeholder="Date suivi">
-                         @error('date_suivi')
-                             <span class="invalid-feedback" role="alert">
-                                 <div>{{ $message }}</div>
-                             </span>
-                         @enderror
-                         <label for="floatingInput">Date suivi</label>
-                     </div>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                     <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                         Vavilider</button>
-                 </div>
-             </form>
-         </div>
-     </div>
- </div>
- {{-- Membres du jury --}}
- <div class="modal fade" id="EditMembresJuryModal{{ $formation->id }}" tabindex="-1" role="dialog"
-     aria-labelledby="EditMembresJuryModalLabel{{ $formation->id }}" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <form method="post" action="{{ route('formations.updateMembresJury') }}"
-                 enctype="multipart/form-data" class="row g-3">
-                 @csrf
-                 @method('patch')
-                 <div class="modal-header" id="EditMembresJuryModalLabel{{ $formation->id }}">
-                     <h5 class="modal-title">Ajouter les membres du jury</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                         aria-label="Close"></button>
-                 </div>
-                 <div class="modal-body">
-                     <input type="hidden" name="id" value="{{ $formation->id }}">
-                     <div class="form-floating mb-3">
-                         <input type="date" name="date_pv" value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
-                             class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
-                             id="date_pv" placeholder="date_pv">
-                         @error('date_pv')
-                             <span class="invalid-feedback" role="alert">
-                                 <div>{{ $message }}</div>
-                             </span>
-                         @enderror
-                         <label for="floatingInput">Date évaluation<span class="text-danger mx-1">*</span></label>
-                     </div>
+{{-- Agent de suivi --}}
+<div class="modal fade" id="EditAgentSuiviModal{{ $formation->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="EditAgentSuiviModalLabel{{ $formation->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{{ route('formations.updateAgentSuivi') }}"
+                enctype="multipart/form-data" class="row g-3">
+                @csrf
+                @method('patch')
+                <div class="modal-header" id="EditAgentSuiviModalLabel{{ $formation->id }}">
+                    <h5 class="modal-title">Ajouter un agent de suivi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" value="{{ $formation->id }}">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="suivi_dossier"
+                            value="{{ $formation?->suivi_dossier ?? old('suivi_dossier') }}"
+                            class="form-control form-control-sm @error('suivi_dossier') is-invalid @enderror"
+                            id="suivi_dossier" placeholder="Nom de l'agent de suivi" autofocus>
+                        @error('suivi_dossier')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                        <label for="floatingInput">Agent suivi</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" name="date_suivi"
+                            value="{{ $formation?->date_suivi?->format('Y-m-d') ?? old('date_suivi') }}"
+                            class="form-control form-control-sm @error('date_suivi') is-invalid @enderror"
+                            id="date_suivi" placeholder="Date suivi">
+                        @error('date_suivi')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                        <label for="floatingInput">Date suivi</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                        Vavilider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- Membres du jury --}}
+<div class="modal fade" id="EditMembresJuryModal{{ $formation->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="EditMembresJuryModalLabel{{ $formation->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" action="{{ route('formations.updateMembresJury') }}"
+                enctype="multipart/form-data" class="row g-3">
+                @csrf
+                @method('patch')
+                <div class="modal-header" id="EditMembresJuryModalLabel{{ $formation->id }}">
+                    <h5 class="modal-title">Evaluation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" value="{{ $formation->id }}">
 
-                     <label for="membres_jury">Membres du jury</label>
-                         
-                         <textarea name="membres_jury" id="membres_jury" cols="30" rows="5"
-                             class="form-control form-control-sm @error('membres_jury') is-invalid @enderror" placeholder="Ajouter les membres du jury"
-                             autofocus>{{ $formation?->membres_jury ?? old('membres_jury') }}</textarea>
+                    <div class="mb-3">
+                        <label>N° convention<span class="text-danger mx-1">*</span></label>
+                        <input type="text" name="numero_convention"
+                            value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
+                            class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
+                            id="numero_convention" placeholder="n° convention">
+                        @error('numero_convention')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
 
-                         {{-- <input type="text" name="membres_jury"
-                             value="{{ $formation?->membres_jury ?? old('membres_jury') }}"
-                             class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
-                             id="membres_jury" placeholder="Ajouter membres du jury" autofocus> --}}
-                         @error('membres_jury')
-                             <span class="invalid-feedback" role="alert">
-                                 <div>{{ $message }}</div>
-                             </span>
-                         @enderror
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                     <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                         Vavilider</button>
-                 </div>
-             </form>
-         </div>
-     </div>
- </div>
+                    <div class="mb-3">
+                        <label>Date évaluation<span class="text-danger mx-1">*</span></label>
+                        <input type="date" name="date_pv"
+                            value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
+                            class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
+                            id="date_pv" placeholder="date_pv">
+                        @error('date_pv')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="evaluateur" class="form-label">Evaluateur<span
+                                class="text-danger mx-1">*</span></label>
+                        <select name="evaluateur" class="form-select @error('evaluateur') is-invalid @enderror"
+                            aria-label="Select" id="select-field" data-placeholder="Choisir evaluateur">
+                            <option value="{{ $formation?->evaluateur?->id }}">
+                                {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
+                            </option>
+                            @foreach ($evaluateurs as $evaluateur)
+                                <option value="{{ $evaluateur->id }}">
+                                    {{ $evaluateur?->name . ', ' . $evaluateur?->fonction . ' [NE : ' . $evaluateur?->formations->count() . ']' ?? old('evaluateur') }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('evaluateur')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Montant indemnité de membre <span class="text-danger mx-1">*</span></label>
+                        <input type="number" name="frais_evaluateur" min="0" step="0.001"
+                            value="{{ $formation?->frais_evaluateur ?? old('frais_evaluateur') }}"
+                            class="form-control form-control-sm @error('frais_evaluateur') is-invalid @enderror"
+                            id="frais_evaluateur" placeholder="Montant indemnité de membre ">
+                        @error('frais_evaluateur')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-9 col-lg-9 mb-3">
+                            <label>Evaluateur ONFP<span class="text-danger mx-1">*</span></label>
+                            <input type="text" name="nom_evaluateur_onfp"
+                                value="{{ $formation?->evaluateur_onfp ?? old('nom_evaluateur_onfp') }}"
+                                class="form-control form-control-sm @error('nom_evaluateur_onfp') is-invalid @enderror"
+                                id="nom_evaluateur_onfp" placeholder="Nom évaluateur onfp">
+                            @error('nom_evaluateur_onfp')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3 mb-4">
+                            <label>Initiale<span class="text-danger mx-1">*</span></label>
+                            <input type="text" name="initiale_evaluateur_onfp"
+                                value="{{ $formation?->initiale_evaluateur_onfp ?? old('initiale_evaluateur_onfp') }}"
+                                class="form-control form-control-sm @error('initiale_evaluateur_onfp') is-invalid @enderror"
+                                id="initiale_evaluateur_onfp" placeholder="Initiale évaluateur onfp">
+                            @error('initiale_evaluateur_onfp')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label>Type de certificat délivré<span class="text-danger mx-1">*</span></label>
+                        <input type="text" name="type_certificat" min="0" step="0.001"
+                            value="{{ $formation?->type_certificat ?? old('type_certificat') }}"
+                            class="form-control form-control-sm @error('type_certificat') is-invalid @enderror"
+                            id="type_certificat" placeholder="Attestation ou Titre ">
+                        @error('type_certificat')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="membres_jury">Membres du jury</label>
+
+                        <textarea name="membres_jury" id="membres_jury" cols="30" rows="3"
+                            class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
+                            placeholder="Membre 1; Membre 2; Membre 3 " autofocus>{{ $formation?->membres_jury ?? old('membres_jury') }}</textarea>
+
+                        {{-- <input type="text" name="membres_jury"
+                            value="{{ $formation?->membres_jury ?? old('membres_jury') }}"
+                            class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
+                            id="membres_jury" placeholder="Ajouter membres du jury" autofocus> --}}
+                        @error('membres_jury')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+
+                        <label for="recommandations">Recommandations</label>
+
+                        <textarea name="recommandations" id="recommandations" cols="30" rows="3"
+                            class="form-control form-control-sm @error('recommandations') is-invalid @enderror"
+                            placeholder="Recommandations" autofocus>{{ $formation?->recommandations ?? old('recommandations') }}</textarea>
+                        @error('recommandations')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                        Vavilider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </section>
 @endsection
 @push('scripts')

@@ -46,9 +46,11 @@ class CreateFormationsTable extends Migration
             $table->string('decret', 200)->nullable();
             $table->string('beneficiaires', 200)->nullable();
             $table->longText('membres_jury')->nullable();
+            $table->longText('recommandations')->nullable();
             $table->double('frais_evaluateur')->nullable();
             $table->double('frais_evaluation')->nullable();
             $table->string('niveau_qualification', 200)->nullable();
+            $table->string('type_formation', 200)->nullable();
             $table->integer('effectif_prevu')->nullable();
             $table->integer('prevue_h')->nullable();
             $table->integer('prevue_f')->nullable();
@@ -58,8 +60,11 @@ class CreateFormationsTable extends Migration
             $table->string('statut')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
-            $table->string('file3', 200)->nullable();
-            $table->string('file4', 200)->nullable();
+            $table->string('type_certificat', 200)->nullable();
+            $table->string('categorie_professionnelle', 200)->nullable();
+            $table->string('numero_convention', 200)->nullable();
+            $table->string('evaluateur_onfp', 200)->nullable();
+            $table->string('initiale_evaluateur_onfp', 200)->nullable();
             $table->string('appreciations', 200)->nullable();
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('agents_id')->nullable();

@@ -314,6 +314,13 @@ class OperateurController extends Controller
         return redirect()->back();
     }
 
+    public function edit($id)
+    {
+        $operateur = Operateur::findOrFail($id);
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        return view("operateurs.update", compact("operateur", "departements"));
+    }
+
     public function show($id)
     {
         $operateur = Operateur::findOrFail($id);

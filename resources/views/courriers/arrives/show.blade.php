@@ -121,6 +121,22 @@
                                     <p class="small fst-italic">{{ $arrive->courrier->observation }}.</p>
                                 @endisset
 
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Imputation</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        @if ($arrive->courrier->directions != '[]')
+                                            <?php $i = 1; ?>
+                                            @foreach ($arrive->courrier->directions as $direction)
+                                                <br>{{ $i++ }}. {!! $direction->name ?? '' !!}
+                                                <b>[{!! $direction->sigle ?? '' !!}]</b>
+                                            @endforeach
+                                        @else
+                                            Aucune imputation pour l'instant
+                                        @endif
+                                    </div>
+                                </div>
+
+                                
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-settings">

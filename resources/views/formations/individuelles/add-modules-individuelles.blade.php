@@ -166,7 +166,7 @@
                                 <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
                                     aria-label="Select" id="select-field-domaine-indiv"
                                     data-placeholder="Choisir domaine">
-                                    <option value="">
+                                    <option value="{{ old('domaine') }}">
                                         {{ old('domaine') }}
                                     </option>
                                     @foreach ($domaines as $domaine)

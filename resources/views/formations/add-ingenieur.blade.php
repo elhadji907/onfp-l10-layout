@@ -46,7 +46,7 @@
                                                 <th>Ingénieur</th>
                                                 <th>Initiale</th>
                                                 <th>Fonction</th>
-                                                <th>Spécialité</th>
+                                                {{-- <th>Spécialité</th> --}}
                                                 <th>Email</th>
                                                 <th>Téléphone</th>
                                                 <th style="text-align: center;">Formations</th>
@@ -71,7 +71,7 @@
                                                     {{--  <td>{{ $ingenieur->name }}</td> --}}
                                                     <td>{{ $ingenieur->initiale }}</td>
                                                     <td>{{ $ingenieur->fonction }}</td>
-                                                    <td>{{ $ingenieur->specialite }}</td>
+                                                    {{-- <td>{{ $ingenieur->specialite }}</td> --}}
                                                     <td><a
                                                             href="mailto:{{ $ingenieur->email }}">{{ $ingenieur->email }}</a>
                                                     </td>

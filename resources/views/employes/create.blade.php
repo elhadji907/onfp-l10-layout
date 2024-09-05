@@ -191,7 +191,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4">
+                               {{--  <div class="col-12 col-md-6 col-lg-4">
                                     <label for="direction" class="form-label">Direction<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="direction" class="form-select @error('direction') is-invalid @enderror"
@@ -207,7 +207,7 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label for="fonction" class="form-label">Fonction<span

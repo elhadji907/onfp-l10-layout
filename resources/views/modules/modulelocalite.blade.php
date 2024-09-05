@@ -77,7 +77,7 @@
                                             </td>
                                             <td>
                                                 <a
-                                                    href="{{ url('modulelocalitestatut', ['$idlocalite' => $individuelle->departement->id, '$idmodule' => $module?->id, '$statut' => $individuelle->statut]) }}">
+                                                    href="{{ url('modulelocalitestatut', ['$idlocalite' => $individuelle->departement->region->id, '$idmodule' => $module?->id, '$statut' => $individuelle->statut]) }}">
                                                     <span
                                                         class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                                     {{--   @isset($individuelle?->statut)

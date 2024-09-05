@@ -55,7 +55,7 @@
                                         </td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline">
-                                                <a href="{{ url('localites/' . $localite->id) }}"
+                                                <a href="{{ url('localites/' . $localite->region->id) }}"
                                                     class="btn btn-success btn-sm mx-1" title="Voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                             </span>

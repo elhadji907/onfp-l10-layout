@@ -212,9 +212,12 @@ class ArriveController extends Controller
             ]
         );
 
-        $status = 'Mise à jour effectuée avec succès';
+        /* $status = 'Mise à jour effectuée avec succès';
 
-        return Redirect::route('arrives.index')->with('status', $status);
+        return Redirect::route('arrives.index')->with('status', $status); */
+        
+        Alert::success('Félicitations !', 'mise à jour effectuée');
+        return Redirect::route('arrives.index'); 
     }
     public function show($id)
     {
@@ -244,8 +247,6 @@ class ArriveController extends Controller
     {
         $arrive = Arrive::findOrFail($id);
         $courrier = $arrive->courrier;
-
-        Alert::success('Félicitations !', 'courrier imputé');
 
         return view("courriers.arrives.imputation-arrive", compact("arrive", "courrier"));
     }

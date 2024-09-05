@@ -56,8 +56,8 @@ class EmployeController extends Controller
             'email'               => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
             'date_embauche'       => ['required', 'date'],
             'categorie'           => ['required', 'string'],
-            'fonction'            => ['required', 'string'],
-            'direction'           => ['required', 'string'],
+            'fonction'            => ['nullable', 'string'],
+            'direction'           => ['nullable', 'string'],
             'situation_familiale' => ['required', 'string'],
         ]);
 

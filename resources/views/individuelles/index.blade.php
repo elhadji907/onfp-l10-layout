@@ -402,7 +402,7 @@
                                     <th>Date naissance</th>
                                     <th>Lieu naissance</th>
                                     <th width="20%">Module</th>
-                                    <{{-- th>Localité</th> --}} <th class="text-center">Statut</th>
+                                    <th class="text-center">Statut</th>
                                         <th class="text-center">#</th>
                                 </tr>
                             </thead>

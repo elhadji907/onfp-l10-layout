@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Direction;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DirectionController extends Controller
 {
@@ -48,15 +50,22 @@ class DirectionController extends Controller
     {
         $direction = Direction::find($id);
         $employe = Employee::orderBy("created_at", "desc")->get();
-        $chef = Employee::findOrFail($direction->chef_id);
-        $chef_name = $chef->matricule . ' ' . $chef->user->firstname . ' ' . $chef->user->name;
+        if (isset($direction->chef_id)) {
+            $chef = Employee::findOrFail($direction->chef_id);
+            dd($chef);
+            $chef_name = $chef->matricule . ' ' . $chef->user->firstname . ' ' . $chef->user->name;
+        } else {
+            $chef = null;
+            $chef_name = null;
+        }
+
         return view("directions.update", compact("direction", "employe", "chef_name", "chef"));
     }
     public function update(Request $request, $id)
     {
         $direction = Direction::find($id);
         $employe = Employee::findOrFail($request->input("employe"));
-        
+
         $this->validate($request, [
             'name'      => ['required', 'string', 'max:255', Rule::unique(Direction::class)->ignore($id)],
             'sigle'     => ['required', 'string', 'max:10', Rule::unique(Direction::class)->ignore($id)],
@@ -83,7 +92,9 @@ class DirectionController extends Controller
     {
         $direction = Direction::find($id);
         $directions = Direction::orderBy("created_at", "desc")->get();
-        return view("directions.show", compact("direction", 'directions'));
+        $employes = Employee::get();
+
+        return view("directions.show", compact("direction", 'directions', 'employes'));
     }
     public function destroy($id)
     {
@@ -91,5 +102,104 @@ class DirectionController extends Controller
         $direction->delete();
         $status = $direction->name . " vient d'être supprimé";
         return redirect()->route("directions.index")->with('status', $status);
+    }
+
+    public function adddirectionAgent($iddirection)
+    {
+
+        $direction = Direction::findOrFail($iddirection);
+        $employes = Employee::get();
+
+        $employeDirection = DB::table('employees')
+            ->where('directions_id', $iddirection)
+            ->pluck('directions_id', 'directions_id')
+            ->all();
+
+        $employeDirectionCheck = DB::table('employees')
+            ->where('directions_id', '!=', null)
+            ->where('directions_id', '!=', $iddirection)
+            ->pluck('directions_id', 'directions_id')
+            ->all();
+
+        return view("directions.direction-employes", compact('employeDirection', 'direction', 'employes', 'employeDirectionCheck'));
+    }
+
+    public function givedirectionAgent($iddirection, Request $request)
+    {
+        $request->validate([
+            'employes' => ['required']
+        ]);
+
+        foreach ($request->employes as $employe) {
+            $employe = Employee::findOrFail($employe);
+            $employe->update([
+                "directions_id"      =>  $iddirection,
+            ]);
+
+            $employe->save();
+        }
+
+        Alert::success('Effectuée !', 'Employé(s) ajouté(s)');
+
+        return redirect()->back();
+    }
+
+
+    public function retirerEmploye(Request $request)
+    {
+        $employe = Employee::findOrFail($request->input('id'));
+
+        $employe->update([
+            'directions_id'  => null,
+        ]);
+
+        $employe->save();
+
+        Alert::success('Effectué !', 'employé retiré');
+
+        return redirect()->back();
+    }
+
+    public function adddirectionChef($iddirection)
+    {
+
+        $direction = Direction::findOrFail($iddirection);
+        $employes = Employee::where('directions_id', $iddirection)->get();
+
+        $employeDirection = DB::table('employees')
+            ->where('directions_id', $iddirection)
+            ->where('id', $direction?->chef_id)
+            ->pluck('id', 'id')
+            ->all();
+
+        $employeDirectionCheck = DB::table('employees')
+            ->where('directions_id', '!=', null)
+            ->where('directions_id', '!=', $iddirection)
+            ->where('id', $direction?->chef_id)
+            ->pluck('id', 'id')
+            ->all();
+
+        return view("directions.direction-chef", compact('employeDirection', 'direction', 'employes', 'employeDirectionCheck'));
+    }
+
+    public function givedirectionChef($iddirection, Request $request)
+    {
+        $request->validate([
+            'employe' => ['required']
+        ]);
+
+        /* $employe = Employee::findOrFail($request->employe); */
+
+        $direction = Direction::findOrFail($iddirection);
+
+        $direction->update([
+            "chef_id"      =>  $request->employe,
+        ]);
+
+        $direction->save();
+
+        Alert::success('Effectuée !', 'Responsable ajouté');
+
+        return redirect()->back();
     }
 }

@@ -826,4 +826,99 @@
             </div>
         </div>
     </section>
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+
+                    <div class="list-group mt-5">
+                        @if (isset(auth::user()->employee->courriers) && auth::user()->employee->courriers != '[]')
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="table-courriers-emp">
+                                    <thead class="table-default">
+                                        <tr>
+                                            <th style="width:60%;">Imputations</th>
+                                            <th style="width:20%;">Instructions</th>
+                                            <th style="width:20%;">Suivi dossier</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (auth::user()->employee->courriers as $courrier)
+                                            <tr>
+                                                <td>
+                                                    @if (isset($courrier) && $courrier->type == 'arrive')
+                                                        <h4><a href="{!! route('arrives.show', $courrier->id) !!}">{!! $courrier->objet ?? '' !!}</a>
+                                                        </h4>
+                                                    @endif
+                                                    <p>{!! $courrier->message !!}</p>
+                                                    <p><strong>Type de courrier : </strong> {!! $courrier->type ?? '' !!}</p>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <small>Posté le {!! Carbon\Carbon::parse($courrier->created_at)->format('d/m/Y à H:i:s') !!}</small>
+                                                        <span
+                                                            class="badge badge-info">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name !!}</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>{!! $courrier->description ?? '' !!}</p>
+                                                </td>
+                                                <td>
+
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        @foreach ($courrier->employees->unique('id') as $employee)
+                                                            {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
+                                                        @endforeach
+                                                        {{-- <a href="{!! url('courrierimputations', ['$type' => $courrier->type, '$id' => $courrier->id]) !!}" class='btn btn-warning btn-sm'
+                                                            title="changer agent suivi">
+                                                            <i class="fa fa-retweet"></i>
+                                                        </a> --}}
+                                                    </div>
+
+
+                                                </td>
+                                                {{--  <td>
+                                        @forelse ($courrier->comments as $comment)
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small>Commentaire de
+                                                    {!! $comment->user->firstname !!}&nbsp;{!! $comment->user->name !!} du
+                                                    {!! Carbon\Carbon::parse($comment->created_at)->format('d/m/Y à H:i:s') !!}: <br>
+                                                    <ul>
+                                                        <li>{!! $comment->content !!}</li>
+                                                    </ul>
+                                                </small>
+                                            @foreach ($comment->comments as $replayComment)
+                                                <div class="ml-5">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <small>Réponse de
+                                                            {!! $comment->user->firstname !!}&nbsp;{!! $comment->user->name !!} du
+                                                            {!! Carbon\Carbon::parse($replayComment->created_at)->format('d/m/Y à H:i:s') !!} : <br>
+                                                            <ul>
+                                                                <li>
+                                                                    {!! $replayComment->content !!}</li>
+                                                            </ul>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            @auth
+                                            @endauth
+                                        @empty
+
+                                            <div class="alert alert-info">Aucun commentaire pour ce courrier</div>
+                                        @endforelse
+                                    </td>  --}}
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

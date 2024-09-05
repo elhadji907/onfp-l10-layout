@@ -143,14 +143,16 @@
 
 <body>
     <h6 valign="top" style="text-align: center;">
-        <b>REPUBLIQUE DU SENEGAL<br></b>
+        {{-- <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
             MINISTERE DE LA FORMATION PROFESSIONNELLE<br>
             ********<br>
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
                 style="width: 100%; max-width: 300px" />
-        </b>
+        </b> --}}
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete_lettre_mission.png'))) }}"
+            style="width: 100%; max-width: 300px" />
     </h6>
     <div class="invoice-box">
         <table class="table table-responsive">
@@ -188,7 +190,7 @@
                     </td>
                 </tr>
                 <tr class="heading">
-                   {{--  <td colspan="7">
+                    {{--  <td colspan="7">
                         <b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name . '(' . $formation?->ingenieur?->initiale . ')' }}
                     </td> --}}
                     <td rowspan="2" class="item" style="text-align: center;"><b>N° CIN</b></td>
@@ -227,10 +229,12 @@
         <h4 valign="top">
             <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : @isset($formation?->date_pv)
                 <span
-                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
+                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
             @endisset
             <br><br>
             <?php $i = 1; ?>
+            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br><br>
+            {{ $formation?->evaluateur_onfp . ', évaluateur ONFP' }}<br><br>
             @isset($membres_jury)
                 @foreach ($membres_jury as $item)
                     {{ $item }} <br><br>

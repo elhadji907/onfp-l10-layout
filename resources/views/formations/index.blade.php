@@ -34,8 +34,7 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>
-                                                <span
-                                                    class="text-primary">{{ $count_today ?? '0' }}</span>
+                                                <span class="text-primary">{{ $count_today ?? '0' }}</span>
                                             </h6>
                                             <span class="text-success small pt-1 fw-bold">Aujourd'hui</span>
                                             {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
@@ -463,6 +462,19 @@
                                             id="titre"
                                             placeholder="Ex: 4ème catégorie de la convention collective ...">
                                         @error('titre')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <label for="numero_convention" class="form-label">Numéro convention</label>
+                                        <input type="text" name="numero_convention"
+                                            value="{{ old('numero_convention') }}"
+                                            class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
+                                            id="numero_convention"
+                                            placeholder="Ex: 000743/ONFP/DG/DIOF/mb du 14 juillet 2023">
+                                        @error('numero_convention')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

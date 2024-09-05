@@ -369,7 +369,23 @@
                                                                         value="{{ $formation->id }}">
                                                                     <button class="btn btn-sm mx-1">PV Evaluation</button>
                                                                 </form>
-                                                                <button class="btn btn-sm mx-1">ABE</button>
+                                                                <hr>
+                                                                <form action="{{ route('lettreEvaluation') }}" method="post"
+                                                                    target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Lettre mission</button>
+                                                                </form>
+                                                                <form action="{{ route('abeEvaluation') }}" method="post"
+                                                                    target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">A B E</button>
+                                                                </form>
                                                             </ul>
                                                         </div>
                                                     </span>
@@ -387,13 +403,13 @@
                                                     <thead>
                                                         <tr>
                                                             {{-- <th>N°</th> --}}
-                                                            <th>Numéro</th>
-                                                            <th>Civilité</th>
+                                                            <th class="text-center">Numéro</th>
+                                                            <th class="text-center">Civilité</th>
                                                             <th class="text-center">CIN</th>
                                                             <th>Prénom</th>
                                                             <th>NOM</th>
                                                             <th class="text-center">Date naissance</th>
-                                                            <th>Lieu de naissance</th>
+                                                            <th class="text-center">Lieu de naissance</th>
                                                             {{-- <th>Adresse</th> --}}
                                                             @isset($individuelle?->note_obtenue)
                                                                 <th class="text-center">Note</th>
@@ -408,14 +424,18 @@
                                                         @foreach ($formation->individuelles as $individuelle)
                                                             <tr>
                                                                 {{-- <td>{{ $i++ }}</td> --}}
-                                                                <td>{{ $individuelle?->numero }}</td>
-                                                                <td>{{ $individuelle?->user?->civilite }}</td>
-                                                                <td style="text-align: center;">{{ $individuelle?->user?->cin }}</td>
+                                                                <td class="text-center">{{ $individuelle?->numero }}</td>
+                                                                <td class="text-center">{{ $individuelle?->user?->civilite }}
+                                                                </td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $individuelle?->user?->cin }}</td>
                                                                 <td>{{ $individuelle?->user?->firstname }}</td>
                                                                 <td>{{ $individuelle?->user?->name }}</td>
-                                                                <td style="text-align: center;">{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                                <td style="text-align: center;">
+                                                                    {{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
                                                                 </td>
-                                                                <td>{{ $individuelle?->user?->lieu_naissance }}</td>
+                                                                <td class="text-center">
+                                                                    {{ $individuelle?->user?->lieu_naissance }}</td>
                                                                 {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
                                                                 @isset($individuelle?->note_obtenue)
                                                                     <td class="text-center">
@@ -496,9 +516,8 @@
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($operateur)
                                             <h1 class="card-title">
-                                                Liste des formations
                                                 @if (isset($module))
-                                                    en {{ $module?->name }}
+                                                    Liste des formations en {{ $module?->name }}
                                                 @endif
                                             </h1>
                                             <div class="row g-3">
@@ -982,21 +1001,35 @@
         {{-- Membres du jury --}}
         <div class="modal fade" id="EditMembresJuryModal{{ $formation->id }}" tabindex="-1" role="dialog"
             aria-labelledby="EditMembresJuryModalLabel{{ $formation->id }}" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="post" action="{{ route('formations.updateMembresJury') }}"
                         enctype="multipart/form-data" class="row g-3">
                         @csrf
                         @method('patch')
                         <div class="modal-header" id="EditMembresJuryModalLabel{{ $formation->id }}">
-                            <h5 class="modal-title">Ajouter les membres du jury</h5>
+                            <h5 class="modal-title">Evaluation</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" value="{{ $formation->id }}">
 
-                            <div class="form-floating mb-3">
+                            <div class="mb-3">
+                                <label>N° convention<span class="text-danger mx-1">*</span></label>
+                                <input type="text" name="numero_convention"
+                                    value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
+                                    class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
+                                    id="numero_convention" placeholder="n° convention">
+                                @error('numero_convention')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Date évaluation<span class="text-danger mx-1">*</span></label>
                                 <input type="date" name="date_pv"
                                     value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
                                     class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
@@ -1006,24 +1039,112 @@
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Date évaluation<span class="text-danger mx-1">*</span></label>
                             </div>
 
-                            <label for="membres_jury">Membres du jury</label>
+                            <div class="mb-3">
+                                <label for="evaluateur" class="form-label">Evaluateur<span
+                                        class="text-danger mx-1">*</span></label>
+                                <select name="evaluateur" class="form-select @error('evaluateur') is-invalid @enderror"
+                                    aria-label="Select" id="select-field" data-placeholder="Choisir evaluateur">
+                                    <option value="{{ $formation?->evaluateur?->id }}">
+                                        {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
+                                    </option>
+                                    @foreach ($evaluateurs as $evaluateur)
+                                        <option value="{{ $evaluateur->id }}">
+                                            {{ $evaluateur?->name . ', ' . $evaluateur?->fonction . ' [NE : ' . $evaluateur?->formations->count() . ']' ?? old('evaluateur') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('evaluateur')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
 
-                            <textarea name="membres_jury" id="membres_jury" cols="30" rows="5"
-                                class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
-                                placeholder="Ajouter les membres du jury" autofocus>{{ $formation?->membres_jury ?? old('membres_jury') }}</textarea>
+                            <div class="mb-3">
+                                <label>Montant indemnité de membre <span class="text-danger mx-1">*</span></label>
+                                <input type="number" name="frais_evaluateur" min="0" step="0.001"
+                                    value="{{ $formation?->frais_evaluateur ?? old('frais_evaluateur') }}"
+                                    class="form-control form-control-sm @error('frais_evaluateur') is-invalid @enderror"
+                                    id="frais_evaluateur" placeholder="Montant indemnité de membre ">
+                                @error('frais_evaluateur')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
 
-                            {{-- <input type="text" name="membres_jury"
+                            <div class="row">
+                                <div class="col-12 col-md-9 col-lg-9 mb-3">
+                                    <label>Evaluateur ONFP<span class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="nom_evaluateur_onfp"
+                                        value="{{ $formation?->evaluateur_onfp ?? old('nom_evaluateur_onfp') }}"
+                                        class="form-control form-control-sm @error('nom_evaluateur_onfp') is-invalid @enderror"
+                                        id="nom_evaluateur_onfp" placeholder="Nom évaluateur onfp">
+                                    @error('nom_evaluateur_onfp')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 mb-3">
+                                    <label>Initiale<span class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="initiale_evaluateur_onfp"
+                                        value="{{ $formation?->initiale_evaluateur_onfp ?? old('initiale_evaluateur_onfp') }}"
+                                        class="form-control form-control-sm @error('initiale_evaluateur_onfp') is-invalid @enderror"
+                                        id="initiale_evaluateur_onfp" placeholder="Initiale évaluateur onfp">
+                                    @error('initiale_evaluateur_onfp')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Type de certificat délivré<span class="text-danger mx-1">*</span></label>
+                                <input type="text" name="type_certificat" min="0" step="0.001"
+                                    value="{{ $formation?->type_certificat ?? old('type_certificat') }}"
+                                    class="form-control form-control-sm @error('type_certificat') is-invalid @enderror"
+                                    id="type_certificat" placeholder="Attestation ou Titre ">
+                                @error('type_certificat')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+
+                                <label for="membres_jury">Membres du jury</label>
+
+                                <textarea name="membres_jury" id="membres_jury" cols="30" rows="3"
+                                    class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
+                                    placeholder="Membre 1; Membre 2; Membre 3 " autofocus>{{ $formation->membres_jury ?? old('membres_jury') }}</textarea>
+
+                                {{-- <input type="text" name="membres_jury"
                                     value="{{ $formation?->membres_jury ?? old('membres_jury') }}"
                                     class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
                                     id="membres_jury" placeholder="Ajouter membres du jury" autofocus> --}}
-                            @error('membres_jury')
-                                <span class="invalid-feedback" role="alert">
-                                    <div>{{ $message }}</div>
-                                </span>
-                            @enderror
+                                @error('membres_jury')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+
+                                <label for="recommandations">Recommandations</label>
+
+                                <textarea name="recommandations" id="recommandations" cols="30" rows="3s"
+                                    class="form-control form-control-sm @error('recommandations') is-invalid @enderror"
+                                    placeholder="Recommandations" autofocus>{{ $formation?->recommandations ?? old('recommandations') }}</textarea>
+                                @error('recommandations')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

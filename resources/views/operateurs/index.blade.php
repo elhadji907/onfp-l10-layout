@@ -61,65 +61,65 @@
                                 <?php $i = 1; ?>
                                 @foreach ($operateurs as $operateur)
                                     {{-- @isset($operateur?->numero_agrement) --}}
-                                        <tr>
-                                            <td>{{ $operateur?->numero_agrement }}</td>
-                                            <td>{{ $operateur?->name }}</td>
-                                            <td>{{ $operateur?->sigle }}</td>
-                                            <td style="text-align: center;">
-                                                @foreach ($operateur->operateurmodules as $operateurmodule)
-                                                    @if ($loop->last)
-                                                        <a href="#"><span
-                                                                class="badge bg-info">{{ $loop->count }}</span></a>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td class="text-center">
-                                                @foreach ($operateur->formations as $formation)
-                                                    @if ($loop->last)
-                                                        <a href="#"><span
-                                                                class="badge bg-info">{{ $loop->count }}</span></a>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td style="text-align: center;"><span class="{{ $operateur->statut_agrement }}">
-                                                    {{ $operateur?->statut_agrement }}</span></td>
-                                            <td>
-                                                <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('operateurs.show', $operateur->id) }}"
-                                                        class="btn btn-primary btn-sm" target="_blank" title="voir détails"><i
-                                                            class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li>
-                                                                {{-- <a class="dropdown-item btn btn-sm"
-                                                                    href="{{ route('operateurs.edit', $operateur->id) }}"
-                                                                    class="mx-1" title="Modifier"><i
-                                                                        class="bi bi-pencil"></i>Modifier</a> --}}
+                                    <tr>
+                                        <td>{{ $operateur?->numero_agrement }}</td>
+                                        <td>{{ $operateur?->name }}</td>
+                                        <td>{{ $operateur?->sigle }}</td>
+                                        <td style="text-align: center;">
+                                            @foreach ($operateur->operateurmodules as $operateurmodule)
+                                                @if ($loop->last)
+                                                    <a href="#"><span
+                                                            class="badge bg-info">{{ $loop->count }}</span></a>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td class="text-center">
+                                            @foreach ($operateur->formations as $formation)
+                                                @if ($loop->last)
+                                                    <a href="#"><span
+                                                            class="badge bg-info">{{ $loop->count }}</span></a>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td style="text-align: center;"><span class="{{ $operateur->statut_agrement }}">
+                                                {{ $operateur?->statut_agrement }}</span></td>
+                                        <td>
+                                            <span class="d-flex align-items-baseline"><a
+                                                    href="{{ route('operateurs.show', $operateur->id) }}"
+                                                    class="btn btn-primary btn-sm" target="_blank" title="voir détails"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <div class="filter">
+                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                            class="bi bi-three-dots"></i></a>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                        <li>
+                                                            <a class="dropdown-item btn btn-sm"
+                                                                href="{{ route('operateurs.edit', $operateur->id) }}"
+                                                                class="mx-1" title="Modifier"><i
+                                                                    class="bi bi-pencil"></i>Modifier</a>
 
-                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                            {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#EditOperateurModal{{ $operateur->id }}">
                                                                     <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <form
-                                                                    action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"
-                                                                        title="Supprimer"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </td>
-                                        </tr>
+                                                                </button> --}}
+                                                        </li>
+                                                        <li>
+                                                            <form
+                                                                action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="dropdown-item show_confirm"
+                                                                    title="Supprimer"><i
+                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
                                     {{-- @endisset --}}
                                 @endforeach
 
@@ -243,7 +243,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="categorie"
                                             class="form-select  @error('categorie') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-categorie"
+                                            aria-label="Select" id="select-field-categorie-pro"
                                             data-placeholder="Choisir diplôme professionnel">
                                             <option value="{{ old('categorie') }}">
                                                 {{ old('categorie') }}
@@ -530,14 +530,11 @@
                     </div>
                 </div>
             </div>
-            @foreach ($operateurs as $operateur)
-                <!-- Edit Operateur -->
+            {{--  @foreach ($operateurs as $operateur)
                 <div class="modal fade" id="EditOperateurModal{{ $operateur->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="EditOperateurModalLabel{{ $operateur->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
-                            {{-- <form method="post" action="{{ route('operateurs.store') }}" enctype="multipart/form-data">
-                                @csrf --}}
                             <form method="post" action="{{ route('operateurs.update', $operateur->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
@@ -645,7 +642,6 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        {{-- Type de structure --}}
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="categorie" class="form-label">Catégorie<span
                                                     class="text-danger mx-1">*</span></label>
@@ -723,10 +719,6 @@
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <label for="adresse" class="form-label">Adresse<span
                                                     class="text-danger mx-1">*</span></label>
-                                            {{-- <input type="text" name="adresse"
-                                                value="{{ $operateur?->adresse ?? old('adresse') }}"
-                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror"
-                                                id="adresse" placeholder="adresse"> --}}
                                                 <textarea name="adresse" id="adresse" rows="1"
                                                 class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                                 placeholder="Adresse exacte opérateur">{{ $operateur->adresse ?? old('adresse') }}</textarea>
@@ -948,14 +940,14 @@
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fermer</button>
                                         <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                            Enregistrer</button>
+                                            Modifier</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @endforeach --}}
             <!-- End Edit Operateur-->
     </section>
 

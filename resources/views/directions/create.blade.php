@@ -69,7 +69,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                           {{--  <div class="col-12 col-md-6 col-lg-6">
                                 <label for="employe" class="form-label">Responsable</label>
                                 <select name="employe" class="form-select  @error('employe') is-invalid @enderror"
                                     aria-label="Select" id="select-field-employe" data-placeholder="Choisir le responsable">
@@ -86,7 +86,7 @@
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Ajouter</button>
                             </div>

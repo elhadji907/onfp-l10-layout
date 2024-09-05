@@ -26,6 +26,7 @@ class CreateFindividuellesTable extends Migration
             $table->char('uuid', 36);
             $table->string('code', 200);
             $table->string('categorie', 200)->nullable();
+            $table->string('statut')->nullable();
             $table->unsignedInteger('formations_id');
             $table->unsignedInteger('modules_id')->nullable();
             $table->unsignedInteger('projets_id')->nullable();

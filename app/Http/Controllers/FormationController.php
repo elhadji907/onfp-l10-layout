@@ -8,6 +8,7 @@ use App\Models\Collectivemodule;
 use App\Models\Departement;
 use App\Models\Direction;
 use App\Models\Domaine;
+use App\Models\Evaluateur;
 use App\Models\Formation;
 use App\Models\Indisponible;
 use App\Models\Individuelle;
@@ -29,6 +30,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class FormationController extends Controller
 {
@@ -48,7 +50,8 @@ class FormationController extends Controller
             ->where('statut', '!=', 'supprimer')
             ->count();
 
-            
+
+        $qrcode = QrCode::size(200)->generate("tel:+221776994173");
         $today = date('Y-m-d');
         $count_today = Formation::where("created_at", "LIKE",  "{$today}%")->count();
 
@@ -60,7 +63,7 @@ class FormationController extends Controller
         $programmes = Programme::orderBy("created_at", "desc")->get();
         $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
         $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
-        return view("formations.index", compact("count_today","collectives_formations_count","individuelles_formations_count","formations", "modules", "departements", "regions", "operateurs", 'types_formations', 'projets', 'programmes', 'choixoperateurs'));
+        return view("formations.index", compact("qrcode", "count_today", "collectives_formations_count", "individuelles_formations_count", "formations", "modules", "departements", "regions", "operateurs", 'types_formations', 'projets', 'programmes', 'choixoperateurs'));
     }
 
 
@@ -141,6 +144,7 @@ class FormationController extends Controller
             "operateurs_id"         =>   $request->input('operateur'),
             "types_formations_id"   =>   $request->input('types_formation'),
             "niveau_qualification"  =>   $request->input('niveau_qualification'),
+            "numero_convention"     =>   $request->input('numero_convention'),
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
@@ -208,6 +212,7 @@ class FormationController extends Controller
             "lieu"                  =>   $request->input('lieu'),
             "types_formations_id"   =>   $request->input('types_formation'),
             "niveau_qualification"  =>   $request->input('niveau_qualification'),
+            "numero_convention"     =>   $request->input('numero_convention'),
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
@@ -242,6 +247,7 @@ class FormationController extends Controller
 
         $individuelles = Individuelle::orderBy("created_at", "desc")->get();
         $listecollectives = Listecollective::orderBy("created_at", "desc")->get();
+        $evaluateurs = Evaluateur::orderBy("created_at", "desc")->get();
 
         $collectivemodule = Collectivemodule::where('collectives_id', $formation->collectives_id)->get();
 
@@ -250,7 +256,7 @@ class FormationController extends Controller
             ->pluck('collectivemodules_id', 'collectivemodules_id')
             ->all();
 
-        return view('formations.' . $type_formation . "s.show", compact("formation", "count_demandes", "operateur", "module", "type_formation", "individuelles", "listecollectives", "collectiveFormation", "ingenieur"));
+        return view('formations.' . $type_formation . "s.show", compact("evaluateurs", "formation", "count_demandes", "operateur", "module", "type_formation", "individuelles", "listecollectives", "collectiveFormation", "ingenieur"));
     }
 
     public function destroy($id)
@@ -902,21 +908,34 @@ class FormationController extends Controller
     public function updateMembresJury(Request $request)
     {
         $request->validate([
-            'membres_jury'  => 'required',
-            'string',
-            'date_pv'       => 'required',
-            'date',
+            'membres_jury'              => ['required', 'string'],
+            'evaluateur'                => ['required', 'string'],
+            'nom_evaluateur_onfp'       => ['required', 'string'],
+            'initiale_evaluateur_onfp'  => ['required', 'string'],
+            'numero_convention'         => ['required', 'string'],
+            'frais_evaluateur'          => ['required', 'string'],
+            'type_certificat'           => ['required', 'string'],
+            'recommandations'           => ['required', 'string'],
+            'date_pv'                   => ['required', 'date'],
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
+
         $formation->update([
-            "membres_jury"    =>  $request->input('membres_jury'),
-            "date_pv"         =>  $request->input('date_pv'),
+            "membres_jury"                  =>  $request->input('membres_jury'),
+            "evaluateur_onfp"               =>  $request->input('nom_evaluateur_onfp'),
+            "initiale_evaluateur_onfp"      =>  $request->input('initiale_evaluateur_onfp'),
+            "numero_convention"             =>  $request->input('numero_convention'),
+            "frais_evaluateur"              =>  $request->input('frais_evaluateur'),
+            "type_certificat"               =>  $request->input('type_certificat'),
+            "recommandations"               =>  $request->input('recommandations'),
+            "date_pv"                       =>  $request->input('date_pv'),
+            "evaluateurs_id"                => $request->input('evaluateur'),
         ]);
 
         $formation->save();
 
-        Alert::success('Fait !', 'enregistré avec succès');
+        Alert::success('Fait !', 'Enregistré avec succès');
 
         return redirect()->back();
     }
@@ -1184,5 +1203,104 @@ class FormationController extends Controller
         }
 
         return redirect()->back();
+    }
+
+
+    public function lettreEvaluation(Request $request)
+    {
+
+        $formation = Formation::find($request->input('id'));
+
+        if ($formation->statut == 'terminer') {
+
+            $title = 'Lettre de mission évaluation formation en  ' . $formation->name;
+
+            $membres_jury = explode(";", $formation->membres_jury);
+            $count_membres = count($membres_jury);
+
+            $dompdf = new Dompdf();
+            $options = $dompdf->getOptions();
+            $options->setDefaultFont('Formation');
+            $dompdf->setOptions($options);
+
+            $dompdf->loadHtml(view('formations.lettrevaluation', compact(
+                'formation',
+                'title',
+                'membres_jury',
+                'count_membres',
+            )));
+
+            // (Optional) Setup the paper size and orientation (portrait ou landscape)
+            $dompdf->setPaper('A4', 'portrait');
+
+            // Render the HTML as PDF
+            $dompdf->render();
+
+
+
+            /*  $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's'; */
+
+            $name = 'Lettre de mission évaluation formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+            // Output the generated PDF to Browser
+            $dompdf->stream($name, ['Attachment' => false]);
+        } else {
+            Alert::warning('Désolez !', "la formation n'est pas encore terminée");
+            return redirect()->back();
+        }
+    }
+
+    public function abeEvaluation(Request $request)
+    {
+
+        $formation = Formation::find($request->input('id'));
+
+        if ($formation->statut == 'terminer') {
+
+            $title = 'Attestation de bonne execution ' . $formation->name;
+
+            $membres_jury = explode(";", $formation->membres_jury);
+            $count_membres = count($membres_jury);
+
+            $dompdf = new Dompdf();
+            $options = $dompdf->getOptions();
+            $options->setDefaultFont('Formation');
+            $dompdf->setOptions($options);
+
+            $dompdf->loadHtml(view('formations.abe', compact(
+                'formation',
+                'title',
+                'membres_jury',
+                'count_membres',
+            )));
+
+            // (Optional) Setup the paper size and orientation (portrait ou landscape)
+            $dompdf->setPaper('A4', 'portrait');
+
+            // Render the HTML as PDF
+            $dompdf->render();
+
+
+
+            /*  $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's'; */
+
+            $name = 'Attestation de bonne execution ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+            // Output the generated PDF to Browser
+            $dompdf->stream($name, ['Attachment' => false]);
+        } else {
+            Alert::warning('Désolez !', "la formation n'est pas encore terminée");
+            return redirect()->back();
+        }
     }
 }

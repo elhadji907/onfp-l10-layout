@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Individuelle;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -125,5 +126,23 @@ class RegionController extends Controller
         $status = "Région " . $region->nom . " ajoutée avec succès";
 
         return  redirect()->route("regions.index")->with("status", $status);
+    }
+
+    public function regionsmodule($idlocalite)
+    {
+        $localite = Region::findOrFail($idlocalite);
+
+        $individuelles = Individuelle::where('regions_id', $idlocalite)->get();
+
+        return view("localites.regions.regionsmodule", compact("localite", "individuelles"));
+    }
+
+    public function regionstatut($idlocalite, $statut)
+    {
+        $localite = Region::findOrFail($idlocalite);
+
+        $individuelles = Individuelle::where('regions_id', $idlocalite)->where('statut', $statut)->get();
+
+        return view("localites.regions.regionstatut", compact("localite", "individuelles", "statut"));
     }
 }

@@ -55,8 +55,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" scope="col">N°</th>
-                                    <th>Régions</th>
-                                    <th>Code</th>
+                                    <th class="text-center">Régions</th>
+                                    {{-- <th class="text-center">Demandes</th> --}}
+                                    <th class="text-center">Code</th>
                                     <th class="text-center" scope="col">Départements</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
@@ -66,7 +67,10 @@
                                 @foreach ($regions as $region)
                                     <tr>
                                         <td style="text-align: center;">{{ $i++ }}</td>
-                                        <td>{{ $region->nom }}</td>
+                                        <td style="text-align: center;">{{ $region->nom }}</td>
+                                        {{-- <td style="text-align: center;">
+                                            <a href="{{ route('regionsmodule', ['idlocalite' => $region->id]) }}"><span class="badge bg-primary">{{ count($region->individuelles) }}</span></a>
+                                        </td> --}}
                                         <td>{{ $region->sigle }}</td>
                                         <td style="text-align: center;">
                                             @foreach ($region->departements as $departement)

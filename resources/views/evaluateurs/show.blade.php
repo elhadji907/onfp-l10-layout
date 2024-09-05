@@ -1,8 +1,9 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des directions')
+@section('title', 'ONFP - Formations '.$evaluateur->name)
 @section('space-work')
 
     <div class="pagetitle">
+        {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
@@ -11,12 +12,13 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
+
     <section class="section">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-12 col-lg-12 mb-4">
+        <div class="row">
+            <div class="col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                        direction="alert">
+                        role="alert">
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -28,66 +30,83 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert">{{ $error }}</div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-body">
-                        {{-- @can('direction-create') --}}
                         <div class="pt-0">
-                            <a href="{{ route('directions.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            {{-- <a href="#" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                <i class="bi bi-plus" title="Ajouter"></i> Ajouter</a> --}}
+                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                data-bs-target="#AddFormationModal">
+                                <i class="bi bi-folder-plus" title="Ajouter"></i>
+                            </button>
                         </div>
-                        {{-- @endcan --}}
-                        <h5 class="card-title">Directions</h5>
-                        {{-- <p>Le tableau de toutes les directions.</p> --}}
+                        <h5 class="card-title">Liste des formations de {{ $evaluateur->name }}</h5>
+                        {{-- <p>Le tableau des demandes formations</p> --}}
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-directions">
+                        <table class="table datatables" id="table-formations">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
-                                    <th>Direction</th>
-                                    <th>Sigle</th>
+                                    <th>Code</th>
                                     <th>Type</th>
-                                    <th>Responsable</th>
-                                    <th>Effectif</th>
+                                    <th>Intitulé formation</th>
+                                    <th>Localité</th>
+                                    <th>Modules</th>
+                                    {{-- <th>Niveau qualification</th> --}}
+                                    {{-- <th>Effectif</th> --}}
+                                    <th class="text-center">Statut</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($directions as $direction)
+                                @foreach ($evaluateur->formations as $formation)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
-                                        <td>{{ $direction->name }}</td>
-                                        <td>{{ $direction->sigle }}</td>
-                                        <td>{{ $direction->type }}</td>
-                                        <td>{{ $direction->chef?->user->civilite . ' ' . $direction->chef?->user->firstname . ' ' . $direction->chef?->user->name }}
+                                        <td>{{ $formation?->code }}</td>
+                                        <td><a href="#">{{ $formation->types_formation?->name }}</a></td>
+                                        <td>{{ $formation?->name }}</td>
+                                        <td>{{ $formation->departement?->region?->nom }}</td>
+                                        <td>
+                                            @isset($formation?->module?->name)
+                                                {{ $formation?->module?->name }}
+                                            @endisset
+                                            @isset($formation?->collectivemodule?->module)
+                                                {{ $formation?->collectivemodule?->module }}
+                                            @endisset
                                         </td>
-                                        <td style="text-align: center;">
-                                            @foreach ($direction->employees as $employe)
-                                                @if ($loop->last)
-                                                    <span class="badge bg-info">{{ $loop->count }}</span>
-                                                @endif
-                                            @endforeach
+                                        <td class="text-center"><a href="#"><span
+                                                    class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
                                         </td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ url('directions/' . $direction->id) }}"
-                                                    class="btn btn-warning btn-sm mx-1" title="Donner permission"><i
+                                            <span class="d-flex align-items-baseline"><a
+                                                    href="{{ route('evaluateurs.show', $evaluateur->id) }}"
+                                                    class="btn btn-primary btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
-                                                    <a class="icon" href="" data-bs-toggle="dropdown"><i
+                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ route('directions.edit', $direction->id) }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
+                                                        <li>
+                                                            <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#EditevaluateurModal{{ $evaluateur->id }}">
+                                                                <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                            </button>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('directions', $direction->id) }}"
+                                                            <form
+                                                                action="{{ route('evaluateurs.destroy', $evaluateur->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"><i
+                                                                <button type="submit" class="dropdown-item show_confirm"
+                                                                    title="Supprimer"><i
                                                                         class="bi bi-trash"></i>Supprimer</button>
                                                             </form>
                                                         </li>
@@ -95,30 +114,32 @@
                                                 </div>
                                             </span>
                                         </td>
-
                                     </tr>
                                 @endforeach
+
                             </tbody>
                         </table>
-                        <!-- End Table with stripped rows -->
                     </div>
                 </div>
 
             </div>
         </div>
+        
+
+    
     </section>
 
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-directions', {
+        new DataTable('#table-formations', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
             "order": [
-                [0, 'asc']
+                [0, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

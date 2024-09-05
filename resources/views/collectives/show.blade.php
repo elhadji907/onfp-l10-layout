@@ -379,7 +379,7 @@
                             {{-- Détail Formations --}}
                             <div class="tab-content">
                                 <div class="tab-pane fade profile-overview pt-1" id="foration-overview">
-                                    <h5 class="card-title">Formation</h5>
+                                    <h5 class="card-title">Formations</h5>
                                     <table class="table datatables" id="table-formations">
                                         <thead>
                                             <tr>
@@ -395,7 +395,7 @@
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; ?>
-                                            <tr>
+                                            {{-- <tr>
                                                 <td>{{ $collective?->formation?->code }}</td>
                                                 <td></td>
                                                 <td></td>
@@ -432,10 +432,9 @@
                                                         </span>
                                                     @endisset
                                                 </td>
-                                            </tr>
+                                            </tr> --}}
                                         </tbody>
                                     </table>
-                                    <!-- End Table with stripped rows -->
                                 </div>
                             </div>
                             {{-- Détail Formations --}}

@@ -58,10 +58,10 @@ class ModuleController extends Controller
 
     public function modulelocalitestatut($idlocalite, $idmodule, $statut)
     {
-        $localite = Departement::findOrFail($idlocalite);
+        $localite = Region::findOrFail($idlocalite);
         $module = Module::findOrFail($idmodule);
 
-        $individuelles = Individuelle::where('departements_id', $idlocalite)
+        $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
             ->where('statut', $statut)->get();
 
@@ -94,12 +94,12 @@ class ModuleController extends Controller
     {
         $this->validate($request, [
             "name"             => ["required", "string", Rule::unique(Module::class)],
-            /* "domaine"          => ["required", "string"], */
+            "domaine"          => ["nullable", "string"],
         ]);
 
         $module = Module::create([
             'name'            => $request->input('name'),
-            /* 'domaines_id'     => $request->input('domaine'), */
+            'domaines_id'     => $request->input('domaine'),
         ]);
 
         $module->save();

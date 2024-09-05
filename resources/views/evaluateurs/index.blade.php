@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des ingénieurs')
+@section('title', 'ONFP - Liste des evaluateurs')
 @section('space-work')
 
     <section class="section register">
@@ -39,47 +39,48 @@
                     <div class="card-body">
                         {{-- @can('role-create') --}}
                         <div class="pt-1">
-                            {{-- <a href="{{ route('ingenieurs.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            {{-- <a href="{{ route('evaluateurs.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
 
                             <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddingenieurModal">
+                                data-bs-target="#AddevaluateurModal">
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
                             </button>
                         </div>
                         {{-- @endcan --}}
-                        <h5 class="card-title">Ingénieurs</h5>
+                        <h5 class="card-title">Evaluateurs</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle justify-content-center" id="table-ingenieurs">
+                        <table class="table datatables align-middle justify-content-center" id="table-evaluateurs">
                             <thead>
                                 <tr>
                                     {{-- <th class="text-center" scope="col">N°</th>
                                     <th>Matricule</th> --}}
                                     <th>Name</th>
-                                    <th>Initiale</th>
                                     <th>Fonction</th>
                                     {{-- <th>Spécialité</th> --}}
                                     <th>Email</th>
                                     <th>Téléphone</th>
+                                    <th>Adresse</th>
                                     <th>Formations</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($ingenieurs as $ingenieur)
+                                @foreach ($evaluateurs as $evaluateur)
                                     <tr>
                                         {{-- <td style="text-align: center;">{{ $i++ }}</td>
-                                        <td>{{ $ingenieur->matricule }}</td> --}}
-                                        <td>{{ $ingenieur->name }}</td>
-                                        <td>{{ $ingenieur->initiale }}</td>
-                                        <td>{{ $ingenieur->fonction }}</td>
-                                        {{-- <td>{{ $ingenieur->specialite }}</td> --}}
-                                        <td><a href="mailto:{{ $ingenieur->email }}">{{ $ingenieur->email }}</a></td>
-                                        <td><a href="tel:+221{{ $ingenieur->telephone }}">{{ $ingenieur->telephone }}</a></td>
+                                        <td>{{ $evaluateur->matricule }}</td> --}}
+                                        <td>{{ $evaluateur->name }}</td>
+                                        <td>{{ $evaluateur->fonction }}</td>
+                                        {{-- <td>{{ $evaluateur->specialite }}</td> --}}
+                                        <td><a href="mailto:{{ $evaluateur->email }}">{{ $evaluateur->email }}</a></td>
+                                        <td><a href="tel:+221{{ $evaluateur->telephone }}">{{ $evaluateur->telephone }}</a>
+                                        </td>
+                                        <td>{{ $evaluateur->adresse }}</td>
                                         <td style="text-align: center;">
-                                            @foreach ($ingenieur->formations as $formation)
+                                            @foreach ($evaluateur->formations as $formation)
                                                 @if ($loop->last)
                                                     <a class="text-primary fw-bold"
                                                         href="#">{!! $loop->count ?? '0' !!}</a>
@@ -89,7 +90,7 @@
 
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('ingenieurs.show', $ingenieur->id) }}"
+                                                    href="{{ route('evaluateurs.show', $evaluateur->id) }}"
                                                     class="btn btn-warning btn-sm mx-1" title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
                                                 <div class="filter">
@@ -99,12 +100,12 @@
                                                         <li>
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
+                                                                data-bs-target="#EditevaluateurModal{{ $evaluateur->id }}">
                                                                 <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ url('ingenieurs', $ingenieur->id) }}"
+                                                            <form action="{{ url('evaluateurs', $evaluateur->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -127,51 +128,29 @@
 
             </div>
         </div>
-        <!-- Add ingenieur -->
-        <div class="modal fade" id="AddingenieurModal" tabindex="-1">
-            <div class="modal-dialog">
+        <!-- Add evaluateur -->
+        <div class="modal fade" id="AddevaluateurModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    {{-- <form method="POST" action="{{ route('addingenieur') }}">
+                    {{-- <form method="POST" action="{{ route('addevaluateur') }}">
                         @csrf --}}
-                    <form method="post" action="{{ url('ingenieurs') }}" enctype="multipart/form-data" class="row g-3">
+                    <form method="post" action="{{ url('evaluateurs') }}" enctype="multipart/form-data" class="row g-3">
                         @csrf
                         <div class="modal-header">
                             <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter un ingénieur</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            {{-- <div class="form-floating mb-3">
-                                <input type="text" name="matricule" value="{{ old('matricule') }}"
-                                    class="form-control form-control-sm @error('matricule') is-invalid @enderror"
-                                    id="matricule" placeholder="Matricule" autofocus>
-                                @error('matricule')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Matricule</label>
-                            </div> --}}
                             <div class="form-floating mb-3">
                                 <input type="text" name="name" value="{{ old('name') }}"
                                     class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                    placeholder="Ingénieur" autofocus>
+                                    placeholder="Nom évaluateur" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                <label for="floatingInput">Ingénieur<span class="text-danger mx-1">*</span></label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" name="initiale" value="{{ old('initiale') }}"
-                                    class="form-control form-control-sm @error('initiale') is-invalid @enderror"
-                                    id="initiale" placeholder="initiale">
-                                @error('initiale')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Initiale<span class="text-danger mx-1">*</span></label>
+                                <label for="floatingInput">Evaluateur<span class="text-danger mx-1">*</span></label>
                             </div>
                             {{-- <div class="form-floating mb-3">
                                 <input type="text" name="specialite" value="{{ old('specialite') }}"
@@ -217,6 +196,18 @@
                                 @enderror
                                 <label for="floatingInput">Telephone<span class="text-danger mx-1">*</span></label>
                             </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" name="adresse" value="{{ old('adresse') }}"
+                                    class="form-control form-control-sm @error('adresse') is-invalid @enderror"
+                                    id="adresse" placeholder="adresse">
+                                @error('adresse')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                <label for="floatingInput">Adresse<span class="text-danger mx-1">*</span></label>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -227,39 +218,27 @@
                 </div>
             </div>
         </div>
-        <!-- End Add ingenieur-->
+        <!-- End Add evaluateur-->
 
-        <!-- Edit ingenieur -->
-        @foreach ($ingenieurs as $ingenieur)
-            <div class="modal fade" id="EditingenieurModal{{ $ingenieur->id }}" tabindex="-1" role="dialog"
-                aria-labelledby="EditingenieurModalLabel{{ $ingenieur->id }}" aria-hidden="true">
-                <div class="modal-dialog">
+        <!-- Edit evaluateur -->
+        @foreach ($evaluateurs as $evaluateur)
+            <div class="modal fade" id="EditevaluateurModal{{ $evaluateur->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditevaluateurModalLabel{{ $evaluateur->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('ingenieurs.update', $ingenieur->id) }}"
+                        <form method="post" action="{{ route('evaluateurs.update', $evaluateur->id) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="modal-header" id="EditingenieurModalLabel{{ $ingenieur->id }}">
-                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier ingénieur</h5>
+                            <div class="modal-header" id="EditevaluateurModalLabel{{ $evaluateur->id }}">
+                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier évaluateur</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <input type="hidden" name="id" value="{{ $ingenieur->id }}">
+                            <input type="hidden" name="id" value="{{ $evaluateur->id }}">
                             <div class="modal-body">
-                                {{-- <div class="form-floating mb-3">
-                                    <input type="text" name="matricule"
-                                        value="{{ $ingenieur->matricule ?? old('matricule') }}"
-                                        class="form-control form-control-sm @error('matricule') is-invalid @enderror"
-                                        id="matricule" placeholder="Matricule" autofocus>
-                                    @error('matricule')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Matricule</label>
-                                </div> --}}
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="name" value="{{ $ingenieur->name ?? old('name') }}"
+                                    <input type="text" name="name" value="{{ $evaluateur->name ?? old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         id="name" placeholder="Ingénieur" autofocus>
                                     @error('name')
@@ -270,32 +249,8 @@
                                     <label for="floatingInput">Ingénieur<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="initiale"
-                                        value="{{ $ingenieur->initiale ?? old('initiale') }}"
-                                        class="form-control form-control-sm @error('initiale') is-invalid @enderror"
-                                        id="initiale" placeholder="initiale">
-                                    @error('initiale')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Initiale<span class="text-danger mx-1">*</span></label>
-                                </div>
-                                {{-- <div class="form-floating mb-3">
-                                    <input type="text" name="specialite"
-                                        value="{{ $ingenieur->specialite ?? old('specialite') }}"
-                                        class="form-control form-control-sm @error('specialite') is-invalid @enderror"
-                                        id="specialite" placeholder="specialite">
-                                    @error('specialite')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Spécialité</label>
-                                </div> --}}
-                                <div class="form-floating mb-3">
                                     <input type="text" name="fonction"
-                                        value="{{ $ingenieur->fonction ?? old('fonction') }}"
+                                        value="{{ $evaluateur->fonction ?? old('fonction') }}"
                                         class="form-control form-control-sm @error('fonction') is-invalid @enderror"
                                         id="fonction" placeholder="fonction">
                                     @error('specialite')
@@ -306,7 +261,8 @@
                                     <label for="floatingInput">Fonction<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="email" value="{{ $ingenieur->email ?? old('email') }}"
+                                    <input type="text" name="email"
+                                        value="{{ $evaluateur->email ?? old('email') }}"
                                         class="form-control form-control-sm @error('email') is-invalid @enderror"
                                         id="email" placeholder="email">
                                     @error('email')
@@ -318,7 +274,7 @@
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="number" min="0" name="telephone"
-                                        value="{{ $ingenieur->telephone ?? old('telephone') }}"
+                                        value="{{ $evaluateur->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="7xxxxxxxx">
                                     @error('telephone')
@@ -327,6 +283,18 @@
                                         </span>
                                     @enderror
                                     <label for="floatingInput">Telephone<span class="text-danger mx-1">*</span></label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="adresse" value="{{  $evaluateur->adresse ?? old('adresse') }}"
+                                        class="form-control form-control-sm @error('adresse') is-invalid @enderror"
+                                        id="adresse" placeholder="adresse">
+                                    @error('adresse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Adresse<span class="text-danger mx-1">*</span></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -339,13 +307,13 @@
                 </div>
             </div>
         @endforeach
-        <!-- End Edit ingenieur-->
+        <!-- End Edit evaluateur-->
     </section>
 
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-ingenieurs', {
+        new DataTable('#table-evaluateurs', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

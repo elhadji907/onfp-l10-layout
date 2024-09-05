@@ -59,4 +59,8 @@ class Evaluateur extends Model
 	{
 		return $this->hasMany(Evaluation::class, 'evaluateurs_id');
 	}
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'evaluateurs_id');
+	}
 }

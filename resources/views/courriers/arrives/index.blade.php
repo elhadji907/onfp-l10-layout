@@ -99,7 +99,7 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-                @if ($message = Session::get('status'))
+                {{-- @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
                         <strong>{{ $message }}</strong>
@@ -112,7 +112,7 @@
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                @endif --}}
                 <div class="card">
                     <div class="card-body">
                         {{-- <div class="pt-1">
@@ -163,25 +163,23 @@
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('arrives.edit', $arrive->id) }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i></a>
+                                                                class="mx-1">Modifier</a>
                                                         </li>
                                                         <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
-                                                                class="mx-1"><i class="bi bi-recycle"></i></a>
+                                                                class="mx-1">Imputer</a>
                                                         </li>
-                                                        <li><a class="dropdown-item btn btn-sm"
+                                                       {{--  <li><a class="dropdown-item btn btn-sm"
                                                                 href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class="mx-1"
-                                                                target="_blank"><i
-                                                                    class="bi bi-file-earmark-arrow-down"></i></a>
-                                                        </li>
+                                                                target="_blank">Imprimer</a>
+                                                        </li> --}}
                                                         <li>
                                                             <form action="{{ route('arrives.destroy', $arrive->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit"
-                                                                    class="dropdown-item show_confirm"><i
-                                                                        class="bi bi-trash"></i></button>
+                                                                    class="dropdown-item show_confirm">Supprimer</button>
                                                             </form>
                                                         </li>
                                                     </ul>

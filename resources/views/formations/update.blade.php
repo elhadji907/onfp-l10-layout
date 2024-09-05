@@ -197,7 +197,7 @@
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="titre" class="form-label">Titre (convention)</label>
-                                    <input type="text" name="titre" value="{{ $formation->titre ?? old('titre') }}"
+                                    <input type="text" name="titre" value="{{ $formation?->titre ?? old('titre') }}"
                                         class="form-control form-control-sm @error('titre') is-invalid @enderror"
                                         id="titre" placeholder="Ex: 4ème catégorie de la convention collective ...">
                                     @error('titre')
@@ -206,7 +206,18 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="numero_convention" class="form-label">Numéro convention</label>
+                                    <input type="text" name="numero_convention" value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
+                                        class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
+                                        id="numero_convention"
+                                        placeholder="Ex: 000743/ONFP/DG/DIOF/mb du 14 juillet 2023">
+                                    @error('numero_convention')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                                 {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="effectif_prevu" class="form-label">Effectif prévu</label>
                                     <input type="number" name="effectif_prevu" min="0" max="25"
@@ -306,7 +317,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                               {{--  <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="programme" class="form-label">Programme</label>
                                     <select name="programme"
                                         class="form-select  @error('programme') is-invalid @enderror" aria-label="Select"
@@ -325,7 +336,7 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="choixoperateur" class="form-label">Choix opérateurs</label>

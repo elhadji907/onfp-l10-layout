@@ -401,40 +401,64 @@
                 </ul>
             </li>
 
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('formations') }}">
-                    <i class="bi bi-folder-symlink-fill"></i>
-                    <span>Gestion formations</span>
+                <a class="nav-link collapsed" data-bs-target="#formations-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-folder-symlink-fill"></i><span>{{ __('Gestion formations') }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
-            </li><!-- End Formations Nav -->
+                <ul id="formations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('formations') }}">
+                            <span>Formations</span>
+                        </a>
+                    </li><!-- End Formations Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
+                            <span>Ingénieurs</span>
+                        </a>
+                    </li><!-- End Formations Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('evaluateurs') }}">
+                            <span>Evaluateurs</span>
+                        </a>
+                    </li><!-- End Formations Nav -->
+
+                </ul>
+            </li>
         @endif
 
         @if (auth()->user()->hasRole('super-admin'))
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('modules') }}">
-                    <i class="bi bi-layers-half"></i>
-                    <span>Gestion modules</span>
+                <a class="nav-link collapsed" data-bs-target="#modules-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-layers-half"></i><span>{{ __('Gestion modules') }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
-            </li><!-- End utilisateurs Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('domaines') }}">
-                    <i class="bi bi-layers-half"></i>
-                    <span>Gestion domaines</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('secteurs') }}">
-                    <i class="bi bi-layers-half"></i>
-                    <span>Gestion secteurs</span>
-                </a>
-            </li><!-- End utilisateurs Nav -->
+                <ul id="modules-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Gestion ingénieurs</span>
-                </a>
-            </li><!-- End Formations Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('modules') }}">
+                            <span>Modules</span>
+                        </a>
+                    </li><!-- End utilisateurs Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('domaines') }}">
+                            <span>Domaines</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('secteurs') }}">
+                            <span>Secteurs</span>
+                        </a>
+                    </li><!-- End utilisateurs Nav -->
+                </ul>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('projets') }}">

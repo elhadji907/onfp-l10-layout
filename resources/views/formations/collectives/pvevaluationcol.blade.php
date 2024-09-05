@@ -143,14 +143,16 @@
 
 <body>
     <h6 valign="top" style="text-align: center;">
-        <b>REPUBLIQUE DU SENEGAL<br></b>
+      {{--   <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
             MINISTERE DE LA FORMATION PROFESSIONNELLE<br>
             ********<br>
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
                 style="width: 100%; max-width: 300px" />
-        </b>
+        </b> --}}
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete_lettre_mission.png'))) }}"
+        style="width: 100%; max-width: 300px" />
     </h6>
     <div class="invoice-box">
         <table class="table table-responsive">
@@ -168,8 +170,7 @@
                             {{ ' au ' . $formation?->date_fin?->format('d/m/Y') }}
                         @endisset
                     </td>
-                    <td colspan="5"><b>{{ __('Intitulé formation : ') }}</b>
-                        {{ $formation?->collectivemodule?->module }}
+                    <td colspan="5"><b>{{ __('Intitulé formation : ') }}</b> {{ $formation?->module?->name }}
                     </td>
                 </tr>
                 <tr class="heading">
@@ -189,20 +190,20 @@
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="7">
-                        <b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name . '(' . $formation?->ingenieur?->sigle . ')' }}
-                    </td>
+                   {{--  <td colspan="7">
+                        <b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name . '(' . $formation?->ingenieur?->initiale . ')' }}
+                    </td> --}}
+                    <td rowspan="2" class="item" style="text-align: center;"><b>N° CIN</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Civilité</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Prénom</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>NOM</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Date naissance</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Lieu de naissance</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Téléphone</b></td>
                     <td colspan="3" style="text-align: center;"><b>{{ __('DECISION DU JURY') }}</b>
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">
-                    <td><b>N° CIN</b></td>
-                    <td><b>Civilité</b></td>
-                    <td><b>Prénom</b></td>
-                    <td><b>NOM</b></td>
-                    <td><b>Date naissance</b></td>
-                    <td><b>Lieu de naissance</b></td>
-                    <td><b>Téléphone</b></td>
                     <td><b>Note</b></td>
                     <td><b>Niveau de maitrise</b></td>
                     <td><b>Observations</b></td>
@@ -226,8 +227,14 @@
             </tbody>
         </table>
         <h4 valign="top">
-            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : <span style="float: right; font-style: italic">{{  $formation?->departement?->nom. ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span><br><br>
+            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : @isset($formation?->date_pv)
+                <span
+                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
+            @endisset
+            <br><br>
             <?php $i = 1; ?>
+            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br><br>
+            {{ $formation?->evaluateur_onfp . ', évaluateur ONFP' }}<br><br>
             @isset($membres_jury)
                 @foreach ($membres_jury as $item)
                     {{ $item }} <br><br>

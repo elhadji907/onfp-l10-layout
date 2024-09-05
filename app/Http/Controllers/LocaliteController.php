@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departement;
+use App\Models\Region;
 use Illuminate\Http\Request;
 
 class LocaliteController extends Controller
@@ -14,7 +15,7 @@ class LocaliteController extends Controller
     }
     public function show($id)
     {
-        $localite = Departement::find($id);
+        $localite = Region::find($id);
         return view("localites.show", compact("localite"));
     }
 }

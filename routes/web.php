@@ -18,6 +18,7 @@ use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\EvaluateurController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\IndemniteController;
@@ -264,6 +265,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/addOperateur', [OperateurController::class, 'addOperateur'])->name('addOperateur');
     
     Route::put('/Validatelistecollective/{id}', [ListecollectiveController::class, 'Validatelistecollective'])->name('Validatelistecollective');
+    
+    Route::get('regionsmodule/{idlocalite}', [RegionController::class, 'regionsmodule'])->name('regionsmodule');
+    Route::get('regionstatut/{idlocalite}/{statut}', [RegionController::class, 'regionstatut'])->name('regionstatut');
+
+    Route::get('directionAgent/{iddirection}', [DirectionController::class, 'adddirectionAgent']);
+    Route::put('directionAgent/{iddirection}', [DirectionController::class, 'givedirectionAgent']);
+
+    Route::get('directionChef/{iddirection}', [DirectionController::class, 'adddirectionChef']);
+    Route::put('directionChef/{iddirection}', [DirectionController::class, 'givedirectionChef']);
+
+    Route::post('/retirerEmploye', [DirectionController::class, 'retirerEmploye'])->name('retirerEmploye');
+
+    Route::post('lettreEvaluation', [FormationController::class, 'lettreEvaluation'])->name('lettreEvaluation');
+    Route::post('abeEvaluation', [FormationController::class, 'abeEvaluation'])->name('abeEvaluation');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
@@ -316,6 +331,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/operateurformateurs', OperateurformateurController::class);
     Route::resource('/operateurlocalites', OperateurlocaliteController::class);
     Route::resource('/commissionagrements', CommissionagrementController::class);
+    Route::resource('/evaluateurs', EvaluateurController::class);
 });
 
 
