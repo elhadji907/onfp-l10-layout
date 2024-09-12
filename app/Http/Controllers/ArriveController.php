@@ -142,7 +142,7 @@ class ArriveController extends Controller
 
             return Redirect::route('arrives.index')->with('status', $status); */
 
-            Alert::success('Félicitations !', 'courrier imputé');
+            Alert::success('Félicitations !', 'Courrier imputé avec succès');
 
             return redirect()->back();
 
@@ -305,7 +305,7 @@ class ArriveController extends Controller
 
         $numero = $courrier->numero;
 
-        $title = ' Coupon d\'envoi n° ' . $numero;
+        $title = ' Coupon d\'envoi ourrier arrivé n° ' . $numero;
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();

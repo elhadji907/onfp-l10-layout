@@ -53,6 +53,8 @@
                                 <tr>
                                     <th>Modules</th>
                                     <th>Domaines</th>
+                                    <th>Secteurs</th>
+                                    <th class="text-center" scope="col">Formations</th>
                                     <th class="text-center" scope="col">Effectif</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
@@ -63,6 +65,15 @@
                                     <tr>
                                         <td>{{ $module->name }}</td>
                                         <td>{{ $module?->domaine?->name }}</td>
+                                        <td>{{ $module?->domaine?->secteur?->name }}</td>
+                                        <td style="text-align: center;">
+                                            @foreach ($module->formations as $formation)
+                                                @if ($loop->last)
+                                                    <a href="{{ url('formations/' . $formation->id) }}"><span
+                                                            class="badge bg-info">{{ $loop->count }}</span></a>
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td style="text-align: center;">
                                             @foreach ($module->individuelles as $individuelle)
                                                 @if ($loop->last)
@@ -303,7 +314,7 @@
                 }
             },
             "order": [
-                [2, 'desc']
+                [4, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

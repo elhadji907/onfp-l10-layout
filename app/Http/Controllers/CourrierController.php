@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Arrive;
 use App\Models\Courrier;
+use App\Models\Depart;
+use App\Models\Interne;
 use App\Models\User;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class CourrierController extends Controller
 {
@@ -18,6 +23,33 @@ class CourrierController extends Controller
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */
     }
+
+    public function index()
+    {
+        $total_arrive = Arrive::count();
+        $total_depart = Depart::count();
+        $total_interne = Interne::count();
+
+        $total_courrier = $total_arrive + $total_depart + $total_interne;
+
+        if ($total_courrier != 0) {
+            $pourcentage_arrive = ($total_arrive / $total_courrier) * 100;
+            $pourcentage_depart = ($total_depart / $total_courrier) * 100;
+            $pourcentage_interne = ($total_interne / $total_courrier) * 100;
+        } else {
+            $pourcentage_arrive = 0;
+            $pourcentage_depart = 0;
+            $pourcentage_interne = 0;
+        }
+
+        $arrives = DB::table('arrives')->where('deleted_at', null)->count();
+        $departs = DB::table('departs')->where('deleted_at', null)->count();
+        $internes = DB::table('internes')->where('deleted_at', null)->count();
+
+        $roles = Role::orderBy('created_at', 'desc')->get();
+        return view("courriers.index", compact("total_courrier", 'roles', 'total_arrive', 'total_depart', 'total_interne', 'pourcentage_arrive', 'pourcentage_depart', 'pourcentage_interne', 'arrives', 'departs', 'internes'));
+    }
+
     public function showFromNotification(Courrier $courrier, DatabaseNotification $notification)
     {
 
@@ -92,5 +124,4 @@ class CourrierController extends Controller
     {
         return view("courriers.notifications");
     }
-    
 }

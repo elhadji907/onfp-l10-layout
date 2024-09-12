@@ -78,8 +78,8 @@ class IngenieurController extends Controller
             "name"          => ['required', 'string', 'max:25', Rule::unique(Ingenieur::class)->ignore($id)->whereNull('deleted_at')],
             "initiale"      => ['required', 'string', 'max:25', Rule::unique(Ingenieur::class)->ignore($id)->whereNull('deleted_at')],
             "fonction"      => ['required', 'string', 'max:250', Rule::unique(Ingenieur::class)->ignore($id)->whereNull('deleted_at')],
-            "email"         => ['required', 'string', 'max:25', Rule::unique(Ingenieur::class)->ignore($id)->whereNull('deleted_at')],
-            "telephone"     => ['required', 'string', 'max:25', Rule::unique(Ingenieur::class)->ignore($id)->whereNull('deleted_at')],
+            "email"         => ['required', 'string', 'max:250', Rule::unique(Ingenieur::class)->ignore($id)->whereNull('deleted_at')],
+            "telephone"     => ['required', 'string', 'max:250', Rule::unique(Ingenieur::class)->ignore($id)->whereNull('deleted_at')],
         ]);
 
         $ingenieur->update([

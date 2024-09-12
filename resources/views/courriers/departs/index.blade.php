@@ -12,6 +12,89 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+               {{--  @if ($message = Session::get('status'))
+                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if ($message = Session::get('danger'))
+                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                @endif --}}
+                <div class="row">
+                    <!-- Sales Card -->
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Départs <span>| Aujourd'hui</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-calendar-check-fill"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ $count_today ?? '0' }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">Aujourd'hui</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div>
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Départs <span>| tous</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-file-earmark-text"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                <span class="text-primary">{{ count($departs) ?? '0' }}</span>
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">Tous</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -31,12 +114,20 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
+                        {{-- <div class="pt-1">
                             <a href="{{ route('departs.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                        </div>
-                        <h5 class="card-title">Liste des courriers départs</h5>
+                        </div> --}}
+                        
+                        <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('departs.index') }}"
+                            class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                        <p> | Liste des courriers départs</p>
+                    </span>
+                        <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
+                            data-bs-target="#addCourrierDepart">
+                            <i class="bi bi-plus" title="Ajouter un nouveau courrier"></i>
+                        </button>
                         {{-- <p>Le tableau des courriers départs</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-departs">
@@ -78,11 +169,11 @@
                                                                 href="{{ url('depart-imputations', ['id' => $depart->id]) }}"
                                                                 class="mx-1"><i class="bi bi-recycle"></i> Imputer</a>
                                                         </li>
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                        {{-- <li><a class="dropdown-item btn btn-sm mx-1"
                                                                 href="{!! url('coupon-depart', ['$id' => $depart->id]) !!}" class="mx-1"
                                                                 target="_blank"><i
                                                                     class="bi bi-file-earmark-arrow-down"></i> Coupon</a>
-                                                        </li>
+                                                        </li> --}}
                                                         <li>
                                                             <form action="{{ route('departs.destroy', $depart->id) }}"
                                                                 method="post">
@@ -106,6 +197,191 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+        <div class="modal fade" id="addCourrierDepart" tabindex="-1" role="dialog"
+            aria-labelledby="addCourrierDepartLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                   {{--  <div class="pt-0 pb-0">
+                        <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
+                        <p class="text-center small">enregister un nouveau courrier départ</p>
+                    </div> --}}
+                    
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter un nouveau courrier départ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                    <form method="post" action="{{ route('departs.store') }}" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+
+                        {{--  <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
+                                demande
+                                individuelle</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div> --}}
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="date_depart" class="form-label">Date départ<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_depart" value="{{ old('date_depart') }}"
+                                        class="form-control form-control-sm @error('date_depart') is-invalid @enderror"
+                                        id="date_depart" placeholder="Date départ">
+                                    @error('date_depart')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="numero_depart" class="form-label">Numéro départ<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="number" min="0" name="numero_depart"
+                                            value="{{ $numCourrier ?? old('numero_depart') }}"
+                                            class="form-control form-control-sm @error('numero_depart') is-invalid @enderror"
+                                            id="numero_depart" placeholder="Numéro départ">
+                                        @error('numero_depart')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="date_corres" class="form-label">Date correspondance<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_corres"
+                                        value="{{ old('date_corres') }}"
+                                        class="form-control form-control-sm @error('date_corres') is-invalid @enderror"
+                                        id="date_corres" placeholder="nom">
+                                    @error('date_corres')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="number" min="0" name="numero_correspondance"
+                                            value="{{ old('numero_correspondance') }}"
+                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
+                                            id="numero_correspondance" placeholder="Numéro de correspondance">
+                                        @error('numero_correspondance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="annee" class="form-label">Année<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="number" min="2024" name="annee" value="{{ $anneeEnCours ?? old('annee') }}"
+                                        class="form-control form-control-sm @error('annee') is-invalid @enderror"
+                                        id="annee" placeholder="Année">
+                                    @error('annee')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-9 mb-0">
+                                    <label for="destinataire" class="form-label">Destinataire<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="destinataire" value="{{ old('destinataire') }}"
+                                        class="form-control form-control-sm @error('destinataire') is-invalid @enderror"
+                                        id="destinataire" placeholder="Destinataire">
+                                    @error('destinataire')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 mb-0">
+                                    <label for="objet" class="form-label">Objet<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="objet" value="{{ old('objet') }}"
+                                        class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                        id="objet" placeholder="Objet">
+                                    @error('objet')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 mb-0">
+                                    <label for="service_expediteur" class="form-label">Service expéditeur</label>
+                                    <input type="text" name="service_expediteur" value="{{ old('service_expediteur') }}"
+                                        class="form-control form-control-sm @error('service_expediteur') is-invalid @enderror"
+                                        id="service_expediteur" placeholder="Service expéditeur">
+                                    @error('service_expediteur')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="numero_reponse" class="form-label">Numéro réponse</label>
+                                    <input type="number" min="0" name="numero_reponse"
+                                        value="{{ old('numero_reponse') }}"
+                                        class="form-control form-control-sm @error('numero_reponse') is-invalid @enderror"
+                                        id="numero_reponse" placeholder="Numéro réponse">
+                                    @error('numero_reponse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <label for="date_reponse" class="form-label">Date réponse</label>
+                                    <input type="date" min="0" name="date_reponse"
+                                        value="{{ old('date_reponse') }}"
+                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror"
+                                        id="date_reponse" placeholder="Numéro réponse">
+                                    @error('date_reponse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                    <label for="observation" class="form-label">Observations</label>
+                                    <textarea name="observation" id="observation" rows="1"
+                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
+                                    @error('observation')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

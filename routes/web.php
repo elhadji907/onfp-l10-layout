@@ -186,6 +186,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
 
     Route::post('couponArrive', [ArriveController::class, 'couponArrive'])->name('couponArrive');
+    Route::post('couponDepart', [DepartController::class, 'couponDepart'])->name('couponDepart');
     Route::get('file-decision/{id}', [EmployeController::class, 'fileDecision'])->name('file-decision');
 
     Route::post('pvEvaluation', [FormationController::class, 'pvEvaluation'])->name('pvEvaluation');

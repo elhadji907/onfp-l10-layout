@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <title>{{ $title }}</title>
+<title>{{ $title }}</title>
 
 <head>
 
@@ -98,8 +98,8 @@
                             @endif
                             <b> {{ __("Date d'arrivée : ") }} </b>
                             {{ $courrier->date_recep?->format('d/m/Y') }} <br />
-                            <b> {{ __('N° du courrier : ') }} </b> <span
-                                style="color:red">{{ $arrive->numero }}</span> <br />
+                            <b> {{ __('N° du courrier : ') }} </b> <span style="color:red">{{ $depart?->numero }}</span>
+                            <br />
 
                         </p>
                     </td>
@@ -125,10 +125,13 @@
                 <tr>
                     <td colspan="4" align="left" valign="top">
                         <p>
-                            <b>{{ __('Expéditeur') }}</u></b> : {{ mb_strtoupper($courrier->expediteur) }}<br>
-                            <b>{{ __('Réf') }}</u></b> : {{ $courrier->reference }}&nbsp;&nbsp;&nbsp;&nbsp;
-                            <b>{{ __('du') }}</u></b> :
-                            {{ $courrier->date_recep?->format('d/m/Y') }}<br>
+                            <b>{{ __('Expéditeur') }}</u></b> : {{ mb_strtoupper($depart->courrier?->reference) }}<br>
+                            @isset($courrier->reference)
+                                <b>{{ __('Réf') }}</u></b> : {{ $courrier->numero }}&nbsp;&nbsp;&nbsp;&nbsp;
+                                <b>{{ __('du') }}</u></b> :
+                                {{ $depart->courrier->date_cores?->format('d/m/Y') }}
+                            @endisset
+                            <br>
                             <b>{{ __('Objet') }}</u></b> : {{ ucfirst($courrier->objet) }}<br>
                             {{-- @if ($courrier->directions != '[]')
                                 <span class="card-category"><u>Imputation </u></b>:
@@ -146,7 +149,7 @@
                                         <td>
 
                                             <input type="checkbox" name="directions[]" value="{{ $direction }}"
-                                                {{ in_array($direction, $arriveDirections) ? 'checked' : '' }}
+                                                {{ in_array($direction, $departDirections) ? 'checked' : '' }}
                                                 class="form-check-input @error('directions') is-invalid @enderror">
                                             {{ $direction }}
                                             @error('directions')
@@ -165,7 +168,7 @@
                                         <td>
                                             {!! $direction ?? 'Aucune' !!}
                                             <span style="float:right;">
-                                                {{ in_array($direction, $arriveDirections) ? "X" : "" }}</span>
+                                                {{ in_array($direction, $departDirections) ? 'X' : '' }}</span>
                                         </td>
                                         @if ($i % 5 == 0)
                                 </tr>
@@ -276,7 +279,7 @@
                 </tr>
             </tbody>
         </table> --}}
-       {{--  <div
+        {{--  <div
             style="position: fixed;
             bottom: -10px;
             left: 0px;

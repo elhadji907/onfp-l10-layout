@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Arrive;
 use App\Models\Depart;
+use App\Models\Departement;
 use App\Models\Individuelle;
+use App\Models\Interne;
+use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -24,6 +28,12 @@ class UserController extends Controller
         // examples:
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin']);
+        $this->middleware("permission:role-view", ["only"=> ["index"]]);
+        $this->middleware("permission:role-create", ["only"=> ["create","store"]]);
+        $this->middleware("permission:role-update", ["only"=> ["update", "edit"]]);
+        $this->middleware("permission:role-show", ["only"=> ["show"]]);
+        $this->middleware("permission:role-delete", ["only"=> ["destroy"]]);
+        $this->middleware("permission:give-role-permissions", ["only"=> ["givePermissionsToRole"]]);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */
@@ -32,11 +42,82 @@ class UserController extends Controller
     public function homePage()
     {
         $total_user = User::count();
+        $email_verified_at = DB::table(table: 'users')->where('email_verified_at', '!=', null)->count();
         $total_arrive = Arrive::count();
         $total_depart = Depart::count();
+        $total_interne = Interne::count();
+
+        $total_courrier = $total_arrive + $total_depart + $total_interne;
+
+        if ($total_courrier != 0) {
+            $pourcentage_arrive = ($total_arrive / $total_courrier) * 100;
+            $pourcentage_depart = ($total_depart / $total_courrier) * 100;
+            $pourcentage_interne = ($total_interne / $total_courrier) * 100;
+        } else {
+            $pourcentage_arrive = 0;
+            $pourcentage_depart = 0;
+            $pourcentage_interne = 0;
+        }
+
         $total_individuelle = Individuelle::count();
         $roles = Role::orderBy('created_at', 'desc')->get();
-        return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle'));
+        /* return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle')); */
+
+
+
+        /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
+        $individuelles = Individuelle::get();
+        $departements = Departement::orderBy("created_at", "desc")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+
+        $today = date('Y-m-d');
+        $annee = date('Y');
+        $annee_lettre = 'Diagramme à barres, année: ' . date('Y');
+        $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count();
+
+        $janvier = DB::table('individuelles')->whereMonth("created_at", "01")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $fevrier = DB::table('individuelles')->whereMonth("created_at", "02")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $mars = DB::table('individuelles')->whereMonth("created_at", "03")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $avril = DB::table('individuelles')->whereMonth("created_at", "04")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $mai = DB::table('individuelles')->whereMonth("created_at", "05")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $juin = DB::table('individuelles')->whereMonth("created_at", "06")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $juillet = DB::table('individuelles')->whereMonth("created_at", "07")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $aout = DB::table('individuelles')->whereMonth("created_at", "08")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $septembre = DB::table('individuelles')->whereMonth("created_at", "09")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $octobre = DB::table('individuelles')->whereMonth("created_at", "10")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $novembre = DB::table('individuelles')->whereMonth("created_at", "11")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $decembre = DB::table('individuelles')->whereMonth("created_at", "12")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+
+        $masculin = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('users.civilite', "M.")
+            ->count();
+
+        $feminin = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('users.civilite', "Mme")
+            ->count();
+
+        $attente = Individuelle::where('statut', 'attente')
+            ->count();
+
+        $nouvelle = Individuelle::where('statut', 'nouvelle')
+            ->count();
+
+        $retenue = Individuelle::where('statut', 'retenue')
+            ->count();
+
+        $terminer = Individuelle::where('statut', 'terminer')
+            ->count();
+
+        $rejeter = Individuelle::where('statut', 'rejeter')
+            ->count();
+
+        $pourcentage_hommes = ($masculin / $individuelles->count()) * 100;
+        $pourcentage_femmes = ($feminin / $individuelles->count()) * 100;
+        $email_verified_at = ($email_verified_at / $total_user) * 100;
+
+        return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle', "pourcentage_femmes", "pourcentage_hommes", "rejeter", "terminer", "retenue", "nouvelle", "attente", "individuelles", "modules", "departements", "count_today", 'janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre', 'annee', 'annee_lettre', 'masculin', 'feminin', 'email_verified_at', 'total_interne', 'pourcentage_arrive', 'pourcentage_depart', 'pourcentage_interne'));
     }
 
     public function create()
@@ -211,8 +292,8 @@ class UserController extends Controller
         $user->syncRoles($request->roles);
 
         Alert::success('Effectuée ! ', 'Mise à jour effectuée');
-        
-       /*  $status = 'Mise à jour effectuée avec succès'; */
+
+        /*  $status = 'Mise à jour effectuée avec succès'; */
 
         /* return Redirect::route('user.index')->with('status', $status); */
         return Redirect::route('user.index');
@@ -235,7 +316,7 @@ class UserController extends Controller
             $user_create_name = $user_create->firstname . " " . $user_create->firstname;
             $user_update_name = $user_update->firstname . " " . $user_update->firstname;
         }
-        
+
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles->pluck('name', 'name')->all();
 
@@ -250,8 +331,8 @@ class UserController extends Controller
 
         /* $mesage = $user->firstname . ' ' . $user->name . ' a été supprimé(e)';
         return redirect()->back()->with("danger", $mesage); */
-        
-        Alert::success('Fait ! '.$user->firstname . ' ' . $user->name , 'a été(e) supprimé(e)');
+
+        Alert::success('Fait ! ' . $user->firstname . ' ' . $user->name, 'a été(e) supprimé(e)');
 
         return redirect()->back();
     }

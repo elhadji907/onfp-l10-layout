@@ -917,14 +917,14 @@ class FormationController extends Controller
     public function updateMembresJury(Request $request)
     {
         $request->validate([
-            'membres_jury'              => ['required', 'string'],
+            'membres_jury'              => ['nullable', 'string'],
             'evaluateur'                => ['required', 'string'],
             'nom_evaluateur_onfp'       => ['required', 'string'],
             'initiale_evaluateur_onfp'  => ['required', 'string'],
             'numero_convention'         => ['required', 'string'],
             'frais_evaluateur'          => ['required', 'string'],
             'type_certificat'           => ['required', 'string'],
-            'recommandations'           => ['required', 'string'],
+            'recommandations'           => ['nullable', 'string'],
             'date_pv'                   => ['required', 'date'],
         ]);
 

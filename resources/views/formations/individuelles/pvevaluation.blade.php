@@ -231,13 +231,13 @@
                 <span
                     style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
             @endisset
-            <br><br>
+            <br>
             <?php $i = 1; ?>
-            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br><br>
-            {{ $formation?->evaluateur_onfp . ', évaluateur ONFP' }}<br><br>
+            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br>
+            {{ $formation?->evaluateur_onfp . ', évaluateur ONFP' }}<br>
             @isset($membres_jury)
                 @foreach ($membres_jury as $item)
-                    {{ $item }} <br><br>
+                    {{ $item }} <br>
                     {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
                 @endforeach
             @endisset

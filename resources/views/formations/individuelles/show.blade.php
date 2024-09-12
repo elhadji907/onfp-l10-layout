@@ -507,7 +507,6 @@
                                     @endisset
                                 </div>
                             </div>
-
                             {{-- Détail Modules --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade module-overview pt-3" id="module-overview">
@@ -530,7 +529,7 @@
                                                 <i class="bi bi-plus" title="Ajouter module"></i> </a>
                                         </div>
                                     @endif
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    {{-- <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($operateur)
                                             <h1 class="card-title">
                                                 @if (isset($module))
@@ -546,11 +545,8 @@
                                                             <th>Type</th>
                                                             <th>Intitulé formation</th>
                                                             <th>Localité</th>
-                                                            {{-- <th>Modules</th> --}}
-                                                            {{-- <th>Niveau qualification</th> --}}
                                                             <th>Effectif</th>
                                                             <th>Statut</th>
-                                                            {{-- <th class="text-center">#</th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -563,8 +559,6 @@
                                                                 </td>
                                                                 <td>{{ $formation?->name }}</td>
                                                                 <td>{{ $formation->departement?->region?->nom }}</td>
-                                                                {{-- <td>{{ $formation->module?->name }}</td> --}}
-                                                                {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
                                                                 <td class="text-center">
                                                                     @foreach ($formation->individuelles as $individuelle)
                                                                         @if ($loop->last)
@@ -576,38 +570,6 @@
                                                                 <td><a href="#"><span
                                                                             class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
                                                                 </td>
-                                                                {{-- <td>
-                                                                    <span class="d-flex align-items-baseline"><a
-                                                                            href="{{ route('formations.show', $formation->id) }}"
-                                                                            class="btn btn-primary btn-sm"
-                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                        <div class="filter">
-                                                                            <a class="icon" href="#"
-                                                                                data-bs-toggle="dropdown"><i
-                                                                                    class="bi bi-three-dots"></i></a>
-                                                                            <ul
-                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                <li><a class="dropdown-item btn btn-sm"
-                                                                                        href="{{ route('formations.edit', $formation->id) }}"
-                                                                                        class="mx-1" title="Modifier"><i
-                                                                                            class="bi bi-pencil"></i>Modifier</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <form
-                                                                                        action="{{ route('formations.destroy', $formation->id) }}"
-                                                                                        method="post">
-                                                                                        @csrf
-                                                                                        @method('DELETE')
-                                                                                        <button type="submit"
-                                                                                            class="dropdown-item show_confirm"
-                                                                                            title="Supprimer"><i
-                                                                                                class="bi bi-trash"></i>Supprimer</button>
-                                                                                    </form>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </span>
-                                                                </td> --}}
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -615,7 +577,7 @@
                                                 </table>
                                             </div>
                                         @endisset
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
@@ -747,6 +709,7 @@
 
                                 </div>
                             </div>
+                            {{-- Evaluation --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade module-overview pt-3" id="evaluation-overview">
                                     @isset($module)
@@ -787,8 +750,8 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php $i = 1; ?>
-                                                            @foreach ($formation->individuelles as $individuelle)
+                                                            <?php $i = 1; ?>                                                            
+                                                        @foreach ($formation->individuelles as $individuelle)
                                                                 <tr>
                                                                     <td>{{ $i++ }}</td>
                                                                     {{-- <td>{{ $individuelle?->numero }}</td> --}}

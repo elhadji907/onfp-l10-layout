@@ -616,10 +616,21 @@
                                                 <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                                                     {{ __('Votre adresse e-mail n\'est pas vérifiée.') }}
 
-                                                    <button form="send-verification"
+                                                    {{--  <button form="send-verification"
                                                         class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                                                         {{ __('Cliquez ici pour renvoyer l\'e-mail de vérification.') }}
-                                                    </button>
+                                                    </button> --}}
+                                                <form method="POST" action="{{ route('verification.send') }}">
+                                                    @csrf
+
+                                                    <div>
+                                                        <button type="submit"
+                                                            class="btn btn-outline-primary">{{ __('Cliquez ici pour renvoyer l\'e-mail de vérification.') }}</button>
+                                                        {{--  <x-primary-button>
+                                                                        {{ __('Renvoyer l\'e-mail de vérification') }}
+                                                                    </x-primary-button> --}}
+                                                    </div>
+                                                </form>
                                                 </p>
 
                                                 @if (session('status') === 'verification-link-sent')
@@ -867,15 +878,15 @@
                                                         @foreach ($courrier->employees->unique('id') as $employee)
                                                             {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
                                                         @endforeach --}}
-                                                        {{-- <a href="{!! url('courrierimputations', ['$type' => $courrier->type, '$id' => $courrier->id]) !!}" class='btn btn-warning btn-sm'
+    {{-- <a href="{!! url('courrierimputations', ['$type' => $courrier->type, '$id' => $courrier->id]) !!}" class='btn btn-warning btn-sm'
                                                             title="changer agent suivi">
                                                             <i class="fa fa-retweet"></i>
                                                         </a> --}}
-                                               {{--      </div>
+    {{--      </div>
 
 
                                                 </td> --}}
-                                                {{--  <td>
+    {{--  <td>
                                         @forelse ($courrier->comments as $comment)
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <small>Commentaire de
@@ -906,7 +917,7 @@
                                             <div class="alert alert-info">Aucun commentaire pour ce courrier</div>
                                         @endforelse
                                     </td>  --}}
-                                {{--             </tr>
+    {{--             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>

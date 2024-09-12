@@ -16,7 +16,7 @@
         <div class="row">
             <!-- Left side columns -->
             <div class="col-lg-12">
-                @if ($message = Session::get('status'))
+                {{-- @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
                         <strong>{{ $message }}</strong>
@@ -35,7 +35,7 @@
                         <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
                             role="alert"><strong>{{ $error }}</strong></div>
                     @endforeach
-                @endif
+                @endif --}}
                 <div class="row">
                     <!-- Sales Card -->
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -46,7 +46,7 @@
                             </div>
                             <a href="#">
                                 <div class="card-body">
-                                    <h5 class="card-title">Courriers<span> | aujourd'hui</span></h5>
+                                    <h5 class="card-title">Arrivés <span>| Aujourd'hui</span></h5>
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -72,7 +72,7 @@
                             </div>
                             <a href="#">
                                 <div class="card-body">
-                                    <h5 class="card-title">Courriers <span>| tous</span></h5>
+                                    <h5 class="card-title">Arrivés <span>| tous</span></h5>
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -125,7 +125,11 @@
                             data-bs-target="#addCourrierArrive">
                             <i class="bi bi-plus" title="Ajouter un nouveau courrier"></i>
                         </button>
-                        <h5 class="card-title">Liste des courriers arrivés</h5>
+                        <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
+                                class="btn btn-success btn-sm" title="retour"><i
+                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                            <p> | Liste des courriers arrivés</p>
+                        </span>
                         {{-- <p>Le tableau des courriers arrivés</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-arrives">
@@ -205,15 +209,15 @@
             aria-labelledby="addCourrierArriveLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                   {{--  <div class="pt-0 pb-0">
+                    {{--  <div class="pt-0 pb-0">
                         <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
                         <p class="text-center small">enregister un nouveau courrier arrivé</p>
                     </div> --}}
-                    
+
                     <div class="modal-header">
                         <h5 class="modal-title">Ajouter un nouveau courrier arrivé</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
+                    </div>
                     <form method="post" action="{{ route('arrives.store') }}" enctype="multipart/form-data"
                         class="row g-3">
                         @csrf

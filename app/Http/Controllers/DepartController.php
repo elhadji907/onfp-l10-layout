@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DepartStoreRequest;
 use App\Models\Courrier;
 use App\Models\Depart;
+use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\User;
+use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DepartController extends Controller
 {
-    
+
     public function __construct()
     {
         // examples:
@@ -28,7 +31,31 @@ class DepartController extends Controller
     public function index()
     {
         $departs = Depart::orderBy('created_at', 'desc')->get();
-        return view("courriers.departs.index", compact("departs"));
+        $anneeEnCours = date('Y');
+        $numCourrier = Depart::get()->last();
+        if (isset($numCourrier)) {
+            $numCourrier = Depart::get()->last()->numero;
+            $numCourrier = ++$numCourrier;
+        } else {
+            $numCourrier = "0001";
+        }
+
+        $longueur = strlen($numCourrier);
+
+        if ($longueur <= 1) {
+            $numCourrier   =   strtolower("000" . $numCourrier);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numCourrier   =   strtolower("00" . $numCourrier);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("0" . $numCourrier);
+        } else {
+            $numCourrier   =   strtolower($numCourrier);
+        }
+
+        $today = date('Y-m-d');
+        $count_today = Depart::where("created_at", "LIKE",  "{$today}%")->count();
+
+        return view("courriers.departs.index", compact("departs", "numCourrier", "anneeEnCours", "today", "count_today"));
     }
     public function create()
     {
@@ -83,9 +110,10 @@ class DepartController extends Controller
         ]);
 
         $depart->save();
-
-        $status = "Enregistrement effectué avec succès";
-        return redirect()->back()->with("status", $status);
+        Alert::success('Félicitations', 'courrié ajouté avec succès');
+        return back();
+        /* $status = "Enregistrement effectué avec succès";
+        return redirect()->back()->with("status", $status); */
     }
 
 
@@ -111,9 +139,12 @@ class DepartController extends Controller
             $courrier->date_imp    =  $request->input('date_imp');
             $courrier->save();
 
-            $status = 'Courrier imputé avec succès';
+            /* $status = 'Courrier imputé avec succès';
 
-            return Redirect::route('departs.index')->with('status', $status);
+            return Redirect::route('departs.index')->with('status', $status); */
+
+            Alert::success('Félicitations !', 'Courrier imputé avec succès');
+            return Redirect::route('departs.index');
 
             //solution, récuper l'id à partir de blade avec le mode hidden
         }
@@ -190,9 +221,12 @@ class DepartController extends Controller
             ]
         );
 
-        $status = 'Courrier mis à jour effectuée avec succès';
+        /*  $status = 'Courrier mis à jour effectuée avec succès'; */
 
-        return Redirect::route('departs.index')->with('status', $status);
+        Alert::success('Félicitations', 'courrié modifié avec succès');
+
+        /* return Redirect::route('departs.index')->with('status', $status); */
+        return Redirect::route('departs.index');
     }
 
     public function show($id)
@@ -256,5 +290,65 @@ class DepartController extends Controller
             $output .= '</ul>';
             echo $output;
         }
+    }
+    
+    public function couponDepart(Request $request)
+    {
+        $depart = Depart::find($request->input('id'));
+        $courrier = $depart->courrier;
+
+        /*  $directions     = Direction::pluck('sigle', 'id'); */
+
+        $directions = Direction::pluck('sigle', 'sigle')->all();
+
+        $departDirections = $courrier->directions->pluck('sigle', 'sigle')->all();
+
+        $numero = $courrier->numero;
+
+        $title = ' Coupon d\'envoi courrier départ n° ' . $numero;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $dompdf->setOptions($options);
+
+        $actions = [
+            'Urgent',
+            'M\'en parler',
+            'Etudes et Avis',
+            'Répondre',
+            'Suivi',
+            'Information',
+            'Diffusion',
+            'Attribution',
+            'Classement',
+        ];
+
+        $dompdf->loadHtml(view('courriers.departs.depart-coupon', compact(
+            'depart',
+            'courrier',
+            'directions',
+            'departDirections',
+            'title',
+            'actions'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's';
+
+        $name = $courrier->expediteur . ', courrier départ n° ' . $numero . ' du ' . $anne . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
     }
 }

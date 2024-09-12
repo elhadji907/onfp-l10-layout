@@ -94,6 +94,27 @@
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <h5 class="card-title">Détails</h5>
+                                    @if ($employe->user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$employe->user->hasVerifiedEmail())
+                                        <div>
+                                            <p class="text-sm mt-2 text-gray-800 dark:text-gray-200 text-danger">
+                                                {{ __('l\'adresse e-mail de cet employé n\'est pas vérifiée.') }}
+                                            {{-- <form method="POST" action="{{ route('verification.send') }}">
+                                                @csrf
+
+                                                <div>
+                                                    <button type="submit"
+                                                        class="btn btn-outline-primary">{{ __('Cliquez ici pour renvoyer l\'e-mail de vérification.') }}</button>
+                                                </div>
+                                            </form>
+                                            </p>
+
+                                            @if (session('status') === 'verification-link-sent')
+                                                <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
+                                                    {{ __('Un nouveau lien de vérification a été envoyé à votre adresse e-mail.') }}
+                                                </p>
+                                            @endif --}}
+                                        </div>
+                                    @endif
                                     <small>
                                         <a href="{!! url('file-decision', ['$id' => $employe->id]) !!}" class='btn btn-primary btn-sm'
                                             title="télécharger la décision" target="_blank">
@@ -224,7 +245,8 @@
                                             {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
                                         percevra un salaire mensuel de base de
                                         <b>{{ $employe->category->salaire_lettre . '(' . $employe->category->salaire . ')' . 'Francs CFA ' }}</b>
-                                        correspondant à la catégorie <b>{{ $employe->category->name }}</b> de la grille salariale du personnel de l'ONFP
+                                        correspondant à la catégorie <b>{{ $employe->category->name }}</b> de la grille
+                                        salariale du personnel de l'ONFP
                                         adoptée par le Conseil d'Administration du 21 Août 2014.
                                         ;<br><br>
                                         <b><u>Article 3</u> :
@@ -713,24 +735,7 @@
                                             <button type="submit" class="btn btn-primary">Sauvegarder les
                                                 modifications</button>
                                         </div>
-                                        @if ($employe->user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$employe->user->hasVerifiedEmail())
-                                            <div>
-                                                <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                                                    {{ __('Votre adresse e-mail n\'est pas vérifiée.') }}
 
-                                                    <button form="send-verification"
-                                                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                                                        {{ __('Cliquez ici pour renvoyer l\'e-mail de vérification.') }}
-                                                    </button>
-                                                </p>
-
-                                                @if (session('status') === 'verification-link-sent')
-                                                    <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                                                        {{ __('Un nouveau lien de vérification a été envoyé à votre adresse e-mail.') }}
-                                                    </p>
-                                                @endif
-                                            </div>
-                                        @endif
                                         <!-- End Profile Edit Form -->
 
                                 </div>

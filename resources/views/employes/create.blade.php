@@ -176,7 +176,7 @@
                                     <label for="categorie" class="form-label">Catégorie<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="categorie" class="form-select @error('categorie') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-categorie"
+                                        aria-label="Select" id="select-field-categories"
                                         data-placeholder="Choisir categorie">
                                         <option value=""></option>
                                         @foreach ($categories as $categorie)

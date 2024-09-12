@@ -467,7 +467,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="numero_convention" class="form-label">Numéro convention</label>
                                         <input type="text" name="numero_convention"
                                             value="{{ old('numero_convention') }}"
@@ -602,7 +602,7 @@
                                         @enderror
                                     </div> --}}
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="choixoperateur" class="form-label">Choix opérateurs</label>
                                         <select name="choixoperateur"
                                             class="form-select  @error('choixoperateur') is-invalid @enderror"
@@ -622,7 +622,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                                 <div class="modal-footer mt-5">

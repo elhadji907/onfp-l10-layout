@@ -170,6 +170,11 @@
                 </a>
                 <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('courriers') }}">
+                            <span>Courriers</span>
+                        </a>
+                    </li><!-- End arrives Nav -->
+                    <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('arrives') }}">
                             <span>Arrivé</span>
                         </a>

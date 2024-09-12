@@ -73,8 +73,10 @@
                                             @endif
                                         </td>
                                         <td style="text-align: center;">
-                                            @isset($user->email_verified_at)
-                                                <span class="badge bg-info mx-1"><i class="bi bi-check2-circle"></i></span>
+                                            @isset($user?->email_verified_at)
+                                                <span class="badge bg-info"><i class="bi bi-check-circle" title="compte vérifié"></i></span>
+                                                {{-- me-1 à mettre dans la classe de la balise i --}}
+                                                {{-- <span class="btn btn-outline-info btn-sm mx-1"><i class="bi bi-check2-circle"></i></span> --}}
                                             @endisset
                                         </td>
                                         {{-- <td>

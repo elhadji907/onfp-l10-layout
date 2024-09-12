@@ -95,14 +95,16 @@
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <form
-                                                            action="{{ route('Validatelistecollective', ['id' => $listecollective?->id]) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button
-                                                                class="show_confirm_valider btn btn-sm mx-1">Valider</button>
-                                                        </form>
+                                                        @can('user-view')
+                                                            <form
+                                                                action="{{ route('Validatelistecollective', ['id' => $listecollective?->id]) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button
+                                                                    class="show_confirm_valider btn btn-sm mx-1">Valider</button>
+                                                            </form>
+                                                        @endcan
                                                         <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('listecollectives.edit', $listecollective->id) }}"
                                                                 class="mx-1" title="Modifier">Modifier</a>
