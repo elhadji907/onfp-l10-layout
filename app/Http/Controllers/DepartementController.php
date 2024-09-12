@@ -9,6 +9,15 @@ use Illuminate\Validation\Rule;
 
 class DepartementController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
     public function index()
     {
         $departements = Departement::orderBy("created_at", "desc")->get();

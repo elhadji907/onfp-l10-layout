@@ -44,7 +44,21 @@
 
     <main>
         <div class="container">
-
+            {{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
+            {{-- @if ($message = Session::get('status'))
+                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                    role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif --}}
+           {{--  @if ($message = Session::get('message'))
+                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
+                    role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif --}}
             <section class="section login min-vh-100 d-flex flex-column align-items-center justify-content-center">
                 <div class="container">
                     <div class="row justify-content-center">
@@ -97,7 +111,7 @@
 
                                         <div class="col-12">
                                             <label for="email" class="form-label">Email<span
-                                                class="text-danger mx-1">*</span></label>
+                                                    class="text-danger mx-1">*</span></label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
                                                 <input type="email" name="email"
@@ -114,7 +128,7 @@
 
                                         <div class="col-12">
                                             <label for="password" class="form-label">Mot de passe<span
-                                                class="text-danger mx-1">*</span></label>
+                                                    class="text-danger mx-1">*</span></label>
                                             <input type="password" name="password"
                                                 class="form-control  @error('password') is-invalid @enderror"
                                                 id="password" required placeholder="Votre mot de passe">

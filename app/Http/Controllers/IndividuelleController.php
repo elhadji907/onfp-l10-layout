@@ -21,6 +21,15 @@ use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class IndividuelleController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin|Demandeur']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
     public function index()
     {
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
@@ -412,10 +421,20 @@ class IndividuelleController extends Controller
         $departements       = Departement::orderBy("created_at", "desc")->get();
         $modules            = Module::orderBy("created_at", "desc")->get();
         $projets            = Projet::orderBy("created_at", "desc")->get();
-        return view("individuelles.update", compact("individuelle", "departements", "modules", "projets"));
+
+        if ($individuelle->statut != 'nouvelle') {
+            Alert::warning('Attention ! ', 'action impossible demande déjà traitée');
+            return redirect()->back();
+        } else {
+            return view("individuelles.update", compact("individuelle", "departements", "modules", "projets"));
+        }
     }
     public function update(Request $request, $id)
     {
+        $individuelle       = Individuelle::findOrFail($id);
+        $user_id            = $individuelle?->users_id;
+
+
         $this->validate($request, [
             'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9', 'max:9'],
             'adresse'                       => ['required', 'string', 'max:255'],
@@ -427,8 +446,6 @@ class IndividuelleController extends Controller
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ]);
 
-        $individuelle       = Individuelle::findOrFail($id);
-        $user_id            = $individuelle?->users_id;
         $departement        = Departement::where('nom', $request->input("departement"))->first();
 
         $regionid           = $departement->region->id;
@@ -549,17 +566,22 @@ class IndividuelleController extends Controller
     {
         $individuelle   = Individuelle::find($id);
 
-        $individuelle->update([
-            'numero'        => $individuelle->numero . '/' . $id,
-        ]);
+        if ($individuelle->statut != 'nouvelle') {
+            Alert::warning('Attention ! ', 'action impossible demande déjà traitée');
+            return redirect()->back();
+        } else {
+            $individuelle->update([
+                'numero'        => $individuelle->numero . '/' . $id,
+            ]);
 
-        $individuelle->save();
+            $individuelle->save();
 
-        $individuelle->delete();
+            $individuelle->delete();
 
-        Alert::success('Fait !', 'demande supprimée');
+            Alert::success('Fait !', 'demande supprimée');
 
-        return redirect()->back();
+            return redirect()->back();
+        }
     }
     public function validationsRejetMessage(Request $request, $id)
     {

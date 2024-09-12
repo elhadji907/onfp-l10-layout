@@ -266,7 +266,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ route('agrement') }}">
-                            <span>Demandes agréments</span>
+                            <span>Validation agréments</span>
                         </a>
                     </li><!-- End operateurs Nav -->
 
@@ -284,6 +284,35 @@
 
                 </ul>
             </li><!-- End Formations Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#formations-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-folder-symlink-fill"></i><span>{{ __('Gestion formations') }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="formations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('formations') }}">
+                            <span>Formations</span>
+                        </a>
+                    </li><!-- End Formations Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
+                            <span>Ingénieurs</span>
+                        </a>
+                    </li><!-- End Formations Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('evaluateurs') }}">
+                            <span>Evaluateurs</span>
+                        </a>
+                    </li><!-- End Formations Nav -->
+
+                </ul>
+            </li>
 
             {{-- <li class="nav-heading">Gestion localités</li> --}}
 
@@ -397,36 +426,6 @@
                             <span>Nomminations</span>
                         </a>
                     </li><!-- End nomminations Page Nav -->
-
-                </ul>
-            </li>
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#formations-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-folder-symlink-fill"></i><span>{{ __('Gestion formations') }}</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="formations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('formations') }}">
-                            <span>Formations</span>
-                        </a>
-                    </li><!-- End Formations Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
-                            <span>Ingénieurs</span>
-                        </a>
-                    </li><!-- End Formations Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('evaluateurs') }}">
-                            <span>Evaluateurs</span>
-                        </a>
-                    </li><!-- End Formations Nav -->
 
                 </ul>
             </li>

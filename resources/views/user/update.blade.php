@@ -41,10 +41,10 @@
                                         <option value="{{ $user->civilite }}">
                                             {{ $user->civilite ?? old('civilite') }}
                                         </option>
-                                        <option value="Monsieur">
+                                        <option value="M.">
                                             Monsieur
                                         </option>
-                                        <option value="Madame">
+                                        <option value="Mme">
                                             Madame
                                         </option>
                                     </select>

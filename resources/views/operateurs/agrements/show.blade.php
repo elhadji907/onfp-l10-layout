@@ -526,8 +526,8 @@
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
-                                            <h5>Type: <span
-                                                    class="{{ $operateur->type_demande }}">{{ $operateur->type_demande }}</span>
+                                            <h5>Type : <span
+                                                    class="{{ $operateur->type_demande }} btn-sm">{{ $operateur->type_demande }}</span>
                                             </h5>
                                             <span class="card-title d-flex align-items-baseline">Statut
                                                 :&nbsp;
@@ -974,6 +974,7 @@
                         <form method="post" action="{{ route('nonRetenu', ['id' => $operateur->id]) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
+                            @method('PUT')
                             <div class="modal-header">
                                 <h5 class="modal-title">Rejet demande agrément</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"

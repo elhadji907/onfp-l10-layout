@@ -79,6 +79,8 @@ class CreateIndividuellesTable extends Migration
             $table->string('niveau_maitrise', 200)->nullable();
             $table->longText('observations')->nullable();
             $table->string('appreciation', 200)->nullable();
+            $table->string('retrait_diplome', 200)->nullable();
+            $table->longText('diplome_retirer_by')->nullable();
             $table->longText('motif_rejet')->nullable();
             $table->string('created_by', 200)->nullable();
             $table->string('updated_by', 200)->nullable();

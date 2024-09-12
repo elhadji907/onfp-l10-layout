@@ -10,6 +10,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class RegionController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
     public function index()
     {
         $regions = Region::orderBy("created_at", "desc")->get();

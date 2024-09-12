@@ -544,7 +544,7 @@
                                             <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
                                             <span class="card-title d-flex align-items-baseline">Statut
                                                 :&nbsp;
-                                                <span class="{{ $operateur->statut_agrement }} text-white">
+                                                <span class="{{ $operateur->statut_agrement }} text-white btn-sm">
                                                     {{ $operateur?->statut_agrement }}</span>
                                                 {{-- <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i

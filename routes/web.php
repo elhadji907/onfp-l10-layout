@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\CollectivemoduleController;
@@ -17,6 +18,8 @@ use App\Http\Controllers\DepartController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\DomaineController;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\EmailFormationController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\EvaluateurController;
 use App\Http\Controllers\FonctionController;
@@ -52,6 +55,9 @@ use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
+
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -82,12 +88,36 @@ use Illuminate\Support\Facades\Route;
 }); */
 
 Route::get('/', function () {
-    return view('user.login-page');
+    return view('user.login');
 });
 Route::get('/', [UserController::class, 'homePage'])->name('home');
 
+Route::post('sendWelcomeEmail', [EmailController::class, 'sendWelcomeEmail'])->name('sendWelcomeEmail');
+Route::post('sendFormationEmail', [EmailFormationController::class, 'sendFormationEmail'])->name('sendFormationEmail');
 
-Route::get('/login-page', [ProfileController::class, 'loginPage'])->name('login-page');
+// Define Custom Verification Routes
+/* Route::controller(VerificationController::class)->group(function() {
+    Route::get('/email/verify', 'notice')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
+    Route::post('/email/resend', 'resend')->name('verification.resend');
+}); */
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); 
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Lien de vérification envoyé !');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/login', [ProfileController::class, 'loginPage'])->name('login');
 Route::get('/register-page', [ProfileController::class, 'registerPage'])->name('register-page');
 
 /* Route::get('/dashboard', function () {
@@ -98,7 +128,7 @@ Route::post('/updateRegion', [RegionController::class, 'updateRegion'])->name('u
 Route::post('/rejeterIndividuelle', [IndividuelleController::class, 'rejeterIndividuelle'])->name('rejeterIndividuelle');
 Route::post('/addRegion', [RegionController::class, 'addRegion'])->name('addRegion');
 /* Route::group(['middleware' => ['isAdmin']], function () { */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

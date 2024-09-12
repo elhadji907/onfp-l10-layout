@@ -34,6 +34,17 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class FormationController extends Controller
 {
+    
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
+
     public function index()
     {
         $formations = Formation::where('statut', '!=', 'supprimer')->orderBy('created_at', 'desc')->get();
@@ -396,7 +407,7 @@ class FormationController extends Controller
             $validated_by = new Validationindividuelle([
                 'validated_id'       =>      Auth::user()->id,
                 'action'             =>      'retirer',
-                'motif'              =>      $request->input('motif'),
+                'motif'              =>      $request->input('motif').', pour la formation : '.$formation->name,
                 'individuelles_id'   =>      $individuelle->id
             ]);
 
@@ -814,17 +825,17 @@ class FormationController extends Controller
                 Alert::warning('Désolez !', 'la formation n\'est pas encore terminée');
                 return redirect()->back();
             }
+
+            $individuelle->save();
+
+            $validated_by = new Validationindividuelle([
+                'validated_id'       =>      Auth::user()->id,
+                'action'             =>      'terminer',
+                'individuelles_id'   =>      $individuelle->id
+            ]);
+
+            $validated_by->save();
         }
-
-        $individuelle->save();
-
-        $validated_by = new Validationindividuelle([
-            'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'terminer',
-            'individuelles_id'   =>      $individuelle->id
-        ]);
-
-        $validated_by->save();
 
         Alert::success('Félicitations !', 'Evaluation terminée');
 
@@ -885,10 +896,8 @@ class FormationController extends Controller
     public function updateAgentSuivi(Request $request)
     {
         $request->validate([
-            'suivi_dossier' => 'required',
-            'string',
-            'date_suivi' => 'required',
-            'date'
+            'suivi_dossier' => ['required', 'string'],
+            'date_suivi' => ['required', 'date']
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
@@ -1260,6 +1269,56 @@ class FormationController extends Controller
 
         $formation = Formation::find($request->input('id'));
 
+        $admis = Individuelle::where('formations_id', $formation->id)
+            ->where('note_obtenue', '>=', '12')
+            ->get();
+
+        $recales = Individuelle::where('formations_id', $formation->id)
+            ->where('note_obtenue', '<', '12')
+            ->get();
+
+        $admis_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('formations_id', $formation->id)
+            ->where('users.civilite', "M.")
+            ->where('note_obtenue', '>=', '12')
+            ->count();
+
+        $admis_f_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('formations_id', $formation->id)
+            ->where('users.civilite', "Mme")
+            ->where('note_obtenue', '>=', '12')
+            ->count();
+
+        $formes_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('formations_id', $formation->id)
+            ->where('users.civilite', "M.")
+            ->count();
+
+        $formes_f_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('formations_id', $formation->id)
+            ->where('users.civilite', "Mme")
+            ->count();
+
+        $formes_total = $formes_h_count + $formes_f_count;
+
+        $retenus_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('formations_id', $formation->id)
+            ->where('users.civilite', "M.")
+            ->count();
+
+        $retenus_f_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('formations_id', $formation->id)
+            ->where('users.civilite', "Mme")
+            ->count();
+
+        $retenus_total = $retenus_h_count + $retenus_f_count;
+
         if ($formation->statut == 'terminer') {
 
             $title = 'Attestation de bonne execution ' . $formation->name;
@@ -1277,6 +1336,16 @@ class FormationController extends Controller
                 'title',
                 'membres_jury',
                 'count_membres',
+                'admis',
+                'recales',
+                'admis_h_count',
+                'admis_f_count',
+                'formes_h_count',
+                'formes_f_count',
+                'formes_total',
+                'retenus_h_count',
+                'retenus_f_count',
+                'retenus_total',
             )));
 
             // (Optional) Setup the paper size and orientation (portrait ou landscape)

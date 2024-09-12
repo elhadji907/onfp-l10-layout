@@ -26,14 +26,42 @@ class OperateurController extends Controller
     {
         $operateurs = Operateur::orderBy('created_at', 'desc')->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
-        return view("operateurs.index", compact("operateurs", "departements"));
+        $operateur_agreer   = Operateur::where('statut_agrement', 'agréer')->count();
+        $operateur_rejeter   = Operateur::where('statut_agrement', 'rejeter')->count();
+        $operateur_nouveau   = Operateur::where('statut_agrement', 'nouveau')->count();
+        $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
+        if (isset($operateur_total) && $operateur_total > '0') {
+            $pourcentage_agreer = ((($operateur_agreer) / ($operateur_total)) * 100);
+            $pourcentage_rejeter = ((($operateur_rejeter) / ($operateur_total)) * 100);
+            $pourcentage_nouveau = ((($operateur_nouveau) / ($operateur_total)) * 100);
+        } else {
+            $pourcentage_agreer = "0";
+            $pourcentage_rejeter = "0";
+            $pourcentage_nouveau = "0";
+        }
+
+        return view("operateurs.index", compact("operateurs", "departements", "operateur_agreer", "operateur_rejeter", "pourcentage_agreer", "pourcentage_rejeter", "operateur_nouveau", "pourcentage_nouveau"));
     }
 
     public function agrement()
     {
+        
         $operateurs = Operateur::query()->orderBy('created_at', 'desc')->orderByDesc('created_at')->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
-        return view("operateurs.agrements.index", compact("operateurs", "departements"));
+
+        $operateurs = Operateur::orderBy('created_at', 'desc')->get();
+        $operateur_new   = Operateur::where('type_demande', 'New')->count();
+        $operateur_renew   = Operateur::where('type_demande', 'Renew')->count();
+        $operateur_total   = Operateur::where('type_demande', 'New')->orwhere('type_demande', 'Renew')->count();
+        if (isset($operateur_total) && $operateur_total > '0') {
+            $pourcentage_new = ((($operateur_new) / ($operateur_total)) * 100);
+            $pourcentage_renew = ((($operateur_renew) / ($operateur_total)) * 100);
+        } else {
+            $pourcentage_new = "0";
+            $pourcentage_renew = "0";
+        }
+
+        return view("operateurs.agrements.index", compact("operateurs", "departements", "operateur_new", "operateur_renew", "pourcentage_new", "pourcentage_renew"));
     }
 
     //cette fonction permet de valider l'agrement des operateurs
@@ -437,17 +465,23 @@ class OperateurController extends Controller
         $moduleoperateur_count = $operateur->operateurmodules->count();
 
         if ($moduleoperateur_count > 0) {
-            $operateur->update([
-                'statut_agrement'    => 'retenu',
-            ]);
+            if ($operateur->statut_agrement == 'nouveau'  || $operateur->statut_agrement == 'non retenu') {
+                $operateur->update([
+                    'statut_agrement'    => 'retenu',
+                ]);
 
-            $operateur->save();
+                $operateur->save();
 
-            Alert::success("Effectué !", "l'opérateur " . $operateur->sigle . ' a été retenu');
+                Alert::success("Effectué !", "l'opérateur " . $operateur?->sigle . ' a été retenu');
 
-            return redirect()->back();
+                return redirect()->back();
+            } else {
+                Alert::warning("Imopssible ", "Car l'opérateur " . $operateur?->sigle . ' a déjà été validé');
+
+                return redirect()->back();
+            }
         } else {
-            Alert::warning('Désolez ! ', 'action impossible');
+            Alert::warning('Désolez ! ', 'assurez-vous d\'avoir ajouté au moins un module');
             return redirect()->back();
         }
 
@@ -495,28 +529,33 @@ class OperateurController extends Controller
 
         $operateur   = Operateur::findOrFail($id);
 
-        $operateur->update([
-            'statut_agrement'    =>  'non retenu',
-            'motif'              =>  $request->input('motif'),
-        ]);
+        if ($operateur->statut_agrement == 'nouveau' || $operateur->statut_agrement == 'retenu') {
+            $operateur->update([
+                'statut_agrement'    =>  'non retenu',
+                'motif'              =>  $request->input('motif'),
+            ]);
 
-        $operateur->save();
+            $operateur->save();
 
-        $validationoperateur = new Validationoperateur([
-            'action'                =>  "non retenu",
-            'motif'                 =>  $request->input('motif'),
-            'validated_id'          =>  Auth::user()->id,
-            'session'               =>  $operateur?->session_agrement,
-            'operateurs_id'         =>  $operateur->id,
+            $validationoperateur = new Validationoperateur([
+                'action'                =>  "non retenu",
+                'motif'                 =>  $request->input('motif'),
+                'validated_id'          =>  Auth::user()->id,
+                'session'               =>  $operateur?->session_agrement,
+                'operateurs_id'         =>  $operateur->id,
 
-        ]);
+            ]);
 
-        $validationoperateur->save();
+            $validationoperateur->save();
 
-        Alert::success('Effectué !', $operateur->sigle . " n'a pas été retenu");
+            Alert::success('Effectué !', $operateur->sigle . " n'a pas été retenu");
 
+            return redirect()->back();
+        } else {
+            Alert::warning("Imopssible ", "Car l'opérateur " . $operateur?->sigle . ' a déjà été validé');
 
-        return redirect()->back();
+            return redirect()->back();
+        }
     }
 
 

@@ -236,6 +236,8 @@ class Individuelle extends Model
 		'arrondissements_id',
 		'departements_id',
 		'users_id',
+		'retrait_diplome',
+		'diplome_retirer_by',
 		'regions_id'
 	];
 

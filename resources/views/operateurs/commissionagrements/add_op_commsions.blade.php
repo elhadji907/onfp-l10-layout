@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         @isset($commissionagrement->operateurs)
-                            <h5 class="pt-2"><u><b>NOMBRE OPERATEURS</b>:</u>
+                            <h5 class="pt-2"><u><b>Opérateurs</b> :</u>
                                 <span class="badge bg-secondary"> {{ count($commissionagrement?->operateurs) }}
                                 </span>
                             </h5>
@@ -45,7 +45,7 @@
                                     <label for="#">Choisir tout</label>
                                     <input type="checkbox" class="form-check-input" id="checkAll">
                                 </div> --}}
-                                <div class="form-check col-md-12 pt-5">
+                                <div class="form-check col-md-12 pt-3">
                                     <table class="table datatables align-middle" id="table-operateurs">
                                         <thead>
                                             <tr>

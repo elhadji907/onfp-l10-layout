@@ -18,6 +18,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ArriveController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin|Courrier']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
+    
     public function index()
     {
         $anneeEnCours = date('Y');

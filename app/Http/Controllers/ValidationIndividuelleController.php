@@ -19,6 +19,10 @@ class ValidationIndividuelleController extends Controller
             Alert::warning('Désolez !', 'demande déjà programmée');
         } elseif ($individuelle->statut == 'retenue') {
             Alert::warning('Désolez !', 'demande déjà traitée');
+        } elseif ($individuelle->statut == 'terminer') {
+            Alert::warning('Désolez !', 'demandeur déjà formé');
+        } elseif ($individuelle->statut == 'rejeter') {
+            Alert::warning('Désolez !', 'demandeur déjà rejetée');
         } else {
             $individuelle->update([
                 'statut'             => 'attente',
@@ -52,12 +56,14 @@ class ValidationIndividuelleController extends Controller
 
         if ($individuelle->statut == 'rejeter') {
             Alert::warning('Désolez !', 'demande déjà rejetée');
-        }  elseif ($individuelle->statut == 'programmer') {
+        } elseif ($individuelle->statut == 'programmer') {
             Alert::warning('Désolez !', 'demande déjà programmée');
-        }  elseif ($individuelle->statut == 'attente') {
+        } elseif ($individuelle->statut == 'attente') {
             Alert::warning('Désolez !', 'demande déjà traitée');
-        }  elseif ($individuelle->statut == 'retenue') {
+        } elseif ($individuelle->statut == 'retenue') {
             Alert::warning('Désolez !', 'demande déjà traitée');
+        } elseif ($individuelle->statut == 'terminer') {
+            Alert::warning('Désolez !', 'demandeur déjà formé');
         } else {
             $individuelle->update([
                 'statut'                => 'rejeter',

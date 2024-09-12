@@ -12,6 +12,154 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card revenue-card">
+                            <a href="{{ route('operateurs.index') }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Opérateurs <span>| Tous</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                {{  count($operateurs) }}
+                                            </h6>
+                                            <span class="text-muted small pt-2 ps-1">Tous</span>
+                                            {{-- <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_nouveau, 2, ',', ' ') .'%' }}</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sales Card -->
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            {{-- <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                            </div> --}}
+                            {{-- {{ route('commissionagrements.show', $commissionagrement->id) }} --}}
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Operateurs <span>| Agréés</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                {{ $operateur_agreer }}
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_agreer, 2, ',', ' ') .'%' }}</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card sales-card">
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Opérateurs <span>| Nouvelle demande</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card revenue-card">
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Opérateurs <span>| Renouvellement</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> --}}
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card customers-card">
+                            {{-- <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                            </div> --}}
+                            {{-- {{ route('showRejeter', ['id' => $commissionagrement->id]) }} --}}
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Opérateurs <span>| Rejetés</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                {{ $operateur_rejeter }}
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_rejeter, 2, ',', ' ') .'%' }}</span>
+                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="card info-card revenue-card">
+                            <a href="#">
+                                <div class="card-body">
+                                    <h5 class="card-title">Opérateurs <span>| Nouveau</span></h5>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>
+                                                {{  $operateur_nouveau }}
+                                            </h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_nouveau, 2, ',', ' ') .'%' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -86,7 +234,7 @@
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('operateurs.show', $operateur->id) }}"
-                                                    class="btn btn-primary btn-sm" target="_blank" title="voir détails"><i
+                                                    class="btn btn-primary btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i

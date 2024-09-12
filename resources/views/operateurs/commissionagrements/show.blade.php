@@ -195,7 +195,7 @@
                                                         <td>
                                                             <span class="d-flex align-items-baseline"><a
                                                                     href="{{ route('agrements', ['id' => $operateur?->id]) }}"
-                                                                    class="btn btn-primary btn-sm" target="_blank"
+                                                                    class="btn btn-primary btn-sm"
                                                                     title="voir détails"><i class="bi bi-eye"></i></a>
                                                                 <div class="filter">
                                                                     <a class="icon" href="#"

@@ -386,6 +386,23 @@
                                                                         value="{{ $formation->id }}">
                                                                     <button class="btn btn-sm mx-1">A B E</button>
                                                                 </form>
+                                                                <hr>
+                                                                <form action="{{ route('sendFormationEmail') }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Démarrage (e-mail)</button>
+                                                                </form>
+                                                                <form action="{{ route('sendWelcomeEmail') }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Résultats (e-mail)</button>
+                                                                </form>
                                                             </ul>
                                                         </div>
                                                     </span>
@@ -402,8 +419,8 @@
                                                     id="table-operateurModules">
                                                     <thead>
                                                         <tr>
-                                                            {{-- <th>N°</th> --}}
-                                                            <th class="text-center">Numéro</th>
+                                                            <th class="text-center">N°</th>
+                                                            <th class="text-center">N° Dossier</th>
                                                             <th class="text-center">Civilité</th>
                                                             <th class="text-center">CIN</th>
                                                             <th>Prénom</th>
@@ -411,9 +428,9 @@
                                                             <th class="text-center">Date naissance</th>
                                                             <th class="text-center">Lieu de naissance</th>
                                                             {{-- <th>Adresse</th> --}}
-                                                            @isset($individuelle?->note_obtenue)
-                                                                <th class="text-center">Note</th>
-                                                            @endisset
+                                                            {{-- @isset($individuelle?->note_obtenue) --}}
+                                                            <th class="text-center">Note</th>
+                                                            {{-- @endisset --}}
                                                             {{-- <th>Appréciation</th> --}}
                                                             {{-- <th class="col"><i class="bi bi-backspace-reverse"></i></th> --}}
                                                             <th class="col"><i class="bi bi-gear"></i></th>
@@ -423,7 +440,7 @@
                                                         <?php $i = 1; ?>
                                                         @foreach ($formation->individuelles as $individuelle)
                                                             <tr>
-                                                                {{-- <td>{{ $i++ }}</td> --}}
+                                                                <td class="text-center">{{ $i++ }}</td>
                                                                 <td class="text-center">{{ $individuelle?->numero }}</td>
                                                                 <td class="text-center">{{ $individuelle?->user?->civilite }}
                                                                 </td>
@@ -437,10 +454,10 @@
                                                                 <td class="text-center">
                                                                     {{ $individuelle?->user?->lieu_naissance }}</td>
                                                                 {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
-                                                                @isset($individuelle?->note_obtenue)
-                                                                    <td class="text-center">
-                                                                        {{ $individuelle?->note_obtenue ?? '' }}</td>
-                                                                @endisset
+                                                                {{-- @isset($individuelle?->note_obtenue) --}}
+                                                                <td class="text-center">
+                                                                    {{ $individuelle?->note_obtenue ?? ' ' }}</td>
+                                                                {{-- @endisset --}}
                                                                 {{-- <td>{{ $individuelle?->appreciation }}</td> --}}
                                                                 <td>
                                                                     <span class="d-flex align-items-baseline"><a
@@ -1137,8 +1154,8 @@
                                 <label for="recommandations">Recommandations</label>
 
                                 <textarea name="recommandations" id="recommandations" cols="30" rows="3s"
-                                    class="form-control form-control-sm @error('recommandations') is-invalid @enderror"
-                                    placeholder="Recommandations" autofocus>{{ $formation?->recommandations ?? old('recommandations') }}</textarea>
+                                    class="form-control form-control-sm @error('recommandations') is-invalid @enderror" placeholder="Recommandations"
+                                    autofocus>{{ $formation?->recommandations ?? old('recommandations') }}</textarea>
                                 @error('recommandations')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>

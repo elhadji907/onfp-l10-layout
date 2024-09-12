@@ -827,12 +827,10 @@
         </div>
     </section>
 
-    <section class="section dashboard">
+    {{-- <section class="section dashboard">
         <div class="row">
-            <!-- Left side columns -->
             <div class="col-lg-12">
                 <div class="row">
-
                     <div class="list-group mt-5">
                         @if (isset(auth::user()->employee->courriers) && auth::user()->employee->courriers != '[]')
                             <div class="table-responsive">
@@ -868,15 +866,15 @@
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         @foreach ($courrier->employees->unique('id') as $employee)
                                                             {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
-                                                        @endforeach
+                                                        @endforeach --}}
                                                         {{-- <a href="{!! url('courrierimputations', ['$type' => $courrier->type, '$id' => $courrier->id]) !!}" class='btn btn-warning btn-sm'
                                                             title="changer agent suivi">
                                                             <i class="fa fa-retweet"></i>
                                                         </a> --}}
-                                                    </div>
+                                               {{--      </div>
 
 
-                                                </td>
+                                                </td> --}}
                                                 {{--  <td>
                                         @forelse ($courrier->comments as $comment)
                                             <div class="d-flex justify-content-between align-items-center">
@@ -908,7 +906,7 @@
                                             <div class="alert alert-info">Aucun commentaire pour ce courrier</div>
                                         @endforelse
                                     </td>  --}}
-                                            </tr>
+                                {{--             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -920,5 +918,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

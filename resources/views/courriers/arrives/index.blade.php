@@ -146,9 +146,11 @@
                                     <tr>
                                         <td style="text-align: center;">{{ $arrive->numero }}</td>
                                         {{-- Date reception = date arrivée --}}
-                                        <td style="text-align: center;">{{ $arrive->courrier->date_recep?->format('d/m/Y') }} </td>
+                                        <td style="text-align: center;">
+                                            {{ $arrive->courrier->date_recep?->format('d/m/Y') }} </td>
                                         <td style="text-align: center;">{{ $arrive->courrier->numero }}</td>
-                                        <td style="text-align: center;">{{ $arrive->courrier->date_cores?->format('d/m/Y') }} </td>
+                                        <td style="text-align: center;">
+                                            {{ $arrive->courrier->date_cores?->format('d/m/Y') }} </td>
                                         {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
                                         <td>{{ $arrive->courrier->expediteur }}</td>
                                         <td>{{ $arrive->courrier->objet }}</td>
@@ -169,7 +171,7 @@
                                                                 href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
                                                                 class="mx-1">Imputer</a>
                                                         </li>
-                                                       {{--  <li><a class="dropdown-item btn btn-sm"
+                                                        {{--  <li><a class="dropdown-item btn btn-sm"
                                                                 href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class="mx-1"
                                                                 target="_blank">Imprimer</a>
                                                         </li> --}}
@@ -203,10 +205,15 @@
             aria-labelledby="addCourrierArriveLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                    <div class="pt-0 pb-0">
+                   {{--  <div class="pt-0 pb-0">
                         <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
                         <p class="text-center small">enregister un nouveau courrier arrivé</p>
-                    </div>
+                    </div> --}}
+                    
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter un nouveau courrier arrivé</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
                     <form method="post" action="{{ route('arrives.store') }}" enctype="multipart/form-data"
                         class="row g-3">
                         @csrf
@@ -366,8 +373,12 @@
                                     @enderror
                                 </div>
 
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

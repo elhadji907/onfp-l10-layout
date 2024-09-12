@@ -14,6 +14,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class IngenieurController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin|Ingenieur']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
     public function index()
     {
         $ingenieurs = Ingenieur::orderBy("created_at", "desc")->get();

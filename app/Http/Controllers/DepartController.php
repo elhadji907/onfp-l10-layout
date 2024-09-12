@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Redirect;
 
 class DepartController extends Controller
 {
+    
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin|Courrier']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
     public function index()
     {
         $departs = Depart::orderBy('created_at', 'desc')->get();
