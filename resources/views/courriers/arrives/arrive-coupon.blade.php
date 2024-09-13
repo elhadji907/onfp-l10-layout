@@ -6,11 +6,16 @@
 
     <meta charset="utf-8" />
     <style>
+        
+        @page {
+            margin-top: 0cm;
+        }
+
         .invoice-box {
             max-width: 800px;
             margin: auto;
             padding: 30px;
-            font-size: 12px;
+            font-size: 14px;
             line-height: 20px;
             color: color: rgb(0, 0, 0);
             ;
@@ -28,10 +33,10 @@
         }
 
         .invoice-box table tr.total td {
-            border-top: 2px solid #eee;
-            border-bottom: 1px solid #eee;
-            border-left: 1px solid #eee;
-            border-right: 1px solid #eee;
+            border-top: 0px solid #eee;
+            border-bottom: 0px solid #eee;
+            border-left: 0px solid #eee;
+            border-right: 0px solid #eee;
             background: #eee;
             font-weight: bold;
         }
@@ -78,15 +83,18 @@
 
 <body>
     <div class="invoice-box">
-        <table class="table table-responsive">
+        <table class="table table-responsive" cellpadding="0" cellspacing="0">
             <tbody>
                 <tr>
-                    <td colspan="2" align="left" valign="top" style="text-align: center;">
-                        <b>REPUBLIQUE DU SENEGAL<br>
+                    <td>
+                        {{-- <b>REPUBLIQUE DU SENEGAL<br>
                             Un Peuple - Un But - Une Foi<br>
                             ********<br>
                             MINISTERE DE LA FORMATION PROFESSIONNELLE
-                        </b>
+                        </b> --}}
+                        
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete_lettre_mission.png'))) }}"
+                        style="width: 100%; max-width: 300px" />
                     </td>
                     <td colspan="2" align="right" valign="top">
                         <p>
@@ -99,14 +107,15 @@
                             <b> {{ __("Date d'arrivée : ") }} </b>
                             {{ $courrier->date_recep?->format('d/m/Y') }} <br />
                             <b> {{ __('N° du courrier : ') }} </b> <span
-                                style="color:red">{{ $arrive->numero }}</span> <br />
+                                style="color:red">{{ 'CA-'.$arrive->numero }}</span> <br />
+                                <h1><br><u>{{ __("FICHE D'IMPUTATION") }}</u></h1>
 
                         </p>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <table class="table table-responsive">
+       {{--  <table class="table table-responsive">
             <tbody>
                 <tr>
                     <td colspan="4" align="left">
@@ -119,7 +128,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> --}}
         <table class="table table-responsive">
             <tbody>
                 <tr>
@@ -162,12 +171,12 @@
                                 <tr class="item">
                                     <?php $i = 1; ?>
                                     @foreach ($directions as $direction)
-                                        <td>
+                                        <td style="padding-left:5px;">
                                             {!! $direction ?? 'Aucune' !!}
                                             <span style="float:right;">
-                                                {{ in_array($direction, $arriveDirections) ? "X" : "" }}</span>
+                                                <span style="color: red; padding-right:5px;">{!! in_array($direction, $arriveDirections) ? "X" : "" !!}</span></span>
                                         </td>
-                                        @if ($i % 5 == 0)
+                                        @if ($i % 4 == 0)
                                 </tr>
                                 <tr class="item">
                                     @endif
@@ -187,12 +196,12 @@
                                 </tr>
                                 @foreach ($actions as $action)
                                     <tr class="item">
-                                        <td colspan="2" align="center">
+                                        <td colspan="2" style="padding-left:5px;">
                                             {{ $action }}
                                         </td>
                                         <td colspan="2" align="center">
                                             @if ($action == $courrier->description)
-                                                {{ __('X') }}
+                                                <span style="color: red;">{{ __('X') }}</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -242,10 +251,7 @@
                             <h4><u>Observations</u></h4>
                             {{ $courrier->observation }}
                         @else
-                            <h4><u>Observations</u>: _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _
-                                _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-                                _ _ _ _ _<br>_ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _
-                                _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                            <h4><u>Observations</u>:
                         @endif
                         </h4>
 
