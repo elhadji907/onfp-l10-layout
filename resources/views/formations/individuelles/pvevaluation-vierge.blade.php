@@ -222,28 +222,28 @@
                         <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
                         <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
                         <td>{{ $individuelle?->user?->telephone }}</td>
-                        <td>{{ $individuelle?->note_obtenue ?? '' }}</td>
-                        <td>{{ $individuelle?->appreciation }}</td>
-                        <td>{{ $individuelle?->observations }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         <h4 valign="top">
-            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : @isset($formation?->date_pv)
+            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> 
+            {{-- : @isset($formation?->date_pv)
                 <span
                     style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
             @endisset
-            <br>
+            <br> --}}
             <?php $i = 1; ?>
-            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br>
+            {{-- {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br>
             {{ $formation?->evaluateur_onfp . ', évaluateur ONFP' }}<br>
             @isset($membres_jury)
                 @foreach ($membres_jury as $item)
                     {{ $item }} <br>
-                    {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
                 @endforeach
-            @endisset
+            @endisset --}}
         </h4>
     </div>
     {{-- <footer>

@@ -107,13 +107,13 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); 
+    $request->fulfill();
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
- 
+
     return back()->with('message', 'Lien de vérification envoyé !');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
@@ -190,6 +190,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('file-decision/{id}', [EmployeController::class, 'fileDecision'])->name('file-decision');
 
     Route::post('pvEvaluation', [FormationController::class, 'pvEvaluation'])->name('pvEvaluation');
+    Route::post('pvVierge', [FormationController::class, 'pvVierge'])->name('pvVierge');
     Route::post('ficheSuivi', [FormationController::class, 'ficheSuivi'])->name('ficheSuivi');
 
     Route::post('pvEvaluationCol', [FormationController::class, 'pvEvaluationCol'])->name('pvEvaluationCol');
@@ -266,16 +267,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::patch('/updateAgentSuivi', [FormationController::class, 'updateAgentSuivi'])->name('formations.updateAgentSuivi');
     Route::patch('/updateMembresJury', [FormationController::class, 'updateMembresJury'])->name('formations.updateMembresJury');
     Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
-    
+
     Route::post('/addProjet', [ProjetController::class, 'addProjet'])->name('addProjet');
-    
+
     Route::get('/showLocalites/{id}', [ProjetlocaliteController::class, 'showLocalites'])->name('showLocalites');
-    
+
     Route::get('/showReference/{id}', [OperateurController::class, 'showReference'])->name('showReference');
     Route::get('/showEquipement/{id}', [OperateurController::class, 'showEquipement'])->name('showEquipement');
     Route::get('/showFormateur/{id}', [OperateurController::class, 'showFormateur'])->name('showFormateur');
     Route::get('/showLocalite/{id}', [OperateurController::class, 'showLocalite'])->name('showLocalite');
-    
+
     Route::put('/validateOperateur/{id}', [OperateurController::class, 'validateOperateur'])->name('validateOperateur');
     Route::put('/agreerOperateur/{id}', [OperateurController::class, 'agreerOperateur'])->name('agreerOperateur');
     Route::get('/agrement', [OperateurController::class, 'agrement'])->name('agrement');
@@ -294,9 +295,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/devenirOperateurs', [OperateurController::class, 'devenirOperateur'])->name('devenirOperateur');
     Route::post('/addOperateur', [OperateurController::class, 'addOperateur'])->name('addOperateur');
-    
+
     Route::put('/Validatelistecollective/{id}', [ListecollectiveController::class, 'Validatelistecollective'])->name('Validatelistecollective');
-    
+
     Route::get('regionsmodule/{idlocalite}', [RegionController::class, 'regionsmodule'])->name('regionsmodule');
     Route::get('regionstatut/{idlocalite}/{statut}', [RegionController::class, 'regionstatut'])->name('regionstatut');
 
