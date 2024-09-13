@@ -162,7 +162,7 @@
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="5"><b>{{ __('Période : ') }}</b>
+                    <td colspan="5"><b>{{ __('Période: ') }}</b>
                         @isset($formation?->date_debut)
                             {{ 'du ' . $formation?->date_debut?->format('d/m/Y') }}
                         @endisset
@@ -170,23 +170,23 @@
                             {{ ' au ' . $formation?->date_fin?->format('d/m/Y') }}
                         @endisset
                     </td>
-                    <td colspan="6"><b>{{ __('Intitulé formation : ') }}</b> {{ $formation?->module?->name }}
+                    <td colspan="6"><b>{{ __('Intitulé formation: ') }}</b> {{ $formation?->module?->name }}
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="5"><b>{{ __('Lieu : ') }}</b> {{ $formation?->lieu }}
+                    <td colspan="5"><b>{{ __('Lieu: ') }}</b> {{ $formation?->lieu }}
                     </td>
-                    <td colspan="6"><b>{{ __('Opérateur : ') }}</b>
+                    <td colspan="6"><b>{{ __('Opérateur: ') }}</b>
                         {{ $formation?->operateur?->name . ' (' . $formation?->operateur?->sigle . ')' }}
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="2"><b>{{ __('Code : ') }}</b> {{ $formation?->code }}
+                    <td colspan="2"><b>{{ __('Code: ') }}</b> {{ $formation?->code }}
                     </td>
-                    <td colspan="3"><b>{{ __('Niveau qualification : ') }}</b>
+                    <td colspan="3"><b>{{ __('Niveau qualification: ') }}</b>
                         {{ $formation?->niveau_qualification }}
                     </td>
-                    <td colspan="6"><b>{{ __('Titre : ') }}</b> {{ $formation?->titre }}
+                    <td colspan="6"><b>{{ __('Titre: ') }}</b> {{ $formation?->titre }}
                     </td>
                 </tr>
                 <tr class="heading">

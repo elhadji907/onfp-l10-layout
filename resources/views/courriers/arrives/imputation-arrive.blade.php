@@ -24,7 +24,8 @@
                                     @csrf
                                     {{-- @method('PUT') --}}
                                     <input type="hidden" name="id" value="{{ $arrive->id }}">
-                                    <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print" aria-hidden="true"></i>Télécharger coupon</button>
+                                    <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print"
+                                            aria-hidden="true"></i>Télécharger coupon</button>
                                 </form>
                             </div>
                             @csrf
@@ -47,7 +48,7 @@
                                         <label for="">Direction/Service/Cellule</label>
                                         <input type="text" placeholder="rechercher direction..."
                                             class="form-control form-control-sm @error('product') is-invalid @enderror"
-                                            name="product" id="product" value="">
+                                            name="product" id="product" value="" @required(true)>
                                         <div class="col-lg-6" id="productList">
                                         </div>
                                         @error('product')
@@ -92,81 +93,129 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    {!! Form::open(['url' => 'arrives/' . $arrive->id, 'method' => 'PATCH', 'files' => true]) !!}
-                    @csrf
-                    <div class="table-responsive">
-                        <table class="table table-bordered" style="display: none;">
-                            <thead>
-                                <tr>
-                                    <th style="width: 50%">Direction</th>
-                                    <th>Responsable</th>
-                                    <th style="width: 5%">#</th>
-                                </tr>
-                            </thead>
-                            <tbody id="addRow" class="addRow">
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td colspan="1" class="">
-                                        <strong>{!! Form::label('Actions attendues') !!}</strong>
-                                        {!! Form::select(
-                                            'description',
-                                            [
-                                                'Urgent' => 'Urgent',
-                                                'M\'en parler' => 'M\'en parler',
-                                                'Etudes et Avis' => 'Etudes et Avis',
-                                                'Répondre' => 'Répondre',
-                                                'Suivi' => 'Suivi',
-                                                'Information' => 'Information',
-                                                'Diffusion' => 'Diffusion',
-                                                'Attribution' => 'Attribution',
-                                                'Classement' => 'Classement',
-                                            ],
-                                            $arrive->courrier->description,
-                                            [
-                                                'placeholder' => 'Choisir une instruction...',
-                                                'class' => 'form-control form-control-sm font-italic',
-                                                'required' => 'required',
-                                                'id' => 'description',
-                                            ],
-                                        ) !!}
+                    <form method="post" action="{{ url('arrives/' . $arrive->id) }}" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+                        @method('PUT')
+                        {{-- {!! Form::open(['url' => 'arrives/' . $arrive->id, 'method' => 'PATCH', 'files' => true]) !!}
+                    @csrf --}}
+                        <div class="table-responsive">
+                            <table class="table table-bordered" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50%">Direction</th>
+                                        <th>Responsable</th>
+                                        <th style="width: 5%">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="addRow" class="addRow">
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="1" class="">
+                                            {{-- <strong>{!! Form::label('Actions attendues') !!}</strong>
+                                            {!! Form::select(
+                                                'description',
+                                                [
+                                                    'Urgent' => 'Urgent',
+                                                    'M\'en parler' => 'M\'en parler',
+                                                    'Etudes et Avis' => 'Etudes et Avis',
+                                                    'Répondre' => 'Répondre',
+                                                    'Suivi' => 'Suivi',
+                                                    'Information' => 'Information',
+                                                    'Diffusion' => 'Diffusion',
+                                                    'Attribution' => 'Attribution',
+                                                    'Classement' => 'Classement',
+                                                ],
+                                                $arrive->courrier->description,
+                                                [
+                                                    'placeholder' => 'Choisir une instruction...',
+                                                    'class' => 'form-control form-control-sm font-italic',
+                                                    'required' => 'required',
+                                                    'id' => 'description',
+                                                ],
+                                            ) !!}
 
-                                        <small id="emailHelp" class="form-text text-muted">
-                                            @if ($errors->has('description'))
-                                                @foreach ($errors->get('description') as $message)
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                @endforeach
-                                            @endif
-                                        </small>
-                                    </td>
-                                    <td colspan="1">
-                                        <strong><label for="date_imp">{{ __('Date imputation') }}</label></strong>
-                                        <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
-                                            type="date"
-                                            class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
-                                            name="date_imp" placeholder="Date imputation" required
-                                            value="{{ optional($arrive->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
-                                            autocomplete="date_imp">
-                                        @error('date_imp')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td colspan="4" class="text-center">
-                                        {!! Form::submit('Imputer', ['class' => 'btn btn-outline-primary pull-right']) !!}
-                                    </td>
-                                </tr>
-                            </tbody>
+                                            <small id="emailHelp" class="form-text text-muted">
+                                                @if ($errors->has('description'))
+                                                    @foreach ($errors->get('description') as $message)
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @endforeach
+                                                @endif
+                                            </small> --}}
+                                            <label for="description" class="form-label">Actions attendues<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <select name="description"
+                                                class="form-select font-italic @error('description') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-familiale"
+                                                data-placeholder="Choisir une instruction..." @required(true)>
+                                                <option value="{{ $arrive?->courrier?->description }}">
+                                                    {{ $arrive?->courrier?->description ?? old('description') }}
+                                                </option>
+                                                <option value="Urgent">
+                                                    Urgent
+                                                </option>
+                                                <option value="M'en parler">
+                                                    M'en parler
+                                                </option>
+                                                <option value="Répondre">
+                                                    Répondre
+                                                </option>
+                                                <option value="Suivi">
+                                                    Suivi
+                                                </option>
+                                                <option value="Information">
+                                                    Information
+                                                </option>
+                                                <option value="Diffusion">
+                                                    Diffusion
+                                                </option>
+                                                <option value="Attribution">
+                                                    Attribution
+                                                </option>
+                                                <option value="Classement">
+                                                    Classement
+                                                </option>
+                                            </select>
+                                            @error('description')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </td>
+                                        <td colspan="1">
+                                            <strong><label for="date_imp">{{ __('Date imputation') }}</label></strong>
+                                            <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
+                                                type="date"
+                                                class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
+                                                name="date_imp" placeholder="Date imputation" required
+                                                value="{{ optional($arrive->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                                                autocomplete="date_imp">
+                                            @error('date_imp')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            {{-- {!! Form::submit('Imputer', ['class' => 'btn btn-outline-primary pull-right']) !!} --}}
 
-                        </table>
-                    </div>
+                                            <div class="text-center">
+                                                <button type="submit"
+                                                    class="btn btn-outline-primary pull-right">Imputer</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
 
-                    {!! Form::close() !!}
+                            </table>
+                        </div>
+                    </form>
+                    {{-- {!! Form::close() !!} --}}
                 </div>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
