@@ -35,7 +35,7 @@
                                     <select name="civilite"
                                         class="form-select form-select-sm @error('civilite') is-invalid @enderror"
                                         aria-label="Select" id="select-field-civilite" data-placeholder="Choisir civilité">
-                                        <option value="">
+                                        <option value="{{ old('civilite') }}">
                                             {{ old('civilite') }}
                                         </option>
                                         <option value="Monsieur">
@@ -133,12 +133,26 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4">
+                                {{-- <div class="col-12 col-md-6 col-lg-4">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="telephone" value="{{ old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="téléphone">
+                                    @error('telephone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div> --}}
+                                
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <label for="telephone" class="form-label">Téléphone personnel<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="number" min="0" name="telephone"
+                                        value="{{ old('telephone') }}"
+                                        class="form-control form-control-sm @error('telephone') is-invalid @enderror"
+                                        id="telephone" placeholder="7xxxxxxxx">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -178,9 +192,9 @@
                                     <select name="categorie" class="form-select @error('categorie') is-invalid @enderror"
                                         aria-label="Select" id="select-field-categories"
                                         data-placeholder="Choisir categorie">
-                                        <option value=""></option>
+                                        <option value="{{ old('categorie') }}">{{ old('categorie') }}</option>
                                         @foreach ($categories as $categorie)
-                                            <option value="{{ $categorie->id }}">
+                                            <option value="{{ $categorie->name }}">
                                                 {{ $categorie->name ?? old('categorie') }}</option>
                                         @endforeach
                                     </select>
@@ -215,9 +229,9 @@
                                     <select name="fonction" class="form-select @error('fonction') is-invalid @enderror"
                                         aria-label="Select" id="select-field-fonction"
                                         data-placeholder="Choisir fonction">
-                                        <option value=""></option>
+                                        <option value="{{ old('fonction') }}">{{ old('fonction') }}</option>
                                         @foreach ($fonctions as $fonction)
-                                            <option value="{{ $fonction->id }}">
+                                            <option value="{{ $fonction->name }}">
                                                 {{ $fonction->name ?? old('fonction') }}</option>
                                         @endforeach
                                     </select>

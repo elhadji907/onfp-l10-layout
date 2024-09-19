@@ -33,93 +33,24 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | Profil</p>
                             </span>
-                            <button type="button" class="btn btn-info btn-sm">
-                                <span class="badge bg-white text-info">{{ $collective_total }}/1</span>
-                            </button>
-                            {{-- @isset(Auth::user()->cin)
+                            @isset(Auth::user()->cin)
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddCollectiveModal">
                                     <i class="bi bi-plus" title="Ajouter"></i>
                                 </button>
-                            @endisset --}}
+                            @endisset
                         </div>
-                        <h5 class="card-title">
-                            Bienvenue {{ Auth::user()->civilite . ' ' . Auth::user()->name }}</h5>
-                        <!-- demande -->
-                        {{-- <form method="post" action="#" enctype="multipart/form-data" class="row g-3"> --}}
-                        <table class="table table-bordered table-hover table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col">N° demande</th>
-                                    <th scope="col">Nom structure</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Téléphone</th>
-                                    <th scope="col">Localité</th>
-                                    <th scope="col">Statut</th>
-                                    <th class="col"><i class="bi bi-gear"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (Auth::user()?->collectives as $collective)
-                                    @isset($collective?->numero)
-                                        <tr>
-                                            <td>{{ $collective?->numero }}
-                                            </td>
-                                            <td>{{ $collective?->name }}
-                                                @isset($collective?->sigle)
-                                                    {{ '(' . $collective?->sigle . ')' }}
-                                                @endisset
-                                            </td>
-                                            <td><a href="mailto:{{ $collective->email1 }}">{{ $collective->email1 }}</a>
-                                            </td>
-                                            <td><a
-                                                    href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
-                                            </td>
-                                            <td>{{ $collective->departement?->region?->nom }}</td>
-                                            <td>
-                                                <span
-                                                    class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
-                                            </td>
-                                            <td>
-                                                <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('collectives.show', $collective->id) }}"
-                                                        class="btn btn-primary btn-sm" title="voir détails"><i
-                                                            class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li><a class="dropdown-item btn btn-sm"
-                                                                    href="{{ route('collectives.edit', $collective->id) }}"
-                                                                    class="mx-1" title="Modifier"><i
-                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                            </li>
-                                                            <li>
-                                                                <form
-                                                                    action="{{ route('collectives.destroy', $collective->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"
-                                                                        title="Supprimer"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    @endisset
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{-- </form> --}}
+                        @if (isset(Auth::user()->cin))
+                            <h5 class="card-title">Aucune demande collective pour le moment !!</h5>
+                        @else
+                            <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
+                                        class="badge bg-warning text-white">Incomplètes</span></a>, cliquez <a
+                                    href="{{ route('profil') }}">ici</a> pour modifier votre profil</h5>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-        {{-- Ajouter un autre choix --}}
         <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddCollectiveModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
@@ -292,21 +223,6 @@
                                             </span>
                                         @enderror
                                     </div>
-
-                                    {{-- <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="module" class="form-label">Formation sollicitée<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="module" value="{{ old('module_name') }}"
-                                            class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                            id="module_name" placeholder="Nom du module" autofocus>
-                                        <div id="countryList"></div>
-                                        {{ csrf_field() }}
-                                        @error('module')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div> --}}
 
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="description" class="form-label">Description de l'organisation<span

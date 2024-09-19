@@ -38,7 +38,7 @@
                                             class="text-danger mx-1">*</span></label>
                                     <select name="civilite" class="form-select  @error('civilite') is-invalid @enderror"
                                         aria-label="Select" id="select-field-civilite" data-placeholder="Choisir civilité">
-                                        <option value="{{ $user->civilite }}">
+                                        <option value="{{ $user->civilite ?? old('civilite') }}">
                                             {{ $user->civilite ?? old('civilite') }}
                                         </option>
                                         <option value="M.">
@@ -58,7 +58,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="cin" class="form-label">CIN<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="cin" value="{{ $user->cin }}"
+                                    <input type="text" name="cin" value="{{ $user->cin ?? old('cin') }}"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         id="cin" placeholder="cin">
                                     @error('cin')
@@ -71,7 +71,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="username" class="form-label">Username<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="username" value="{{ $user->username }}"
+                                    <input type="text" name="username" value="{{ $user->username ?? old('username') }}"
                                         class="form-control form-control-sm @error('username') is-invalid @enderror"
                                         id="username" placeholder="username">
                                     @error('username')
@@ -84,7 +84,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="firstname" class="form-label">Prénom<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="firstname" value="{{ $user->firstname }}"
+                                    <input type="text" name="firstname" value="{{ $user->firstname ?? old('firstname') }}"
                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
                                         id="firstname" placeholder="prénom">
                                     @error('firstname')
@@ -97,7 +97,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="name" class="form-label">Nom<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="name" value="{{ $user->name }}"
+                                    <input type="text" name="name" value="{{ $user->name ?? old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         id="name" placeholder="nom">
                                     @error('name')
@@ -122,7 +122,7 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="lieu_naissance" class="form-label">Lieu naissance</label>
-                                    <input type="text" name="lieu_naissance" value="{{ $user->lieu_naissance }}"
+                                    <input type="text" name="lieu_naissance" value="{{ $user->lieu_naissance ?? old('lieu_naissance') }}"
                                         class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
                                         id="lieu_naissance" placeholder="Lieu de naissance">
                                     @error('lieu_naissance')
@@ -137,7 +137,7 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         {{-- <span class="input-group-text" id="email">@</span> --}}
-                                        <input type="email" name="email" value="{{ $user->email }}"
+                                        <input type="email" name="email" value="{{ $user->email ?? old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
                                         @error('email')
@@ -151,7 +151,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone" value="{{ $user->telephone }}"
+                                    <input type="text" name="telephone" value="{{ $user->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="téléphone">
                                     @error('telephone')
@@ -164,7 +164,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="adresse" value="{{ $user->adresse }}"
+                                    <input type="text" name="adresse" value="{{ $user->adresse ?? old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
                                     @error('adresse')
@@ -181,7 +181,7 @@
                                         class="form-select  @error('situation_familiale') is-invalid @enderror"
                                         aria-label="Select" id="select-field-familiale"
                                         data-placeholder="Choisir situation familiale">
-                                        <option value="{{ $user->situation_familiale }}">
+                                        <option value="{{ $user->situation_familiale ?? old('situation_familiale') }}">
                                             {{ $user->situation_familiale ?? old('situation_familiale') }}
                                         </option>
                                         <option value="Marié(e)">
@@ -211,7 +211,7 @@
                                                 class="form-select  @error('situation_professionnelle') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-professionnelle"
                                                 data-placeholder="Choisir situation professionnelle">
-                                                <option value="{{ $user->situation_professionnelle }}">
+                                                <option value="{{ $user->situation_professionnelle ?? old('situation_professionnelle') }}">
                                                     {{ $user->situation_professionnelle ?? old('situation_professionnelle') }}
                                                 </option>
                                                 <option value="Employé(e)">

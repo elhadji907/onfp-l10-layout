@@ -31,10 +31,35 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Page de connexion</title>
+    <title>Page de réinitialisation de mot de passe</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script type="text/javascript">
+        function callbackThen(response) {
+            // read Promise object
+            response.json().then(function(data) {
+                console.log(data);
+                if (data.success && data.score > 0.5) {
+                    console.log('valid recpatcha');
+                } else {
+                    document.getElementById('registerForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        alert('recpatcha error');
+                    });
+                }
+            });
+        }
 
+        function callbackCatch(error) {
+            console.error('Error:', error)
+        }
+    </script>
+
+    {!! htmlScriptTagJsApi([
+        'callback_then' => 'callbackThen',
+        'callback_catch' => 'callbackCatch',
+    ]) !!}
     <!-- Favicons -->
     <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -78,7 +103,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif --}}
-          {{--   @if ($message = Session::get('message'))
+            {{--   @if ($message = Session::get('message'))
                 <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                     role="alert">
                     <strong>{{ $message }}</strong>
@@ -88,6 +113,24 @@
             <section class="section login min-vh-100 d-flex flex-column align-items-center justify-content-center">
                 <div class="container">
                     <div class="row justify-content-center">
+
+                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-center py-1">
+                                        <a href="{{ url('/login-page') }}"
+                                            class="logo d-flex align-items-center w-auto">
+                                            <span class="d-none d-lg-block">ONFP</span>
+                                        </a>
+                                    </div>
+
+                                    <!-- Slides with captions -->
+                                    @include('user.slide-image')
+                                    <!-- End Slides with captions -->
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
                             {{-- <div class="d-flex justify-content-center py-4">
@@ -100,14 +143,14 @@
                             <div class="card">
 
                                 <div class="card-body">
-                                    @if ($message = Session::get('status'))
+                                    {{-- @if ($message = Session::get('status'))
                                         <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                                             role="alert">
                                             <strong>{{ $message }}</strong>
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                         </div>
-                                    @endif
+                                    @endif --}}
                                     <div class="pt-0 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Réinitialisation du mot de passe
                                             par e-mail</h5>
@@ -149,18 +192,16 @@
                                 </div>
                             </div>
 
-                            <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
-                            </div>
-
                         </div>
                     </div>
                 </div>
-
+                <div class="credits">
+                    <!-- All the links in the footer should remain intact. -->
+                    <!-- You can delete the links only if you purchased the pro version. -->
+                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                    Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
+                </div>
             </section>
             @include('sweetalert::alert')
         </div>

@@ -33,7 +33,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $autres_diplomes
  * @property string|null $autres_diplomes_pros
  * @property string|null $telephone
- * @property string|null $fixe
  * @property string|null $motivation
  * @property string|null $motif
  * @property int|null $annee_diplome
@@ -178,7 +177,6 @@ class Individuelle extends Model
 		'autres_diplomes',
 		'autres_diplomes_pros',
 		'telephone',
-		'fixe',
 		'motivation',
 		'motif',
 		'annee_diplome',

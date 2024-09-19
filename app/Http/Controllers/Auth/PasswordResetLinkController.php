@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PasswordResetLinkController extends Controller
 {
@@ -35,6 +36,8 @@ class PasswordResetLinkController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
+        
+        Alert::success('Félicitations ! ', 'Nous vous avons envoyé par courriel le lien de réinitialisation du mot de passe !');
 
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EmployeController extends Controller
 {
@@ -56,7 +57,7 @@ class EmployeController extends Controller
             'firstname'           => ['required', 'string', 'max:50'],
             'name'                => ['required', 'string', 'max:25'],
             'image'               => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'telephone'           => ['required', 'string', 'max:25', 'min:9'],
+            'telephone'           => ['required', 'string', 'max:9', 'min:9'],
             'adresse'             => ['required', 'string', 'max:255'],
             'civilite'            => ['required', 'string', 'max:10'],
             'cin'                 => ['required', 'string', 'min:13', 'max:15'],
@@ -108,18 +109,24 @@ class EmployeController extends Controller
             ]);
         }
 
+        $categorie = Category::where('name', $request->categorie)->first();
+        $fonction = Fonction::where('name', $request->fonction)->first();
+        $direction = Direction::where('name', $request->direction)->first();
+
         $employe = Employee::create([
-            'users_id'      => $user->id,
+            'users_id'      => $user?->id,
             'matricule'     => $request?->matricule,
-            'cin'           => $request->cin,
-            'date_embauche' => $request->date_embauche,
-            'fonctions_id'  => $request->fonction,
-            'directions_id' => $request->direction,
-            'categories_id' => $request->categorie,
+            'cin'           => $request?->cin,
+            'date_embauche' => $request?->date_embauche,
+            'fonctions_id'  => $fonction?->id,
+            'directions_id' => $direction?->id,
+            'categories_id' => $categorie?->id,
         ]);
 
-        $status = "Enregistrement effectué avec succès";
-        return Redirect::route('employes.index')->with("status", $status);
+        /* $status = "Enregistrement effectué avec succès";
+        return Redirect::route('employes.index')->with("status", $status); */
+        Alert::success('Félicitations ! ', 'Enregistrement effectué avec succès');
+        return Redirect::route('employes.index');
     }
 
     public function edit($id)
@@ -237,7 +244,7 @@ class EmployeController extends Controller
             $user_create_name = $user_create->firstname . " " . $user_create->firstname;
             $user_update_name = $user_update->firstname . " " . $user_update->firstname;
         }
-        
+
 
         return view("employes.show", compact("user", "user_create_name", "user_update_name", "employe", "directions", "categories", "fonctions"));
     }

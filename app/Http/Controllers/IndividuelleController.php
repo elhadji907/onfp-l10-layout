@@ -188,7 +188,7 @@ class IndividuelleController extends Controller
                     'date_depot'                        =>  $date_depot,
                     'numero'                            =>  $numero_individuelle,
                     'adresse'                           =>  $request->input('adresse'),
-                    'fixe'                              =>  $request->input('telephone_secondaire'),
+                    'telephone'                         =>  $request->input('telephone_secondaire'),
                     'niveau_etude'                      =>  $request->input('niveau_etude'),
                     'diplome_academique'                =>  $request->input('diplome_academique'),
                     'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -220,7 +220,7 @@ class IndividuelleController extends Controller
                     'date_depot'                        =>  $date_depot,
                     'numero'                            =>  $numero_individuelle,
                     'adresse'                           =>  $request->input('adresse'),
-                    'fixe'                              =>  $request->input('telephone_secondaire'),
+                    'telephone'                         =>  $request->input('telephone_secondaire'),
                     'niveau_etude'                      =>  $request->input('niveau_etude'),
                     'diplome_academique'                =>  $request->input('diplome_academique'),
                     'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -259,8 +259,8 @@ class IndividuelleController extends Controller
             "cin"                           => ["required", "string", "min:13", "max:15", Rule::unique(User::class)],
             'firstname'                     => ['required', 'string', 'max:50'],
             'lastname'                      => ['required', 'string', 'max:25'],
-            'telephone'                     => ['required', 'string', 'max:25', 'min:9', 'max:9'],
-            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9', 'max:9'],
+            'telephone'                     => ['required', 'string', 'min:9', 'max:9'],
+            'telephone_secondaire'          => ['required', 'string', 'min:9', 'max:9'],
             'date_naissance'                => ['required', 'date'],
             'lieu_naissance'                => ['string', 'required'],
             'adresse'                       => ['required', 'string', 'max:255'],
@@ -355,7 +355,7 @@ class IndividuelleController extends Controller
             $individuelle = new Individuelle([
                 'date_depot'                        =>  $request->input('date_depot'),
                 'numero'                            =>  $numero_individuelle,
-                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'telephone'                         =>  $request->input('telephone_secondaire'),
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
@@ -387,7 +387,7 @@ class IndividuelleController extends Controller
                 'date_depot'                        =>  $request->input('date_depot'),
                 'numero'                            =>  $numero_individuelle,
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
-                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'telephone'                         =>  $request->input('telephone_secondaire'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
                 'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
@@ -437,7 +437,7 @@ class IndividuelleController extends Controller
 
 
         $this->validate($request, [
-            'telephone_secondaire'          => ['required', 'string', 'max:25', 'min:9', 'max:9'],
+            'telephone_secondaire'          => ['required', 'string', 'min:9', 'max:9'],
             'adresse'                       => ['required', 'string', 'max:255'],
             'departement'                   => ['required', 'string', 'max:255'],
             'module'                        => ['required', 'string', 'max:255'],
@@ -459,7 +459,7 @@ class IndividuelleController extends Controller
         if (isset($individuelle->module) && ($individuelle->module->name == $module_find->name)) {
             $individuelle->update([
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
-                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'telephone'                         =>  $request->input('telephone_secondaire'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
                 'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
@@ -471,6 +471,7 @@ class IndividuelleController extends Controller
                 'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
+                'adresse'                           =>  $request->input('adresse'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $departement->id,
                 "projets_id"                        =>  $request->input("projet"),
@@ -486,7 +487,7 @@ class IndividuelleController extends Controller
             }
             $individuelle->update([
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
-                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'telephone'                         =>  $request->input('telephone_secondaire'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
                 'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
@@ -498,6 +499,7 @@ class IndividuelleController extends Controller
                 'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
+                'adresse'                           =>  $request->input('adresse'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $departement->id,
                 "projets_id"                        =>  $request->input("projet"),
@@ -516,7 +518,7 @@ class IndividuelleController extends Controller
 
             $individuelle->update([
                 'niveau_etude'                      =>  $request->input('niveau_etude'),
-                'fixe'                              =>  $request->input('telephone_secondaire'),
+                'telephone'                         =>  $request->input('telephone_secondaire'),
                 'diplome_academique'                =>  $request->input('diplome_academique'),
                 'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
                 'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
@@ -528,6 +530,7 @@ class IndividuelleController extends Controller
                 'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
+                'adresse'                           =>  $request->input('adresse'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $departement->id,
                 "projets_id"                        =>  $request->input("projet"),
@@ -540,7 +543,7 @@ class IndividuelleController extends Controller
 
         $individuelle->save();
 
-        Alert::success('Modification ! ', 'demande modifié avec succès');
+        Alert::success('Modification ! ', 'demande modifiée avec succès');
         return Redirect::route("demandesIndividuelle");
     }
 
@@ -598,6 +601,11 @@ class IndividuelleController extends Controller
         $individuelle = Individuelle::where('users_id', $user->id)->get();
         $individuelle_total = $individuelle->count();
 
-        return view("individuelles.show-individuelle", compact("individuelle_total", "departements", "modules"));
+        if ($individuelle_total == 0) {
+            return view("individuelles.show-individuelle-aucune", compact("individuelle_total", "departements", "modules"));
+        } else {
+            return view("individuelles.show-individuelle", compact("individuelle_total", "departements", "modules"));
+        }
+
     }
 }

@@ -165,7 +165,7 @@
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse"
-                                        value="{{ $individuelle?->user->adresse ?? old('adresse') }}"
+                                        value="{{ $individuelle?->adresse ?? old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
                                     @error('adresse')
@@ -209,7 +209,7 @@
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="0" name="telephone_secondaire"
-                                        value="{{ $individuelle?->fixe ?? old('telephone_secondaire') }}"
+                                        value="{{ $individuelle?->telephone ?? old('telephone_secondaire') }}"
                                         class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
                                         id="telephone_secondaire" placeholder="7xxxxxxxx">
                                     @error('telephone_secondaire')
@@ -238,8 +238,8 @@
                                     <select name="departement"
                                         class="form-select  @error('departement') is-invalid @enderror" aria-label="Select"
                                         id="select-field-departement" data-placeholder="Choisir localité">
-                                        <option value="{{ $individuelle?->departement?->nom }}">
-                                            {{ $individuelle?->departement?->nom }}</option>
+                                        <option value="{{ $individuelle?->departement?->nom ?? old('departement') }}">
+                                            {{ $individuelle?->departement?->nom ?? old('departement') }}</option>
                                         @foreach ($departements as $departement)
                                             <option value="{{ $departement->nom }}">
                                                 {{ $departement->nom }}

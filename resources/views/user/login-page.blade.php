@@ -4,14 +4,39 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script type="text/javascript">
+        function callbackThen(response) {
+            // read Promise object
+            response.json().then(function(data) {
+                console.log(data);
+                if (data.success && data.score > 0.5) {
+                    console.log('recpatcha valid');
+                } else {
+                    document.getElementById('registerForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        alert('erreur recpatcha');
+                    });
+                }
+            });
+        }
 
+        function callbackCatch(error) {
+            console.error('Error:', error)
+        }
+    </script>
+
+    {!! htmlScriptTagJsApi([
+        'callback_then' => 'callbackThen',
+        'callback_catch' => 'callbackCatch',
+    ]) !!}
     <title>Page de connexion</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <!-- Favicons -->
     <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -52,7 +77,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif --}}
-           {{--  @if ($message = Session::get('message'))
+            {{--  @if ($message = Session::get('message'))
                 <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                     role="alert">
                     <strong>{{ $message }}</strong>
@@ -79,7 +104,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-column align-items-center justify-content-center">
+                        <div
+                            class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-column align-items-center justify-content-center">
                             {{-- <div class="d-flex justify-content-center py-4">
                                 <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
                                     <span class="d-none d-lg-block">ONFP</span>
@@ -162,19 +188,17 @@
 
                                 </div>
                             </div>
-
-                            <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
-                            </div>
-
                         </div>
                     </div>
                 </div>
 
+                <div class="credits">
+                    <!-- All the links in the footer should remain intact. -->
+                    <!-- You can delete the links only if you purchased the pro version. -->
+                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                    Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
+                </div>
             </section>
             @include('sweetalert::alert')
         </div>

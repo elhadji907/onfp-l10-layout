@@ -5,8 +5,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script type="text/javascript">
+        function callbackThen(response) {
+            // read Promise object
+            response.json().then(function(data) {
+                console.log(data);
+                if (data.success && data.score > 0.5) {
+                    console.log('valid recpatcha');
+                } else {
+                    document.getElementById('registerForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        alert('recpatcha error');
+                    });
+                }
+            });
+        }
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        function callbackCatch(error) {
+            console.error('Error:', error)
+        }
+    </script>
+
+    {!! htmlScriptTagJsApi([
+        'callback_then' => 'callbackThen',
+        'callback_catch' => 'callbackCatch',
+    ]) !!}
+
+    <title>{{ config('app.name', 'ONFP') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

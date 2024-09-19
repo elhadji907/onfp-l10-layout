@@ -7,7 +7,32 @@
     <title>@yield('title', 'ONFP')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script type="text/javascript">
+        function callbackThen(response) {
+            // read Promise object
+            response.json().then(function(data) {
+                console.log(data);
+                if (data.success && data.score > 0.5) {
+                    console.log('valid recpatcha');
+                } else {
+                    document.getElementById('registerForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        alert('recpatcha error');
+                    });
+                }
+            });
+        }
 
+        function callbackCatch(error) {
+            console.error('Error:', error)
+        }
+    </script>
+
+    {!! htmlScriptTagJsApi([
+        'callback_then' => 'callbackThen',
+        'callback_catch' => 'callbackCatch',
+    ]) !!}
     <!-- Favicons -->
     <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
@@ -57,7 +82,6 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
     <style>
-
         .nouvelle {
             background-color: #ff9966;
             color: white;
@@ -200,7 +224,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
-        
+
         .non {
             background-color: #DC3545;
             color: white;
@@ -227,6 +251,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message2 {
             background-color: #198754;
             color: white;
@@ -235,6 +260,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message3 {
             background-color: #198754;
             color: white;
@@ -243,6 +269,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message4 {
             background-color: #198754;
             color: white;
@@ -251,6 +278,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message5 {
             background-color: #198754;
             color: white;
@@ -259,6 +287,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message6 {
             background-color: #198754;
             color: white;
@@ -267,6 +296,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message7 {
             background-color: #198754;
             color: white;
@@ -275,6 +305,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message8 {
             background-color: #198754;
             color: white;
@@ -283,6 +314,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message9 {
             background-color: #198754;
             color: white;
@@ -291,6 +323,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message10 {
             background-color: #198754;
             color: white;
@@ -299,6 +332,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message11 {
             background-color: #198754;
             color: white;
@@ -307,6 +341,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message12 {
             background-color: #198754;
             color: white;
@@ -315,6 +350,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message13 {
             background-color: #198754;
             color: white;
@@ -323,6 +359,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message14 {
             background-color: #198754;
             color: white;
@@ -331,6 +368,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .message15 {
             background-color: #198754;
             color: white;
@@ -639,7 +677,7 @@
             dropdownCssClass: "select2--small",
         });
     </script>
-    
+
     <script>
         $('#select-field-registre-update').select2({
             theme: "bootstrap-5",
@@ -860,7 +898,7 @@
             dropdownParent: $('#AddFormationModal'),
         });
     </script>
-    
+
     <script>
         $('#select-field_type_demande').select2({
             theme: "bootstrap-5",

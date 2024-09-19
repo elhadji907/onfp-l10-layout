@@ -74,7 +74,7 @@
                                         </td>
                                         <td style="text-align: center;">
                                             @isset($user?->email_verified_at)
-                                                <span class="badge bg-info"><i class="bi bi-check-circle" title="compte vérifié"></i></span>
+                                                <span class="badge bg-success"><i class="bi bi-check-circle" title="compte vérifié"></i></span>
                                                 {{-- me-1 à mettre dans la classe de la balise i --}}
                                                 {{-- <span class="btn btn-outline-info btn-sm mx-1"><i class="bi bi-check2-circle"></i></span> --}}
                                             @endisset
@@ -96,7 +96,7 @@
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
                                                     href="{{ route('users.show', $user->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="voir détails"><i
+                                                    class="btn btn-info btn-sm mx-1" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i

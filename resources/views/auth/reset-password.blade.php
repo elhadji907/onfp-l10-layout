@@ -44,8 +44,33 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script type="text/javascript">
+        function callbackThen(response) {
+            // read Promise object
+            response.json().then(function(data) {
+                console.log(data);
+                if (data.success && data.score > 0.5) {
+                    console.log('valid recpatcha');
+                } else {
+                    document.getElementById('registerForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        alert('recpatcha error');
+                    });
+                }
+            });
+        }
 
-    <title>Page inscription</title>
+        function callbackCatch(error) {
+            console.error('Error:', error)
+        }
+    </script>
+
+    {!! htmlScriptTagJsApi([
+        'callback_then' => 'callbackThen',
+        'callback_catch' => 'callbackCatch',
+    ]) !!}
+    <title>Page de réinitialisation de mot de passe</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -85,7 +110,6 @@
         <div class="container">
             <section
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-
                 <div class="col-lg-6">
                     <div class="card mb-3">
                         <div class="card-body">
@@ -97,7 +121,8 @@
                             </div>
 
 
-                            <form method="POST" action="{{ route('password.store') }}">
+                            <form class="row g-3 needs-validation" method="POST"
+                                action="{{ route('password.store') }}">
                                 @csrf
 
                                 <input type="hidden" name="token" value="{{ $request->route('token') }}">

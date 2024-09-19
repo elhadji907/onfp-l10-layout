@@ -383,11 +383,29 @@ class CollectiveController extends Controller
     {
         $collective   = Collective::find($id);
 
-        $collective->delete();
+        /* $collective->delete();
 
         Alert::success('Demande', 'supprimée');
 
-        return redirect()->back();
+        return redirect()->back(); */
+
+
+        if ($collective->statut_demande != 'nouvelle') {
+            Alert::warning('Attention ! ', 'action impossible demande déjà traitée');
+            return redirect()->back();
+        } else {
+            $collective->update([
+                'numero'        => $collective->numero . '/' . $id,
+            ]);
+
+            $collective->save();
+
+            $collective->delete();
+
+            Alert::success('Fait !', 'demande supprimée');
+
+            return redirect()->back();
+        }
     }
     public function demandesCollective()
     {
@@ -397,6 +415,10 @@ class CollectiveController extends Controller
         $collective = Collective::where('users_id', $user->id)->get();
         $collective_total = $collective->count();
 
-        return view("collectives.show-collective", compact("collective_total", "departements", "modules"));
+        if ($collective_total == 0) {
+            return view("collectives.show-collective-aucune", compact("collective_total", "departements", "modules"));
+        } else {
+            return view("collectives.show-collective", compact("collective_total", "departements", "modules"));
+        }
     }
 }
