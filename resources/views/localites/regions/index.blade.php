@@ -71,7 +71,7 @@
                                         {{-- <td style="text-align: center;">
                                             <a href="{{ route('regionsmodule', ['idlocalite' => $region->id]) }}"><span class="badge bg-primary">{{ count($region->individuelles) }}</span></a>
                                         </td> --}}
-                                        <td>{{ $region->sigle }}</td>
+                                        <td style="text-align: center;">{{ $region->sigle }}</td>
                                         <td style="text-align: center;">
                                             @foreach ($region->departements as $departement)
                                                 @if ($loop->last)

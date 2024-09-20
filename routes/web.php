@@ -92,16 +92,6 @@ Route::get('/', function () {
 });
 Route::get('/', [UserController::class, 'homePage'])->name('home');
 
-Route::post('sendWelcomeEmail', [EmailController::class, 'sendWelcomeEmail'])->name('sendWelcomeEmail');
-Route::post('sendFormationEmail', [EmailFormationController::class, 'sendFormationEmail'])->name('sendFormationEmail');
-
-// Define Custom Verification Routes
-/* Route::controller(VerificationController::class)->group(function() {
-    Route::get('/email/verify', 'notice')->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
-    Route::post('/email/resend', 'resend')->name('verification.resend');
-}); */
-
 Route::get('/email/verify', function () {
     return view('auth.verify');
 })->middleware('auth')->name('verification.notice');
@@ -120,14 +110,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/login', [ProfileController::class, 'loginPage'])->name('login');
 Route::get('/register-page', [ProfileController::class, 'registerPage'])->name('register-page');
 
-/* Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard'); */
-Route::get('/modal', [RegionController::class, 'modal'])->name('modal');
-Route::post('/updateRegion', [RegionController::class, 'updateRegion'])->name('updateRegion');
-Route::post('/rejeterIndividuelle', [IndividuelleController::class, 'rejeterIndividuelle'])->name('rejeterIndividuelle');
-Route::post('/addRegion', [RegionController::class, 'addRegion'])->name('addRegion');
-/* Route::group(['middleware' => ['isAdmin']], function () { */
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -136,10 +118,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/profil', [ProfileController::class, 'profilePage'])->name('profil');
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
-    /* Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
-    Route::post('/users/create', [UserController::class, 'store'])->name('user.store');
-    Route::get('/users/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update'); */
+
+    Route::get('/modal', [RegionController::class, 'modal'])->name('modal');
+    Route::post('/updateRegion', [RegionController::class, 'updateRegion'])->name('updateRegion');
+    Route::post('/rejeterIndividuelle', [IndividuelleController::class, 'rejeterIndividuelle'])->name('rejeterIndividuelle');
+    Route::post('/addRegion', [RegionController::class, 'addRegion'])->name('addRegion');
+
+    Route::post('sendWelcomeEmail', [EmailController::class, 'sendWelcomeEmail'])->name('sendWelcomeEmail');
+    Route::post('sendFormationEmail', [EmailFormationController::class, 'sendFormationEmail'])->name('sendFormationEmail');
 
     Route::put('/arrives/{arriveId}/delete', [ArriveController::class, 'destroy']);
     Route::put('/departs/{departId}/delete', [DepartController::class, 'destroy']);
@@ -171,7 +157,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('/employes/{employeId}/give-indemnites', [EmployeController::class, 'giveIndemniteToEmploye']);
 
     Route::get('/roles/{roleName}/get-users', [RoleController::class, 'getUsersToRole']);
-
 
     Route::get('arrive-imputations/{id}', [ArriveController::class, 'arriveImputation'])->name('arrive-imputations');
     Route::post('/arrive/fetch', [ArriveController::class, 'fetch'])->name('arrive.fetch');

@@ -51,7 +51,7 @@ class IndividuelleFactory extends Factory
             'date_depot'                            =>      $this->faker->dateTimeBetween('-1 years', '-0 years'),
             'niveau_etude'                          =>      $this->faker->randomElement($array = array('Aucun', 'Arabe', 'Elementaire', 'Secondaire', 'Supérieur', 'Moyen')),
             'numero'                                =>      $numero_individuelle,
-            'fixe'                                  =>      $this->faker->unique(true)->numberBetween(70, 79) . rand(10, 99) . rand(10, 99) . rand(0, 9) . rand(0, 9) . rand(0, 9),
+            'telephone'                             =>      $this->faker->unique(true)->numberBetween(70, 79) . rand(10, 99) . rand(10, 99) . rand(0, 9) . rand(0, 9) . rand(0, 9),
             'statut'                                =>      $this->faker->randomElement($array = array('nouvelle', 'attente')),
             'qualification'                         =>      $this->faker->word,
             'projetprofessionnel'                   =>      $this->faker->text,

@@ -30,12 +30,12 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Localités</h5>
+                        <h5 class="card-title">Départements</h5>
                         <table class="table datatables align-middle justify-content-center" id="table-localites">
                             <thead>
                                 <tr>
-                                    <th>Localités</th>
-                                    <th>Région</th>
+                                    <th>Départements</th>
+                                    <th>Régions</th>
                                     <th class="text-center" scope="col">Demandes individuelles</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
