@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArriveOperateurStoreRequest;
 use App\Http\Requests\ArriveStoreRequest;
 use App\Models\Arrive;
 use App\Models\Courrier;
 use App\Models\Direction;
 use App\Models\Employee;
+use App\Models\Operateur;
 use App\Models\User;
 use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ArriveController extends Controller
@@ -36,16 +40,20 @@ class ArriveController extends Controller
             $numCourrier = Arrive::get()->last()->numero;
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "0001";
+            $numCourrier = "000001";
         }
 
         $longueur = strlen($numCourrier);
 
         if ($longueur <= 1) {
-            $numCourrier   =   strtolower("000" . $numCourrier);
+            $numCourrier   =   strtolower("00000" . $numCourrier);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("00" . $numCourrier);
+            $numCourrier   =   strtolower("0000" . $numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("000" . $numCourrier);
+        }elseif ($longueur >= 4 && $longueur < 5) {
+            $numCourrier   =   strtolower("00" . $numCourrier);
+        }elseif ($longueur >= 5 && $longueur < 6) {
             $numCourrier   =   strtolower("0" . $numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
@@ -65,16 +73,20 @@ class ArriveController extends Controller
             $numCourrier = Arrive::get()->last()->numero;
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "0001";
+            $numCourrier = "000001";
         }
 
         $longueur = strlen($numCourrier);
 
         if ($longueur <= 1) {
-            $numCourrier   =   strtolower("000" . $numCourrier);
+            $numCourrier   =   strtolower("00000" . $numCourrier);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("00" . $numCourrier);
+            $numCourrier   =   strtolower("0000" . $numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("000" . $numCourrier);
+        }elseif ($longueur >= 4 && $longueur < 5) {
+            $numCourrier   =   strtolower("00" . $numCourrier);
+        }elseif ($longueur >= 5 && $longueur < 6) {
             $numCourrier   =   strtolower("0" . $numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
@@ -115,6 +127,73 @@ class ArriveController extends Controller
         return redirect()->back();
     }
 
+    public function addCourrierOperateur(ArriveOperateurStoreRequest $request): RedirectResponse
+    {
+        $user = new User([
+            /* 'firstname'             =>      $request->input("prenom"),
+            'name'                  =>      $request->input("nom"), */
+            'username'              =>      $request->input("sigle"),
+            'email'                 =>      $request->input('email'),
+            "telephone"             =>      $request->input("fixe"),
+            /* 'lieu_naissance'        =>      $request->input("adresse"),
+            "adresse"               =>      $request->input("adresse"), */
+            'password'              =>      Hash::make($request->input('email')),
+            'created_by'            =>      Auth::user()->id,
+            'updated_by'            =>      Auth::user()->id
+        ]);
+
+        $user->save();
+
+        $user->assignRole('Demandeur');
+
+        $anneeEnCours = date('y');
+        $annee = date('Y');
+        $numero_agrement = $request->input("numero_arrive").'.'.$anneeEnCours.'/ONFP/DG/DEC/'.$annee;
+
+        $operateur = Operateur::create([
+            "name"                 =>       $request->input("expediteur"),
+            "sigle"                =>       $request->input("sigle"),
+            "numero_agrement"      =>       $numero_agrement,
+            "email1"               =>       $request->input("email"),
+            "fixe"                 =>       $request->input("fixe"),
+            "type_demande"         =>       $request->input("type_demande"),
+            "annee_agrement"       =>       date('Y-m-d'),
+            "statut_agrement"      =>       'nouveau',
+            "users_id"             =>       $user->id
+        ]);
+
+        $operateur->save();
+
+        $user->assignRole('Operateur');
+        $numero_coreespondance = $request->input("numero_arrive").'.'.$anneeEnCours;
+        
+        $courrier = new Courrier([
+            'date_recep'            =>      $request->input('date_arrivee'),
+            'date_cores'            =>      $request->input('date_correspondance'),
+            'numero'                =>      $numero_coreespondance,
+            'annee'                 =>      $request->input('annee'),
+            'objet'                 =>      $request->input('objet'),
+            'expediteur'            =>      $request->input('expediteur'),
+            'numero_reponse'        =>      $request->input('numero_reponse'),
+            'date_reponse'          =>      $request->input('date_reponse'),
+            'observation'           =>      $request->input('observation'),
+            'type'                  =>      'arrive',
+            "user_create_id"        =>      Auth::user()->id,
+            "user_update_id"        =>      Auth::user()->id,
+            'users_id'              =>      Auth::user()->id,
+        ]);
+
+        $courrier->save();
+
+        $arrive = new Arrive([
+            'numero'             =>      $request->input('numero_arrive'),
+            'courriers_id'       =>      $courrier->id
+        ]);
+
+        $arrive->save();
+        Alert::success("Félicitations !", "Courrier ajouté avec succès");
+        return redirect()->back();
+    }
 
     public function edit($id)
     {
@@ -160,6 +239,7 @@ class ArriveController extends Controller
             "numero_reponse"        => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,{$courrier->id}"],
             "date_reponse"          => ["nullable", "date"],
             "observation"           => ["nullable", "string"],
+            "file"                  => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf', 'max:2048']
         ]);
 
         if (isset($courrier->file)) {
@@ -172,7 +252,29 @@ class ArriveController extends Controller
             $this->validate($request, [
                 "legende"          => ["required", "string"],
             ]);
+
             $filePath = request('file')->store('courriers', 'public');
+
+            /* dd($filePath); */
+            
+            $file = $request->file('file');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'courriers/' . $filename . '' . time() . '.' . $extension;
+
+            /* dd($fileNameToStore); */
+
+            /* $file = Image::make(public_path("/storage/{$filePath}"))->fit(800, 800); */
+
+           /*  $file->save(); */
+
             $courrier->update(
                 [
                     'date_recep'       =>      $request->input('date_arrivee'),

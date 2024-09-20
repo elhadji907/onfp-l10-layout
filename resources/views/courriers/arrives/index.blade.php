@@ -121,15 +121,21 @@
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div> --}}
 
-                        <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
-                            data-bs-target="#addCourrierArrive">
-                            <i class="bi bi-plus" title="Ajouter un nouveau courrier"></i>
-                        </button>
-                        <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
-                                class="btn btn-success btn-sm" title="retour"><i
-                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                            <p> | Liste des courriers arrivés</p>
-                        </span>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
+                                    class="btn btn-success btn-sm" title="retour"><i
+                                        class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                <p> | Liste des courriers arrivés</p>
+                            </span>
+                            <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
+                                data-bs-target="#addCourrierOperateur"><i class="bi bi-plus"
+                                    title="ajouter courrier opérateurs"></i>&nbsp;ajouter courrier opérateurs</button>
+
+                            <button type="button" class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal"
+                                data-bs-target="#addCourrierArrive">
+                                <i class="bi bi-plus" title="ajouter courrier arrivé"></i>&nbsp;ajouter courrier arrivé
+                            </button>
+                        </div>
                         {{-- <p>Le tableau des courriers arrivés</p> --}}
                         <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-arrives">
@@ -231,7 +237,7 @@
                         </div> --}}
                         <div class="modal-body">
                             <div class="row g-3">
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="date_arrivee" class="form-label">Date arrivée<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_arrivee" value="{{ old('date_arrivee') }}"
@@ -244,7 +250,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="numero_arrive" class="form-label">Numéro<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -260,7 +266,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="date_correspondance" class="form-label">Date correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_correspondance"
@@ -274,7 +280,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="numero_correspondance" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -290,7 +296,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-34 mb-0">
+                                <div class="col-12 col-md-6 col-lg-34 mb-0">
                                     <label for="annee" class="form-label">Année<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="2024" name="annee"
@@ -304,7 +310,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="expediteur" class="form-label">Expéditeur<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="expediteur" id="expediteur" rows="1"
@@ -328,7 +334,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="reference" class="form-label">Référence</label>
                                     <input type="text" name="reference" value="{{ old('reference') }}"
                                         class="form-control form-control-sm @error('reference') is-invalid @enderror"
@@ -340,7 +346,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                     <input type="number" min="0" name="numero_reponse"
                                         value="{{ old('numero_reponse') }}"
@@ -353,7 +359,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="date_reponse" class="form-label">Date réponse</label>
                                     <input type="date" min="0" name="date_reponse"
                                         value="{{ old('date_reponse') }}"
@@ -365,6 +371,246 @@
                                         </span>
                                     @enderror
                                 </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <label for="observation" class="form-label">Observations</label>
+                                    <textarea name="observation" id="observation" rows="1"
+                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
+                                    @error('observation')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addCourrierOperateur" tabindex="-1" role="dialog"
+            aria-labelledby="addCourrierOperateurLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    {{--  <div class="pt-0 pb-0">
+                        <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
+                        <p class="text-center small">enregister un nouveau courrier arrivé</p>
+                    </div> --}}
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter un nouveau courrier arrivé</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {{-- <form method="post" action="{{ route('arrives.store') }}" enctype="multipart/form-data"
+                        class="row g-3"> --}}
+                        <form method="post" action="{{ route('addCourrierOperateur') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row g-3">
+
+                                <div class="col-12 col-md-6 col-lg-8 mb-0">
+                                    <label for="objet" class="form-label">Objet<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="objet" id="objet" rows="1"
+                                        class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet') }}</textarea>
+                                    @error('objet')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="numero_arrive" class="form-label">Numéro<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="number" min="0" name="numero_arrive"
+                                            value="{{ $numCourrier ?? old('numero_arrive') }}"
+                                            class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
+                                            id="numero_arrive" placeholder="Numéro de correspondance">
+                                        @error('numero_arrive')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="date_arrivee" class="form-label">Date arrivée<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_arrivee" value="{{ old('date_arrivee') }}"
+                                        class="form-control form-control-sm @error('date_arrivee') is-invalid @enderror"
+                                        id="date_arrivee" placeholder="Date arrivée">
+                                    @error('date_arrivee')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="date_correspondance" class="form-label">Date correspondance<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_correspondance"
+                                        value="{{ old('date_correspondance') }}"
+                                        class="form-control form-control-sm @error('date_correspondance') is-invalid @enderror"
+                                        id="date_correspondance" placeholder="nom">
+                                    @error('date_correspondance')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                {{-- <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="text" min="0" name="numero_correspondance"
+                                            value="{{ old('numero_correspondance') }}"
+                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
+                                            id="numero_correspondance" placeholder="Numéro de correspondance">
+                                        @error('numero_correspondance')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="annee" class="form-label">Année<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="number" min="2024" name="annee"
+                                        value="{{ $anneeEnCours ?? old('annee') }}"
+                                        class="form-control form-control-sm @error('annee') is-invalid @enderror"
+                                        id="annee" placeholder="Année">
+                                    @error('annee')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-8 col-lg-8 mb-0">
+                                    <label for="expediteur" class="form-label">Opérateur<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="expediteur" id="expediteur" rows="1"
+                                        class="form-control form-control-sm @error('expediteur') is-invalid @enderror" placeholder="Expéditeur">{{ old('expediteur') }}</textarea>
+                                    @error('expediteur')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="sigle" class="form-label">Sigle</label>
+                                    <textarea name="sigle" id="sigle" rows="1"
+                                        class="form-control form-control-sm @error('sigle') is-invalid @enderror" placeholder="Sigle">{{ old('sigle') }}</textarea>
+                                    @error('sigle')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="email" class="form-label">Email<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="email" name="email" value="{{ old('email') }}"
+                                        class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                        id="email" placeholder="Adresse email">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="fixe" class="form-label">Téléphone<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="number" min="0" name="fixe" value="{{ old('fixe') }}"
+                                        class="form-control form-control-sm @error('fixe') is-invalid @enderror"
+                                        id="fixe" placeholder="3xxxxxxxx">
+                                    @error('fixe')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <label for="type_demande" class="form-label">TYPE<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="type_demande"
+                                        class="form-select form-select-sm @error('type_demande') is-invalid @enderror"
+                                        aria-label="Select" id="select-field" data-placeholder="Choisir type de demande">
+                                        <option value="{{ old('type_demande') }}">
+                                            {{ old('type_demande') }}
+                                        </option>
+                                        <option value="new">
+                                            Nouvelle
+                                        </option>
+                                        <option value="renew">
+                                            Renouvellement
+                                        </option>
+                                    </select>
+                                    @error('type_demande')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                {{-- <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="reference" class="form-label">Référence</label>
+                                    <input type="text" name="reference" value="{{ old('reference') }}"
+                                        class="form-control form-control-sm @error('reference') is-invalid @enderror"
+                                        id="reference" placeholder="Référence">
+                                    @error('reference')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="numero_reponse" class="form-label">Numéro réponse</label>
+                                    <input type="number" min="0" name="numero_reponse"
+                                        value="{{ old('numero_reponse') }}"
+                                        class="form-control form-control-sm @error('numero_reponse') is-invalid @enderror"
+                                        id="numero_reponse" placeholder="Numéro réponse">
+                                    @error('numero_reponse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                    <label for="date_reponse" class="form-label">Date réponse</label>
+                                    <input type="date" min="0" name="date_reponse"
+                                        value="{{ old('date_reponse') }}"
+                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror"
+                                        id="date_reponse" placeholder="Numéro réponse">
+                                    @error('date_reponse')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div> --}}
 
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <label for="observation" class="form-label">Observations</label>

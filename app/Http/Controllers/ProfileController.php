@@ -74,9 +74,10 @@ class ProfileController extends Controller
             // Create unique file name
             $fileNameToStore = 'avatars/' . $filename . '' . time() . '.' . $extension;
 
-            //dd($fileNameToStore);
+            /* dd($fileNameToStore); */
 
             $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
+            
             $image->save();
 
             $request->user()->update([

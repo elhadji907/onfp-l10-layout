@@ -297,6 +297,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('lettreEvaluation', [FormationController::class, 'lettreEvaluation'])->name('lettreEvaluation');
     Route::post('abeEvaluation', [FormationController::class, 'abeEvaluation'])->name('abeEvaluation');
 
+    Route::post('/addCourrierOperateur', [ArriveController::class, 'addCourrierOperateur'])->name('addCourrierOperateur');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

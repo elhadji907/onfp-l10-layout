@@ -218,7 +218,7 @@ class OperateurController extends Controller
         $user = new User([
             /* 'civilite'              =>      $request->input("civilite"), */
             'firstname'             =>      $request->input("prenom"),
-            'name'                  =>      $request->input("noms"),
+            'name'                  =>      $request->input("nom"),
             'username'              =>      $request->input("sigle"),
             'email'                 =>      $request->input('email1'),
             "telephone"             =>      $request->input("telephone1"),
