@@ -147,6 +147,8 @@ return [
         'name'                  => 'nom',
         'username'              => "nom d'utilisateur",
         'email'                 => 'adresse courriel',
+        'uppercase'             => 'majuscule',
+        'lowercase'             => 'miniscule',
         'first_name'            => 'prénom',
         'firstname'             => 'prénom',
         'last_name'             => 'nom',

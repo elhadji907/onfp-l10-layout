@@ -10,6 +10,19 @@ use Illuminate\Support\Facades\Redirect;
 
 class PermissionController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware("auth");
+        $this->middleware(['role:super-admin|admin']);
+        $this->middleware("permission:role-view", ["only"=> ["index"]]);
+        $this->middleware("permission:role-create", ["only"=> ["create","store"]]);
+        $this->middleware("permission:role-update", ["only"=> ["update", "edit"]]);
+        $this->middleware("permission:role-show", ["only"=> ["show"]]);
+        $this->middleware("permission:role-delete", ["only"=> ["destroy"]]);
+        $this->middleware("permission:give-role-permissions", ["only"=> ["givePermissionsToRole"]]);
+    }
+    
     public function index()
     {
         $permissions = Permission::orderBy('created_at', 'desc')->get();

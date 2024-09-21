@@ -63,7 +63,8 @@ class IndividuelleFactory extends Factory
             'diplome_professionnel'                 =>      SnmG::getDiplome(),
             'autre_diplome_professionnel'           =>      SnmG::getDiplome(),
             'etablissement_academique'              =>      SnmG::getEtablissement(),
-            'specialite_diplome_professionnel'      =>   $this->faker->word,
+            'specialite_diplome_professionnel'      =>      $this->faker->word,
+            'adresse'                               =>      fake()->address(),
 
             'regions_id'            => function () use ($regions_id) {
                 return $regions_id;

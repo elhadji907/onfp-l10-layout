@@ -149,22 +149,6 @@ class ArriveController extends Controller
         $anneeEnCours = date('y');
         $annee = date('Y');
         $numero_agrement = $request->input("numero_arrive").'.'.$anneeEnCours.'/ONFP/DG/DEC/'.$annee;
-
-        $operateur = Operateur::create([
-            "name"                 =>       $request->input("expediteur"),
-            "sigle"                =>       $request->input("sigle"),
-            "numero_agrement"      =>       $numero_agrement,
-            "email1"               =>       $request->input("email"),
-            "fixe"                 =>       $request->input("fixe"),
-            "type_demande"         =>       $request->input("type_demande"),
-            "annee_agrement"       =>       date('Y-m-d'),
-            "statut_agrement"      =>       'nouveau',
-            "users_id"             =>       $user->id
-        ]);
-
-        $operateur->save();
-
-        $user->assignRole('Operateur');
         $numero_coreespondance = $request->input("numero_arrive").'.'.$anneeEnCours;
         
         $courrier = new Courrier([
@@ -191,6 +175,24 @@ class ArriveController extends Controller
         ]);
 
         $arrive->save();
+
+        $operateur = Operateur::create([
+            "name"                 =>       $request->input("expediteur"),
+            "sigle"                =>       $request->input("sigle"),
+            "numero_agrement"      =>       $numero_agrement,
+            "email1"               =>       $request->input("email"),
+            "fixe"                 =>       $request->input("fixe"),
+            "type_demande"         =>       $request->input("type_demande"),
+            "annee_agrement"       =>       date('Y-m-d'),
+            "statut_agrement"      =>       'nouveau',
+            "users_id"             =>       $user->id,
+            'courriers_id'         =>      $courrier->id
+        ]);
+
+        $operateur->save();
+
+        $user->assignRole('Operateur');
+        
         Alert::success("Félicitations !", "Courrier ajouté avec succès");
         return redirect()->back();
     }
