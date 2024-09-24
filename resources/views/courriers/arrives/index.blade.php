@@ -15,7 +15,7 @@
     <section class="section dashboard">
         <div class="row">
             <!-- Left side columns -->
-            <div class="col-lg-12">
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                 {{-- @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -38,7 +38,7 @@
                 @endif --}}
                 <div class="row">
                     <!-- Sales Card -->
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card sales-card">
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -64,7 +64,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card sales-card">
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -98,7 +98,7 @@
 
     <section class="section">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                 {{-- @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -237,7 +237,7 @@
                         </div> --}}
                         <div class="modal-body">
                             <div class="row g-3">
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_arrivee" class="form-label">Date arrivée<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_arrivee" value="{{ old('date_arrivee') }}"
@@ -250,7 +250,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="numero_arrive" class="form-label">Numéro<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -266,7 +266,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_correspondance" class="form-label">Date correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_correspondance"
@@ -280,7 +280,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="numero_correspondance" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -296,7 +296,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-34 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="annee" class="form-label">Année<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="2024" name="annee"
@@ -310,7 +310,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="expediteur" class="form-label">Expéditeur<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="expediteur" id="expediteur" rows="1"
@@ -322,7 +322,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="objet" id="objet" rows="1"
@@ -334,7 +334,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="reference" class="form-label">Référence</label>
                                     <input type="text" name="reference" value="{{ old('reference') }}"
                                         class="form-control form-control-sm @error('reference') is-invalid @enderror"
@@ -346,7 +346,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                     <input type="number" min="0" name="numero_reponse"
                                         value="{{ old('numero_reponse') }}"
@@ -359,7 +359,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_reponse" class="form-label">Date réponse</label>
                                     <input type="date" min="0" name="date_reponse"
                                         value="{{ old('date_reponse') }}"
@@ -372,7 +372,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="observation" class="form-label">Observations</label>
                                     <textarea name="observation" id="observation" rows="1"
                                         class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
@@ -416,7 +416,7 @@
                         <div class="modal-body">
                             <div class="row g-3">
 
-                                <div class="col-12 col-md-6 col-lg-8 mb-0">
+                                <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="objet" id="objet" rows="1"
@@ -428,7 +428,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="numero_arrive" class="form-label">Numéro<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -444,7 +444,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_arrivee" class="form-label">Date arrivée<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_arrivee" value="{{ old('date_arrivee') }}"
@@ -457,7 +457,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_correspondance" class="form-label">Date correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_correspondance"
@@ -471,7 +471,7 @@
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                {{-- <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="numero_correspondance" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
@@ -487,7 +487,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="annee" class="form-label">Année<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="2024" name="annee"
@@ -501,7 +501,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-8 col-lg-8 mb-0">
+                                <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                     <label for="expediteur" class="form-label">Opérateur<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="expediteur" id="expediteur" rows="1"
@@ -513,7 +513,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="sigle" class="form-label">Sigle</label>
                                     <textarea name="sigle" id="sigle" rows="1"
                                         class="form-control form-control-sm @error('sigle') is-invalid @enderror" placeholder="Sigle">{{ old('sigle') }}</textarea>
@@ -525,7 +525,7 @@
                                 </div>
 
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="email" class="form-label">Email<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="email" name="email" value="{{ old('email') }}"
@@ -538,7 +538,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="fixe" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="0" name="fixe" value="{{ old('fixe') }}"
@@ -551,7 +551,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="type_demande" class="form-label">TYPE<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="type_demande"
@@ -574,7 +574,7 @@
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="reference" class="form-label">Référence</label>
                                     <input type="text" name="reference" value="{{ old('reference') }}"
                                         class="form-control form-control-sm @error('reference') is-invalid @enderror"
@@ -586,7 +586,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                     <input type="number" min="0" name="numero_reponse"
                                         value="{{ old('numero_reponse') }}"
@@ -599,7 +599,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="date_reponse" class="form-label">Date réponse</label>
                                     <input type="date" min="0" name="date_reponse"
                                         value="{{ old('date_reponse') }}"
@@ -612,7 +612,7 @@
                                     @enderror
                                 </div> --}}
 
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="observation" class="form-label">Observations</label>
                                     <textarea name="observation" id="observation" rows="1"
                                         class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
@@ -624,10 +624,10 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
+                                    <button type="button" class="btn btn-secondary btn-sm"
                                         data-bs-dismiss="modal">Fermer</button>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                     </div>
                                 </div>
                             </div>

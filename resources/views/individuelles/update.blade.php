@@ -11,9 +11,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
+                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
-
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 pt-2">
@@ -128,8 +127,7 @@
                                 </div> --}}
 
 
-                                <div class="col-12 col-md-6 col-lg-6 mb-0">
-
+                                <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                     <label for="module" class="form-label">Formation sollicitée<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="module"
@@ -160,8 +158,30 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror --}}
+                                </div>                                
+
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="departement" class="form-label">Lieu de formation<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="departement"
+                                        class="form-select  @error('departement') is-invalid @enderror" aria-label="Select"
+                                        id="select-field-departement" data-placeholder="Choisir localité">
+                                        <option value="{{ $individuelle?->departement?->nom ?? old('departement') }}">
+                                            {{ $individuelle?->departement?->nom ?? old('departement') }}</option>
+                                        @foreach ($departements as $departement)
+                                            <option value="{{ $departement->nom }}">
+                                                {{ $departement->nom }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('departement')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-6 mb-0">
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse"
@@ -205,7 +225,7 @@
                                     @enderror
                                 </div> --}}
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="0" name="telephone_secondaire"
@@ -231,27 +251,6 @@
                                         </span>
                                     @enderror
                                 </div> --}}
-
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                    <label for="departement" class="form-label">Lieu de formation<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="departement"
-                                        class="form-select  @error('departement') is-invalid @enderror" aria-label="Select"
-                                        id="select-field-departement" data-placeholder="Choisir localité">
-                                        <option value="{{ $individuelle?->departement?->nom ?? old('departement') }}">
-                                            {{ $individuelle?->departement?->nom ?? old('departement') }}</option>
-                                        @foreach ($departements as $departement)
-                                            <option value="{{ $departement->nom }}">
-                                                {{ $departement->nom }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('departement')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
 
                                 {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
                                     <label for="matricule" class="form-label">Situation familiale<span
@@ -319,7 +318,7 @@
                                     @enderror
                                 </div> --}}
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="Niveau étude" class="form-label">Niveau étude<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="niveau_etude"
@@ -354,7 +353,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="diplome_academique" class="form-label">Diplôme académique<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="diplome_academique"
@@ -399,7 +398,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="autre_diplome_academique" class="form-label">Si autre ? précisez</label>
                                     <input type="text" name="autre_diplome_academique"
                                         value="{{ $individuelle->autre_diplome_academique ?? old('autre_diplome_academique') }}"
@@ -412,7 +411,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="option_diplome_academique" class="form-label">Option du diplôme</label>
                                     <input type="text" name="option_diplome_academique"
                                         value="{{ $individuelle->option_diplome_academique ?? old('option_diplome_academique') }}"
@@ -425,7 +424,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="etablissement_academique" class="form-label">Etablissement
                                         académique</label>
                                     <input type="text" name="etablissement_academique"
@@ -439,7 +438,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="diplome_pro" class="form-label">Diplôme professionnel<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="diplome_professionnel"
@@ -484,7 +483,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="autre_diplome_professionnel" class="form-label">Si autre ?
                                         précisez</label>
                                     <input type="text" name="autre_diplome_professionnel"
@@ -499,7 +498,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="etablissement_professionnel" class="form-label">Etablissement
                                         professionnel</label>
                                     <input type="text" name="etablissement_professionnel"
@@ -513,7 +512,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="specialite_diplome_professionnel" class="form-label">Spécialité</label>
                                     <input type="text" name="specialite_diplome_professionnel"
                                         value="{{ $individuelle->specialite_diplome_professionnel ?? old('specialite_diplome_professionnel') }}"
@@ -526,7 +525,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="projet_poste_formation" class="form-label">Votre projet après la
                                         formation<span class="text-danger mx-1">*</span></label>
                                     <select name="projet_poste_formation"
@@ -559,7 +558,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="qualification" class="form-label">Qualification et autres diplômes</label>
                                     <textarea name="qualification" id="qualification" rows="2"
                                         class="form-control form-control-sm @error('qualification') is-invalid @enderror"
@@ -571,7 +570,7 @@
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="projet" class="form-label">Projet</label>
                                     <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
                                         aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
@@ -590,7 +589,7 @@
                                         </span>
                                     @enderror
                                 </div> --}}
-                                <div class="col-12 col-md-6 col-lg-6 mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="experience" class="form-label">Expériences et stages</label>
                                     <textarea name="experience" id="experience" rows="2"
                                         class="form-control form-control-sm @error('experience') is-invalid @enderror"
@@ -602,7 +601,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="projetprofessionnel" class="form-label">Informations complémentaires sur
                                         le projet
                                         professionnel</label>
@@ -617,7 +616,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Enregister modifications</button>
                                 </div>
                             </form>
 

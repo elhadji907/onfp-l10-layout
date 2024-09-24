@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', $operateur->sigle)
+@section('title', $operateur?->sigle)
 @section('space-work')
 
     <section
@@ -42,7 +42,7 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <span class="nav-link"><a href="{{ route('operateurs.index', $operateur->id) }}"
+                                    <span class="nav-link"><a href="{{ route('operateurs.index', $operateur?->id) }}"
                                             class="btn btn-secondary btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>
                                     </span>
@@ -97,11 +97,11 @@
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 mb-2">
                                             <div class="label">Raison sociale</div>
-                                            <div>{{ $operateur?->name }}</div>
+                                            <div>{{ $operateur?->user?->operateur }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Sigle</div>
-                                            <div>{{ $operateur?->sigle }}</div>
+                                            <div>{{ $operateur?->user?->username }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Numéro agrément</div>
@@ -109,18 +109,14 @@
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Adresse email</div>
-                                            <div><a href="mailto:{{ $operateur?->email1 }}">{{ $operateur?->email1 }}</a>
+                                            <div><a
+                                                    href="mailto:{{ $operateur?->user?->email }}">{{ $operateur?->user?->email }}</a>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Téléphone fixe</div>
-                                            <div><a href="tel:+221{{ $operateur?->fixe }}">{{ $operateur?->fixe }}</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
-                                            <div class="label">Téléphone portable</div>
                                             <div><a
-                                                    href="tel:+221{{ $operateur?->telephone1 }}">{{ $operateur?->telephone1 }}</a>
+                                                    href="tel:+221{{ $operateur?->user?->fixe }}">{{ $operateur?->user?->fixe }}</a>
                                             </div>
                                         </div>
                                         @isset($operateur?->user?->bp)
@@ -131,7 +127,7 @@
                                         @endisset
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Catégorie</div>
-                                            <div>{{ $operateur?->categorie }}</div>
+                                            <div>{{ $operateur?->user?->categorie }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Statut juridique</div>
@@ -147,15 +143,15 @@
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Adrese</div>
-                                            <div>{{ $operateur?->adresse }}</div>
+                                            <div>{{ $operateur?->user?->adresse }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">RCCM/Ninea</div>
-                                            <div>{{ $operateur?->rccm }}</div>
+                                            <div>{{ $operateur?->user?->rccm }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">N° RCCM/Ninea</div>
-                                            <div>{{ $operateur?->ninea }}</div>
+                                            <div>{{ $operateur?->user?->ninea }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Quitus</div>
@@ -172,30 +168,21 @@
                                         <h5 class="card-title">Personne morale</h5>
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="label">Civilité</div>
-                                            <div>{{ $operateur?->civilite_responsable }}</div>
+                                            <div>{{ $operateur?->user?->civilite }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Prénom</div>
-                                            <div>{{ $operateur->prenom_responsable }}</div>
+                                            <div>{{ $operateur?->user?->firstname }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Nom</div>
-                                            <div>{{ $operateur->nom_responsable }}</div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
-                                            <div class="label">Email</div>
-                                            <div><a href="mailto:{{ $operateur->email2 }}">{{ $operateur->email2 }}</a>
-                                            </div>
+                                            <div>{{ $operateur?->user?->name }}</div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Téléphone</div>
                                             <div><a
-                                                    href="tel:+221{{ $operateur->telephone2 }}">{{ $operateur->telephone2 }}</a>
+                                                    href="tel:+221{{ $operateur?->telephone }}">{{ $operateur?->telephone }}</a>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-lg-4 mb-2">
-                                            <div class="label">Fonction responsable</div>
-                                            <div>{{ $operateur->fonction_responsable }}</div>
                                         </div>
                                     </form>
                                 </div>
@@ -210,7 +197,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
                                             <h5 class="card-title">
-                                                <a href="{{ route('showReference', ['id' => $operateur->id]) }}"
+                                                <a href="{{ route('showReference', ['id' => $operateur?->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
@@ -234,7 +221,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                @foreach ($operateur->operateureferences as $operateureference)
+                                                @foreach ($operateur?->operateureferences as $operateureference)
                                                     <tr>
                                                         <td>{{ $operateureference?->organisme }}</td>
                                                         <td>{{ $operateureference?->contact }}</td>
@@ -280,7 +267,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
                                             <h5 class="card-title">
-                                                <a href="{{ route('showEquipement', ['id' => $operateur->id]) }}"
+                                                <a href="{{ route('showEquipement', ['id' => $operateur?->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
@@ -303,7 +290,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                @foreach ($operateur->operateurequipements as $operateurequipement)
+                                                @foreach ($operateur?->operateurequipements as $operateurequipement)
                                                     <tr>
                                                         <td>{{ $operateurequipement->designation }}</td>
                                                         <td style="text-align: center;">
@@ -355,7 +342,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">FORMATEURS</h5>
                                             <h5 class="card-title">
-                                                <a href="{{ route('showFormateur', ['id' => $operateur->id]) }}"
+                                                <a href="{{ route('showFormateur', ['id' => $operateur?->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
@@ -378,7 +365,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                @foreach ($operateur->operateurformateurs as $operateurformateur)
+                                                @foreach ($operateur?->operateurformateurs as $operateurformateur)
                                                     <tr>
                                                         <td>{{ $operateurformateur->name }}</td>
                                                         <td>{{ $operateurformateur->domaine }}</td>
@@ -428,7 +415,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">LOCALITES</h5>
                                             <h5 class="card-title">
-                                                <a href="{{ route('showLocalite', ['id' => $operateur->id]) }}"
+                                                <a href="{{ route('showLocalite', ['id' => $operateur?->id]) }}"
                                                     class="btn btn-outline-primary float-end btn-rounded btn-sm"
                                                     target="_blank">
                                                     <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
@@ -449,7 +436,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                @foreach ($operateur->operateurlocalites as $operateurlocalite)
+                                                @foreach ($operateur?->operateurlocalites as $operateurlocalite)
                                                     <tr>
                                                         <td style="text-align: center;">{{ $i++ }}</td>
                                                         <td>{{ $operateurlocalite->name }}</td>
@@ -477,7 +464,8 @@
                                                     </th>
                                                 </tr>
                                                 <tr>
-                                                    <input type="hidden" name="operateur" value="{{ $operateur->id }}">
+                                                    <input type="hidden" name="operateur"
+                                                        value="{{ $operateur?->id }}">
                                                     <td>
                                                         <input type="text" name="module" id="module_operateur"
                                                             class="form-control form-control-sm"
@@ -544,7 +532,7 @@
                                             <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
                                             <span class="card-title d-flex align-items-baseline">Statut
                                                 :&nbsp;
-                                                <span class="{{ $operateur->statut_agrement }} text-white btn-sm">
+                                                <span class="{{ $operateur?->statut_agrement }} text-white btn-sm">
                                                     {{ $operateur?->statut_agrement }}</span>
                                                 {{-- <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -553,7 +541,7 @@
 
                                                 {{-- Validation automatique --}}
                                                 {{--  <form
-                                                            action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
+                                                            action="{{ route('validateOperateur', ['id' => $operateur?->id]) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('PUT')
@@ -562,7 +550,7 @@
                                                                     title="Valider"></i>&nbsp;Valider</button>
                                                         </form> --}}
                                                 {{--   <form
-                                                            action="{{ route('agreerOperateur', ['id' => $operateur->id]) }}"
+                                                            action="{{ route('agreerOperateur', ['id' => $operateur?->id]) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('PUT')
@@ -572,14 +560,14 @@
                                                         </form>
                                                         <div>
                                                             <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                                data-bs-target="#ReserveAgrementModal{{ $operateur->id }}"><i
+                                                                data-bs-target="#ReserveAgrementModal{{ $operateur?->id }}"><i
                                                                     class="bi bi-chat-square-text"
                                                                     title="Justification"></i>&nbsp;Sous réserve
                                                             </button>
                                                         </div> --}}
-                                                {{-- @isset($operateur->motif) --}}
+                                                {{-- @isset($operateur?->motif) --}}
                                                 {{-- <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                            data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i
+                                                            data-bs-target="#RejetAgrementModal{{ $operateur?->id }}"><i
                                                                 class="bi bi-trash"
                                                                 title="Justification"></i>&nbsp;Rejeter
                                                         </button> --}}
@@ -607,7 +595,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php $i = 1; ?>
-                                                    @foreach ($operateur->operateurmodules as $operateurmodule)
+                                                    @foreach ($operateur?->operateurmodules as $operateurmodule)
                                                         <tr>
                                                             <td style="text-align: center;">{{ $i++ }}</td>
                                                             <td>{{ $operateurmodule?->domaine }}</td>
@@ -771,7 +759,7 @@
         </div>
         <!-- End Edit Operateur-->
         <!-- Edit Operateur Module -->
-        @foreach ($operateur->operateurmodules as $operateurmodule)
+        @foreach ($operateur?->operateurmodules as $operateurmodule)
             <div class="modal fade" id="EditOperateurmoduleModal{{ $operateurmodule->id }}" tabindex="-1"
                 role="dialog" aria-labelledby="EditOperateurmoduleModalLabel{{ $operateurmodule->id }}"
                 aria-hidden="true">
@@ -873,7 +861,7 @@
         @endforeach
         <!-- End Edit Operateur Module-->
         <!-- The Modal Delete -->
-        @foreach ($operateur->operateurmodules as $operateurmodule)
+        @foreach ($operateur?->operateurmodules as $operateurmodule)
             <div class="modal" id="myModal{{ $operateurmodule->id }}">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -906,7 +894,7 @@
                 </div>
             </div>
         @endforeach
-        {{-- @foreach ($operateur->operateurmodules as $operateurmodule)
+        {{-- @foreach ($operateur?->operateurmodules as $operateurmodule)
             <div class="modal fade" id="AddRegionModal{{ $operateurmodule->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -944,10 +932,10 @@
         @endforeach --}}
         {{-- Agrément sous réserve --}}
         {{--  @foreach ($operateurs as $operateur)
-            <div class="modal fade" id="ReserveAgrementModal{{ $operateur->id }}" tabindex="-1">
+            <div class="modal fade" id="ReserveAgrementModal{{ $operateur?->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('validation-operateur.update', $operateur->id) }}"
+                        <form method="post" action="{{ route('validation-operateur.update', $operateur?->id) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
                             @method('PUT')
@@ -980,10 +968,10 @@
         @endforeach --}}
         {{-- Agrément rejeter --}}
         {{-- @foreach ($operateurs as $operateur)
-            <div class="modal fade" id="RejetAgrementModal{{ $operateur->id }}" tabindex="-1">
+            <div class="modal fade" id="RejetAgrementModal{{ $operateur?->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <form method="post" action="{{ route('validation-operateur.destroy', $operateur->id) }}"
+                        <form method="post" action="{{ route('validation-operateur.destroy', $operateur?->id) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
                             @method('DELETE')
@@ -1027,7 +1015,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <input type="hidden" name="operateur" value="{{ $operateur->id }}">
+                        <input type="hidden" name="operateur" value="{{ $operateur?->id }}">
                         <div class="modal-body">
                             <div class="form-floating mb-3">
                                 <input type="text" name="organisme" value="{{ old('organisme') }}"
@@ -1099,7 +1087,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <input type="hidden" name="operateur" value="{{ $operateur->id }}">
+                            <input type="hidden" name="operateur" value="{{ $operateur?->id }}">
                             <div class="modal-body">
                                 <div class="form-floating mb-3">
                                     <input type="text" name="organisme"

@@ -55,6 +55,15 @@ class CreateUsersTable extends Migration
             /*  1->marié; 2->celibataire; 3->veuf(ve); 4->divorsé */
             /* $table->enum('situation_familiale', ['', 'Marié(e)', 'Célibataire', 'Veuf(ve)', 'Divorsé(e)']); */
             $table->string('situation_familiale')->nullable(true);
+            
+            $table->string('operateur', 200)->nullable();
+            $table->string('web', 200)->nullable();
+            $table->string('typestructure', 200)->nullable();
+            $table->string('categorie', 200)->nullable();
+            $table->string('ninea', 200)->nullable();
+            $table->string('rccm', 200)->nullable();
+            $table->string('email_responsable', 200)->nullable();
+
             $table->rememberToken();
 
             $table->unique(["email"], 'email_UNIQUE');

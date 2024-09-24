@@ -239,17 +239,26 @@
                             <span>Collectives</span>
                         </a>
                     </li><!-- End collectives Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('devenirOperateur') }}">
-                            <span>Devenir Opérateur</span>
-                        </a>
-                    </li><!-- End collectives Nav -->
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link collapsed" href="#">
                             <span>Prise en charge</span>
                         </a>
-                    </li><!-- End Prise en charges Nav -->
+                    </li> --}}
+                    <!-- End Prise en charges Nav -->
+                </ul>
+            </li><!-- End demandes Nav -->
+        @endif
+        @if (auth()->user()->hasRole('Operateur'))
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#demandeurs-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-folder-plus"></i><span>Mes demandes</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="demandeurs-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('devenirOperateur') }}">
+                            <span>Agrément</span>
+                        </a>
+                    </li><!-- End collectives Nav -->
                 </ul>
             </li><!-- End demandes Nav -->
         @endif

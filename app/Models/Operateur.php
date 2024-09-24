@@ -18,9 +18,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $numero_agrement
- * @property string|null $name
- * @property string|null $sigle
- * @property string|null $typestructure
  * @property Carbon|null $date_depot
  * @property Carbon|null $annee_agrement
  * @property string|null $session_agrement
@@ -28,17 +25,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $date_debut
  * @property Carbon|null $date_fin
  * @property Carbon|null $date_renew
- * @property string|null $ninea
- * @property string|null $rccm
  * @property string|null $quitus
  * @property Carbon|null $debut_quitus
  * @property Carbon|null $fin_quitus
- * @property string|null $telephone1
- * @property string|null $telephone2
- * @property string|null $fixe
- * @property string|null $email1
- * @property string|null $email2
- * @property string|null $adresse
  * @property string|null $nom_responsable
  * @property string|null $prenom_responsable
  * @property string|null $cin_responsable
@@ -47,7 +36,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $fonction_responsable
  * @property string|null $statut_agrement
  * @property string|null $statut
- * @property string|null $categorie
  * @property string|null $motif
  * @property int|null $users_id
  * @property int|null $rccms_id
@@ -123,9 +111,6 @@ class Operateur extends Model
 	protected $fillable = [
 		'uuid',
 		'numero_agrement',
-		'name',
-		'sigle',
-		'typestructure',
 		'date_depot',
 		'annee_agrement',
 		'session_agrement',
@@ -133,30 +118,21 @@ class Operateur extends Model
 		'date_debut',
 		'date_fin',
 		'date_renew',
-		'ninea',
-		'rccm',
 		'quitus',
 		'debut_quitus',
 		'fin_quitus',
-		'telephone1',
-		'telephone2',
-		'fixe',
-		'email1',
-		'email2',
-		'adresse',
-		'civilite_responsable',
+		/* 'civilite_responsable',
 		'nom_responsable',
 		'prenom_responsable',
 		'cin_responsable',
 		'telephone_responsable',
 		'email_responsable',
-		'fonction_responsable',
+		'fonction_responsable', */
 		'statut_agrement',
 		'statut',
 		'autre_statut',
 		'bp',
 		'web',
-		'categorie',
 		'motif',
 		'type_demande',
 		'users_id',

@@ -56,6 +56,7 @@ class OperateurmoduleController extends Controller
             ]);
 
             $operateurmodule->save();
+
         } elseif ($operateur->categorie == 'Privé' && $total_module >= 2) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
             return redirect()->back();

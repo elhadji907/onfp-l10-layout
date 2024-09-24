@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-column align-items-center justify-content-center">
 
                             {{-- <div class="d-flex justify-content-center py-4">
                                 <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">

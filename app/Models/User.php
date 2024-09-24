@@ -61,6 +61,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'situation_professionnelle',
         'situation_familiale',
         'cin',
+
+        'operateur',
+        'web',
+        'typestructure',
+        'categorie',
+        'ninea',
+        'rccm',
+        'email_responsables',
+
         'remember_token'
     ];
 
@@ -108,10 +117,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return 'username';
     }
 
-	public function operateurmodules()
-	{
-		return $this->hasMany(Operateurmodule::class, 'users_id')->latest();
-	}
+    public function operateurmodules()
+    {
+        return $this->hasMany(Operateurmodule::class, 'users_id')->latest();
+    }
     public function administrateur()
     {
         return $this->hasOne(Administrateur::class, 'users_id');
@@ -172,7 +181,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Collective::class, 'users_id')->latest();
     }
 
-	
+
     public function pcharges()
     {
         return $this->hasMany(Pcharge::class, 'users_id')->latest();

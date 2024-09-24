@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProfileUpdateRequest extends FormRequest
+class ProfileOperateurUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,12 +17,16 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'cin'                       => ['required', 'string', 'min:13', 'max:15', Rule::unique(User::class)->ignore($this->user()->id)],
+            'operateur'                 => ['required', 'string', Rule::unique(User::class)->ignore($this->user()->id)],
             'username'                  => ['required', 'string'],
             'civilite'                  => ['required', 'string', 'max:8'],
             'firstname'                 => ['required', 'string', 'max:150'],
             'name'                      => ['required', 'string', 'max:25'],
             'date_naissance'            => ['required', 'string'],
             'lieu_naissance'            => ['required', 'string'],
+            'categorie'                 => ['required', 'string'],
+            'rccm'                      => ['required', 'string'],
+            'ninea'                     => ['required', 'string', Rule::unique(User::class)->ignore($this->user()->id)],
             'image'                     => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'email'                     => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'telephone'                 => ['required', 'string', 'max:25', 'min:9'],

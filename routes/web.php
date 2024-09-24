@@ -43,6 +43,7 @@ use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileOperateurController;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\ProjetlocaliteController;
 use App\Http\Controllers\ProjetmoduleController;
@@ -54,11 +55,12 @@ use App\Http\Controllers\ValidationcollectiveController;
 use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
-use App\Http\Controllers\ValidationoperateurController;
 
+use App\Http\Controllers\ValidationoperateurController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -113,6 +115,7 @@ Route::get('/register-page', [ProfileController::class, 'registerPage'])->name('
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profiles', [ProfileOperateurController::class, 'update'])->name('profile.updated');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/home', [UserController::class, 'homePage'])->name('home');
     Route::get('/profil', [ProfileController::class, 'profilePage'])->name('profil');
@@ -280,6 +283,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/devenirOperateurs', [OperateurController::class, 'devenirOperateur'])->name('devenirOperateur');
     Route::post('/addOperateur', [OperateurController::class, 'addOperateur'])->name('addOperateur');
+    
+    Route::post('/renewOperateur', [OperateurController::class, 'renewOperateur'])->name('renewOperateur');
 
     Route::put('/Validatelistecollective/{id}', [ListecollectiveController::class, 'Validatelistecollective'])->name('Validatelistecollective');
 

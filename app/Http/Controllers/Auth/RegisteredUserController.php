@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             /* 'prenom'                => ['required', 'string', 'max:50'], */
-            'username'              => ['required', 'string', 'max:150'],
+            'username'              => ['required', 'string', 'max:25', 'unique:' . User::class],
             'email'                 => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             /* 'telephone'             => ['required', 'string', 'max:25', 'min:9'], */
             /* 'adresse'               => ['required', 'string', 'max:255'], */
@@ -81,7 +81,7 @@ class RegisteredUserController extends Controller
 
         Alert::success('Félicitations ! ' . $user->name, ' Votre compte est créé, merci de vérifier votre boite e-mail, pour activer votre compte');
 
-        $user->assignRole('Demandeur');
+        $user->assignRole($request->input('role'));
 
         event(new Registered($user));
         /* event(new Registered($demandeur));

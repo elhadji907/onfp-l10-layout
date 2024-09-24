@@ -15,10 +15,10 @@
     <section class="section dashboard">
         <div class="row">
             <!-- Left side columns -->
-            <div class="col-lg-12">
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                 <div class="row">
-                    
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card revenue-card">
                             <a href="{{ route('operateurs.index') }}">
                                 <div class="card-body">
@@ -30,7 +30,7 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>
-                                                {{  count($operateurs) }}
+                                                {{ count($operateurs) }}
                                             </h6>
                                             <span class="text-muted small pt-2 ps-1">Tous</span>
                                             {{-- <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_nouveau, 2, ',', ' ') .'%' }}</span> --}}
@@ -42,7 +42,7 @@
                     </div>
 
                     <!-- Sales Card -->
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card sales-card">
                             {{-- <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -60,7 +60,8 @@
                                             <h6>
                                                 {{ $operateur_agreer }}
                                             </h6>
-                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_agreer, 2, ',', ' ') .'%' }}</span>
+                                            <span
+                                                class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_agreer, 2, ',', ' ') . '%' }}</span>
                                             {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                         </div>
                                     </div>
@@ -68,7 +69,7 @@
                             </a>
                         </div>
                     </div>
-                    {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    {{-- <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card sales-card">
                             <a href="#">
                                 <div class="card-body">
@@ -87,7 +88,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card revenue-card">
                             <a href="#">
                                 <div class="card-body">
@@ -106,7 +107,7 @@
                             </a>
                         </div>
                     </div> --}}
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card customers-card">
                             {{-- <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -125,7 +126,8 @@
                                             <h6>
                                                 {{ $operateur_rejeter }}
                                             </h6>
-                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_rejeter, 2, ',', ' ') .'%' }}</span>
+                                            <span
+                                                class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_rejeter, 2, ',', ' ') . '%' }}</span>
                                             {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                         </div>
                                     </div>
@@ -133,8 +135,8 @@
                             </a>
                         </div>
                     </div>
-                    
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card revenue-card">
                             <a href="#">
                                 <div class="card-body">
@@ -146,9 +148,10 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>
-                                                {{  $operateur_nouveau }}
+                                                {{ $operateur_nouveau }}
                                             </h6>
-                                            <span class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_nouveau, 2, ',', ' ') .'%' }}</span>
+                                            <span
+                                                class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_nouveau, 2, ',', ' ') . '%' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +165,7 @@
 
     <section class="section">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -192,87 +195,93 @@
                             </button>
                         </div>
                         <h5 class="card-title">Liste des opérateurs</h5>
-                        <table class="table datatables table-bordered table-hover align-middle table-striped"
-                            id="table-operateurs">
-                            <thead>
-                                <tr>
-                                    <th width="15%">N° agrément</th>
-                                    <th width="45%">Opérateurs</th>
-                                    <th width="10%">Sigle</th>
-                                    <th width="5%" class="text-center">Modules</th>
-                                    <th width="5%" class="text-center">Formations</th>
-                                    <th width="15%" class="text-center">Statut</th>
-                                    <th width="5%"><i class="bi bi-gear"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1; ?>
-                                @foreach ($operateurs as $operateur)
-                                    {{-- @isset($operateur?->numero_agrement) --}}
+                        <div class="table-responsive">
+                            <table
+                                class="table datatables table-bordered table-hover table-striped"
+                                id="table-operateurs">
+                                <thead>
                                     <tr>
-                                        <td>{{ $operateur?->numero_agrement }}</td>
-                                        <td>{{ $operateur?->name }}</td>
-                                        <td>{{ $operateur?->sigle }}</td>
-                                        <td style="text-align: center;">
-                                            @foreach ($operateur->operateurmodules as $operateurmodule)
-                                                @if ($loop->last)
-                                                    <a href="#"><span
-                                                            class="badge bg-info">{{ $loop->count }}</span></a>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        <td class="text-center">
-                                            @foreach ($operateur->formations as $formation)
-                                                @if ($loop->last)
-                                                    <a href="#"><span
-                                                            class="badge bg-info">{{ $loop->count }}</span></a>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        <td style="text-align: center;"><span class="{{ $operateur->statut_agrement }}">
-                                                {{ $operateur?->statut_agrement }}</span></td>
-                                        <td>
-                                            <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('operateurs.show', $operateur->id) }}"
-                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li>
-                                                            <a class="dropdown-item btn btn-sm"
-                                                                href="{{ route('operateurs.edit', $operateur->id) }}"
-                                                                class="mx-1" title="Modifier"><i
-                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                        <th width="15%" class="text-center">N° agrément</th>
+                                        <th width="45%">Opérateurs</th>
+                                        <th width="10%" class="text-center">Sigle</th>
+                                        <th width="5%" class="text-center">Modules</th>
+                                        <th width="5%" class="text-center">Formations</th>
+                                        <th width="15%" class="text-center">Statut</th>
+                                        <th width="5%"><i class="bi bi-gear"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; ?>
+                                    @foreach ($operateurs as $operateur)
+                                        {{-- @isset($operateur?->numero_agrement) --}}
+                                        <tr>
+                                            <td>{{ $operateur?->numero_agrement }}</td>
+                                            <td>{{ $operateur?->user?->operateur }}</td>
+                                            <td>{{ $operateur?->user?->username }}</td>
+                                            <td style="text-align: center;">
+                                                @foreach ($operateur->operateurmodules as $operateurmodule)
+                                                    @if ($loop->last)
+                                                        <a href="#"><span
+                                                                class="badge bg-info">{{ $loop->count }}</span></a>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td class="text-center">
+                                                @foreach ($operateur->formations as $formation)
+                                                    @if ($loop->last)
+                                                        <a href="#"><span
+                                                                class="badge bg-info">{{ $loop->count }}</span></a>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td style="text-align: center;"><span
+                                                    class="{{ $operateur->statut_agrement }}">
+                                                    {{ $operateur?->statut_agrement }}</span></td>
+                                            <td>
+                                                <span class="d-flex align-items-baseline"><a
+                                                        href="{{ route('operateurs.show', $operateur->id) }}"
+                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <li>
+                                                                <a class="dropdown-item btn btn-sm"
+                                                                    href="{{ route('operateurs.edit', $operateur->id) }}"
+                                                                    class="mx-1" title="Modifier"><i
+                                                                        class="bi bi-pencil"></i>Modifier</a>
 
-                                                            {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#EditOperateurModal{{ $operateur->id }}">
                                                                     <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                                 </button> --}}
-                                                        </li>
-                                                        <li>
-                                                            <form
-                                                                action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"
-                                                                    title="Supprimer"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    {{-- @endisset --}}
-                                @endforeach
+                                                            </li>
+                                                            <li>
+                                                                <form
+                                                                    action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="dropdown-item show_confirm"
+                                                                        title="Supprimer"><i
+                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        {{-- @endisset --}}
+                                    @endforeach
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+
+                        </div>
                         <!-- End Table with stripped rows -->
 
                     </div>
@@ -280,7 +289,8 @@
 
             </div>
         </div>
-        <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
+        <div
+            class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddOperateurModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
@@ -294,7 +304,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="name" class="form-label">Raison sociale opérateur<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="name" id="name" rows="1"
@@ -307,7 +317,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="sigle" class="form-label">Sigle<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="sigle" value="{{ old('sigle') }}"
@@ -320,7 +330,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="numero_agrement" class="form-label">Numéro agrément<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="numero_agrement"
@@ -334,7 +344,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="email1" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="email" name="email1" value="{{ old('email1') }}"
@@ -347,7 +357,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="fixe" class="form-label">Téléphone fixe<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="number" min="0" name="fixe" value="{{ old('fixe') }}"
@@ -360,7 +370,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="telephone1" class="form-label">Téléphone<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="number" min="0" name="telephone1"
@@ -374,7 +384,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="bp" class="form-label">Boite postal</label>
                                         <input type="text" name="bp" value="{{ old('bp') }}"
                                             class="form-control form-control-sm @error('bp') is-invalid @enderror"
@@ -386,7 +396,7 @@
                                         @enderror
                                     </div>
                                     {{-- Type de structure --}}
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="categorie" class="form-label">Catégorie<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="categorie"
@@ -413,7 +423,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="statut" class="form-label">Statut juridique<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="statut" class="form-select  @error('statut') is-invalid @enderror"
@@ -445,7 +455,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="autre_statut" class="form-label">Si autre ?
                                             précisez</label>
                                         <input type="text" name="autre_statut" value="{{ old('autre_statut') }}"
@@ -458,7 +468,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="adresse" class="form-label">Adresse<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="adresse" id="adresse" rows="1"
@@ -471,7 +481,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="departement" class="form-label">Siège social<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
@@ -491,7 +501,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="registre_commerce" class="form-label">RCCM / Ninea<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="registre_commerce"
@@ -514,7 +524,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="ninea" class="form-label">Numéro RCCM / Ninea<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="ninea" value="{{ old('ninea') }}"
@@ -527,8 +537,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="quitus" class="form-label">Quitus fiscal<span
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="quitus" class="form-label">N° quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="quitus" value="{{ old('quitus') }}"
                                             class="form-control form-control-sm @error('quitus') is-invalid @enderror"
@@ -539,7 +549,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_quitus" class="form-label">Date délivrance<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
@@ -551,7 +561,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="type_demande" class="form-label">TYPE<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="type_demande"
@@ -577,7 +587,7 @@
 
                                     <hr class="dropdown-divider mt-5">
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="civilite" class="form-label">Civilité<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="civilite"
@@ -600,7 +610,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="prenom" class="form-label">Prénom responsable<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="prenom" value="{{ old('prenom') }}"
@@ -613,7 +623,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="nom" class="form-label">Nom responsable<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="nom" value="{{ old('nom') }}"
@@ -626,7 +636,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="email2" class="form-label">Adresse e-mail<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="email" name="email2" value="{{ old('email2') }}"
@@ -639,7 +649,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="telephone2" class="form-label">Téléphone responsable<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="number" min="0" name="telephone2"
@@ -653,7 +663,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="fonction_responsable" class="form-label">Fonction responsable<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="fonction_responsable"
@@ -668,9 +678,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer mt-5">
-                                    <button type="button" class="btn btn-secondary"
+                                    <button type="button" class="btn btn-secondary btn-sm"
                                         data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
                                         Enregistrer</button>
                                 </div>
                             </div>
@@ -695,7 +705,7 @@
                                 <div class="modal-body">
                                     <input type="hidden" name="id" value="{{ $operateur->id }}">
                                     <div class="row g-3">
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="name" class="form-label">Raison sociale opérateur<span
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="name" id="name" rows="1"
@@ -708,7 +718,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="sigle" class="form-label">Sigle<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="sigle"
@@ -722,7 +732,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="numero_agrement" class="form-label">Numéro agrément<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="numero_agrement"
@@ -736,7 +746,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="email1" class="form-label">Email<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="email1"
@@ -750,7 +760,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="fixe" class="form-label">Téléphone fixe<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="number" min="0" name="fixe"
@@ -764,7 +774,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="telephone1" class="form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="number" min="0" name="telephone1"
@@ -778,7 +788,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="bp" class="form-label">Boite postal</label>
                                             <input type="text" name="bp"
                                                 value="{{ $operateur->user?->bp ?? old('bp') }}"
@@ -790,7 +800,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="categorie" class="form-label">Catégorie<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="categorie" class="form-select selectpicker"
@@ -817,7 +827,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="statut" class="form-label">Statut juridique<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="statut"
@@ -850,7 +860,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="autre_statut" class="form-label">Si autre ?
                                                 précisez</label>
                                             <input type="text" name="autre_statut"
@@ -864,7 +874,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="adresse" class="form-label">Adresse<span
                                                     class="text-danger mx-1">*</span></label>
                                                 <textarea name="adresse" id="adresse" rows="1"
@@ -877,7 +887,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="departement" class="form-label">Siège social<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="departement"
@@ -900,7 +910,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="registre_commerce" class="form-label">RCCM / Ninéa<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="registre_commerce"
@@ -924,7 +934,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="ninea" class="form-label">Numéro RCCM / Ninéa<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="ninea"
@@ -938,8 +948,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="quitus" class="form-label">Quitus fiscal<span
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
+                                            <label for="quitus" class="form-label">N° quitus fiscal<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="quitus"
                                                 value="{{ $operateur?->quitus ?? old('quitus') }}"
@@ -951,7 +961,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="date_quitus" class="form-label">Date délivrance<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_quitus"
@@ -965,7 +975,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="type_demande" class="form-label">TYPE<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="type_demande"
@@ -991,7 +1001,7 @@
 
                                         <hr class="dropdown-divider mt-3">
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="civilite" class="form-label">Civilité responsable<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="civilite"
@@ -1014,7 +1024,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="prenom" class="form-label">Prénom responsable<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="prenom"
@@ -1028,7 +1038,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="nom" class="form-label">Nom responsable<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="nom"
@@ -1042,7 +1052,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="email2" class="form-label">Adresse e-mail<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="email" name="email2"
@@ -1056,7 +1066,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="telephone2" class="form-label">Téléphone responsable<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="number" min="0" name="telephone2"
@@ -1070,7 +1080,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="fonction_responsable" class="form-label">Fonction responsable<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="fonction_responsable"

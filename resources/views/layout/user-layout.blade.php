@@ -234,7 +234,7 @@
             /* border-radius: 5px; */
         }
 
-        .message0 {
+        .incomplète {
             background-color: #DC3545;
             color: white;
             padding: 4px 8px;
@@ -243,133 +243,7 @@
             /* border-radius: 5px; */
         }
 
-        .message1 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message2 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message3 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message4 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message5 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message6 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message7 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message8 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message9 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message10 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message11 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message12 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message13 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message14 {
-            background-color: #198754;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
-        .message15 {
+        .valide {
             background-color: #198754;
             color: white;
             padding: 4px 8px;
@@ -392,7 +266,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="{{ url('/home') }}" class="logo d-flex align-items-center">
                 {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
-                <span class="d-none d-lg-block">ONFP V1</span>
+                <span class="d-none d-lg-block">ONFP V2</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -746,6 +620,28 @@
 
     <script>
         $('#select-field-categorie-update').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#categorie').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#rccm').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),

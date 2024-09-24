@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', $operateur->sigle . ' - références et expériences professionnelles')
+@section('title', $operateur?->user?->username . ' - références et expériences professionnelles')
 @section('space-work')
 
     <section class="section register">

@@ -125,7 +125,9 @@
                 {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
                 <img class="rounded-circle" alt="Profil" src="{{ asset(Auth::user()->getImage()) }}">
                 <span class="d-none d-md-block dropdown-toggle ps-2">
-                    @if (Auth::user()->name)
+                    @if (Auth::user()->operateur)
+                        {{ Auth::user()->username }}
+                    @elseif (Auth::user()->name)
                         {{ Auth::user()->civilite . ' ' . Auth::user()->name }}
                     @else
                         {{ Auth::user()->username }}
@@ -136,7 +138,9 @@
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
                     <h6>
-                        @if (Auth::user()->name)
+                        @if (Auth::user()->operateur)
+                            {{ Auth::user()->username }}
+                        @elseif (Auth::user()->name)
                             {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
                         @else
                             {{ Auth::user()->username }}
