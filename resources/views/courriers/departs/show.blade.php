@@ -46,20 +46,22 @@
                                     data-bs-target="#profile-overview">Courrier</button>
                             </li>
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
                                         href="{{ route('departs.edit', $depart->id) }}" class="mx-1">
-                                        {{-- <i class="bi bi-pencil mx-1"></i> --}}
                                         Modifier</a></button>
-                            </li>
+                            </li> --}}
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <button class="nav-link"><a class="dropdown-item btn btn-sm mx-1"
                                         href="{{ url('depart-imputations', ['id' => $depart->id]) }}" class="mx-1">
-                                        {{-- <i class="bi bi-recycle mx-1"></i> --}}
                                         Imputer</a></button>
-                            </li>
+                            </li> --}}
 
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#courrier_update">Modifier</button>
+                            </li>
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab"
                                     data-bs-target="#profile-settings">Commentaires</button>
@@ -241,6 +243,203 @@
                                     <div class="alert alert-info">Aucun commentaire pour ce courrier</div>
 
                                 @endforelse
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="courrier_update">
+                                <form method="post" action="{{ url('departs/' . $depart->id) }}" enctype="multipart/form-data"
+                                    class="row g-3">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="date_depart" class="form-label">Date départ<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="date" name="date_depart" value="{{ $depart->courrier->date_depart?->format('Y-m-d') ?? old('date_depart') }}"
+                                            class="form-control form-control-sm @error('date_depart') is-invalid @enderror"
+                                            id="date_depart" placeholder="Date départ">
+                                        @error('date_depart')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="numero_depart" class="form-label">Numéro départ<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <input type="number" min="0" name="numero_depart"
+                                                value="{{ $depart->numero ?? old('numero_depart') }}"
+                                                class="form-control form-control-sm @error('numero_depart') is-invalid @enderror"
+                                                id="numero_depart" placeholder="Numéro départ">
+                                            @error('numero_depart')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="date_corres" class="form-label">Date correspondance<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="date" name="date_corres"
+                                            value="{{ $depart->courrier->date_cores?->format('Y-m-d') ?? old('date_corres') }}"
+                                            class="form-control form-control-sm @error('date_corres') is-invalid @enderror"
+                                            id="date_corres" placeholder="nom">
+                                        @error('date_corres')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <input type="number" min="0" name="numero_correspondance"
+                                                value="{{ $depart->courrier->numero ?? old('numero_correspondance') }}"
+                                                class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
+                                                id="numero_correspondance" placeholder="Numéro de correspondance">
+                                            @error('numero_correspondance')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="annee" class="form-label">Année<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="number" min="2024" name="annee" value="{{ $depart->courrier->annee ?? old('annee') }}"
+                                            class="form-control form-control-sm @error('annee') is-invalid @enderror"
+                                            id="annee" placeholder="Année">
+                                        @error('annee')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="destinataire" class="form-label">Destinataire<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="destinataire" value="{{ $depart->destinataire ?? old('destinataire') }}"
+                                            class="form-control form-control-sm @error('destinataire') is-invalid @enderror"
+                                            id="destinataire" placeholder="Destinataire">
+                                        @error('destinataire')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="objet" class="form-label">Objet<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="objet" value="{{ $depart->courrier->objet ?? old('objet') }}"
+                                            class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                            id="objet" placeholder="Objet">
+                                        @error('objet')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="service_expediteur" class="form-label">Service expéditeur</label>
+                                        <input type="text" name="service_expediteur" value="{{ $depart->courrier->reference ?? old('service_expediteur') }}"
+                                            class="form-control form-control-sm @error('service_expediteur') is-invalid @enderror"
+                                            id="service_expediteur" placeholder="Service expéditeur">
+                                        @error('service_expediteur')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="numero_reponse" class="form-label">Numéro réponse</label>
+                                        <input type="number" min="0" name="numero_reponse"
+                                            value="{{ $depart->courrier->numero_reponse ?? old('numero_reponse') }}"
+                                            class="form-control form-control-sm @error('numero_reponse') is-invalid @enderror"
+                                            id="numero_reponse" placeholder="Numéro réponse">
+                                        @error('numero_reponse')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="date_reponse" class="form-label">Date réponse</label>
+                                        <input type="date" min="0" name="date_reponse"
+                                            value="{{ $depart->courrier->date_reponse?->format('Y-m-d') ?? old('date_reponse') }}"
+                                            class="form-control form-control-sm @error('date_reponse') is-invalid @enderror"
+                                            id="date_reponse" placeholder="Numéro réponse">
+                                        @error('date_reponse')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="observation" class="form-label">Observations</label>
+                                        <textarea name="observation" id="observation" rows="1"
+                                            class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ $depart->courrier->observation ?? old('observation') }}</textarea>
+                                        @error('observation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="legende" class="form-label">Légende</label>
+                                        <input type="text" name="legende"
+                                            value="{{ $depart->courrier->legende ?? old('legende') }}"
+                                            class="form-control form-control-sm @error('legende') is-invalid @enderror"
+                                            id="legende" placeholder="Le nom du fichier scanné">
+                                        @error('legende')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+    
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="reference" class="form-label">Scan courrier</label>
+                                        <input type="file" name="file" id="file"
+                                            class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                        @error('file')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        @error('reference')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        @if (isset($depart->courrier->file))
+                                        <label for="reference" class="form-label">Cliquer ici pour télécharger</label><br>
+                                            <a class="btn btn-outline-secondary btn-sm" title="télécharger le fichier joint"
+                                                target="_blank" href="{{ asset($depart->courrier->getFile()) }}">
+                                                <i class="bi bi-download">&nbsp;Cliquer ici pour télécharger le courrier scanné</i>
+                                            </a>
+                                        @endif
+                                        {{-- <img class="w-25" alt="courrier"
+                                        src="{{ asset($depart->courrier->getFile()) }}" width="50"
+                                        height="auto"> --}}
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
+                                    </div>
+                                </form>
                             </div>
                         </div><!-- End Bordered Tabs -->
 

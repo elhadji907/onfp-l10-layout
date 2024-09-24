@@ -37,20 +37,25 @@ class DepartController extends Controller
             $numCourrier = Depart::get()->last()->numero;
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "0001";
+            $numCourrier = "000001";
         }
 
         $longueur = strlen($numCourrier);
 
         if ($longueur <= 1) {
-            $numCourrier   =   strtolower("000" . $numCourrier);
+            $numCourrier   =   strtolower("00000" . $numCourrier);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("00" . $numCourrier);
+            $numCourrier   =   strtolower("0000" . $numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("000" . $numCourrier);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numCourrier   =   strtolower("00" . $numCourrier);
+        } elseif ($longueur >= 5 && $longueur < 6) {
             $numCourrier   =   strtolower("0" . $numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
         }
+
 
         $today = date('Y-m-d');
         $count_today = Depart::where("created_at", "LIKE",  "{$today}%")->count();
@@ -65,16 +70,20 @@ class DepartController extends Controller
             $numCourrier = Depart::get()->last()->numero;
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "0001";
+            $numCourrier = "000001";
         }
 
         $longueur = strlen($numCourrier);
 
         if ($longueur <= 1) {
-            $numCourrier   =   strtolower("000" . $numCourrier);
+            $numCourrier   =   strtolower("00000" . $numCourrier);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("00" . $numCourrier);
+            $numCourrier   =   strtolower("0000" . $numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("000" . $numCourrier);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numCourrier   =   strtolower("00" . $numCourrier);
+        } elseif ($longueur >= 5 && $longueur < 6) {
             $numCourrier   =   strtolower("0" . $numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
@@ -226,7 +235,7 @@ class DepartController extends Controller
         Alert::success('Félicitations', 'courrié modifié avec succès');
 
         /* return Redirect::route('departs.index')->with('status', $status); */
-        return Redirect::route('departs.index');
+        return Redirect::back();
     }
 
     public function show($id)
@@ -291,7 +300,7 @@ class DepartController extends Controller
             echo $output;
         }
     }
-    
+
     public function couponDepart(Request $request)
     {
         $depart = Depart::find($request->input('id'));

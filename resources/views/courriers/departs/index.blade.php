@@ -169,10 +169,10 @@
                                                                 href="{{ route('departs.edit', $depart->id) }}"
                                                                 class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
                                                         </li>
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
+                                                        {{-- <li><a class="dropdown-item btn btn-sm mx-1"
                                                                 href="{{ url('depart-imputations', ['id' => $depart->id]) }}"
                                                                 class="mx-1"><i class="bi bi-recycle"></i> Imputer</a>
-                                                        </li>
+                                                        </li> --}}
                                                         {{-- <li><a class="dropdown-item btn btn-sm mx-1"
                                                                 href="{!! url('coupon-depart', ['$id' => $depart->id]) !!}" class="mx-1"
                                                                 target="_blank"><i
