@@ -63,6 +63,7 @@ class CreateUsersTable extends Migration
             $table->string('ninea', 200)->nullable();
             $table->string('rccm', 200)->nullable();
             $table->string('email_responsable', 200)->nullable();
+            $table->string('fonction_responsable', 200)->nullable();
 
             $table->rememberToken();
 

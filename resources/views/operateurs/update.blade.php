@@ -59,8 +59,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="numero_agrement" class="form-label">Numéro agrément<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="numero_agrement" class="form-label">Numéro agrément</label>
                                         <input type="text" name="numero_agrement"
                                             value="{{ $operateur->numero_agrement ?? old('numero_agrement') }}"
                                             class="form-control form-control-sm @error('numero_agrement') is-invalid @enderror"
@@ -281,15 +280,29 @@
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="quitus" class="form-label">N° quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="quitus"
-                                            value="{{ $operateur?->quitus ?? old('quitus') }}"
-                                            class="form-control form-control-sm @error('quitus') is-invalid @enderror"
-                                            id="quitus" placeholder="Quitus fiscal">
+
+                                        <input type="file" name="quitus" id="quitus"
+                                            class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
                                         @error('quitus')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
+                                            <span class="text-danger">{{ $message }}</span>
                                         @enderror
+                                        {{-- <input type="text" name="quitus"
+                                        value="{{ $operateur?->quitus ?? old('quitus') }}"
+                                        class="form-control form-control-sm @error('quitus') is-invalid @enderror"
+                                        id="quitus" placeholder="Quitus fiscal">
+                                    @error('quitus')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror --}}
+                                        @isset($operateur?->quitus)
+                                            <div class="pt-2">
+                                                <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
+                                                    target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
+                                                    <i class="bi bi-file-image"></i>
+                                                </a>
+                                            </div>
+                                        @endisset
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_quitus" class="form-label">Date délivrance<span
@@ -327,7 +340,7 @@
                                             </span>
                                         @enderror
                                     </div>
-{{-- 
+                                    {{-- 
                                     <hr class="dropdown-divider mt-3">
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">

@@ -155,6 +155,13 @@ class Operateur extends Model
 		'file9',
 		'file10'
 	];
+
+	public function getQuitus()
+    {
+        $quitusPath = $this->quitus;
+        return "/storage/" . $quitusPath;
+    }
+
 	public function historiqueagrements()
 	{
 		return $this->hasMany(Historiqueagrement::class, 'historiqueagrements_id')->latest();

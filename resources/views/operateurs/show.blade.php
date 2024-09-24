@@ -155,7 +155,12 @@
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-2">
                                             <div class="label">Quitus</div>
-                                            <div>{{ $operateur?->quitus }}</div>
+                                            <div>
+                                                <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
+                                                    target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
+                                                    <i class="bi bi-file-image"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="label">Date délivrance quitus</div>

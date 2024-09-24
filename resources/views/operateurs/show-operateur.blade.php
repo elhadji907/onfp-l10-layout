@@ -59,13 +59,14 @@
                                         <th class="text-center" width="2%">Info</th>
                                         <th width="10%">N° agrément</th>
                                         {{-- <th width="45%">Opérateurs</th> --}}
-                                        <th width="38%">Opérateur</th>
+                                        <th width="35%">Opérateur</th>
                                         <th width="10%" class="text-center">Sigle</th>
                                         <th width="10%" class="text-center">Téléphone</th>
                                         <th width="15%" class="text-center">Type demande</th>
                                         {{-- <th width="5%" class="text-center">Modules</th> --}}
                                         {{-- <th width="5%" class="text-center">Formations</th> --}}
                                         <th width="10%" class="text-center">Statut</th>
+                                        <th width="5%" class="text-center">Quitus</th>
                                         <th width="5%" class="text-center"><i class="bi bi-gear"></i></th>
                                     </tr>
                                 </thead>
@@ -107,6 +108,12 @@
                                                 <span class="{{ $statut_demande }} mb-2">
                                                     {{ $statut_demande }}
                                                 </span>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
+                                                    target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
+                                                    <i class="bi bi-file-image"></i>
+                                                </a>
                                             </td>
                                             <td style="text-align: center;">
                                                 <span class="d-flex align-items-baseline"><a
@@ -319,20 +326,26 @@
                                     </div> --}}
 
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="quitus" class="form-label">N° quitus fiscal<span
+                                        <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="quitus" value="{{ old('quitus') }}"
+                                        <input type="file" name="quitus" id="quitus"
+                                            class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                        @error('quitus')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        {{-- <input type="text" name="quitus" value="{{ old('quitus') }}"
                                             class="form-control form-control-sm @error('quitus') is-invalid @enderror"
                                             id="quitus" placeholder="N° quitus fiscal">
                                         @error('quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </div>
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="date_quitus" class="form-label">Date délivrance<span
+                                        <label for="date_quitus" class="form-label">Date visa quitus<span
                                                 class="text-danger mx-1">*</span></label>
+
                                         <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
                                             class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
                                             id="date_quitus" placeholder="Date quitus">
@@ -341,6 +354,14 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
+                                        {{-- <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
+                                            class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
+                                            id="date_quitus" placeholder="Date quitus">
+                                        @error('date_quitus')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror --}}
                                     </div>
 
                                     {{-- <hr class="dropdown-divider mt-3">
@@ -718,7 +739,19 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="quitus"
+
+                                        <input type="file" name="quitus" id="quitus"
+                                            class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                        @error('quitus')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <div class="pt-2">
+                                            <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
+                                                target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
+                                                <i class="bi bi-file-image"></i>
+                                            </a>
+                                        </div>
+                                        {{-- <input type="text" name="quitus"
                                             value="{{ $operateur?->quitus ?? old('quitus') }}"
                                             class="form-control form-control-sm @error('quitus') is-invalid @enderror"
                                             id="quitus" placeholder="Quitus fiscal">
@@ -726,10 +759,10 @@
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </div>
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="date_quitus" class="form-label">Date délivrance<span
+                                        <label for="date_quitus" class="form-label">Date visa quitus<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_quitus"
                                             value="{{ $operateur?->debut_quitus?->format('Y-m-d') ?? old('date_quitus') }}"
@@ -751,10 +784,10 @@
                                             <option value="{{ $operateur?->type_demande }}">
                                                 {{ $operateur?->type_demande ?? old('type_demande') }}
                                             </option>
-                                            <option value="new">
+                                            <option value="Nouvelle">
                                                 Nouvelle
                                             </option>
-                                            <option value="renew">
+                                            <option value="Renouvellement">
                                                 Renouvellement
                                             </option>
                                         </select>

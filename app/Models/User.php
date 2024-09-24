@@ -69,6 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'ninea',
         'rccm',
         'email_responsables',
+        'fonction_responsable',
 
         'remember_token'
     ];

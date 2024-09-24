@@ -134,7 +134,8 @@ class ArriveController extends Controller
             'name'                  =>      $request->input("nom"), */
             'username'              =>      $request->input("sigle"),
             'email'                 =>      $request->input('email'),
-            "telephone"             =>      $request->input("fixe"),
+            "operateur"             =>       $request->input("expediteur"),
+            "fixe"                  =>       $request->input("fixe"),
             /* 'lieu_naissance'        =>      $request->input("adresse"),
             "adresse"               =>      $request->input("adresse"), */
             'password'              =>      Hash::make($request->input('email')),
@@ -177,11 +178,7 @@ class ArriveController extends Controller
         $arrive->save();
 
         $operateur = Operateur::create([
-            "name"                 =>       $request->input("expediteur"),
-            "sigle"                =>       $request->input("sigle"),
             "numero_agrement"      =>       $numero_agrement,
-            "email1"               =>       $request->input("email"),
-            "fixe"                 =>       $request->input("fixe"),
             "type_demande"         =>       $request->input("type_demande"),
             "annee_agrement"       =>       date('Y-m-d'),
             "statut_agrement"      =>       'nouveau',

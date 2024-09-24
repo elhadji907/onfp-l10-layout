@@ -560,10 +560,10 @@
                                         <option value="{{ old('type_demande') }}">
                                             {{ old('type_demande') }}
                                         </option>
-                                        <option value="new">
+                                        <option value="Nouvelle">
                                             Nouvelle
                                         </option>
-                                        <option value="renew">
+                                        <option value="Renouvellement">
                                             Renouvellement
                                         </option>
                                     </select>

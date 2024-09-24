@@ -34,7 +34,7 @@
                                 <p> | Profil</p>
                             </span>
                             <button type="button" class="btn btn-info btn-sm">
-                                <span class="badge bg-white text-info">{{ $operateur_total }}/1</span>
+                                <span class="badge bg-white text-info">{{ $operateur_total }}</span>
                             </button>
                             {{-- @isset(Auth::user()->cin) --}}
                             <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
@@ -56,14 +56,16 @@
             </div>
         </div>
         {{-- Ajouter un autre choix --}}
-        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+        <div
+            class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddoperateurModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <form method="post" action="{{ route('operateurs.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter une demande d'agrément</h5>
+                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter une demande
+                                    d'agrément</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -148,18 +150,39 @@
                                             </span>
                                         @enderror
                                     </div> --}}
-
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="type_demande" class="form-label">Type demande<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="type_demande"
+                                            class="form-select form-select-sm @error('type_demande') is-invalid @enderror"
+                                            aria-label="Select" id="select-field_type_demande"
+                                            data-placeholder="Choisir type de demande">
+                                            <option value="{{ old('type_demande') }}">
+                                                {{ old('type_demande') }}
+                                            </option>
+                                            <option value="Nouvelle">
+                                                Nouvelle
+                                            </option>
+                                            <option value="Renouvellement">
+                                                Renouvellement
+                                            </option>
+                                        </select>
+                                        @error('type_demande')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     {{-- Type de structure --}}
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="departement" class="form-label">Siège social<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select form-select-sm @error('departement') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-departement_op"
-                                            data-placeholder="Choisir">
-                                            <option value=""></option>
+                                            aria-label="Select" id="select-field-departement_op" data-placeholder="Choisir">
+                                            <option value="{{ old('departement') }}">{{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
-                                                <option value="{{ $departement->id }}">
+                                                <option value="{{ $departement->nom }}">
                                                     {{ $departement->nom }}
                                                 </option>
                                             @endforeach
@@ -170,7 +193,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    
+
                                     {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="categorie" class="form-label">Catégorie<span
                                                 class="text-danger mx-1">*</span></label>
@@ -280,19 +303,23 @@
                                     </div> --}}
 
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="quitus" class="form-label">N° quitus fiscal<span
+                                        <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="quitus" value="{{ old('quitus') }}"
+                                        <input type="file" name="quitus" id="quitus" class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                        @error('quitus')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        {{-- <input type="text" name="quitus" value="{{ old('quitus') }}"
                                             class="form-control form-control-sm @error('quitus') is-invalid @enderror"
                                             id="quitus" placeholder="N° quitus fiscal">
                                         @error('quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </div>
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="date_quitus" class="form-label">Date délivrance<span
+                                        <label for="date_quitus" class="form-label">Date visa quitus<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
                                             class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
@@ -303,30 +330,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="type_demande" class="form-label">Type demande<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="type_demande"
-                                            class="form-select form-select-sm @error('type_demande') is-invalid @enderror"
-                                            aria-label="Select" id="select-field_type_demande"
-                                            data-placeholder="Choisir type de demande">
-                                            <option value="{{ old('type_demande') }}">
-                                                {{ old('type_demande') }}
-                                            </option>
-                                            <option value="new">
-                                                Nouvelle
-                                            </option>
-                                            <option value="renew">
-                                                Renouvellement
-                                            </option>
-                                        </select>
-                                        @error('type_demande')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-{{-- 
+
+                                    {{-- 
                                     <hr class="dropdown-divider mt-3">
 
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
@@ -727,10 +732,10 @@
                                             <option value="{{ $operateur?->type_demande }}">
                                                 {{ $operateur?->type_demande ?? old('type_demande') }}
                                             </option>
-                                            <option value="new">
+                                            <option value="Nouvelle">
                                                 Nouvelle
                                             </option>
-                                            <option value="renew">
+                                            <option value="Renouvellement">
                                                 Renouvellement
                                             </option>
                                         </select>

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\Facades\Image;
 
 class OperateurController extends Controller
 {
@@ -49,9 +50,9 @@ class OperateurController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
 
         $operateurs = Operateur::orderBy('created_at', 'desc')->get();
-        $operateur_new   = Operateur::where('type_demande', 'New')->count();
-        $operateur_renew   = Operateur::where('type_demande', 'Renew')->count();
-        $operateur_total   = Operateur::where('type_demande', 'New')->orwhere('type_demande', 'Renew')->count();
+        $operateur_new   = Operateur::where('type_demande', 'Nouvelle')->count();
+        $operateur_renew   = Operateur::where('type_demande', 'Renouvellement')->count();
+        $operateur_total   = Operateur::where('type_demande', 'Nouvelle')->orwhere('type_demande', 'Renouvellement')->count();
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_new = ((($operateur_new) / ($operateur_total)) * 100);
             $pourcentage_renew = ((($operateur_renew) / ($operateur_total)) * 100);
@@ -74,10 +75,10 @@ class OperateurController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "categorie"             =>      "required|string",
+            /* "categorie"             =>      "required|string", */
             "statut"                =>      "required|string",
             "departement"           =>      "required|string",
-            "quitus"                =>      "required|string",
+            "quitus"                =>      ['image', 'required', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             "date_quitus"           =>      "required|string",
             "type_demande"          =>      "required|string",
         ]);
@@ -85,6 +86,7 @@ class OperateurController extends Controller
         $user = Auth::user();
 
         $operateur_total = Operateur::where('users_id', $user->id)->count();
+        $departement = Departement::where('nom', $request->input("departement"))->first();
 
         if ($operateur_total >= 1) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
@@ -96,15 +98,25 @@ class OperateurController extends Controller
                 "statut"               =>       $request->input("statut"),
                 "autre_statut"         =>       $request->input("autre_statut"),
                 "type_demande"         =>       $request->input("type_demande"),
-                "quitus"               =>       $request->input("quitus"),
                 "debut_quitus"         =>       $request->input("date_quitus"),
                 "annee_agrement"       =>       date('Y-m-d'),
                 "statut_agrement"      =>       'nouveau',
-                "departements_id"      =>       $request->input("departement"),
+                "departements_id"      =>       $departement?->id,
                 "users_id"             =>       $user->id
             ]);
 
             $operateur->save();
+
+            if (request('quitus')) {
+                $quitusPath = request('quitus')->store('quitus', 'public');
+                $quitus = Image::make(public_path("/storage/{$quitusPath}"));
+
+                $quitus->save();
+
+                $operateur->update([
+                    'quitus' => $quitusPath
+                ]);
+            }
 
             Alert::success("Félicitations ! ", "demande ajoutée avec succès");
 
@@ -114,7 +126,7 @@ class OperateurController extends Controller
     public function addOperateur(Request $request)
     {
         $this->validate($request, [
-            "name"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            /*  "name"                  => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "sigle"                 => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
@@ -123,13 +135,13 @@ class OperateurController extends Controller
             "numero_agrement"       => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "email1"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "email"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "fixe"                  => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "telephone1"            => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
+            "telephone"            => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
 
@@ -139,69 +151,109 @@ class OperateurController extends Controller
             "adresse"               =>      "required|string",
             "ninea"                 =>      "required|string",
             "registre_commerce"     =>      "required|string",
-            "quitus"                =>      "required|string",
+            "quitus"                =>      ['image', 'required', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             "date_quitus"           =>      "required|string",
             "civilite"              =>      "required|string",
             "prenom"                =>      "required|string",
             "nom"                   =>      "required|string",
-            "email2"                => ["required", "string", Rule::unique('operateurs')->where(function ($query) {
+            "fonction_responsable"  =>      "required|string", */
+
+            'operateur'                 => ["required", "string", Rule::unique('users')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "telephone2"            => ["required", "min:9", "max:9", "string", Rule::unique('operateurs')->where(function ($query) {
+            'email'                     => ["required", "email", Rule::unique('users')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "fonction_responsable"  =>      "required|string",
+            'username'                  => ["required", "string", Rule::unique('users')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            'fixe'                      => ["required", "string", "min:9", "max:9", Rule::unique('users')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            'telephone'                 => ["required", "string", "min:9", "max:9",  Rule::unique('users')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            'bp'                        => ['nullable', 'string'],
+            'categorie'                 => ['required', 'string'],
+            'adresse'                   => ['required', 'string', 'max:255'],
+            'rccm'                      => ['required', 'string'],
+            'ninea'                     => ["required", "string", Rule::unique('users')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            'web'                       => ['nullable', 'string', 'max:255'],
+            'civilite'                  => ['required', 'string', 'max:8'],
+            'prenom'                 => ['required', 'string', 'max:150'],
+            'email_responsable'         => ["required", "email", Rule::unique('users')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            /* 'fonction_responsable'      => ['required', 'string'], */
+
+            "numero_agrement"           => ["nullable", "string", Rule::unique('operateurs')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })],
+            "statut"                    =>  "required|string",
+            "autre_statut"              =>  "nullable|string",
+            "departement"               =>  "required|string",
+            "quitus"                    =>  ['image', 'sometimes', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            "date_quitus"               =>  "required|string",
+            "type_demande"              =>  "required|string",
         ]);
 
         $user = new User([
-            /* 'civilite'              =>      $request->input("civilite"), */
+            'civilite'              =>      $request->input("civilite"),
             'firstname'             =>      $request->input("prenom"),
             'name'                  =>      $request->input("nom"),
-            'username'              =>      $request->input("sigle"),
-            'email'                 =>      $request->input('email1'),
-            "telephone"             =>      $request->input("telephone1"),
-            'lieu_naissance'        =>      $request->input("adresse"),
+            'operateur'             =>      $request->input("operateur"),
+            'username'              =>      $request->input("username"),
+            'email'                 =>      $request->input('email'),
+            "fixe"                  =>      $request->input("fixe"),
+            "telephone"             =>      $request->input("telephone"),
             "adresse"               =>      $request->input("adresse"),
-            'password'              =>      Hash::make($request->input('email1')),
+            'password'              =>      Hash::make($request->input('email')),
             'created_by'            =>      Auth::user()->id,
-            'updated_by'            =>      Auth::user()->id
+            'updated_by'            =>      Auth::user()->id,
+            "categorie"             =>      $request->input("categorie"),
+            "email_responsable"     =>      $request->input("email_responsable"),
+            /* "fonction_responsable"  =>      $request->input("fonction_responsable"), */
+            "telephone_parent"      =>      $request->input("telephone_parent"),
+            "rccm"                  =>      $request->input("rccm"), /* choisir ninea ou rccm */
+            "ninea"                 =>      $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
+            "bp"                    =>      $request->input("bp"),
+
         ]);
 
         $user->save();
 
         $user->assignRole('Demandeur');
 
+        $departement = Departement::where('nom', $request->input("departement"))->first();
+
         $operateur = Operateur::create([
-            "name"                 =>       $request->input("name"),
-            "sigle"                =>       $request->input("sigle"),
             "numero_agrement"      =>       $request->input("numero_agrement"),
-            "email1"               =>       $request->input("email1"),
-            "fixe"                 =>       $request->input("fixe"),
-            "telephone1"           =>       $request->input("telephone1"),
-            "categorie"            =>       $request->input("categorie"),
             "statut"               =>       $request->input("statut"),
             "autre_statut"         =>       $request->input("autre_statut"),
             "type_demande"         =>       $request->input("type_demande"),
-            "adresse"              =>       $request->input("adresse"),
-            "rccm"                 =>       $request->input("registre_commerce"), /* choisir ninea ou rccm */
-            "ninea"                =>       $request->input("ninea"), /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
-            "quitus"               =>       $request->input("quitus"),
-            "bp"                   =>       $request->input("bp"),
             "debut_quitus"         =>       $request->input("date_quitus"),
             "annee_agrement"       =>       date('Y-m-d'),
             "statut_agrement"      =>       'nouveau',
-            "civilite_responsable" =>       $request->input("civilite"),
-            "prenom_responsable"   =>       $request->input("prenom"),
-            "nom_responsable"      =>       $request->input("nom"),
-            "email2"               =>       $request->input("email2"),
-            "telephone2"           =>       $request->input("telephone2"),
-            "fonction_responsable" =>       $request->input("fonction_responsable"),
-            "departements_id"      =>       $request->input("departement"),
+            "departements_id"      =>       $departement?->id,
             "users_id"             =>       $user->id
         ]);
 
         $operateur->save();
+
         $user->assignRole('Operateur');
+
+        if (request('quitus')) {
+            $quitusPath = request('quitus')->store('quitus', 'public');
+            $quitus = Image::make(public_path("/storage/{$quitusPath}"));
+
+            $quitus->save();
+
+            $operateur->update([
+                'quitus' => $quitusPath
+            ]);
+        }
 
         Alert::success("Félicitations !", "opérateur ajouté avec succès");
 
@@ -213,7 +265,7 @@ class OperateurController extends Controller
         foreach ($user->operateurs as $key => $operateur) {
         }
         $this->validate($request, [
-            "quitus"                =>      ['required', 'string', 'max:10', Rule::unique(Operateur::class)->ignore($operateur?->id)],
+            "quitus"                =>      ['image', 'required', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             "date_quitus"           =>      "required|string",
         ]);
 
@@ -223,16 +275,27 @@ class OperateurController extends Controller
             "statut"               =>       $operateur?->statut,
             "statut_agrement"      =>       'nouveau',
             "autre_statut"         =>       $operateur?->autre_statut,
-            "type_demande"         =>       'renew',
+            "type_demande"         =>       'Renouvellement',
             "rccm"                 =>       $operateur?->registre_commerce, /* choisir ninea ou rccm */
             "ninea"                =>       $operateur?->ninea, /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
-            "quitus"               =>       $request->input("quitus"),
+            /* "quitus"               =>       $request->input("quitus"), */
             "debut_quitus"         =>       $request->input("date_quitus"),
             "departements_id"      =>       $operateur?->departements_id,
             "users_id"             =>       $operateur?->users_id,
         ]);
 
         $op->save();
+
+        if (request('quitus')) {
+            $quitusPath = request('quitus')->store('quitus', 'public');
+            $quitus = Image::make(public_path("/storage/{$quitusPath}"));
+
+            $quitus->save();
+
+            $op->update([
+                'quitus' => $quitusPath
+            ]);
+        }
 
         foreach ($operateur->operateurmodules as $key => $operateurmodule) {
             $module = new Operateurmodule([
@@ -316,12 +379,12 @@ class OperateurController extends Controller
             "adresse"               =>      ['required', 'string'],
             "ninea"                 =>      ['required', 'string'],
             "registre_commerce"     =>      ['required', 'string'],
-            "quitus"                =>      ['required', 'string'],
+            "quitus"                =>      ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             "date_quitus"           =>      ['required', 'string'],
             "type_demande"          =>      ['required', 'string'],
         ]);
 
-           $user->update([
+        $user->update([
             'operateur'             =>      $request->input("operateur"),
             'username'              =>      $request->input("username"),
             "fixe"                  =>      $request->input("fixe"),
@@ -342,13 +405,23 @@ class OperateurController extends Controller
             "statut"               =>       $request->input("statut"),
             "autre_statut"         =>       $request->input("autre_statut"),
             "type_demande"         =>       $request->input("type_demande"),
-            "quitus"               =>       $request->input("quitus"),
             "debut_quitus"         =>       $request->input("date_quitus"),
             "departements_id"      =>       $request->input("departement"),
             "users_id"             =>       $user->id
         ]);
 
         $operateur->save();
+
+        if (request('quitus')) {
+            $quitusPath = request('quitus')->store('quitus', 'public');
+            $quitus = Image::make(public_path("/storage/{$quitusPath}"));
+
+            $quitus->save();
+
+            $operateur->update([
+                'quitus' => $quitusPath
+            ]);
+        }
 
         Alert::success("Effectuée ! ", 'demande modifiée avec succès');
 

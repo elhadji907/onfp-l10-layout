@@ -305,12 +305,12 @@
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="name" class="form-label">Raison sociale opérateur<span
+                                        <label for="operateur" class="form-label">Raison sociale opérateur<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="name" id="name" rows="1"
-                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                            placeholder="La raison sociale de l'opérateur">{{ old('name') }}</textarea>
-                                        @error('name')
+                                        <textarea name="operateur" id="operateur" rows="1"
+                                            class="form-control form-control-sm @error('operateur') is-invalid @enderror"
+                                            placeholder="La raison sociale de l'opérateur">{{ old('operateur') }}</textarea>
+                                        @error('operateur')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -318,12 +318,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="sigle" class="form-label">Sigle<span
+                                        <label for="username" class="form-label">Sigle<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="sigle" value="{{ old('sigle') }}"
-                                            class="form-control form-control-sm @error('sigle') is-invalid @enderror"
-                                            id="sigle" placeholder="Sigle">
-                                        @error('sigle')
+                                        <input type="text" name="username" value="{{ old('username') }}"
+                                            class="form-control form-control-sm @error('username') is-invalid @enderror"
+                                            id="username" placeholder="username">
+                                        @error('username')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -345,12 +345,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="email1" class="form-label">Email<span
+                                        <label for="email" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="email" name="email1" value="{{ old('email1') }}"
-                                            class="form-control form-control-sm @error('email1') is-invalid @enderror"
-                                            id="email1" placeholder="Adresse email">
-                                        @error('email1')
+                                        <input type="email" name="email" value="{{ old('email') }}"
+                                            class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                            id="email" placeholder="Adresse email">
+                                        @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -371,13 +371,13 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="telephone1" class="form-label">Téléphone<span
+                                        <label for="telephone" class="form-label">Téléphone<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="telephone1"
-                                            value="{{ old('telephone1') }}"
-                                            class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
-                                            id="telephone1" placeholder="7xxxxxxxx">
-                                        @error('telephone1')
+                                        <input type="number" min="0" name="telephone"
+                                            value="{{ old('telephone') }}"
+                                            class="form-control form-control-sm @error('telephone') is-invalid @enderror"
+                                            id="telephone" placeholder="7xxxxxxxx">
+                                        @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -487,9 +487,9 @@
                                         <select name="departement"
                                             class="form-select form-select-sm @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement" data-placeholder="Choisir">
-                                            <option value=""></option>
+                                            <option value="{{ old('departement') }}">{{ old('departement') }}</option>
                                             @foreach ($departements as $departement)
-                                                <option value="{{ $departement->id }}">
+                                                <option value="{{ $departement->nom }}">
                                                     {{ $departement->nom }}
                                                 </option>
                                             @endforeach
@@ -502,13 +502,13 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="registre_commerce" class="form-label">RCCM / Ninea<span
+                                        <label for="rccm" class="form-label">RCCM / Ninea<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <select name="registre_commerce"
-                                            class="form-select form-select-sm @error('registre_commerce') is-invalid @enderror"
+                                        <select name="rccm"
+                                            class="form-select form-select-sm @error('rccm') is-invalid @enderror"
                                             aria-label="Select" id="select-field-registre" data-placeholder="Choisir">
-                                            <option value="{{ old('registre_commerce') }}">
-                                                {{ old('registre_commerce') }}
+                                            <option value="{{ old('rccm') }}">
+                                                {{ old('rccm') }}
                                             </option>
                                             <option value="Registre de commerce">
                                                 Registre de commerce
@@ -517,7 +517,7 @@
                                                 Ninea
                                             </option>
                                         </select>
-                                        @error('registre_commerce')
+                                        @error('rccm')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -538,6 +538,14 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="quitus" class="form-label">Quitus fiscal</label>
+                                        <input type="file" name="quitus" id="quitus" value="{{ old('quitus') }}" class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                        @error('quitus')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                   {{--  <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="quitus" class="form-label">N° quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="quitus" value="{{ old('quitus') }}"
@@ -548,7 +556,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_quitus" class="form-label">Date délivrance<span
                                                 class="text-danger mx-1">*</span></label>
@@ -571,10 +579,10 @@
                                             <option value="{{ old('type_demande') }}">
                                                 {{ old('type_demande') }}
                                             </option>
-                                            <option value="new">
+                                            <option value="Nouvelle">
                                                 Nouvelle
                                             </option>
-                                            <option value="renew">
+                                            <option value="Renouvellement">
                                                 Renouvellement
                                             </option>
                                         </select>
@@ -637,12 +645,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="email2" class="form-label">Adresse e-mail<span
+                                        <label for="email_responsable" class="form-label">Adresse e-mail<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="email" name="email2" value="{{ old('email2') }}"
-                                            class="form-control form-control-sm @error('email2') is-invalid @enderror"
-                                            id="email2" placeholder="Adresse email responsable">
-                                        @error('email2')
+                                        <input type="email" name="email_responsable" value="{{ old('email_responsable') }}"
+                                            class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
+                                            id="email_responsable" placeholder="Adresse email responsable">
+                                        @error('email_responsable')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -650,13 +658,13 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="telephone2" class="form-label">Téléphone responsable<span
+                                        <label for="telephone_parent" class="form-label">Téléphone responsable<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="telephone2"
-                                            value="{{ old('telephone2') }}"
-                                            class="form-control form-control-sm @error('telephone2') is-invalid @enderror"
-                                            id="telephone2" placeholder="7xxxxxxxx">
-                                        @error('telephone2')
+                                        <input type="number" min="0" name="telephone_parent"
+                                            value="{{ old('telephone_parent') }}"
+                                            class="form-control form-control-sm @error('telephone_parent') is-invalid @enderror"
+                                            id="telephone_parent" placeholder="7xxxxxxxx">
+                                        @error('telephone_parent')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -911,14 +919,14 @@
                                         </div>
 
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-12">
-                                            <label for="registre_commerce" class="form-label">RCCM / Ninéa<span
+                                            <label for="rccm" class="form-label">RCCM / Ninéa<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <select name="registre_commerce"
-                                                class="form-select form-select-sm @error('registre_commerce') is-invalid @enderror"
+                                            <select name="rccm"
+                                                class="form-select form-select-sm @error('rccm') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-registre-update"
                                                 data-placeholder="Choisir">
                                                 <option value="{{ $operateur->rccm }}">
-                                                    {{ $operateur->rccm ?? old('registre_commerce') }}
+                                                    {{ $operateur->rccm ?? old('rccm') }}
                                                 </option>
                                                 <option value="Registre de commerce">
                                                     Registre de commerce
@@ -927,7 +935,7 @@
                                                     Ninea
                                                 </option>
                                             </select>
-                                            @error('registre_commerce')
+                                            @error('rccm')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
@@ -1118,9 +1126,9 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
-            "order": [
+            /* "order": [
                 [0, 'desc']
-            ],
+            ], */
             language: {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",

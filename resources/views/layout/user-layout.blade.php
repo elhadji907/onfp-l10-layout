@@ -153,7 +153,34 @@
             /* border-radius: 5px; */
         }
 
+        .new {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .renew {
+            background-color: #ffcc00;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Nouvelle {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Renouvellement {
             background-color: #ffcc00;
             color: white;
             padding: 4px 8px;
@@ -216,15 +243,6 @@
             /* border-radius: 5px; */
         }
 
-        .new {
-            background-color: #0DCAF0;
-            color: white;
-            padding: 4px 8px;
-            text-align: center;
-            border-radius: 25% 10%;
-            /* border-radius: 5px; */
-        }
-
         .non {
             background-color: #DC3545;
             color: white;
@@ -264,10 +282,17 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
-            <a href="{{ url('/home') }}" class="logo d-flex align-items-center">
-                {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
-                <span class="d-none d-lg-block">ONFP V2</span>
-            </a>
+            @if (auth()->user()->hasRole('super-admin'))
+                <a href="{{ url('/home') }}" class="logo d-flex align-items-center">
+                    {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
+                    <span class="d-none d-lg-block">ONFP V2</span>
+                </a>
+            @else
+                <a href="{{ url('/profil') }}" class="logo d-flex align-items-center">
+                    {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
+                    <span class="d-none d-lg-block">ONFP</span>
+                </a>
+            @endif
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
         {{--   <div class="search-bar">
