@@ -210,10 +210,15 @@
                                                     employé</button>
                                             </form> --}}
 
-                                            <button type="button" class="btn btn-outline-success btn-sm float-end"
-                                                data-bs-toggle="modal" data-bs-target="#addEmploye{{ $user?->id }}">
-                                                <i class="bi bi-plus"
-                                                    title="Ajouter à la base de données des employés"></i>Employé</button>
+                                            @if (isset($user->employee))
+                                                <span class="badge bg-info">cet utilisateur est un employé</span>
+                                            @else
+                                                <button type="button" class="btn btn-outline-success btn-sm float-end"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#addEmploye{{ $user?->id }}"
+                                                    title="Ajouter à la base de données des employés">
+                                                    Employé</button>
+                                            @endif
                                         </div>
                                         <!-- Profile Edit Form -->
                                         <div class="row mb-3">
@@ -615,94 +620,99 @@
 
             </div>
         </div>
+        @if (isset($user->employee))
+        @else
+            <div class="modal fade" id="addEmploye{{ $user?->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="addEmployeLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {{--  <div class="pt-0 pb-0">
+                <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
+                <p class="text-center small">enregister un nouveau courrier arrivé</p>
+            </div> --}}
 
-        <div class="modal fade" id="addEmploye{{ $user?->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="addEmployeLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    {{--  <div class="pt-0 pb-0">
-                        <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
-                        <p class="text-center small">enregister un nouveau courrier arrivé</p>
-                    </div> --}}
-
-                    <div class="modal-header">
-                        <h5 class="modal-title">Enregistrer cette utilisateur comme employé</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form method="post" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data"
-                        class="row g-3">
-                        @csrf
-                        @method('patch')
-
-                        <input name="employe" type="hidden" value="1">
-                        {{--  <div class="modal-header">
-                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
-                                demande
-                                individuelle</h5>
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enregistrer cette utilisateur comme employé</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
-                        </div> --}}
-                        <div class="modal-body">
-                            <div class="row g-3">
+                        </div>
+                        <form method="post" action="{{ route('users.update', $user->id) }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <label for="cin" class="form-label">CIN<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="cin" value="{{ $user->cin ?? old('cin') }}"
-                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                        id="cin" placeholder="cin">
-                                    @error('cin')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
+                            <input name="employe" type="hidden" value="1">
+                            {{--  <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
+                        demande
+                        individuelle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div> --}}
+                            <div class="modal-body">
+                                <div class="row g-3">
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <label for="matricule" class="form-label">Matricule</label>
-                                    <input type="text" name="matricule"
-                                        value="{{ $employe->matricule ?? old('matricule') }}"
-                                        class="form-control form-control-sm @error('matricule') is-invalid @enderror"
-                                        id="matricule" placeholder="matricule">
-                                    @error('matricule')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="cin" class="form-label">CIN<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="cin" value="{{ $user->cin ?? old('cin') }}"
+                                            class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                            id="cin" placeholder="cin">
+                                        @error('cin')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <label for="direction" class="form-label">Direction<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="direction" class="form-select @error('direction') is-invalid @enderror"
-                                        aria-label="Select" id="select-field" data-placeholder="Choisir direction">
-                                        <option value="{{ $user?->employee?->direction?->id }}">{{ $user?->employee?->direction?->name }}
-                                        </option>
-                                        @foreach ($directions as $direction)
-                                            <option value="{{ $direction?->id }}">
-                                                {{ $direction?->name ?? old('direction') }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('direction')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="matricule" class="form-label">Matricule</label>
+                                        <input type="text" name="matricule"
+                                            value="{{ $employe->matricule ?? old('matricule') }}"
+                                            class="form-control form-control-sm @error('matricule') is-invalid @enderror"
+                                            id="matricule" placeholder="matricule">
+                                        @error('matricule')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="direction" class="form-label">Direction<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="direction"
+                                            class="form-select @error('direction') is-invalid @enderror"
+                                            aria-label="Select" id="select-field" data-placeholder="Choisir direction">
+                                            <option value="{{ $user?->employee?->direction?->id }}">
+                                                {{ $user?->employee?->direction?->name }}
+                                            </option>
+                                            @foreach ($directions as $direction)
+                                                <option value="{{ $direction?->id }}">
+                                                    {{ $direction?->name ?? old('direction') }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('direction')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
 
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Fermer</button>
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fermer</button>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </section>
 @endsection

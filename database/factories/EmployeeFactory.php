@@ -36,11 +36,11 @@ class EmployeeFactory extends Factory
         $nombre9 = rand(0, 9);
 
         $matricule = $nombre4 . $nombre5 . $nombre6 . $nombre7 . $nombre8 . $nombre9 . '/' . $letter;
-        $cin = $nombre1 . $nombre2 . $nombre3 . $nombre4 . $nombre5 . $nombre6 . $nombre7 . $nombre8 . $nombre9;
+        /* $cin = $nombre1 . $nombre2 . $nombre3 . $nombre4 . $nombre5 . $nombre6 . $nombre7 . $nombre8 . $nombre9; */
         return [
             'matricule' => $matricule,
             'adresse' => $this->faker->address,
-            'cin' =>  $cin,
+            /* 'cin' =>  $cin, */
             'date_embauche' => $this->faker->dateTime(),
             'classification' => $this->faker->word,
             'categorie_salaire' => $this->faker->word,

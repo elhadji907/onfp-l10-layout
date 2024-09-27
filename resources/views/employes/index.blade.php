@@ -56,15 +56,15 @@
                                 @foreach ($employes as $employe)
                                     <tr>
                                         <th scope="row"><img class="rounded-circle w-20" alt="Profil"
-                                                src="{{ asset($employe->user->getImage()) }}" width="40" height="auto">
+                                                src="{{ asset($employe?->user?->getImage()) }}" width="40" height="auto">
                                         </th>
                                         {{-- <td>{{ $i++ }}</td> --}}
-                                        <td>{{ $employe->matricule }}</td>
-                                        <td>{{ $employe->user->firstname }}</td>
-                                        <td>{{ $employe->user->name }}</td>
-                                        <td>{{ $employe->user->email }}</td>
-                                        <td>{{ $employe->user->telephone }}</td>
-                                        <td>{{ $employe->direction->name }}</td>
+                                        <td>{{ $employe?->matricule }}</td>
+                                        <td>{{ $employe?->user?->firstname }}</td>
+                                        <td>{{ $employe?->user?->name }}</td>
+                                        <td>{{ $employe?->user?->email }}</td>
+                                        <td>{{ $employe?->user?->telephone }}</td>
+                                        <td>{{ $employe?->direction?->name }}</td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
                                                     href="{{ route('employes.show', $employe->id) }}"

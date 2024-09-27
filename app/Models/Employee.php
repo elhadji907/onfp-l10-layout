@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $uuid
  * @property string $matricule
  * @property string|null $adresse
- * @property string $cin
  * @property Carbon|null $date_embauche
  * @property string|null $classification
  * @property string|null $categorie_salaire
@@ -81,7 +80,6 @@ class Employee extends Model
 		'uuid',
 		'matricule',
 		'adresse',
-		'cin',
 		'date_embauche',
 		'classification',
 		'categorie_salaire',

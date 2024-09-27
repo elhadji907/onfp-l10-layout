@@ -212,9 +212,9 @@ class UserController extends Controller
             ]);
             Employee::create([
                 'users_id'      => $user?->id,
-                'cin'           => $request->input('employe'),
-                'matricule'     => $request->input('matricule'),
-                'directions_id' => $request->input('direction'),
+                'cin'           => $request?->input('employe'),
+                'matricule'     => $request?->input('matricule'),
+                'directions_id' => $request?->input('direction'),
             ]);
             Alert::success('Effectuée ! ', 'employé ajouté');
 

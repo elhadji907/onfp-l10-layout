@@ -164,7 +164,7 @@
                                 <div class="row">
                                     <div class="col-lg-2 col-md-4 label">CIN</div>
                                     <div class="col-lg-10 col-md-8">
-                                        {{ $employe?->cin }}</div>
+                                        {{ $employe?->user?->cin }}</div>
                                 </div>
 
                                 <div class="row">
@@ -463,7 +463,7 @@
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="cin" type="cin"
                                                     class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                                    id="cin" value="{{ $employe->cin ?? old('cin') }}"
+                                                    id="cin" value="{{ $employe?->user?->cin ?? old('cin') }}"
                                                     autocomplete="cin" placeholder="Votre n° de téléphone">
                                                 @error('cin')
                                                     <span class="invalid-feedback" role="alert">

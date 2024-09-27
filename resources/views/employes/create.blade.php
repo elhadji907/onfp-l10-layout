@@ -205,14 +205,14 @@
                                     @enderror
                                 </div>
 
-                                {{--  <div class="col-12 col-md-6 col-lg-4">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <label for="direction" class="form-label">Direction<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="direction" class="form-select @error('direction') is-invalid @enderror"
                                         aria-label="Select" id="select-field" data-placeholder="Choisir direction">
-                                        <option value=""></option>
+                                        <option value="{{ old('direction') }}">{{ old('direction') }}</option>
                                         @foreach ($directions as $direction)
-                                            <option value="{{ $direction->id }}">
+                                            <option value="{{ $direction->name }}">
                                                 {{ $direction->name ?? old('direction') }}</option>
                                         @endforeach
                                     </select>
@@ -221,7 +221,7 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                </div> --}}
+                                </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label for="fonction" class="form-label">Fonction<span
@@ -249,7 +249,7 @@
                                         class="form-select  @error('situation_familiale') is-invalid @enderror"
                                         aria-label="Select" id="select-field-familiale"
                                         data-placeholder="Choisir situation familiale">
-                                        <option value="">
+                                        <option value="{{ old('situation_familiale') }}">
                                             {{ old('situation_familiale') }}
                                         </option>
                                         <option value="Marié(e)">

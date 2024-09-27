@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+<title>{{ $title }}</title>
 
 <head>
 
@@ -312,7 +313,7 @@
                                         <td colspan="4">
                                             <?php $i = 2; ?>
                                             @foreach ($employe->articles as $article)
-                                            <b><u>Article {{ ++$i }}</u> :</b>
+                                                <b><u>Article {{ ++$i }}</u> :</b>
                                                 {{ $article?->name }};<br><br>
                                             @endforeach
                                         </td>

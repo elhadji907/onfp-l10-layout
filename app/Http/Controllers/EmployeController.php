@@ -52,7 +52,7 @@ class EmployeController extends Controller
     public function store(Request $request)
     {
         /* dd($request->civilite); */
-        $this->validate($request, [
+        /* $this->validate($request, [
             "matricule"           => ['nullable', 'string', 'min:8', 'max:8'],
             'firstname'           => ['required', 'string', 'max:50'],
             'name'                => ['required', 'string', 'max:25'],
@@ -60,7 +60,7 @@ class EmployeController extends Controller
             'telephone'           => ['required', 'string', 'max:9', 'min:9'],
             'adresse'             => ['required', 'string', 'max:255'],
             'civilite'            => ['required', 'string', 'max:10'],
-            'cin'                 => ['required', 'string', 'min:13', 'max:15'],
+            'cin'                 => ['required', 'string', 'min:13', 'max:15', Rule::unique(User::class)],
             'date_naissance'      => ['required', 'date'],
             'lieu_naissance'      => ['string', 'required'],
             'email'               => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
@@ -69,11 +69,17 @@ class EmployeController extends Controller
             'fonction'            => ['nullable', 'string'],
             'direction'           => ['nullable', 'string'],
             'situation_familiale' => ['required', 'string'],
-        ]);
+        ]); */
+
+        $categorie = Category::where('name', $request?->categorie)->first();
+        $fonction = Fonction::where('name', $request?->fonction)->first();
+        $direction = Direction::where('name', $request?->direction)->first();
 
         $user = User::create([
+            'cin'                   => $request?->cin,
             'civilite'              => $request->civilite,
             'firstname'             => $request->firstname,
+            'username'              => $request->email,
             'name'                  => $request->name,
             'date_naissance'        => $request->date_naissance,
             'lieu_naissance'        => $request->lieu_naissance,
@@ -109,20 +115,17 @@ class EmployeController extends Controller
             ]);
         }
 
-        $categorie = Category::where('name', $request->categorie)->first();
-        $fonction = Fonction::where('name', $request->fonction)->first();
-        $direction = Direction::where('name', $request->direction)->first();
 
         $employe = Employee::create([
             'users_id'      => $user?->id,
             'matricule'     => $request?->matricule,
-            'cin'           => $request?->cin,
             'date_embauche' => $request?->date_embauche,
             'fonctions_id'  => $fonction?->id,
             'directions_id' => $direction?->id,
             'categories_id' => $categorie?->id,
         ]);
 
+        $user->assignRole('Employe');
         /* $status = "Enregistrement effectué avec succès";
         return Redirect::route('employes.index')->with("status", $status); */
         Alert::success('Félicitations ! ', 'Enregistrement effectué avec succès');
@@ -154,9 +157,9 @@ class EmployeController extends Controller
             'password'            => ['string', 'max:255', 'nullable'],
             'situation_familiale' => ['string', 'max:15', 'required'],
             'roles.*'             => ['string', 'max:255', 'nullable', 'max:255'],
-            "email"               => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($user->id)],
-            "matricule"           => ['nullable', 'string', 'min:8', 'max:8', Rule::unique(Employee::class)->ignore($employe->id)],
-            'cin'                 => ['required', 'string', 'min:13', 'max:15', Rule::unique(Employee::class)->ignore($employe->id)],
+            "email"               => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
+            "matricule"           => ['nullable', 'string', 'min:8', 'max:8', Rule::unique(table: Employee::class)->ignore($employe->id)->whereNull('deleted_at')],
+            'cin'                 => ['required', 'string', 'min:13', 'max:15', Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
             'date_embauche'       => ['required', 'date'],
             'categorie'           => ['required', 'string'],
             'fonction'            => ['required', 'string'],
@@ -189,6 +192,7 @@ class EmployeController extends Controller
         }
 
         $user->update([
+            'cin'                       =>  $request->cin,
             'civilite'                  =>  $request->civilite,
             'firstname'                 =>  $request->firstname,
             'name'                      =>  $request->name,
@@ -210,7 +214,6 @@ class EmployeController extends Controller
             'users_id'      => $user->id,
             'matricule'     => $request->matricule,
             'diplome'       => $request->diplome,
-            'cin'           => $request->cin,
             'date_embauche' => $request->date_embauche,
             'fonction_precedente' => $request->fonction_precedente,
             'fonctions_id'  => $request->fonction,
@@ -260,7 +263,7 @@ class EmployeController extends Controller
     public function fileDecision($id)
     {
         $employe = Employee::find($id);
-        $title = 'Coupon d\'envoi ' . $employe->matricule;
+        $title = "Décision de " . $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name;
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
