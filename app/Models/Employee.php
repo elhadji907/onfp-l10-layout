@@ -142,6 +142,13 @@ class Employee extends Model
 			->withTimestamps();
 	}
 
+	public function arrives()
+	{
+		return $this->belongsToMany(Arrive::class, 'courrierarrivesemployes', 'employees_id', 'arrives_id')
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
+	}
+
 	public function lois()
 	{
 		return $this->belongsToMany(Loi::class, 'employeslois', 'employes_id', 'lois_id')

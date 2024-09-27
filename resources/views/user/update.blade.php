@@ -267,7 +267,7 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="profil" class="form-label">Image de profil</label>
-                                    <input type="file" name="image" id="image" multiple
+                                    <input type="file" name="image" id="image"
                                         class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
                                     @error('image')
                                         <span class="text-danger">{{ $message }}</span>

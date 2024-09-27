@@ -284,8 +284,7 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                                     <label for="profil" class="form-label">Photo de profil</label>
-                                    <input type="file" name="image" id="image" multiple
-                                        value="{{ old('image') }}"
+                                    <input type="file" name="image" id="image" value="{{ old('image') }}"
                                         class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
                                     @error('image')
                                         <span class="text-danger">{{ $message }}</span>

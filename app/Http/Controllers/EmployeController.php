@@ -252,12 +252,10 @@ class EmployeController extends Controller
     public function destroy($id)
     {
         $employe = Employee::findOrFail($id);
-        $employe->user->delete();
         $employe->delete();
         $mesage = $employe->user->firstname . ' ' . $employe->user->name . ' a été supprimé(e)';
         return redirect()->back()->with("danger", $mesage);
     }
-
 
     public function fileDecision($id)
     {

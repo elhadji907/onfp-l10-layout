@@ -145,7 +145,7 @@
                                         </span>
                                     @enderror
                                 </div> --}}
-                                
+
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label for="telephone" class="form-label">Téléphone personnel<span
                                             class="text-danger mx-1">*</span></label>
@@ -205,7 +205,7 @@
                                     @enderror
                                 </div>
 
-                               {{--  <div class="col-12 col-md-6 col-lg-4">
+                                {{--  <div class="col-12 col-md-6 col-lg-4">
                                     <label for="direction" class="form-label">Direction<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="direction" class="form-select @error('direction') is-invalid @enderror"
@@ -283,11 +283,10 @@
                                         </span>
                                     @enderror
                                 </div>
-                
+
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label for="profil" class="form-label">Photo de profil</label>
-                                    <input type="file" name="image" id="image" multiple
-                                        value="{{ old('image') }}"
+                                    <input type="file" name="image" id="image" value="{{ old('image') }}"
                                         class="form-control @error('image') is-invalid @enderror btn btn-outline-info btn-sm">
                                     @error('image')
                                         <span class="text-danger">{{ $message }}</span>

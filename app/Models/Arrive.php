@@ -35,17 +35,31 @@ class Arrive extends Model
 	protected $table = 'arrives';
 
 	protected $casts = [
-		'courriers_id' => 'int'
+		'courriers_id' => 'int',
 	];
 
 	protected $fillable = [
 		'numero',
 		'uuid',
-		'courriers_id'
+		'courriers_id',
 	];
 
 	public function courrier()
 	{
 		return $this->belongsTo(Courrier::class, 'courriers_id');
+	}
+
+	public function employees()
+	{
+		return $this->belongsToMany(Employee::class, 'courrierarrivesemployes', 'arrives_id', 'employes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function users()
+	{
+		return $this->belongsToMany(User::class, 'courrierarrivesusers', 'arrives_id', 'users_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 }

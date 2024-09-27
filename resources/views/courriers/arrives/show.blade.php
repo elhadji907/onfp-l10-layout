@@ -14,7 +14,7 @@
                     class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                 <p> | Liste des courriers arrivés</p>
             </span>
-            <div class="col-xl-4">
+            {{-- <div class="col-xl-4">
                 <div class="card border-info mb-3">
                     <div class="card-header text-center">
                         AUDIT
@@ -22,7 +22,6 @@
                     <div class="card-body profile-card pt-1 d-flex flex-column">
                         <h5 class="card-title">Informations complémentaires</h5>
                         <p>créé par <b>{{ $user_create_name }}</b>, {{ $courrier->created_at->diffForHumans() }}</p>
-                        {{-- <p>modifié par <b>{{ $user_update_name }}</b>, {{ $courrier->updated_at->diffForHumans() }}</p> --}}
                         @if ($courrier->created_at != $courrier->updated_at)
                             <p>{{ 'modifié par ' }} <b> {{ $user_update_name }} </b>
                                 {{ $courrier->updated_at->diffForHumans() }}</p>
@@ -32,9 +31,9 @@
                     </div>
                 </div>
 
-            </div>
+            </div> --}}
 
-            <div class="col-xl-8">
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
 
                 <div class="card border-info mb-3">
                     <div class="card-body pt-3">
@@ -130,15 +129,11 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Imputation</div>
                                     <div class="col-lg-9 col-md-8">
-                                        @if ($arrive->courrier->directions != '[]')
-                                            <?php $i = 1; ?>
-                                            @foreach ($arrive->courrier->directions as $direction)
-                                                <br>{{ $i++ }}. {!! $direction->name ?? '' !!}
-                                                <b>[{!! $direction->sigle ?? '' !!}]</b>
-                                            @endforeach
-                                        @else
-                                            Aucune imputation pour l'instant
-                                        @endif
+                                        <?php $i = 1; ?>
+                                        @foreach ($arrive?->employees as $employee)
+                                            <br>{{ $i++ }}. {!! $employee?->user?->firstname . ' ' . $employee?->user?->name !!}
+                                            <b>[{!! $employee?->direction?->sigle ?? '' !!}]</b>
+                                        @endforeach
                                     </div>
                                 </div>
 
@@ -283,7 +278,7 @@
                                     enctype="multipart/form-data" class="row g-3">
                                     @csrf
                                     @method('PUT')
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_arrivee" class="form-label">Date arrivée<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_arrivee"
@@ -297,7 +292,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="numero_arrive" class="form-label">Numéro<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
@@ -313,7 +308,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_correspondance" class="form-label">Date correspondance<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_correspondance"
@@ -327,7 +322,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="numero_correspondance" class="form-label">Numéro correspondance<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
@@ -343,7 +338,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="annee" class="form-label">Année<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="number" min="2024" name="annee"
@@ -357,7 +352,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="expediteur" class="form-label">Expéditeur<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="expediteur"
@@ -371,7 +366,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="objet" class="form-label">Objet<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="objet"
@@ -385,7 +380,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="reference" class="form-label">Référence</label>
                                         <input type="text" name="reference"
                                             value="{{ $arrive->courrier->reference ?? old('reference') }}"
@@ -398,7 +393,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                         <input type="number" min="0" name="numero_reponse"
                                             value="{{ $arrive->courrier->numero_reponse ?? old('numero_reponse') }}"
@@ -411,7 +406,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_reponse" class="form-label">Date réponse</label>
                                         <input type="date" min="0" name="date_reponse"
                                             value="{{ $arrive->courrier->date_reponse?->format('Y-m-d') ?? old('date_reponse') }}"
@@ -424,7 +419,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                         <label for="observation" class="form-label">Observations </label>
                                         <textarea name="observation" id="observation" rows="1" class="form-control form-control-sm"
                                             placeholder="Observations">{{ old('observation', $arrive->courrier->observation) }}</textarea>
@@ -435,7 +430,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="legende" class="form-label">Légende</label>
                                         <input type="text" name="legende"
                                             value="{{ $arrive->courrier->legende ?? old('legende') }}"
@@ -448,7 +443,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="reference" class="form-label">Scan courrier</label>
                                         <input type="file" name="file" id="file"
                                             class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
@@ -461,7 +456,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         @if (isset($arrive->courrier->file))
                                             <label for="reference" class="form-label">Cliquer ici pour
                                                 télécharger</label><br>
@@ -517,7 +512,7 @@
                                                     <div class="pb-1"><b>Expéditeur:</b>
                                                         {{ $arrive->courrier->expediteur }}</div>
                                                     <div class="pb-3"><b>Objet:</b> {{ $arrive->courrier->objet }}</div>
-                                                    <div class="pb-3"><b>Imputation:</b>
+                                                    {{-- <div class="pb-3"><b>Imputation:</b>
                                                         @if ($arrive->courrier->directions != '[]')
                                                             <?php $i = 1; ?>
                                                             @foreach ($arrive->courrier->directions as $direction)
@@ -527,11 +522,11 @@
                                                         @else
                                                             Aucune imputation pour l'instant
                                                         @endif
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                                         <div class="form-group">
-                                                            <label for="">Direction/Service/Cellule</label>
-                                                            <input type="text" placeholder="rechercher direction..."
+                                                            <label for="">Employé</label>
+                                                            <input type="text" placeholder="rechercher employé..."
                                                                 class="form-control form-control-sm @error('product') is-invalid @enderror"
                                                                 name="product" id="product" value=""
                                                                 @required(true)>
@@ -547,25 +542,22 @@
 
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="">Chef</label>
+                                                            <label for="">Direction/Service/Cellule</label>
                                                             <input type="text" placeholder="Personne responsable"
-                                                                class="form-control form-control-sm @error('chef') is-invalid @enderror"
-                                                                name="chef" id="chef" value="" readonly>
-                                                            @error('chef')
+                                                                class="form-control form-control-sm @error('direction') is-invalid @enderror"
+                                                                name="direction" id="direction" value="" readonly>
+                                                            @error('direction')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <div>{{ $message }}</div>
                                                                 </span>
                                                             @enderror
+                                                            <input type="hidden" name="id_direction" id="id_direction" value="" readonly>
                                                         </div>
                                                     </div>
 
                                                     <input type="hidden" placeholder="ID"
-                                                        class="form-control form-control-sm @error('id_direction') is-invalid @enderror"
-                                                        name="id_direction" id="id_direction" value="0.0"
-                                                        min="0">
-                                                    <input type="hidden" placeholder="ID"
-                                                        class="form-control form-control-sm @error('id_employe') is-invalid @enderror"
-                                                        name="id_employe" id="id_employe" value="" min="0">
+                                                        class="form-control form-control-sm @error('id_emp') is-invalid @enderror"
+                                                        name="id_emp" id="id_emp" value="0.0" min="0">
                                                     <input type="hidden" placeholder="imp"
                                                         class="form-control form-control-sm @error('imp') is-invalid @enderror"
                                                         name="imp" id="imp" value="1">
@@ -709,6 +701,84 @@
                                             </div>
                                         </form>
                                         {{-- {!! Form::close() !!} --}}
+                                        <div>
+                                            <h5 class="card-title">Imputation employés</h5>
+                                            {{-- <p>Le tableau de tous les employés.</p> --}}
+                                            <!-- Table with stripped rows -->
+                                            <table class="table datatables align-middle" id="table-employes">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Matricule</th>
+                                                        <th>Prénom</th>
+                                                        <th>Nom</th>
+                                                        <th>E-mail</th>
+                                                        <th>Téléphone</th>
+                                                        <th>Direction</th>
+                                                        @if (auth()->user()->hasRole('super-admin'))
+                                                            <th>#</th>
+                                                        @endif
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 1; ?>
+                                                    @foreach ($arrive?->employees as $employe)
+                                                        <tr>
+                                                            <th scope="row"><img class="rounded-circle w-20"
+                                                                    alt="Profil"
+                                                                    src="{{ asset($employe->user->getImage()) }}"
+                                                                    width="40" height="auto">
+                                                            </th>
+                                                            {{-- <td>{{ $i++ }}</td> --}}
+                                                            <td>{{ $employe?->matricule }}</td>
+                                                            <td>{{ $employe?->user?->firstname }}</td>
+                                                            <td>{{ $employe?->user?->name }}</td>
+                                                            <td><a
+                                                                    href="mailto:{{ $employe?->user?->email }}">{{ $employe?->user?->email }}</a>
+                                                            </td>
+                                                            <td><a href="tel:+221{{ $employe?->user?->telephone }}">{{ $employe?->user?->telephone }}</a></td>
+                                                            <td>{{ $employe?->direction?->name }}</td>
+                                                            @if (auth()->user()->hasRole('super-admin'))
+                                                                <td>
+                                                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                                                            href="{{ route('employes.show', $employe->id) }}"
+                                                                            class="btn btn-success btn-sm mx-1"
+                                                                            title="voir détails"><i
+                                                                                class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                {{-- <li><a class="dropdown-item btn btn-sm mx-1"
+                                                                                    href="{{ route('employes.edit', $employe->id) }}"
+                                                                                    class="mx-1"><i
+                                                                                        class="bi bi-pencil"></i>
+                                                                                    Modifier</a>
+                                                                            </li> --}}
+                                                                                {{-- <li>
+                                                                                <form
+                                                                                    action="{{ route('employes.destroy', $employe->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="dropdown-item show_confirm"><i
+                                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                                </form>
+                                                                            </li> --}}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -719,13 +789,13 @@
                                     <script id="document-template" type="text/x-handlebars-template">
                                         <tr class="delete_add_more_item" id="delete_add_more_item">    
                                             <td>
-                                                <input type="hidden" name="id_direction[]" value="@{{ id_direction }}" required placeholder="Id direction" class="form-control form-control-sm">
-                                                <input type="hidden" name="id_employe[]" value="@{{ id_employe }}" required placeholder="Id employe" class="form-control form-control-sm">
-                                                <input type="text" name="product[]" value="@{{ product }}" required placeholder="Direction" class="form-control form-control-sm" readonly>                            
+                                                <input type="hidden" name="id_emp[]" value="@{{ id_emp }}" required placeholder="Id Employé" class="form-control form-control-sm">
+                                                <input type="text" name="product[]" value="@{{ product }}" required placeholder="Employé" class="form-control form-control-sm" readonly>                            
                                                 <input type="hidden" name="imp" value="@{{ imp }}">
                                             </td>
                                             <td>
-                                            <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="Le nom du responsable" readonly>
+                                                <input type="text" class="direction form-control form-control-sm" name="direction[]" value="@{{ direction }}" required min="1" placeholder="Le nom du responsable" readonly>
+                                                <input type="hidden" class="direction form-control form-control-sm" name="id_direction[]" value="@{{ id_direction }}" required min="1" placeholder="Le nom du responsable">
                                           </td>
                                             <td>
                                             <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="bi bi-trash"></i></i>
@@ -736,17 +806,17 @@
                                         $(document).on('click', '#addMore', function() {
                                             $('.table').show();
                                             var product = $("#product").val();
+                                            var id_emp = $("#id_emp").val();
+                                            var direction = $("#direction").val();
                                             var id_direction = $("#id_direction").val();
-                                            var id_employe = $("#id_employe").val();
-                                            var chef = $("#chef").val();
                                             var imp = $("#imp").val();
                                             var source = $("#document-template").html();
                                             var template = Handlebars.compile(source);
                                             var data = {
                                                 product: product,
+                                                id_emp: id_emp,
+                                                direction: direction,
                                                 id_direction: id_direction,
-                                                id_employe: id_employe,
-                                                chef: chef,
                                                 imp: imp,
                                             }
                                             var html = template(data);
@@ -778,9 +848,9 @@
                                         });
                                         $(document).on('click', 'li', function() {
                                             $('#product').val($(this).text());
-                                            $('#id_direction').val($(this).data("id"));
-                                            $('#id_employe').val($(this).data("employeid"));
-                                            $('#chef').val($(this).data("chef"));
+                                            $('#id_emp').val($(this).data("id"));
+                                            $('#direction').val($(this).data("direction"));
+                                            $('#id_direction').val($(this).data("iddirection"));
                                             $('#productList').fadeOut();
                                         });
                                     </script>

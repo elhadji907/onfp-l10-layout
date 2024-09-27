@@ -6,6 +6,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Models\Arrive;
 use App\Models\Depart;
 use App\Models\Departement;
+use App\Models\Direction;
+use App\Models\Employee;
 use App\Models\Individuelle;
 use App\Models\Interne;
 use App\Models\Module;
@@ -28,12 +30,12 @@ class UserController extends Controller
         // examples:
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin']);
-        $this->middleware("permission:role-view", ["only"=> ["index"]]);
-        $this->middleware("permission:role-create", ["only"=> ["create","store"]]);
-        $this->middleware("permission:role-update", ["only"=> ["update", "edit"]]);
-        $this->middleware("permission:role-show", ["only"=> ["show"]]);
-        $this->middleware("permission:role-delete", ["only"=> ["destroy"]]);
-        $this->middleware("permission:give-role-permissions", ["only"=> ["givePermissionsToRole"]]);
+        $this->middleware("permission:role-view", ["only" => ["index"]]);
+        $this->middleware("permission:role-create", ["only" => ["create", "store"]]);
+        $this->middleware("permission:role-update", ["only" => ["update", "edit"]]);
+        $this->middleware("permission:role-show", ["only" => ["show"]]);
+        $this->middleware("permission:role-delete", ["only" => ["destroy"]]);
+        $this->middleware("permission:give-role-permissions", ["only" => ["givePermissionsToRole"]]);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */
@@ -202,101 +204,120 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $this->validate($request, [
-            'civilite'         => ['nullable', 'string', 'max:10'],
-            'username'         => ['required', 'string', 'max:150'],
-            "cin"              => ["required", "string", "min:13", "max:15", Rule::unique(User::class)->ignore($id)],
-            'firstname'        => ['required', 'string', 'max:150'],
-            'name'             => ['required', 'string', 'max:50'],
-            'date_naissance'   => ['string', 'nullable'],
-            'lieu_naissance'   => ['string', 'nullable'],
-            'image'            => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'telephone'        => ['required', 'string', 'max:25', 'min:9'],
-            'adresse'          => ['required', 'string', 'max:255'],
-            'password'         => ['string', 'max:255', 'nullable'],
-            'roles.*'          => ['string', 'max:255', 'nullable', 'max:255'],
-            "email"            => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
-        ]);
-
-        if (request('image')) {
-            $imagePath = request('image')->store('avatars', 'public');
-            $file = $request->file('image');
-            $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Remove unwanted characters
-            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-            $filename = preg_replace("/\s+/", '-', $filename);
-            // Get the original image extension
-            $extension = $file->getClientOriginalExtension();
-
-            // Create unique file name
-            $fileNameToStore = 'avatars/' . $filename . '' . time() . '.' . $extension;
-
-            //dd($fileNameToStore);
-
-            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
-
-            $image->save();
-
-            $user->update([
-                'image' => $imagePath
+        if ($request->input('employe') == "1") {
+            $this->validate($request, [
+                "matricule"           => ['nullable', 'string', 'min:8', 'max:8',Rule::unique(Employee::class)],
+                'cin'                 => ['required', 'string', 'min:13', 'max:15',Rule::unique(Employee::class)],
+                'direction'           => ['required', 'string'],
             ]);
-        }
-        if (isset($request->password)) {
-            $password = Hash::make($request->password);
-            $user->update([
-                'password'                  =>  $password,
-                'civilite'                  =>  $request->civilite,
-                'username'                  =>  $request->username,
-                'cin'                       =>  $request->cin,
-                'firstname'                 =>  $request->firstname,
-                'name'                      =>  $request->name,
-                'date_naissance'            =>  $request->date_naissance,
-                'lieu_naissance'            =>  $request->lieu_naissance,
-                'situation_familiale'       =>  $request->situation_familiale,
-                'situation_professionnelle' =>  $request->situation_professionnelle,
-                'email'                     =>  $request->email,
-                'telephone'                 =>  $request->telephone,
-                'adresse'                   =>  $request->adresse,
-                'twitter'                   =>  $request->twitter,
-                'facebook'                  =>  $request->facebook,
-                'instagram'                 =>  $request->instagram,
-                'linkedin'                  =>  $request->linkedin,
-                'updated_by'                =>  Auth::user()->id,
+            Employee::create([
+                'users_id'      => $user?->id,
+                'cin'           => $request->input('employe'),
+                'matricule'     => $request->input('matricule'),
+                'directions_id' => $request->input('direction'),
             ]);
+            Alert::success('Effectuée ! ', 'employé ajouté');
+
+            return Redirect::back();
         } else {
-            $user->update([
-                'civilite'                  =>  $request->civilite,
-                'username'                  =>  $request->username,
-                'cin'                       =>  $request->cin,
-                'firstname'                 =>  $request->firstname,
-                'name'                      =>  $request->name,
-                'date_naissance'            =>  $request->date_naissance,
-                'lieu_naissance'            =>  $request->lieu_naissance,
-                'situation_familiale'       =>  $request->situation_familiale,
-                'situation_professionnelle' =>  $request->situation_professionnelle,
-                'email'                     =>  $request->email,
-                'telephone'                 =>  $request->telephone,
-                'adresse'                   =>  $request->adresse,
-                /* 'password'                  =>  $request->newPassword, */
-                'twitter'                   =>  $request->twitter,
-                'facebook'                  =>  $request->facebook,
-                'instagram'                 =>  $request->instagram,
-                'linkedin'                  =>  $request->linkedin,
-                'updated_by'                =>  Auth::user()->id,
+
+            $this->validate($request, [
+                'civilite'         => ['nullable', 'string', 'max:10'],
+                'username'         => ['required', 'string', 'max:150'],
+                "cin"              => ["required", "string", "min:13", "max:15", Rule::unique(User::class)->ignore($id)],
+                'firstname'        => ['required', 'string', 'max:150'],
+                'name'             => ['required', 'string', 'max:50'],
+                'date_naissance'   => ['string', 'nullable'],
+                'lieu_naissance'   => ['string', 'nullable'],
+                'image'            => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+                'telephone'        => ['required', 'string', 'max:25', 'min:9'],
+                'adresse'          => ['required', 'string', 'max:255'],
+                'password'         => ['string', 'max:255', 'nullable'],
+                'roles.*'          => ['string', 'max:255', 'nullable', 'max:255'],
+                "email"            => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
             ]);
+
+            if (request('image')) {
+                $imagePath = request('image')->store('avatars', 'public');
+                $file = $request->file('image');
+                $filenameWithExt = $file->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Remove unwanted characters
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                // Get the original image extension
+                $extension = $file->getClientOriginalExtension();
+
+                // Create unique file name
+                $fileNameToStore = 'avatars/' . $filename . '' . time() . '.' . $extension;
+
+                //dd($fileNameToStore);
+
+                $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
+
+                $image->save();
+
+                $user->update([
+                    'image' => $imagePath
+                ]);
+            }
+            if (isset($request->password)) {
+                $password = Hash::make($request->password);
+                $user->update([
+                    'password'                  =>  $password,
+                    'civilite'                  =>  $request->civilite,
+                    'username'                  =>  $request->username,
+                    'cin'                       =>  $request->cin,
+                    'firstname'                 =>  $request->firstname,
+                    'name'                      =>  $request->name,
+                    'date_naissance'            =>  $request->date_naissance,
+                    'lieu_naissance'            =>  $request->lieu_naissance,
+                    'situation_familiale'       =>  $request->situation_familiale,
+                    'situation_professionnelle' =>  $request->situation_professionnelle,
+                    'email'                     =>  $request->email,
+                    'telephone'                 =>  $request->telephone,
+                    'adresse'                   =>  $request->adresse,
+                    'twitter'                   =>  $request->twitter,
+                    'facebook'                  =>  $request->facebook,
+                    'instagram'                 =>  $request->instagram,
+                    'linkedin'                  =>  $request->linkedin,
+                    'updated_by'                =>  Auth::user()->id,
+                ]);
+            } else {
+                $user->update([
+                    'civilite'                  =>  $request->civilite,
+                    'username'                  =>  $request->username,
+                    'cin'                       =>  $request->cin,
+                    'firstname'                 =>  $request->firstname,
+                    'name'                      =>  $request->name,
+                    'date_naissance'            =>  $request->date_naissance,
+                    'lieu_naissance'            =>  $request->lieu_naissance,
+                    'situation_familiale'       =>  $request->situation_familiale,
+                    'situation_professionnelle' =>  $request->situation_professionnelle,
+                    'email'                     =>  $request->email,
+                    'telephone'                 =>  $request->telephone,
+                    'adresse'                   =>  $request->adresse,
+                    /* 'password'                  =>  $request->newPassword, */
+                    'twitter'                   =>  $request->twitter,
+                    'facebook'                  =>  $request->facebook,
+                    'instagram'                 =>  $request->instagram,
+                    'linkedin'                  =>  $request->linkedin,
+                    'updated_by'                =>  Auth::user()->id,
+                ]);
+            }
+
+            /* $user->save(); */
+
+            $user->syncRoles($request->roles);
+
+
+            Alert::success('Effectuée ! ', 'Mise à jour effectuée');
+
+            /*  $status = 'Mise à jour effectuée avec succès'; */
+
+            /* return Redirect::route('user.index')->with('status', $status); */
+            return Redirect::route('user.index');
         }
-
-        /* $user->save(); */
-
-        $user->syncRoles($request->roles);
-
-        Alert::success('Effectuée ! ', 'Mise à jour effectuée');
-
-        /*  $status = 'Mise à jour effectuée avec succès'; */
-
-        /* return Redirect::route('user.index')->with('status', $status); */
-        return Redirect::route('user.index');
     }
 
     public function show($id)
@@ -319,8 +340,9 @@ class UserController extends Controller
 
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles->pluck('name', 'name')->all();
+        $directions = Direction::orderBy('created_at', 'desc')->get();
 
-        return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles"));
+        return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles", "directions"));
     }
 
     public function destroy($userId)

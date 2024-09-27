@@ -287,7 +287,7 @@
                                                                     class="bi bi-trash"></i></a>
                                                         </div> --}}
                                                 <div class="pt-2">
-                                                    <input type="file" name="image" id="image" multiple
+                                                    <input type="file" name="image" id="image"
                                                         class="form-control @error('image') is-invalid @enderror btn btn-primary btn-sm">
                                                     @error('image')
                                                         <span class="text-danger">{{ $message }}</span>

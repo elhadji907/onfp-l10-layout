@@ -233,4 +233,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function arrives()
+	{
+		return $this->belongsToMany(Arrive::class, 'courrierarrivesusers', 'users_id', 'arrives_id')
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
+	}
+
 }

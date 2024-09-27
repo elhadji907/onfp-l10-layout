@@ -506,6 +506,24 @@
         });
     </script>
     <script type="text/javascript">
+        $('.show_confirm_employes').click(function(event) {
+            var form = $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                    title: `Êtes-vous sûr de vouloir ajouter à la base de données des employés ?`,
+                    text: "Si oui, cliquer sur ok.",
+                    icon: "success",
+                    buttons: true,
+                })
+                .then((willValide) => {
+                    if (willValide) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
+    <script type="text/javascript">
         $('.show_confirm_retirer').click(function(event) {
             var form = $(this).closest("form");
             var name = $(this).data("name");

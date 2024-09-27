@@ -190,14 +190,31 @@
                             </div>
 
                             {{-- Edit uer --}}
-                            <div class="tab-content pt-2">
+                            <div class="tab-content pt-0">
                                 {{-- Début Edition --}}
                                 <div class="tab-pane fade profile-edit pt-3" id="user-edit">
                                     <form method="post" action="{{ route('users.update', $user->id) }}"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('patch')
-                                        <h5 class="card-title">Modification user</h5>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">Modification user</h5>
+                                            {{--  <form action="{{ route('employes.update', $user?->id) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <input name="employe" type="hidden" value="1">
+                                                <button
+                                                    class="show_confirm_employes btn btn-outline-success btn-sm float-end">Ajouter
+                                                    employé</button>
+                                            </form> --}}
+
+                                            <button type="button" class="btn btn-outline-success btn-sm float-end"
+                                                data-bs-toggle="modal" data-bs-target="#addEmploye{{ $user?->id }}">
+                                                <i class="bi bi-plus"
+                                                    title="Ajouter à la base de données des employés"></i>Employé</button>
+                                        </div>
                                         <!-- Profile Edit Form -->
                                         <div class="row mb-3">
                                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Image
@@ -216,7 +233,7 @@
                                                                     class="bi bi-trash"></i></a>
                                                         </div> --}}
                                                 <div class="pt-2">
-                                                    <input type="file" name="image" id="image" multiple
+                                                    <input type="file" name="image" id="image"
                                                         class="form-control @error('image') is-invalid @enderror btn btn-primary btn-sm">
                                                     @error('image')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -569,7 +586,7 @@
                                             <button type="submit" class="btn btn-primary">Sauvegarder les
                                                 modifications</button>
                                         </div>
-                                        @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
+                                        {{-- @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                                             <div>
                                                 <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                                                     {{ __('Votre adresse e-mail n\'est pas vérifiée.') }}
@@ -586,7 +603,7 @@
                                                     </p>
                                                 @endif
                                             </div>
-                                        @endif
+                                        @endif --}}
                                         <!-- End Profile Edit Form -->
                                     </form>
                                 </div>
@@ -596,6 +613,95 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="modal fade" id="addEmploye{{ $user?->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="addEmployeLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    {{--  <div class="pt-0 pb-0">
+                        <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
+                        <p class="text-center small">enregister un nouveau courrier arrivé</p>
+                    </div> --}}
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enregistrer cette utilisateur comme employé</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+                        @method('patch')
+
+                        <input name="employe" type="hidden" value="1">
+                        {{--  <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
+                                demande
+                                individuelle</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div> --}}
+                        <div class="modal-body">
+                            <div class="row g-3">
+
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="cin" class="form-label">CIN<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="cin" value="{{ $user->cin ?? old('cin') }}"
+                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                        id="cin" placeholder="cin">
+                                    @error('cin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="matricule" class="form-label">Matricule</label>
+                                    <input type="text" name="matricule"
+                                        value="{{ $employe->matricule ?? old('matricule') }}"
+                                        class="form-control form-control-sm @error('matricule') is-invalid @enderror"
+                                        id="matricule" placeholder="matricule">
+                                    @error('matricule')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="direction" class="form-label">Direction<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="direction" class="form-select @error('direction') is-invalid @enderror"
+                                        aria-label="Select" id="select-field" data-placeholder="Choisir direction">
+                                        <option value="{{ $user?->employee?->direction?->id }}">{{ $user?->employee?->direction?->name }}
+                                        </option>
+                                        @foreach ($directions as $direction)
+                                            <option value="{{ $direction?->id }}">
+                                                {{ $direction?->name ?? old('direction') }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('direction')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

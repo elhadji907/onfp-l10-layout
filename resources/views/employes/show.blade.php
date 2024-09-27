@@ -244,8 +244,8 @@
                                         <b><u>Article 2</u> :
                                             {{ $employe->user->civilite . ' ' . $employe->user->firstname . ' ' . $employe->user->name }}</b>
                                         percevra un salaire mensuel de base de
-                                        <b>{{ $employe->category->salaire_lettre . '(' . $employe->category->salaire . ')' . 'Francs CFA ' }}</b>
-                                        correspondant à la catégorie <b>{{ $employe->category->name }}</b> de la grille
+                                        <b>{{ $employe?->category?->salaire_lettre . '(' . $employe?->category?->salaire . ')' . 'Francs CFA ' }}</b>
+                                        correspondant à la catégorie <b>{{ $employe?->category?->name }}</b> de la grille
                                         salariale du personnel de l'ONFP
                                         adoptée par le Conseil d'Administration du 21 Août 2014.
                                         ;<br><br>

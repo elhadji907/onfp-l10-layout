@@ -47,6 +47,7 @@
                                     <th>Nom</th>
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
+                                    <th>Direction</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -63,6 +64,7 @@
                                         <td>{{ $employe->user->name }}</td>
                                         <td>{{ $employe->user->email }}</td>
                                         <td>{{ $employe->user->telephone }}</td>
+                                        <td>{{ $employe->direction->name }}</td>
                                         <td>
                                             <span class="d-flex mt-2 align-items-baseline"><a
                                                     href="{{ route('employes.show', $employe->id) }}"

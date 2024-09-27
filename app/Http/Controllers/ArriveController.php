@@ -31,7 +31,7 @@ class ArriveController extends Controller
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */
     }
-    
+
     public function index()
     {
         $anneeEnCours = date('Y');
@@ -51,9 +51,9 @@ class ArriveController extends Controller
             $numCourrier   =   strtolower("0000" . $numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
             $numCourrier   =   strtolower("000" . $numCourrier);
-        }elseif ($longueur >= 4 && $longueur < 5) {
+        } elseif ($longueur >= 4 && $longueur < 5) {
             $numCourrier   =   strtolower("00" . $numCourrier);
-        }elseif ($longueur >= 5 && $longueur < 6) {
+        } elseif ($longueur >= 5 && $longueur < 6) {
             $numCourrier   =   strtolower("0" . $numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
@@ -84,9 +84,9 @@ class ArriveController extends Controller
             $numCourrier   =   strtolower("0000" . $numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
             $numCourrier   =   strtolower("000" . $numCourrier);
-        }elseif ($longueur >= 4 && $longueur < 5) {
+        } elseif ($longueur >= 4 && $longueur < 5) {
             $numCourrier   =   strtolower("00" . $numCourrier);
-        }elseif ($longueur >= 5 && $longueur < 6) {
+        } elseif ($longueur >= 5 && $longueur < 6) {
             $numCourrier   =   strtolower("0" . $numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
@@ -149,9 +149,9 @@ class ArriveController extends Controller
 
         $anneeEnCours = date('y');
         $annee = date('Y');
-        $numero_agrement = $request->input("numero_arrive").'.'.$anneeEnCours.'/ONFP/DG/DEC/'.$annee;
-        $numero_coreespondance = $request->input("numero_arrive").'.'.$anneeEnCours;
-        
+        $numero_agrement = $request->input("numero_arrive") . '.' . $anneeEnCours . '/ONFP/DG/DEC/' . $annee;
+        $numero_coreespondance = $request->input("numero_arrive") . '.' . $anneeEnCours;
+
         $courrier = new Courrier([
             'date_recep'            =>      $request->input('date_arrivee'),
             'date_cores'            =>      $request->input('date_correspondance'),
@@ -189,7 +189,7 @@ class ArriveController extends Controller
         $operateur->save();
 
         $user->assignRole('Operateur');
-        
+
         Alert::success("Félicitations !", "Courrier ajouté avec succès");
         return redirect()->back();
     }
@@ -210,8 +210,11 @@ class ArriveController extends Controller
         if (isset($imp) && $imp == "1") {
             $courrier = $arrive->courrier;
             /* $count = count($request->product); */
+            /* $courrier->directions()->sync($request->id_direction);
+            $courrier->employees()->sync($request->id_employe); */
+            $arrive->employees()->sync($request->id_emp);
+            $arrive->users()->sync($request->id_emp);
             $courrier->directions()->sync($request->id_direction);
-            $courrier->employees()->sync($request->id_employe);
             $courrier->description =  $request->input('description');
             $courrier->date_imp    =  $request->input('date_imp');
             $courrier->save();
@@ -255,7 +258,7 @@ class ArriveController extends Controller
             $filePath = request('file')->store('courriers', 'public');
 
             /* dd($filePath); */
-            
+
             $file = $request->file('file');
             $filenameWithExt = $file->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -272,7 +275,7 @@ class ArriveController extends Controller
 
             /* $file = Image::make(public_path("/storage/{$filePath}"))->fit(800, 800); */
 
-           /*  $file->save(); */
+            /*  $file->save(); */
 
             $courrier->update(
                 [
@@ -326,9 +329,9 @@ class ArriveController extends Controller
         /* $status = 'Mise à jour effectuée avec succès';
 
         return Redirect::route('arrives.index')->with('status', $status); */
-        
+
         Alert::success('Félicitations !', 'mise à jour effectuée');
-        return Redirect::route('arrives.index'); 
+        return Redirect::route('arrives.index');
     }
     public function show($id)
     {
@@ -368,12 +371,24 @@ class ArriveController extends Controller
         if ($request->get('query')) {
             $query = $request->get('query');
 
-            $data = DB::table('directions')
+            /* $data = DB::table('directions')
                 ->where('sigle', 'LIKE', "%{$query}%")
+                ->get(); */
+            /* $data = DB::table('employees')->join('users', 'users.id', 'employees.users_id')
+                ->select('employees.*')
+                ->where('users.firstname', 'LIKE', "%{$query}%")
+                ->orwhere('users.name', 'LIKE', "%{$query}%")
+                ->get(); */
+
+
+            $data = Employee::join('users', 'users.id', 'employees.users_id')
+                ->select('employees.*')
+                ->where('users.firstname', 'LIKE', "%{$query}%")
+                ->orwhere('users.name', 'LIKE', "%{$query}%")
                 ->get();
 
             $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-            foreach ($data as $direction) {
+            /* foreach ($data as $direction) {
                 $id = $direction->id;
                 $sigle = $direction->sigle;
                 $employe_id = $direction->chef_id;
@@ -386,6 +401,23 @@ class ArriveController extends Controller
                 $output .= '
        
                 <li data-id="' . $id . '" data-chef="' . $name . '" data-employeid="' . $employe->id . '"><a href="#">' . $sigle . '</a></li>
+       ';
+            } */
+            foreach ($data as $employe) {
+                $id = $employe->id;
+                $firstname = $employe->user->firstname;
+                $name = $employe->user->name;
+                $direction_name = $employe->direction->name;
+                $iddirection = $employe->direction->id;
+                $sigle = $employe->direction->sigle;
+
+                $direction = $direction_name . ' (' . $sigle . ') ';
+
+                $name = $firstname . ' ' . $name;
+
+                $output .= '
+       
+                <li data-id="' . $id . '" data-direction="' . $direction . '" data-iddirection="' . $iddirection . '"><a href="#">' . $name . '</a></li>
        ';
             }
             $output .= '</ul>';
