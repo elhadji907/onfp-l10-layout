@@ -29,13 +29,14 @@
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                @endif --}}
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
-                            role="alert"><strong>{{ $error }}</strong></div>
                     @endforeach
-                @endif --}}
+                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+                        <strong>{{ $error }}</strong>
+                    </div>
+                @endif
                 <div class="row">
                     <!-- Sales Card -->
                     <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
@@ -154,19 +155,19 @@
                                 <?php $i = 1; ?>
                                 @foreach ($arrives as $arrive)
                                     <tr>
-                                        <td style="text-align: center;">{{ $arrive->numero }}</td>
+                                        <td style="text-align: center;">{{ $arrive?->numero }}</td>
                                         {{-- Date reception = date arrivée --}}
                                         <td style="text-align: center;">
-                                            {{ $arrive->courrier->date_recep?->format('d/m/Y') }} </td>
-                                        <td style="text-align: center;">{{ $arrive->courrier->numero }}</td>
+                                            {{ $arrive?->courrier?->date_recep?->format('d/m/Y') }} </td>
+                                        <td style="text-align: center;">{{ $arrive?->courrier?->numero }}</td>
                                         <td style="text-align: center;">
-                                            {{ $arrive->courrier->date_cores?->format('d/m/Y') }} </td>
+                                            {{ $arrive?->courrier?->date_cores?->format('d/m/Y') }} </td>
                                         {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
-                                        <td>{{ $arrive->courrier->expediteur }}</td>
-                                        <td>{{ $arrive->courrier->objet }}</td>
+                                        <td>{{ $arrive?->courrier?->expediteur }}</td>
+                                        <td>{{ $arrive?->courrier?->objet }}</td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('arrives.show', $arrive->id) }}"
+                                                    href="{{ route('arrives.show', $arrive?->id) }}"
                                                     class="btn btn-success btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
                                                 <div class="filter">
@@ -174,24 +175,24 @@
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li><a class="dropdown-item btn btn-sm"
-                                                                href="{{ route('arrives.edit', $arrive->id) }}"
-                                                                class="mx-1">Modifier</a>
+                                                                href="{{ route('arrives.edit', $arrive?->id) }}"
+                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
                                                         </li>
-                                                        <li><a class="dropdown-item btn btn-sm"
+                                                        {{-- <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
                                                                 class="mx-1">Imputer</a>
-                                                        </li>
+                                                        </li> --}}
                                                         {{--  <li><a class="dropdown-item btn btn-sm"
                                                                 href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class="mx-1"
                                                                 target="_blank">Imprimer</a>
                                                         </li> --}}
                                                         <li>
-                                                            <form action="{{ route('arrives.destroy', $arrive->id) }}"
+                                                            <form action="{{ route('arrives.destroy', $arrive?->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit"
-                                                                    class="dropdown-item show_confirm">Supprimer</button>
+                                                                <button type="submit" class="dropdown-item show_confirm"><i
+                                                                        class="bi bi-trash"></i>Supprimer</button>
                                                             </form>
                                                         </li>
                                                     </ul>
@@ -411,7 +412,7 @@
                     </div>
                     {{-- <form method="post" action="{{ route('arrives.store') }}" enctype="multipart/form-data"
                         class="row g-3"> --}}
-                        <form method="post" action="{{ route('addCourrierOperateur') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('addCourrierOperateur') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="row g-3">

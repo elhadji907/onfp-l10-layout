@@ -60,12 +60,12 @@
                                     <th>Lieu naissance</th> --}}
                                     <th>Module</th>
                                     <th width="12%" class="text-center">Département</th>
-                                    <th width="8%" class="text-center">Niveau étude</th>
-                                    <th width="12%" class="text-center">Diplome académique</th>
-                                    <th width="13%" class="text-center">Diplome professionnel</th>
+                                    <th width="15%" class="text-center">Niveau étude</th>
+                                    <th width="15%" class="text-center">Diplome académique</th>
+                                    <th width="15%" class="text-center">Diplome professionnel</th>
                                    {{--  <th width="15%">Projet</th> --}}
                                     <th width="5%" class="text-center">Statut</th>
-                                    <th><i class="bi bi-gear"></i></th>
+                                    <th style="width:5%;"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -152,7 +152,7 @@
                                         <div class="col-md-8 col-lg-9">
 
                                             <div class="form-floating mb-3">
-                                                <textarea class="form-control @error('commentaire') is-invalid @enderror" placeholder="Ecrire votre commentaire ici"
+                                                <textarea class="form-control @error('commentaire') is-invalid @enderror" placeholder="Ecrire votre commentaire ici..."
                                                     name="commentaire" id="commentaire" style="height: 100px;"></textarea>
                                                 <label for="floatingTextarea">Ecrire votre commentaire ici</label>
                                             </div>

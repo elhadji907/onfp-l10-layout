@@ -36,7 +36,7 @@
 <body>
     <header>
         {{-- <img src="assets/img/logo-onfp.jpg" alt="Logo ONFP" width="150" height="50"> --}}
-        <h1>ONFP</h1>
+        {{-- <h1>ONFP</h1> --}}
     </header>
 
     <body>

@@ -14,10 +14,8 @@ use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
-use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ArriveController extends Controller
@@ -35,12 +33,21 @@ class ArriveController extends Controller
     public function index()
     {
         $anneeEnCours = date('Y');
-        $numCourrier = Arrive::get()->last();
+        $an = date('y');
+
+        $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
+            ->select('arrives.*')
+            ->where('courriers.annee', $anneeEnCours)
+            ->get()->last();
+
         if (isset($numCourrier)) {
-            $numCourrier = Arrive::get()->last()->numero;
+            $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
+                ->select('arrives.*')
+                ->get()->last()->numero;
+
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "000001";
+            $numCourrier = $an . "0001";
         }
 
         $longueur = strlen($numCourrier);
@@ -68,12 +75,21 @@ class ArriveController extends Controller
     public function create()
     {
         $anneeEnCours = date('Y');
-        $numCourrier = Arrive::get()->last();
+        $an = date('y');
+
+        $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
+            ->select('arrives.*')
+            ->where('courriers.annee', $anneeEnCours)
+            ->get()->last();
+
         if (isset($numCourrier)) {
-            $numCourrier = Arrive::get()->last()->numero;
+            $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
+                ->select('arrives.*')
+                ->get()->last()->numero;
+
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "000001";
+            $numCourrier = $an . "0001";
         }
 
         $longueur = strlen($numCourrier);
@@ -353,8 +369,10 @@ class ArriveController extends Controller
         $arrive = Arrive::findOrFail($arriveId);
         $arrive->courrier()->delete();
         $arrive->delete();
-        $status = "Supprimer avec succès";
-        return redirect()->back()->with("danger", $status);
+        /*  $status = "Supprimer avec succès"; */
+        Alert::success('Effectué !', 'courrier supprimer avec succès');
+        /* return redirect()->back()->with("danger", $status); */
+        return redirect()->back();
     }
 
     public function arriveImputation(Request $request, $id)

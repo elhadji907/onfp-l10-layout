@@ -15,21 +15,25 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-                @foreach (auth()->user()->unReadNotifications as $notification)
+                @forelse (auth()->user()->unReadNotifications as $notification)
                     <a class="dropdown-item d-flex align-items-centers"
                         href="{{ route('courriers.showFromNotification', ['courrier' => $notification->data['courrierId'], 'notification' => $notification->id]) }}">
                         {{-- <li class="notification-item"> --}}
-                            {{-- <i class="bi bi-check-circle text-success"></i> --}}
-                            <div>
-                                <h4>{!! $notification->data['firstname'] !!}&nbsp;{!! $notification->data['name'] !!}</h4>
-                                <p>{!! $notification->data['courrierTitle'] !!}</p>
-                                <p>{!! $notification->created_at->diffForHumans() !!}</p>
-                            </div>
+                        {{-- <i class="bi bi-check-circle text-success"></i> --}}
+                        <div>
+                            <h4>{!! $notification->data['firstname'] !!}&nbsp;{!! $notification->data['name'] !!}</h4>
+                            <p>{!! $notification->data['courrierTitle'] !!}</p>
+                            <p>{!! $notification->created_at->diffForHumans() !!}</p>
+                        </div>
                         {{-- </li> --}}
                     </a>
                     <hr>
-                @endforeach
-                
+                @empty
+
+                    <div class="alert alert-info">Aucun commentaire non lu pour ce courrier
+                    </div>
+                @endforelse
+
             </div>
         </div>
     </section>

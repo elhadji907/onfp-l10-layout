@@ -52,7 +52,7 @@ class EmployeController extends Controller
     public function store(Request $request)
     {
         /* dd($request->civilite); */
-        /* $this->validate($request, [
+        $this->validate($request, [
             "matricule"           => ['nullable', 'string', 'min:8', 'max:8'],
             'firstname'           => ['required', 'string', 'max:50'],
             'name'                => ['required', 'string', 'max:25'],
@@ -69,7 +69,7 @@ class EmployeController extends Controller
             'fonction'            => ['nullable', 'string'],
             'direction'           => ['nullable', 'string'],
             'situation_familiale' => ['required', 'string'],
-        ]); */
+        ]);
 
         $categorie = Category::where('name', $request?->categorie)->first();
         $fonction = Fonction::where('name', $request?->fonction)->first();
@@ -128,7 +128,7 @@ class EmployeController extends Controller
         $user->assignRole('Employe');
         /* $status = "Enregistrement effectué avec succès";
         return Redirect::route('employes.index')->with("status", $status); */
-        Alert::success('Félicitations ! ', 'Enregistrement effectué avec succès');
+        Alert::success('Félicitations ! ', 'Employé enregistré avec succès');
         return Redirect::route('employes.index');
     }
 
@@ -191,6 +191,10 @@ class EmployeController extends Controller
             ]);
         }
 
+        $categorie = Category::where('name', $request->input('categorie'))->first();
+        $fonction = Fonction::where('name', $request->input('fonction'))->first();
+        $direction = Direction::where('name', $request->input('direction'))->first();
+
         $user->update([
             'cin'                       =>  $request->cin,
             'civilite'                  =>  $request->civilite,
@@ -209,21 +213,22 @@ class EmployeController extends Controller
             'updated_by'                =>  Auth::user()->id,
         ]);
 
-
         $employe->update([
-            'users_id'      => $user->id,
-            'matricule'     => $request->matricule,
-            'diplome'       => $request->diplome,
-            'date_embauche' => $request->date_embauche,
-            'fonction_precedente' => $request->fonction_precedente,
-            'fonctions_id'  => $request->fonction,
-            'directions_id' => $request->direction,
-            'categories_id' => $request->categorie,
+            'users_id'                  =>  $user->id,
+            'matricule'                 =>  $request->matricule,
+            'diplome'                   =>  $request->diplome,
+            'date_embauche'             =>  $request->date_embauche,
+            'fonction_precedente'       =>  $request->fonction_precedente,
+            'fonctions_id'              =>  $fonction->id,
+            'directions_id'             =>  $direction->id,
+            'categories_id'             =>  $categorie->id,
         ]);
 
-        $status = 'Mise à jour effectuée avec succès';
+        /* $status = 'Mise à jour effectuée avec succès';
 
-        return Redirect::back()->with('status', $status);
+        return Redirect::back()->with('status', $status); */
+        Alert::success('Mise à jour effectuée');
+        return redirect()->route("employes.index");
     }
 
     public function show($id)
@@ -256,8 +261,10 @@ class EmployeController extends Controller
     {
         $employe = Employee::findOrFail($id);
         $employe->delete();
-        $mesage = $employe->user->firstname . ' ' . $employe->user->name . ' a été supprimé(e)';
-        return redirect()->back()->with("danger", $mesage);
+        Alert::success('L\'employé ' . $employe->user->firstname . ' ' . $employe->user->name, 'supprimé avec succès');
+        /* $mesage = $employe->user->firstname . ' ' . $employe->user->name . ' a été supprimé(e)';
+        return redirect()->back()->with("danger", $mesage); */
+        return redirect()->back();
     }
 
     public function fileDecision($id)

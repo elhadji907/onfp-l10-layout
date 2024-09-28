@@ -74,7 +74,8 @@
                                         </td>
                                         <td style="text-align: center;">
                                             @isset($user?->email_verified_at)
-                                                <span class="badge bg-success"><i class="bi bi-check-circle" title="compte vérifié"></i></span>
+                                            <i class="bi bi-check-circle text-success" title="compte vérifié"></i>
+                                                {{-- <span class="badge bg-success"><i class="bi bi-check-circle" title="compte vérifié"></i></span> --}}
                                                 {{-- me-1 à mettre dans la classe de la balise i --}}
                                                 {{-- <span class="btn btn-outline-info btn-sm mx-1"><i class="bi bi-check2-circle"></i></span> --}}
                                             @endisset

@@ -32,12 +32,18 @@ class DepartController extends Controller
     {
         $departs = Depart::orderBy('created_at', 'desc')->get();
         $anneeEnCours = date('Y');
-        $numCourrier = Depart::get()->last();
+        $an = date('y');
+
+        $numCourrier = Depart::join('courriers', 'courriers.id', 'departs.courriers_id')
+            ->select('departs.*')
+            ->where('courriers.annee', $anneeEnCours)
+            ->get()->last();
+
         if (isset($numCourrier)) {
             $numCourrier = Depart::get()->last()->numero;
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "000001";
+            $numCourrier = $an . "0001";
         }
 
         $longueur = strlen($numCourrier);
@@ -56,7 +62,6 @@ class DepartController extends Controller
             $numCourrier   =   strtolower($numCourrier);
         }
 
-
         $today = date('Y-m-d');
         $count_today = Depart::where("created_at", "LIKE",  "{$today}%")->count();
 
@@ -65,12 +70,18 @@ class DepartController extends Controller
     public function create()
     {
         $anneeEnCours = date('Y');
-        $numCourrier = Depart::get()->last();
+        $an = date('y');
+
+        $numCourrier = Depart::join('courriers', 'courriers.id', 'departs.courriers_id')
+            ->select('departs.*')
+            ->where('courriers.annee', $anneeEnCours)
+            ->get()->last();
+
         if (isset($numCourrier)) {
             $numCourrier = Depart::get()->last()->numero;
             $numCourrier = ++$numCourrier;
         } else {
-            $numCourrier = "000001";
+            $numCourrier = $an . "0001";
         }
 
         $longueur = strlen($numCourrier);

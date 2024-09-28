@@ -51,7 +51,7 @@ class Arrive extends Model
 
 	public function employees()
 	{
-		return $this->belongsToMany(Employee::class, 'courrierarrivesemployes', 'arrives_id', 'employes_id')
+		return $this->belongsToMany(Employee::class, 'courrierarrivesemployes', 'arrives_id', 'employees_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

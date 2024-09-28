@@ -41,7 +41,7 @@
 
                     <hr class="dropdown-divider">
                     <li class="dropdown-footer">
-                        <a href="#">Voir toutes les notifications</a>
+                        <a href="{{ url('notifications') }}">Voir toutes les notifications</a>
                     </li>
 
                 </ul><!-- End Notification Dropdown Items -->

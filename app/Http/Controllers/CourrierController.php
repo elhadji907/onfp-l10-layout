@@ -9,6 +9,7 @@ use App\Models\Interne;
 use App\Models\User;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Role;
 
 class CourrierController extends Controller
@@ -81,14 +82,16 @@ class CourrierController extends Controller
         $user_create_name = $user_create->firstname . ' ' . $user_create->name;
         $user_update_name = $user_update->firstname . ' ' . $user_update->name;
 
-        if ($courrier->type == 'arrive') {
-            /* return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name")); */
-            return redirect()->back()->with('arrive', 'courrier', 'user_create_name', 'user_update_name');
-        }
+        Alert::success('Lecture fait', 'le courrier a été visionné');
 
-        if ($courrier->type == 'depart') {
-            /* return view("courriers.departs.show", compact("depart", "courrier", "user_create_name", "user_update_name")); */
-            return redirect()->back()->with('depart', 'courrier', 'user_create_name', 'user_update_name');
+        if ($courrier->type == 'arrive') {
+            return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
+            /* return redirect()->back()->with('arrive', 'courrier', 'user_create_name', 'user_update_name'); */
+        } elseif ($courrier->type == 'depart') {
+            return view("courriers.departs.show", compact("depart", "courrier", "user_create_name", "user_update_name"));
+            /* return redirect()->back()->with('depart', 'courrier', 'user_create_name', 'user_update_name'); */
+        } else {
+            return redirect()->back();
         }
 
         /*  if ($typescourrier == 'Courriers arrives') {            

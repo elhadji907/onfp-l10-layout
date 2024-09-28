@@ -456,7 +456,7 @@ class OperateurController extends Controller
         $operateur = Operateur::find($id);
         $operateur->delete();
 
-        Alert::success("Fait " . $operateur->sigle, 'a été supprimé');
+        Alert::success("Fait " . $operateur?->user?->username, 'a été supprimé');
         return redirect()->back();
     }
     function fetch(Request $request)

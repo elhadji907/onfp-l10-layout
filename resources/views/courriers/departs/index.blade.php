@@ -16,7 +16,7 @@
         <div class="row">
             <!-- Left side columns -->
             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                {{--  @if ($message = Session::get('status'))
+                {{-- @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
                         <strong>{{ $message }}</strong>
@@ -29,13 +29,13 @@
                         <strong>{{ $message }}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                @endif --}}
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
-                            role="alert"><strong>{{ $error }}</strong></div>
                     @endforeach
-                @endif --}}
+                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+                        <strong>{{ $error }}</strong></div>
+                @endif
                 <div class="row">
                     <!-- Sales Card -->
                     <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
