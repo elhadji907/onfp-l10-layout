@@ -81,12 +81,12 @@
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Date arrivé</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->date_recep->format('d/m/Y') }}
+                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->date_recep?->translatedFormat('l jS F Y') }}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Date correspondance</div>
-                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->date_cores->format('d/m/Y') }}
+                                    <div class="col-lg-3 col-md-4">{{ $arrive->courrier->date_cores?->translatedFormat('l jS F Y') }}
                                     </div>
                                 </div>
 

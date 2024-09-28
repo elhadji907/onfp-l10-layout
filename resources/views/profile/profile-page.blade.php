@@ -888,7 +888,7 @@
                                                         {{-- <p><strong>Type de courrier : </strong> {!! $arrive?->courrier?->type ?? '' !!}</p> --}}
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             {{-- format('d/m/Y à H:i:s') --}}
-                                                            <small>Imputer le {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('D d F Y') !!}</small>
+                                                            <small>Imputer le, {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('l jS F Y') !!}</small>
                                                             <span
                                                                 class="badge badge-info">{!! $arrive?->courrier?->user?->firstname !!}&nbsp;{!! $arrive?->courrier?->user?->name !!}</span>
                                                         </div>

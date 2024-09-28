@@ -57,7 +57,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center" width="2%">Info</th>
-                                        <th width="10%">N° agrément</th>
+                                        <th width="12%">N° agrément</th>
                                         {{-- <th width="45%">Opérateurs</th> --}}
                                         <th width="35%">Opérateur</th>
                                         <th width="10%" class="text-center">Sigle</th>

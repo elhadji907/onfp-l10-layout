@@ -44,7 +44,13 @@
                             {{-- @endisset --}}
                         </div>
 
-                        @if (isset(Auth::user()->cin))
+                        @if (isset(Auth::user()?->operateur) &&
+                                isset(Auth::user()?->username) &&
+                                isset(Auth::user()?->ninea) &&
+                                isset(Auth::user()?->rccm) &&
+                                isset(Auth::user()?->email_responsable) &&
+                                isset(Auth::user()?->fonction_responsable) &&
+                                isset(Auth::user()?->email))
                             <h5 class="card-title">Aucune demande operateur pour le moment !</h5>
                         @else
                             <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
@@ -305,7 +311,8 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="file" name="quitus" id="quitus" class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                        <input type="file" name="quitus" id="quitus"
+                                            class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
                                         @error('quitus')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

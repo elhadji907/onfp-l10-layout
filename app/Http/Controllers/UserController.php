@@ -219,6 +219,8 @@ class UserController extends Controller
             ]);
             Alert::success('Effectuée ! ', 'employé ajouté');
 
+            $user->assignRole('Employe');
+            
             return Redirect::back();
         } else {
 
