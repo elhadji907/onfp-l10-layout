@@ -159,7 +159,13 @@
                                         créé, {{ Auth::user()?->created_at->diffForHumans() }}
                                     </p>
                                     <h5 class="card-title">Informations personnelles :
-                                        @if (isset(Auth::user()?->cin))
+                                        @if (isset(Auth::user()?->operateur) &&
+                                                isset(Auth::user()?->username) &&
+                                                isset(Auth::user()?->ninea) &&
+                                                isset(Auth::user()?->rccm) &&
+                                                isset(Auth::user()?->email_responsable) &&
+                                                isset(Auth::user()?->fonction_responsable) &&
+                                                isset(Auth::user()?->email))
                                             <span class="badge bg-success text-white">Complètes</span>
                                         @else
                                             <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
@@ -554,8 +560,7 @@
                                         <h5 class="card-title">Personne responsable</h5>
                                         {{-- CIN --}}
                                         <div class="row mb-3">
-                                            <label for="cin" class="col-md-4 col-lg-3 col-form-label">CIN<span
-                                                    class="text-danger mx-1">*</span>
+                                            <label for="cin" class="col-md-4 col-lg-3 col-form-label">CIN
                                             </label>
                                             <div class="col-md-8 col-lg-9">
                                                 <div class="pt-2">
@@ -639,7 +644,7 @@
                                             <label for="telephone" class="col-md-4 col-lg-3 col-form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="telephone" type="telephone"
+                                                <input name="telephone" type="text"
                                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                                     id="telephone" value="{{ $user->telephone ?? old('telephone') }}"
                                                     autocomplete="telephone" placeholder="N° de téléphone">
@@ -651,10 +656,47 @@
                                             </div>
                                         </div>
 
+                                        {{-- Email --}}
+                                        <div class="row mb-3">
+                                            <label for="email" class="col-md-4 col-lg-3 col-form-label">Email<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="email_responsable" type="text"
+                                                    class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
+                                                    id="email_responsable"
+                                                    value="{{ $user->email_responsable ?? old('email_responsable') }}"
+                                                    autocomplete="email_responsable" placeholder="Email responsable">
+                                                @error('email_responsable')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- fonction --}}
+                                        <div class="row mb-3">
+                                            <label for="fonction" class="col-md-4 col-lg-3 col-form-label">Fonction<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="fonction_responsable" type="text"
+                                                    class="form-control form-control-sm @error('fonction_responsable') is-invalid @enderror"
+                                                    id="fonction_responsable"
+                                                    value="{{ $user->fonction_responsable ?? old('fonction_responsable') }}"
+                                                    autocomplete="fonction_responsable"
+                                                    placeholder="fonction responsable">
+                                                @error('fonction_responsable')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                         {{-- Date de naissance --}}
                                         <div class="row mb-3">
                                             <label for="date_naissance" class="col-md-4 col-lg-3 col-form-label">Date
-                                                naissance<span class="text-danger mx-1">*</span></label>
+                                                naissance</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input type="date" name="date_naissance"
                                                     value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
@@ -670,7 +712,7 @@
                                         {{-- Lieu naissance --}}
                                         <div class="row mb-3">
                                             <label for="lieu naissance" class="col-md-4 col-lg-3 col-form-label">Lieu
-                                                naissance<span class="text-danger mx-1">*</span></label>
+                                                naissance</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="lieu_naissance" type="text"
                                                     class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
@@ -687,7 +729,7 @@
                                         {{-- Situation familiale --}}
                                         <div class="row mb-3">
                                             <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
-                                                familiale<span class="text-danger mx-1">*</span></label>
+                                                familiale</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <select name="situation_familiale"
                                                     class="form-select form-select-sm @error('situation_familiale') is-invalid @enderror"
@@ -720,7 +762,7 @@
                                         {{-- Situation professionnelle --}}
                                         <div class="row mb-3">
                                             <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
-                                                profes.<span class="text-danger mx-1">*</span></label>
+                                                profes.</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <select name="situation_professionnelle"
                                                     class="form-select  @error('situation_professionnelle') is-invalid @enderror"
