@@ -282,15 +282,15 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
-            @if (auth()->user()->hasRole('super-admin'))
+            @if (auth()->user()->hasRole('super-admin|admin|DIOF|DEC'))
                 <a href="{{ url('/home') }}" class="logo d-flex align-items-center">
                     {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
-                    <span class="d-none d-lg-block">ONFP V2</span>
+                    <span class="d-none d-lg-block">ONFP V²</span>
                 </a>
             @else
                 <a href="{{ url('/profil') }}" class="logo d-flex align-items-center">
                     {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
-                    <span class="d-none d-lg-block">ONFP</span>
+                    <span class="d-none d-lg-block">ONFP V²</span>
                 </a>
             @endif
             <i class="bi bi-list toggle-sidebar-btn"></i>

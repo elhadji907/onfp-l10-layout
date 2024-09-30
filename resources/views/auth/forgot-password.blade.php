@@ -120,7 +120,8 @@
                                     <div class="d-flex justify-content-center py-1">
                                         <a href="{{ url('/login-page') }}"
                                             class="logo d-flex align-items-center w-auto">
-                                            <span class="d-none d-lg-block">ONFP</span>
+                                            <h5 class="card-title">ONFP - La référence de la formation professionnelle
+                                            </h5>
                                         </a>
                                     </div>
 
@@ -131,7 +132,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-column align-items-center justify-content-center">
+                        <div
+                            class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-column align-items-center justify-content-center">
 
                             {{-- <div class="d-flex justify-content-center py-4">
                                 <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
@@ -152,8 +154,11 @@
                                         </div>
                                     @endif --}}
                                     <div class="pt-0 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Réinitialisation du mot de passe
-                                            par e-mail</h5>
+                                        <a href="{{ url('/login-page') }}"
+                                            class="logo d-flex align-items-center w-auto">
+                                            <h5 class="card-title">Réinitialisation du mot de passe
+                                                par e-mail</h5>
+                                        </a>
                                         {{-- <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de
                                             passe pour vous connecter</p> --}}
                                     </div>

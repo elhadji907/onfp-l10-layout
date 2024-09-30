@@ -10,6 +10,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ValidationoperateurController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin|DEC|ADEC']);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
 
     public function update(Request $request, $id)
     {

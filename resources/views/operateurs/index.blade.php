@@ -188,17 +188,17 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddOperateurModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
-                            </button>
-                        </div>
+                        @if (auth()->user()->hasRole('super-admin|admin|DEC'))
+                            <div class="pt-1">
+                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                    data-bs-target="#AddOperateurModal">
+                                    <i class="bi bi-person-plus" title="Ajouter"></i>
+                                </button>
+                            </div>
+                        @endif
                         <h5 class="card-title">Liste des opérateurs</h5>
                         <div class="table-responsive">
-                            <table
-                                class="table datatables table-bordered table-hover table-striped"
-                                id="table-operateurs">
+                            <table class="table datatables table-bordered table-hover table-striped" id="table-operateurs">
                                 <thead>
                                     <tr>
                                         <th width="15%" class="text-center">N° agrément</th>
@@ -207,7 +207,9 @@
                                         <th width="5%" class="text-center">Modules</th>
                                         <th width="5%" class="text-center">Formations</th>
                                         <th width="15%" class="text-center">Statut</th>
-                                        <th width="5%"><i class="bi bi-gear"></i></th>
+                                        @if (auth()->user()->hasRole('super-admin|admin'))
+                                            <th width="5%"><i class="bi bi-gear"></i></th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -242,36 +244,39 @@
                                                         href="{{ route('operateurs.show', $operateur->id) }}"
                                                         class="btn btn-primary btn-sm" title="voir détails"><i
                                                             class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li>
-                                                                <a class="dropdown-item btn btn-sm"
-                                                                    href="{{ route('operateurs.edit', $operateur->id) }}"
-                                                                    class="mx-1" title="Modifier"><i
-                                                                        class="bi bi-pencil"></i>Modifier</a>
+                                                    @if (auth()->user()->hasRole('super-admin|admin'))
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul
+                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                <li>
+                                                                    <a class="dropdown-item btn btn-sm"
+                                                                        href="{{ route('operateurs.edit', $operateur->id) }}"
+                                                                        class="mx-1" title="Modifier"><i
+                                                                            class="bi bi-pencil"></i>Modifier</a>
 
-                                                                {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                    {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#EditOperateurModal{{ $operateur->id }}">
                                                                     <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                                 </button> --}}
-                                                            </li>
-                                                            <li>
-                                                                <form
-                                                                    action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="dropdown-item show_confirm"
-                                                                        title="Supprimer"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="dropdown-item show_confirm"
+                                                                            title="Supprimer"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    @endif
                                                 </span>
                                             </td>
                                         </tr>
@@ -539,13 +544,14 @@
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="quitus" class="form-label">Quitus fiscal</label>
-                                        <input type="file" name="quitus" id="quitus" value="{{ old('quitus') }}" class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                        <input type="file" name="quitus" id="quitus" value="{{ old('quitus') }}"
+                                            class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
                                         @error('quitus')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
 
-                                   {{--  <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    {{--  <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="quitus" class="form-label">N° quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="quitus" value="{{ old('quitus') }}"
@@ -647,7 +653,8 @@
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="email_responsable" class="form-label">Adresse e-mail<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="email" name="email_responsable" value="{{ old('email_responsable') }}"
+                                        <input type="email" name="email_responsable"
+                                            value="{{ old('email_responsable') }}"
                                             class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
                                             id="email_responsable" placeholder="Adresse email responsable">
                                         @error('email_responsable')

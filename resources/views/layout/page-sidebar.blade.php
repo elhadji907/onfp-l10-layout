@@ -161,7 +161,7 @@
             </ul>
         </li> --}}
         <!-- End Charts Nav -->
-        @if (auth()->user()->hasRole('super-admin'))
+        @if (auth()->user()->hasRole('super-admin|courrier|a-courrier'))
             {{-- <li class="nav-heading">Gestion courrier</li> --}}
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
@@ -195,7 +195,7 @@
             </li><!-- End Courriers Nav -->
         @endif
         {{-- <li class="nav-heading">Gestion demandeurs</li> --}}
-        @if (auth()->user()->hasRole('super-admin'))
+        @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF'))
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-folder-plus"></i><span>Gestion demandeurs</span><i
@@ -263,7 +263,7 @@
             </li><!-- End demandes Nav -->
         @endif
 
-        @if (auth()->user()->hasRole('super-admin'))
+        @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF|DEC'))
             {{-- <li class="nav-heading">Gestion opérateurs</li> --}}
             {{-- Formations --}}
             <li class="nav-item">
@@ -371,6 +371,9 @@
 
             {{-- <li class="nav-heading">EMPLOYES</li> --}}
 
+            @endif
+            
+        @if (auth()->user()->hasRole('super-admin|DRH'))
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse"
                     href="#">
@@ -445,7 +448,7 @@
             </li>
         @endif
 
-        @if (auth()->user()->hasRole('super-admin'))
+        @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF'))
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#modules-nav" data-bs-toggle="collapse"
                     href="#">

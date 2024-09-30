@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         // examples:
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin']);
+        $this->middleware(['role:super-admin|admin|DIOF|DEC|DPP']);
         $this->middleware("permission:role-view", ["only" => ["index"]]);
         $this->middleware("permission:role-create", ["only" => ["create", "store"]]);
         $this->middleware("permission:role-update", ["only" => ["update", "edit"]]);

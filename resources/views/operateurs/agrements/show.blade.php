@@ -533,23 +533,23 @@
                                                 :&nbsp;
                                                 <span class="{{ $operateur->statut_agrement }} text-white">
                                                     {{ $operateur?->statut_agrement }}</span>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                @if (auth()->user()->hasRole('super-admin|admin'))
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
-                                                        {{-- Validation automatique --}}
-                                                        <form
-                                                            action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button class="show_confirm_valider btn btn-sm mx-1"><i
-                                                                    class="bi bi-check2-circle"
-                                                                    title="Valider"></i>&nbsp;Retenu</button>
-                                                        </form>
-
-                                                        {{--   <form
+                                                            {{-- Validation automatique --}}
+                                                            <form
+                                                                action="{{ route('validateOperateur', ['id' => $operateur->id]) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button class="show_confirm_valider btn btn-sm mx-1"><i
+                                                                        class="bi bi-check2-circle"
+                                                                        title="Valider"></i>&nbsp;Retenu</button>
+                                                            </form>
+                                                            {{--   <form
                                                             action="{{ route('agreerOperateur', ['id' => $operateur->id]) }}"
                                                             method="post">
                                                             @csrf
@@ -565,15 +565,17 @@
                                                                     title="Justification"></i>&nbsp;Sous réserve
                                                             </button>
                                                         </div> --}}
-                                                        {{-- @isset($operateur->motif) --}}
-                                                        <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                            data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i
-                                                                class="bi bi-trash" title="Justification"></i>&nbsp;Non
-                                                            retenu
-                                                        </button>
-                                                        {{-- @endisset --}}
-                                                    </ul>
-                                                </div>
+                                                            {{-- @isset($operateur->motif) --}}
+                                                            <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                data-bs-target="#RejetAgrementModal{{ $operateur->id }}"><i
+                                                                    class="bi bi-trash"
+                                                                    title="Justification"></i>&nbsp;Non
+                                                                retenu
+                                                            </button>
+                                                            {{-- @endisset --}}
+                                                        </ul>
+                                                    </div>
+                                                @endif
                                             </span>
                                         </div>
                                         {{-- <form method="post" action="#" enctype="multipart/form-data"
@@ -590,7 +592,9 @@
                                                         <th scope="col">CATEGORIE</th>
                                                         <th scope="col">QUALIFICATION</th>
                                                         <th class="text-center">STATUT</th>
-                                                        <th class="text-center"><i class="bi bi-gear"></i></th>
+                                                        @if (auth()->user()->hasRole('super-admin|admin'))
+                                                            <th class="text-center"><i class="bi bi-gear"></i></th>
+                                                        @endif
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -612,13 +616,14 @@
                                                                     <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
                                                                         class="btn btn-primary btn-sm"
                                                                         title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                    <div class="filter">
-                                                                        <a class="icon" href="#"
-                                                                            data-bs-toggle="dropdown"><i
-                                                                                class="bi bi-three-dots"></i></a>
-                                                                        <ul
-                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            {{--  <form
+                                                                    @if (auth()->user()->hasRole('super-admin|admin'))
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                {{--  <form
                                                                                 action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                 method="post">
                                                                                 @csrf
@@ -626,25 +631,27 @@
                                                                                 <button
                                                                                     class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
                                                                             </form> --}}
-                                                                            {{-- <button class="dropdown-item btn btn-sm mx-1"
+                                                                                {{-- <button class="dropdown-item btn btn-sm mx-1"
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
                                                                             </button> --}}
-                                                                            <button class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
-                                                                            </button>
-                                                                            <form
-                                                                                action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit"
-                                                                                    class="dropdown-item show_confirm"
-                                                                                    title="Supprimer">Supprimer</button>
-                                                                            </form>
-                                                                        </ul>
-                                                                    </div>
+                                                                                <button
+                                                                                    class="dropdown-item btn btn-sm mx-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
+                                                                                </button>
+                                                                                <form
+                                                                                    action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="dropdown-item show_confirm"
+                                                                                        title="Supprimer">Supprimer</button>
+                                                                                </form>
+                                                                            </ul>
+                                                                        </div>
+                                                                    @endif
                                                                 </span>
                                                             </td>
                                                         </tr>

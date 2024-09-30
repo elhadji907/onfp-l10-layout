@@ -11,16 +11,27 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+                <div
+                    class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 pt-2">
-                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('demandesIndividuelle') }}" class="btn btn-success btn-sm"
-                                            title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | Dossier personnel</p>
-                                    </span>
+                                    @if (auth()->user()->hasRole('Demandeur'))
+                                        <span class="d-flex mt-2 align-items-baseline"><a
+                                                href="{{ route('demandesIndividuelle') }}" class="btn btn-success btn-sm"
+                                                title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                            <p> | Dossier personnel</p>
+                                        </span>
+                                    @endif
+                                    @if (auth()->user()->hasRole('super-admin|admin'))
+                                        <span class="d-flex mt-2 align-items-baseline"><a
+                                                href="{{ route('individuelles.show', $individuelle?->id) }}"
+                                                class="btn btn-success btn-sm" title="retour"><i
+                                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                            <p> | retour</p>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                             {{-- <p>NB: Si la formation souhaiter n'est pas disponible, merci de choisir <b>Autre</b> et renseigner votre formation souhaitée sur la case: {{ ("<<Si autre formation ? précisez>>") }}</p> --}}
@@ -158,7 +169,7 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror --}}
-                                </div>                                
+                                </div>
 
                                 <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="departement" class="form-label">Lieu de formation<span
@@ -616,7 +627,8 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-sm">Enregister modifications</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Enregister
+                                        modifications</button>
                                 </div>
                             </form>
 

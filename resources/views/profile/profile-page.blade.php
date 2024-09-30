@@ -843,7 +843,7 @@
     @endif
 
     @if (auth()->user()->hasRole('super-admin'))
-        <section class="section dashboard">
+        <section class="section faq">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="row">
@@ -904,7 +904,9 @@
                                                     </div>
                                                 </td> --}}
                                                     <td>
-                                                        <h5 class="card-title">Commentaires ({{ count($arrive->courrier->comments) }})</h5>
+                                                        <h5 class="card-title">Commentaires
+                                                            ({{ count($arrive->courrier->comments) }})
+                                                        </h5>
                                                         @forelse ($arrive->courrier->comments as $comment)
                                                             <div class="accordion accordion-flush"
                                                                 id="accordionFlushExample">
@@ -926,14 +928,18 @@
                                                                         <div class="accordion-body">
                                                                             <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
                                                                             <div class="activity">
-                                                                                <div class="activity-item d-flex">
-                                                                                    <div class="activite-label">
-                                                                                        {{-- <span class="fw-bold text-dark"></span> --}}
+                                                                                <div
+                                                                                    class="activity-item d-flex col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                                                    <div
+                                                                                        class="activite-label col-2 col-md-2 col-lg-2 col-sm-2 col-xs-2 col-xxl-2">
                                                                                         {!! Carbon\Carbon::parse($comment?->created_at)?->diffForHumans() !!}
                                                                                     </div>
+                                                                                    &nbsp;
                                                                                     <i
                                                                                         class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                                                                    <div class="activity-content">
+                                                                                    &nbsp;
+                                                                                    <div
+                                                                                        class="activity-content col-10 col-md-10 col-lg-10 col-sm-10 col-xs-10 col-xxl-10">
                                                                                         {!! $comment->content !!}
                                                                                     </div>
                                                                                 </div>
@@ -946,18 +952,17 @@
                                                                             $e = '1a';
                                                                             $f = '1a';
                                                                             ?>
-
+                                                                            <h5 class="card-title">Réponses au
+                                                                                commentaire #
+                                                                                {{ $i - 1 }}</h5>
                                                                             <div class="activity">
                                                                                 @forelse ($comment->comments as $replayComment)
-                                                                                    <h5 class="card-title">Réponses au
-                                                                                        commentaire #
-                                                                                        {{ $i - 1 }}</h5>
                                                                                     <div
                                                                                         class="row col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                                                                         <label for=""
-                                                                                            class="col-2 col-md-2 col-lg-2 col-sm-2 col-xs-2 col-xxl-2"></label>
+                                                                                            class="col-1 col-md-1 col-lg-1 col-sm-1 col-xs-1 col-xxl-1"></label>
                                                                                         <div
-                                                                                            class="col-10 col-md-10 col-lg-10 col-sm-10 col-xs-10 col-xxl-10">
+                                                                                            class="col-11 col-md-11 col-lg-11 col-sm-11 col-xs-11 col-xxl-11">
 
                                                                                             <h2 class="accordion-header"
                                                                                                 id="flush-heading{{ $b++ }}">
@@ -987,14 +992,16 @@
                                                                                                     <div
                                                                                                         class="activity-item d-flex">
                                                                                                         <div
-                                                                                                            class="activite-label">
+                                                                                                            class="activite-label col-3 col-md-3 col-lg-3 col-sm-3 col-xs-3 col-xxl-3">
                                                                                                             {{-- <span class="fw-bold text-dark"></span> --}}
-                                                                                                            {!! Carbon\Carbon::parse($comment?->created_at)?->diffForHumans() !!}
+                                                                                                            {!! Carbon\Carbon::parse($replayComment?->created_at)?->diffForHumans() !!}
                                                                                                         </div>
+                                                                                                        &nbsp;
                                                                                                         <i
                                                                                                             class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                                                                                                        &nbsp;
                                                                                                         <div
-                                                                                                            class="activity-content">
+                                                                                                            class="activity-content col-8 col-md-8 col-lg-8 col-sm-8 col-xs-8 col-xxl-8">
                                                                                                             {!! $replayComment?->content !!}
                                                                                                         </div>
                                                                                                     </div>

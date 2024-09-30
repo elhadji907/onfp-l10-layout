@@ -35,12 +35,14 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddProjetModal">
-                                <i class="bi bi-plus" title="Ajouter"></i>
-                            </button>
-                        </div>
+                        @if (auth()->user()->hasRole('super-admin|admin'))
+                            <div class="pt-1">
+                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                    data-bs-target="#AddProjetModal">
+                                    <i class="bi bi-plus" title="Ajouter"></i>
+                                </button>
+                            </div>
+                        @endif
                         <h5 class="card-title">Liste des projets et programmes</h5>
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
@@ -76,33 +78,36 @@
                                                     href="{{ route('projets.show', $projet->id) }}"
                                                     class="btn btn-primary btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li>
-                                                            {{-- <a class="dropdown-item btn btn-sm"
+                                                @if (auth()->user()->hasRole('super-admin|admin'))
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <li>
+                                                                {{-- <a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('projets.edit', $projet->id) }}"
                                                                 class="mx-1" title="Modifier"><i
                                                                     class="bi bi-pencil"></i>Modifier</a> --}}
-                                                            <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#EditProjetModal{{ $projet->id }}">
-                                                                <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <form action="{{ route('projets.destroy', $projet->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"
-                                                                    title="Supprimer"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#EditProjetModal{{ $projet->id }}">
+                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <form action="{{ route('projets.destroy', $projet->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="dropdown-item show_confirm"
+                                                                        title="Supprimer"><i
+                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                @endif
                                             </span>
                                         </td>
                                     </tr>
@@ -223,8 +228,8 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="effectif" class="form-label">Effectif à former</label>
-                                        <input type="number" name="effectif" value="{{ old('effectif') }}" min="0"
-                                            step="5"
+                                        <input type="number" name="effectif" value="{{ old('effectif') }}"
+                                            min="0" step="5"
                                             class="form-control form-control-sm @error('effectif') is-invalid @enderror"
                                             id="effectif" placeholder="effectif total à former">
                                         @error('effectif')
@@ -298,7 +303,8 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="sigle" class="form-label">Sigle<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="sigle" value="{{ $projet->sigle ?? old('sigle') }}"
+                                            <input type="text" name="sigle"
+                                                value="{{ $projet->sigle ?? old('sigle') }}"
                                                 class="form-control form-control-sm @error('sigle') is-invalid @enderror"
                                                 id="sigle" placeholder="sigle">
                                             @error('sigle')
@@ -325,8 +331,9 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="duree" class="form-label">Durée<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" name="duree" value="{{ $projet->duree ?? old('duree') }}"
-                                                min="1" max="84"
+                                            <input type="number" name="duree"
+                                                value="{{ $projet->duree ?? old('duree') }}" min="1"
+                                                max="84"
                                                 class="form-control form-control-sm @error('duree') is-invalid @enderror"
                                                 id="duree" placeholder="durée en mois">
                                             @error('duree')
@@ -338,8 +345,9 @@
 
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="budjet" class="form-label">Budjet (F CFA)</label>
-                                            <input type="number" name="budjet" value="{{ $projet->budjet ?? old('budjet') }}"
-                                                min="0" step="0.001"
+                                            <input type="number" name="budjet"
+                                                value="{{ $projet->budjet ?? old('budjet') }}" min="0"
+                                                step="0.001"
                                                 class="form-control form-control-sm @error('budjet') is-invalid @enderror"
                                                 id="budjet" placeholder="Budjet total">
                                             @error('budjet')
@@ -351,7 +359,8 @@
 
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="debut" class="form-label">Date début</label>
-                                            <input type="date" name="debut" value="{{ $projet->debut?->format('Y-m-d') ?? old('debut') }}"
+                                            <input type="date" name="debut"
+                                                value="{{ $projet->debut?->format('Y-m-d') ?? old('debut') }}"
                                                 class="form-control form-control-sm @error('debut') is-invalid @enderror"
                                                 id="debut" placeholder="Date début">
                                             @error('debut')
@@ -363,7 +372,8 @@
 
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="fin" class="form-label">Date fin</label>
-                                            <input type="date" name="fin" value="{{ $projet?->fin?->format('Y-m-d') ?? old('fin') }}"
+                                            <input type="date" name="fin"
+                                                value="{{ $projet?->fin?->format('Y-m-d') ?? old('fin') }}"
                                                 class="form-control form-control-sm @error('fin') is-invalid @enderror"
                                                 id="fin" placeholder="Date fin">
                                             @error('fin')
@@ -375,7 +385,8 @@
 
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="effectif" class="form-label">Effectif à former</label>
-                                            <input type="number" name="effectif" value="{{ $projet?->effectif ?? old('effectif') }}" min="0"
+                                            <input type="number" name="effectif"
+                                                value="{{ $projet?->effectif ?? old('effectif') }}" min="0"
                                                 step="5"
                                                 class="form-control form-control-sm @error('effectif') is-invalid @enderror"
                                                 id="effectif" placeholder="effectif total à former">

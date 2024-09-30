@@ -52,13 +52,15 @@
                                         data-bs-target="#modules-overview">Modules</button>
                                 </li>
 
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"><a
-                                            href="{{ route('showLocalites', ['id' => $projet->id]) }}" target="_blank"
-                                            rel="noopener noreferrer">Localités</a>
+                                @if (auth()->user()->hasRole('super-admin|admin'))
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab"><a
+                                                href="{{ route('showLocalites', ['id' => $projet->id]) }}" target="_blank"
+                                                rel="noopener noreferrer">Localités</a>
 
-                                    </button>
-                                </li>
+                                        </button>
+                                    </li>
+                                @endif
                             </ul>
 
                             <div class="tab-content">
@@ -139,10 +141,12 @@
                                                             class="form-control form-control-sm" /></td>
                                                 </tr>
                                             </table>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-outline-success btn-sm"><i
-                                                        class="bi bi-printer"></i> Enregistrer</button>
-                                            </div>
+                                            @if (auth()->user()->hasRole('super-admin|admin'))
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-outline-success btn-sm"><i
+                                                            class="bi bi-printer"></i> Enregistrer</button>
+                                                </div>
+                                            @endif
                                         </div>
                                     </form><!-- End module -->
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
@@ -162,7 +166,9 @@
                                                         <th scope="col">Module</th>
                                                         <th scope="col">Domaines</th>
                                                         <th scope="col">Effectif</th>
-                                                        <th class="col"><i class="bi bi-gear"></i></th>
+                                                        @if (auth()->user()->hasRole('super-admin|admin'))
+                                                            <th class="col"><i class="bi bi-gear"></i></th>
+                                                        @endif
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -178,17 +184,19 @@
                                                                     <a href="{{ route('projetmodules.show', $projetmodule->id) }}"
                                                                         class="btn btn-primary btn-sm"
                                                                         title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                    <div class="filter">
-                                                                        <a class="icon" href="#"
-                                                                            data-bs-toggle="dropdown"><i
-                                                                                class="bi bi-three-dots"></i></a>
-                                                                        <ul
-                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <button class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#EditprojetmoduleModal{{ $projetmodule->id }}">Modifier
-                                                                            </button>
-                                                                            {{-- <form
+                                                                    @if (auth()->user()->hasRole('super-admin|admin'))
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <button
+                                                                                    class="dropdown-item btn btn-sm mx-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#EditprojetmoduleModal{{ $projetmodule->id }}">Modifier
+                                                                                </button>
+                                                                                {{-- <form
                                                                                 action="{{ route('validation-projet-modules.update', $projetmodule->id) }}"
                                                                                 method="post">
                                                                                 @csrf
@@ -196,12 +204,14 @@
                                                                                 <button
                                                                                     class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
                                                                             </form> --}}
-                                                                            <button class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#AddRegionModal{{ $projetmodule->id }}">Rejeter
-                                                                            </button>
-                                                                        </ul>
-                                                                    </div>
+                                                                                <button
+                                                                                    class="dropdown-item btn btn-sm mx-1"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#AddRegionModal{{ $projetmodule->id }}">Rejeter
+                                                                                </button>
+                                                                            </ul>
+                                                                        </div>
+                                                                    @endif
                                                                 </span>
                                                             </td>
                                                         </tr>

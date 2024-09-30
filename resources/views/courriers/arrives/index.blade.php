@@ -128,10 +128,11 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | Liste des courriers arrivés</p>
                             </span>
-                            <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
-                                data-bs-target="#addCourrierOperateur"><i class="bi bi-plus"
-                                    title="ajouter courrier opérateurs"></i>&nbsp;ajouter courrier opérateurs</button>
-
+                            @can('courrier-operateur-view')
+                                <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
+                                    data-bs-target="#addCourrierOperateur"><i class="bi bi-plus"
+                                        title="ajouter courrier opérateurs"></i>&nbsp;ajouter courrier opérateurs</button>
+                            @endcan
                             <button type="button" class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal"
                                 data-bs-target="#addCourrierArrive">
                                 <i class="bi bi-plus" title="ajouter courrier arrivé"></i>&nbsp;ajouter courrier arrivé
@@ -186,15 +187,17 @@
                                                                 href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class="mx-1"
                                                                 target="_blank">Imprimer</a>
                                                         </li> --}}
-                                                        <li>
-                                                            <form action="{{ route('arrives.destroy', $arrive?->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
-                                                        </li>
+                                                        @can('arrive-delete')
+                                                            <li>
+                                                                <form action="{{ route('arrives.destroy', $arrive?->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="dropdown-item show_confirm"><i
+                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                </form>
+                                                            </li>
+                                                        @endcan
                                                     </ul>
                                                 </div>
                                             </span>

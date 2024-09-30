@@ -19,7 +19,7 @@ class CourrierController extends Controller
     {
         // examples:
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|Courrier']);
+        $this->middleware(['role:super-admin|admin|courrier|a-courrier']);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */

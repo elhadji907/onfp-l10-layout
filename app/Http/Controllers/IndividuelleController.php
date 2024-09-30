@@ -25,7 +25,7 @@ class IndividuelleController extends Controller
     {
         // examples:
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|Demandeur']);
+        $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF']);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */
@@ -369,6 +369,7 @@ class IndividuelleController extends Controller
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
+                'adresse'                           =>  $request->input('adresse'),
                 "departements_id"                   =>  $departement->id,
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module_find->id,
@@ -400,6 +401,7 @@ class IndividuelleController extends Controller
                 'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                 'qualification'                     =>  $request->input('qualification'),
                 'experience'                        =>  $request->input('experience'),
+                'adresse'                           =>  $request->input('adresse'),
                 "departements_id"                   =>  $departement->id,
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module->id,
@@ -544,7 +546,8 @@ class IndividuelleController extends Controller
         $individuelle->save();
 
         Alert::success('Modification ! ', 'demande modifiée avec succès');
-        return Redirect::route("demandesIndividuelle");
+        /* return Redirect::route("demandesIndividuelle"); */
+        return Redirect::back();
     }
 
     public function show($id)

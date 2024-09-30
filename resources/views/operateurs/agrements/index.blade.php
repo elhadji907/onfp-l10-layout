@@ -27,7 +27,7 @@
                             {{-- {{ route('commissionagrements.show', $commissionagrement->id) }} --}}
                             <a href="#">
                                 <div class="card-body">
-                                    <h5 class="card-title">Operateurs <span>| New</span></h5>
+                                    <h5 class="card-title">Operateurs <span>| Nouvelle</span></h5>
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -55,7 +55,7 @@
                             {{-- {{ route('showAgreer', ['id' => $commissionagrement->id]) }} --}}
                             <a href="#">
                                 <div class="card-body">
-                                    <h5 class="card-title">Opérateurs <span>| Renew</span></h5>
+                                    <h5 class="card-title">Opérateurs <span>| Renouvellement</span></h5>
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -180,15 +180,11 @@
                                                     href="{{ route('showAgrement', ['id' => $operateur->id]) }}"
                                                     class="btn btn-primary btn-sm" title="voir détails"><i
                                                         class="bi bi-eye"></i></a>
-                                                <div class="filter">
+                                                {{-- <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li>
-                                                            {{-- <a class="dropdown-item btn btn-sm"
-                                                                    href="{{ route('operateurs.edit', $operateur->id) }}"
-                                                                    class="mx-1" title="Modifier"><i
-                                                                        class="bi bi-pencil"></i>Modifier</a> --}}
 
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
@@ -208,7 +204,7 @@
                                                             </form>
                                                         </li>
                                                     </ul>
-                                                </div>
+                                                </div> --}}
                                             </span>
                                         </td>
                                     </tr>
@@ -473,17 +469,23 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="quitus" value="{{ old('quitus') }}"
+                                        {{-- <input type="text" name="quitus" value="{{ old('quitus') }}"
                                             class="form-control form-control-sm @error('quitus') is-invalid @enderror"
                                             id="quitus" placeholder="N° quitus fiscal">
                                         @error('quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
+                                        @enderror --}}
+
+                                        <input type="file" name="quitus" id="quitus"
+                                            class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                        @error('quitus')
+                                            <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="date_quitus" class="form-label">Date délivrance<span
+                                        <label for="date_quitus" class="form-label">Date visa<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
                                             class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
@@ -889,7 +891,7 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="quitus" class="form-label">Quitus fiscal<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="quitus"
+                                            {{-- <input type="text" name="quitus"
                                                 value="{{ $operateur?->quitus ?? old('quitus') }}"
                                                 class="form-control form-control-sm @error('quitus') is-invalid @enderror"
                                                 id="quitus" placeholder="Quitus fiscal">
@@ -897,10 +899,25 @@
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
+                                            @enderror --}}
+
+
+                                            <input type="file" name="quitus" id="quitus"
+                                                class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                            @error('quitus')
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
+                                            @isset($operateur?->quitus)
+                                                <div class="pt-2">
+                                                    <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
+                                                        target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
+                                                        <i class="bi bi-file-image"></i>
+                                                    </a>
+                                                </div>
+                                            @endisset
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="date_quitus" class="form-label">Date délivrance<span
+                                            <label for="date_quitus" class="form-label">Date visa<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_quitus"
                                                 value="{{ $operateur?->debut_quitus?->format('Y-m-d') ?? old('date_quitus') }}"

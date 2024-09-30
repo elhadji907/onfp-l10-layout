@@ -178,6 +178,7 @@
                                                                 target="_blank"><i
                                                                     class="bi bi-file-earmark-arrow-down"></i> Coupon</a>
                                                         </li> --}}
+                                                        @can('depart-delete')
                                                         <li>
                                                             <form action="{{ route('departs.destroy', $depart->id) }}"
                                                                 method="post">
@@ -187,6 +188,7 @@
                                                                         class="bi bi-trash"></i>Supprimer</button>
                                                             </form>
                                                         </li>
+                                                        @endcan
                                                     </ul>
                                                 </div>
                                             </span>

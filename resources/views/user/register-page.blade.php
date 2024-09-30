@@ -74,10 +74,12 @@
                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-flex justify-content-center py-4">
+                                <div class="d-flex justify-content-center py-0">
                                     <a href="{{ url('/register-page') }}"
                                         class="logo d-flex align-items-center w-auto">
-                                        <span class="d-none d-lg-block">ONFP</span>
+                                        {{-- <span class="d-none d-lg-block">La référence de la formation professionnelle</span> --}}
+                                        {{-- <span class="d-none d-lg-block small fst-italic">La référence de la formation professionnelle</span> --}}
+                                        <h5 class="card-title">ONFP - La référence de la formation professionnelle</h5>
                                     </a>
                                 </div>
 
@@ -90,22 +92,30 @@
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                        <div class="card mb-3">
+                        <div class="card mb-0">
                             <div class="card-body">
+                                <div class="d-flex justify-content-center py-0">
+                                    <a href="{{ url('/register-page') }}"
+                                        class="logo d-flex align-items-center w-auto">
+                                        {{-- <span class="d-none d-lg-block">Créer un compte</span> --}}
+                                        <h5 class="card-title">Création de compte</h5>
+                                    </a>
+                                </div>
+                                <div class="d-flex justify-content-center py-0">
+                                    <ul class="nav nav-tabs nav-tabs-bordered mb-3 justify-content-center">
+                                        <li class="nav-item">
+                                            <button class="nav-link active" data-bs-toggle="tab"
+                                                data-bs-target="#profile-overview">Compte personnel ou
+                                                collectif</button>
+                                        </li>
 
-                                <ul class="nav nav-tabs nav-tabs-bordered mb-3">
+                                        <li class="nav-item">
+                                            <button class="nav-link" data-bs-toggle="tab"
+                                                data-bs-target="#profile-edit">Compte pour devenir opérateur</button>
+                                        </li>
 
-                                    <li class="nav-item">
-                                        <button class="nav-link active" data-bs-toggle="tab"
-                                            data-bs-target="#profile-overview">Créer un compte personnel</button>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab"
-                                            data-bs-target="#profile-edit">Créer un compte opérateur</button>
-                                    </li>
-
-                                </ul>
+                                    </ul>
+                                </div>
                                 {{-- <div>
                                     <h5 class="card-title text-center pb-0 fs-4">Créer un compte personnel</h5>
                                      <p class="text-center small">Entrez vos informations personnelles pour créer un
@@ -308,8 +318,8 @@
                                                             class="btn btn-default" data-bs-toggle="modal"
                                                             data-bs-target="#largeModal">
                                                             termes et conditions
-                                                        </button>
-                                                        <span class="text-danger mx-1">*</span></label>
+                                                            <span class="text-danger mx-1">*</span>
+                                                        </button></label>
                                                     <div class="invalid-feedback">
                                                         @error('password_confirmation')
                                                             {{ $message }}
@@ -319,7 +329,7 @@
                                             </div>
                                             <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                                                 <button class="btn btn-primary w-100" type="submit">Créer un
-                                                    compte</button>
+                                                    compte personnel ou collectif</button>
                                             </div>
                                             <div
                                                 class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12 d-flex justify-content-center">
@@ -423,7 +433,7 @@
                                             </div>
                                             <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                                                 <button class="btn btn-primary w-100" type="submit">Créer un
-                                                    compte</button>
+                                                    compte opérateur</button>
                                             </div>
                                             <div
                                                 class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12 d-flex justify-content-center">

@@ -35,6 +35,12 @@ class ListecollectiveController extends Controller
             "telephone"            =>      "nullable|string|min:9|max:9",
         ]);
 
+        $this->validate($request, [
+            "cin"                  =>      ["required", "string", Rule::unique('individuelles')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })]
+        ]);
+
         $membre = Listecollective::create([
             'cin'                       =>      $request->input('cin'),
             'civilite'                  =>      $request->input('civilite'),
