@@ -310,6 +310,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('collectives/rapports',[CollectiveController::class,'rapports'])->name('collectives.rapport');
     Route::post('collectives/rapports',[CollectiveController::class,'generateRapport']);
 
+    Route::get('arrives/rapports',[ArriveController::class,'rapports'])->name('arrives.rapport');
+    Route::post('arrives/rapports',[ArriveController::class,'generateRapport']);
+
+    Route::get('departs/rapports',[DepartController::class,'rapports'])->name('departs.rapport');
+    Route::post('departs/rapports',[DepartController::class,'generateRapport']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

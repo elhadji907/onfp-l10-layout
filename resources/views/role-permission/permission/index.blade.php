@@ -1,9 +1,7 @@
 @extends('layout.user-layout')
 @section('title', 'ONFP - Liste des permissions')
 @section('space-work')
-
     <div class="pagetitle">
-        {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
@@ -11,7 +9,7 @@
                 <li class="breadcrumb-item active">Données</li>
             </ol>
         </nav>
-    </div><!-- End Page Title -->
+    </div>
     <section class="section">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -38,23 +36,23 @@
                         </div>
                         <h5 class="card-title">Permissions</h5>
                         <p>Le tableau de toutes les permissions du système.</p>
-                        <!-- Table with stripped rows -->
                         <table class="table datatables align-middle" id="table-permissions">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
+                                    <th width="5%">N°</th>
                                     <th>Permissions</th>
-                                    <th>#</th>
+                                    <th width="5%">#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($permissions as $permission)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td style="text-align: center">{{ $i++ }}</td>
                                         <td>{{ $permission->name }}</td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('permissions/'.$permission->id.'/edit') }}"
+                                            <span class="d-flex mt-2 align-items-baseline"><a
+                                                    href="{{ url('permissions/' . $permission->id . '/edit') }}"
                                                     class="btn btn-success btn-sm" title="Modifier"><i
                                                         class="bi bi-pencil-square"></i></a>&nbsp;
                                                 <form action="{{ url('permissions', $permission->id) }}" method="post">
@@ -67,18 +65,13 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
-                        <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
 @endsection
 @push('scripts')
     <script>

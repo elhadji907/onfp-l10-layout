@@ -28,8 +28,6 @@ class CreateCollectivesTable extends Migration
             $table->longText('name')->nullable();
             $table->string('sigle', 100)->nullable();
             $table->timestamp('date_depot')->nullable();
-            $table->string('items1', 200)->nullable();
-            $table->timestamp('date1')->nullable();
             $table->string('statut_demande', 100)->nullable();
             $table->string('validated_by', 100)->nullable();
             $table->string('statut_juridique', 100)->nullable();
@@ -41,15 +39,14 @@ class CreateCollectivesTable extends Migration
             $table->string('fixe', 45)->nullable();
             $table->string('bp', 200)->nullable();
             $table->string('fax', 200)->nullable();
-            $table->string('telephone1', 200)->nullable();
-            $table->string('telephone2', 200)->nullable();
-            $table->string('email1', 200)->nullable();
-            $table->string('email2', 200)->nullable();
+            $table->string('email', 200)->nullable();
             $table->longText('projetprofessionnel')->nullable();
             $table->longText('experience')->nullable();
             $table->longText('prerequis')->nullable();
             $table->longText('motivation')->nullable();
             $table->integer('nbre_pieces')->nullable();
+            $table->string('items1', 200)->nullable();
+            $table->timestamp('date1')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();

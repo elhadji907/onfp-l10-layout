@@ -574,46 +574,65 @@
         @endcan
         @can('rapport-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#rapport-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-files"></i><span>{{ __("Rapports") }}</span><i
+                <a class="nav-link collapsed" data-bs-target="#rapport-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-files"></i><span>{{ __('Rapports') }}</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="rapport-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('individuelles.rapport') }}">
-                            <span>Demandes individuelles</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Demandes collectives</span>
-                        </a>
-                    </li>
+                    @can('rapport-individuelle-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('individuelles.rapport') }}">
+                                <span>Demandes individuelles</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Courriers</span>
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Opérateurs</span>
-                        </a>
-                    </li>
+                    @can('rapport-collective-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('collectives.rapport') }}">
+                                <span>Demandes collectives</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Formations</span>
-                        </a>
-                    </li>
+                    @can('rapport-arrive-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('arrives.rapport') }}">
+                                <span>Courriers arrivés</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('rapport-arrive-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('departs.rapport') }}">
+                                <span>Courriers départs</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Formés</span>
-                        </a>
-                    </li>
+                    @can('rapport-operateur-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#">
+                                <span>Opérateurs</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('rapport-formation-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#">
+                                <span>Formations</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('rapport-formes-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#">
+                                <span>Formés</span>
+                            </a>
+                        </li>
+                    @endcan
 
                 </ul>
             </li><!-- End Courriers Nav -->

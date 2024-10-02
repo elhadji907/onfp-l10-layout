@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'rapports demandes individuelles')
+@section('title', 'rapports courriers arrivés')
 @section('space-work')
     <div class="pagetitle">
         <nav>
@@ -8,7 +8,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
                 @endcan
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Générer des rapports</li>
+                <li class="breadcrumb-item active">Générer rapport courriers arrivés</li>
             </ol>
         </nav>
     </div>
@@ -24,10 +24,10 @@
                 title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
             <p> | Tableau de bord</p>
         </span>
-        @isset($individuelles)
+        @isset($arrives)
             <span class="page-title badge bg-primary">{{ $title }}</span>
         @endisset
-        @can('rapport-individuelle-view')
+        @can('rapport-arrive-view')
             <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                 data-bs-target="#generate_rapport"></i>Générer un rapport</button>
         @endcan
@@ -35,47 +35,40 @@
     <section class="section">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                @isset($individuelles)
+                @isset($arrives)
                     {{-- <div class="pb-2">
                         <span class="page-title badge bg-info">{{ $title }}</span>
                     </div> --}}
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table datatables align-middle" id="table-individuelles">
+                                <table class="table datatables align-middle" id="table-arrive">
                                     <thead>
                                         <tr>
-                                            {{-- <th class="text-center">N°</th> --}}
-                                            <th class="text-center">CIN</th>
-                                            <th>Prénom</th>
-                                            <th>NOM</th>
-                                            <th>Date nais.</th>
-                                            <th>Lieu nais.</th>
-                                            <th>Localité</th>
-                                            <th width="20%">Module</th>
-                                            <th class="text-center">Statut</th>
-                                            {{-- <th class="text-center">Statut</th> --}}
+                                            <th class="text-center">N°</th>
+                                            <th class="text-center">Date arrivé</th>
+                                            <th class="text-center">N° correspondance</th>
+                                            <th class="text-center">Date correspondance</th>
+                                            <th>Expéditeur</th>
+                                            <th>Objet</th>
                                             <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($individuelles as $individuelle)
-                                            @if (!empty($individuelle?->user?->cin))
+                                        @foreach ($arrives as $arrive)
+                                            @if (!empty($arrive?->numero))
                                                 <tr>
-                                                    {{--  <td style="text-align: center">{{ $individuelle->numero }}</td> --}}
-                                                    <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
-                                                    <td>{{ $individuelle?->user?->firstname }}</td>
-                                                    <td>{{ $individuelle?->user?->name }}</td>
-                                                    <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                                                    <td>{{ $individuelle?->user?->lieu_naissance }}</td>
-                                                    <td>{{ $individuelle?->departement?->nom }}</td>
-                                                    <td>{{ $individuelle?->module?->name }}</td>
-                                                    <td>
-                                                        <span class="{{ $individuelle->statut }}">
-                                                            {{ $individuelle->statut }}
-                                                        </span>
-                                                    </td>
-                                                    <td>{{ date_format(date_create($individuelle?->created_at), 'd/m/Y') }}
+                                                    <td style="text-align: center;">{{ $arrive?->numero }}</td>
+                                                    {{-- Date reception = date arrivée --}}
+                                                    <td style="text-align: center;">
+                                                        {{ $arrive?->courrier?->date_recep?->format('d/m/Y') }} </td>
+                                                    <td style="text-align: center;">{{ $arrive?->courrier?->numero }}</td>
+                                                    <td style="text-align: center;">
+                                                        {{ $arrive?->courrier?->date_cores?->format('d/m/Y') }} </td>
+                                                    {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
+                                                    <td>{{ $arrive?->courrier?->expediteur }}</td>
+                                                    <td>{{ $arrive?->courrier?->objet }}</td>
+                                                    <td>{{ date_format(date_create($arrive?->created_at), 'd/m/Y') }}
                                                     </td>
                                                 </tr>
                                             @endif
@@ -94,10 +87,10 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Générer un rapport pour les demandes individuelles</h5>
+                        <h5 class="modal-title">Générer un rapport pour les courriers arrivés</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="post" action="{{ route('individuelles.rapport') }}">
+                    <form method="post" action="{{ route('arrives.rapport') }}">
                         @csrf
                         <div class="modal-body">
                             <div class="row g-3">
@@ -136,7 +129,7 @@
 
 @push('scripts')
     <script>
-        new DataTable('#table-individuelles', {
+        new DataTable('#table-arrive', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

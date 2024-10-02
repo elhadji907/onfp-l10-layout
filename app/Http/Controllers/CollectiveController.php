@@ -48,7 +48,7 @@ class CollectiveController extends Controller
             "sigle"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "email1"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+            "email"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "fixe"                  => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
@@ -100,7 +100,7 @@ class CollectiveController extends Controller
             } else {
                 $numero_collective   =   strtoupper($random);
             } */
-            $annee = date('y');
+            /* $annee = date('y');
             $numero_collective = Collective::get()->last();
             if (isset($numero_collective)) {
                 $numero_collective = Collective::get()->last()->numero;
@@ -120,6 +120,39 @@ class CollectiveController extends Controller
             } else {
                 $numero_collective = "00001";
                 $numero_collective = 'C' . $annee . $numero_collective;
+            } */
+            $anneeEnCours = date('Y');
+            $an = date('y');
+
+            $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
+                ->select('collectives.*')
+                ->where('date_depot',  "LIKE",  "{$anneeEnCours}%")
+                ->get()->last();
+
+            if (isset($numero_collective)) {
+                $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
+                    ->select('collectives.*')
+                    ->get()->last()->numero;
+                $numero_collective = ++$numero_collective;
+            } else {
+                $numero_collective = $an . "0001";
+                $numero_collective = 'C' . $numero_collective;
+            }
+
+            $longueur = strlen($numero_collective);
+
+            if ($longueur <= 1) {
+                $numero_collective   =   strtolower("00000" . $numero_collective);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numero_collective   =   strtolower("0000" . $numero_collective);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numero_collective   =   strtolower("000" . $numero_collective);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numero_collective   =   strtolower("00" . $numero_collective);
+            } elseif ($longueur >= 5 && $longueur < 6) {
+                $numero_collective   =   strtolower("0" . $numero_collective);
+            } else {
+                $numero_collective   =   strtolower($numero_collective);
             }
 
             $numero_collective = strtoupper($numero_collective);
@@ -133,10 +166,11 @@ class CollectiveController extends Controller
                 "name"                      =>       $request->input("name"),
                 "sigle"                     =>       $request->input("sigle"),
                 "numero"                    =>       $numero_collective,
+                "date_depot"                =>       now(),
                 "description"               =>       $request->input("description"),
                 "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
                 "telephone"                 =>       $request->input("telephone"),
-                "email1"                    =>       $request->input("email1"),
+                "email"                     =>       $request->input("email"),
                 "email_responsable"         =>       $request->input("email_responsable"),
                 "fixe"                      =>       $request->input("fixe"),
                 "adresse"                   =>       $request->input("adresse"),
@@ -172,7 +206,7 @@ class CollectiveController extends Controller
             "sigle"                 => ["nullable", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "email1"                => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+            "email"                => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "fixe"                  => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
@@ -218,7 +252,7 @@ class CollectiveController extends Controller
             $numero_collective   =   strtoupper($random);
         } */
 
-        $annee = date('y');
+        /*  $annee = date('y');
         $numero_collective = Collective::get()->last();
         if (isset($numero_collective)) {
             $numero_collective = Collective::get()->last()->numero;
@@ -238,6 +272,40 @@ class CollectiveController extends Controller
         } else {
             $numero_collective = "00001";
             $numero_collective = 'C' . $annee . $numero_collective;
+        } */
+
+        $anneeEnCours = date('Y');
+        $an = date('y');
+
+        $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
+            ->select('collectives.*')
+            ->where('date_depot',  "LIKE",  "{$anneeEnCours}%")
+            ->get()->last();
+
+        if (isset($numero_collective)) {
+            $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
+                ->select('collectives.*')
+                ->get()->last()->numero;
+            $numero_collective = ++$numero_collective;
+        } else {
+            $numero_collective = $an . "0001";
+            $numero_collective = 'C' . $numero_collective;
+        }
+
+        $longueur = strlen($numero_collective);
+
+        if ($longueur <= 1) {
+            $numero_collective   =   strtolower("00000" . $numero_collective);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero_collective   =   strtolower("0000" . $numero_collective);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero_collective   =   strtolower("000" . $numero_collective);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero_collective   =   strtolower("00" . $numero_collective);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numero_collective   =   strtolower("0" . $numero_collective);
+        } else {
+            $numero_collective   =   strtolower($numero_collective);
         }
 
         $numero_collective = strtoupper($numero_collective);
@@ -247,9 +315,8 @@ class CollectiveController extends Controller
 
         $user = User::create([
             'name'          =>  $request->input('name'),
-            'sigle'         =>  $request->input('sigle'),
-            'email'         =>  $request->input('email1'),
-            'username'      =>  $request->input('email1'),
+            'email'         =>  $request->input('email'),
+            'username'      =>  $request->input('sigle'),
             'telephone'     =>  $request->input('telephone'),
             'adresse'       =>  $request->input('adresse'),
             'password'      =>  Hash::make($request->email),
@@ -271,9 +338,10 @@ class CollectiveController extends Controller
             "sigle"                     =>       $request->input("sigle"),
             "numero"                    =>       $numero_collective,
             "description"               =>       $request->input("description"),
+            "date_depot"                =>       $request->input("date_depot"),
             "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
             "telephone"                 =>       $request->input("telephone"),
-            "email1"                    =>       $request->input("email1"),
+            "email"                     =>        $request->input("email"),
             "email_responsable"         =>       $request->input("email_responsable"),
             "fixe"                      =>       $request->input("fixe"),
             "adresse"                   =>       $request->input("adresse"),
@@ -312,7 +380,7 @@ class CollectiveController extends Controller
             "sigle"                 => ["nullable", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })->ignore($id)],
-            "email1"                => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+            "email"                => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })->ignore($id)],
             "fixe"                  => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
@@ -342,30 +410,58 @@ class CollectiveController extends Controller
         $departement = Departement::where('nom', $request->input("departement"))->first();
         $regionid = $departement->region->id;
 
-        $collective->update([
-            "name"                      =>       $request->input("name"),
-            "sigle"                     =>       $request->input("sigle"),
-            "description"               =>       $request->input("description"),
-            "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
-            "telephone"                 =>       $request->input("telephone"),
-            "email1"                    =>       $request->input("email1"),
-            "email_responsable"         =>       $request->input("email_responsable"),
-            "fixe"                      =>       $request->input("fixe"),
-            "adresse"                   =>       $request->input("adresse"),
-            "bp"                        =>       $request->input("bp"),
-            "statut_juridique"          =>       $request->input("statut"),
-            "autre_statut_juridique"    =>       $request->input("autre_statut"),
-            "civilite_responsable"      =>       $request->input("civilite"),
-            "prenom_responsable"        =>       $request->input("prenom"),
-            "nom_responsable"           =>       $request->input("nom"),
-            "telephone_responsable"     =>       $request->input("telephone_responsable"),
-            "fonction_responsable"      =>       $request->input("fonction_responsable"),
-            "departements_id"           =>       $departement->id,
-            /* "modules_id"                =>       $request->input("module"), */
-            "regions_id"                =>       $regionid,
-            /* "demandeurs_id"             =>       $demandeur->id, */
-            "users_id"                  =>       $user_id
-        ]);
+        if ($request->input(key: "date_depot") == null) {
+            $collective->update([
+                "name"                      =>       $request->input("name"),
+                "sigle"                     =>       $request->input("sigle"),
+                "description"               =>       $request->input("description"),
+                "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
+                "telephone"                 =>       $request->input("telephone"),
+                "email"                     =>       $request->input("email"),
+                "email_responsable"         =>       $request->input("email_responsable"),
+                "fixe"                      =>       $request->input("fixe"),
+                "adresse"                   =>       $request->input("adresse"),
+                "bp"                        =>       $request->input("bp"),
+                "statut_juridique"          =>       $request->input("statut"),
+                "autre_statut_juridique"    =>       $request->input("autre_statut"),
+                "civilite_responsable"      =>       $request->input("civilite"),
+                "prenom_responsable"        =>       $request->input("prenom"),
+                "nom_responsable"           =>       $request->input("nom"),
+                "telephone_responsable"     =>       $request->input("telephone_responsable"),
+                "fonction_responsable"      =>       $request->input("fonction_responsable"),
+                "departements_id"           =>       $departement->id,
+                /* "modules_id"                =>       $request->input("module"), */
+                "regions_id"                =>       $regionid,
+                /* "demandeurs_id"             =>       $demandeur->id, */
+                "users_id"                  =>       $user_id
+            ]);
+        } else {
+            $collective->update([
+                "name"                      =>       $request->input("name"),
+                "sigle"                     =>       $request->input("sigle"),
+                "description"               =>       $request->input("description"),
+                "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
+                "telephone"                 =>       $request->input("telephone"),
+                "email"                     =>       $request->input("email"),
+                "email_responsable"         =>       $request->input("email_responsable"),
+                "fixe"                      =>       $request->input("fixe"),
+                "date_depot"                =>       $request->input(key: "date_depot"),
+                "adresse"                   =>       $request->input("adresse"),
+                "bp"                        =>       $request->input("bp"),
+                "statut_juridique"          =>       $request->input("statut"),
+                "autre_statut_juridique"    =>       $request->input("autre_statut"),
+                "civilite_responsable"      =>       $request->input("civilite"),
+                "prenom_responsable"        =>       $request->input("prenom"),
+                "nom_responsable"           =>       $request->input("nom"),
+                "telephone_responsable"     =>       $request->input("telephone_responsable"),
+                "fonction_responsable"      =>       $request->input("fonction_responsable"),
+                "departements_id"           =>       $departement->id,
+                /* "modules_id"                =>       $request->input("module"), */
+                "regions_id"                =>       $regionid,
+                /* "demandeurs_id"             =>       $demandeur->id, */
+                "users_id"                  =>       $user_id
+            ]);
+        }
 
         $collective->save();
 
@@ -432,15 +528,15 @@ class CollectiveController extends Controller
         }
     }
 
-    
+
     public function rapports(Request $request)
     {
-        $title = 'Rapports demandes collectives';
+        $title = 'rapports demandes collectives';
         return view('collectives.rapports', compact(
             'title'
         ));
     }
-  public function generateRapport(Request $request)
+    public function generateRapport(Request $request)
     {
         $this->validate($request, [
             'from_date' => 'required|date',
@@ -453,14 +549,14 @@ class CollectiveController extends Controller
 
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-        if ($from_date == $to_date) {
-            $title = 'demandes collectives reçues le '.$from_date.' à '.$now;
-        } else {
-            $title = 'demandes collectives reçues du '.$from_date.' au '.$to_date.' à '.$now;
-        }
-       
         $collectives = Collective::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
-        
+
+        if ($from_date == $to_date) {
+            $title = $collectives->count() . ' demande(s) collective(s) reçue(s) le ' . $from_date . ' à ' . $now;
+        } else {
+            $title = $collectives->count() . ' demande(s) collective(s) reçue(s) du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+        }
+
         return view('collectives.rapports', compact(
             'collectives',
             'from_date',

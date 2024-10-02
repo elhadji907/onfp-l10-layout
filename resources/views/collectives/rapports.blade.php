@@ -1,12 +1,14 @@
 @extends('layout.user-layout')
-@section('title', $title)
+@section('title', 'rapports demandes individuelles')
 @section('space-work')
     <div class="pagetitle">
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
+                @can('user-view')
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
+                @endcan
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Générer des rapports</li>
+                <li class="breadcrumb-item active">Générer rapport demandes collectives</li>
             </ol>
         </nav>
     </div>
@@ -22,7 +24,10 @@
                 title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
             <p> | Tableau de bord</p>
         </span>
-        @can('courrier-operateur-view')
+        @isset($collectives)
+            <span class="page-title badge bg-primary">{{ $title }}</span>
+        @endisset
+        @can('rapport-collective-view')
             <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                 data-bs-target="#generate_rapport"></i>Générer un rapport</button>
         @endcan
@@ -31,20 +36,23 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                 @isset($collectives)
-                    <div class="pb-2">
+                    {{-- <div class="pb-2">
                         <span class="page-title badge bg-info">{{ $title }}</span>
-                    </div>
+                    </div> --}}
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table datatables align-middle" id="table-collective">
                                     <thead>
                                         <tr>
+                                            <th>N°</th>
                                             <th>Nom structure</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
                                             <th>Localité</th>
-                                            <th>Statut</th>
+                                            <th class="text-center">Modules</th>
+                                            <th class="text-center">Effectif</th>
+                                            <th class="text-center">Statut</th>
                                             <th>Date</th>
                                         </tr>
                                     </thead>
@@ -52,16 +60,21 @@
                                         @foreach ($collectives as $collective)
                                             @if (!empty($collective?->numero))
                                                 <tr>
+                                                    <td>{{ $collective?->numero }}
+                                                    </td>
                                                     <td>{{ $collective?->name }}
                                                         @isset($collective?->sigle)
                                                             {{ '(' . $collective?->sigle . ')' }}
                                                         @endisset
                                                     </td>
-                                                    <td><a href="mailto:{{ $collective->email1 }}">{{ $collective->email1 }}</a>
+                                                    <td><a href="mailto:{{ $collective->email }}">{{ $collective->email }}</a>
                                                     </td>
-                                                    <td><a href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
+                                                    <td><a
+                                                            href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
                                                     </td>
                                                     <td>{{ $collective->departement?->region?->nom }}</td>
+                                                    <td class="text-center">{{ count($collective->collectivemodules) }}</td>
+                                                    <td class="text-center">{{ count($collective->listecollectives) }}</td>
                                                     <td>
                                                         <span
                                                             class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>

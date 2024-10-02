@@ -146,7 +146,7 @@ class IndividuelleController extends Controller
             $cin  =   str_replace(' ', '', $cin);
             $date_depot =   date('Y-m-d');
 
-            $annee = date('y');
+            /* $annee = date('y');
             $numero_individuelle = Individuelle::get()->last();
             if (isset($numero_individuelle)) {
                 $numero_individuelle = Individuelle::get()->last()->numero;
@@ -166,7 +166,42 @@ class IndividuelleController extends Controller
             } else {
                 $numero_individuelle = "00001";
                 $numero_individuelle = 'I' . $annee . $numero_individuelle;
+            } */
+
+            $anneeEnCours = date('Y');
+            $an = date('y');
+
+            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                ->select('individuelles.*')
+                ->where('date_depot',  "LIKE",  "{$anneeEnCours}%")
+                ->get()->last();
+
+            if (isset($numero_individuelle)) {
+                $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                    ->select('individuelles.*')
+                    ->get()->last()->numero;
+                $numero_individuelle = ++$numero_individuelle;
+            } else {
+                $numero_individuelle = $an . "0001";
+                $numero_individuelle = 'I' . $numero_individuelle;
             }
+
+            $longueur = strlen($numero_individuelle);
+
+            if ($longueur <= 1) {
+                $numero_individuelle   =   strtolower("00000" . $numero_individuelle);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numero_individuelle   =   strtolower("0000" . $numero_individuelle);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numero_individuelle   =   strtolower("000" . $numero_individuelle);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numero_individuelle   =   strtolower("00" . $numero_individuelle);
+            } elseif ($longueur >= 5 && $longueur < 6) {
+                $numero_individuelle   =   strtolower("0" . $numero_individuelle);
+            } else {
+                $numero_individuelle   =   strtolower($numero_individuelle);
+            }
+
 
             $numero_individuelle = strtoupper($numero_individuelle);
 
@@ -296,7 +331,7 @@ class IndividuelleController extends Controller
             $numero_individuelle   =   strtoupper($random);
         } */
 
-        $annee = date('y');
+        /* $annee = date('y');
         $numero_individuelle = Individuelle::get()->last();
         if (isset($numero_individuelle)) {
             $numero_individuelle = Individuelle::get()->last()->numero;
@@ -316,6 +351,41 @@ class IndividuelleController extends Controller
         } else {
             $numero_individuelle = "00001";
             $numero_individuelle = 'I' . $annee . $numero_individuelle;
+        } */
+
+        
+        $anneeEnCours = date('Y');
+        $an = date('y');
+
+        $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('date_depot',  "LIKE",  "{$anneeEnCours}%")
+            ->get()->last();
+
+        if (isset($numero_individuelle)) {
+            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                ->select('individuelles.*')
+                ->get()->last()->numero;
+            $numero_individuelle = ++$numero_individuelle;
+        } else {
+            $numero_individuelle = $an . "0001";
+            $numero_individuelle = 'I' . $numero_individuelle;
+        }
+
+        $longueur = strlen($numero_individuelle);
+
+        if ($longueur <= 1) {
+            $numero_individuelle   =   strtolower("00000" . $numero_individuelle);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero_individuelle   =   strtolower("0000" . $numero_individuelle);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero_individuelle   =   strtolower("000" . $numero_individuelle);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero_individuelle   =   strtolower("00" . $numero_individuelle);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numero_individuelle   =   strtolower("0" . $numero_individuelle);
+        } else {
+            $numero_individuelle   =   strtolower($numero_individuelle);
         }
 
         $numero_individuelle = strtoupper($numero_individuelle);
@@ -602,7 +672,7 @@ class IndividuelleController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
         $user = Auth::user();
-        $individuelle = Individuelle::where('users_id', $user->id)->get();
+        $individuelle = Individuelle::where('users_id', $user->id)->where('numero', '!=', null)->get();
         $individuelle_total = $individuelle->count();
 
         if ($individuelle_total == 0) {
@@ -610,17 +680,16 @@ class IndividuelleController extends Controller
         } else {
             return view("individuelles.show-individuelle", compact("individuelle_total", "departements", "modules"));
         }
-
     }
 
     public function rapports(Request $request)
     {
-        $title = 'Rapports demandes individuelles';
+        $title = 'rapports demandes individuelles';
         return view('individuelles.rapports', compact(
             'title'
         ));
     }
-  public function generateRapport(Request $request)
+    public function generateRapport(Request $request)
     {
         $this->validate($request, [
             'from_date' => 'required|date',
@@ -633,13 +702,13 @@ class IndividuelleController extends Controller
 
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-        if ($from_date == $to_date) {
-            $title = 'demandes individuelles reçues le '.$from_date.' à '.$now;
-        } else {
-            $title = 'demandes individuelles reçues du '.$from_date.' au '.$to_date.' à '.$now;
-        }
-       
         $individuelles = Individuelle::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
+
+        if ($from_date == $to_date) {
+            $title = $individuelles->count() . ' demande(s) individuelle(s) reçue(s) le ' . $from_date . ' à ' . $now;
+        } else {
+            $title = $individuelles->count() . ' demande(s) individuelle(s) reçue(s) du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+        }
 
         return view('individuelles.rapports', compact(
             'individuelles',
@@ -648,5 +717,4 @@ class IndividuelleController extends Controller
             'title'
         ));
     }
-
 }

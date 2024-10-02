@@ -9,7 +9,9 @@
                 {{-- <h1>Data Tables</h1> --}}
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                        @can('user-view')
+                            <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                        @endcan
                         <li class="breadcrumb-item">Tables</li>
                         <li class="breadcrumb-item active">Collectives</li>
                     </ol>
@@ -40,13 +42,14 @@
                     <div class="card">
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-tabs-bordered">
-
-                                <li class="nav-item">
-                                    <span class="nav-link"><a href="{{ route('demandesCollective') }}"
-                                            class="btn btn-secondary btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>
-                                    </span>
-                                </li>
+                                @can('collective-view')
+                                    <li class="nav-item">
+                                        <span class="nav-link"><a href="{{ route('demandesCollective') }}"
+                                                class="btn btn-secondary btn-sm" title="retour"><i
+                                                    class="bi bi-arrow-counterclockwise"></i></a>
+                                        </span>
+                                    </li>
+                                @endcan
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Info
                                         demande</button>
@@ -132,7 +135,7 @@
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Email</div>
-                                            <div>{{ $collective?->email1 }}</div>
+                                            <div>{{ $collective?->email }}</div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Projet professionnel</div>
@@ -216,7 +219,8 @@
                                             @foreach ($collective->collectivemodules as $collectivemodule)
                                             @endforeach
                                             @isset($collectivemodule)
-                                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
+                                                <button type="button"
+                                                    class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
                                                     <i class="bi bi-person-plus" title="Ajouter module"></i>
                                                 </button>

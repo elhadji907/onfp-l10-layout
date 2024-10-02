@@ -196,6 +196,15 @@ class DatabaseSeeder extends Seeder
         'rapport-show',
         'rapport-view',
         'rapport-delete',
+        'rapport-individuelle-view',
+        'rapport-collective-view',
+        'rapport-courrier-view',
+        'rapport-arrive-view',
+        'rapport-depart-view',
+        'rapport-interne-view',
+        'rapport-operateur-view',
+        'rapport-formation-view',
+        'rapport-formes-view',
     ];
 
     public function run(): void

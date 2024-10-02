@@ -17,7 +17,8 @@
                             role="alert"><strong>{{ $error }}</strong></div>
                     @endforeach
                 @endif
-                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+                <div
+                    class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
 
                         <div class="card-body">
@@ -73,12 +74,12 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="email1" class="form-label">Email<span
+                                    <label for="email" class="form-label">Email<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="email" name="email1" value="{{ $collective?->email1 ?? old('email1') }}"
-                                        class="form-control form-control-sm @error('email1') is-invalid @enderror"
-                                        id="email1" placeholder="Adresse email">
-                                    @error('email1')
+                                    <input type="email" name="email" value="{{ $collective?->email ?? old('email') }}"
+                                        class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                        id="email" placeholder="Adresse email">
+                                    @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -172,6 +173,22 @@
                                         </span>
                                     @enderror
                                 </div>
+                                @can('collective-show')
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="date_depot" class="form-label">Date dépot<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="date" name="date_depot"
+                                            value="{{ date_format(date_create($collective?->date_depot), 'Y-m-d') ?? old('date_depot') }}"
+                                            class="form-control form-control-sm @error('date_depot') is-invalid @enderror"
+                                            id="date_depot" placeholder="Date dépot">
+                                        @error('date_depot')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                @endcan
+
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="departement" class="form-label">Siège social<span
                                             class="text-danger mx-1">*</span></label>

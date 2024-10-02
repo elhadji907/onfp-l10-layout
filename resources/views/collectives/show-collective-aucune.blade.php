@@ -68,7 +68,7 @@
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 mb-0">
                                         <label for="name" class="form-label">Nom de la structure<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="name" id="name" rows="2"
+                                        <textarea name="name" id="name" rows="1"
                                             class="form-control form-control-sm @error('name') is-invalid @enderror"
                                             placeholder="La raison sociale de l'opérateur">{{ old('name') }}</textarea>
                                         @error('name')
@@ -92,12 +92,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="email1" class="form-label">Email<span
+                                        <label for="email" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="email" name="email1" value="{{ old('email1') }}"
-                                            class="form-control form-control-sm @error('email1') is-invalid @enderror"
-                                            id="email1" placeholder="Adresse email">
-                                        @error('email1')
+                                        <input type="email" name="email" value="{{ old('email') }}"
+                                            class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                            id="email" placeholder="Adresse email">
+                                        @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

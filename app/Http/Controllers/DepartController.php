@@ -11,6 +11,7 @@ use App\Models\User;
 use Dompdf\Dompdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -370,5 +371,41 @@ class DepartController extends Controller
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
+    }
+    
+    public function rapports(Request $request)
+    {
+        $title = 'rapports courriers départs';
+        return view('courriers.departs.rapports', compact(
+            'title'
+        ));
+    }
+  public function generateRapport(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $now =  Carbon::now()->format('H:i:s');
+
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+        $departs = Depart::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
+
+        if ($from_date == $to_date) {
+            $title = $departs->count().' courrier(s) départ(s) le '.$from_date.' à '.$now;
+        } else {
+            $title = $departs->count().' courrier(s) départ(s) du '.$from_date.' au '.$to_date.' à '.$now;
+        }
+        
+        return view('courriers.departs.rapports', compact(
+            'departs',
+            'from_date',
+            'to_date',
+            'title'
+        ));
     }
 }
