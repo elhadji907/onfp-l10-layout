@@ -316,6 +316,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('departs/rapports',[DepartController::class,'rapports'])->name('departs.rapport');
     Route::post('departs/rapports',[DepartController::class,'generateRapport']);
 
+    Route::get('operateurs/rapports',[OperateurController::class,'rapports'])->name('operateurs.rapport');
+    Route::post('operateurs/rapports',[OperateurController::class,'generateRapport']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

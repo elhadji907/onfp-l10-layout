@@ -931,6 +931,7 @@
             dropdownParent: $('#AddRefModal'),
         });
     </script>
+    
     <script>
         $('#select-field-type-add').select2({
             theme: "bootstrap-5",
@@ -942,6 +943,31 @@
             dropdownParent: $('#AddRefModal'),
         });
     </script>
+
+    <script>
+        $('#select-field-region-module-rapport').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#generate_rapport_module_region'),
+        });
+    </script>
+
+    <script>
+        $('#select-field-region-rapport').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+            dropdownParent: $('#generate_rapport'),
+        });
+    </script>
+
     <script>
         $('#select-field-etat-update').select2({
             theme: "bootstrap-5",

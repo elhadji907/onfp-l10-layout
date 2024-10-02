@@ -58,6 +58,7 @@ class CreateOperateursTable extends Migration
             $table->unsignedInteger('courriers_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('departements_id')->nullable();
+            $table->unsignedInteger('regions_id')->nullable();
             $table->unsignedInteger('commissionagrements_id')->nullable();
             $table->unsignedInteger('historiqueagrements_id')->nullable();
             $table->string('file1', 200)->nullable();
@@ -86,6 +87,8 @@ class CreateOperateursTable extends Migration
             $table->index(["communes_id"], 'fk_operateurs_communes1_idx');
 
             $table->index(["departements_id"], 'fk_operateurs_departements1_idx');
+
+            $table->index(["regions_id"], 'fk_operateurs_regions1_idx');
 
             $table->softDeletes();
             $table->nullableTimestamps();
@@ -128,6 +131,11 @@ class CreateOperateursTable extends Migration
 
             $table->foreign('departements_id', 'fk_operateurs_departements1_idx')
                 ->references('id')->on('departements')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('regions_id', 'fk_operateurs_regions1_idx')
+                ->references('id')->on('regions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

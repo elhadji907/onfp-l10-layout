@@ -612,7 +612,7 @@
 
                     @can('rapport-operateur-view')
                         <li class="nav-item">
-                            <a class="nav-link collapsed" href="#">
+                            <a class="nav-link collapsed" href="{{ route('operateurs.rapport') }}">
                                 <span>Opérateurs</span>
                             </a>
                         </li>

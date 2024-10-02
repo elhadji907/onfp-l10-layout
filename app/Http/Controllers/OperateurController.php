@@ -14,23 +14,21 @@ use App\Models\Region;
 use App\Models\User;
 use App\Models\Validationoperateur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use RealRashid\SweetAlert\Facades\Alert;
 use Intervention\Image\Facades\Image;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OperateurController extends Controller
 {
     public function __construct()
     {
-        // examples:
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin|Operateur|DIOF|ADIOF|DEC|ADEC']);
-        /* $this->middleware(['permission:arrive-show']); */
-        // or with specific guard
-        /* $this->middleware(['role_or_permission:super-admin']); */
+        $this->middleware(['permission:operateur-view']);
     }
     public function index()
     {
@@ -111,6 +109,7 @@ class OperateurController extends Controller
                 "annee_agrement"       =>       date('Y-m-d'),
                 "statut_agrement"      =>       'nouveau',
                 "departements_id"      =>       $departement?->id,
+                "regions_id"          =>       $departement?->region?->id,
                 "users_id"             =>       $user->id
             ]);
 
@@ -246,6 +245,7 @@ class OperateurController extends Controller
             "annee_agrement"       =>       date('Y-m-d'),
             "statut_agrement"      =>       'nouveau',
             "departements_id"      =>       $departement?->id,
+            "regions_id"          =>       $departement?->region?->id,
             "users_id"             =>       $user->id
         ]);
 
@@ -290,6 +290,7 @@ class OperateurController extends Controller
             /* "quitus"               =>       $request->input("quitus"), */
             "debut_quitus"         =>       $request->input("date_quitus"),
             "departements_id"      =>       $operateur?->departements_id,
+            "regions_id"           =>       $operateur?->departement?->region?->id,
             "users_id"             =>       $operateur?->users_id,
         ]);
 
@@ -374,6 +375,7 @@ class OperateurController extends Controller
     {
         $operateur = Operateur::findOrFail($id);
         $user      = $operateur->user;
+        $departement = Departement::findOrFail($request->input("departement"));
 
         $this->validate($request, [
             "operateur"             =>      ['required', 'string', Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
@@ -415,7 +417,8 @@ class OperateurController extends Controller
             "autre_statut"         =>       $request->input("autre_statut"),
             "type_demande"         =>       $request->input("type_demande"),
             "debut_quitus"         =>       $request->input("date_quitus"),
-            "departements_id"      =>       $request->input("departement"),
+            "departements_id"      =>       $departement?->id,
+            "regions_id"           =>       $departement?->region?->id,
             "users_id"             =>       $user->id
         ]);
 
@@ -806,5 +809,68 @@ class OperateurController extends Controller
                 )
             );
         }
+    }
+
+
+    public function rapports(Request $request)
+    {
+        $title = 'rapports opérateurs';
+        $regions = Region::orderBy("created_at", "desc")->get();
+        return view('operateurs.rapports', compact(
+            'title',
+            'regions',
+        ));
+    }
+    public function generateRapport(Request $request)
+    {
+        if ($request->valeur_region == "1") {
+            $this->validate($request, [
+                'region' => 'required|string',
+            ]);
+
+            $region = Region::findOrFail($request->region);
+
+            $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
+                ->select('operateurs.*')
+                ->where('regions_id',  "{$request->region}%")
+                ->get();
+
+            $title = $operateurs->count() . ' opérateur(s) agréé(s) à ' . $region->nom;
+        } elseif ($request->valeur_module == "1") {
+            $this->validate($request, [
+                'module' => 'required|string',
+            ]);
+
+            $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
+                ->select('operateurs.*')
+                ->where('operateurmodules.module', 'LIKE', "{$request->module}%")
+                ->get();
+
+
+            $title = $operateurs->count() . ' opérateur(s) agréé(s) en ' . $request->module;
+        } else {
+            $this->validate($request, [
+                'region' => 'required|string',
+                'module' => 'required|string',
+            ]);
+
+            $region = Region::findOrFail($request->region);
+
+            $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
+                ->select('operateurs.*')
+                ->where('regions_id',  "{$request->region}")
+                ->where('operateurmodules.module', 'LIKE', "%{$request->module}%")
+                ->get();
+
+            $title = $operateurs->count() . ' opérateur(s) agréé(s) dans la région de  ' . $region->nom . ' en ' . $request->module;
+        }
+
+        $regions = Region::orderBy("created_at", "desc")->get();
+
+        return view('operateurs.rapports', compact(
+            'operateurs',
+            'title',
+            'regions'
+        ));
     }
 }

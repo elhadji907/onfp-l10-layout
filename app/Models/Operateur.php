@@ -91,6 +91,7 @@ class Operateur extends Model
 		'courriers_id' => 'int',
 		'communes_id' => 'int',
 		'departements_id' => 'int',
+		'regions_id' => 'int',
 		'commissionagrements_id' => 'int',
 		'fin_quitus' => 'datetime',
 		'debut_quitus' => 'datetime',
@@ -143,6 +144,7 @@ class Operateur extends Model
 		'courriers_id',
 		'communes_id',
 		'departements_id',
+		'regions_id',
 		'commissionagrements_id',
 		'file1',
 		'file2',
@@ -209,6 +211,11 @@ class Operateur extends Model
 	public function departement()
 	{
 		return $this->belongsTo(Departement::class, 'departements_id');
+	}
+
+	public function region()
+	{
+		return $this->belongsTo(Region::class, 'regions_id');
 	}
 
 	public function commissionagrement()

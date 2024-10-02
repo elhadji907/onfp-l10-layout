@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Region extends Model
 {
-    use HasFactory;
+	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'regions';
@@ -50,8 +50,8 @@ class Region extends Model
 	public function antennes()
 	{
 		return $this->belongsToMany(Antenne::class, 'antennesregions', 'regions_id', 'antennes_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
 	}
 
 	public function demandeurs()
@@ -79,17 +79,21 @@ class Region extends Model
 		return $this->hasMany(Individuelle::class, 'regions_id');
 	}
 
-	public function operateurs()
+/* 	public function operateurs()
 	{
 		return $this->belongsToMany(Operateur::class, 'operateursregions', 'regions_id', 'operateurs_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
+	} */
 
 	public function programmes()
 	{
 		return $this->belongsToMany(Programme::class, 'programmesregions', 'regions_id', 'programmes_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+			->withPivot('id', 'deleted_at')
+			->withTimestamps();
+	}
+	public function operateurs()
+	{
+		return $this->hasMany(Operateur::class, 'regions_id');
 	}
 }

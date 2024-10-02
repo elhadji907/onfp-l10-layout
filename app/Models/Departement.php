@@ -74,6 +74,6 @@ class Departement extends Model
 	}
 	public function operateurs()
 	{
-		return $this->hasMany(Operateur::class, 'communes_id');
+		return $this->hasMany(Operateur::class, 'departements_id');
 	}
 }
