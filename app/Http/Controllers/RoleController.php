@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
+
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\Models\User;
-
-use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -107,7 +108,11 @@ class RoleController extends Controller
         $role->syncPermissions($request->permissions);
 
         $messages = "Permissions accordée(s)";
-        return redirect()->route('roles.index', compact('role'))->with('status', $messages);
+
+        Alert::success('Permissions accordée(s)');
+        return redirect()->back();
+
+        /* return redirect()->route('roles.index', compact('role'))->with('status', $messages); */
     }
 
     public function getUsersToRole($roleName, Request $request)

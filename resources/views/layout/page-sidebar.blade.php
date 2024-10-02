@@ -1,14 +1,14 @@
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-        @if (auth()->user()->hasRole('super-admin'))
+        @can('user-view')
             <li class="nav-item">
                 <a class="nav-link " href="{{ url('/home') }}">
                     <i class="bi bi-grid"></i>
                     <span>Tableau de bord</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-        @endif
+        @endcan
 
         {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -161,12 +161,12 @@
             </ul>
         </li> --}}
         <!-- End Charts Nav -->
-        @if (auth()->user()->hasRole('super-admin|courrier|a-courrier'))
+        {{-- @if (auth()->user()->hasRole('super-admin|courrier|a-courrier')) --}}
+        @can('courrier-view')
             {{-- <li class="nav-heading">Gestion courrier</li> --}}
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-envelope"></i><span>Gestion courrier</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-envelope"></i><span>Gestion courrier</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li class="nav-item">
@@ -174,55 +174,72 @@
                             <span>Courriers</span>
                         </a>
                     </li><!-- End arrives Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('arrives') }}">
-                            <span>Arrivé</span>
-                        </a>
-                    </li><!-- End arrives Nav -->
+                    @can('arrive-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('arrives') }}">
+                                <span>Arrivé</span>
+                            </a>
+                        </li><!-- End arrives Nav -->
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('departs') }}">
-                            <span>Départ</span>
-                        </a>
-                    </li><!-- End departs Nav -->
+                    @can('depart-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('departs') }}">
+                                <span>Départ</span>
+                            </a>
+                        </li><!-- End departs Nav -->
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Interne</span>
-                        </a>
-                    </li><!-- End internes Nav -->
+                    @can('interne-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#">
+                                <span>Interne</span>
+                            </a>
+                        </li><!-- End internes Nav -->
+                    @endcan
                 </ul>
             </li><!-- End Courriers Nav -->
-        @endif
+        @endcan
+        {{-- @endif --}}
         {{-- <li class="nav-heading">Gestion demandeurs</li> --}}
-        @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF'))
+        {{-- @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF')) --}}
+        @can('demande-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-folder-plus"></i><span>Gestion demandeurs</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('individuelles') }}">
-                            <span>Demandes individuelles</span>
-                        </a>
-                    </li><!-- End individuelles Nav -->
+                    @can('individuelle-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('individuelles') }}">
+                                <span>Demandes individuelles</span>
+                            </a>
+                        </li><!-- End individuelles Nav -->
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('collectives') }}">
-                            <span>Demandes collectives</span>
-                        </a>
-                    </li><!-- End collectives Nav -->
+                    @can('collective-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('collectives') }}">
+                                <span>Demandes collectives</span>
+                            </a>
+                        </li><!-- End collectives Nav -->
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Demandes prise en charge</span>
-                        </a>
-                    </li><!-- End Prise en charges Nav -->
+                    @can('pcharge-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#">
+                                <span>Demandes prise en charge</span>
+                            </a>
+                        </li><!-- End Prise en charges Nav -->
+                    @endcan
+
                 </ul>
             </li><!-- End demandes Nav -->
-        @endif
-        @if (auth()->user()->hasRole('Demandeur'))
+        @endcan
+        {{-- @endif --}}
+        {{-- @if (auth()->user()->hasRole('Demandeur')) --}}
+        @can('demandeur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demandeurs-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-folder-plus"></i><span>Mes demandes</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -247,13 +264,17 @@
                     <!-- End Prise en charges Nav -->
                 </ul>
             </li><!-- End demandes Nav -->
-        @endif
-        @if (auth()->user()->hasRole('Operateur'))
+        @endcan
+        {{--  @endif --}}
+        {{-- @if (auth()->user()->hasRole('Operateur')) --}}
+        @can('operateur-demande-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#demandeurs-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-folder-plus"></i><span>Mes demandes</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#demandeurs-operateur-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-folder-plus"></i><span>Devenir opérateur</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="demandeurs-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="demandeurs-operateur-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ route('devenirOperateur') }}">
                             <span>Agrément</span>
@@ -261,11 +282,13 @@
                     </li><!-- End collectives Nav -->
                 </ul>
             </li><!-- End demandes Nav -->
-        @endif
+        @endcan
+        {{-- @endif --}}
 
-        @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF|DEC'))
-            {{-- <li class="nav-heading">Gestion opérateurs</li> --}}
-            {{-- Formations --}}
+        {{-- @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF|DEC')) --}}
+        {{-- <li class="nav-heading">Gestion opérateurs</li> --}}
+        {{-- Formations --}}
+        @can('operateur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-people-fill"></i><span>Gestion opérateurs</span><i
@@ -277,31 +300,36 @@
                             <span>Opérateurs</span>
                         </a>
                     </li><!-- End operateurs Nav -->
+                    @can('agrement-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('agrement') }}">
+                                <span>Validation agréments</span>
+                            </a>
+                        </li><!-- End operateurs Nav -->
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('agrement') }}">
-                            <span>Validation agréments</span>
-                        </a>
-                    </li><!-- End operateurs Nav -->
+                    @can('agrement-commission')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('commissionagrements.index') }}">
+                                <span>Commission agrément</span>
+                            </a>
+                        </li><!-- End operateurs Nav -->
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('commissionagrements.index') }}">
-                            <span>Commission agrément</span>
-                        </a>
-                    </li><!-- End operateurs Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
-                            <span>Modules</span>
-                        </a>
-                    </li><!-- End operateurmodules Nav -->
+                    @can('agrement-module')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
+                                <span>Modules</span>
+                            </a>
+                        </li><!-- End operateurmodules Nav -->
+                    @endcan
 
                 </ul>
             </li><!-- End Formations Nav -->
-
+        @endcan
+        @can('formation-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#formations-nav" data-bs-toggle="collapse"
-                    href="#">
+                <a class="nav-link collapsed" data-bs-target="#formations-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-folder-symlink-fill"></i><span>{{ __('Gestion formations') }}</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -312,24 +340,26 @@
                             <span>Formations</span>
                         </a>
                     </li><!-- End Formations Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
-                            <span>Ingénieurs</span>
-                        </a>
-                    </li><!-- End Formations Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('evaluateurs') }}">
-                            <span>Evaluateurs</span>
-                        </a>
-                    </li><!-- End Formations Nav -->
-
+                    @can('ingenieur-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
+                                <span>Ingénieurs</span>
+                            </a>
+                        </li><!-- End Formations Nav -->
+                    @endcan
+                    @can('evaluateur-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('evaluateurs') }}">
+                                <span>Evaluateurs</span>
+                            </a>
+                        </li><!-- End Formations Nav -->
+                    @endcan
                 </ul>
             </li>
+        @endcan
+        {{-- <li class="nav-heading">Gestion localités</li> --}}
 
-            {{-- <li class="nav-heading">Gestion localités</li> --}}
-
+        @can('localite-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#localite-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-globe"></i><span>Gestion localités</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -340,11 +370,13 @@
                             <span>Localités</span>
                         </a>
                     </li><!-- End localites Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('regions') }}">
-                            <span>Régions</span>
-                        </a>
-                    </li><!-- End regions Nav -->
+                    @can('region-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('regions') }}">
+                                <span>Régions</span>
+                            </a>
+                        </li><!-- End regions Nav -->
+                    @endcan
 
                     {{-- <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('departements') }}">
@@ -368,17 +400,16 @@
                     <!-- End communes Nav -->
                 </ul>
             </li><!-- End Courriers Nav -->
+        @endcan
 
-            {{-- <li class="nav-heading">EMPLOYES</li> --}}
+        {{-- <li class="nav-heading">EMPLOYES</li> --}}
+        {{-- @endif --}}
 
-            @endif
-            
-        @if (auth()->user()->hasRole('super-admin|DRH'))
+        {{-- @if (auth()->user()->hasRole('super-admin|DRH')) --}}
+        @can('employe-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-people"></i><span>Gestion employés</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-people"></i><span>Gestion employés</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="employes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
@@ -389,108 +420,136 @@
                         </a>
                     </li><!-- End employes Page Nav -->
                     {{-- <li class="nav-heading">PARAMETRES</li> --}}
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/directions') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Directions</span>
-                        </a>
-                    </li><!-- End directions Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/categories') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Catégories</span>
-                        </a>
-                    </li><!-- End categories Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/fonctions') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Fonction</span>
-                        </a>
-                    </li><!-- End fonction Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/lois') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Lois</span>
-                        </a>
-                    </li><!-- End loi Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/decrets') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Decret</span>
-                        </a>
-                    </li><!-- End loi Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/procesverbals') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>PV</span>
-                        </a>
-                    </li><!-- End PV Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/decisions') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Décisions</span>
-                        </a>
-                    </li><!-- End Décisions Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/articles') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Articles</span>
-                        </a>
-                    </li><!-- End nomminations Page Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('/nomminations') }}">
-                            {{-- <i class="bi bi-stack"></i> --}}
-                            <span>Nomminations</span>
-                        </a>
-                    </li><!-- End nomminations Page Nav -->
+                    @can('direction-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/directions') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Directions</span>
+                            </a>
+                        </li><!-- End directions Page Nav -->
+                    @endcan
+                    @can('categorie-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/categories') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Catégories</span>
+                            </a>
+                        </li><!-- End categories Page Nav -->
+                    @endcan
+                    @can('fonction-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/fonctions') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Fonction</span>
+                            </a>
+                        </li><!-- End fonction Page Nav -->
+                    @endcan
+                    @can('loi-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/lois') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Lois</span>
+                            </a>
+                        </li><!-- End loi Page Nav -->
+                    @endcan
+                    @can('decret-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/decrets') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Decret</span>
+                            </a>
+                        </li><!-- End loi Page Nav -->
+                    @endcan
+                    @can('pv-recrutement-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/procesverbals') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>PV</span>
+                            </a>
+                        </li><!-- End PV Page Nav -->
+                    @endcan
+                    @can('decision')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/decisions') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Décisions</span>
+                            </a>
+                        </li><!-- End Décisions Page Nav -->
+                    @endcan
+                    @can('article-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/articles') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Articles</span>
+                            </a>
+                        </li><!-- End nomminations Page Nav -->
+                    @endcan
+                    @can('nommination-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('/nomminations') }}">
+                                {{-- <i class="bi bi-stack"></i> --}}
+                                <span>Nomminations</span>
+                            </a>
+                        </li><!-- End nomminations Page Nav -->
+                    @endcan
 
                 </ul>
             </li>
-        @endif
+        @endcan
+        {{-- @endif --}}
 
-        @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF'))
+        {{-- @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF')) --}}
+        @can('module-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#modules-nav" data-bs-toggle="collapse"
-                    href="#">
+                <a class="nav-link collapsed" data-bs-target="#modules-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layers-half"></i><span>{{ __('Gestion modules') }}</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="modules-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
 
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('modules') }}">
                             <span>Modules</span>
                         </a>
                     </li><!-- End utilisateurs Nav -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('domaines') }}">
-                            <span>Domaines</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('secteurs') }}">
-                            <span>Secteurs</span>
-                        </a>
-                    </li><!-- End utilisateurs Nav -->
+                    @can('domaine-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('domaines') }}">
+                                <span>Domaines</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('secteur-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('secteurs') }}">
+                                <span>Secteurs</span>
+                            </a>
+                        </li><!-- End utilisateurs Nav -->
+                    @endcan
                 </ul>
             </li>
+        @endcan
 
+        @can('projet-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('projets') }}">
                     <i class="bi bi-layers-half"></i>
                     <span>Gestion projets</span>
                 </a>
             </li><!-- End utilisateurs Nav -->
-        @endif
-        @if (auth()->user()->hasRole('super-admin'))
+        @endcan
+        {{-- @endif --}}
+        {{--  @if (auth()->user()->hasRole('super-admin')) --}}
+        @can('user-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('user') }}">
                     <i class="bi bi-person-plus"></i>
                     <span>Gestion utilisateurs</span>
                 </a>
             </li><!-- End utilisateurs Nav -->
-            {{-- <li class="nav-heading">{{ __("Contrôle d'accès") }}</li> --}}
+        @endcan
+        {{-- <li class="nav-heading">{{ __("Contrôle d'accès") }}</li> --}}
+        @can('role-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse"
                     href="#">
@@ -503,22 +562,64 @@
                             <span>Roles</span>
                         </a>
                     </li><!-- End roles Nav -->
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('permissions') }}">
-                            <span>Permissions</span>
-                        </a>
-                    </li><!-- End Permissions Nav -->
+                    @can('permission-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                                <span>Permissions</span>
+                            </a>
+                        </li><!-- End Permissions Nav -->
+                    @endcan
                 </ul>
             </li><!-- End Courriers Nav -->
-            <!-- End utilisateurs Nav -->
+        @endcan
+        @can('rapport-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <i class="bi bi-files"></i>
-                    <span>Rapports</span>
+                <a class="nav-link collapsed" data-bs-target="#rapport-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-files"></i><span>{{ __("Rapports") }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
-            </li><!-- End utilisateurs Nav -->
-        @endif
+                <ul id="rapport-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('individuelles.rapport') }}">
+                            <span>Demandes individuelles</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Demandes collectives</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Courriers</span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Opérateurs</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Formations</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#">
+                            <span>Formés</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li><!-- End Courriers Nav -->
+        @endcan
+        <!-- End utilisateurs Nav -->
+        {{-- @endif --}}
         {{-- <li class="nav-heading">Pages</li> --}}
 
         {{-- <li class="nav-item">

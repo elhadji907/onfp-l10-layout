@@ -304,6 +304,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/addCourrierOperateur', [ArriveController::class, 'addCourrierOperateur'])->name('addCourrierOperateur');
 
+    Route::get('individuelles/rapports',[IndividuelleController::class,'rapports'])->name('individuelles.rapport');
+    Route::post('individuelles/rapports',[IndividuelleController::class,'generateRapport']);
+
+    Route::get('collectives/rapports',[CollectiveController::class,'rapports'])->name('collectives.rapport');
+    Route::post('collectives/rapports',[CollectiveController::class,'generateRapport']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

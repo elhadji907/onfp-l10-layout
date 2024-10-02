@@ -249,12 +249,12 @@ class ArriveController extends Controller
         $this->validate($request, [
             "date_arrivee"          => ["required", "date"],
             "date_correspondance"   => ["required", "date"],
-            "numero_correspondance" => ["nullable", "string", "min:4", "max:6", "unique:courriers,numero,{$arrive->courrier->id}"],
-            "numero_arrive"         => ["required", "string", "min:4", "max:6", "unique:arrives,numero,{$arrive->id}"],
+            "numero_correspondance" => ["nullable", "string", "min:6", "max:9", "unique:courriers,numero,{$arrive->courrier->id}"],
+            "numero_arrive"         => ["required", "string", "min:6", "max:9", "unique:arrives,numero,{$arrive->id}"],
             "annee"                 => ["required", "string"],
             "expediteur"            => ["required", "string"],
             "objet"                 => ["required", "string"],
-            "numero_reponse"        => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,{$courrier->id}"],
+            "numero_reponse"        => ["string", "min:6", "max:9", "nullable", "unique:courriers,numero_reponse,{$courrier->id}"],
             "date_reponse"          => ["nullable", "date"],
             "observation"           => ["nullable", "string"],
             "file"                  => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf', 'max:2048']

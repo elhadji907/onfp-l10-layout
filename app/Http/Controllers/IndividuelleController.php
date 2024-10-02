@@ -11,13 +11,14 @@ use App\Models\Projet;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
-use RealRashid\SweetAlert\Facades\Alert;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class IndividuelleController extends Controller
 {
@@ -611,4 +612,41 @@ class IndividuelleController extends Controller
         }
 
     }
+
+    public function rapports(Request $request)
+    {
+        $title = 'Rapports demandes individuelles';
+        return view('individuelles.rapports', compact(
+            'title'
+        ));
+    }
+  public function generateRapport(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $now =  Carbon::now()->format('H:i:s');
+
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+        if ($from_date == $to_date) {
+            $title = 'demandes individuelles reçues le '.$from_date.' à '.$now;
+        } else {
+            $title = 'demandes individuelles reçues du '.$from_date.' au '.$to_date.' à '.$now;
+        }
+       
+        $individuelles = Individuelle::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
+
+        return view('individuelles.rapports', compact(
+            'individuelles',
+            'from_date',
+            'to_date',
+            'title'
+        ));
+    }
+
 }

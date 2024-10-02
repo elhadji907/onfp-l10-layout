@@ -10,6 +10,7 @@ use App\Models\Departement;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -429,5 +430,42 @@ class CollectiveController extends Controller
         } else {
             return view("collectives.show-collective", compact("collective_total", "departements", "modules"));
         }
+    }
+
+    
+    public function rapports(Request $request)
+    {
+        $title = 'Rapports demandes collectives';
+        return view('collectives.rapports', compact(
+            'title'
+        ));
+    }
+  public function generateRapport(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $now =  Carbon::now()->format('H:i:s');
+
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+        if ($from_date == $to_date) {
+            $title = 'demandes collectives reçues le '.$from_date.' à '.$now;
+        } else {
+            $title = 'demandes collectives reçues du '.$from_date.' au '.$to_date.' à '.$now;
+        }
+       
+        $collectives = Collective::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
+        
+        return view('collectives.rapports', compact(
+            'collectives',
+            'from_date',
+            'to_date',
+            'title'
+        ));
     }
 }

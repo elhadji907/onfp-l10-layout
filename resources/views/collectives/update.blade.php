@@ -50,7 +50,7 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="name" class="form-label">Nom de la structure<span
                                             class="text-danger mx-1">*</span></label>
-                                    <textarea name="name" id="name" rows="2"
+                                    <textarea name="name" id="name" rows="1"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         placeholder="La raison sociale de l'opérateur">{{ $collective?->name ?? old('name') }}</textarea>
                                     @error('name')
