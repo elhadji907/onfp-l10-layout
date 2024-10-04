@@ -372,7 +372,7 @@ class DepartController extends Controller
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
     }
-    
+
     public function rapports(Request $request)
     {
         $title = 'rapports courriers départs';
@@ -380,7 +380,7 @@ class DepartController extends Controller
             'title'
         ));
     }
-  public function generateRapport(Request $request)
+    public function generateRapport(Request $request)
     {
         $this->validate($request, [
             'from_date' => 'required|date',
@@ -395,12 +395,26 @@ class DepartController extends Controller
 
         $departs = Depart::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
 
+        $count = $departs->count();
+
         if ($from_date == $to_date) {
-            $title = $departs->count().' courrier(s) départ(s) le '.$from_date.' à '.$now;
+            if (isset($count) && $count < "1") {
+                $title = 'aucun courrier départ le ' . $from_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' courrier départ le ' . $from_date . ' à ' . $now;
+            } else {
+                $title = $count . ' courriers départs le ' . $from_date . ' à ' . $now;
+            }
         } else {
-            $title = $departs->count().' courrier(s) départ(s) du '.$from_date.' au '.$to_date.' à '.$now;
+            if (isset($count) && $count < "1") {
+                $title = 'aucun courrier départ du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' courrier départ du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } else {
+                $title = $count . ' courriers départs du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            }
         }
-        
+
         return view('courriers.departs.rapports', compact(
             'departs',
             'from_date',

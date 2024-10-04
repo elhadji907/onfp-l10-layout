@@ -839,7 +839,7 @@ class OperateurController extends Controller
                 ->where('regions_id',  "{$request->region}")
                 ->get();
             $count = $operateurs->count();
-            
+
             if (isset($count) && $count <= "1") {
                 $operateur = 'opérateur';
                 if (isset($request->statut) && $request->statut == "agréer") {
@@ -867,6 +867,7 @@ class OperateurController extends Controller
                 ->select('operateurs.*')
                 ->where('statut_agrement', 'LIKE', "%{$request->statut}%")
                 ->where('operateurmodules.module', 'LIKE', "%{$request->module}%")
+                ->distinct()
                 ->get();
 
             $count = $operateurs->count();
@@ -900,9 +901,11 @@ class OperateurController extends Controller
                 ->where('statut_agrement', 'LIKE', "%{$request->statut}%")
                 ->where('regions_id',  "{$request->region}")
                 ->where('operateurmodules.module', 'LIKE', "%{$request->module}%")
+                ->distinct()
                 ->get();
-                
+
             $count = $operateurs->count();
+
             if (isset($count) && $count <= "1") {
                 $operateur = 'opérateur';
                 if (isset($request->statut) && $request->statut == "agréer") {

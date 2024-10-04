@@ -512,7 +512,7 @@ class ArriveController extends Controller
             'title'
         ));
     }
-  public function generateRapport(Request $request)
+    public function generateRapport(Request $request)
     {
         $this->validate($request, [
             'from_date' => 'required|date',
@@ -527,12 +527,27 @@ class ArriveController extends Controller
 
         $arrives = Arrive::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
 
+
+        $count = $arrives->count();
+
         if ($from_date == $to_date) {
-            $title = $arrives->count().' courrier(s) reçu(s) le '.$from_date.' à '.$now;
+            if (isset($count) && $count < "1") {
+                $title = 'aucun courrier arrivé le ' . $from_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' courrier arrivé le ' . $from_date . ' à ' . $now;
+            } else {
+                $title = $count . ' courriers arrivés le ' . $from_date . ' à ' . $now;
+            }
         } else {
-            $title = $arrives->count().' courrier(s) reçu(s) du '.$from_date.' au '.$to_date.' à '.$now;
+            if (isset($count) && $count < "1") {
+                $title = 'aucun courrier arrivé du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' courrier arrivé du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } else {
+                $title = $count . ' courriers arrivés du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            }
         }
-        
+
         return view('courriers.arrives.rapports', compact(
             'arrives',
             'from_date',

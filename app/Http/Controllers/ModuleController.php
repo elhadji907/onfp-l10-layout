@@ -152,6 +152,7 @@ class ModuleController extends Controller
             ->where('statut', 'LIKE', "%{$request->statut}%")
             ->where('regions_id',  "{$request->region}")
             ->where('modules.name', 'LIKE', "%{$request->module}%")
+            ->distinct()
             ->get();
 
 
