@@ -93,7 +93,7 @@
                                 <div class="d-flex justify-content-center py-0">
                                     <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
                                         {{-- <span class="d-none d-lg-block">ONFP</span> --}}
-                                        <h5 class="card-title">ONFP - La référence de la formation professionnelle</h5>
+                                        <h6 class="card-title">ONFP</h6>
                                     </a>
                                 </div>
 
@@ -122,9 +122,9 @@
                                             aria-label="Close"></button>
                                     </div>
                                 @endif
-                                <div class="pt-0 pb-0">
+                                <div class="d-flex justify-content-center">
                                     <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
-                                        <h5 class="card-title">Introduire vous informations pour vous connecter</h5>
+                                        <h6 class="card-title">Connectez-vous !</h6>
                                     </a>
                                     {{-- <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de
                                             passe pour vous connecter</p> --}}

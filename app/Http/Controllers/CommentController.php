@@ -8,11 +8,8 @@ use App\Notifications\newCommentPosted;
 
 class CommentController extends Controller
 {
-
-
     public function store(Courrier $courrier)
     {
-
         request()->validate(
             [
                 'commentaire'   =>  'required|min:5',

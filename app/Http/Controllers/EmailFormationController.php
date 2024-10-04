@@ -25,10 +25,10 @@ class EmailFormationController extends Controller
             $toEmail = $individuelle?->user?->email;
             $toUserName = $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name;
             $message = $formation?->date_debut?->format('d/m/Y') . ' au ' . $formation?->date_fin?->format('d/m/Y') .
-                ' à ' . $formation?->lieu . ', ' . $formation?->departement?->nom . '. La formation est assurée par l\'opérateur '
-                . $formation?->operateur?->name . ', téléphone : ' . $formation?->operateur?->telephone1;
-            $subject = 'Notification démarrage formation ';
-            $module = 'Votre candidature en ' . $formation?->module?->name . ' est retenue, la formation est prévue du ' . $message;
+                ' à ' . $formation?->lieu . ', ' . $formation?->departement?->nom . ' et sera assurée par l\'opérateur '
+                . $formation?->operateur?->user?->operateur . '(' . $formation?->operateur?->user?->username . ')' . ', n° téléphone : ' . $formation?->operateur?->user?->telephone;
+            $subject = 'Démarrage formation !';
+            $module = 'Votre demande de formation en ' . $formation?->module?->name . ' est retenue, la formation est prévue du ' . $message;
             Mail::to($toEmail)->send(new WelcomeFormationEmail($message, $subject, $toEmail, $toUserName, $module));
         }
         return back();

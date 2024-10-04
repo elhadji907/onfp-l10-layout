@@ -79,7 +79,7 @@
                                         class="logo d-flex align-items-center w-auto">
                                         {{-- <span class="d-none d-lg-block">La référence de la formation professionnelle</span> --}}
                                         {{-- <span class="d-none d-lg-block small fst-italic">La référence de la formation professionnelle</span> --}}
-                                        <h5 class="card-title">ONFP - La référence de la formation professionnelle</h5>
+                                        <h5 class="card-title">ONFP</h5>
                                     </a>
                                 </div>
 

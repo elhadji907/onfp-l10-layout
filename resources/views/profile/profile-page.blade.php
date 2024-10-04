@@ -842,204 +842,221 @@
         </section>
     @endif
 
-    @if (auth()->user()->hasRole('super-admin'))
-        <section class="section faq">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                    <div class="row">
-                        <div class="list-group mt-2">
-                            @if (isset(auth::user()->employee->arrives))
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-courriers-emp">
-                                        <thead class="table-default">
-                                            <tr>
-                                                <th style="width:40%;">Imputations</th>
-                                                <th style="width:15%;">Instructions DG</th>
-                                                {{-- <th style="width:10%;">Suivi dossier</th> --}}
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (auth::user()->employee?->arrives as $arrive)
-                                                <?php
-                                                $i = 1;
-                                                $x = 0;
-                                                $y = 0;
-                                                $z = 0;
-                                                $xy = 0;
-                                                $xz = 0;
-                                                ?>
+    @can('user-view')
+        @can('employe-view')
+            <section class="section faq">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                        <div class="row">
+                            <div class="list-group">
+                                @if (isset(Auth::user()->employee->arrives))
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="table-courriers-emp">
+                                            <thead class="table-default">
                                                 <tr>
-                                                    <td>
-                                                        {{-- @if (isset($arrive?->courrier) && $arrive?->courrier?->type == 'arrive') --}}
-                                                        <h4><a href="{!! route('arrives.show', $arrive?->courrier?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
-                                                        </h4>
-                                                        @if (isset($arrive->courrier->file))
-                                                            <label for="reference" class="form-label">Scan courrier :
-                                                            </label>
-                                                            <a class="btn btn-outline-secondary btn-sm"
-                                                                title="télécharger le fichier joint" target="_blank"
-                                                                href="{{ asset($arrive->courrier->getFile()) }}">
-                                                                <i class="bi bi-download"></i>
-                                                            </a>
-                                                        @endif
-                                                        {{-- @endif --}}
-                                                        <p>{!! $arrive?->courrier?->message !!}</p>
-                                                        {{-- <p><strong>Type de courrier : </strong> {!! $arrive?->courrier?->type ?? '' !!}</p> --}}
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            {{-- format('d/m/Y à H:i:s') --}}
-                                                            <small>Imputer le, {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('l jS F Y') !!}</small>
-                                                            <span
-                                                                class="badge badge-info">{!! $arrive?->courrier?->user?->firstname !!}&nbsp;{!! $arrive?->courrier?->user?->name !!}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p>{!! $arrive?->courrier->description ?? '' !!}</p>
-                                                    </td>
-                                                    {{-- <td>
+                                                    <th style="width:40%;">Imputations</th>
+                                                    <th style="width:15%;">Instructions DG</th>
+                                                    {{-- <th style="width:10%;">Suivi dossier</th> --}}
+                                                    <th class="text-center">
+                                                        @unless (auth()->user()->unReadNotifications->isEmpty())
+                                                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                                                <i class="bi bi-bell"></i>
+                                                                <span
+                                                                    class="badge bg-primary badge-number">{!! auth()->user()->unReadNotifications->count() !!}</span>
+                                                            </a><!-- End Notification Icon -->
+                                                            <ul
+                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                                                                <li class="dropdown-header">
+                                                                    {!! auth()->user()->unReadNotifications->count() !!} nouveaux commentaires non lus
+                                                                    <a href="{{ url('notifications') }}" target="_blank"><span
+                                                                            class="badge rounded-pill bg-primary p-2 ms-2">Voir
+                                                                            tous</span></a>
+                                                                </li>
+                                                            </ul>
+                                                        @endunless
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (Auth::user()->employee?->arrives as $arrive)
+                                                    <?php
+                                                    $i = 1;
+                                                    $x = 0;
+                                                    $y = 0;
+                                                    $z = 0;
+                                                    $xy = 0;
+                                                    $xz = 0;
+                                                    ?>
+                                                    <tr>
+                                                        <td>
+                                                            {{-- @if (isset($arrive?->courrier) && $arrive?->courrier?->type == 'arrive') --}}
+                                                            <h4><a href="{!! route('arrives.show', $arrive?->courrier?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
+                                                            </h4>
+                                                            @if (isset($arrive->courrier->file))
+                                                                <label for="reference" class="form-label">Scan courrier :
+                                                                </label>
+                                                                <a class="btn btn-outline-secondary btn-sm"
+                                                                    title="télécharger le fichier joint" target="_blank"
+                                                                    href="{{ asset($arrive->courrier->getFile()) }}">
+                                                                    <i class="bi bi-download"></i>
+                                                                </a>
+                                                            @endif
+                                                            {{-- @endif --}}
+                                                            <p>{!! $arrive?->courrier?->message !!}</p>
+                                                            {{-- <p><strong>Type de courrier : </strong> {!! $arrive?->courrier?->type ?? '' !!}</p> --}}
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                {{-- format('d/m/Y à H:i:s') --}}
+                                                                <small>Imputer le, {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('l jS F Y') !!}</small>
+                                                                <span
+                                                                    class="badge badge-info">{!! $arrive?->courrier?->user?->firstname !!}&nbsp;{!! $arrive?->courrier?->user?->name !!}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p>{!! $arrive?->courrier->description ?? '' !!}</p>
+                                                        </td>
+                                                        {{-- <td>
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         @foreach ($arrive?->employees->unique('id') as $employee)
                                                             {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
                                                         @endforeach
                                                     </div>
                                                 </td> --}}
-                                                    <td>
-                                                        <h5 class="card-title">Commentaires
-                                                            ({{ count($arrive->courrier->comments) }})
-                                                        </h5>
-                                                        @forelse ($arrive->courrier->comments as $comment)
-                                                            <div class="accordion accordion-flush"
-                                                                id="accordionFlushExample">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header"
-                                                                        id="flush-heading{{ $x++ }}">
-                                                                        <button class="accordion-button collapsed"
-                                                                            type="button" data-bs-toggle="collapse"
-                                                                            data-bs-target="#flush-collapse{{ $z++ }}"
-                                                                            aria-expanded="false"
-                                                                            aria-controls="flush-collapse{{ $xy++ }}">
-                                                                            Commentaire # {{ $i++ }}
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="flush-collapse{{ $xz++ }}"
-                                                                        class="accordion-collapse collapse"
-                                                                        aria-labelledby="flush-heading{{ $y++ }}"
-                                                                        data-bs-parent="#accordionFlushExample">
-                                                                        <div class="accordion-body">
-                                                                            <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
-                                                                            <div class="activity">
-                                                                                <div
-                                                                                    class="activity-item d-flex col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                        <td>
+                                                            <h5 class="card-title">Commentaires
+                                                                ({{ count($arrive->courrier->comments) }})
+                                                            </h5>
+                                                            @forelse ($arrive->courrier->comments as $comment)
+                                                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                                    <div class="accordion-item">
+                                                                        <h2 class="accordion-header"
+                                                                            id="flush-heading{{ $x++ }}">
+                                                                            <button class="accordion-button collapsed"
+                                                                                type="button" data-bs-toggle="collapse"
+                                                                                data-bs-target="#flush-collapse{{ $z++ }}"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="flush-collapse{{ $xy++ }}">
+                                                                                Commentaire # {{ $i++ }}
+                                                                            </button>
+                                                                        </h2>
+                                                                        <div id="flush-collapse{{ $xz++ }}"
+                                                                            class="accordion-collapse collapse"
+                                                                            aria-labelledby="flush-heading{{ $y++ }}"
+                                                                            data-bs-parent="#accordionFlushExample">
+                                                                            <div class="accordion-body">
+                                                                                <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
+                                                                                <div class="activity">
                                                                                     <div
-                                                                                        class="activite-label col-2 col-md-2 col-lg-2 col-sm-2 col-xs-2 col-xxl-2">
-                                                                                        {!! Carbon\Carbon::parse($comment?->created_at)?->diffForHumans() !!}
-                                                                                    </div>
-                                                                                    &nbsp;
-                                                                                    <i
-                                                                                        class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                                                                    &nbsp;
-                                                                                    <div
-                                                                                        class="activity-content col-10 col-md-10 col-lg-10 col-sm-10 col-xs-10 col-xxl-10">
-                                                                                        {!! $comment->content !!}
+                                                                                        class="activity-item d-flex col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                                                        <div
+                                                                                            class="activite-label col-2 col-md-2 col-lg-2 col-sm-2 col-xs-2 col-xxl-2">
+                                                                                            {!! Carbon\Carbon::parse($comment?->created_at)?->diffForHumans() !!}
+                                                                                        </div>
+                                                                                        &nbsp;
+                                                                                        <i
+                                                                                            class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                                                                        &nbsp;
+                                                                                        <div
+                                                                                            class="activity-content col-10 col-md-10 col-lg-10 col-sm-10 col-xs-10 col-xxl-10">
+                                                                                            {!! $comment->content !!}
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <?php
-                                                                            $a = 1;
-                                                                            $b = '1a';
-                                                                            $c = '1a';
-                                                                            $d = '1a';
-                                                                            $e = '1a';
-                                                                            $f = '1a';
-                                                                            ?>
-                                                                            <h5 class="card-title">Réponses au
-                                                                                commentaire #
-                                                                                {{ $i - 1 }}</h5>
-                                                                            <div class="activity">
-                                                                                @forelse ($comment->comments as $replayComment)
-                                                                                    <div
-                                                                                        class="row col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                                                                        <label for=""
-                                                                                            class="col-1 col-md-1 col-lg-1 col-sm-1 col-xs-1 col-xxl-1"></label>
+                                                                                <?php
+                                                                                $a = 1;
+                                                                                $b = '1a';
+                                                                                $c = '1a';
+                                                                                $d = '1a';
+                                                                                $e = '1a';
+                                                                                $f = '1a';
+                                                                                ?>
+                                                                                <h5 class="card-title">Réponses au
+                                                                                    commentaire #
+                                                                                    {{ $i - 1 }}</h5>
+                                                                                <div class="activity">
+                                                                                    @forelse ($comment->comments as $replayComment)
                                                                                         <div
-                                                                                            class="col-11 col-md-11 col-lg-11 col-sm-11 col-xs-11 col-xxl-11">
+                                                                                            class="row col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                                                            <label for=""
+                                                                                                class="col-1 col-md-1 col-lg-1 col-sm-1 col-xs-1 col-xxl-1"></label>
+                                                                                            <div
+                                                                                                class="col-11 col-md-11 col-lg-11 col-sm-11 col-xs-11 col-xxl-11">
 
-                                                                                            <h2 class="accordion-header"
-                                                                                                id="flush-heading{{ $b++ }}">
-                                                                                                <button
-                                                                                                    class="accordion-button collapsed"
-                                                                                                    type="button"
-                                                                                                    data-bs-toggle="collapse"
-                                                                                                    data-bs-target="#flush-collapse{{ $d++ }}"
-                                                                                                    aria-expanded="false"
-                                                                                                    aria-controls="flush-collapse{{ $e++ }}">
-                                                                                                    Réponse #
-                                                                                                    {{ $a++ }}
-                                                                                                </button>
-                                                                                            </h2>
-                                                                                            {{-- <h5 class="card-title">
+                                                                                                <h2 class="accordion-header"
+                                                                                                    id="flush-heading{{ $b++ }}">
+                                                                                                    <button
+                                                                                                        class="accordion-button collapsed"
+                                                                                                        type="button"
+                                                                                                        data-bs-toggle="collapse"
+                                                                                                        data-bs-target="#flush-collapse{{ $d++ }}"
+                                                                                                        aria-expanded="false"
+                                                                                                        aria-controls="flush-collapse{{ $e++ }}">
+                                                                                                        Réponse #
+                                                                                                        {{ $a++ }}
+                                                                                                    </button>
+                                                                                                </h2>
+                                                                                                {{-- <h5 class="card-title">
                                                                                                 Réponse
                                                                                                 {!! $replayComment?->user?->firstname . ' ' . $replayComment?->user?->name !!}<span></span>
                                                                                             </h5> --}}
 
-                                                                                            <div id="flush-collapse{{ $f++ }}"
-                                                                                                class="accordion-collapse collapse"
-                                                                                                aria-labelledby="flush-heading{{ $c++ }}"
-                                                                                                data-bs-parent="#accordionFlushExample">
-                                                                                                <div
-                                                                                                    class="accordion-body">
-                                                                                                    <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
-                                                                                                    <div
-                                                                                                        class="activity-item d-flex">
+                                                                                                <div id="flush-collapse{{ $f++ }}"
+                                                                                                    class="accordion-collapse collapse"
+                                                                                                    aria-labelledby="flush-heading{{ $c++ }}"
+                                                                                                    data-bs-parent="#accordionFlushExample">
+                                                                                                    <div class="accordion-body">
+                                                                                                        <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
                                                                                                         <div
-                                                                                                            class="activite-label col-3 col-md-3 col-lg-3 col-sm-3 col-xs-3 col-xxl-3">
-                                                                                                            {{-- <span class="fw-bold text-dark"></span> --}}
-                                                                                                            {!! Carbon\Carbon::parse($replayComment?->created_at)?->diffForHumans() !!}
-                                                                                                        </div>
-                                                                                                        &nbsp;
-                                                                                                        <i
-                                                                                                            class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                                                                                        &nbsp;
-                                                                                                        <div
-                                                                                                            class="activity-content col-8 col-md-8 col-lg-8 col-sm-8 col-xs-8 col-xxl-8">
-                                                                                                            {!! $replayComment?->content !!}
+                                                                                                            class="activity-item d-flex">
+                                                                                                            <div
+                                                                                                                class="activite-label col-3 col-md-3 col-lg-3 col-sm-3 col-xs-3 col-xxl-3">
+                                                                                                                {{-- <span class="fw-bold text-dark"></span> --}}
+                                                                                                                {!! Carbon\Carbon::parse($replayComment?->created_at)?->diffForHumans() !!}
+                                                                                                            </div>
+                                                                                                            &nbsp;
+                                                                                                            <i
+                                                                                                                class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                                                                                                            &nbsp;
+                                                                                                            <div
+                                                                                                                class="activity-content col-8 col-md-8 col-lg-8 col-sm-8 col-xs-8 col-xxl-8">
+                                                                                                                {!! $replayComment?->content !!}
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                @empty
-                                                                                    <div class="alert alert-info">Aucune
-                                                                                        réponse à ce commentaire</div>
-                                                                                @endforelse
+                                                                                    @empty
+                                                                                        <div class="alert alert-info">Aucune
+                                                                                            réponse à ce commentaire</div>
+                                                                                    @endforelse
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        @empty
+                                                            @empty
 
-                                                            <div class="alert alert-info">Aucun commentaire pour ce
-                                                                courrier
-                                                            </div>
-                                                        @endforelse
+                                                                <div class="alert alert-info">Aucun commentaire pour ce
+                                                                    courrier
+                                                                </div>
+                                                            @endforelse
 
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @else
-                                <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
-                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @else
+                                    <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    @endif
+            </section>
+        @endcan
+    @endcan
 @endsection
 
 @push('scripts')

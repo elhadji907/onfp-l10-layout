@@ -25,7 +25,7 @@ class EmailController extends Controller
             $toEmail = $individuelle?->user?->email;
             $toUserName = $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name;
             $message = $individuelle?->note_obtenue . '/20, avec la mention ' . $individuelle?->appreciation;
-            $subject = 'Notification fin de formation ';
+            $subject = 'Formation terminée ! ';
             $module = $formation?->module?->name;
             Mail::to($toEmail)->send(new WelcomeEmail($message, $subject, $toEmail, $toUserName, $module));
         }

@@ -28,7 +28,8 @@ class OperateurController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin|Operateur|DIOF|ADIOF|DEC|ADEC']);
-        $this->middleware(['permission:operateur-view']);
+        $this->middleware("permission:operateur-view", ["only" => ["create", "store"]]);
+        $this->middleware("permission:operateur-demande-view", ["only" => ["create", "store"]]);
     }
     public function index()
     {
@@ -697,7 +698,10 @@ class OperateurController extends Controller
     public function retirerOperateur($id)
     {
         $operateur = Operateur::findOrFail($id);
-
+        if ($operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible opérateur déjà traité');
+            return redirect()->back();
+        }
         $operateur->update([
             'statut_agrement'    => 'retirer',
             'commissionagrements_id'    => null,
@@ -826,43 +830,95 @@ class OperateurController extends Controller
         if ($request->valeur_region == "1") {
             $this->validate($request, [
                 'region' => 'required|string',
+                'statut' => 'required|string',
             ]);
 
             $region = Region::findOrFail($request->region);
 
-            $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
-                ->select('operateurs.*')
-                ->where('regions_id',  "{$request->region}%")
+            $operateurs = Operateur::where('statut_agrement', 'LIKE', "{$request->statut}")
+                ->where('regions_id',  "{$request->region}")
                 ->get();
+            $count = $operateurs->count();
+            
+            if (isset($count) && $count <= "1") {
+                $operateur = 'opérateur';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréé';
+                } else {
+                    $statut = $request->statut;
+                }
+            } else {
+                $operateur = 'opérateurs';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréés';
+                } else {
+                    $statut = $request->statut;
+                }
+            }
 
-            $title = $operateurs->count() . ' opérateur(s) agréé(s) à ' . $region->nom;
+            $title = $count . ' ' . $operateur . ' ' . $statut . ' à ' . $region->nom;
         } elseif ($request->valeur_module == "1") {
             $this->validate($request, [
                 'module' => 'required|string',
+                'statut' => 'required|string',
             ]);
 
             $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
                 ->select('operateurs.*')
-                ->where('operateurmodules.module', 'LIKE', "{$request->module}%")
+                ->where('statut_agrement', 'LIKE', "%{$request->statut}%")
+                ->where('operateurmodules.module', 'LIKE', "%{$request->module}%")
                 ->get();
 
-
-            $title = $operateurs->count() . ' opérateur(s) agréé(s) en ' . $request->module;
+            $count = $operateurs->count();
+            if (isset($count) && $count <= "1") {
+                $operateur = 'opérateur';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréé';
+                } else {
+                    $statut = $request->statut;
+                }
+            } else {
+                $operateur = 'opérateurs';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréés';
+                } else {
+                    $statut = $request->statut;
+                }
+            }
+            $title = $count . ' ' . $operateur . ' ' . $statut . ' en ' . $request->module;
         } else {
             $this->validate($request, [
                 'region' => 'required|string',
                 'module' => 'required|string',
+                'statut' => 'required|string',
             ]);
 
             $region = Region::findOrFail($request->region);
 
             $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
                 ->select('operateurs.*')
+                ->where('statut_agrement', 'LIKE', "%{$request->statut}%")
                 ->where('regions_id',  "{$request->region}")
                 ->where('operateurmodules.module', 'LIKE', "%{$request->module}%")
                 ->get();
-
-            $title = $operateurs->count() . ' opérateur(s) agréé(s) dans la région de  ' . $region->nom . ' en ' . $request->module;
+                
+            $count = $operateurs->count();
+            if (isset($count) && $count <= "1") {
+                $operateur = 'opérateur';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréé';
+                } else {
+                    $statut = $request->statut;
+                }
+            } else {
+                $operateur = 'opérateurs';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréés';
+                } else {
+                    $statut = $request->statut;
+                }
+            }
+            $title = $count . ' ' . $operateur . ' ' . $statut . ' dans la région de  ' . $region->nom . ' en ' . $request->module;
         }
 
         $regions = Region::orderBy("created_at", "desc")->get();

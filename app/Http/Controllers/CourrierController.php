@@ -84,6 +84,8 @@ class CourrierController extends Controller
 
         Alert::success('Lecture fait', 'le courrier a été visionné');
 
+        /* return redirect()->back(); */
+
         if ($courrier->type == 'arrive') {
             return view("courriers.arrives.show", compact("arrive", "courrier", "user_create_name", "user_update_name"));
             /* return redirect()->back()->with('arrive', 'courrier', 'user_create_name', 'user_update_name'); */

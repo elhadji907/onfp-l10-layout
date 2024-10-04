@@ -303,7 +303,7 @@
                     @can('agrement-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('agrement') }}">
-                                <span>Validation agréments</span>
+                                <span>Traitement agréments</span>
                             </a>
                         </li><!-- End operateurs Nav -->
                     @endcan
@@ -595,6 +595,22 @@
                         </li>
                     @endcan
 
+                    @can('rapport-individuelle-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('modules.rapport') }}">
+                                <span>Demandeurs modules</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('rapport-formation-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('formations.rapport') }}">
+                                <span>Demandeurs formations</span>
+                            </a>
+                        </li>
+                    @endcan
+
                     @can('rapport-arrive-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('arrives.rapport') }}">
@@ -614,14 +630,6 @@
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('operateurs.rapport') }}">
                                 <span>Opérateurs</span>
-                            </a>
-                        </li>
-                    @endcan
-
-                    @can('rapport-formation-view')
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="#">
-                                <span>Formations</span>
                             </a>
                         </li>
                     @endcan

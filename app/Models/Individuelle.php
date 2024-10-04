@@ -95,6 +95,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Arrondissement|null $arrondissement
  * @property Commune|null $commune
  * @property Convention|null $convention
+ * @property User|null $user
  * @property Demandeur $demandeur
  * @property Departement|null $departement
  * @property Diplome|null $diplome

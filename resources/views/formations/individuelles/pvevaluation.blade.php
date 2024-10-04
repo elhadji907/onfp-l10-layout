@@ -177,7 +177,7 @@
                     <td colspan="5"><b>{{ __('Lieu: ') }}</b> {{ $formation?->lieu }}
                     </td>
                     <td colspan="6"><b>{{ __('Opérateur: ') }}</b>
-                        {{ $formation?->operateur?->name . ' (' . $formation?->operateur?->sigle . ')' }}
+                        {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
                     </td>
                 </tr>
                 <tr class="heading">

@@ -61,10 +61,13 @@ class newCommentPosted extends Notification
     public function toArray($notifiable)
     {
         return [
-            'courrierTitle' => $this->courrier->objet,
-            'courrierId' => $this->courrier->id,
-            'firstname' => $this->user->firstname,
-            'name' => $this->user->name
+            'courrierTitle' =>  $this->courrier->objet,
+            'courrierId'    =>  $this->courrier->id,
+            'firstname'     =>  $this->user->firstname,
+            'name'          =>  $this->user->name,
+            'file'          =>  $this->courrier->file,
+            'expediteur'    =>  $this->courrier->expediteur,
+            'description'    =>  $this->courrier->description
         ];
     }
 }

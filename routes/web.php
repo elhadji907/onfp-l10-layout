@@ -319,6 +319,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('operateurs/rapports',[OperateurController::class,'rapports'])->name('operateurs.rapport');
     Route::post('operateurs/rapports',[OperateurController::class,'generateRapport']);
 
+    Route::get('modules/rapports',[ModuleController::class,'rapports'])->name('modules.rapport');
+    Route::post('modules/rapports',[ModuleController::class,'generateRapport']);
+
+    Route::get('formations/rapports',[FormationController::class,'rapports'])->name('formations.rapport');
+    Route::post('formations/rapports',[FormationController::class,'generateRapport']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

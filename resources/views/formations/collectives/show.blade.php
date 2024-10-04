@@ -214,7 +214,7 @@
                                     @if (isset($operateur))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
-                                                {{ $formation?->operateur?->name . '(' . $formation?->operateur?->sigle . ')' }}
+                                                {{ $formation?->operateur?->user?->operateur . '(' . $formation?->operateur?->user?->username . ')' }}
                                                 <a class="btn btn-info btn-sm" title=""
                                                     href="{{ route('operateurs.show', $formation?->operateur?->id) }}"><i
                                                         class="bi bi-eye"></i></a>&nbsp;

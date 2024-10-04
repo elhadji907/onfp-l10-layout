@@ -36,12 +36,10 @@
                             <button type="button" class="btn btn-info btn-sm">
                                 <span class="badge bg-white text-info">{{ $operateur_total }}</span>
                             </button>
-                            {{-- @isset(Auth::user()->cin) --}}
                             <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
                                 data-bs-toggle="modal" data-bs-target="#AddoperateurModal">
                                 <i class="bi bi-plus" title="Ajouter demande"></i>
                             </button>
-                            {{-- @endisset --}}
                         </div>
 
                         @if (isset(Auth::user()?->operateur) &&

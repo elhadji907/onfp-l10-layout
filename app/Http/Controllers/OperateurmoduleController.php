@@ -56,8 +56,7 @@ class OperateurmoduleController extends Controller
             ]);
 
             $operateurmodule->save();
-
-        } elseif ($operateur->categorie == 'Privé' && $total_module >= 2) {
+        } elseif ($operateur->user->categorie == 'Privé' && $total_module >= 2) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de modules autorisés');
             return redirect()->back();
         } elseif ($total_module >= 10) {
@@ -93,13 +92,16 @@ class OperateurmoduleController extends Controller
     public function update(Request $request, $id)
     {
         $operateurmodule = Operateurmodule::findOrFail($id);
-
+        if ($operateurmodule->statut != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible module déjà traité');
+            return redirect()->back();
+        }
         $operateurmodule_find    = DB::table('operateurmodules')->where('module', $request->input("module"))->first();
 
-        $operateurmodule_count    = DB::table('operateurmodules')
+        /* $operateurmodule_count    = DB::table('operateurmodules')
             ->where('module', $request->input("module"))
             ->where('operateurs_id', $operateurmodule->operateurs_id)
-            ->count();
+            ->count(); */
 
         $operateur_find  = Operateurmodule::where('operateurs_id', $operateurmodule->operateurs_id)->get();
 
@@ -153,10 +155,16 @@ class OperateurmoduleController extends Controller
     public function destroy($id)
     {
         $operateurmodule = Operateurmodule::find($id);
-        /* dd($operateurmodule); */
-        $operateurmodule->delete();
+        if ($operateurmodule->statut != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible module déjà traité');
+            return redirect()->back();
+        } else {
 
-        Alert::success("Module " . $operateurmodule->module, 'a été supprimé avec succès');
-        return redirect()->back();
+            $operateurmodule->delete();
+
+            Alert::success('Effectuée !', 'module supprimée');
+
+            return redirect()->back();
+        }
     }
 }

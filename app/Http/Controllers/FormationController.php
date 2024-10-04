@@ -27,6 +27,7 @@ use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -34,7 +35,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class FormationController extends Controller
 {
-    
+
     public function __construct()
     {
         // examples:
@@ -407,7 +408,7 @@ class FormationController extends Controller
             $validated_by = new Validationindividuelle([
                 'validated_id'       =>      Auth::user()->id,
                 'action'             =>      'retirer',
-                'motif'              =>      $request->input('motif').', pour la formation : '.$formation->name,
+                'motif'              =>      $request->input('motif') . ', pour la formation : ' . $formation->name,
                 'individuelles_id'   =>      $individuelle->id
             ]);
 
@@ -1419,5 +1420,55 @@ class FormationController extends Controller
             Alert::warning('Désolez !', "la formation n'est pas encore terminée");
             return redirect()->back();
         }
+    }
+
+    public function rapports(Request $request)
+    {
+        $title = 'rapports formations';
+        return view('formations.rapports', compact(
+            'title'
+        ));
+    }
+    public function generateRapport(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $now =  Carbon::now()->format('H:i:s');
+
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+        $formations = Formation::whereBetween(DB::raw('DATE(date_debut)'), array($request->from_date, $request->to_date))->get();
+
+        $count = $formations->count();
+        
+        if ($from_date == $to_date) {
+            if (isset($count) && $count < "1") {
+                $title = 'aucune formation effctuée le ' . $from_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' formation effctuée le ' . $from_date . ' à ' . $now;
+            } else {
+                $title = $count . ' formations effctuées le ' . $from_date . ' à ' . $now;
+            }
+        } else {
+            if (isset($count) && $count < "1") {
+                $title = 'aucune formation effctuée du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' formation effctuée du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } else {
+                $title = $count . ' formations effctuées du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            }
+        }
+
+        return view('formations.rapports', compact(
+            'formations',
+            'from_date',
+            'to_date',
+            'title'
+        ));
     }
 }

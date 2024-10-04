@@ -27,12 +27,15 @@
                                 <p> | {{ $commissionagrement?->commission }}</p>
                             </span>
                         </div>
-                        <h5> Statut:
+                        <h5 class="card-title">
+                            {{ count($operateurs) . ' opérateur(s) agréé(s)' . ' pour un total de ' . count($operateurmodules) . ' modules dont ' . $count_operateurmodules_distinct . ' modules distincts' }}
+                        </h5>
+                        {{--  <h5> Statut:
                             <span class="badge bg-success">agréer</span>
-                        </h5>
-                        <h5> Opérateurs:
+                        </h5> --}}
+                        {{-- <h5> Opérateurs:
                             <span class="badge bg-secondary">{{ count($operateurs) }}</span>
-                        </h5>
+                        </h5> --}}
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT')
@@ -41,12 +44,12 @@
                                     <table class="table datatables align-middle" id="table-operateurs">
                                         <thead>
                                             <tr>
-                                                <th>Opérateurs</th>
-                                                <th>Adresse</th>
-                                                <th>Domaine</th>
-                                                <th>Modules</th>
-                                                <th>Niveau qualification</th>
-                                                <th>N° agrément</th>
+                                                <th width="35%">Opérateurs</th>
+                                                <th width="15%">Adresse</th>
+                                                <th width="10%">Domaine</th>
+                                                <th width="15%">Modules</th>
+                                                <th width="15%">Niveau qualification</th>
+                                                <th width="15%">N° agrément</th>
                                                 {{-- <th width="15%" class="text-center">Statut</th> --}}
                                                 <th><i class="bi bi-gear"></i></th>
                                             </tr>
@@ -55,14 +58,15 @@
                                             <?php $i = 1; ?>
                                             @foreach ($operateurmodules as $operateurmodule)
                                                 {{-- @isset($operateur?->numero_agrement) --}}
-                                                    <tr>
-                                                        <td>{{ $operateurmodule?->operateur?->name.' ('.$operateurmodule?->operateur?->sigle.')' }}</td>
-                                                        <td>{{ $operateurmodule?->operateur?->adresse }}</td>
-                                                        <td>{{ $operateurmodule?->domaine }}</td>
-                                                        <td>{{ $operateurmodule?->module }}</td>
-                                                        <td>{{ $operateurmodule?->niveau_qualification }}</td>
-                                                        <td>{{ $operateurmodule?->operateur?->numero_agrement }}</td>
-                                                        {{-- <td style="text-align: center;">
+                                                <tr>
+                                                    <td>{{ $operateurmodule?->operateur?->user?->operateur . ' (' . $operateurmodule?->operateur?->user?->username . ')' }}
+                                                    </td>
+                                                    <td>{{ $operateurmodule?->operateur?->user?->adresse }}</td>
+                                                    <td>{{ $operateurmodule?->domaine }}</td>
+                                                    <td>{{ $operateurmodule?->module }}</td>
+                                                    <td>{{ $operateurmodule?->niveau_qualification }}</td>
+                                                    <td>{{ $operateurmodule?->operateur?->numero_agrement }}</td>
+                                                    {{-- <td style="text-align: center;">
                                                             @foreach ($operateur?->operateurmodules as $operateurmodule)
                                                                 @if ($loop->last)
                                                                     <a href="#"><span
@@ -70,18 +74,18 @@
                                                                 @endif
                                                             @endforeach
                                                         </td> --}}
-                                                        {{-- <td class="text-center">
+                                                    {{-- <td class="text-center">
                                                             <span
                                                                 class="{{ $operateur->statut_agrement }}">{{ $operateur->statut_agrement }}</span>
                                                         </td> --}}
-                                                        <td>
-                                                            <span class="d-flex align-items-baseline"><a
-                                                                    href="{{ route('agrements', ['id' => $operateurmodule?->operateur?->id]) }}"
-                                                                    class="btn btn-primary btn-sm" target="_blank"
-                                                                    title="voir détails"><i class="bi bi-eye"></i></a>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
+                                                    <td>
+                                                        <span class="d-flex align-items-baseline"><a
+                                                                href="{{ route('agrements', ['id' => $operateurmodule?->operateur?->id]) }}"
+                                                                class="btn btn-primary btn-sm" target="_blank"
+                                                                title="voir détails"><i class="bi bi-eye"></i></a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
                                                 {{-- @endisset --}}
                                             @endforeach
                                         </tbody>

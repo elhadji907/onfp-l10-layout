@@ -27,11 +27,14 @@
                                 <p> | {{ $commissionagrement?->commission }}</p>
                             </span>
                         </div>
-                        <h5> Statut:
+                        {{-- <h5> Statut:
                             <span class="badge bg-warning">sous réserve</span>
                         </h5>
                         <h5> Opérateurs:
                             <span class="badge bg-secondary">{{ count($operateurs) }}</span>
+                        </h5> --}}
+                        <h5 class="card-title">
+                            {{ count($operateurs) . ' opérateur(s) agréé(s) sous réserve' }}
                         </h5>
                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                             @csrf
@@ -58,8 +61,8 @@
                                             @foreach ($operateurs as $operateur)
                                                 @isset($operateur?->numero_agrement)
                                                     <tr>
-                                                        <td>{{ $operateur?->name . ' (' . $operateur?->sigle . ')' }}</td>
-                                                        <td>{{ $operateur?->adresse }}</td>
+                                                        <td>{{ $operateur?->operateur?->user?->operateur . ' (' . $operateur?->operateur?->user?->username . ')' }}</td>
+                                                        <td>{{ $operateur?->user?->adresse }}</td>
                                                         {{-- <td>{{ count($operateur?->operateurmodules) }}</td> --}}
                                                         <td>{{ $operateur?->numero_agrement }}</td>
                                                         {{-- <td style="text-align: center;">

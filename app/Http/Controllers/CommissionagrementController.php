@@ -198,7 +198,15 @@ class CommissionagrementController extends Controller
             ->where('operateurmodules.statut', "agréer")
             ->get();
 
-        return view('operateurs.agrements.show_agreer', compact('operateurs', 'commissionagrement', 'operateurmodules'));
+        $count_operateurmodules_distinct = Operateurmodule::join('operateurs', 'operateurs.id', 'operateurmodules.operateurs_id')
+            ->select('operateurmodules.*')
+            ->where('operateurs.statut_agrement', "agréer")
+            ->where('operateurs.commissionagrements_id', $commissionagrement->id)
+            ->where('operateurmodules.statut', "agréer")
+            ->distinct('module')
+            ->count('module');
+
+        return view('operateurs.agrements.show_agreer', compact('operateurs', 'commissionagrement', 'operateurmodules', 'count_operateurmodules_distinct'));
     }
 
     public function showReserve($id)

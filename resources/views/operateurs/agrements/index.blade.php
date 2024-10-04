@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - demandes operateurs')
+@section('title', 'ONFP - traitement dossiers agrément operateurs')
 @section('space-work')
 
     <div class="pagetitle">
@@ -142,13 +142,13 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-1">
+                        {{-- <div class="pt-1">
                             <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                 data-bs-target="#AddOperateurModal">
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
                             </button>
-                        </div>
-                        <h5 class="card-title">Validation agrément opérateurs</h5>
+                        </div> --}}
+                        <h5 class="card-title">Traitement dossiers agrément opérateurs</h5>
                         <table class="table datatables table-bordered table-hover align-middle table-striped"
                             id="table-operateurs">
                             <thead>
@@ -156,8 +156,8 @@
                                     {{-- <th width="15%">N° courrier</th> --}}
                                     <th width="5%" class="text-center">Année</th>
                                     <th width="5%" class="text-center">Type</th>
-                                    <th width="60%">Opérateurs</th>
-                                    <th width="10%">Sigle</th>
+                                    <th width="60%" class="text-center">Opérateurs</th>
+                                    <th width="10%" class="text-center">Sigle</th>
                                     <th width="15%" class="text-center">Statut</th>
                                     <th width="5%"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -171,8 +171,8 @@
                                         <td style="text-align: center">{{ $operateur?->annee_agrement?->format('Y') }}</td>
                                         <td style="text-align: center"><span class="{{ $operateur->type_demande }}">
                                                 {{ $operateur?->type_demande }}</span></td>
-                                        <td>{{ $operateur?->name }}</td>
-                                        <td>{{ $operateur?->sigle }}</td>
+                                        <td>{{ $operateur?->user?->operateur }}</td>
+                                        <td>{{ $operateur?->user?->username }}</td>
                                         <td style="text-align: center"><span class="{{ $operateur->statut_agrement }}">
                                                 {{ $operateur?->statut_agrement }}</span></td>
                                         <td>
@@ -220,8 +220,8 @@
 
             </div>
         </div>
-        <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
-            <div class="modal fade" id="AddOperateurModal" tabindex="-1">
+        {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center"> --}}
+            {{-- <div class="modal fade" id="AddOperateurModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <form method="post" action="{{ route('operateurs.store') }}" enctype="multipart/form-data">
@@ -325,7 +325,6 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    {{-- Type de structure --}}
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="categorie" class="form-label">Catégorie<span
                                                 class="text-danger mx-1">*</span></label>
@@ -469,14 +468,6 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        {{-- <input type="text" name="quitus" value="{{ old('quitus') }}"
-                                            class="form-control form-control-sm @error('quitus') is-invalid @enderror"
-                                            id="quitus" placeholder="N° quitus fiscal">
-                                        @error('quitus')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror --}}
 
                                         <input type="file" name="quitus" id="quitus"
                                             class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
@@ -622,15 +613,12 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            @foreach ($operateurs as $operateur)
-                <!-- Edit Operateur -->
+            </div> --}}
+            {{-- @foreach ($operateurs as $operateur)
                 <div class="modal fade" id="EditOperateurModal{{ $operateur->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="EditOperateurModalLabel{{ $operateur->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
-                            {{-- <form method="post" action="{{ route('operateurs.store') }}" enctype="multipart/form-data">
-                                @csrf --}}
                             <form method="post" action="{{ route('operateurs.update', $operateur->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
@@ -739,7 +727,6 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        {{-- Type de structure --}}
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="categorie" class="form-label">Catégorie<span
                                                     class="text-danger mx-1">*</span></label>
@@ -891,17 +878,6 @@
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
                                             <label for="quitus" class="form-label">Quitus fiscal<span
                                                     class="text-danger mx-1">*</span></label>
-                                            {{-- <input type="text" name="quitus"
-                                                value="{{ $operateur?->quitus ?? old('quitus') }}"
-                                                class="form-control form-control-sm @error('quitus') is-invalid @enderror"
-                                                id="quitus" placeholder="Quitus fiscal">
-                                            @error('quitus')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror --}}
-
-
                                             <input type="file" name="quitus" id="quitus"
                                                 class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
                                             @error('quitus')
@@ -1060,7 +1036,7 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @endforeach --}}
             <!-- End Edit Operateur-->
     </section>
 

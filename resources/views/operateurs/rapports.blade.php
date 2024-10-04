@@ -28,23 +28,24 @@
             <span class="page-title badge bg-primary">{{ $title }}</span>
         @endisset
         @can('rapport-operateur-view')
-            <span class="d-flex align-items-baseline"><a href="#" class="btn btn-primary btn-sm"
-                    title="Générer rapports"><i class="bi bi-printer"></i></a>
+            <span class="d-flex align-items-baseline">
+                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#generate_rapport_module_region" title="Générer rapports">Générer rapport</a>
                 <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <li>
                             <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#generate_rapport"></i>rapport par region</button>
+                                data-bs-target="#generate_rapport"></i>Par région</button>
                         </li>
                         <li>
                             <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#generate_rapport_module"></i>rapport par module</button>
+                                data-bs-target="#generate_rapport_module"></i>Par module</button>
                         </li>
-                        <li>
+                        {{-- <li>
                             <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#generate_rapport_module_region"></i>rapport module/région</button>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </span>
@@ -78,7 +79,7 @@
 
                                                     <td>{{ $operateur?->numero_agrement }}</td>
                                                     <td>{{ $operateur?->user?->operateur }}</td>
-                                                    <td>{{ $operateur?->user?->username }}</td>
+                                                    <td style="text-align: center;">{{ $operateur?->user?->username }}</td>
                                                     <td style="text-align: center;">
                                                         @foreach ($operateur->operateurmodules as $operateurmodule)
                                                             @if ($loop->last)
@@ -126,7 +127,8 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label>Région</label>
+                                                <label for="region" class="form-label">Région<span
+                                                        class="text-danger mx-1">*</span></label>
                                                 <input type="hidden" value="1" name="valeur_region">
                                                 <select name="region"
                                                     class="form-select  @error('region') is-invalid @enderror"
@@ -145,6 +147,43 @@
                                                     </span>
                                                 @enderror
                                                 {{-- <input type="text" name="region" class="form-control region"> --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="region" class="form-label">Statut<span
+                                                        class="text-danger mx-1">*</span></label>
+                                                <select name="statut"
+                                                    class="form-select form-select-sm @error('statut') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-statut-rapport"
+                                                    data-placeholder="Choisir statut">
+                                                    <option value="{{ old('statut') }}">
+                                                        {{ old('statut') }}
+                                                    </option>
+                                                    <option value="agréer">
+                                                        agréer
+                                                    </option>
+                                                    <option value="nouveau">
+                                                        nouveau
+                                                    </option>
+                                                    <option value="rejeter">
+                                                        rejeter
+                                                    </option>
+                                                    <option value="sous réserve">
+                                                        sous réserve
+                                                    </option>
+                                                    <option value="retenu">
+                                                        retenu
+                                                    </option>
+                                                    <option value="attente">
+                                                        attente
+                                                    </option>
+                                                </select>
+                                                @error('statut')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -179,14 +218,53 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label>Module</label>
+                                                <label for="module" class="form-label">Module<span
+                                                        class="text-danger mx-1">*</span></label>
                                                 <input type="hidden" value="1" name="valeur_module">
                                                 {{-- <input type="text" name="module" id="module_operateur"
                                                     class="form-control form-control-sm"
                                                     placeholder="Module ou spécialité" />
                                                 <div id="moduleList"></div>
                                                 {{ csrf_field() }} --}}
-                                                <input type="text" name="module" placeholder="module..." class="form-control form-control-sm module">
+                                                <input type="text" name="module" placeholder="module..."
+                                                    class="form-control form-control-sm module">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="region" class="form-label">Statut<span
+                                                        class="text-danger mx-1">*</span></label>
+                                                <select name="statut"
+                                                    class="form-select form-select-sm @error('statut') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-statut-rappor"
+                                                    data-placeholder="Choisir statut">
+                                                    <option value="{{ old('statut') }}">
+                                                        {{ old('statut') }}
+                                                    </option>
+                                                    <option value="agréer">
+                                                        agréer
+                                                    </option>
+                                                    <option value="nouveau">
+                                                        nouveau
+                                                    </option>
+                                                    <option value="rejeter">
+                                                        rejeter
+                                                    </option>
+                                                    <option value="sous réserve">
+                                                        sous réserve
+                                                    </option>
+                                                    <option value="retenu">
+                                                        retenu
+                                                    </option>
+                                                    <option value="attente">
+                                                        attente
+                                                    </option>
+                                                </select>
+                                                @error('statut')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -207,10 +285,10 @@
         </div>
         <div class="modal fade" id="generate_rapport_module_region" tabindex="-1" role="dialog"
             aria-labelledby="generate_rappor_module_regionLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Générer un rapport operateurs par module</h5>
+                        <h5 class="modal-title">Générer rapport opérateurs par module et région</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="post" action="{{ route('operateurs.rapport') }}">
@@ -219,19 +297,23 @@
                             <div class="row g-3">
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <div class="row">
-                                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label>Module</label>
+                                                <label for="module" class="form-label">Module<span
+                                                        class="text-danger mx-1">*</span></label>
                                                 <input type="text" name="module" id="module_operateur"
                                                     class="form-control form-control-sm"
                                                     placeholder="Module ou spécialité" />
                                                 <div id="moduleList"></div>
                                                 {{ csrf_field() }}
+                                                {{-- <input type="text" name="module" placeholder="module..."
+                                                    class="form-control form-control-sm module"> --}}
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label>Région</label>
+                                                <label for="region" class="form-label">Région<span
+                                                        class="text-danger mx-1">*</span></label>
                                                 <select name="region"
                                                     class="form-select  @error('region') is-invalid @enderror"
                                                     aria-label="Select" id="select-field-region-module-rapport"
@@ -249,6 +331,43 @@
                                                     </span>
                                                 @enderror
                                                 {{-- <input type="text" name="region" class="form-control region"> --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="region" class="form-label">Statut<span
+                                                        class="text-danger mx-1">*</span></label>
+                                                <select name="statut"
+                                                    class="form-select form-select-sm @error('statut') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-statut-rappo"
+                                                    data-placeholder="Choisir statut">
+                                                    <option value="{{ old('statut') }}">
+                                                        {{ old('statut') }}
+                                                    </option>
+                                                    <option value="agréer">
+                                                        agréer
+                                                    </option>
+                                                    <option value="nouveau">
+                                                        nouveau
+                                                    </option>
+                                                    <option value="rejeter">
+                                                        rejeter
+                                                    </option>
+                                                    <option value="sous réserve">
+                                                        sous réserve
+                                                    </option>
+                                                    <option value="retenu">
+                                                        retenu
+                                                    </option>
+                                                    <option value="attente">
+                                                        attente
+                                                    </option>
+                                                </select>
+                                                @error('statut')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>

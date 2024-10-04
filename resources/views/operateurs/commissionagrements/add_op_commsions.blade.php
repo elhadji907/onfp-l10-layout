@@ -78,8 +78,8 @@
                                                                 </span>
                                                             @enderror
                                                         </td>
-                                                        <td>{{ $operateur?->name }}</td>
-                                                        <td>{{ $operateur?->sigle }}</td>
+                                                        <td>{{ $operateur?->user?->operateur }}</td>
+                                                        <td>{{ $operateur?->user?->username }}</td>
                                                         <td style="text-align: center;">
                                                             @foreach ($operateur?->operateurmodules as $operateurmodule)
                                                                 @if ($loop->last)

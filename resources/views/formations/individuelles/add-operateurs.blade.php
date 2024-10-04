@@ -30,7 +30,11 @@
                         </div>
                         <h5><u><b>MODULE</b>:</u> {{ $module?->name }}</h5>
                         <h5><u><b>REGION</b>:</u> {{ $localite->nom }}</h5>
-                        <h5><u><b>OPERATEUR</b>:</u> {{ $formation?->operateur?->sigle }}</h5>
+                        <h5><u><b>OPERATEUR</b>:</u>
+                            @if (!empty($formation?->operateur?->user?->username))
+                                {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
+                            @endif
+                        </h5>
                         <form method="post"
                             action="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
@@ -69,23 +73,28 @@
                                                                 </span>
                                                                 @enderror{{ $operateurmodule?->operateur?->numero_agrement }}
                                                             </td>
-                                                            <td>{{ $operateurmodule?->operateur?->name }}</td>
-                                                            <td>{{ $operateurmodule?->operateur?->sigle }}</td>
+                                                            <td>{{ $operateurmodule?->operateur?->user?->operateur }}</td>
+                                                            <td>{{ $operateurmodule?->operateur?->user?->username }}</td>
                                                             <td style="text-align: center;">
-                                                                @foreach ($operateurmodule?->operateur?->operateurmodules as $operateurmodule)
+                                                                {{-- @foreach ($operateurmodule?->operateur?->operateurmodules as $operateurmodule)
                                                                     @if ($loop->last)
-                                                                        <a href="#"><span
+                                                                        <a href="#">
+                                                                            <span
                                                                                 class="badge bg-info">{{ $loop->count }}</span></a>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
+                                                                <span
+                                                                    class="badge bg-info">{{ count($operateurmodule?->operateur?->operateurmodules) }}</span>
                                                             </td>
                                                             <td class="text-center">
-                                                                @foreach ($operateurmodule?->operateur?->formations as $formation)
+                                                                {{-- @foreach ($operateurmodule?->operateur?->formations as $formation)
                                                                     @if ($loop->last)
                                                                         <a href="#"><span
                                                                                 class="badge bg-info">{{ $loop->count }}</span></a>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
+                                                                <span
+                                                                    class="badge bg-info">{{ count($operateurmodule?->operateur?->formations) }}</span>
                                                             </td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline"><a
