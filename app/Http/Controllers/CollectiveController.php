@@ -551,10 +551,24 @@ class CollectiveController extends Controller
 
         $collectives = Collective::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
 
+        $count = $collectives->count();
+
         if ($from_date == $to_date) {
-            $title = $collectives->count() . ' demande(s) collective(s) reçue(s) le ' . $from_date . ' à ' . $now;
+            if (isset($count) && $count < "1") {
+                $title = 'aucune demande collective reçue le ' . $from_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' demande collective reçue le ' . $from_date . ' à ' . $now;
+            } else {
+                $title = $count . ' demandes collective reçues le ' . $from_date . ' à ' . $now;
+            }
         } else {
-            $title = $collectives->count() . ' demande(s) collective(s) reçue(s) du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            if (isset($count) && $count < "1") {
+                $title = 'aucune demande collective reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' demande collective reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            } else {
+                $title = $count . ' demandes collective reçues du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+            }
         }
 
         return view('collectives.rapports', compact(

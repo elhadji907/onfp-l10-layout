@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'rapports demandes collectives')
+@section('title', 'Générer rapport demandes collectives')
 @section('space-work')
     <div class="pagetitle">
         <nav>
@@ -95,10 +95,10 @@
         </div>
         <div class="modal fade" id="generate_rapport" tabindex="-1" role="dialog" aria-labelledby="generate_rapportLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Générer un rapport pour les demandes collectives</h5>
+                        <h5 class="modal-title">Générer rapport demandes collectives</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="post" action="{{ route('collectives.rapport') }}">
@@ -107,17 +107,29 @@
                             <div class="row g-3">
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <div class="row">
-                                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
                                                 <label>De</label>
-                                                <input type="date" name="from_date" class="form-control from_date">
+                                                <input type="date" name="from_date"
+                                                    class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
                                             </div>
+                                            @error('from_date')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
                                         </div>
-                                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
                                                 <label>À</label>
-                                                <input type="date" name="to_date" class="form-control to_date">
+                                                <input type="date" name="to_date"
+                                                    class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
                                             </div>
+                                            @error('to_date')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>

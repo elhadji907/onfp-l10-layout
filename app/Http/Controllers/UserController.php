@@ -11,9 +11,12 @@ use App\Models\Employee;
 use App\Models\Individuelle;
 use App\Models\Interne;
 use App\Models\Module;
+use App\Models\Operateur;
+use App\Models\Region;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -131,7 +134,11 @@ class UserController extends Controller
 
     public function index()
     {
-        $user_liste = User::orderBy('created_at', 'desc')->get();
+        $user_liste = User::skip(0)
+            ->take(500)
+            ->latest()
+            ->get();
+            
         return view("user.index", compact("user_liste"));
     }
 
@@ -220,7 +227,7 @@ class UserController extends Controller
             Alert::success('Effectuée ! ', 'employé ajouté');
 
             $user->assignRole('Employe');
-            
+
             return Redirect::back();
         } else {
 
@@ -361,5 +368,227 @@ class UserController extends Controller
         Alert::success('Fait ! ' . $user->firstname . ' ' . $user->name, 'a été(e) supprimé(e)');
 
         return redirect()->back();
+    }
+
+    public function rapports(Request $request)
+    {
+        $title = 'Générer rapport utilisateurs';
+        $roles = Role::pluck('name', 'name')->all();
+        return view('user.rapports', compact(
+            'title',
+            'roles'
+        ));
+    }
+    public function generateRapport(Request $request)
+    {
+        if ($request->cin_value == "1") {
+            $this->validate($request, [
+                'cin' => 'required|string|min:10|max:15',
+            ]);
+
+            $users = User::where('cin', 'LIKE', "%{$request->cin}%")
+                ->distinct()
+                ->get();
+
+            $count = $users->count();
+
+            if (isset($count) && $count <= "1") {
+                $user = 'utilisateur';
+            } else {
+                $user = 'utilisateurs';
+            }
+
+            $title = $count . ' ' . $user . ' avec le cin ' . $request->cin;
+        } elseif ($request->date_value == "1") {
+            $this->validate($request, [
+                'from_date' => 'required|date',
+                'to_date' => 'required|date',
+            ]);
+
+            $now =  Carbon::now()->format('H:i:s');
+
+            $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+            $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+            $users = User::whereBetween(DB::raw('DATE(date_naissance)'), array($request->from_date, $request->to_date))->get();
+
+            $count = $users->count();
+
+            if ($from_date == $to_date) {
+                if (isset($count) && $count < "1") {
+                    $title = 'aucune utilisateur né le ' . $from_date;
+                } elseif (isset($count) && $count == "1") {
+                    $title = $count . ' utilisateur né ' . $from_date;
+                } else {
+                    $title = $count . ' utilisateurs nés ' . $from_date;
+                }
+            } else {
+                if (isset($count) && $count < "1") {
+                    $title = 'aucune utilisateur né entre le ' . $from_date . ' au ' . $to_date;
+                } elseif (isset($count) && $count == "1") {
+                    $title = $count . ' utilisateur né entre le ' . $from_date . ' au ' . $to_date;
+                } else {
+                    $title = $count . ' utilisateurs nés entre le ' . $from_date . ' au ' . $to_date;
+                }
+            }
+        } elseif ($request->telephone_value == "1") {
+            $this->validate($request, [
+                'telephone' => 'required|string|min:9|max:9',
+            ]);
+
+            $users = User::where('telephone', 'LIKE', "%{$request->telephone}%")
+                ->orwhere('fixe', 'LIKE', "%{$request->telephone}%")
+                ->distinct()
+                ->get();
+
+            $count = $users->count();
+
+            if (isset($count) && $count <= "1") {
+                $user = 'utilisateur';
+            } else {
+                $user = 'utilisateurs';
+            }
+
+            $title = $count . ' ' . $user . ' avec le téléphone ' . $request->telephone;
+        } elseif ($request->date_value == "1") {
+            $this->validate($request, [
+                'from_date' => 'required|date',
+                'to_date' => 'required|date',
+            ]);
+
+            $now =  Carbon::now()->format('H:i:s');
+
+            $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+            $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+            $users = User::whereBetween(DB::raw('DATE(date_naissance)'), array($request->from_date, $request->to_date))->get();
+
+            $count = $users->count();
+
+            if ($from_date == $to_date) {
+                if (isset($count) && $count < "1") {
+                    $title = 'aucune utilisateur né le ' . $from_date;
+                } elseif (isset($count) && $count == "1") {
+                    $title = $count . ' utilisateur né ' . $from_date;
+                } else {
+                    $title = $count . ' utilisateurs nés ' . $from_date;
+                }
+            } else {
+                if (isset($count) && $count < "1") {
+                    $title = 'aucune utilisateur né entre le ' . $from_date . ' au ' . $to_date;
+                } elseif (isset($count) && $count == "1") {
+                    $title = $count . ' utilisateur né entre le ' . $from_date . ' au ' . $to_date;
+                } else {
+                    $title = $count . ' utilisateurs nés entre le ' . $from_date . ' au ' . $to_date;
+                }
+            }
+        } elseif ($request->email_value == "1") {
+            $this->validate($request, [
+                'email' => 'required|email',
+            ]);
+
+            $users = User::where('email', 'LIKE', "%{$request->email}%")
+                ->distinct()
+                ->get();
+
+            $count = $users->count();
+
+            if (isset($count) && $count <= "1") {
+                $user = 'utilisateur';
+            } else {
+                $user = 'utilisateurs';
+            }
+
+            $title = $count . ' ' . $user . ' avec le mail ' . $request->email;
+        } elseif ($request->verify_value == "1") {
+
+            $users = User::where('email_verified_at', '!=', null)
+                ->distinct()
+                ->get();
+
+            $count = $users->count();
+
+            if (isset($count) && $count <= "1") {
+                $user = 'utilisateur avec un compte valide ';
+            } else {
+                $user = 'utilisateurs avec des comptes valides ';
+            }
+
+            $title = $count . ' ' . $user . ' ' . $request->email;
+        } elseif ($request->role_value == "1") {
+            $this->validate($request, [
+                'role' => 'required|string',
+            ]);
+
+            $role = $request->role;
+
+            $users = User::whereHas(
+                'roles',
+                function ($q) use ($role) {
+                    $q->where('name', $role);
+                }
+            )->get();
+
+            /* dd($users);
+
+             $admins = User::whereHas('roles', function($q) use ($role){$q->whereIn('role.name', $role);})->get();
+
+             dd($admins); */
+
+            $count = $users->count();
+
+            if (isset($count) && $count <= "1") {
+                $user = 'utilisateur';
+            } else {
+                $user = 'utilisateurs';
+            }
+
+            $title = $count . ' ' . $user . ' avec le role ' . $role;
+        } else {
+            $this->validate($request, [
+                'region' => 'required|string',
+                'module' => 'required|string',
+                'statut' => 'required|string',
+            ]);
+
+            $region = Region::findOrFail($request->region);
+
+            $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
+                ->select('operateurs.*')
+                ->where('statut_agrement', 'LIKE', "%{$request->statut}%")
+                ->where('regions_id',  "{$request->region}")
+                ->where('operateurmodules.module', 'LIKE', "%{$request->module}%")
+                ->distinct()
+                ->get();
+
+            $count = $operateurs->count();
+
+            if (isset($count) && $count <= "1") {
+                $operateur = 'opérateur';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréé';
+                } else {
+                    $statut = $request->statut;
+                }
+            } else {
+                $operateur = 'opérateurs';
+                if (isset($request->statut) && $request->statut == "agréer") {
+                    $statut = 'agréés';
+                } else {
+                    $statut = $request->statut;
+                }
+            }
+            $title = $count . ' ' . $operateur . ' ' . $statut . ' dans la région de  ' . $region->nom . ' en ' . $request->module;
+        }
+
+        $roles = Role::pluck('name', 'name')->all();
+
+        return view('user.rapports', compact(
+            'users',
+            'roles',
+            'title'
+        ));
     }
 }

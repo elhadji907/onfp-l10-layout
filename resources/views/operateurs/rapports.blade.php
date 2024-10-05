@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'rapports opérateurs')
+@section('title', 'Générer rapport operateurs')
 @section('space-work')
     <div class="pagetitle">
         <nav>

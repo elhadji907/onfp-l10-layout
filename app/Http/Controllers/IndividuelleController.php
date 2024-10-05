@@ -34,8 +34,12 @@ class IndividuelleController extends Controller
     public function index()
     {
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
-        $individuelles = Individuelle::get();
-        $departements = Departement::orderBy("created_at", "desc")->get();
+        $individuelles = Individuelle::skip(0)
+            ->take(500)
+            ->latest()
+            ->get();
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
 
         /* $today = date('Y-m-d');
@@ -744,19 +748,19 @@ class IndividuelleController extends Controller
 
         if ($from_date == $to_date) {
             if (isset($count) && $count < "1") {
-                $title = 'aucune demande reçue le ' . $from_date . ' à ' . $now;
+                $title = 'aucune demande individuelle reçue le ' . $from_date . ' à ' . $now;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' demande reçue le ' . $from_date . ' à ' . $now;
+                $title = $count . ' demande individuelle reçue le ' . $from_date . ' à ' . $now;
             } else {
-                $title = $count . ' demandes reçues le ' . $from_date . ' à ' . $now;
+                $title = $count . ' demandes individuelles reçues le ' . $from_date . ' à ' . $now;
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucune demande reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = 'aucune demande individuelle reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' demande reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' demande individuelle reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
             } else {
-                $title = $count . ' demandes reçues du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' demandes individuelles reçues du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
             }
         }
 

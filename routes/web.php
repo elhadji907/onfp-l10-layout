@@ -325,6 +325,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('formations/rapports',[FormationController::class,'rapports'])->name('formations.rapport');
     Route::post('formations/rapports',[FormationController::class,'generateRapport']);
 
+    Route::get('users/rapports',[UserController::class,'rapports'])->name('users.rapport');
+    Route::post('users/rapports',[UserController::class,'generateRapport']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

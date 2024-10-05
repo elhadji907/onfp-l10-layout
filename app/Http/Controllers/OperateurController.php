@@ -814,8 +814,6 @@ class OperateurController extends Controller
             );
         }
     }
-
-
     public function rapports(Request $request)
     {
         $title = 'rapports opérateurs';

@@ -634,6 +634,14 @@
                         </li>
                     @endcan
 
+                    @can('rapport-user-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('users.rapport') }}">
+                                <span>Utilisateurs</span>
+                            </a>
+                        </li>
+                    @endcan
+
                     @can('rapport-formes-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="#">
