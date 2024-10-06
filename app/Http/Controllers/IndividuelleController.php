@@ -34,10 +34,21 @@ class IndividuelleController extends Controller
     public function index()
     {
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
-        $individuelles = Individuelle::skip(0)
-            ->take(500)
+        //skip permet de sauter des lignes, par exemple skip(2) permet de parcourrir la BD en sautant ligne par 2
+        //take joue le même role que limit
+        $individuelles = Individuelle::limit(250)
             ->latest()
             ->get();
+
+        $count_demandeur = $individuelles?->count();
+
+        if ($count_demandeur < "1") {
+            $title = 'Aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle';
+        } else {
+            $title = 'Liste des ' . $count_demandeur . ' dernières demandes individuelles';
+        }
 
         $departements = Departement::orderBy("created_at", "DESC")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
@@ -89,7 +100,10 @@ class IndividuelleController extends Controller
         $pourcentage_femmes = ($feminin / $individuelles->count()) * 100; 
 
         return view("individuelles.index", compact("pourcentage_femmes", "pourcentage_hommes", "rejeter", "terminer", "retenue", "nouvelle", "attente", "individuelles", "modules", "departements", "count_today", 'janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre', 'annee', 'annee_lettre', 'masculin', 'feminin'));*/
-        return view("individuelles.index", compact('individuelles', 'departements', 'modules'));
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
     }
 
     public function create()
@@ -731,6 +745,7 @@ class IndividuelleController extends Controller
     }
     public function generateRapport(Request $request)
     {
+
         $this->validate($request, [
             'from_date' => 'required|date',
             'to_date' => 'required|date',
@@ -768,6 +783,51 @@ class IndividuelleController extends Controller
             'individuelles',
             'from_date',
             'to_date',
+            'title'
+        ));
+    }
+
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
+            'cin'               => 'nullable|string',
+            'name'              => 'nullable|string',
+            'firstname'         => 'nullable|string',
+            'telephone'         => 'nullable|string',
+            'email'             => 'nullable|email',
+        ]);
+
+        if ($request?->cin == null && $request->firstname == null && $request->telephone == null && $request->name == null && $request->email == null) {
+            Alert::warning('Attention ', 'Renseigner au moins un champ pour rechercher');
+            return redirect()->back();
+        }
+
+        $individuelles = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('users.firstname', 'LIKE', "%{$request?->firstname}%")
+            ->where('users.name', 'LIKE', "%{$request?->name}%")
+            ->where('users.cin', 'LIKE', "%{$request?->cin}%")
+            ->where('users.telephone', 'LIKE', "%{$request?->telephone}%")
+            ->where('users.email', 'LIKE', "%{$request?->email}%")
+            ->distinct()
+            ->get();
+
+        $count = $individuelles?->count();
+
+        if (isset($count) && $count < "1") {
+            $title = 'aucune demande trouvée';
+        } elseif (isset($count) && $count == "1") {
+            $title = $count . ' demande trouvée';
+        } else {
+            $title = $count . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        /* $modules = Module::orderBy("created_at", "desc")->get(); */
+
+        return view('individuelles.index', compact(
+            'individuelles',
+            'departements',
             'title'
         ));
     }

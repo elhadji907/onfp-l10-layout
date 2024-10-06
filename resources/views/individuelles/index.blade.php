@@ -51,81 +51,102 @@
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
                             </button> --}}
 
-                            <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
+                            {{-- <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                                 data-bs-target="#AddIndividuelModal">
                                 <i class="bi bi-plus" title="Ajouter une nouvelle demande"></i>
-                            </button>
+                            </button> --}}
+                            <div class="d-flex justify-content-between align-items-center">
+                                @can('rapport-operateur-view')
+                                    <h5 class="card-title">{{ $title }}</h5>
+                                    <span class="d-flex align-items-baseline">
+                                        <a href="#" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
+                                            data-bs-target="#AddIndividuelModal" title="Générer rapports">Ajouter</a>
+                                        <div class="filter">
+                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                    class="bi bi-three-dots"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                <li>
+                                                    <button type="button" class="dropdown-item btn btn-sm"
+                                                        data-bs-toggle="modal" data-bs-target="#generate_rapport"></i>Rechercher
+                                                        plus</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </span>
+                                @endcan
+                            </div>
                         </div>
-                        <h5 class="card-title">Liste de toutes les demandes individuelles</h5>
                         {{-- <p>Le tableau des demandes individuelles</p> --}}
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-individuelles">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">N°</th>
-                                    <th class="text-center">CIN</th>
-                                    <th>Prénom</th>
-                                    <th>NOM</th>
-                                    <th>Date naissance</th>
-                                    <th>Lieu naissance</th>
-                                    <th width="20%">Module</th>
-                                    <th class="text-center">Statut</th>
-                                    <th class="text-center">#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1; ?>
-                                @foreach ($individuelles as $individuelle)
-                                    @isset($individuelle?->numero)
-                                        <tr>
-                                            <td style="text-align: center">{{ $individuelle?->numero }}</td>
-                                            <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
-                                            <td>{{ $individuelle?->user?->firstname }}</td>
-                                            <td>{{ $individuelle?->user?->name }}</td>
-                                            <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                                            <td>{{ $individuelle?->user?->lieu_naissance }}</td>
-                                            <td>{{ $individuelle?->module?->name }}</td>
-                                            {{-- <td>{{ $individuelle?->departement?->nom }}</td> --}}
-                                            <td>
-                                                <span class="{{ $individuelle?->statut }}">
-                                                    {{ $individuelle?->statut }}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('individuelles.show', $individuelle?->id) }}"
-                                                        class="btn btn-primary btn-sm" title="voir détails"><i
-                                                            class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li><a class="dropdown-item btn btn-sm"
-                                                                    href="{{ route('individuelles.edit', $individuelle?->id) }}"
-                                                                    class="mx-1" title="Modifier"><i
-                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                            </li>
-                                                            <li>
-                                                                <form
-                                                                    action="{{ route('individuelles.destroy', $individuelle?->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"
-                                                                        title="Supprimer"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    @endisset
-                                @endforeach
+                        @isset($individuelles)
+                            <table class="table datatables align-middle" id="table-individuelles">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">N°</th>
+                                        <th class="text-center">CIN</th>
+                                        <th>Prénom</th>
+                                        <th>NOM</th>
+                                        <th>Date naissance</th>
+                                        <th>Lieu naissance</th>
+                                        <th width="20%">Module</th>
+                                        <th class="text-center">Statut</th>
+                                        <th class="text-center">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; ?>
+                                    @foreach ($individuelles as $individuelle)
+                                        @isset($individuelle?->numero)
+                                            <tr>
+                                                <td style="text-align: center">{{ $individuelle?->numero }}</td>
+                                                <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
+                                                <td>{{ $individuelle?->user?->firstname }}</td>
+                                                <td>{{ $individuelle?->user?->name }}</td>
+                                                <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
+                                                <td>{{ $individuelle?->user?->lieu_naissance }}</td>
+                                                <td>{{ $individuelle?->module?->name }}</td>
+                                                {{-- <td>{{ $individuelle?->departement?->nom }}</td> --}}
+                                                <td>
+                                                    <span class="{{ $individuelle?->statut }}">
+                                                        {{ $individuelle?->statut }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="d-flex align-items-baseline"><a
+                                                            href="{{ route('individuelles.show', $individuelle?->id) }}"
+                                                            class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                class="bi bi-eye"></i></a>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                        href="{{ route('individuelles.edit', $individuelle?->id) }}"
+                                                                        class="mx-1" title="Modifier"><i
+                                                                            class="bi bi-pencil"></i>Modifier</a>
+                                                                </li>
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('individuelles.destroy', $individuelle?->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="dropdown-item show_confirm"
+                                                                            title="Supprimer"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endisset
+                                    @endforeach
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        @endisset
                         <!-- End Table with stripped rows -->
 
                     </div>
@@ -133,7 +154,8 @@
 
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+        <div
+            class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddIndividuelModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
@@ -728,6 +750,121 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="generate_rapport" tabindex="-1" role="dialog"
+            aria-labelledby="generate_rapportLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Générer une recherche<span
+                            class="text-danger mx-1">*</span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="{{ route('individuelles.report') }}">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="firstname" class="form-label">Prénom</label>
+                                                <input type="text" name="firstname" value="{{ old('firstname') }}"
+                                                    class="form-control form-control-sm @error('firstname') is-invalid @enderror"
+                                                    id="firstname" placeholder="Prénom">
+                                                @error('firstname')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="name" class="form-label">Nom</label>
+                                                <input type="text" name="name" value="{{ old('name') }}"
+                                                    class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                                    id="name" placeholder="Nom">
+                                                @error('name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="cin" class="form-label">N° CIN</label>
+                                                <input minlength="5" maxlength="15" type="text" name="cin"
+                                                    value="{{ old('cin') }}"
+                                                    class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                                    id="cin" placeholder="Numéro demande">
+                                                @error('cin')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="telephone" class="form-label">Téléphone</label>
+                                                <input minlength="5" maxlength="10" type="text" name="telephone"
+                                                    value="{{ old('telephone') }}"
+                                                    class="form-control form-control-sm @error('telephone') is-invalid @enderror"
+                                                    id="telephone" placeholder="7xxxxxxxx">
+                                                @error('telephone')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" name="email"
+                                                    value="{{ old('email') }}"
+                                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                                    id="email" placeholder="email@email.com">
+                                                @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                            class="btn btn-primary btn-block submit_rapport btn-sm">Rechercher</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
