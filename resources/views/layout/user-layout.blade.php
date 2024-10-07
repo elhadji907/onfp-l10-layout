@@ -207,6 +207,15 @@
             /* border-radius: 5px; */
         }
 
+        .former {
+            background-color: #198754;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .agréer {
             background-color: #198754;
             color: white;

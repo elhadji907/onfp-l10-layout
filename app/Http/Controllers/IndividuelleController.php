@@ -39,7 +39,7 @@ class IndividuelleController extends Controller
         $total_count = Individuelle::get();
         $total_count = number_format($total_count->count(), 0, ',', ' ');
 
-        $individuelles = Individuelle::limit(250)
+        $individuelles = Individuelle::limit(500)
             ->latest()
             ->get();
 

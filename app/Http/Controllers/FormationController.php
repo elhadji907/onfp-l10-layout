@@ -820,7 +820,7 @@ class FormationController extends Controller
                 $individuelle->update([
                     "note_obtenue"       =>  $value,
                     "appreciation"       =>  $appreciation,
-                    "statut"             =>  'terminer',
+                    "statut"             =>  'former',
                 ]);
             } else {
                 Alert::warning('Désolez !', 'la formation n\'est pas encore terminée');
@@ -831,7 +831,7 @@ class FormationController extends Controller
 
             $validated_by = new Validationindividuelle([
                 'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'terminer',
+                'action'             =>      'former',
                 'individuelles_id'   =>      $individuelle->id
             ]);
 
@@ -1445,7 +1445,7 @@ class FormationController extends Controller
         $formations = Formation::whereBetween(DB::raw('DATE(date_debut)'), array($request->from_date, $request->to_date))->get();
 
         $count = $formations->count();
-        
+
         if ($from_date == $to_date) {
             if (isset($count) && $count < "1") {
                 $title = 'aucune formation effctuée le ' . $from_date . ' à ' . $now;
@@ -1468,6 +1468,98 @@ class FormationController extends Controller
             'formations',
             'from_date',
             'to_date',
+            'title'
+        ));
+    }
+
+
+    public function rapportsformes(Request $request)
+    {
+        $regions = Region::get();
+        $title = 'rapports formés';
+        return view('formes.rapports', compact(
+            'regions',
+            'title'
+        ));
+    }
+    public function generateRapportFormes(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $now =  Carbon::now()->format('H:i:s');
+
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+        if (isset($request->module) && isset($request->region)) {
+            $module = Module::where('name', $request->module)->first();
+            $region = Region::where('nom', $request->region)->first();
+            $title_region_module = ' dans la région de ' . $request->region .  ' en ' . $request->module;
+
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
+                ->where('individuelles.regions_id',  $region?->id)
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } elseif (isset($request->region)) {
+            $region = Region::where('nom', $request->region)->first();
+            $title_region_module = ' dans la région de ' . $request->region;
+
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->where('individuelles.regions_id',  $region?->id)
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } elseif (isset($request->module)) {
+            $module = Module::where('name', $request->module)->first();
+            $title_region_module = ' en ' . $request->module;
+
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } else {
+            $title_region_module = '';
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        }
+
+        $count = $formes->count();
+
+        if ($from_date == $to_date) {
+            if (isset($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé le ' . $from_date . ' ' . $title_region_module;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé le ' . $from_date . ' ' . $title_region_module;
+            } else {
+                $title = $count . ' bénéficiaires formé le ' . $from_date . ' ' . $title_region_module;
+            }
+        } else {
+            if (isset($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+            } else {
+                $title = $count . ' bénéficiaires formés entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+            }
+        }
+
+        $regions = Region::get();
+        return view('formes.rapports', compact(
+            'formes',
+            'regions',
             'title'
         ));
     }

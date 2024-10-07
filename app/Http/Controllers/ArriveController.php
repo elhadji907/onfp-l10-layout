@@ -68,10 +68,29 @@ class ArriveController extends Controller
             $numCourrier   =   strtolower($numCourrier);
         }
 
-        $arrives = Arrive::orderBy('created_at', 'desc')->get();
+        /* $arrives = Arrive::orderBy('created_at', 'desc')->get(); */
+
+        $total_count = Arrive::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $arrives = Arrive::take(100)
+            ->latest()
+            ->get();
+
+        $count_courrier = number_format($arrives?->count(), 0, ',', ' ');
+
+        if ($count_courrier < "1") {
+            $title = 'Aucun courrier';
+        } elseif ($count_courrier == "1") {
+            $title = $count_courrier . ' courrier sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_courrier . ' derniers courriers sur un total de ' . $total_count;
+        }
+
         $today = date('Y-m-d');
         $count_today = Arrive::where("created_at", "LIKE",  "{$today}%")->count();
-        return view("courriers.arrives.index", compact("arrives", "count_today", "anneeEnCours", "numCourrier"));
+
+        return view("courriers.arrives.index", compact("arrives", "count_today", "anneeEnCours", "numCourrier", "title"));
     }
 
     public function create()
@@ -552,6 +571,44 @@ class ArriveController extends Controller
             'arrives',
             'from_date',
             'to_date',
+            'title'
+        ));
+    }
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
+            'numero'             => 'nullable|string',
+            'objet'              => 'nullable|string',
+            'expediteur'         => 'nullable|string',
+        ]);
+
+        if ($request?->numero == null && $request->objet == null && $request->expediteur == null) {
+            Alert::warning('Attention ', 'Renseigner au moins un champ pour rechercher');
+            return redirect()->back();
+        }
+
+        $arrives = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
+            ->select('arrives.*')
+            ->where('arrives.numero', 'LIKE', "%{$request?->numero}%")
+            ->where('courriers.objet', 'LIKE', "%{$request?->objet}%")
+            ->where('courriers.expediteur', 'LIKE', "%{$request?->expediteur}%")
+            ->distinct()
+            ->get();
+
+        $count = $arrives?->count();
+
+        if (isset($count) && $count < "1") {
+            $title = 'aucun courrier trouvé';
+        } elseif (isset($count) && $count == "1") {
+            $title = $count . ' courrier trouvé';
+        } else {
+            $title = $count . ' courriers trouvés';
+        }
+
+        /* $modules = Module::orderBy("created_at", "desc")->get(); */
+
+        return view('courriers.arrives.index', compact(
+            'arrives',
             'title'
         ));
     }

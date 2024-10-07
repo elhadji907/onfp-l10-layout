@@ -609,6 +609,29 @@ class UserController extends Controller
         ));
     }
 
+    public function reports(Request $request)
+    {
+        $total_count = User::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $roles = Role::pluck('name', 'name')->all();
+
+        $user_liste = User::take(100)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($user_liste?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'Aucun utilisateur';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' utilisateur sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_demandeur . ' derniers utilisateurs sur un total de ' . $total_count;
+        }
+
+        return view("user.index", compact("user_liste", "title", "roles"));
+    }
 
     public function generateReport(Request $request)
     {

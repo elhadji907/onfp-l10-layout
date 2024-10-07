@@ -32,10 +32,11 @@
                 @endif --}}
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert">
+                            <strong>{{ $error }}</strong>
+                        </div>
                     @endforeach
-                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
-                        <strong>{{ $error }}</strong>
-                    </div>
                 @endif
                 <div class="row">
                     <!-- Sales Card -->
@@ -121,97 +122,116 @@
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div> --}}
-
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
+                        <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
+                                class="btn btn-success btn-sm" title="retour"><i
+                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                        </span>
+                        <div class="d-flex justify-content-between align-items-center mt-0">
+                            {{-- <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Liste des courriers arrivés</p>
-                            </span>
+                            </span> --}}
+                            <h5 class="card-title">{{ $title }}</h5>
                             @can('courrier-operateur-view')
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                                     data-bs-target="#addCourrierOperateur"><i class="bi bi-plus"
                                         title="ajouter courrier opérateurs"></i>&nbsp;ajouter courrier opérateurs</button>
                             @endcan
-                            <button type="button" class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal"
+                            {{-- <button type="button" class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal"
                                 data-bs-target="#addCourrierArrive">
                                 <i class="bi bi-plus" title="ajouter courrier arrivé"></i>&nbsp;ajouter courrier arrivé
-                            </button>
+                            </button> --}}
+
+                            <span class="d-flex align-items-baseline">
+                                <a href="#" class="btn btn-success btn-sm float-end" data-bs-toggle="modal"
+                                    data-bs-target="#addCourrierArrive" title="Ajouter">Ajouter</a>
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li>
+                                            <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#generate_rapport"></i>Rechercher
+                                                plus</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
                         </div>
                         {{-- <p>Le tableau des courriers arrivés</p> --}}
                         <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-arrives">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">N°</th>
-                                    <th class="text-center">Date arrivé</th>
-                                    <th class="text-center">N° correspondance</th>
-                                    <th class="text-center">Date correspondance</th>
-                                    <th>Expéditeur</th>
-                                    <th>Objet</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1; ?>
-                                @foreach ($arrives as $arrive)
+                        @isset($arrives)
+                            <table class="table datatables align-middle" id="table-arrives">
+                                <thead>
                                     <tr>
-                                        <td style="text-align: center;">{{ $arrive?->numero }}</td>
-                                        {{-- Date reception = date arrivée --}}
-                                        <td style="text-align: center;">
-                                            {{ $arrive?->courrier?->date_recep?->format('d/m/Y') }} </td>
-                                        <td style="text-align: center;">{{ $arrive?->courrier?->numero }}</td>
-                                        <td style="text-align: center;">
-                                            {{ $arrive?->courrier?->date_cores?->format('d/m/Y') }} </td>
-                                        {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
-                                        <td>{{ $arrive?->courrier?->expediteur }}</td>
-                                        <td>{{ $arrive?->courrier?->objet }}</td>
-                                        <td>
-                                            <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('arrives.show', $arrive?->id) }}"
-                                                    class="btn btn-success btn-sm" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm"
-                                                                href="{{ route('arrives.edit', $arrive?->id) }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
-                                                        </li>
-                                                        {{-- <li><a class="dropdown-item btn btn-sm"
+                                        <th class="text-center">N°</th>
+                                        <th class="text-center">Date arrivé</th>
+                                        <th class="text-center">N° correspondance</th>
+                                        <th class="text-center">Date correspondance</th>
+                                        <th>Expéditeur</th>
+                                        <th>Objet</th>
+                                        <th>#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; ?>
+                                    @foreach ($arrives as $arrive)
+                                        <tr>
+                                            <td style="text-align: center;">{{ $arrive?->numero }}</td>
+                                            {{-- Date reception = date arrivée --}}
+                                            <td style="text-align: center;">
+                                                {{ $arrive?->courrier?->date_recep?->format('d/m/Y') }} </td>
+                                            <td style="text-align: center;">{{ $arrive?->courrier?->numero }}</td>
+                                            <td style="text-align: center;">
+                                                {{ $arrive?->courrier?->date_cores?->format('d/m/Y') }} </td>
+                                            {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
+                                            <td>{{ $arrive?->courrier?->expediteur }}</td>
+                                            <td>{{ $arrive?->courrier?->objet }}</td>
+                                            <td>
+                                                <span class="d-flex align-items-baseline"><a
+                                                        href="{{ route('arrives.show', $arrive?->id) }}"
+                                                        class="btn btn-success btn-sm" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <li><a class="dropdown-item btn btn-sm"
+                                                                    href="{{ route('arrives.edit', $arrive?->id) }}"
+                                                                    class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
+                                                            </li>
+                                                            {{-- <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
                                                                 class="mx-1">Imputer</a>
                                                         </li> --}}
-                                                        {{--  <li><a class="dropdown-item btn btn-sm"
+                                                            {{--  <li><a class="dropdown-item btn btn-sm"
                                                                 href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class="mx-1"
                                                                 target="_blank">Imprimer</a>
                                                         </li> --}}
-                                                        @can('arrive-delete')
-                                                            <li>
-                                                                <form action="{{ route('arrives.destroy', $arrive?->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        @endcan
-                                                    </ul>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
+                                                            @can('arrive-delete')
+                                                                <li>
+                                                                    <form action="{{ route('arrives.destroy', $arrive?->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="dropdown-item show_confirm"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endisset
                         <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -632,6 +652,83 @@
                                         data-bs-dismiss="modal">Fermer</button>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="generate_rapport" tabindex="-1" role="dialog"
+            aria-labelledby="generate_rapportLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Générer une recherche<span class="text-danger mx-1">*</span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="{{ route('arrives.report') }}">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="numero" class="form-label">Numero</label>
+                                                <input type="text" name="numero" value="{{ old('numero') }}"
+                                                    class="form-control form-control-sm @error('numero') is-invalid @enderror"
+                                                    id="numero" placeholder="Numero">
+                                                @error('numero')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="objet" class="form-label">Objet</label>
+                                                <input type="text" name="objet" value="{{ old('objet') }}"
+                                                    class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                                    id="objet" placeholder="Objet">
+                                                @error('objet')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="expediteur" class="form-label">Expéditeur</label>
+                                                <input type="text" name="expediteur" value="{{ old('expediteur') }}"
+                                                    class="form-control form-control-sm @error('expediteur') is-invalid @enderror"
+                                                    id="expediteur" placeholder="Expéditeur">
+                                                @error('expediteur')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                            class="btn btn-primary btn-block submit_rapport btn-sm">Rechercher</button>
                                     </div>
                                 </div>
                             </div>

@@ -333,6 +333,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     
     Route::get('users/index',[UserController::class,'index'])->name('users.report');
     Route::post('users/index',[UserController::class,'generateReport']);
+    
+    Route::get('arrives/index',[ArriveController::class,'index'])->name('arrives.report');
+    Route::post('arrives/index',[ArriveController::class,'generateReport']);
+
+    Route::get('formes/rapportsformes',[FormationController::class,'rapportsformes'])->name('formes.rapport');
+    Route::post('formes/rapportsformes',[FormationController::class,'generateRapportFormes']);
+
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

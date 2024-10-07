@@ -47,14 +47,14 @@
                                     <table class="table datatables align-middle" id="table-individuelles">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" class="form-check-input" id="checkAll">N°</th>
-                                                <th>Civilité</th>
-                                                <th>CIN</th>
+                                                <th><input type="checkbox" class="form-check-input" id="checkAll">Civilité</th>
+                                                {{-- <th>N°</th>
+                                                <th>CIN</th> --}}
                                                 <th>Prénom</th>
                                                 <th>NOM</th>
                                                 <th>Date naissance</th>
-                                                <th>Lieu de naissance</th>
-                                                <th>Adresse</th>
+                                                <th>Lieu naissance</th>
+                                                {{-- <th>Adresse</th> --}}
                                                 <th>Département</th>
                                                 <th>Module</th>
                                                 <th>Statut</th>
@@ -76,16 +76,16 @@
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <div>{{ $message }}</div>
                                                                 </span>
-                                                                @enderror{{ $individuelle?->numero }}
+                                                                @enderror{{ $individuelle?->user?->civilite }}
                                                             </td>
-                                                            <td>{{ $individuelle?->user?->civilite }}</td>
-                                                            <td>{{ $individuelle?->user?->cin }}</td>
+                                                            {{-- <td>{{ $individuelle?->user?->numero }}</td>
+                                                            <td>{{ $individuelle?->user?->cin }}</td> --}}
                                                             <td>{{ $individuelle?->user?->firstname }}</td>
                                                             <td>{{ $individuelle?->user?->name }}</td>
                                                             <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
                                                             </td>
                                                             <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                                            <td>{{ $individuelle?->user->adresse }}</td>
+                                                            {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
                                                             <td>{{ $individuelle?->departement->nom }}</td>
                                                             <td>{{ $individuelle?->module->name }}</td>
                                                             <td><span
