@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -23,10 +24,12 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'email'     => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'username'  => ['required', 'string', 'lowercase', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'firstname' => ['required', 'string', 'max:150'],
             'name'      => ['required', 'string', 'max:25'],
             'image'     => ['string', 'max:255', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'telephone' => ['required', 'string', 'max:25', 'min:9'],
+            'telephone' => ['required', 'string', 'max:9', 'min:9'],
             'adresse'   => ['required', 'string', 'max:255'],
             'password'  => ['string', 'max:255', 'nullable'],
             'roles.*'   => ['string', 'max:255', 'nullable', 'max:255'],

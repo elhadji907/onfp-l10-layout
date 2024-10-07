@@ -134,27 +134,41 @@ class UserController extends Controller
 
     public function index()
     {
-        $user_liste = User::skip(0)
-            ->take(500)
+        $total_count = User::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $roles = Role::pluck('name', 'name')->all();
+
+        $user_liste = User::take(100)
             ->latest()
             ->get();
-            
-        return view("user.index", compact("user_liste"));
+
+        $count_demandeur = number_format($user_liste?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'Aucun utilisateur';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' utilisateur sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_demandeur . ' derniers utilisateurs sur un total de ' . $total_count;
+        }
+
+        return view("user.index", compact("user_liste", "title", "roles"));
     }
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        $this->validate($request, [
+        /* $this->validate($request, [
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
-        ]);
+        ]); */
 
         if ($request->password) {
             $password = Hash::make($request->password);
         } else {
             $password = Hash::make($request->email);
         }
-
         $user = User::create([
+            'username' => $request->username,
             'firstname' => $request->firstname,
             'name' => $request->name,
             'email' => $request->email,
@@ -192,8 +206,11 @@ class UserController extends Controller
 
         /* $user = User::create($request->all()); */
 
-        $status = "Enregistrement effectué avec succès";
-        return redirect()->back()->with("status", $status);
+        /*  $status = "Enregistrement effectué avec succès";
+        return redirect()->back()->with("status", $status); */
+
+        Alert::success('Effectué !', 'Utilisateur enregistré');
+        return redirect()->back();
     }
 
     public function edit($id)
@@ -233,7 +250,7 @@ class UserController extends Controller
 
             $this->validate($request, [
                 'civilite'         => ['nullable', 'string', 'max:10'],
-                'username'         => ['required', 'string', 'max:150'],
+                'username'         => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
                 "cin"              => ["required", "string", "min:13", "max:15", Rule::unique(User::class)->ignore($id)],
                 'firstname'        => ['required', 'string', 'max:150'],
                 'name'             => ['required', 'string', 'max:50'],
@@ -587,6 +604,53 @@ class UserController extends Controller
 
         return view('user.rapports', compact(
             'users',
+            'roles',
+            'title'
+        ));
+    }
+
+
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
+            'cin'               => 'nullable|string',
+            'name'              => 'nullable|string',
+            'firstname'         => 'nullable|string',
+            'telephone'         => 'nullable|string',
+            'email'             => 'nullable|email',
+        ]);
+
+        if ($request?->cin == null && $request->firstname == null && $request->telephone == null && $request->name == null && $request->email == null) {
+            Alert::warning('Attention ', 'Renseigner au moins un champ pour rechercher');
+            return redirect()->back();
+        }
+
+        $user_liste = User::where('firstname', 'LIKE', "%{$request?->firstname}%")
+            ->where('name', 'LIKE', "%{$request?->name}%")
+            ->where('cin', 'LIKE', "%{$request?->cin}%")
+            ->where('telephone', 'LIKE', "%{$request?->telephone}%")
+            ->where('email', 'LIKE', "%{$request?->email}%")
+            ->distinct()
+            ->get();
+
+        $count = $user_liste?->count();
+
+        if (isset($count) && $count < "1") {
+            $title = 'aucun utilisateur trouvée';
+        } elseif (isset($count) && $count == "1") {
+            $title = $count . ' utilisateur trouvée';
+        } else {
+            $title = $count . ' utilisateurs trouvées';
+        }
+
+
+        $roles = Role::pluck('name', 'name')->all();
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        /* $modules = Module::orderBy("created_at", "desc")->get(); */
+
+        return view('user.index', compact(
+            'user_liste',
+            'departements',
             'roles',
             'title'
         ));

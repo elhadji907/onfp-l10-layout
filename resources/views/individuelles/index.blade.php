@@ -173,18 +173,6 @@
                                     <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                         <label for="module" class="form-label">Formation sollicitée<span
                                                 class="text-danger mx-1">*</span></label>
-                                        {{-- <select name="module" class="form-select  @error('module') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-module-indiv"
-                                            data-placeholder="Choisir formation">
-                                            <option value="">
-                                                {{ old('module') }}
-                                            </option>
-                                            @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}">
-                                                    {{ $module->name }}
-                                                </option>
-                                            @endforeach
-                                        </select> --}}
                                         <input type="text" name="module" value="{{ old('module_name') }}"
                                             class="form-control form-control-sm @error('module_name') is-invalid @enderror"
                                             id="module_name" placeholder="Nom du module" autofocus>

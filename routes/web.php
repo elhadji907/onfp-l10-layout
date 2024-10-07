@@ -330,6 +330,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     
     Route::get('individuelles/index',[IndividuelleController::class,'index'])->name('individuelles.report');
     Route::post('individuelles/index',[IndividuelleController::class,'generateReport']);
+    
+    Route::get('users/index',[UserController::class,'index'])->name('users.report');
+    Route::post('users/index',[UserController::class,'generateReport']);
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

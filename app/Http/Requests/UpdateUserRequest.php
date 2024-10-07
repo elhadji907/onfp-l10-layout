@@ -20,8 +20,10 @@ class UpdateUserRequest extends FormRequest
         return [
             'firstname'     => ['required', 'string', 'max:150'],
             'name'          => ['required', 'string', 'max:25'],
+            'username'      => ['required', 'string', 'lowercase', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'cin'           => ['nullable', 'string', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'image'         => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'telephone'     => ['required', 'string', 'max:25', 'min:9'],
+            'telephone'     => ['required', 'string', 'max:9', 'min:9'],
             'adresse'       => ['required', 'string', 'max:255'],
             'password'      => ['string', 'max:255', 'nullable'],
             'roles.*'       => ['string', 'max:255', 'nullable', 'max:255'],

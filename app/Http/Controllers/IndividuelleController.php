@@ -36,18 +36,21 @@ class IndividuelleController extends Controller
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
         //skip permet de sauter des lignes, par exemple skip(2) permet de parcourrir la BD en sautant ligne par 2
         //take joue le même role que limit
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
         $individuelles = Individuelle::limit(250)
             ->latest()
             ->get();
 
-        $count_demandeur = $individuelles?->count();
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
 
         if ($count_demandeur < "1") {
             $title = 'Aucune demande individuelle';
         } elseif ($count_demandeur == "1") {
-            $title = $count_demandeur . ' demande individuelle';
+            $title = $count_demandeur . ' demande individuelle sur un total de ' . $total_count;
         } else {
-            $title = 'Liste des ' . $count_demandeur . ' dernières demandes individuelles';
+            $title = 'Liste des ' . $count_demandeur . ' dernières demandes individuelles sur un total de ' . $total_count;
         }
 
         $departements = Departement::orderBy("created_at", "DESC")->get();
