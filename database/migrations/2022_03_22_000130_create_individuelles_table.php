@@ -71,8 +71,8 @@ class CreateIndividuellesTable extends Migration
             $table->string('file3', 200)->nullable();
             $table->string('file4', 200)->nullable();
             $table->string('file5', 200)->nullable();
-            $table->string('file6', 200)->nullable();
-            $table->string('file7', 200)->nullable();
+            $table->string('suivi', 200)->nullable();
+            $table->longText('informations_suivi')->nullable();
             $table->integer('nbre_pieces')->nullable();
             $table->integer('nbre_enfants')->nullable();
             $table->double('note_obtenue')->nullable();

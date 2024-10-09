@@ -515,6 +515,24 @@
         });
     </script>
     <script type="text/javascript">
+        $('.show_confirm_suivi').click(function(event) {
+            var form = $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                    title: `Êtes-vous sûr de bien vouloir suivre ce bénéficiaire ?`,
+                    text: "Si oui, cliquer sur ok.",
+                    icon: "success",
+                    buttons: true,
+                })
+                .then((willValide) => {
+                    if (willValide) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
+    <script type="text/javascript">
         $('.show_confirm_employes').click(function(event) {
             var form = $(this).closest("form");
             var name = $(this).data("name");

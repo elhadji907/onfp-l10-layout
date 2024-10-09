@@ -529,7 +529,6 @@
                 </ul>
             </li>
         @endcan
-
         @can('projet-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('projets') }}">
@@ -539,6 +538,7 @@
             </li><!-- End utilisateurs Nav -->
         @endcan
         {{-- @endif --}}
+
         {{--  @if (auth()->user()->hasRole('super-admin')) --}}
         @can('user-view')
             <li class="nav-item">
@@ -547,6 +547,14 @@
                     <span>Gestion utilisateurs</span>
                 </a>
             </li><!-- End utilisateurs Nav -->
+        @endcan
+        @can('rapport-suivi-formes-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('suiviformes.suivi') }}">
+                    <i class="bi bi-file-earmark-person"></i>
+                    <span>Suivi formés</span>
+                </a>
+            </li>
         @endcan
         {{-- <li class="nav-heading">{{ __("Contrôle d'accès") }}</li> --}}
         @can('role-view')
@@ -649,7 +657,6 @@
                             </a>
                         </li>
                     @endcan
-
                 </ul>
             </li><!-- End Courriers Nav -->
         @endcan

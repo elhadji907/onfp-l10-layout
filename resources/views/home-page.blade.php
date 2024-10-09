@@ -239,7 +239,8 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    <span class="text-primary">{{ $count_today ?? '0' }}</span>
+                                                    <span
+                                                        class="text-primary">{{ number_format($count_today, 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span class="text-success small pt-1 fw-bold">Aujourd'hui</span>
                                                 {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
@@ -265,7 +266,8 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    <span class="text-primary">{{ count($individuelles) ?? '0' }}</span>
+                                                    <span
+                                                        class="text-primary">{{ number_format(count($individuelles), 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span class="text-success small pt-1 fw-bold">Toutes</span>
                                                 {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
@@ -291,7 +293,8 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    <span class="text-primary">{{ $masculin }}</span>
+                                                    <span
+                                                        class="text-primary">{{ number_format($masculin, 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span
                                                     class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_hommes, 2, ',', ' ') . '%' }}</span>
@@ -318,7 +321,8 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    <span class="text-primary">{{ $feminin }}</span>
+                                                    <span
+                                                        class="text-primary">{{ number_format($feminin, 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span
                                                     class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes, 2, ',', ' ') . '%' }}</span>
@@ -371,7 +375,7 @@
                                                     <i class="bi bi-person-plus-fill"></i>
                                                 </div>
                                                 <div class="ps-3">
-                                                    <h6>{{ $total_user }}</h6>
+                                                    <h6>{{ number_format($total_user, 0, '', ' ') }}</h6>
                                                     <span
                                                         class="text-success small pt-1 fw-bold">{{ number_format($email_verified_at, 2, ',', ' ') . '%' }}</span>
                                                     <span class="text-muted small pt-2 ps-1">comptes vérifiés</span>
@@ -398,7 +402,7 @@
                                                     <i class="bi bi-envelope-open"></i>
                                                 </div>
                                                 <div class="ps-3">
-                                                    <h6>{{ $total_arrive }}</h6>
+                                                    <h6>{{ number_format($total_arrive, 0, '', ' ') }}</h6>
                                                     <span
                                                         class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_arrive, 2, ',', ' ') . '%' }}</span>
                                                     {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
@@ -423,7 +427,7 @@
                                                     <i class="bi bi-envelope"></i>
                                                 </div>
                                                 <div class="ps-3">
-                                                    <h6>{{ $total_depart }}</h6>
+                                                    <h6>{{ number_format($total_depart, 0, '', ' ') }}</h6>
                                                     <span
                                                         class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_depart, 2, ',', ' ') . '%' }}</span>
                                                     {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
@@ -447,7 +451,7 @@
                                                     <i class="bi bi-envelope"></i>
                                                 </div>
                                                 <div class="ps-3">
-                                                    <h6>{{ $total_interne }}</h6>
+                                                    <h6>{{ number_format($total_interne, 0, '', ' ') }}</h6>
                                                     <span
                                                         class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_interne, 2, ',', ' ') . '%' }}</span>
                                                     {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}

@@ -46,7 +46,7 @@
                                     <thead>
                                         <tr>
                                             {{-- <th class="text-center">N°</th> --}}
-                                            <th class="text-start">CIN</th>
+                                            <th class="text-center">CIN</th>
                                             <th>Prénom</th>
                                             <th>NOM</th>
                                             <th>Date naissance</th>
@@ -56,6 +56,9 @@
                                             <th>Région</th>
                                             <th class="text-center">Appréciation</th>
                                             <th class="text-center">Date</th>
+                                            @can('rapport-suivi-formes-view')
+                                                <th class="text-center" width="5%">Suivi</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -71,7 +74,9 @@
                                                     <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                     <td>{{ $individuelle?->module?->name }}</td>
                                                     <td>{{ $individuelle?->region?->nom }}</td>
-                                                    <td style="text-align: center"><span class="badge bg-info">{{ $individuelle?->appreciation }}</span></td>
+                                                    <td style="text-align: center"><span
+                                                            class="badge bg-info">{{ $individuelle?->appreciation }}</span>
+                                                    </td>
                                                     {{--  <td>
                                                         <span class="{{ $individuelle->statut }}">
                                                             {{ $individuelle->statut }}
@@ -83,6 +88,28 @@
                                                     {{-- <td style="text-align: center">
                                                         {{ date_format(date_create($individuelle?->formation?->date_fin), 'd/m/Y') }}
                                                     </td> --}}
+                                                    @can('rapport-suivi-formes-view')
+                                                        <td>
+                                                            @if (empty($individuelle?->suivi))
+                                                                {{-- <button type="button"
+                                                                    class="show_confirm_suivi btn btn-dark rounded-pill btn-sm float-center">Suivre</button> --}}
+                                                                {{--  <button type="button"
+                                                                    class="btn btn-dark rounded-pill btn-sm float-center"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#generate_suivi">Suivre</button> --}}
+                                                                <form action="{{ route('SuivreFormes', $individuelle?->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button
+                                                                        class="show_confirm_suivi btn btn-dark rounded-pill btn-sm float-center">Suivre</button>
+                                                                </form>
+                                                            @else
+                                                                <button type="button"
+                                                                    class="btn btn-success rounded-pill btn-sm float-center">Suivi</button>
+                                                            @endif
+                                                        </td>
+                                                    @endcan
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -183,11 +210,9 @@
                                     class="btn btn-primary btn-block submit_rapport btn-sm">Envoyer</button>
                             </div>
                         </div>
+                    </form>
                 </div>
             </div>
-            </form>
-        </div>
-        </div>
         </div>
     </section>
 @endsection

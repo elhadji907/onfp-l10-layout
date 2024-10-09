@@ -255,6 +255,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::patch('/updateAgentSuivi', [FormationController::class, 'updateAgentSuivi'])->name('formations.updateAgentSuivi');
     Route::patch('/updateMembresJury', [FormationController::class, 'updateMembresJury'])->name('formations.updateMembresJury');
     Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
+    Route::patch('/updateAttestations', [FormationController::class, 'updateAttestations'])->name('individuelles.updateAttestations');
 
     Route::post('/addProjet', [ProjetController::class, 'addProjet'])->name('addProjet');
 
@@ -340,6 +341,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('formes/rapportsformes',[FormationController::class,'rapportsformes'])->name('formes.rapport');
     Route::post('formes/rapportsformes',[FormationController::class,'generateRapportFormes']);
 
+    Route::get('suivi/suiviformes',[FormationController::class,'suiviformes'])->name('suiviformes.suivi');
+    Route::post('suivi/suiviformes',[FormationController::class,'generateSuiviFormes']);
+
+    Route::put('suivreformes/{id}',[FormationController::class,'SuivreFormes'])->name('SuivreFormes');
+    Route::post('formesuivi',[FormationController::class,'FormeSuivi'])->name('FormeSuivi');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

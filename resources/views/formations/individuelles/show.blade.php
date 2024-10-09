@@ -81,6 +81,12 @@
                                     </button>
                                 </li>
 
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#retrait-attestation-overview">Attestations
+                                    </button>
+                                </li>
+
                             </ul>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade profile-overview pt-3" id="profile-overview">
@@ -758,8 +764,8 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php $i = 1; ?>                                                            
-                                                        @foreach ($formation->individuelles as $individuelle)
+                                                            <?php $i = 1; ?>
+                                                            @foreach ($formation->individuelles as $individuelle)
                                                                 <tr>
                                                                     <td>{{ $i++ }}</td>
                                                                     {{-- <td>{{ $individuelle?->numero }}</td> --}}
@@ -819,6 +825,128 @@
                                                             class="bi bi-check2-circle"></i>&nbsp;Save</button>
                                                 </div>
                                             </form>
+                                        </div>
+                                    @endisset
+                                </div>
+                            </div>
+                            {{-- Retrait attestation --}}
+                            <div class="tab-content pt-2">
+                                <div class="tab-pane fade attestation-overview pt-1" id="retrait-attestation-overview">
+                                    @isset($module)
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                            {{-- <form method="post"
+                                                action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
+                                                enctype="multipart/form-data" class="row g-3">
+                                                @csrf
+                                                @method('PUT') --}}
+                                            <h1 class="card-title">Retrait des attestations</h1>
+                                            {{-- <div class="d-flex justify-content-between align-items-center">
+                                                    <h1 class="card-title"> Liste des bénéficiaires :
+                                                        {{ $count_demandes }}</h1>
+                                                    <h5 class="card-title">
+                                                        Membres du jury
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
+                                                            <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                        </button>
+                                                    </h5>
+                                                </div> --}}
+                                            <div class="row g-3">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-evaluation">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>N°</th>
+                                                            {{-- <th>Numéro</th> --}}
+                                                            <th>Civilité</th>
+                                                            <th>CIN</th>
+                                                            <th>Prénom</th>
+                                                            <th>NOM</th>
+                                                            <th>Date naissance</th>
+                                                            <th>Lieu de naissance</th>
+                                                            <th class="text-center">Note<span
+                                                                    class="text-danger mx-1">*</span></th>
+                                                            <th>Diplôme</th>
+                                                            <th class="col"><i class="bi bi-gear"></i></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $i = 1; ?>
+                                                        @foreach ($formation->individuelles as $individuelle)
+                                                            <tr>
+                                                                <td>{{ $i++ }}</td>
+                                                                {{-- <td>{{ $individuelle?->numero }}</td> --}}
+                                                                <td>{{ $individuelle?->user?->civilite }}</td>
+                                                                <td>{{ $individuelle?->user?->cin }}</td>
+                                                                <td>{{ $individuelle?->user?->firstname }}</td>
+                                                                <td>{{ $individuelle?->user?->name }}</td>
+                                                                <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                                </td>
+                                                                <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                                                <td style="text-align: center">
+                                                                    {{-- <input type="number"
+                                                                            value="{{ $individuelle?->note_obtenue }}"
+                                                                            name="notes[]" placeholder="note" step="0.01"
+                                                                            min="0" max="20">
+                                                                        <input type="hidden" name="individuelles[]"
+                                                                            value="{{ $individuelle?->id }}"> --}}
+                                                                    <span>{{ $individuelle?->note_obtenue }}</span>
+                                                                </td>
+                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                    @if (isset($individuelle?->retrait_diplome))
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-success btn-sm"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditShowModal{{ $individuelle->id }}">
+                                                                            <i class="bi bi-eye" title="Attestation"></i>
+                                                                        </button>
+                                                                        {{-- @else
+                                                                        <span>retiré par {{ $individuelle?->retrait_diplome }}</span> --}}
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-primary btn-sm"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#EditAttestationsModal{{ $individuelle->id }}">
+                                                                        <i class="bi bi-plus" title="Attestation"></i>
+                                                                    </button>
+                                                                </td>
+                                                                {{-- <td>
+                                                                    <span class="d-flex align-items-baseline"><a
+                                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                            class="btn btn-primary btn-sm"
+                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li>
+                                                                                    <a class="btn btn-danger btn-sm"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#indiponibleModal{{ $individuelle->id }}"
+                                                                                        title="retirer">Retirer de cette
+                                                                                        formation
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td> --}}
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                </table>
+                                            </div>
+                                            {{-- <div class="text-center">
+                                                    <button type="submit" class="btn btn-outline-primary"><i
+                                                            class="bi bi-check2-circle"></i>&nbsp;Save</button>
+                                                </div>
+                                            </form> --}}
                                         </div>
                                     @endisset
                                 </div>
@@ -932,6 +1060,159 @@
                                     Valider</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        {{-- Attestations --}}
+        @foreach ($formation->individuelles as $individuelle)
+            <div class="modal fade" id="EditAttestationsModal{{ $individuelle->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditAttestationsModalLabel{{ $individuelle->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="{{ route('individuelles.updateAttestations') }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch')
+                            <div class="modal-header" id="EditAttestationsModalLabel{{ $individuelle->id }}">
+                                <h5 class="modal-title">Retrait attestation de
+                                    {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="{{ $individuelle->id }}">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row g-3">
+                                        <label for="retrait" class="form-label">Choisir<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
+                                            <label class="form-check-label" for="moi">
+                                                Moi même
+                                            </label>
+                                            <input type="radio" name="moi" value="moi"
+                                                class="form-check-input @error('moi') is-invalid @enderror">
+                                            @error('moi')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
+                                            <label class="form-check-label" for="autre">
+                                                Autre
+                                            </label>
+                                            <input type="radio" name="autre" value="autre"
+                                                class="form-check-input @error('autre') is-invalid @enderror">
+                                            @error('autre')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 pt-3">
+                                    <label for="date_retrait" class="form-label">Date retrait<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_retrait"
+                                        value="{{ date('Y-m-d') ?? old('date_retrait') }}"
+                                        class="form-control form-control-sm @error('date_retrait') is-invalid @enderror"
+                                        id="date_retrait" placeholder="Date naissance">
+                                    @error('date_retrait')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <hr>
+                                <label for="form-label">Si autre</label>
+                                <hr>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="cin" class="form-label">N° CIN</label>
+                                    <input minlength="13" maxlength="14" type="text" name="cin"
+                                        value="{{ old('cin') }}"
+                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                        placeholder="Numéro carte d'identité nationale">
+                                    @error('cin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" name="name" value="{{ old('name') }}"
+                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                        placeholder="Prénom et NOM">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="commentaires" class="form-label">Commentaires</label>
+                                    <input type="text" maxlength="150" name="commentaires" value="{{ old('commentaires') }}"
+                                        class="form-control form-control-sm @error('commentaires') is-invalid @enderror"
+                                        placeholder="Un petit commentaire...">
+                                    @error('commentaires')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Valider</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        {{-- Attestations retrait --}}
+        @foreach ($formation->individuelles as $individuelle)
+            <div class="modal fade" id="EditShowModal{{ $individuelle->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="EditShowModalLabel{{ $individuelle->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {{-- <form method="post" action="{{ route('individuelles.updateAttestations') }}"
+                            enctype="multipart/form-data" class="row g-3">
+                            @csrf
+                            @method('patch') --}}
+                        <div class="modal-header" id="EditShowModalLabel{{ $individuelle->id }}">
+                            <h5 class="modal-title">Attestation de
+                                {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="{{ $individuelle->id }}">
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="row g-3">
+                                    <label for="retrait" class="form-label">Informations !<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label class="form-check-label" for="moi">
+                                            {{ $individuelle?->retrait_diplome }}
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                    Valider</button>
+                            </div>
+                        </form> --}}
                     </div>
                 </div>
             </div>

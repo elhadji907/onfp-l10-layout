@@ -990,6 +990,46 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
+    public function updateAttestations(Request $request)
+    {
+        $date_retrait = date_format(date_create($request->date_retrait), 'd/m/Y');
+        $request->validate([
+            'date_retrait' => 'required',
+            'date',
+        ]);
+        if ($request->input('moi') == 'moi') {
+            $retrait_diplome = 'retiré par son propriétaire le ' . $date_retrait;
+        } else {
+            $request->validate([
+                'cin' => 'required',
+                'string',
+                'max:15',
+                'min:12',
+                'name' => 'required',
+                'string',
+            ]);
+            $retrait_diplome = 'retiré par ' . $request->input('name') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
+        }
+
+        $commentaires = $request->input('commentaires');
+
+        if (isset($commentaires)) {
+            $retrait_diplome = $retrait_diplome . '; ' . $commentaires;
+        }
+
+
+        $individuelle = Individuelle::findOrFail($request->input('id'));
+
+        $individuelle->update([
+            "retrait_diplome"       =>  $retrait_diplome,
+        ]);
+
+        $individuelle->save();
+
+        Alert::success('Merci et à bientôt !', 'Bonne chance pour la suite');
+
+        return redirect()->back();
+    }
 
     public function ficheSuivi(Request $request)
     {
@@ -1472,7 +1512,6 @@ class FormationController extends Controller
         ));
     }
 
-
     public function rapportsformes(Request $request)
     {
         $regions = Region::get();
@@ -1562,5 +1601,133 @@ class FormationController extends Controller
             'regions',
             'title'
         ));
+    }
+
+    public function suiviformes(Request $request)
+    {
+        $regions = Region::get();
+        $title = 'Base de données des formés suivis';
+
+        $formes = Individuelle::where('suivi', 'suivi')->get();
+
+        return view('formes.suivi', compact(
+            'regions',
+            'formes',
+            'title'
+        ));
+    }
+    public function generateSuiviFormes(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $now =  Carbon::now()->format('H:i:s');
+
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+        if (isset($request->module) && isset($request->region)) {
+            $module = Module::where('name', $request->module)->first();
+            $region = Region::where('nom', $request->region)->first();
+            $title_region_module = ' dans la région de ' . $request->region .  ' en ' . $request->module;
+
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
+                ->where('individuelles.regions_id',  $region?->id)
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } elseif (isset($request->region)) {
+            $region = Region::where('nom', $request->region)->first();
+            $title_region_module = ' dans la région de ' . $request->region;
+
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->where('individuelles.regions_id',  $region?->id)
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } elseif (isset($request->module)) {
+            $module = Module::where('name', $request->module)->first();
+            $title_region_module = ' en ' . $request->module;
+
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } else {
+            $title_region_module = '';
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        }
+
+        $count = $formes->count();
+
+        if ($from_date == $to_date) {
+            if (isset($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé le ' . $from_date . ' ' . $title_region_module;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé le ' . $from_date . ' ' . $title_region_module;
+            } else {
+                $title = $count . ' bénéficiaires formé le ' . $from_date . ' ' . $title_region_module;
+            }
+        } else {
+            if (isset($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+            } else {
+                $title = $count . ' bénéficiaires formés entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+            }
+        }
+
+        $regions = Region::get();
+        return view('formes.suivi', compact(
+            'formes',
+            'regions',
+            'title'
+        ));
+    }
+
+    public function SuivreFormes(Request $request, $id)
+    {
+        $individuelle = Individuelle::findOrFail($id);
+
+        $individuelle->update([
+            'suivi' => 'suivi'
+        ]);
+
+        $individuelle->save();
+
+        Alert::success('Demandeur suivi !');
+        return redirect()->back();
+    }
+
+    public function FormeSuivi(Request $request)
+    {
+        $this->validate($request, [
+            'informations_suivi' => 'required|string',
+        ]);
+
+        $individuelle = Individuelle::findOrFail($request->id);
+
+        $individuelle->update([
+            'informations_suivi' => $request->informations_suivi
+        ]);
+
+        $individuelle->save();
+
+        Alert::success('Enregistrement effectué !');
+
+        return redirect()->back();
     }
 }
