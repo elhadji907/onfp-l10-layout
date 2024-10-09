@@ -1007,6 +1007,8 @@ class FormationController extends Controller
                 'min:12',
                 'name' => 'required',
                 'string',
+                'observations' => 'nullable',
+                'string','max:50'
             ]);
             $retrait_diplome = 'retiré par ' . $request->input('name') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
         }
