@@ -28,13 +28,13 @@
                                 </span>
                             </div>
                         </div>
-                        <h5><u><b>Région</b></u> : {{ $localite->nom }}</h5>
+                        <h5><u><b>Région</b></u> : {{ $region->nom }}</h5>
                         <h5><u><b>Module</b></u> : {{ $module->name }}</h5>
-                        <h5><u><b>Candisdats</b></u> : {{ $individuelles->count() ?? '' }}</h5>
-                        <h5><u><b>Effectif</b></u> : {{ $candidatsretenus?->count() ?? '' }}</h5>
+                        {{-- <h5><u><b>Candisdats</b></u> : {{ $individuelles->count() ?? '' }}</h5> --}}
+                        <h5><u><b>Sélectionnés </b></u> : {{ $candidatsretenus?->count() ?? '' }}</h5>
                         <form method="post"
                             action="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->id]) }}"
-                            enctype="multipart/form-data" class="row g-3">
+                            enctype="multipart/form-data" class="row g-3 mt-2">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
@@ -47,7 +47,8 @@
                                     <table class="table datatables align-middle" id="table-individuelles">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" class="form-check-input" id="checkAll">Civilité</th>
+                                                <th><input type="checkbox" class="form-check-input" id="checkAll">Civilité
+                                                </th>
                                                 {{-- <th>N°</th>
                                                 <th>CIN</th> --}}
                                                 <th>Prénom</th>
@@ -72,71 +73,72 @@
                                                                 {{ in_array($individuelle->formations_id, $individuelleFormation) ? 'checked' : '' }}
                                                                 {{ in_array($individuelle->formations_id, $individuelleFormationCheck) ? 'disabled' : '' }}
                                                                 class="form-check-input @error('individuelles') is-invalid @enderror">
+                                                            {{ $individuelle?->user?->civilite }}
                                                             @error('individuelles')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <div>{{ $message }}</div>
                                                                 </span>
-                                                                @enderror{{ $individuelle?->user?->civilite }}
-                                                            </td>
-                                                            {{-- <td>{{ $individuelle?->user?->numero }}</td>
+                                                            @enderror
+                                                        </td>
+                                                        {{-- <td>{{ $individuelle?->user?->numero }}</td>
                                                             <td>{{ $individuelle?->user?->cin }}</td> --}}
-                                                            <td>{{ $individuelle?->user?->firstname }}</td>
-                                                            <td>{{ $individuelle?->user?->name }}</td>
-                                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
-                                                            </td>
-                                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                                            {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
-                                                            <td>{{ $individuelle?->departement->nom }}</td>
-                                                            <td>{{ $individuelle?->module->name }}</td>
-                                                            <td><span
-                                                                    class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
-                                                            </td>
-                                                            <td>
-                                                                <span class="d-flex align-items-baseline"><a
-                                                                        href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                                        class="btn btn-primary btn-sm" title="voir détails"
-                                                                        target="_blanck"><i class="bi bi-eye"></i></a>
-                                                                    <div class="filter">
-                                                                        <a class="icon" href="#"
-                                                                            data-bs-toggle="dropdown"><i
-                                                                                class="bi bi-three-dots"></i></a>
-                                                                        <ul
-                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <li><a class="dropdown-item btn btn-sm"
-                                                                                    href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                                                    class="mx-1" title="Modifier"><i
-                                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <form
-                                                                                    action="{{ route('individuelles.destroy', $individuelle->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item show_confirm"
-                                                                                        title="Supprimer"><i
-                                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                                </form>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    @endisset
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-outline-primary"><i
-                                                    class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
-                                        </div>
+                                                        <td>{{ $individuelle?->user?->firstname }}</td>
+                                                        <td>{{ $individuelle?->user?->name }}</td>
+                                                        <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                        </td>
+                                                        <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                                        {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
+                                                        <td>{{ $individuelle?->departement->nom }}</td>
+                                                        <td>{{ $individuelle?->module->name }}</td>
+                                                        <td><span
+                                                                class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="d-flex align-items-baseline"><a
+                                                                    href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="voir détails"
+                                                                    target="_blanck"><i class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <li><a class="dropdown-item btn btn-sm"
+                                                                                href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                                class="mx-1" title="Modifier"><i
+                                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"
+                                                                                    title="Supprimer"><i
+                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endisset
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-outline-primary"><i
+                                                class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </section>
-    @endsection
+        </div>
+    </section>
+@endsection

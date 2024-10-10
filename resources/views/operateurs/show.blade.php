@@ -465,7 +465,7 @@
 
                                                 <tr>
                                                     <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
-                                                    <th>CATEGORIE PROFESSIONNELLE<span class="text-danger mx-1">*</span>
+                                                    <th>NIVEAU QUALIFICATION<span class="text-danger mx-1">*</span>
                                                     </th>
                                                 </tr>
                                                 <tr>
@@ -484,10 +484,10 @@
                                                         </p>
                                                     </td>
                                                     <td><input type="text" name="categorie"
-                                                            placeholder="Catégorie professionnelle"
+                                                            placeholder="Niveau de qualification"
                                                             class="form-control form-control-sm" />
                                                         <p class="small fst-italic">
-                                                            <small>{{ __("Préciser la catégorie professionnelle,l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
+                                                            <small>{{ __("Préciser le niveau de qualification,l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
                                                             <small>{{ __("d'une pré-qualification ou qualification") }}</small>
                                                         </p>
                                                     </td>
@@ -592,7 +592,7 @@
                                                         <th scope="col">N°</th>
                                                         <th scope="col">DOMAINE</th>
                                                         <th scope="col">MODULE</th>
-                                                        <th scope="col">CATEGORIE</th>
+                                                        <th scope="col">NIVEAU QUALIFICATION</th>
                                                         <th scope="col">QUALIFICATION</th>
                                                         <th class="text-center">STATUT</th>
                                                         <th class="text-center"><i class="bi bi-gear"></i></th>

@@ -399,19 +399,19 @@ class DepartController extends Controller
 
         if ($from_date == $to_date) {
             if (isset($count) && $count < "1") {
-                $title = 'aucun courrier départ le ' . $from_date . ' à ' . $now;
+                $title = 'aucun courrier départ le ' . $from_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' courrier départ le ' . $from_date . ' à ' . $now;
+                $title = $count . ' courrier départ le ' . $from_date;
             } else {
-                $title = $count . ' courriers départs le ' . $from_date . ' à ' . $now;
+                $title = $count . ' courriers départs le ' . $from_date;
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucun courrier départ du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = 'aucun courrier départ entre le ' . $from_date . ' et le ' . $to_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' courrier départ du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' courrier départ entre le ' . $from_date . ' et le ' . $to_date;
             } else {
-                $title = $count . ' courriers départs du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' courriers départs entre le ' . $from_date . ' et le ' . $to_date;
             }
         }
 

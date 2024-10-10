@@ -169,15 +169,18 @@
                                 <p><b>Intitulé de la formation </b>: {{ $formation?->module?->name }} </p>
                                 <p><b>Niveau de qualification </b>: {{ $formation?->titre }} </p>
                                 <p><b>Nombre de bénéficiaires </b>:
-                                    {{ ' H: ' . str_pad($formation->prevue_h, 2, "0", STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    {{ ' F: ' . str_pad($formation->prevue_f, 2, "0", STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    {{ ' T: ' . str_pad($formation->effectif_prevu, 2, "0", STR_PAD_LEFT) }}
+                                    {{ ' H: ' . str_pad($formation->prevue_h, 2, '0', STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{ ' F: ' . str_pad($formation->prevue_f, 2, '0', STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{ ' T: ' . str_pad($formation->effectif_prevu, 2, '0', STR_PAD_LEFT) }}
                                 </p>
                                 <p><b>Opérateur d'exécution </b>:
-                                    {{ $formation?->operateur?->name . ' (' . $formation?->operateur?->sigle . ')' }}
+                                    {{ $formation?->operateur?->user?->operateur }}
+                                    @if (!empty($formation?->operateur?->user?->username))
+                                        {{ '(' . $formation?->operateur?->user?->username . ')' }}
+                                    @endif
                                 </p>
                                 <p><b>Lieu de formation </b>:
-                                    {{ $formation?->operateur?->name . ' (' . $formation?->lieu . ')' }}
+                                    {{ $formation?->lieu }}
                                 </p>
                                 <p><b>Document attendu </b>:
                                 <ol>

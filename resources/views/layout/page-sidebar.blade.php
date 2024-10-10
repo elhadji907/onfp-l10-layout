@@ -614,7 +614,7 @@
                     @can('rapport-formation-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('formations.rapport') }}">
-                                <span>Demandeurs formations</span>
+                                <span>Formations</span>
                             </a>
                         </li>
                     @endcan

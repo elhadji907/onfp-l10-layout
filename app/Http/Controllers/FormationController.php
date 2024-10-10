@@ -300,7 +300,7 @@ class FormationController extends Controller
     {
         $formation = Formation::findOrFail($idformation);
         $module = Module::findOrFail($idmodule);
-        $localite = Region::findOrFail($idlocalite);
+        $region = Region::findOrFail($idlocalite);
 
         /* $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
@@ -314,15 +314,28 @@ class FormationController extends Controller
             ->orWhere('statut', 'programmer')
             ->get(); */
 
-        $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+        /* $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
             ->select('individuelles.*')
             ->where('modules.name', 'LIKE', "%{$module->name}%")
             ->where('regions_id', $idlocalite)
             ->where('statut', 'attente')
             ->orWhere('statut', 'retirer')
-            ->orWhere('statut', 'retenue')
+            ->orWhere('statut', 'retenu')
             ->orWhere('statut', 'programmer')
+            ->get(); */
+        /* dd($localite->nom); */
+        $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+            ->join('regions', 'regions.id', 'individuelles.regions_id')
+            ->select('individuelles.*')
+            ->where('modules.name', 'LIKE', "%{$module->name}%")
+            ->where('regions.nom', $region->nom)
+            ->where('modules.name', 'LIKE', "%{$module->name}%")
+            ->where('statut', 'attente')
+            ->orWhere('statut', 'retirer')
+            ->orWhere('statut', 'retenu')
             ->get();
+
+        /* dd($individuelles); */
 
         $candidatsretenus = Individuelle::where('formations_id', $idformation)
             ->get();
@@ -338,7 +351,18 @@ class FormationController extends Controller
             ->pluck('formations_id', 'formations_id')
             ->all();
 
-        return view("formations.individuelles.add-individuelles", compact('formation', 'individuelles', 'individuelleFormation', 'module', 'localite', 'candidatsretenus', 'individuelleFormationCheck'));
+        return view(
+            "formations.individuelles.add-individuelles",
+            compact(
+                'formation',
+                'individuelles',
+                'individuelleFormation',
+                'module',
+                'region',
+                'candidatsretenus',
+                'individuelleFormationCheck'
+            )
+        );
     }
 
     public function giveformationdemandeurs($idformation, $idmodule, $idlocalite, Request $request)
@@ -358,7 +382,7 @@ class FormationController extends Controller
                 $individuelle = Individuelle::findOrFail($individuelle);
                 $individuelle->update([
                     "formations_id"      =>  $idformation,
-                    "statut"             =>  'retenue',
+                    "statut"             =>  'retenu',
                 ]);
 
                 $individuelle->save();
@@ -366,7 +390,7 @@ class FormationController extends Controller
 
             $validated_by = new Validationindividuelle([
                 'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'retenue',
+                'action'             =>      'retenu',
                 'individuelles_id'   =>      $individuelle->id
             ]);
 
@@ -598,10 +622,10 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($idformation);
 
         /* $collectives = Collective::where('statut_demande', 'accepter')
-            ->orwhere('statut_demande', 'retenue')
+            ->orwhere('statut_demande', 'retenu')
             ->get(); */
 
-        $collectivemodules = Collectivemodule::where('statut', 'retenue')
+        $collectivemodules = Collectivemodule::where('statut', 'retenu')
             ->orwhere('statut', 'accepter')
             ->orwhere('statut', 'attente')
             ->get();
@@ -654,7 +678,7 @@ class FormationController extends Controller
 
         $collectivemodule->update([
             "formations_id"      =>  $idformation,
-            "statut"             =>  'retenue',
+            "statut"             =>  'retenu',
         ]);
 
         $collectivemodule->save();
@@ -1008,7 +1032,8 @@ class FormationController extends Controller
                 'name' => 'required',
                 'string',
                 'observations' => 'nullable',
-                'string','max:50'
+                'string',
+                'max:50'
             ]);
             $retrait_diplome = 'retiré par ' . $request->input('name') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
         }
@@ -1285,7 +1310,7 @@ class FormationController extends Controller
 
                 $listecollective->update([
                     "formations_id"      =>  $idformation,
-                    "statut"             =>  'retenue',
+                    "statut"             =>  'retenu',
                 ]);
 
                 $listecollective->save();
@@ -1293,7 +1318,7 @@ class FormationController extends Controller
 
             /*  $validated_by = new Validationcollective([
                 'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'retenue',
+                'action'             =>      'retenu',
                 'collectives_id'   =>      $listecollective->id
             ]);
 
@@ -1490,19 +1515,19 @@ class FormationController extends Controller
 
         if ($from_date == $to_date) {
             if (isset($count) && $count < "1") {
-                $title = 'aucune formation effctuée le ' . $from_date . ' à ' . $now;
+                $title = 'aucune formation effctuée le ' . $from_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' formation effctuée le ' . $from_date . ' à ' . $now;
+                $title = $count . ' formation effctuée le ' . $from_date;
             } else {
-                $title = $count . ' formations effctuées le ' . $from_date . ' à ' . $now;
+                $title = $count . ' formations effctuées le ' . $from_date;
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucune formation effctuée du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = 'aucune formation effctuée entre le ' . $from_date . ' et le ' . $to_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' formation effctuée du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' formation effctuée entre le ' . $from_date . ' et le ' . $to_date;
             } else {
-                $title = $count . ' formations effctuées du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' formations effctuées entre le ' . $from_date . ' et le ' . $to_date;
             }
         }
 
@@ -1589,11 +1614,11 @@ class FormationController extends Controller
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucun bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+                $title = 'aucun bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             } else {
-                $title = $count . ' bénéficiaires formés entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaires formés entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             }
         }
 
@@ -1684,11 +1709,11 @@ class FormationController extends Controller
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucun bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+                $title = 'aucun bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' bénéficiaire formé entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             } else {
-                $title = $count . ' bénéficiaires formés entre le ' . $from_date . ' et ' . $to_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaires formés entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             }
         }
 

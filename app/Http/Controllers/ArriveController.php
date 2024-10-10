@@ -551,19 +551,19 @@ class ArriveController extends Controller
 
         if ($from_date == $to_date) {
             if (isset($count) && $count < "1") {
-                $title = 'aucun courrier arrivé le ' . $from_date . ' à ' . $now;
+                $title = 'aucun courrier arrivé le ' . $from_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' courrier arrivé le ' . $from_date . ' à ' . $now;
+                $title = $count . ' courrier arrivé le ' . $from_date;
             } else {
-                $title = $count . ' courriers arrivés le ' . $from_date . ' à ' . $now;
+                $title = $count . ' courriers arrivés le ' . $from_date;
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucun courrier arrivé du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = 'aucun courrier arrivé entre le ' . $from_date . ' et le ' . $to_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' courrier arrivé du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' courrier arrivé entre le ' . $from_date . ' et le ' . $to_date;
             } else {
-                $title = $count . ' courriers arrivés du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' courriers arrivés entre le ' . $from_date . ' et le ' . $to_date;
             }
         }
 

@@ -161,7 +161,10 @@
 
                                 <p style="text-align : justify;">
                                     <b>OPERATEUR </b> :
-                                    {{ $formation?->operateur?->name . ' (' . $formation?->evaluateur?->fonction . ')' }}
+                                    {{ $formation?->operateur?->user?->operateur }}
+                                    @if (!empty($formation?->operateur?->user?->username))
+                                        {{ '(' . $formation?->operateur?->user?->username . ')' }}
+                                    @endif
                                 </p>
                                 <p style="text-align : justify;">
                                     <span><b>MODULE </b> :
@@ -222,12 +225,12 @@
 
                                 <p>
                                     <span>
-                                        <b>TYPE DE CERTIFICATION DELIVREE </b> :
+                                        <b>TYPE DE CERTIFICATION DÉLIVRÉE </b> :
                                         {{ $formation?->type_certificat }}
                                     </span>
                                 </p>
 
-                                <p><b>NOMBRE DE BENEFICIAIRES CERTIFIES </b>:
+                                <p><b>NOMBRE DE BÉNÉFICIAIRES CERTIFIÉS </b>:
                                     {{ ' H : ' . str_pad($admis_h_count, 2, '0', STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     {{ ' F : ' . str_pad($admis_f_count, 2, '0', STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </p>

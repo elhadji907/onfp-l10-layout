@@ -766,19 +766,19 @@ class IndividuelleController extends Controller
 
         if ($from_date == $to_date) {
             if (isset($count) && $count < "1") {
-                $title = 'aucune demande individuelle reçue le ' . $from_date . ' à ' . $now;
+                $title = 'aucune demande individuelle reçue le ' . $from_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' demande individuelle reçue le ' . $from_date . ' à ' . $now;
+                $title = $count . ' demande individuelle reçue le ' . $from_date;
             } else {
-                $title = $count . ' demandes individuelles reçues le ' . $from_date . ' à ' . $now;
+                $title = $count . ' demandes individuelles reçues le ' . $from_date;
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucune demande individuelle reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = 'aucune demande individuelle reçue entre le ' . $from_date . ' et le ' . $to_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' demande individuelle reçue du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' demande individuelle reçue entre le ' . $from_date . ' et le ' . $to_date;
             } else {
-                $title = $count . ' demandes individuelles reçues du ' . $from_date . ' au ' . $to_date . ' à ' . $now;
+                $title = $count . ' demandes individuelles reçues entre le ' . $from_date . ' et le ' . $to_date;
             }
         }
 

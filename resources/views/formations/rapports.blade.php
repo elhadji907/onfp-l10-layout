@@ -24,9 +24,9 @@
                 title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
             <p> | Tableau de bord</p>
         </span>
-        @isset($formations)
+        {{-- @isset($formations)
             <span class="page-title badge bg-primary">{{ $title }}</span>
-        @endisset
+        @endisset --}}
         @can('rapport-individuelle-view')
             <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                 data-bs-target="#generate_rapport"></i>Générer un rapport</button>
@@ -38,6 +38,7 @@
                 @isset($formations)
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">{{ $title }}</h5>
                             <div class="table-responsive">
                                 <table class="table datatables align-middle" id="table-formations">
                                     <thead>

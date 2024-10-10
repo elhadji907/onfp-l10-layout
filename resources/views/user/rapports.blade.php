@@ -24,9 +24,9 @@
                 title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
             <p> | Tableau de bord</p>
         </span>
-        @isset($users)
+        {{-- @isset($users)
             <span class="page-title badge bg-primary">{{ $title }}</span>
-        @endisset
+        @endisset --}}
         @can('rapport-operateur-view')
             <span class="d-flex align-items-baseline">
                 <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -65,6 +65,7 @@
                 @isset($users)
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">{{ $title }}</h5>
                             <div class="table-responsive">
                                 <table class="table datatables align-middle" id="table-operateur">
                                     <thead>
