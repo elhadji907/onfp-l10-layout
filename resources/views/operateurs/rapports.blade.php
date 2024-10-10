@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label for="region" class="form-label">Statut<span
+                                                <label for="statut" class="form-label">Statut<span
                                                         class="text-danger mx-1">*</span></label>
                                                 <select name="statut"
                                                     class="form-select form-select-sm @error('statut') is-invalid @enderror"

@@ -38,19 +38,35 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- @can('role-create') --}}
-                        <div class="pt-1">
-                            {{-- <a href="{{ route('regions.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                        {{-- <div class="pt-1"> --}}
+                        {{-- <a href="{{ route('regions.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
 
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                        {{--  <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
                                 data-bs-target="#AddRegionModal">
                                 <i class="bi bi-person-plus" title="Ajouter"></i>
                             </button>
+                        </div> --}}
+                        <div class="d-flex justify-content-between align-items-center">
+                            @can('role-create')
+                                <h5 class="card-title">{{ $title }}</h5>
+                                <span class="d-flex align-items-baseline">
+                                    <a href="#" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
+                                        data-bs-target="#AddRegionModal" title="Générer rapports">Ajouter</a>
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                class="bi bi-three-dots"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li>
+                                                <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#generate_rapport_module_region"></i>Rechercher</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </span>
+                            @endcan
                         </div>
-                        {{-- @endcan --}}
-                        <h5 class="card-title">Régions</h5>
-                        <!-- Table with stripped rows -->
                         <table class="table datatables align-middle justify-content-center" id="table-regions">
                             <thead>
                                 <tr>
@@ -223,6 +239,88 @@
             </div>
         @endforeach
         <!-- End Edit Region-->
+
+        <div class="modal fade" id="generate_rapport_module_region" tabindex="-1" role="dialog"
+            aria-labelledby="generate_rapport_module_regionLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Générer une recherche<span class="text-danger mx-1">*</span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="{{ route('regions.rapports') }}">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="form-group">
+                                        <label for="region" class="form-label">Région<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="region" class="form-select  @error('region') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-region-module-rapport"
+                                            data-placeholder="Choisir la région">
+                                            <option value="">Toutes</option>
+                                            @foreach ($regions as $region)
+                                                <option value="{{ $region->nom }}">
+                                                    {{ $region->nom }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('region')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="form-group">
+                                        <label for="statut" class="form-label">Statut<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="statut"
+                                            class="form-select form-select-sm @error('statut') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-statut-report"
+                                            data-placeholder="Choisir statut">
+                                            <option value="{{ old('statut') }}">
+                                                {{ old('statut') }}
+                                            </option>
+                                            <option value="nouvelle">
+                                                nouvelle
+                                            </option>
+                                            <option value="attente">
+                                                attente
+                                            </option>
+                                            <option value="former">
+                                                former
+                                            </option>
+                                            <option value="rejeter">
+                                                rejeter
+                                            </option>
+                                            <option value="retenu">
+                                                retenu
+                                            </option>
+                                        </select>
+                                        @error('statut')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                            class="btn btn-primary btn-block submit_rapport btn-sm">Rechercher</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 
 @endsection

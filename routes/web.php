@@ -347,6 +347,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('suivreformes/{id}',[FormationController::class,'SuivreFormes'])->name('SuivreFormes');
     Route::post('formesuivi',[FormationController::class,'FormeSuivi'])->name('FormeSuivi');
 
+    Route::get('regions/rapports',[RegionController::class,'rapports'])->name('regions.rapports');
+    Route::post('regions/rapports',[RegionController::class,'generateRapport']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

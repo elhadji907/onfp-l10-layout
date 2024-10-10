@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Individuelle;
+use App\Models\Module;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -23,9 +24,22 @@ class RegionController extends Controller
     {
         $regions = Region::orderBy("created_at", "desc")->get();
 
-        return view("localites.regions.index", compact("regions"));
-    }
+        $count_region = number_format($regions?->count(), 0, ',', ' ');
 
+        if (isset($count_region) && $count_region == "0") {
+            $title = 'Aucune région';
+        } else {
+            $title = 'Liste des ' . $count_region . ' régions';
+        }
+
+        return view(
+            "localites.regions.index",
+            compact(
+                "regions",
+                "title",
+            )
+        );
+    }
 
     public function create()
     {
@@ -109,7 +123,8 @@ class RegionController extends Controller
     public function updateRegion(Request $request)
     {
         $request->validate([
-            'name' => 'required', 'string'
+            'name' => 'required',
+            'string'
         ]);
         $region = Region::findOrFail($request->input('id'));
         $region->nom = $request->input('name');
@@ -153,5 +168,86 @@ class RegionController extends Controller
         $individuelles = Individuelle::where('regions_id', $idlocalite)->where('statut', $statut)->get();
 
         return view("localites.regions.regionstatut", compact("localite", "individuelles", "statut"));
+    }
+    public function rapports(Request $request)
+    {
+        $regions = Region::orderBy("created_at", "desc")->get();
+
+        $count_region = number_format($regions?->count(), 0, ',', ' ');
+
+        if ($count_region == "0") {
+            $title = 'Aucune région';
+        } else {
+            $title = 'Liste des ' . $count_region . ' régions';
+        }
+
+        return view(
+            "localites.regions.index",
+            compact(
+                "regions",
+                "title",
+            )
+        );
+    }
+    public function generateRapport(Request $request)
+    {
+        $this->validate($request, [
+            'region' => 'required|string',
+            'statut' => 'required|string',
+        ]);
+
+        $region = Region::where('nom', $request?->region)->first();
+        $statut = $request?->statut;
+
+        if (isset($request?->region) && isset($request?->statut)) {
+            $individuelles = Individuelle::where('statut', 'LIKE', "%{$request->statut}%")
+                ->where('regions_id',  "{$region?->id}")
+                ->distinct()
+                ->get();
+
+            $individuellesmodules = Module::join('individuelles', 'individuelles.modules_id', 'modules.id')
+                ->select('modules.*')
+                ->where('individuelles.statut', 'LIKE', "%{$request->statut}%")
+                ->where('individuelles.regions_id',  "{$region?->id}")
+                ->distinct()
+                ->get();
+
+            $count = $individuelles->count();
+
+            if (isset($count) && $count == "0") {
+                $title = 'aucune demande trouvée dans la région de ' . $request?->region . ' avec le statut ' . $request?->statut;
+            } else {
+                $title = $count . ' demandes trouvées dans la région de ' . $request?->region . ' avec le statut ' . $request?->statut;
+            }
+        } else {
+            $regions = Region::orderBy("created_at", "desc")->get();
+
+            $count_region = number_format($regions?->count(), 0, ',', ' ');
+
+            if (isset($count_region) && $count_region == "0") {
+                $title = 'Aucune région';
+            } else {
+                $title = 'Liste des ' . $count_region . ' régions';
+            }
+
+            return view(
+                "localites.regions.index",
+                compact(
+                    "regions",
+                    "title",
+                )
+            );
+        }
+
+        $regions = Region::orderBy("created_at", "desc")->get();
+
+        return view('localites.regions.rapports', compact(
+            'individuelles',
+            'title',
+            'regions',
+            'statut',
+            'region',
+            'individuellesmodules',
+        ));
     }
 }

@@ -511,7 +511,7 @@
                         <a class="nav-link collapsed" href="{{ url('modules') }}">
                             <span>Modules</span>
                         </a>
-                    </li><!-- End utilisateurs Nav -->
+                    </li>
                     @can('domaine-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('domaines') }}">
@@ -524,7 +524,7 @@
                             <a class="nav-link collapsed" href="{{ url('secteurs') }}">
                                 <span>Secteurs</span>
                             </a>
-                        </li><!-- End utilisateurs Nav -->
+                        </li>
                     @endcan
                 </ul>
             </li>
@@ -535,7 +535,7 @@
                     <i class="bi bi-layers-half"></i>
                     <span>Gestion projets</span>
                 </a>
-            </li><!-- End utilisateurs Nav -->
+            </li>
         @endcan
         {{-- @endif --}}
 
@@ -546,7 +546,7 @@
                     <i class="bi bi-person-plus"></i>
                     <span>Gestion utilisateurs</span>
                 </a>
-            </li><!-- End utilisateurs Nav -->
+            </li>
         @endcan
         @can('rapport-suivi-formes-view')
             <li class="nav-item">
@@ -660,7 +660,7 @@
                 </ul>
             </li><!-- End Courriers Nav -->
         @endcan
-        <!-- End utilisateurs Nav -->
+        
         {{-- @endif --}}
         {{-- <li class="nav-heading">Pages</li> --}}
 

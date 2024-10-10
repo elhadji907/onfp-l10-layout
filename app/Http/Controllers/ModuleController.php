@@ -26,7 +26,29 @@ class ModuleController extends Controller
     {
         $modules = Module::orderBy("created_at", "desc")->get();
         $domaines = Domaine::orderBy("created_at", "desc")->get();
-        return view("modules.index", compact("modules", "domaines"));
+        $regions = Region::orderBy("created_at", "desc")->get();
+
+        $total_count = Module::count();
+
+        $count_module = number_format($modules?->count(), 0, ',', ' ');
+
+        if ($count_module < "1") {
+            $title = 'Aucun module';
+        } elseif ($count_module == "1") {
+            $title = $count_module . ' module sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_module . ' modules sur un total de ' . $total_count;
+        }
+
+        return view(
+            "modules.index",
+            compact(
+                "modules",
+                "domaines",
+                "regions",
+                "title"
+            )
+        );
     }
     public function show($id)
     {
@@ -162,6 +184,98 @@ class ModuleController extends Controller
             $individuelle = 'demandeur';
             if (isset($request->statut) && $request->statut == "nouvelle") {
                 $statut = 'nouveau';
+            } elseif (isset($request->statut) && $request->statut == "former") {
+                $statut = 'a terminé la formation';
+            } elseif (isset($request->statut) && $request->statut == "rejeter") {
+                $statut = 'rejeté';
+            } elseif (isset($request->statut) && $request->statut == "attente") {
+                $statut = 'en attente de formation';
+            } elseif (isset($request->statut) && $request->statut == "retenu") {
+                $statut = 'retenu';
+            } else {
+                $statut = $request->statut;
+            }
+        } else {
+            $individuelle = 'demandeurs';
+            if (isset($request->statut) && $request->statut == "nouvelle") {
+                $statut = 'nouveaux';
+            } elseif (isset($request->statut) && $request->statut == "former") {
+                $statut = 'ont terminé leur formation';
+            } elseif (isset($request->statut) && $request->statut == "rejeter") {
+                $statut = 'rejetés';
+            } elseif (isset($request->statut) && $request->statut == "attente") {
+                $statut = 'en attente de formation';
+            } elseif (isset($request->statut) && $request->statut == "retenu") {
+                $statut = 'retenus';
+            } else {
+                $statut = $request->statut;
+            }
+        }
+        $title = $count . ' ' . $individuelle . ' ' . $statut . ' en ' . $request->module . ' dans la région de  ' . $region->nom;
+
+        $regions = Region::orderBy("created_at", "desc")->get();
+
+        return view('modules.rapports', compact(
+            'individuelles',
+            'title',
+            'regions',
+        ));
+    }/* 
+    public function reports(Request $request)
+    {
+        $title = 'rapports opérateurs';
+
+        $modules = Module::orderBy("created_at", "desc")->get();
+        $domaines = Domaine::orderBy("created_at", "desc")->get();
+        $regions = Region::orderBy("created_at", "desc")->get();
+
+        $total_count = Module::count();
+
+        $count_module = number_format($modules?->count(), 0, ',', ' ');
+
+        if ($count_module < "1") {
+            $title = 'Aucun module';
+        } elseif ($count_module == "1") {
+            $title = $count_module . ' module sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_module . ' modules sur un total de ' . $total_count;
+        }
+
+        return view(
+            "modules.index",
+            compact(
+                "modules",
+                "domaines",
+                "regions",
+                "title"
+            )
+        );
+    }
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
+            'region' => 'required|string',
+            'module' => 'required|string',
+            'statut' => 'required|string',
+        ]);
+
+        $region = Region::findOrFail($request->region);
+
+        $individuelles = Individuelle::join('modules', 'individuelles.modules_id', 'modules.id')
+            ->select('individuelles.*')
+            ->where('statut', 'LIKE', "%{$request->statut}%")
+            ->where('regions_id',  "{$request->region}")
+            ->where('modules.name', 'LIKE', "%{$request->module}%")
+            ->distinct()
+            ->get();
+
+
+        $count = $individuelles->count();
+
+        if (isset($count) && $count <= "1") {
+            $individuelle = 'demandeur';
+            if (isset($request->statut) && $request->statut == "nouvelle") {
+                $statut = 'nouveau';
             } elseif (isset($request->statut) && $request->statut == "terminer") {
                 $statut = 'a terminé la formation';
             } elseif (isset($request->statut) && $request->statut == "rejeter") {
@@ -198,5 +312,5 @@ class ModuleController extends Controller
             'title',
             'regions',
         ));
-    }
+    } */
 }
