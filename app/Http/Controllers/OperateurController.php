@@ -27,7 +27,7 @@ class OperateurController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|Operateur|DIOF|ADIOF|DEC|ADEC']);
+        $this->middleware(['role:super-admin|admin|Operateur|DIOF|ADIOF|DEC|ADEC|Demandeur']);
         $this->middleware("permission:operateur-view", ["only" => ["create", "store"]]);
         $this->middleware("permission:operateur-demande-view", ["only" => ["create", "store"]]);
     }

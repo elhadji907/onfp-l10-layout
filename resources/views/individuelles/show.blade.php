@@ -22,20 +22,25 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mt-3">
 
-                                @if (auth()->user()->hasRole('Demandeur'))
-                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('demandesIndividuelle') }}" class="btn btn-secondary btn-sm"
-                                            title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                {{-- @if (auth()->user()->hasRole('Demandeur')) --}}
+                                @can('demandeur-view')
+                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('demandesIndividuelle') }}"
+                                            class="btn btn-secondary btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | retour</p>
                                     </span>
-                                @endif
-                                @if (auth()->user()->hasRole('super-admin|admin'))
-                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                            href="{{ route('individuelles.index') }}" class="btn btn-secondary btn-sm"
-                                            title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                @endcan
+                                {{-- @endif --}}
+                                {{-- @if (auth()->user()->hasRole('super-admin|admin')) --}}
+
+                                @can('user-view')
+                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('individuelles.index') }}"
+                                            class="btn btn-secondary btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | retour</p>
                                     </span>
-                                @endif
+                                @endcan
+                                {{-- @endif --}}
 
                                 <span>
                                     <nav class="header-nav ms-auto">
@@ -108,7 +113,8 @@
                                         </ul>
                                     </nav>
                                 </span>
-                                @if (auth()->user()->hasRole('super-admin'))
+                                {{-- @if (auth()->user()->hasRole('super-admin')) --}}
+                                @can('user-view')
                                     <span class="d-flex align-items-baseline">
                                         <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                         <div class="filter">
@@ -146,7 +152,8 @@
                                             </ul>
                                         </div>
                                     </span>
-                                @endif
+                                @endcan
+                                {{-- @endif --}}
                             </div>
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <form method="post" action="{{ url('individuelles/' . $individuelle?->id) }}"

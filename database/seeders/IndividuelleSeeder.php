@@ -13,7 +13,7 @@ class IndividuelleSeeder extends Seeder
     public function run(): void
     {
         Individuelle::factory()
-            ->count(1200)
+            ->count(100)
             ->create();
     }
 }

@@ -207,6 +207,9 @@ class DatabaseSeeder extends Seeder
         'rapport-formes-view',
         'rapport-user-view',
         'rapport-suivi-formes-view',
+        'home-view',
+        'courrier-view',
+        'localite-view',
     ];
 
     public function run(): void
