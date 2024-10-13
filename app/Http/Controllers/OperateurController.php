@@ -28,17 +28,19 @@ class OperateurController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin|Operateur|DIOF|ADIOF|DEC|ADEC|Demandeur']);
-        $this->middleware("permission:operateur-view", ["only" => ["create", "store"]]);
-        $this->middleware("permission:operateur-demande-view", ["only" => ["create", "store"]]);
+        /* $this->middleware("permission:operateur-view", ["only" => ["create", "store"]]); */
+        /* $this->middleware("permission:operateur-view", ["only" => ["index", "update", "destroy", "show"]]); */
+        $this->middleware("permission:operateur-demande-view");
+        $this->middleware("permission:user-view", ["only" => ["index"]]);
     }
     public function index()
     {
-        $operateurs = Operateur::orderBy('created_at', 'desc')->get();
-        $departements = Departement::orderBy("created_at", "desc")->get();
-        $operateur_agreer   = Operateur::where('statut_agrement', 'agréer')->count();
-        $operateur_rejeter   = Operateur::where('statut_agrement', 'rejeter')->count();
-        $operateur_nouveau   = Operateur::where('statut_agrement', 'nouveau')->count();
-        $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
+        $operateurs             = Operateur::orderBy('created_at', 'desc')->get();
+        $departements           = Departement::orderBy("created_at", "desc")->get();
+        $operateur_agreer       = Operateur::where('statut_agrement', 'agréer')->count();
+        $operateur_rejeter      = Operateur::where('statut_agrement', 'rejeter')->count();
+        $operateur_nouveau      = Operateur::where('statut_agrement', 'nouveau')->count();
+        $operateur_total        = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_agreer = ((($operateur_agreer) / ($operateur_total)) * 100);
             $pourcentage_rejeter = ((($operateur_rejeter) / ($operateur_total)) * 100);
@@ -54,13 +56,12 @@ class OperateurController extends Controller
 
     public function agrement()
     {
-        $operateurs = Operateur::query()->orderBy('created_at', 'desc')->orderByDesc('created_at')->get();
-        $departements = Departement::orderBy("created_at", "desc")->get();
-
-        $operateurs = Operateur::orderBy('created_at', 'desc')->get();
-        $operateur_new   = Operateur::where('type_demande', 'Nouvelle')->count();
-        $operateur_renew   = Operateur::where('type_demande', 'Renouvellement')->count();
-        $operateur_total   = Operateur::where('type_demande', 'Nouvelle')->orwhere('type_demande', 'Renouvellement')->count();
+        $operateurs         = Operateur::query()->orderBy('created_at', 'desc')->orderByDesc('created_at')->get();
+        $departements       = Departement::orderBy("created_at", "desc")->get();
+        $operateurs         = Operateur::orderBy('created_at', 'desc')->get();
+        $operateur_new      = Operateur::where('type_demande', 'Nouvelle')->count();
+        $operateur_renew    = Operateur::where('type_demande', 'Renouvellement')->count();
+        $operateur_total    = Operateur::where('type_demande', 'Nouvelle')->orwhere('type_demande', 'Renouvellement')->count();
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_new = ((($operateur_new) / ($operateur_total)) * 100);
             $pourcentage_renew = ((($operateur_renew) / ($operateur_total)) * 100);
@@ -110,7 +111,7 @@ class OperateurController extends Controller
                 "annee_agrement"       =>       date('Y-m-d'),
                 "statut_agrement"      =>       'nouveau',
                 "departements_id"      =>       $departement?->id,
-                "regions_id"          =>       $departement?->region?->id,
+                "regions_id"           =>       $departement?->region?->id,
                 "users_id"             =>       $user->id
             ]);
 

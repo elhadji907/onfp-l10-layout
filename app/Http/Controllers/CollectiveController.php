@@ -7,6 +7,8 @@ use App\Models\Collectivemodule;
 use App\Models\Commune;
 use App\Models\Demandeur;
 use App\Models\Departement;
+use App\Models\Formation;
+use App\Models\Listecollective;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -480,9 +482,27 @@ class CollectiveController extends Controller
     public function show($id)
     {
         $collective = Collective::findOrFail($id);
+        
+        $listecollective = Listecollective::where('collectives_id', $id)->first();
+
+        $listemodulescollective = Collectivemodule::where("collectives_id", $id)->first();
         $collectivemodules = Collectivemodule::where("collectives_id", $id)->get();
+
+        $formation = Formation::where('collectives_id', $id)->first();
+        
         $collectives    = Collective::where('users_id', $collective?->users_id)->get();
-        return view('collectives.show', compact('collective', 'collectivemodules', 'collectives'));
+
+        return view(
+            'collectives.show',
+            compact(
+                'collective',
+                'collectivemodules',
+                'collectives',
+                'listecollective',
+                'listemodulescollective',
+                'formation'
+            )
+        );
     }
 
     public function destroy($id)

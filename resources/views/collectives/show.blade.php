@@ -44,8 +44,16 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
                                 @can('collective-view')
                                     <li class="nav-item">
-                                        <span class="nav-link"><a href="{{ route('demandesCollective') }}"
+                                        <span class="nav-link"><a href="{{ route('collectives.index') }}"
                                                 class="btn btn-secondary btn-sm" title="retour"><i
+                                                    class="bi bi-arrow-counterclockwise"></i></a>
+                                        </span>
+                                    </li>
+                                @endcan
+                                @can('demandeur-view')
+                                    <li class="nav-item">
+                                        <span class="nav-link"><a href="{{ route('demandesCollective') }}"
+                                                class="btn btn-info btn-sm" title="retour"><i
                                                     class="bi bi-arrow-counterclockwise"></i></a>
                                         </span>
                                     </li>
@@ -193,7 +201,8 @@
                                                 <span class="badge bg-info text-white">
                                                     {{ $collective?->numero }}</span>
                                             </span>
-                                            @if (auth()->user()->hasRole('super-admin'))
+                                            {{-- @if (auth()->user()->hasRole('super-admin')) --}}
+                                            @can('user-view')
                                                 <span class="card-title d-flex align-items-baseline">Statut demande :&nbsp;
                                                     <span class="{{ $collective?->statut_demande }} text-white">
                                                         {{ $collective?->statut_demande }}</span>
@@ -215,7 +224,8 @@
                                                         </ul>
                                                     </div>
                                                 </span>
-                                            @endif
+                                            @endcan
+                                            {{-- @endif --}}
                                             @foreach ($collective->collectivemodules as $collectivemodule)
                                             @endforeach
                                             @isset($collectivemodule)
@@ -227,77 +237,83 @@
                                             @endisset
                                         </div>
                                         <p>Liste des membres</p>
-                                        <div class="row g-3">
-                                            <table
-                                                class="table datatables align-middle justify-content-center table-borderless"
-                                                id="table-collectiveMembres">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">CIN</th>
-                                                        <th scope="col">Civilité</th>
-                                                        <th scope="col">Prénom</th>
-                                                        <th scope="col">Nom</th>
-                                                        <th scope="col">Date naissance</th>
-                                                        <th scope="col">Lieu naissance</th>
-                                                        <th scope="col">Niveau étude</th>
-                                                        <th scope="col">Module</th>
-                                                        <th scope="col">Statut</th>
-                                                        <th class="col"><i class="bi bi-gear"></i></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php $i = 1; ?>
-                                                    @foreach ($collective->listecollectives as $listecollective)
+                                        @if (!empty($listecollective))
+                                            <div class="row g-3">
+                                                <table
+                                                    class="table datatables align-middle justify-content-center table-borderless"
+                                                    id="table-collectiveMembres">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{ $listecollective?->cin }}</td>
-                                                            <td>{{ $listecollective?->civilite }}</td>
-                                                            <td>{{ $listecollective?->prenom }}</td>
-                                                            <td>{{ $listecollective?->nom }}</td>
-                                                            <td>{{ $listecollective?->date_naissance->format('d/m/Y') }}
-                                                            </td>
-                                                            <td>{{ $listecollective?->lieu_naissance }}</td>
-                                                            <td>{{ $listecollective?->niveau_etude }}</td>
-                                                            <td>{{ $listecollective?->collectivemodule?->module }}</td>
-                                                            <td>
-                                                                <span
-                                                                    class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
-                                                            </td>
-                                                            <td>
-                                                                <span class="d-flex align-items-baseline">
-                                                                    <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
-                                                                        class="btn btn-primary btn-sm"
-                                                                        title="voir détails" target="_blank"><i
-                                                                            class="bi bi-eye"></i></a>
-                                                                    <div class="filter">
-                                                                        <a class="icon" href="#"
-                                                                            data-bs-toggle="dropdown"><i
-                                                                                class="bi bi-three-dots"></i></a>
-                                                                        <ul
-                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                            <li><a class="dropdown-item btn btn-sm"
-                                                                                    href="{{ route('listecollectives.edit', $listecollective->id) }}"
-                                                                                    class="mx-1" title="Modifier"><i
-                                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                                            </li>
-                                                                            <form
-                                                                                action="{{ route('listecollectives.destroy', $listecollective->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit"
-                                                                                    class="dropdown-item show_confirm"
-                                                                                    title="Supprimer"><i
-                                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                                            </form>
-                                                                        </ul>
-                                                                    </div>
-                                                                </span>
-                                                            </td>
+                                                            <th scope="col" class="text-center">CIN</th>
+                                                            <th scope="col">Civilité</th>
+                                                            <th scope="col">Prénom</th>
+                                                            <th scope="col">Nom</th>
+                                                            <th scope="col">Date naissance</th>
+                                                            <th scope="col">Lieu naissance</th>
+                                                            <th scope="col">Niveau étude</th>
+                                                            <th scope="col">Module</th>
+                                                            <th scope="col">Statut</th>
+                                                            <th class="col"><i class="bi bi-gear"></i></th>
                                                         </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $i = 1; ?>
+                                                        @foreach ($collective->listecollectives as $listecollective)
+                                                            <tr>
+                                                                <td>{{ $listecollective?->cin }}</td>
+                                                                <td>{{ $listecollective?->civilite }}</td>
+                                                                <td>{{ $listecollective?->prenom }}</td>
+                                                                <td>{{ $listecollective?->nom }}</td>
+                                                                <td>{{ $listecollective?->date_naissance->format('d/m/Y') }}
+                                                                </td>
+                                                                <td>{{ $listecollective?->lieu_naissance }}</td>
+                                                                <td>{{ $listecollective?->niveau_etude }}</td>
+                                                                <td>{{ $listecollective?->collectivemodule?->module }}</td>
+                                                                <td>
+                                                                    <span
+                                                                        class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="d-flex align-items-baseline">
+                                                                        <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
+                                                                            class="btn btn-primary btn-sm"
+                                                                            title="voir détails" target="_blank"><i
+                                                                                class="bi bi-eye"></i></a>
+                                                                        <div class="filter">
+                                                                            <a class="icon" href="#"
+                                                                                data-bs-toggle="dropdown"><i
+                                                                                    class="bi bi-three-dots"></i></a>
+                                                                            <ul
+                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                                        href="{{ route('listecollectives.edit', $listecollective->id) }}"
+                                                                                        class="mx-1" title="Modifier"><i
+                                                                                            class="bi bi-pencil"></i>Modifier</a>
+                                                                                </li>
+                                                                                <form
+                                                                                    action="{{ route('listecollectives.destroy', $listecollective->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="dropdown-item show_confirm"
+                                                                                        title="Supprimer"><i
+                                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                                </form>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        @else
+                                            <div class="alert alert-info">Aucun membre pour l'instat
+                                            </div>
+                                        @endif
+
                                         {{-- </form> --}}
                                     </div>
                                 </div>
@@ -310,53 +326,71 @@
                                         <i class="bi bi-plus" title="Ajouter module"></i>
                                     </button>
                                     <h5 class="card-title">Liste des modules</h5>
-                                    <table class="table datatables" id="table-modules">
-                                        <thead>
-                                            <tr>
-                                                <th>N°</th>
-                                                <th>Module</th>
-                                                <th>Demandeurs</th>
-                                                <th class="float-end"><i class="bi bi-gear"></i></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1; ?>
-                                            @foreach ($collective?->collectivemodules as $collectivemodule)
+                                    @if (!empty($listemodulescollective))
+                                        <table class="table datatables" id="table-modules">
+                                            <thead>
                                                 <tr>
-                                                    <td>{{ $i++ }}</td>
-                                                    <td>{{ $collectivemodule?->module }}</td>
-                                                    <td>
-                                                        @foreach ($collectivemodule->listecollectives as $listecollective)
-                                                            @if ($loop->last)
-                                                                <a href="#"><span
-                                                                        class="badge bg-info">{{ $loop->count }}</span></a>
-                                                            @endif
-                                                        @endforeach
-                                                    </td>
-                                                    <td>
-                                                        <span class="d-flex align-items-baseline float-end"><a
-                                                                href="{{ route('collectivemodules.show', $collectivemodule->id) }}"
-                                                                class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                    class="bi bi-eye"></i></a>
-                                                            <div class="filter">
-                                                                <a class="icon" href="#"
-                                                                    data-bs-toggle="dropdown"><i
-                                                                        class="bi bi-three-dots"></i></a>
-                                                                <ul
-                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    {{-- <li><a class="dropdown-item btn btn-sm"
-                                                                            href="{{ route('collectivemodules.edit', $collectivemodule->id) }}"
-                                                                            class="mx-1" title="Modifier"><i
-                                                                                class="bi bi-pencil"></i>Modifier</a>
-                                                                    </li> --}}
-                                                                    <button type="button"
-                                                                        class="dropdown-item btn btn-sm mx-1"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#EditRegionModal{{ $collectivemodule->id }}">
-                                                                        <i class="bi bi-pencil" title="Modifier"></i>
-                                                                        Modifier
-                                                                    </button>
-                                                                    <li>
+                                                    <th>N°</th>
+                                                    <th>Module</th>
+                                                    <th>Demandeurs</th>
+                                                    <th>Statut</th>
+                                                    <th class="float-end"><i class="bi bi-gear"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($collective?->collectivemodules as $collectivemodule)
+                                                    <tr>
+                                                        <td>{{ $i++ }}</td>
+                                                        <td>{{ $collectivemodule?->module }}</td>
+                                                        <td>
+                                                            {{-- @foreach ($collectivemodule->listecollectives as $listecollective)
+                                                                @if ($loop->last)
+                                                                    <a href="#"><span
+                                                                            class="badge bg-info">{{ $loop->count }}</span></a>
+                                                                @endif
+                                                            @endforeach --}}
+                                                            <span
+                                                                class="badge bg-info">{{ count($collectivemodule->listecollectives) }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="{{ $collectivemodule?->statut }}">
+                                                                {{ $collectivemodule?->statut }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+
+                                                            <span class="d-flex align-items-baseline float-end"><a
+                                                                    href="{{ route('collectivemodules.show', $collectivemodule->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                        class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        @can('validate-module-collective')
+                                                                            <form
+                                                                                action="{{ route('validerModuleCollective') }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <input type="hidden" name="id"
+                                                                                    value="{{ $collectivemodule->id }}">
+                                                                                <button
+                                                                                    class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
+                                                                            </form>
+                                                                            <button class="btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#RejetModuleDemandeModal{{ $collectivemodule->id }}">Rejeter
+                                                                            </button>
+                                                                            <br>
+                                                                        @endcan
+                                                                        <button class="btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditRegionModal{{ $collectivemodule->id }}">Modifier
+                                                                        </button>
                                                                         <form
                                                                             action="{{ route('collectivemodules.destroy', $collectivemodule->id) }}"
                                                                             method="post">
@@ -364,19 +398,54 @@
                                                                             @method('DELETE')
                                                                             <button type="submit"
                                                                                 class="dropdown-item show_confirm"
-                                                                                title="Supprimer"><i
-                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                                title="Supprimer">Supprimer</button>
                                                                         </form>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                            {{-- <span class="d-flex align-items-baseline float-end"><a
+                                                                    href="{{ route('collectivemodules.show', $collectivemodule->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                        class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <button type="button"
+                                                                            class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditRegionModal{{ $collectivemodule->id }}">
+                                                                            <i class="bi bi-pencil" title="Modifier"></i>
+                                                                            Modifier
+                                                                        </button>
+                                                                        <li>
+                                                                            <form
+                                                                                action="{{ route('collectivemodules.destroy', $collectivemodule->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"
+                                                                                    title="Supprimer"><i
+                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span> --}}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <div class="alert alert-info">Aucun module pour l'instat
+                                        </div>
+                                    @endif
+
                                     <!-- End Table with stripped rows -->
                                 </div>
                             </div>
@@ -384,22 +453,23 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade profile-overview pt-1" id="foration-overview">
                                     <h5 class="card-title">Formations</h5>
-                                    <table class="table datatables" id="table-formations">
-                                        <thead>
-                                            <tr>
-                                                <th>Code</th>
-                                                <th>Type</th>
-                                                <th>Intitulé formation</th>
-                                                <th>Localité</th>
-                                                <th>Modules</th>
-                                                <th>Effectif</th>
-                                                <th>Statut</th>
-                                                <th>#</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1; ?>
-                                            {{-- <tr>
+                                    @if (!empty($formation))
+                                        <table class="table datatables" id="table-formations">
+                                            <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Type</th>
+                                                    <th>Intitulé formation</th>
+                                                    <th>Localité</th>
+                                                    <th>Modules</th>
+                                                    <th>Effectif</th>
+                                                    <th>Statut</th>
+                                                    <th>#</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                {{-- <tr>
                                                 <td>{{ $collective?->formation?->code }}</td>
                                                 <td></td>
                                                 <td></td>
@@ -437,8 +507,12 @@
                                                     @endisset
                                                 </td>
                                             </tr> --}}
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <div class="alert alert-info">Aucune formation pour l'instat
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             {{-- Détail Formations --}}
@@ -859,6 +933,41 @@
                 </div>
             </div>
         </div>
+        @foreach ($collectivemodules as $collectivemodule)
+            <div class="modal fade" id="RejetModuleDemandeModal{{ $collectivemodule->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="{{ route('rejeterModuleCollective') }}"
+                            enctype="multipart/form-data" class="row">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet module</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" value="{{ $collectivemodule->id }}">
+                                <label for="motif" class="form-label">Motifs du rejet</label>
+                                <textarea name="motif" id="motif" rows="5"
+                                    class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                    placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                                @error('motif')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
+                                    Rejeter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 @endsection
 

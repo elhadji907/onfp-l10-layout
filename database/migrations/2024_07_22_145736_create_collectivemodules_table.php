@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('module')->nullable();
             $table->string('domaine')->nullable();
             $table->string('niveau_qualification')->nullable();
-            $table->longText('details')->nullable();
+            $table->longText('motif')->nullable();
             $table->longText('adresse')->nullable();
             $table->string('contact')->nullable();
             $table->string('statut')->nullable();

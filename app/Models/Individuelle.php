@@ -58,7 +58,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file2
  * @property string|null $file3
  * @property string|null $file4
- * @property string|null $file5
+ * @property string|null $attestation
  * @property string|null $suivi
  * @property string|null $informations_suivi
  * @property int|null $nbre_pieces
@@ -203,7 +203,7 @@ class Individuelle extends Model
 		'file2',
 		'file3',
 		'file4',
-		'file5',
+		'attestation',
 		'suivi',
 		'informations_suivi',
 		'nbre_pieces',

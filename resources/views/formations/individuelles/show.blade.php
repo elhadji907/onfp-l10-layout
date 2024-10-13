@@ -203,6 +203,12 @@
                                                 <div>{{ $formation?->choixoperateur?->description }}</div>
                                             </div>
                                         @endisset
+                                        @if(!empty($formation?->attestation))
+                                            <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                                <div class="label">Titres - Attestations</div>
+                                                <div>{{ $formation?->attestation }}</div>
+                                            </div>
+                                        @endif
                                     </form>
                                     <div class="col-12 col-md-12 col-lg-12 mb-0 text-center">
                                         <a class="btn btn-outline-primary"
@@ -839,19 +845,17 @@
                                                 enctype="multipart/form-data" class="row g-3">
                                                 @csrf
                                                 @method('PUT') --}}
-                                            <h1 class="card-title">Retrait des attestations</h1>
-                                            {{-- <div class="d-flex justify-content-between align-items-center">
-                                                    <h1 class="card-title"> Liste des bénéficiaires :
-                                                        {{ $count_demandes }}</h1>
-                                                    <h5 class="card-title">
-                                                        Membres du jury
-                                                        <button type="button" class="btn btn-outline-primary btn-sm"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
-                                                            <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
-                                                        </button>
-                                                    </h5>
-                                                </div> --}}
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h1 class="card-title">Retrait des attestations</h1>
+                                                <h5 class="card-title">
+                                                    Informer
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#EditRemiseAttestationsModal{{ $formation->id }}">
+                                                        <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                    </button>
+                                                </h5>
+                                            </div>
                                             <div class="row g-3">
                                                 <table class="table table-bordered table-hover datatables"
                                                     id="table-evaluation">
@@ -993,6 +997,53 @@
                 </div>
             </div>
         @endforeach
+        <!-- Remise attestation-->
+        <div class="modal fade" id="EditRemiseAttestationsModal{{ $formation->id }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{{ url('remiseAttestations', ['$idformation' => $formation->id]) }}"
+                        enctype="multipart/form-data" class="row">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Situation des attestations
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="formationid" value="{{ $formation->id }}">
+                            <label for="region" class="form-label">Statut<span
+                                    class="text-danger mx-1">*</span></label>
+                            <select name="statut"
+                                class="form-select form-select-sm @error('statut') is-invalid @enderror"
+                                aria-label="Select" id="select-field-statut-attestations" data-placeholder="Choisir statut">
+                                <option value="{{ old('statut') }}">
+                                    {{ old('statut') }}
+                                </option>
+                                <option value="disponibles">
+                                    disponible
+                                </option>
+                                <option value="retirés">
+                                    retirer
+                                </option>
+                            </select>
+                            @error('statut')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn-sm"><i
+                                    class="bi bi-arrow-right-circle"></i>
+                                Valider</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="RejetDemandeModal" tabindex="-1">
             <div class="modal-dialog">
@@ -1154,7 +1205,8 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="commentaires" class="form-label">Commentaires</label>
-                                    <input type="text" maxlength="150" name="commentaires" value="{{ old('commentaires') }}"
+                                    <input type="text" maxlength="150" name="commentaires"
+                                        value="{{ old('commentaires') }}"
                                         class="form-control form-control-sm @error('commentaires') is-invalid @enderror"
                                         placeholder="Un petit commentaire...">
                                     @error('commentaires')
@@ -1277,7 +1329,8 @@
                         @csrf
                         @method('patch')
                         <div class="modal-header" id="EditMembresJuryModalLabel{{ $formation->id }}">
-                            <h5 class="modal-title">Evaluation</h5>
+                            <h5 class="modal-title text-center">Evaluation formation <br>
+                                {{ $formation?->module?->name }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -1316,11 +1369,13 @@
                                 <select name="evaluateur" class="form-select @error('evaluateur') is-invalid @enderror"
                                     aria-label="Select" id="select-field" data-placeholder="Choisir evaluateur">
                                     <option value="{{ $formation?->evaluateur?->id }}">
-                                        {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
+                                        @if (!empty($formation?->evaluateur?->name))
+                                            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
+                                        @endif
                                     </option>
                                     @foreach ($evaluateurs as $evaluateur)
                                         <option value="{{ $evaluateur->id }}">
-                                            {{ $evaluateur?->name . ', ' . $evaluateur?->fonction . ' [NE : ' . $evaluateur?->formations->count() . ']' ?? old('evaluateur') }}
+                                            {{ $evaluateur?->name . ', ' . $evaluateur?->fonction ?? old('evaluateur') }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -1344,7 +1399,7 @@
                                 @enderror
                             </div>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-12 col-md-9 col-lg-9 mb-3">
                                     <label>Evaluateur ONFP<span class="text-danger mx-1">*</span></label>
                                     <input type="text" name="nom_evaluateur_onfp"
@@ -1369,6 +1424,31 @@
                                         </span>
                                     @enderror
                                 </div>
+                            </div> --}}
+
+
+                            <div class="mb-3">
+                                <label for="evaluateur" class="form-label">Evaluateur ONFP<span
+                                        class="text-danger mx-1">*</span></label>
+                                <select name="onfpevaluateur"
+                                    class="form-select @error('onfpevaluateur') is-invalid @enderror" aria-label="Select"
+                                    id="select-field-onfp" data-placeholder="Choisir evaluateur ONFP">
+                                    <option value="{{ $formation->onfpevaluateur?->id }}">
+                                        @if (!empty($formation?->onfpevaluateur?->name))
+                                            {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}
+                                        @endif
+                                    </option>
+                                    @foreach ($onfpevaluateurs as $onfpevaluateur)
+                                        <option value="{{ $onfpevaluateur->id }}">
+                                            {{ $onfpevaluateur?->name . ', ' . $onfpevaluateur?->fonction ?? old('onfpevaluateur') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('onfpevaluateur')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -1385,7 +1465,7 @@
                             </div>
                             <div class="mb-3">
 
-                                <label for="membres_jury">Membres du jury</label>
+                                <label for="membres_jury">Autre membres du jury</label>
 
                                 <textarea name="membres_jury" id="membres_jury" cols="30" rows="3"
                                     class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"

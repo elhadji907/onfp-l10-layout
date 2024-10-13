@@ -47,8 +47,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
- * @property string|null $file4
- * @property string|null $file5
+ * @property string|null $legende_recipice
+ * @property string|null $file_recipice
  * @property int $demandeurs_id
  * @property int|null $ingenieurs_id
  * @property int|null $formations_id
@@ -76,6 +76,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Programme|null $programme
  * @property Projet|null $projet
  * @property Collection|Programme[] $programmes
+ * @property Collection|Listecollective[] $listecollectives
  * @property Collection|Projet[] $projets
  * @property Collection|Membre[] $membres
  * @property Collection|Formation[] $formations
@@ -148,8 +149,8 @@ class Collective extends Model
 		'file1',
 		'file2',
 		'file3',
-		'file4',
-		'file5',
+		'legende_recipice',
+		'file_recipice',
 		'demandeurs_id',
 		'ingenieurs_id',
 		'formations_id',

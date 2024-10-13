@@ -207,9 +207,11 @@
                                         <th width="5%" class="text-center">Modules</th>
                                         <th width="5%" class="text-center">Formations</th>
                                         <th width="15%" class="text-center">Statut</th>
-                                        @if (auth()->user()->hasRole('super-admin|admin'))
+                                        {{-- @if (auth()->user()->hasRole('super-admin|admin')) --}}
+                                        @can('user-view')
                                             <th width="5%"><i class="bi bi-gear"></i></th>
-                                        @endif
+                                        @endcan
+                                        {{-- @endif --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -239,17 +241,17 @@
                                             <td style="text-align: center;"><span
                                                     class="{{ $operateur->statut_agrement }}">
                                                     {{ $operateur?->statut_agrement }}</span></td>
-                                            <td>
-                                                <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('operateurs.show', $operateur->id) }}"
-                                                        class="btn btn-primary btn-sm" title="voir détails"><i
-                                                            class="bi bi-eye"></i></a>
-                                                    @if (auth()->user()->hasRole('super-admin|admin'))
+                                            @can('user-view')
+                                                <td>
+                                                    <span class="d-flex align-items-baseline"><a
+                                                            href="{{ route('operateurs.show', $operateur->id) }}"
+                                                            class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                class="bi bi-eye"></i></a>
+                                                        {{-- @if (auth()->user()->hasRole('super-admin|admin')) --}}
                                                         <div class="filter">
                                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                     class="bi bi-three-dots"></i></a>
-                                                            <ul
-                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                                 <li>
                                                                     <a class="dropdown-item btn btn-sm"
                                                                         href="{{ route('operateurs.edit', $operateur->id) }}"
@@ -276,9 +278,10 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                    @endif
-                                                </span>
-                                            </td>
+                                                        {{-- @endif --}}
+                                                    </span>
+                                                </td>
+                                            @endcan
                                         </tr>
                                         {{-- @endisset --}}
                                     @endforeach

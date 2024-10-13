@@ -33,6 +33,7 @@ use App\Http\Controllers\LocaliteController;
 use App\Http\Controllers\LoiController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\NomminationController;
+use App\Http\Controllers\OnfpevaluateurController;
 use App\Http\Controllers\OperateurController;
 use App\Http\Controllers\OperateureferenceController;
 use App\Http\Controllers\OperateurequipementController;
@@ -54,12 +55,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationcollectiveController;
 use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
-use App\Http\Controllers\ValidationmoduleController;
 
+use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -224,6 +226,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::put('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'givecollectiveformations']);
 
     Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
+    Route::put('collectiveindisponibles/{idformation}', [FormationController::class, 'givecollectiveindisponibles']);
+
+    Route::put('remiseAttestations/{idformation}', [FormationController::class, 'giveremiseAttestations']);
 
     Route::post('/addIndividuelle', [IndividuelleController::class, 'addIndividuelle'])->name('addIndividuelle');
     Route::post('/addCollective', [CollectiveController::class, 'addCollective'])->name('addCollective');
@@ -350,6 +355,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('regions/rapports',[RegionController::class,'rapports'])->name('regions.rapports');
     Route::post('regions/rapports',[RegionController::class,'generateRapport']);
 
+    Route::put('/validerModuleCollective', [CollectivemoduleController::class, 'validerModuleCollective'])->name('validerModuleCollective');
+    Route::put('/rejeterModuleCollective', [CollectivemoduleController::class, 'rejeterModuleCollective'])->name('rejeterModuleCollective');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -402,6 +410,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('/operateurlocalites', OperateurlocaliteController::class);
     Route::resource('/commissionagrements', CommissionagrementController::class);
     Route::resource('/evaluateurs', EvaluateurController::class);
+    Route::resource('/onfpevaluateurs', OnfpevaluateurController::class);
 });
 
 

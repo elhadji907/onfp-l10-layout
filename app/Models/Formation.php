@@ -49,6 +49,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $total
  * @property string|null $appreciations
  * @property int|null $ingenieurs_id
+ * @property int|null $onfpevaluateurs_id
  * @property int|null $evaluateurs_id
  * @property int|null $agents_id
  * @property int|null $detfs_id
@@ -88,6 +89,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Departement|null $departement
  * @property Detf|null $detf
  * @property Ingenieur|null $ingenieur
+ * @property Onfpevaluateur|null $onfpevaluateur
  * @property Localite|null $localite
  * @property Module|null $module
  * @property Collectivemodule|null $collectivemodule
@@ -138,6 +140,7 @@ class Formation extends Model
 		'forme_f' => 'int',
 		'total' => 'int',
 		'ingenieurs_id' => 'int',
+		'onfpevaluateurs_id' => 'int',
 		'evaluateurs_id' => 'int',
 		'agents_id' => 'int',
 		'detfs_id' => 'int',
@@ -218,6 +221,7 @@ class Formation extends Model
 		'recommandations',
 		'appreciations',
 		'ingenieurs_id',
+		'onfpevaluateurs_id',
 		'evaluateurs_id',
 		'agents_id',
 		'detfs_id',
@@ -303,6 +307,11 @@ class Formation extends Model
 	public function ingenieur()
 	{
 		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
+	}
+
+	public function onfpevaluateur()
+	{
+		return $this->belongsTo(Onfpevaluateur::class, 'onfpevaluateurs_id');
 	}
 
 	public function evaluateur()

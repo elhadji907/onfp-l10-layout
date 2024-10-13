@@ -24,7 +24,7 @@
                                 <span class="d-flex mt-0 align-items-baseline"><a
                                         href="{{ route('formations.show', $formation->id) }}" class="btn btn-success btn-sm"
                                         title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                    <p> | Détails formation</p>
+                                    <p> | Liste des demandes collectives</p>
                                 </span>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                             </h5>
                             <h5><b><u>MODULE</u></b> :{{ $formation?->collectivemodule?->module }}</h5>
                         @endisset
-                        <h5 class="pt-2">Liste des demandes collectives</h5>
+                        {{-- <h5 class="pt-2">Liste des demandes collectives</h5> --}}
                         <form method="post" action="{{ url('formationcollectives', ['$idformation' => $formation->id]) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf

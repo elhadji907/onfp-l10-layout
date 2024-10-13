@@ -50,8 +50,8 @@ class CreateCollectivesTable extends Migration
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();
-            $table->string('file4', 200)->nullable();
-            $table->string('file5', 200)->nullable();
+            $table->string('legende_recipice', 200)->nullable();
+            $table->string('file_recipice', 200)->nullable();
             $table->string('civilite_responsable')->nullable(true);
             $table->string('nom_responsable', 200)->nullable();
             $table->string('prenom_responsable', 200)->nullable();

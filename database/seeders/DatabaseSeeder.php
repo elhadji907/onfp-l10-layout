@@ -210,6 +210,9 @@ class DatabaseSeeder extends Seeder
         'home-view',
         'courrier-view',
         'localite-view',
+        'agrement-commission',
+        'onfpevaluateur-view',
+        'validate-module-collective',
     ];
 
     public function run(): void
@@ -261,6 +264,9 @@ class DatabaseSeeder extends Seeder
             IndemniteSeeder::class,
             TypeformationSeeder::class,
             ProjetSeeder::class,
+            IngenieurSeeder::class,
+            EvaluateurSeeder::class,
+            OnfpevaluateurSeeder::class,
             IndividuelleSeeder::class,
         ]);
     }

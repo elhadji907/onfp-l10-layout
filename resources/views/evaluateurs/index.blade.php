@@ -137,7 +137,7 @@
                     <form method="post" action="{{ url('evaluateurs') }}" enctype="multipart/form-data" class="row g-3">
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter un ingénieur</h5>
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter un évaluateur</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -231,7 +231,8 @@
                             @csrf
                             @method('patch')
                             <div class="modal-header" id="EditevaluateurModalLabel{{ $evaluateur->id }}">
-                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier évaluateur</h5>
+                                <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier évaluateur
+                                </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -286,7 +287,8 @@
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="adresse" value="{{  $evaluateur->adresse ?? old('adresse') }}"
+                                    <input type="text" name="adresse"
+                                        value="{{ $evaluateur->adresse ?? old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
                                     @error('adresse')

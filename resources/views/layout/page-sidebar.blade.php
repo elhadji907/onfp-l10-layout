@@ -354,6 +354,13 @@
                             </a>
                         </li><!-- End Formations Nav -->
                     @endcan
+                    @can('evaluateur-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('onfpevaluateurs') }}">
+                                <span>Evaluateurs ONFP</span>
+                            </a>
+                        </li><!-- End Formations Nav -->
+                    @endcan
                 </ul>
             </li>
         @endcan

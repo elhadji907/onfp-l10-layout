@@ -82,6 +82,7 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('antennes_id')->nullable();
             $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('choixoperateurs_id')->nullable();
+            $table->unsignedInteger('onfpevaluateurs_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();
             $table->unsignedInteger('collectivemodules_id')->nullable();
             $table->unsignedInteger('collectives_id')->nullable();

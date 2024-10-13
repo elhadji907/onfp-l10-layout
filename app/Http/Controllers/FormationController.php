@@ -15,6 +15,7 @@ use App\Models\Individuelle;
 use App\Models\Ingenieur;
 use App\Models\Listecollective;
 use App\Models\Module;
+use App\Models\Onfpevaluateur;
 use App\Models\Operateur;
 use App\Models\Operateurmodule;
 use App\Models\Programme;
@@ -260,6 +261,7 @@ class FormationController extends Controller
         $individuelles = Individuelle::orderBy("created_at", "desc")->get();
         $listecollectives = Listecollective::orderBy("created_at", "desc")->get();
         $evaluateurs = Evaluateur::orderBy("created_at", "desc")->get();
+        $onfpevaluateurs = Onfpevaluateur::orderBy("created_at", "desc")->get();
 
         $collectivemodule = Collectivemodule::where('collectives_id', $formation->collectives_id)->get();
 
@@ -268,32 +270,89 @@ class FormationController extends Controller
             ->pluck('collectivemodules_id', 'collectivemodules_id')
             ->all();
 
-        return view('formations.' . $type_formation . "s.show", compact("evaluateurs", "formation", "count_demandes", "operateur", "module", "type_formation", "individuelles", "listecollectives", "collectiveFormation", "ingenieur"));
+        $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
+            ->select('collectivemodules.*')
+            ->where('collectives.statut_demande', 'attente')
+            ->whereBetween('collectivemodules.statut', ['attente', 'attente', 'retenu'])
+            ->get();
+
+        $collectiveModule = DB::table('collectivemodules')
+            ->where('formations_id', $formation->id)
+            ->pluck('formations_id', 'formations_id')
+            ->all();
+
+        $collectiveModuleCheck = DB::table('collectivemodules')
+            ->where('formations_id', '!=', null)
+            ->where('formations_id', '!=', $formation->id)
+            ->pluck('formations_id', 'formations_id')
+            ->all();
+
+        return view(
+            'formations.' . $type_formation . "s.show",
+            compact(
+                "evaluateurs",
+                "formation",
+                "count_demandes",
+                "operateur",
+                "module",
+                "type_formation",
+                "individuelles",
+                "listecollectives",
+                "collectiveFormation",
+                "onfpevaluateurs",
+                "ingenieur",
+                "collectivemodules",
+                "collectiveModule",
+                "collectiveModuleCheck",
+            )
+        );
     }
 
     public function destroy($id)
     {
         $formation   = Formation::find($id);
 
-        /* $formation->delete(); */
+        if (!empty($formation->types_formation->name) && $formation->types_formation->name == "collective") {
+            foreach ($formation->listecollectives as $liste) {
+            }
+            if (!empty($liste)) {
+                Alert::warning('Attention !', 'impossible de supprimer');
+                return redirect()->back();
+            } else {
+                $formation->delete();
+                Alert::success('Effectuée ! ' . 'formation supprimée');
+                return redirect()->back();
+            }
+        } elseif (!empty($formation->types_formation->name) && $formation->types_formation->name == "individuelle") {
+            foreach ($formation->individuelles as $individuelle) {
+            }
+            if (!empty($individuelle)) {
+                Alert::warning('Attention !', 'impossible de supprimer');
+                return redirect()->back();
+            } else {
+                $formation->delete();
+                Alert::success('Effectuée ! ', 'formation supprimée');
+                return redirect()->back();
+            }
+        } else {
+            $formation->update([
+                "statut"       =>   "supprimer",
+            ]);
 
-        $formation->update([
-            "statut"       =>   "supprimer",
-        ]);
-
-        $formation->save();
+            $formation->save();
 
 
-        $statut = new Statut([
-            "statut"                =>   "supprimer",
-            "formations_id"         =>   $formation->id,
-        ]);
+            $statut = new Statut([
+                "statut"                =>   "supprimer",
+                "formations_id"         =>   $formation->id,
+            ]);
 
-        $statut->save();
+            $statut->save();
 
-        Alert::success('La formation ' . $formation->name, 'a été supprimer');
+            Alert::success('Effectuée ! ', 'formation supprimée');
 
-        return redirect()->back();
+            return redirect()->back();
+        }
     }
 
     public function addformationdemandeurs($idformation, $idmodule, $idlocalite)
@@ -330,9 +389,7 @@ class FormationController extends Controller
             ->where('modules.name', 'LIKE', "%{$module->name}%")
             ->where('regions.nom', $region->nom)
             ->where('modules.name', 'LIKE', "%{$module->name}%")
-            ->where('statut', 'attente')
-            ->orWhere('statut', 'retirer')
-            ->orWhere('statut', 'retenu')
+            ->whereBetween('statut', ['attente', 'retirer', 'retenu'])
             ->get();
 
         /* dd($individuelles); */
@@ -440,6 +497,53 @@ class FormationController extends Controller
 
             Alert::success('Effectué', 'demandeur retiré de cette formation');
         }
+        return redirect()->back();
+    }
+
+    public function givecollectiveindisponibles($idformation,  Request $request)
+    {
+        $request->validate([
+            'motif' => ['required']
+        ]);
+
+        $listecollective = Listecollective::findOrFail($request->input('listecollectiveid'));
+        $formation   = Formation::findOrFail($idformation);
+
+        if ($formation->statut == 'terminer' && $listecollective->note_obtenue > 0) {
+            Alert::warning('Attention !', 'impossible de retirer ce demandeur');
+        } else {
+            $listecollective->update([
+                "formations_id"      =>  null,
+                "statut"             =>  'retirer',
+                "motif_rejet"        =>  $request->motif,
+            ]);
+
+            $listecollective->save();
+
+            Alert::success('Effectué', 'demandeur retiré de cette formation');
+        }
+        return redirect()->back();
+    }
+
+    public function giveremiseAttestations($idformation,  Request $request)
+    {
+        $request->validate([
+            'statut' => ['required']
+        ]);
+
+
+        $formation = Formation::findOrFail($request->input('formationid'));
+
+        if ($formation->statut != 'terminer') {
+            Alert::warning('Attention !', 'la formation n\'est pas encore terminée');
+        } else {
+            $formation->update([
+                "attestation"             =>  $request->statut,
+            ]);
+
+            $formation->save();
+        }
+        Alert::success('Attestations ' . $request->statut);
         return redirect()->back();
     }
 
@@ -620,14 +724,21 @@ class FormationController extends Controller
     {
 
         $formation = Formation::findOrFail($idformation);
-
         /* $collectives = Collective::where('statut_demande', 'accepter')
             ->orwhere('statut_demande', 'retenu')
             ->get(); */
 
-        $collectivemodules = Collectivemodule::where('statut', 'retenu')
-            ->orwhere('statut', 'accepter')
-            ->orwhere('statut', 'attente')
+        /* $admis_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('formations_id', $formation->id)
+            ->where('users.civilite', "M.")
+            ->where('note_obtenue', '>=', '12')
+            ->count(); */
+
+        $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
+            ->select('collectivemodules.*')
+            ->where('collectives.statut_demande', 'attente')
+            ->whereBetween('collectivemodules.statut', ['attente', 'retenu'])
             ->get();
 
         /* $collectiveFormation = DB::table('collectives')
@@ -652,7 +763,15 @@ class FormationController extends Controller
             ->pluck('formations_id', 'formations_id')
             ->all();
 
-        return view("formations.collectives.add-collectives", compact('formation', 'collectivemodules', 'collectiveModule', 'collectiveModuleCheck'));
+        return view(
+            "formations.collectives.add-collectives",
+            compact(
+                'formation',
+                'collectivemodules',
+                'collectiveModule',
+                'collectiveModuleCheck'
+            )
+        );
     }
 
 
@@ -662,15 +781,23 @@ class FormationController extends Controller
             'collectivemodule' => ['required']
         ]);
 
-
         $collectivemodule = Collectivemodule::findOrFail($request->collectivemodule);
 
-        if (isset($request->collectivemoduleformation) && $request->collectivemoduleformation != $collectivemodule->id) {
+        $formation = Formation::findOrFail($idformation);
+
+        foreach ($formation->listecollectives as $liste) {
+        }
+
+        if (!empty($liste)) {
+            Alert::warning('Attention !', 'des bénéficiaires sont déjà sélectionnés');
+
+            return redirect()->back();
+        } elseif (isset($request->collectivemoduleformation) && $request->collectivemoduleformation != $collectivemodule->id) {
             $collectivemoduleformation = Collectivemodule::findOrFail($request->collectivemoduleformation);
 
             $collectivemoduleformation->update([
                 "formations_id"      =>  null,
-                "statut"             =>  'accepter',
+                "statut"             =>  'attente',
             ]);
 
             $collectivemoduleformation->save();
@@ -944,8 +1071,6 @@ class FormationController extends Controller
         $request->validate([
             'membres_jury'              => ['nullable', 'string'],
             'evaluateur'                => ['required', 'string'],
-            'nom_evaluateur_onfp'       => ['required', 'string'],
-            'initiale_evaluateur_onfp'  => ['required', 'string'],
             'numero_convention'         => ['required', 'string'],
             'frais_evaluateur'          => ['required', 'string'],
             'type_certificat'           => ['required', 'string'],
@@ -957,14 +1082,13 @@ class FormationController extends Controller
 
         $formation->update([
             "membres_jury"                  =>  $request->input('membres_jury'),
-            "evaluateur_onfp"               =>  $request->input('nom_evaluateur_onfp'),
-            "initiale_evaluateur_onfp"      =>  $request->input('initiale_evaluateur_onfp'),
             "numero_convention"             =>  $request->input('numero_convention'),
             "frais_evaluateur"              =>  $request->input('frais_evaluateur'),
             "type_certificat"               =>  $request->input('type_certificat'),
             "recommandations"               =>  $request->input('recommandations'),
             "date_pv"                       =>  $request->input('date_pv'),
             "evaluateurs_id"                => $request->input('evaluateur'),
+            "onfpevaluateurs_id"            => $request->input('onfpevaluateur'),
         ]);
 
         $formation->save();
@@ -1269,6 +1393,7 @@ class FormationController extends Controller
         $localite = Region::findOrFail($idlocalite);
 
         $listecollectives = Listecollective::where('collectivemodules_id', $idcollectivemodule)
+            ->whereBetween('statut', ['attente', 'retenu', 'retirer', 'former'])
             ->get();
 
         $candidatsretenus = Listecollective::where('collectivemodules_id', $idcollectivemodule)

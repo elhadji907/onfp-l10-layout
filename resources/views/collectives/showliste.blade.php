@@ -1,5 +1,11 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste membres')
+@section('title',
+    $collectivemodule->collective->name .
+    ' (' .
+    $collectivemodule->collective->sigle .
+    '), liste membres
+    en ' .
+    $collectivemodule->module)
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -10,7 +16,14 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                             <li class="breadcrumb-item">Tables</li>
-                            <li class="breadcrumb-item active">{{ $collectivemodule->module }}</li>
+                            <li class="breadcrumb-item active">
+                                {{ $collectivemodule->collective->name .
+                                    ' (' .
+                                    $collectivemodule->collective->sigle .
+                                    '), liste membres
+                                                                                                    en ' .
+                                    $collectivemodule->module }}
+                            </li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
@@ -45,22 +58,25 @@
                         </li>
                     </ul>
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                            data-bs-target="#AddIndividuelModal">
-                            <i class="bi bi-plus" title="Ajouter"></i>
-                        </button>
-                        <h5 class="card-title">Modules: {{ $collectivemodule->module }}</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">Modules: {{ $collectivemodule->module }}</h5>
+                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                data-bs-target="#AddIndividuelModal">
+                                <i class="bi bi-plus" title="Ajouter"></i>
+                            </button>
+                        </div>
                         <table class="table datatables align-middle justify-content-center" id="table-modules">
                             <thead>
                                 <tr>
-                                    <th scope="col">CIN</th>
+                                    <th scope="col" class="text-center">N°</th>
+                                    <th scope="col" class="text-center">CIN</th>
                                     <th scope="col">Civilité</th>
                                     <th scope="col">Prénom</th>
                                     <th scope="col">Nom</th>
                                     <th scope="col">Date naissance</th>
                                     <th scope="col">Lieu naissance</th>
                                     <th scope="col">Niveau étude</th>
-                                    <th scope="col">Module</th>
+                                    {{-- <th scope="col">Module</th> --}}
                                     <th scope="col">Statut</th>
                                     <th class="col"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -69,7 +85,8 @@
                                 <?php $i = 1; ?>
                                 @foreach ($collectivemodule->listecollectives as $listecollective)
                                     <tr>
-                                        <td>{{ $listecollective?->cin }}</td>
+                                        <td class="text-center">{{ $i++ }}</td>
+                                        <td class="text-center">{{ $listecollective?->cin }}</td>
                                         <td>{{ $listecollective?->civilite }}</td>
                                         <td>{{ $listecollective?->prenom }}</td>
                                         <td>{{ $listecollective?->nom }}</td>
@@ -77,7 +94,7 @@
                                         </td>
                                         <td>{{ $listecollective?->lieu_naissance }}</td>
                                         <td>{{ $listecollective?->niveau_etude }}</td>
-                                        <td>{{ $listecollective?->collectivemodule?->module }}</td>
+                                        {{-- <td>{{ $listecollective?->collectivemodule?->module }}</td> --}}
                                         <td>
                                             <span
                                                 class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
@@ -438,9 +455,9 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             },
-            "order": [
-                [2, 'desc']
-            ],
+            /*   "order": [
+                  [0, 'desc']
+              ], */
             language: {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher&nbsp;:",

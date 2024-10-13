@@ -27,6 +27,7 @@ class IndividuelleController extends Controller
         // examples:
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF']);
+        $this->middleware("permission:user-view", ["only" => ["index"]]);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */
@@ -517,7 +518,7 @@ class IndividuelleController extends Controller
         $modules            = Module::orderBy("created_at", "desc")->get();
         $projets            = Projet::orderBy("created_at", "desc")->get();
 
-        if ($individuelle->statut != 'nouvelle') {
+        if ($individuelle->statut != 'nouvelle' && $individuelle->statut != 'attente') {
             Alert::warning('Attention ! ', 'action impossible demande déjà traitée');
             return redirect()->back();
         } else {

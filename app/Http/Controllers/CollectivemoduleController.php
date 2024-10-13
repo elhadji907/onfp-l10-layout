@@ -93,4 +93,38 @@ class CollectivemoduleController extends Controller
 
         return redirect()->back();
     }
+
+    public function validerModuleCollective(Request $request)
+    {
+        $collectivemodule = Collectivemodule::findOrFail($request->id);
+
+        $collectivemodule->update([
+            'statut' => 'attente'
+        ]);
+
+        $collectivemodule->save();
+        Alert::success('Module validé !', 'Merci à bientôt');
+
+        return redirect()->back();
+    }
+
+    public function rejeterModuleCollective(Request $request)
+    {
+        $request->validate([
+            'motif' => 'required|string'
+        ]);
+
+        $collectivemodule = Collectivemodule::findOrFail($request->id);
+
+        $collectivemodule->update([
+            'motif' => $request->motif,
+            'statut' => 'rejeter'
+        ]);
+
+        $collectivemodule->save();
+        
+        Alert::success('Module rejeté !', 'Merci à bientôt');
+
+        return redirect()->back();
+    }
 }

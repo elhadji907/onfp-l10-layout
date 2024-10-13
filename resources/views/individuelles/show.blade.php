@@ -23,19 +23,19 @@
                             <div class="d-flex justify-content-between align-items-center mt-3">
 
                                 {{-- @if (auth()->user()->hasRole('Demandeur')) --}}
-                                @can('demandeur-view')
-                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('demandesIndividuelle') }}"
-                                            class="btn btn-secondary btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | retour</p>
-                                    </span>
-                                @endcan
                                 {{-- @endif --}}
                                 {{-- @if (auth()->user()->hasRole('super-admin|admin')) --}}
 
                                 @can('user-view')
                                     <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('individuelles.index') }}"
                                             class="btn btn-secondary btn-sm" title="retour"><i
+                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                        <p> | retour</p>
+                                    </span>
+                                @endcan
+                                @can('demandeur-view')
+                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('demandesIndividuelle') }}"
+                                            class="btn btn-info btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | retour</p>
                                     </span>

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string|null $module
  * @property string|null $domaine
  * @property string|null $niveau_qualification
- * @property string|null $details
+ * @property string|null $motif
  * @property string|null $adresse
  * @property string|null $contact
  * @property string|null $statut
@@ -58,7 +58,7 @@ class Collectivemodule extends Model
         'module',
         'domaine',
         'niveau_qualification',
-        'details',
+        'motif',
         'adresse',
         'contact',
         'statut',
