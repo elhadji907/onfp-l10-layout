@@ -357,6 +357,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::put('/validerModuleCollective', [CollectivemoduleController::class, 'validerModuleCollective'])->name('validerModuleCollective');
     Route::put('/rejeterModuleCollective', [CollectivemoduleController::class, 'rejeterModuleCollective'])->name('rejeterModuleCollective');
+    Route::put('/supprimerModuleCollective', [CollectivemoduleController::class, 'supprimerModuleCollective'])->name('supprimerModuleCollective');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

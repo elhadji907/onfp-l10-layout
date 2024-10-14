@@ -612,6 +612,7 @@
                                             sélectionné : {{ $formation?->collectivemodule?->module }}
                                         @endif
                                     </h1>
+
                                     @if (!empty($formation?->collectivemodule?->module))
                                         <form method="post"
                                             action="{{ url('formationcollectives', ['$idformation' => $formation->id]) }}"
@@ -858,13 +859,22 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
                                                 {{ $formation?->collectivemodule?->collective->name . ' (' . $formation?->collectivemodule?->collective->sigle . ')' }}
-                                                <a class="btn btn-info btn-sm" title=""
+                                                <a class="btn btn-info btn-sm" title="modifier module"
                                                     href="{{ route('collectives.show', $formation->collectivemodule?->collective->id) }}"
                                                     target="_blank"><i class="bi bi-eye"></i></a>&nbsp;
                                                 <a href="{{ url('collectiveformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                     class="btn btn-primary float-end btn-sm">
                                                     <i class="bi bi-pencil" title="Changer module"></i> </a>
                                             </h5>
+                                            <form action="{{ route('supprimerModuleCollective') }}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="id"
+                                                    value="{{ $formation->collectivemodule?->id }}">
+                                                <button type="submit"
+                                                    class="btn btn-danger float-end btn-sm show_confirm"
+                                                    title="Supprimer"><i class="bi bi-trash"></i>Supprimer</button>
+                                            </form>
                                         </div>
                                     @else
                                         <div class="d-flex justify-content-between align-items-center">
@@ -1350,7 +1360,8 @@
             <div class="modal fade" id="indiponibleModal{{ $listecollective->id }}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form method="post" action="{{ url('collectiveindisponibles', ['$idformation' => $formation->id]) }}"
+                        <form method="post"
+                            action="{{ url('collectiveindisponibles', ['$idformation' => $formation->id]) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
                             @method('PUT')

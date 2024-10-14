@@ -122,8 +122,24 @@ class CollectivemoduleController extends Controller
         ]);
 
         $collectivemodule->save();
-        
+
         Alert::success('Module rejeté !', 'Merci à bientôt');
+
+        return redirect()->back();
+    }
+
+    public function supprimerModuleCollective(Request $request)
+    {
+        $collectivemodule = Collectivemodule::findOrFail($request->id);
+
+        $collectivemodule->update([
+            'statut' => 'attente',
+            'formations_id' => null
+        ]);
+
+        $collectivemodule->save();
+
+        Alert::success('Module supprimer !', 'Merci à bientôt');
 
         return redirect()->back();
     }

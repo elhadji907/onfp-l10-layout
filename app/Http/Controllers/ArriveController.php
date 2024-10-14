@@ -50,22 +50,22 @@ class ArriveController extends Controller
             $numCourrier = ++$numCourrier;
         } else {
             $numCourrier = $an . "0001";
-        }
 
-        $longueur = strlen($numCourrier);
+            $longueur = strlen($numCourrier);
 
-        if ($longueur <= 1) {
-            $numCourrier   =   strtolower("00000" . $numCourrier);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("0000" . $numCourrier);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-            $numCourrier   =   strtolower("000" . $numCourrier);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-            $numCourrier   =   strtolower("00" . $numCourrier);
-        } elseif ($longueur >= 5 && $longueur < 6) {
-            $numCourrier   =   strtolower("0" . $numCourrier);
-        } else {
-            $numCourrier   =   strtolower($numCourrier);
+            if ($longueur <= 1) {
+                $numCourrier   =   strtolower("00000" . $numCourrier);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numCourrier   =   strtolower("0000" . $numCourrier);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numCourrier   =   strtolower("000" . $numCourrier);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numCourrier   =   strtolower("00" . $numCourrier);
+            } elseif ($longueur >= 5 && $longueur < 6) {
+                $numCourrier   =   strtolower("0" . $numCourrier);
+            } else {
+                $numCourrier   =   strtolower($numCourrier);
+            }
         }
 
         /* $arrives = Arrive::orderBy('created_at', 'desc')->get(); */
@@ -111,23 +111,23 @@ class ArriveController extends Controller
             $numCourrier = ++$numCourrier;
         } else {
             $numCourrier = $an . "0001";
+            $longueur = strlen($numCourrier);
+
+            if ($longueur <= 1) {
+                $numCourrier   =   strtolower("00000" . $numCourrier);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numCourrier   =   strtolower("0000" . $numCourrier);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numCourrier   =   strtolower("000" . $numCourrier);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numCourrier   =   strtolower("00" . $numCourrier);
+            } elseif ($longueur >= 5 && $longueur < 6) {
+                $numCourrier   =   strtolower("0" . $numCourrier);
+            } else {
+                $numCourrier   =   strtolower($numCourrier);
+            }
         }
 
-        $longueur = strlen($numCourrier);
-
-        if ($longueur <= 1) {
-            $numCourrier   =   strtolower("00000" . $numCourrier);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("0000" . $numCourrier);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-            $numCourrier   =   strtolower("000" . $numCourrier);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-            $numCourrier   =   strtolower("00" . $numCourrier);
-        } elseif ($longueur >= 5 && $longueur < 6) {
-            $numCourrier   =   strtolower("0" . $numCourrier);
-        } else {
-            $numCourrier   =   strtolower($numCourrier);
-        }
         return view("courriers.arrives.create", compact('anneeEnCours', 'numCourrier'));
     }
 

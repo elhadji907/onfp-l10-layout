@@ -40,7 +40,24 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="code" class="form-label">Code<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="text" name="code"
+                                            value="{{$formation?->code ?? old('code') }}"
+                                            class="form-control form-control-sm @error('code') is-invalid @enderror"
+                                            id="code" placeholder="Numéro de correspondance">
+                                        @error('code')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="departement" class="form-label">Département<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="departement"
@@ -61,12 +78,12 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                    <label for="lieu" class="form-label">Lieu exact<span
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="lieu" class="form-label">Adresse exacte<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="lieu" value="{{ $formation?->lieu ?? old('lieu') }}"
                                         class="form-control form-control-sm @error('lieu') is-invalid @enderror"
-                                        id="lieu" placeholder="Lieu exact">
+                                        id="lieu" placeholder="Adresse exacte">
                                     @error('lieu')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -119,7 +136,7 @@
                                     @enderror
                                 </div> --}}
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="types_formation" class="form-label">Type formation<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="types_formation"
@@ -142,7 +159,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="niveau_qualification" class="form-label">Niveau qualification<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="niveau_qualification"
@@ -169,7 +186,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_debut" class="form-label">Date début</label>
                                     <input type="date" name="date_debut"
                                         value="{{ $formation->date_debut->format('Y-m-d') ?? old('date_debut') }}"
@@ -182,7 +199,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_fin" class="form-label">Date fin</label>
                                     <input type="date" name="date_fin"
                                         value="{{ $formation?->date_fin?->format('Y-m-d') ?? old('date_fin') }}"
@@ -195,7 +212,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="titre" class="form-label">Titre (convention)</label>
                                     <input type="text" name="titre" value="{{ $formation?->titre ?? old('titre') }}"
                                         class="form-control form-control-sm @error('titre') is-invalid @enderror"
@@ -206,7 +223,8 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="numero_convention" class="form-label">Numéro convention</label>
                                     <input type="text" name="numero_convention" value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
                                         class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
@@ -231,7 +249,7 @@
                                     @enderror
                                 </div> --}}
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="prevue_h" class="form-label">Effectif homme</label>
                                     <input type="number" name="prevue_h" min="0" max="25"
                                         value="{{ $formation?->prevue_h ?? old('prevue_h') }}"
@@ -244,7 +262,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="prevue_f" class="form-label">Effectif femme</label>
                                     <input type="number" name="prevue_f" min="0" max="25"
                                         value="{{ $formation?->prevue_f ?? old('prevue_f') }}"
@@ -257,8 +275,7 @@
                                     @enderror
                                 </div>
 
-
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="frais_operateurs" class="form-label">Frais opérateur</label>
                                     <input type="number" name="frais_operateurs" min="0" step="0.001"
                                         value="{{ $formation?->frais_operateurs ?? old('frais_operateurs') }}"
@@ -271,7 +288,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="frais_add" class="form-label">Frais additionels</label>
                                     <input type="number" name="frais_add" min="0" step="0.001"
                                         value="{{ $formation?->frais_add ?? old('frais_add') }}"
@@ -284,7 +301,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="autes_frais" class="form-label">Autres frais</label>
                                     <input type="number" name="autes_frais" min="0" step="0.001"
                                         value="{{ $formation?->autes_frais ?? old('autes_frais') }}"
@@ -297,7 +314,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="projet" class="form-label">Projet</label>
                                     <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
                                         aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
@@ -338,7 +355,7 @@
                                     @enderror
                                 </div> --}}
 
-                                <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                {{-- <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="choixoperateur" class="form-label">Choix opérateurs</label>
                                     <select name="choixoperateur"
                                         class="form-select  @error('choixoperateur') is-invalid @enderror"
@@ -358,7 +375,7 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> --}}
                         </div>
 
                         <div class="text-center p-3">

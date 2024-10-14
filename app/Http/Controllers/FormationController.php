@@ -76,7 +76,68 @@ class FormationController extends Controller
         $programmes = Programme::orderBy("created_at", "desc")->get();
         $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
         $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
-        return view("formations.index", compact("qrcode", "count_today", "collectives_formations_count", "individuelles_formations_count", "formations", "modules", "departements", "regions", "operateurs", 'types_formations', 'projets', 'programmes', 'choixoperateurs'));
+
+
+        $anneeEnCours = date('Y');
+        $annee = date('y');
+
+        $numFormation = Formation::join('types_formations', 'types_formations.id', 'formations.types_formations_id')
+            ->select('formations.*')
+            ->where('formations.annee', $anneeEnCours)
+            ->get()->last();
+
+        /*->where('types_formations.name', $request->types_formation)*/
+
+        if (isset($numFormation)) {
+            $numFormation = Formation::join('types_formations', 'types_formations.id', 'formations.types_formations_id')
+                ->select('formations.*')
+                ->where('formations.annee', $anneeEnCours)
+                ->get()->last()->code;
+
+            $numFormation = ++$numFormation;
+
+            /*  ->where('types_formations.name', $request->types_formation) */
+        } else {
+            $numFormation = $annee . "0001";
+
+            $numFormation   =   'F' . $numFormation;
+
+            $longueur = strlen($numFormation);
+
+            if ($longueur <= 1) {
+                $numFormation   =   strtoupper("00000" . $numFormation);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numFormation   =   strtoupper("0000" . $numFormation);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numFormation   =   strtoupper("000" . $numFormation);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numFormation   =   strtoupper("00" . $numFormation);
+            } elseif ($longueur >= 5 && $longueur < 6) {
+                $numFormation   =   strtoupper("0" . $numFormation);
+            } else {
+                $numFormation   =   strtoupper($numFormation);
+            }
+        }
+
+        return view(
+            "formations.index",
+            compact(
+                "qrcode",
+                "count_today",
+                "collectives_formations_count",
+                "individuelles_formations_count",
+                "formations",
+                "modules",
+                "departements",
+                "regions",
+                "operateurs",
+                'types_formations',
+                'projets',
+                'programmes',
+                'numFormation',
+                'choixoperateurs'
+            )
+        );
     }
 
 
@@ -88,6 +149,7 @@ class FormationController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            "code"                  =>   "required|string|min:7|max:8|unique:formations,code",
             "name"                  =>   "required|string|unique:formations,name",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
@@ -98,17 +160,16 @@ class FormationController extends Controller
             "date_fin"              =>   "nullable|date",
         ]);
 
-        $annee = date('y');
-
         /* $mois = date('m');
         $rand1 = rand(100, 999);
         $rand2 = chr(rand(65, 90));
 
         $rand = $rand1 . '' . $rand2; */
 
-        $types_formation = TypesFormation::findOrFail($request->input('types_formation'));
+        $types_formation = TypesFormation::where('name', $request->input('types_formation'))->get()->first();
+        $departement = Departement::where('nom', $request->input('departement'))->get()->first();
 
-        $count_formation = Formation::get()->count();
+        /* $count_formation = Formation::get()->count();
 
         $count_formation = ++$count_formation;
 
@@ -132,7 +193,54 @@ class FormationController extends Controller
             $fin = "C";
         }
 
-        $code_formation = $for . '' . $annee . '' . $code_formation . '' . $fin;
+        $code_formation = $for . '' . $annee . '' . $code_formation . '' . $fin; */
+
+
+        $anneeEnCours = date('Y');
+        $annee = date('y');
+
+        $numFormation = Formation::join('types_formations', 'types_formations.id', 'formations.types_formations_id')
+            ->select('formations.*')
+            ->where('formations.annee', $anneeEnCours)
+            ->get()->last();
+
+        /*->where('types_formations.name', $request->types_formation)*/
+
+        if (isset($numFormation)) {
+            $numFormation = Formation::join('types_formations', 'types_formations.id', 'formations.types_formations_id')
+                ->select('formations.*')
+                ->where('formations.annee', $anneeEnCours)
+                ->get()->last()->code;
+
+            $numFormation = ++$numFormation;
+
+            /*  ->where('types_formations.name', $request->types_formation) */
+        } else {
+            $numFormation = $annee . "0001";
+
+            $numFormation   =   'F' . $numFormation;
+
+            $longueur = strlen($numFormation);
+
+            if ($longueur <= 1) {
+                $numFormation   =   strtoupper("00000" . $numFormation);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numFormation   =   strtoupper("0000" . $numFormation);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numFormation   =   strtoupper("000" . $numFormation);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numFormation   =   strtoupper("00" . $numFormation);
+            } elseif ($longueur >= 5 && $longueur < 6) {
+                $numFormation   =   strtoupper("0" . $numFormation);
+            } else {
+                $numFormation   =   strtoupper($numFormation);
+            }
+        }
+
+        /* $arrives = Arrive::orderBy('created_at', 'desc')->get(); */
+
+        $total_count = Formation::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
 
         /* $rand = $fic . '' . $mois . $annee . $rand; */
 
@@ -146,16 +254,18 @@ class FormationController extends Controller
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
         ]);
+
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
+
         $formation = new Formation([
-            "code"                  =>   $code_formation,
+            "code"                  =>   $request->input('code'),
             "name"                  =>   $request->input('name'),
-            "regions_id"            =>   $request->input('region'),
-            "departements_id"       =>   $request->input('departement'),
+            "regions_id"            =>   $departement->region->id,
+            "departements_id"       =>   $departement->id,
             "lieu"                  =>   $request->input('lieu'),
             /* "modules_id"            =>   $request->input('module'), */
             "operateurs_id"         =>   $request->input('operateur'),
-            "types_formations_id"   =>   $request->input('types_formation'),
+            "types_formations_id"   =>   $types_formation->id,
             "niveau_qualification"  =>   $request->input('niveau_qualification'),
             "numero_convention"     =>   $request->input('numero_convention'),
             "titre"                 =>   $request->input('titre'),
@@ -171,7 +281,7 @@ class FormationController extends Controller
             "programmes_id"         =>   $request->input('programme'),
             "choixoperateurs_id"    =>   $request->input('choixoperateur'),
             "statut"                =>   "nouvelle",
-            "annee"                 =>   $annee,
+            "annee"                 =>   $anneeEnCours,
 
         ]);
 
@@ -207,6 +317,7 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($id);
 
         $this->validate($request, [
+            "code"                  =>   "required|string|unique:formations,code,{$formation->id}",
             "name"                  =>   "required|string|unique:formations,name,{$formation->id}",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
@@ -219,6 +330,7 @@ class FormationController extends Controller
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
 
         $formation->update([
+            "code"                  =>   $request->input('code'),
             "name"                  =>   $request->input('name'),
             "regions_id"            =>   $request->input('region'),
             "departements_id"       =>   $request->input('departement'),
@@ -273,7 +385,7 @@ class FormationController extends Controller
         $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
             ->select('collectivemodules.*')
             ->where('collectives.statut_demande', 'attente')
-            ->whereBetween('collectivemodules.statut', ['attente', 'attente', 'retenu'])
+            ->whereBetween('collectivemodules.statut', ['attente', 'retenu', 'retirer', 'former'])
             ->get();
 
         $collectiveModule = DB::table('collectivemodules')
@@ -319,6 +431,12 @@ class FormationController extends Controller
                 Alert::warning('Attention !', 'impossible de supprimer');
                 return redirect()->back();
             } else {
+                $formation->update([
+                    "code"       =>   $formation->code . '/' . $formation->id,
+                ]);
+
+                $formation->save();
+
                 $formation->delete();
                 Alert::success('Effectuée ! ' . 'formation supprimée');
                 return redirect()->back();
@@ -330,6 +448,11 @@ class FormationController extends Controller
                 Alert::warning('Attention !', 'impossible de supprimer');
                 return redirect()->back();
             } else {
+                $formation->update([
+                    "code"       =>   $formation->code . '/' . $formation->id,
+                ]);
+
+                $formation->save();
                 $formation->delete();
                 Alert::success('Effectuée ! ', 'formation supprimée');
                 return redirect()->back();
@@ -1392,8 +1515,10 @@ class FormationController extends Controller
         $collectivemodule = Collectivemodule::findOrFail($idcollectivemodule);
         $localite = Region::findOrFail($idlocalite);
 
-        $listecollectives = Listecollective::where('collectivemodules_id', $idcollectivemodule)
-            ->whereBetween('statut', ['attente', 'retenu', 'retirer', 'former'])
+        $listecollectives = Listecollective::join('collectives', 'collectives.id', 'listecollectives.collectives_id')
+            ->select('listecollectives.*')
+            ->where('collectives.id', $collectivemodule->collective->id)
+            ->where('collectivemodules_id', $idcollectivemodule)
             ->get();
 
         $candidatsretenus = Listecollective::where('collectivemodules_id', $idcollectivemodule)

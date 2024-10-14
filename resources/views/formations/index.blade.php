@@ -302,19 +302,36 @@
                                             </span>
                                         @enderror
                                     </div> --}}
+                                    
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="code" class="form-label">Code<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="input-group has-validation">
+                                        <input type="text" name="code"
+                                            value="{{ $numFormation ?? old('code') }}"
+                                            class="form-control form-control-sm @error('code') is-invalid @enderror"
+                                            id="code" placeholder="Numéro de correspondance">
+                                        @error('code')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="departement" class="form-label">Département<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select  @error('departement') is-invalid @enderror"
                                             aria-label="Select" id="select-field-departement-modal"
                                             data-placeholder="Choisir département">
-                                            <option value="">
+                                            <option value="{{ old('departement') }}">
                                                 {{ old('departement') }}
                                             </option>
                                             @foreach ($departements as $departement)
-                                                <option value="{{ $departement->id }}">
+                                                <option value="{{ $departement->nom }}">
                                                     {{ $departement->nom }}
                                                 </option>
                                             @endforeach
@@ -326,12 +343,12 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="lieu" class="form-label">Lieu exact<span
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="lieu" class="form-label">Adresse exacte<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="lieu" value="{{ old('lieu') }}"
                                             class="form-control form-control-sm @error('lieu') is-invalid @enderror"
-                                            id="lieu" placeholder="Lieu exact">
+                                            id="lieu" placeholder="Adresse exacte">
                                         @error('lieu')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -384,18 +401,18 @@
                                         @enderror
                                     </div> --}}
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="types_formation" class="form-label">Type formation<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="types_formation"
                                             class="form-select  @error('types_formation') is-invalid @enderror"
                                             aria-label="Select" id="select-field-types_formation"
                                             data-placeholder="Choisir type formation">
-                                            <option value="">
+                                            <option value="{{ old('types_formation') }}">
                                                 {{ old('types_formation') }}
                                             </option>
                                             @foreach ($types_formations as $types_formation)
-                                                <option value="{{ $types_formation->id }}">
+                                                <option value="{{ $types_formation->name }}">
                                                     {{ $types_formation->name }}
                                                 </option>
                                             @endforeach
@@ -407,7 +424,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="niveau_qualification" class="form-label">Niveau qualification<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="niveau_qualification"
@@ -431,7 +448,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_debut" class="form-label">Date début</label>
                                         <input type="date" name="date_debut" value="{{ old('date_debut') }}"
                                             class="form-control form-control-sm @error('date_debut') is-invalid @enderror"
@@ -443,7 +460,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_fin" class="form-label">Date fin</label>
                                         <input type="date" name="date_fin" value="{{ old('date_fin') }}"
                                             class="form-control form-control-sm @error('date_fin') is-invalid @enderror"
@@ -455,7 +472,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="titre" class="form-label">Titre (convention)</label>
                                         <input type="text" name="titre" value="{{ old('titre') }}"
                                             class="form-control form-control-sm @error('titre') is-invalid @enderror"
@@ -467,7 +484,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="numero_convention" class="form-label">Numéro convention</label>
                                         <input type="text" name="numero_convention"
                                             value="{{ old('numero_convention') }}"
@@ -494,7 +511,7 @@
                                         @enderror
                                     </div> --}}
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="prevue_h" class="form-label">Effectif prévu homme</label>
                                         <input type="number" name="prevue_h" min="0" max="25"
                                             value="{{ old('prevue_h') }}"
@@ -507,7 +524,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="prevue_f" class="form-label">Effectif prévu femme</label>
                                         <input type="number" name="prevue_f" min="0" max="25"
                                             value="{{ old('prevue_f') }}"
@@ -520,7 +537,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="frais_operateurs" class="form-label">Frais opérateur</label>
                                         <input type="number" name="frais_operateurs" min="0" step="0.001"
                                             value="{{ old('frais_operateurs') }}"
@@ -533,7 +550,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="frais_add" class="form-label">Frais additionels</label>
                                         <input type="number" name="frais_add" min="0" step="0.001"
                                             value="{{ old('frais_add') }}"
@@ -546,7 +563,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="autes_frais" class="form-label">Autres frais</label>
                                         <input type="number" name="autes_frais" min="0" step="0.001"
                                             value="{{ old('autes_frais') }}"
