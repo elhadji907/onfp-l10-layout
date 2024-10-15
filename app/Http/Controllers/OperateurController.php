@@ -30,8 +30,8 @@ class OperateurController extends Controller
         $this->middleware(['role:super-admin|admin|Operateur|DIOF|ADIOF|DEC|ADEC|Demandeur']);
         /* $this->middleware("permission:operateur-view", ["only" => ["create", "store"]]); */
         /* $this->middleware("permission:operateur-view", ["only" => ["index", "update", "destroy", "show"]]); */
-        $this->middleware("permission:operateur-demande-view");
-        $this->middleware("permission:user-view", ["only" => ["index"]]);
+        /* $this->middleware("permission:operateur-demande-view");
+        $this->middleware("permission:user-view", ["only" => ["index"]]); */
     }
     public function index()
     {

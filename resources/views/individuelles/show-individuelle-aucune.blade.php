@@ -108,7 +108,7 @@
                                         <label for="adresse" class="form-label">Adresse<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="adresse"
-                                            value="{{ old('adresse') }}"
+                                            value="{{ Auth::user()?->adresse ?? old('adresse') }}"
                                             class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                             id="adresse" placeholder="adresse">
                                         @error('adresse')
@@ -122,7 +122,7 @@
                                         <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="number" name="telephone_secondaire" min="0"
-                                            value="{{ old('telephone_secondaire') }}"
+                                            value="{{ Auth::user()?->telephone_secondaire ?? old('telephone_secondaire') }}"
                                             class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
                                             id="telephone_secondaire" placeholder="7x xxx xx xx">
                                         @error('telephone_secondaire')

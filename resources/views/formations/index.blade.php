@@ -170,7 +170,7 @@
                                 <tr>
                                     <th>Code</th>
                                     <th>Type</th>
-                                    <th>Intitulé formation</th>
+                                    <th>Bénéficiaires</th>
                                     <th>Localité</th>
                                     <th>Modules</th>
                                     {{-- <th>Niveau qualification</th> --}}
@@ -270,11 +270,11 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="name" class="form-label">Intitulé formation<span
+                                    <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        <label for="name" class="form-label">Bénéficiaires<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="name" id="name" rows="1"
-                                            class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Intitulé formation">{{ old('name') }}</textarea>
+                                            class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Bénéficiaires">{{ old('name') }}</textarea>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -302,25 +302,25 @@
                                             </span>
                                         @enderror
                                     </div> --}}
-                                    
 
-                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="code" class="form-label">Code<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <div class="input-group has-validation">
-                                        <input type="text" name="code"
-                                            value="{{ $numFormation ?? old('code') }}"
-                                            class="form-control form-control-sm @error('code') is-invalid @enderror"
-                                            id="code" placeholder="Numéro de correspondance">
-                                        @error('code')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
+
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="code" class="form-label">Code<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" name="code"
+                                                value="{{ $numFormation ?? old('code') }}"
+                                                class="form-control form-control-sm @error('code') is-invalid @enderror"
+                                                id="code" placeholder="Numéro de correspondance">
+                                            @error('code')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="departement" class="form-label">Département<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
@@ -344,11 +344,11 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="lieu" class="form-label">Adresse exacte<span
+                                        <label for="lieu" class="form-label">Lieu formation<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="lieu" value="{{ old('lieu') }}"
                                             class="form-control form-control-sm @error('lieu') is-invalid @enderror"
-                                            id="lieu" placeholder="Adresse exacte">
+                                            id="lieu" placeholder="Lieu formation">
                                         @error('lieu')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -472,7 +472,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="titre" class="form-label">Titre (convention)</label>
                                         <input type="text" name="titre" value="{{ old('titre') }}"
                                             class="form-control form-control-sm @error('titre') is-invalid @enderror"
@@ -484,8 +484,20 @@
                                             </span>
                                         @enderror
                                     </div>
+
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="lettre_mission" class="form-label">N° lettre de mission</label>
+                                        <input type="text" name="lettre_mission" value="{{ old('lettre_mission') }}"
+                                            class="form-control form-control-sm @error('lettre_mission') is-invalid @enderror"
+                                            id="lettre_mission" placeholder="N°000875 du 05/08/2024 ...">
+                                        @error('lettre_mission')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="numero_convention" class="form-label">Numéro convention</label>
+                                        <label for="numero_convention" class="form-label">Référence convention</label>
                                         <input type="text" name="numero_convention"
                                             value="{{ old('numero_convention') }}"
                                             class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
@@ -677,10 +689,10 @@
                                     <input type="hidden" name="id" value="{{ $formation->id }}">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <label for="name" class="form-label">Intitulé formation<span
+                                            <label for="name" class="form-label">Bénéficiaires<span
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="name" id="name" rows="1"
-                                                class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Intitulé formation">{{ $formation?->name ?? old('name') }}</textarea>
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Bénéficiaires">{{ $formation?->name ?? old('name') }}</textarea>
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>

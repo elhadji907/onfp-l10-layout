@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $convention_col
  * @property string|null $decret
  * @property string|null $beneficiaires
+ * @property string|null $lettre_mission
  * @property string|null $membres_jury
  * @property string|null $type_formation
  * @property string|null $niveau_qualification
@@ -204,6 +205,7 @@ class Formation extends Model
 		'decret',
 		'beneficiaires',
 		'membres_jury',
+		'lettre_mission',
 		'niveau_qualification',
 		'effectif_prevu',
 		'prevue_h',

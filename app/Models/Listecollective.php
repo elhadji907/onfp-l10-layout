@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Collection;
  * 
  * @property Domaine|null $domaine
  * @property Specialite|null $specialite
+ * @property Collectivemodule|null $collectivemodule
  * @property Statut|null $statut
  * @property Collection|Collective[] $collectives
  *

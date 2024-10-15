@@ -452,61 +452,38 @@
                             {{-- Détail Formations --}}
                             <div class="tab-content">
                                 <div class="tab-pane fade profile-overview pt-1" id="foration-overview">
-                                    <h5 class="card-title">Formations</h5>
-                                    @if (!empty($formation))
+                                    <h5 class="card-title">Formations </h5>
+                                    @foreach ($collective->collectivemodules as $collectivemodule)
+                                    @endforeach
+                                    @if (!empty($collectivemodule))
                                         <table class="table datatables" id="table-formations">
                                             <thead>
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Type</th>
-                                                    <th>Intitulé formation</th>
                                                     <th>Localité</th>
                                                     <th>Modules</th>
-                                                    <th>Effectif</th>
-                                                    <th>Statut</th>
-                                                    <th>#</th>
+                                                    <th class="text-center">Effectif</th>
+                                                    <th class="text-center">Statut</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                {{-- <tr>
-                                                <td>{{ $collective?->formation?->code }}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    @isset($collective)
-                                                        <span class="d-flex align-items-baseline"><a href="#"
-                                                                class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                    class="bi bi-eye"></i></a>
-                                                            <div class="filter">
-                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                        class="bi bi-three-dots"></i></a>
-                                                                <ul
-                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    <li><a class="dropdown-item btn btn-sm" href="#"
-                                                                            class="mx-1" title="Modifier"><i
-                                                                                class="bi bi-pencil"></i>Modifier</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form action="#" method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit"
-                                                                                class="dropdown-item show_confirm"
-                                                                                title="Supprimer"><i
-                                                                                    class="bi bi-trash"></i>Supprimer</button>
-                                                                        </form>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </span>
-                                                    @endisset
-                                                </td>
-                                            </tr> --}}
+                                                @foreach ($collective->collectivemodules as $collectivemodule)
+                                                    <tr>
+                                                        <td>{{ $collectivemodule?->formation?->code }}</td>
+                                                        <td><a>{{ $collectivemodule?->formation->types_formation?->name }}</a>
+                                                        </td>
+                                                        <td>{{ $collectivemodule?->formation->departement?->region?->nom }}
+                                                        </td>
+                                                        <td>{{ $collectivemodule?->module }}
+                                                        </td>
+                                                        <td class="text-center">{{ count($collectivemodule?->listecollectives) }}</td>
+                                                        <td class="text-center"><a><span
+                                                                    class="{{ $collectivemodule?->formation?->statut }}">{{ $collectivemodule?->formation?->statut }}</span></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     @else

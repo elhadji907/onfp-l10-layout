@@ -19,7 +19,13 @@
                     @endforeach
                 @endif
                 <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
-                    <div class="card mb-3">
+                    <div class="card mb-0">
+                        @can('collective-view')
+                            <span class="nav-link"><a href="{{ route('collectivemodules.show', $listecollective->collectivemodule->id) }}"
+                                    class="btn btn-secondary btn-sm" title="retour"><i
+                                        class="bi bi-arrow-counterclockwise"></i></a>
+                            </span>
+                        @endcan
                         <div class="card-body">
                             <form method="post" action="{{ url('listecollectives/' . $listecollective->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
@@ -31,7 +37,7 @@
                                         <label for="cin" class="form-label">CIN<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="cin"
-                                            value="{{ old('cin') ?? $listecollective?->cin  }}"
+                                            value="{{ old('cin') ?? $listecollective?->cin }}"
                                             class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                             id="cin" placeholder="CIN">
                                         @error('cin')
@@ -207,9 +213,9 @@
                                         @enderror
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-secondary btn-sm"
                                             data-bs-dismiss="modal">Fermer</button>
-                                        <button type="submit" class="btn btn-outline-primary"><i
+                                        <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                 class="bi bi-pencil"></i>
                                             Modifier</button>
                                     </div>

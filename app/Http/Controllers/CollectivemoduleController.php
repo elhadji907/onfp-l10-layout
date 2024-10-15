@@ -65,16 +65,21 @@ class CollectivemoduleController extends Controller
 
         $collectivemodule   = Collectivemodule::find($id);
 
-        $collectivemodule->update([
-            'module'            => $request->input('module_name'),
-            'collectives_id'    => $request->input('collective'),
-        ]);
+        if (!empty($collectivemodule->formations_id)) {
+            Alert::warning('Désolez ! ', 'action impossible');
+            return redirect()->back();
+        } else {
+            $collectivemodule->update([
+                'module'            => $request->input('module_name'),
+                'collectives_id'    => $request->input('collective'),
+            ]);
 
-        $collectivemodule->save();
+            $collectivemodule->save();
 
-        Alert::success('Fait ! ', 'module modifié avec succès');
+            Alert::success('Fait ! ', 'module modifié avec succès');
 
-        return redirect()->back();
+            return redirect()->back();
+        }
     }
 
     public function show($id)

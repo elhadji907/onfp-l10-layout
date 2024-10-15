@@ -62,7 +62,12 @@ class ListecollectiveController extends Controller
     public function edit($id)
     {
         $listecollective   = Listecollective::find($id);
-        return view("collectives.updateliste", compact("listecollective"));
+        if ($listecollective->statut != 'nouveau') {
+            Alert::warning('Désolez ! !', 'impossible de modifier ce demandeur');
+            return redirect()->back();
+        } else {
+            return view("collectives.updateliste", compact("listecollective"));
+        }
     }
 
     public function update(Request $request, $id)
@@ -101,7 +106,7 @@ class ListecollectiveController extends Controller
 
         $listecollective->save();
 
-        Alert::success("Ajouté !", "avec succès");
+        Alert::success("Modification effectuée !", "merci");
 
         return Redirect::route('collectivemodules.show', $request->input('module'));
     }
@@ -116,11 +121,15 @@ class ListecollectiveController extends Controller
     {
         $listecollective   = Listecollective::find($id);
 
-        $listecollective->delete();
+        if (!empty($listecollective->formations_id)) {
+            Alert::warning('Désolez ! !', 'impossible');
+            return redirect()->back();
+        } else {
+            $listecollective->delete();
+            Alert::success('demandeur supprimé !');
 
-        Alert::success('module', 'supprimé');
-
-        return redirect()->back();
+            return redirect()->back();
+        }
     }
 
     public function Validatelistecollective($id)

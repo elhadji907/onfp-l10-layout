@@ -20,8 +20,7 @@
                                 {{ $collectivemodule->collective->name .
                                     ' (' .
                                     $collectivemodule->collective->sigle .
-                                    '), liste membres
-                                                                                                    en ' .
+                                    '), liste membres en ' .
                                     $collectivemodule->module }}
                             </li>
                         </ol>
@@ -77,7 +76,8 @@
                                     <th scope="col">Lieu naissance</th>
                                     <th scope="col">Niveau étude</th>
                                     {{-- <th scope="col">Module</th> --}}
-                                    <th scope="col">Statut</th>
+                                    <th scope="col" class="text-center">Statut</th>
+                                    <th scope="col" class="text-center">Appréciation</th>
                                     <th class="col"><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
@@ -95,10 +95,11 @@
                                         <td>{{ $listecollective?->lieu_naissance }}</td>
                                         <td>{{ $listecollective?->niveau_etude }}</td>
                                         {{-- <td>{{ $listecollective?->collectivemodule?->module }}</td> --}}
-                                        <td>
+                                        <td class="text-center">
                                             <span
                                                 class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
                                         </td>
+                                        <td class="text-center">{{ $listecollective?->appreciation }}</td>
                                         <td>
                                             <span class="d-flex align-items-baseline">
                                                 {{-- <a href="{{ route('listecollectives.show', $listecollective?->id) }} "

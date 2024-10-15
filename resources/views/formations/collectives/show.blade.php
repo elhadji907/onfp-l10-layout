@@ -773,37 +773,37 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php $i = 1; ?>
-                                                        @foreach ($ingenieur?->formations as $formation)
+                                                        @foreach ($ingenieur?->formations as $form)
                                                             <tr>
-                                                                <td>{{ $formation?->code }}</td>
+                                                                <td>{{ $form?->code }}</td>
                                                                 <td><a
-                                                                        href="#">{{ $formation->types_formation?->name }}</a>
+                                                                        href="#">{{ $form->types_formation?->name }}</a>
                                                                 </td>
-                                                                <td>{{ $formation?->name }}</td>
-                                                                <td>{{ $formation->departement?->region?->nom }}</td>
+                                                                <td>{{ $form?->name }}</td>
+                                                                <td>{{ $form->departement?->region?->nom }}</td>
                                                                 <td>
-                                                                    @isset($formation?->module?->name)
-                                                                        {{ $formation?->module?->name }}
+                                                                    @isset($form?->module?->name)
+                                                                        {{ $form?->module?->name }}
                                                                     @endisset
-                                                                    @isset($formation?->collectivemodule?->module)
-                                                                        {{ $formation?->collectivemodule?->module }}
+                                                                    @isset($form?->collectivemodule?->module)
+                                                                        {{ $form?->collectivemodule?->module }}
                                                                     @endisset
                                                                 </td>
-                                                                {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
+                                                                {{-- <td>{{ $form->niveau_qualification }}</td> --}}
                                                                 {{--   <td class="text-center">
-                                                                @foreach ($formation->individuelles as $individuelle)
+                                                                @foreach ($form->individuelles as $individuelle)
                                                                     @if ($loop->last)
                                                                         <a class="text-primary fw-bold"
-                                                                            href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
+                                                                            href="{{ route('formations.show', $form->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                                     @endif
                                                                 @endforeach
                                                             </td> --}}
                                                                 <td class="text-center"><a href="#"><span
-                                                                            class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
+                                                                            class="{{ $form?->statut }}">{{ $form?->statut }}</span></a>
                                                                 </td>
                                                                 <td>
                                                                     <span class="d-flex align-items-baseline"><a
-                                                                            href="{{ route('formations.show', $formation->id) }}"
+                                                                            href="{{ route('formations.show', $form->id) }}"
                                                                             class="btn btn-primary btn-sm"
                                                                             title="voir détails"><i
                                                                                 class="bi bi-eye"></i></a>
@@ -815,18 +815,18 @@
                                                                                 class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                                                 <li>
                                                                                     <a class="dropdown-item btn btn-sm"
-                                                                                        href="{{ route('formations.edit', $formation->id) }}"
+                                                                                        href="{{ route('formations.edit', $form->id) }}"
                                                                                         class="mx-1" title="Modifier"><i
                                                                                             class="bi bi-pencil"></i>Modifier</a>
                                                                                     {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#EditFormationModal{{ $formation->id }}">
+                                                                                    data-bs-target="#EditFormationModal{{ $form->id }}">
                                                                                     <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                                                 </button> --}}
                                                                                 </li>
                                                                                 <li>
                                                                                     <form
-                                                                                        action="{{ route('formations.destroy', $formation->id) }}"
+                                                                                        action="{{ route('formations.destroy', $form->id) }}"
                                                                                         method="post">
                                                                                         @csrf
                                                                                         @method('DELETE')

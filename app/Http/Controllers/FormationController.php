@@ -158,6 +158,7 @@ class FormationController extends Controller
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
+            "lettre_mission"        =>   "nullable|string",
         ]);
 
         /* $mois = date('m');
@@ -244,16 +245,15 @@ class FormationController extends Controller
 
         /* $rand = $fic . '' . $mois . $annee . $rand; */
 
-        $this->validate($request, [
+      /*   $this->validate($request, [
             "name"                  =>   "required|string|unique:formations,name,except,id",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
-            /* "module"                =>   "required|string", */
             "niveau_qualification"  =>   "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
-        ]);
+        ]); */
 
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
 
@@ -275,6 +275,7 @@ class FormationController extends Controller
             "prevue_h"              =>   $request->input('prevue_h'),
             "prevue_f"              =>   $request->input('prevue_f'),
             "frais_operateurs"      =>   $request->input('frais_operateurs'),
+            "lettre_mission"        =>   $request->input('lettre_mission'),
             "frais_add"             =>   $request->input('frais_add'),
             "autes_frais"           =>   $request->input('autes_frais'),
             "projets_id"            =>   $request->input('projet'),
@@ -325,6 +326,7 @@ class FormationController extends Controller
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
+            "lettre_mission"        =>   "nullable|string",
         ]);
 
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
@@ -348,6 +350,7 @@ class FormationController extends Controller
             "frais_add"             =>   $request->input('frais_add'),
             "autes_frais"           =>   $request->input('autes_frais'),
             "projets_id"            =>   $request->input('projet'),
+            "lettre_mission"        =>   $request->input('lettre_mission'),
             "programmes_id"         =>   $request->input('programme'),
             "choixoperateurs_id"    =>   $request->input('choixoperateur'),
 
@@ -1149,10 +1152,26 @@ class FormationController extends Controller
             $listecollective->update([
                 "note_obtenue"       =>  $value,
                 "appreciation"       =>  $appreciation,
-                "statut"             =>  'terminer',
+                "statut"             =>  'former',
             ]);
 
             $listecollective->save();
+
+            $collectivemodule = $listecollective->collectivemodule;
+
+            $collectivemodule->update([
+                "statut"             =>  'former',
+            ]);
+
+            $collectivemodule->save();
+
+            $collective = $collectivemodule->collective;
+
+            $collective->update([
+                "statut_demande"      =>  'former',
+            ]);
+
+            $collective->save();
         }
 
         /*  $validated_by = new Validationindividuelle([

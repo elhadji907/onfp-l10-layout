@@ -26,11 +26,11 @@ class WelcomeFormationEmail extends Mailable
      */
     public function __construct($message, $subject, $toEmail, $toUserName, $module)
     {
-        $this->mailMessage = $message;
-        $this->subject = $subject;
-        $this->toEmail = $toEmail;
-        $this->toUserName = $toUserName;
-        $this->module = $module;
+        $this->mailMessage  = $message;
+        $this->subject      = $subject;
+        $this->toEmail      = $toEmail;
+        $this->toUserName   = $toUserName;
+        $this->module       = $module;
     }
 
     /**
@@ -39,9 +39,9 @@ class WelcomeFormationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('danilobadji@gmail.com', 'ONFP, démarrage formation'),
+            from: new Address('lamine.badji@onfp.sn', 'ONFP, Démarrage formation'),
             replyTo: [
-                new Address('danilobadji@gmail.com', 'onfp@onfp.sn')
+                new Address('lamine.badji@onfp.sn', 'ONFP, Réponse démarrage formation')
             ],
             subject: $this->subject,
         );

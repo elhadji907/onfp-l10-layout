@@ -59,7 +59,7 @@ class CreateFormationsTable extends Migration
             $table->integer('total')->nullable();
             $table->string('statut')->nullable();
             $table->string('file1', 200)->nullable();
-            $table->string('file2', 200)->nullable();
+            $table->string('lettre_mission', 200)->nullable();
             $table->string('type_certificat', 200)->nullable();
             $table->string('categorie_professionnelle', 200)->nullable();
             $table->string('numero_convention', 200)->nullable();

@@ -133,6 +133,7 @@ class IndividuelleController extends Controller
 
         $individuelle_total = Individuelle::where('users_id', $user->id)->count();
 
+
         if ($individuelle_total >= 3) {
             Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
             return redirect()->back();
