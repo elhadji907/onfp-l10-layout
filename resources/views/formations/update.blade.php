@@ -228,7 +228,7 @@
                                     <label for="lettre_mission" class="form-label">N° lettre de mission</label>
                                     <input type="text" name="lettre_mission" value="{{  $formation?->lettre_mission ?? old('lettre_mission') }}"
                                         class="form-control form-control-sm @error('lettre_mission') is-invalid @enderror"
-                                        id="lettre_mission" placeholder="N°000875 du 05/08/2024 ...">
+                                        id="lettre_mission" placeholder="N°000875 du 05/08/2024">
                                     @error('lettre_mission')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -334,7 +334,7 @@
                                             {{ $formation?->projet?->sigle ?? old('projet') }}
                                         </option>
                                         @foreach ($projets as $projet)
-                                            <option value="{{ $projet?->id }}">
+                                            <option value="{{ $projet?->sigle }}">
                                                 {{ $projet?->sigle }}
                                             </option>
                                         @endforeach

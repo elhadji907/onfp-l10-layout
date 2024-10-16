@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Collective;
+use App\Models\Individuelle;
+use App\Models\Projet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,19 +22,35 @@ class ProfileController extends Controller
      */
     public function profilePage(Request $request): View
     {
+        $user = Auth::user();
+        $projets = Projet::where('statut', 'ouvert')->get();
+
+        $individuelles = Individuelle::where('users_id', $user->id)
+            ->where('projets_id',  null)
+            ->get();
+
+        $collectives = Collective::where('users_id', $user->id)
+            ->get();
+
         foreach (Auth::user()->roles as $role) {
             if ($role->name == 'Operateur') {
                 return view('profile.profile-operateur-page', [
                     'user' => $request->user(),
+                    'projets' => $projets,
                 ]);
             } else {
                 return view('profile.profile-page', [
                     'user' => $request->user(),
+                    'projets' => $projets,
+                    'individuelles' => $individuelles,
+                    'collectives' => $collectives,
                 ]);
             }
         }
+
         return view('profile.profile-page', [
             'user' => $request->user(),
+            'projets' => $projets,
         ]);
     }
 

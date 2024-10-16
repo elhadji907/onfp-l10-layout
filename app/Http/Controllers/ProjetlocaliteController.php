@@ -28,8 +28,8 @@ class ProjetlocaliteController extends Controller
         ]);
 
         $projetlocalite = new Projetlocalite([
-            "localite"                =>  $request->input("localite"),
-            /* "effectif"              =>  $request->input("effectif"), */
+            "localite"              =>  $request->input("localite"),
+            "effectif"              =>  $request->input("effectif"),
             'projets_id'            =>  $request->input('projet'),
         ]);
 
@@ -53,7 +53,7 @@ class ProjetlocaliteController extends Controller
 
         $projetlocalite->update([
             "localite"                =>  $request->input("localite"),
-            /* "effectif"              =>  $request->input("effectif"), */
+            "effectif"              =>  $request->input("effectif"),
             'projets_id'              =>  $request->input('id'),
         ]);
 

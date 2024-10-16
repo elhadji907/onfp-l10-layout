@@ -213,6 +213,10 @@ class DatabaseSeeder extends Seeder
         'agrement-commission',
         'onfpevaluateur-view',
         'validate-module-collective',
+        'projet-view',
+        'projet-show',
+        'projet-update',
+        'projet-delete',
     ];
 
     public function run(): void

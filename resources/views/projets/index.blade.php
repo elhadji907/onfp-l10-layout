@@ -49,10 +49,11 @@
                                 <tr>
                                     <th>N°</th>
                                     <th>Projet / Programme</th>
-                                    <th>Sigle</th>
-                                    <th>Description</th>
-                                    <th>Reçues</th>
-                                    <th>Prévues</th>
+                                    <th class="text-center">Sigle</th>
+                                    <th class="text-center">Statut</th>
+                                    <th>Modules</th>
+                                    <th class="text-center">Reçues</th>
+                                    <th class="text-center">Prévues</th>
                                     <th class="text-center">#</th>
                                 </tr>
                             </thead>
@@ -62,17 +63,22 @@
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $projet?->name }}</td>
-                                        <td>{{ $projet?->sigle }}</td>
-                                        <td>{{ substr($projet?->description, 0, 50) . '...' }}</td>
+                                        <td class="text-center">{{ $projet?->sigle }}</td>
                                         <td class="text-center">
-                                            @foreach ($projet?->individuelles as $individuelle)
+                                            <span class="{{ $projet?->statut }}">{{ $projet?->statut }}</span>
+                                        </td>
+                                        <td class="text-center"><span
+                                                class="badge bg-success">{{ count($projet?->projetmodules) }}</span></td>
+                                        <td class="text-center">
+                                            <span class="badge bg-info">{{ count($projet?->individuelles) }}</span>
+                                            {{-- @foreach ($projet?->individuelles as $individuelle)
                                                 @if ($loop->last)
                                                     <a href="#"><span
                                                             class="badge bg-info">{{ $loop->count }}</span></a>
                                                 @endif
-                                            @endforeach
+                                            @endforeach --}}
                                         </td>
-                                        <td>{{ $projet?->effectif }}</td>
+                                        <td class="text-center">{{ $projet?->effectif }}</td>
                                         <td>
                                             <span class="d-flex align-items-baseline"><a
                                                     href="{{ route('projets.show', $projet->id) }}"
@@ -90,8 +96,7 @@
                                                                     class="bi bi-pencil"></i>Modifier</a> --}}
                                                                 <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                     data-bs-toggle="modal"
-                                                                    data-bs-target="#EditProjetModal{{ $projet->id }}">
-                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                                    data-bs-target="#EditProjetModal{{ $projet->id }}">Modifier
                                                                 </button>
                                                             </li>
                                                             <li>
@@ -101,8 +106,27 @@
                                                                     @method('DELETE')
                                                                     <button type="submit"
                                                                         class="dropdown-item show_confirm"
-                                                                        title="Supprimer"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                        title="Supprimer">Supprimer</button>
+                                                                </form>
+                                                            </li>
+                                                            <li>
+                                                                <form
+                                                                    action="{{ route('ouvrirProjet', ['id' => $projet?->id]) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button
+                                                                        class="show_confirm_valider btn btn-sm mx-1">Ouvrir</button>
+                                                                </form>
+                                                            </li>
+                                                            <li>
+                                                                <form
+                                                                    action="{{ route('fermerProjet', ['id' => $projet?->id]) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button
+                                                                        class="show_confirm_valider btn btn-sm mx-1">Fermer</button>
                                                                 </form>
                                                             </li>
                                                         </ul>
@@ -329,8 +353,7 @@
                                         </div>
 
                                         <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                            <label for="duree" class="form-label">Durée<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="duree" class="form-label">Durée</label>
                                             <input type="number" name="duree"
                                                 value="{{ $projet->duree ?? old('duree') }}" min="1"
                                                 max="84"

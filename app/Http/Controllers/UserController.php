@@ -12,6 +12,7 @@ use App\Models\Individuelle;
 use App\Models\Interne;
 use App\Models\Module;
 use App\Models\Operateur;
+use App\Models\Projet;
 use App\Models\Region;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -122,7 +123,48 @@ class UserController extends Controller
         $pourcentage_femmes = ($feminin / $individuelles->count()) * 100;
         $email_verified_at = ($email_verified_at / $total_user) * 100;
 
-        return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle', "pourcentage_femmes", "pourcentage_hommes", "rejeter", "terminer", "retenue", "nouvelle", "attente", "individuelles", "modules", "departements", "count_today", 'janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre', 'annee', 'annee_lettre', 'masculin', 'feminin', 'email_verified_at', 'total_interne', 'pourcentage_arrive', 'pourcentage_depart', 'pourcentage_interne'));
+        return view(
+            "home-page",
+            compact(
+                "total_user",
+                'roles',
+                'total_arrive',
+                'total_depart',
+                'total_individuelle',
+                "pourcentage_femmes",
+                "pourcentage_hommes",
+                "rejeter",
+                "terminer",
+                "retenue",
+                "nouvelle",
+                "attente",
+                "individuelles",
+                "modules",
+                "departements",
+                "count_today",
+                'janvier',
+                'fevrier',
+                'mars',
+                'avril',
+                'mai',
+                'juin',
+                'juillet',
+                'aout',
+                'septembre',
+                'octobre',
+                'novembre',
+                'decembre',
+                'annee',
+                'annee_lettre',
+                'masculin',
+                'feminin',
+                'email_verified_at',
+                'total_interne',
+                'pourcentage_arrive',
+                'pourcentage_depart',
+                'pourcentage_interne'
+            )
+        );
     }
 
     public function create()

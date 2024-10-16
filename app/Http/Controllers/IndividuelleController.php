@@ -164,9 +164,9 @@ class IndividuelleController extends Controller
                 $numero_individuelle   =   strtoupper($random);
             }
             $numero_individuelle = 'I' . $annee . $numero_individuelle; */
-
+            /* 
             $cin  =   $request->input('cin');
-            $cin  =   str_replace(' ', '', $cin);
+            $cin  =   str_replace(' ', '', $cin); */
             $date_depot =   date('Y-m-d');
 
             /* $annee = date('y');
@@ -731,13 +731,32 @@ class IndividuelleController extends Controller
         $departements = Departement::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
         $user = Auth::user();
-        $individuelle = Individuelle::where('users_id', $user->id)->where('numero', '!=', null)->get();
-        $individuelle_total = $individuelle->count();
+        $individuelles = Individuelle::where('users_id', $user->id)
+            ->where('numero', '!=', null)
+            ->where('projets_id',  null)
+            ->get();
+        $individuelle_total = $individuelles->count();
 
         if ($individuelle_total == 0) {
-            return view("individuelles.show-individuelle-aucune", compact("individuelle_total", "departements", "modules"));
+            return view(
+                "individuelles.show-individuelle-aucune",
+                compact(
+                    "individuelle_total",
+                    "departements",
+                    "individuelles",
+                    "modules"
+                )
+            );
         } else {
-            return view("individuelles.show-individuelle", compact("individuelle_total", "departements", "modules"));
+            return view(
+                "individuelles.show-individuelle",
+                compact(
+                    "individuelle_total",
+                    "departements",
+                    "individuelles",
+                    "modules"
+                )
+            );
         }
     }
 
@@ -835,5 +854,152 @@ class IndividuelleController extends Controller
             'departements',
             'title'
         ));
+    }
+
+    public function showIndividuelleProjet(Request $request)
+    {
+        $projet = Projet::findOrFail($request->idprojet);
+        $this->validate($request, [
+            'telephone_secondaire'          => ['required', 'string', 'max:9', 'min:9'],
+            'adresse'                       => ['required', 'string', 'max:255'],
+            'departement'                   => ['required', 'string', 'max:255'],
+            'module'                        => ['required', 'string', 'max:255'],
+            'niveau_etude'                  => ['required', 'string', 'max:255'],
+            'diplome_academique'            => ['required', 'string', 'max:255'],
+            'diplome_professionnel'         => ['required', 'string', 'max:255'],
+            'projet_poste_formation'        => ['required', 'string', 'max:255'],
+        ]);
+
+        $user = Auth::user();
+
+        $individuelle_total = Individuelle::where('users_id', $user->id)->where('projets_id', $projet->id)
+            ->count();
+
+        if ($individuelle_total >= 3) {
+            Alert::warning('Attention ! ', 'Vous avez atteint le nombre de demandes autoriées');
+            return redirect()->back();
+        } else {
+
+            $date_depot =   date('Y-m-d');
+
+            $anneeEnCours = date('Y');
+            $an = date('y');
+
+            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                ->select('individuelles.*')
+                ->where('date_depot',  "LIKE",  "{$anneeEnCours}%")
+                ->get()->last();
+
+            if (isset($numero_individuelle)) {
+                $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                    ->select('individuelles.*')
+                    ->get()->last()->numero;
+                $numero_individuelle = ++$numero_individuelle;
+            } else {
+                $numero_individuelle = $an . "0001";
+                $numero_individuelle = 'I' . $numero_individuelle;
+            }
+
+            $longueur = strlen($numero_individuelle);
+
+            if ($longueur <= 1) {
+                $numero_individuelle   =   strtolower("00000" . $numero_individuelle);
+            } elseif ($longueur >= 2 && $longueur < 3) {
+                $numero_individuelle   =   strtolower("0000" . $numero_individuelle);
+            } elseif ($longueur >= 3 && $longueur < 4) {
+                $numero_individuelle   =   strtolower("000" . $numero_individuelle);
+            } elseif ($longueur >= 4 && $longueur < 5) {
+                $numero_individuelle   =   strtolower("00" . $numero_individuelle);
+            } elseif ($longueur >= 5 && $longueur < 6) {
+                $numero_individuelle   =   strtolower("0" . $numero_individuelle);
+            } else {
+                $numero_individuelle   =   strtolower($numero_individuelle);
+            }
+
+
+            $numero_individuelle = strtoupper($numero_individuelle);
+
+            $departement = Departement::where('nom', $request->input("departement"))->first();
+
+            $regionid = $departement?->region?->id;
+
+            $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
+
+            $demandeur_ind = Individuelle::where('users_id', $user->id)->where('projets_id', $projet->id)->get();
+
+            if (isset($module_find)) {
+                foreach ($demandeur_ind as $key => $value) {
+                    if ($value->module->name == $module_find->name) {
+                        Alert::warning('Attention ! le module ' . $value->module->name, 'a déjà été choisi');
+                        return redirect()->back();
+                    }
+                }
+                $individuelle = new Individuelle([
+                    'date_depot'                        =>  $date_depot,
+                    'numero'                            =>  $numero_individuelle,
+                    'adresse'                           =>  $request->input('adresse'),
+                    'telephone'                         =>  $request->input('telephone_secondaire'),
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $departement->id,
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $module_find->id,
+                    /* 'autre_module'                      =>  $request->input('autre_module'), */
+                    'statut'                            => 'nouvelle',
+                    'users_id'                          =>  $user->id,
+                    'projets_id'                        =>  $projet->id,
+                ]);
+            } else {
+                $module = new Module([
+                    'name'            => $request->input('module'),
+                ]);
+
+                $module->save();
+
+                $individuelle = new Individuelle([
+                    'date_depot'                        =>  $date_depot,
+                    'numero'                            =>  $numero_individuelle,
+                    'adresse'                           =>  $request->input('adresse'),
+                    'telephone'                         =>  $request->input('telephone_secondaire'),
+                    'niveau_etude'                      =>  $request->input('niveau_etude'),
+                    'diplome_academique'                =>  $request->input('diplome_academique'),
+                    'autre_diplome_academique'          =>  $request->input('autre_diplome_academique'),
+                    'option_diplome_academique'         =>  $request->input('option_diplome_academique'),
+                    'etablissement_academique'          =>  $request->input('etablissement_academique'),
+                    'diplome_professionnel'             =>  $request->input('diplome_professionnel'),
+                    'autre_diplome_professionnel'       =>  $request->input('autre_diplome_professionnel'),
+                    'specialite_diplome_professionnel'  =>  $request->input('specialite_diplome_professionnel'),
+                    'etablissement_professionnel'       =>  $request->input('etablissement_professionnel'),
+                    'projet_poste_formation'            =>  $request->input('projet_poste_formation'),
+                    'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
+                    'qualification'                     =>  $request->input('qualification'),
+                    'experience'                        =>  $request->input('experience'),
+                    "departements_id"                   =>  $departement->id,
+                    "regions_id"                        =>  $regionid,
+                    "modules_id"                        =>  $module->id,
+                    /* 'autre_module'                      =>  $request->input('autre_module'), */
+                    'statut'                            => 'nouvelle',
+                    'users_id'                          =>  $user->id,
+                    'projets_id'                        =>  $projet->id,
+                ]);
+            }
+        }
+
+        $individuelle->save();
+
+        Alert::success('Enregistrée ! ', 'demande ajoutée avec succès');
+
+        return Redirect::back();
     }
 }

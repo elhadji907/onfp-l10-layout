@@ -45,7 +45,8 @@
                             @endisset
                         </div>
                         <h5 class="card-title">
-                            Bonjour {{ Auth::user()->civilite . ' ' . Auth::user()->firstname. ' ' . Auth::user()->name }}</h5>
+                            Bonjour {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
+                        </h5>
                         <!-- demande -->
                         {{-- s --}}
                         <table class="table table-bordered table-hover table-borderless">
@@ -60,10 +61,11 @@
                                     <th>Lieu naissance</th> --}}
                                     <th>Module</th>
                                     <th width="12%" class="text-center">Département</th>
-                                    <th width="15%" class="text-center">Niveau étude</th>
-                                    <th width="15%" class="text-center">Diplome académique</th>
-                                    <th width="15%" class="text-center">Diplome professionnel</th>
-                                   {{--  <th width="15%">Projet</th> --}}
+                                    <th width="12%" class="text-center">Niveau étude</th>
+                                    <th width="13%" class="text-center">Diplome académique</th>
+                                    <th width="13%" class="text-center">Diplome professionnel</th>
+                                    {{--  <th width="15%">Projet</th> --}}
+                                    <th width="5%" class="text-center">Projet</th>
                                     <th width="5%" class="text-center">Statut</th>
                                     <th style="width:5%;"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -76,7 +78,7 @@
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $individuelle?->numero }}</td>
-                                           {{--  <td>{{ $individuelle?->user?->cin }}</td>
+                                            {{--  <td>{{ $individuelle?->user?->cin }}</td>
                                             <td>{{ $individuelle?->user?->firstname }}</td>
                                             <td>{{ $individuelle?->user?->name }}</td>
                                             <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
@@ -86,6 +88,7 @@
                                             <td class="text-center">{{ $individuelle?->niveau_etude }}</td>
                                             <td class="text-center">{{ $individuelle?->diplome_academique }}</td>
                                             <td class="text-center">{{ $individuelle?->diplome_professionnel }}</td>
+                                            <td class="text-center">{{ $individuelle?->projet?->sigle }}</td>
                                             {{-- <td>{{ $individuelle?->projet_poste_formation }}</td> --}}
                                             <td class="text-center">
                                                 <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}
@@ -719,7 +722,8 @@
         {{-- Ajouter un autre choix --}}
 
         @foreach (Auth::user()?->individuelles as $individuelle)
-            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+            <div
+                class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                 <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -738,11 +742,24 @@
                                             <label for="module" class="form-label">Formation sollicitée<span
                                                     class="text-danger mx-1">*</span></label>
 
-                                            <input type="text" name="module" value="{{ old('module_name') }}"
+                                            {{-- <input type="text" name="module" value="{{ old('module_name') }}"
                                                 class="form-control form-control-sm @error('module_name') is-invalid @enderror"
                                                 id="module_name" placeholder="Nom du module" autofocus>
                                             <div id="countryList"></div>
-                                            {{ csrf_field() }}
+                                            {{ csrf_field() }} --}}
+
+                                            <select name="module"
+                                                class="form-select  @error('module') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-projetmodule-ind"
+                                                data-placeholder="Choisir module">
+                                                <option value="{{ old('module') }}">
+                                                    {{ old('module') }}</option>
+                                                @foreach ($projetmodules as $projetmodule)
+                                                    <option value="{{ $projetmodule->module }}">
+                                                        {{ $projetmodule->module }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                             @error('module')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -789,9 +806,9 @@
                                                 data-placeholder="Choisir la localité">
                                                 <option value="{{ $individuelle?->departement?->nom }}">
                                                     {{ $individuelle?->departement?->nom ?? old('departement') }}</option>
-                                                @foreach ($departements as $departement)
-                                                    <option value="{{ $departement->nom }}">
-                                                        {{ $departement->nom }}
+                                                @foreach ($projetlocalites as $projetlocalite)
+                                                    <option value="{{ $projetlocalite->localite }}">
+                                                        {{ $projetlocalite->localite }}
                                                     </option>
                                                 @endforeach
                                             </select>

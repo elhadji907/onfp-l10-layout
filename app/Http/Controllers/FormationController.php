@@ -331,6 +331,8 @@ class FormationController extends Controller
 
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
 
+        $projet = Projet::where('sigle',$request->input('projet'))->first();
+
         $formation->update([
             "code"                  =>   $request->input('code'),
             "name"                  =>   $request->input('name'),
@@ -349,7 +351,7 @@ class FormationController extends Controller
             "frais_operateurs"      =>   $request->input('frais_operateurs'),
             "frais_add"             =>   $request->input('frais_add'),
             "autes_frais"           =>   $request->input('autes_frais'),
-            "projets_id"            =>   $request->input('projet'),
+            "projets_id"            =>   $projet?->id,
             "lettre_mission"        =>   $request->input('lettre_mission'),
             "programmes_id"         =>   $request->input('programme'),
             "choixoperateurs_id"    =>   $request->input('choixoperateur'),
