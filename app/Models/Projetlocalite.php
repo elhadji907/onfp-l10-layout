@@ -19,7 +19,7 @@ class Projetlocalite extends Model
         'uuid',
         'localite',
         'effectif',
-        'projets_id'
+        'projets_id',
     ];
 
     public function projet()

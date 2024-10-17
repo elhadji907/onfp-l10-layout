@@ -385,25 +385,25 @@
                         </li><!-- End regions Nav -->
                     @endcan
 
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('departements') }}">
                             <span>Départements</span>
                         </a>
-                    </li> --}}
+                    </li>
                     <!-- End departements Nav -->
 
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('arrondissements') }}">
                             <span>Arrondissement</span>
                         </a>
-                    </li> --}}
+                    </li>
                     <!-- End arrondissements Nav -->
 
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('communes') }}">
                             <span>Commune</span>
                         </a>
-                    </li> --}}
+                    </li>
                     <!-- End communes Nav -->
                 </ul>
             </li><!-- End Courriers Nav -->

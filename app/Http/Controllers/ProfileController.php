@@ -23,7 +23,9 @@ class ProfileController extends Controller
     public function profilePage(Request $request): View
     {
         $user = Auth::user();
-        $projets = Projet::where('statut', 'ouvert')->get();
+        $projets = Projet::where('statut', 'ouvert')
+            ->orwhere('statut', 'fermer')
+            ->get();
 
         $individuelles = Individuelle::where('users_id', $user->id)
             ->where('projets_id',  null)

@@ -23,9 +23,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $debut
  * @property Carbon|null $fin
  * @property float|null $budjet
+ * @property string|null $statut
  * @property string|null $duree
+ * @property string|null $type_projet
+ * @property string|null $type_localite
  * @property string|null $budjet_lettre
  * @property Carbon|null $date_signature
+ * @property Carbon|null $date_ouverture
+ * @property Carbon|null $date_fermeture
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -55,6 +60,8 @@ class Projet extends Model
 	protected $casts = [
 		'budjet' => 'float',
 		'date_signature' => 'datetime',
+		'date_ouverture' => 'datetime',
+		'date_fermeture' => 'datetime',
 		'debut' => 'datetime',
 		'fin' => 'datetime',
 	];
@@ -62,7 +69,9 @@ class Projet extends Model
 	protected $dates = [
 		'debut',
 		'fin',
-		'date_signature'
+		'date_signature',
+		'date_ouverture',
+		'date_fermeture'
 	];
 
 	protected $fillable = [
@@ -77,7 +86,11 @@ class Projet extends Model
 		'effectif',
 		'statut',
 		'budjet_lettre',
-		'date_signature'
+		'date_signature',
+		'date_ouverture',
+		'date_fermeture',
+		'type_projet',
+		'type_localite',
 	];
 
 	

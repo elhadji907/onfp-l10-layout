@@ -50,6 +50,8 @@ class ProjetController extends Controller
             "effectif"          => ["nullable", "string"],
             "debut"             => ["nullable", "date"],
             "fin"               => ["nullable", "date"],
+            "type"              => ["required", "string"],
+            "type_projet"       => ["required", "string"],
         ]);
 
         $projet = new Projet([
@@ -62,6 +64,8 @@ class ProjetController extends Controller
             'fin'                =>  $request->input('fin'),
             'debut'              =>  $request->input('debut'),
             'effectif'           =>  $request->input('effectif'),
+            'type_localite'      =>  $request->input('type'),
+            'type_projet'        =>  $request->input('type_projet'),
             'statut'             =>  'attente',
 
         ]);
@@ -104,6 +108,8 @@ class ProjetController extends Controller
             "effectif"          => ["nullable", "string"],
             "debut"             => ["nullable", "date"],
             "fin"               => ["nullable", "date"],
+            "type"              => ["required", "string"],
+            "type_projet"       => ["required", "string"],
         ]);
 
         $projet->update([
@@ -116,6 +122,8 @@ class ProjetController extends Controller
             'fin'                   =>  $request->input('fin'),
             'debut'                 =>  $request->input('debut'),
             'effectif'              =>  $request->input('effectif'),
+            'type_localite'         =>  $request->input('type'),
+            'type_projet'           =>  $request->input('type_projet'),
         ]);
 
         $projet->save();
@@ -137,12 +145,16 @@ class ProjetController extends Controller
 
     public function projetsIndividuelle($id)
     {
+        $user = Auth::user();
         $projet = Projet::findOrFail($id);
-        $projetlocalites = Projetlocalite::orderBy("created_at", "desc")->get();
+        $type_localite = $projet->type_localite;
+        $projetlocalites = Projetlocalite::where('projets_id', $id)
+            ->orderBy("created_at", "desc")->get();
+
         $projetmodules = Projetmodule::where('projets_id', $id)
             ->orderBy("created_at", "desc")
             ->get();
-        $user = Auth::user();
+            
         $individuelle = Individuelle::where('users_id', $user->id)
             ->where('projets_id', $id)
             ->where('numero', '!=', null)
@@ -151,7 +163,7 @@ class ProjetController extends Controller
         $individuelle_total = $individuelle->count();
 
         $individuelles = Individuelle::where('users_id', $user->id)
-            ->where('projets_id', '!=', null)
+            ->where('projets_id', $id)
             ->get();
 
         if ($individuelle_total == 0) {
@@ -181,7 +193,6 @@ class ProjetController extends Controller
 
     public function ouvrirProjet($id)
     {
-
         $projet = Projet::findOrFail($id);
 
         $projet->update([

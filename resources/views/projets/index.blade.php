@@ -47,7 +47,7 @@
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
+                                    <th class="text-center" width="3%">N°</th>
                                     <th>Projet / Programme</th>
                                     <th class="text-center">Sigle</th>
                                     <th class="text-center">Statut</th>
@@ -61,7 +61,7 @@
                                 <?php $i = 1; ?>
                                 @foreach ($projets as $projet)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td class="text-center">{{ $i++ }}</td>
                                         <td>{{ $projet?->name }}</td>
                                         <td class="text-center">{{ $projet?->sigle }}</td>
                                         <td class="text-center">
@@ -136,14 +136,11 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
@@ -154,15 +151,14 @@
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau
-                                    partenaire</h5>
+                                    projet ou programme</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
-
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <label for="name" class="form-label">Partenaire<span
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="name" class="form-label">Projet<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="name" id="name" rows="1"
                                             class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Nom du projet ou programme">{{ old('name') }}</textarea>
@@ -173,7 +169,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="sigle" class="form-label">Sigle<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="sigle" value="{{ old('sigle') }}"
@@ -186,7 +182,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_signature" class="form-label">Date signature<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_signature" value="{{ old('date_signature') }}"
@@ -199,7 +195,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="duree" class="form-label">Durée<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="number" name="duree" value="{{ old('duree') }}" min="1"
@@ -213,7 +209,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="budjet" class="form-label">Budjet (F CFA)</label>
                                         <input type="number" name="budjet" value="{{ old('budjet') }}" min="0"
                                             step="0.001"
@@ -226,7 +222,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="debut" class="form-label">Date début</label>
                                         <input type="date" name="debut" value="{{ old('debut') }}"
                                             class="form-control form-control-sm @error('debut') is-invalid @enderror"
@@ -238,7 +234,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="fin" class="form-label">Date fin</label>
                                         <input type="date" name="fin" value="{{ old('fin') }}"
                                             class="form-control form-control-sm @error('fin') is-invalid @enderror"
@@ -250,7 +246,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="effectif" class="form-label">Effectif à former</label>
                                         <input type="number" name="effectif" value="{{ old('effectif') }}"
                                             min="0" step="5"
@@ -263,7 +259,42 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="type" class="form-label">Type localité<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="type" class="form-select  @error('type') is-invalid @enderror"
+                                            aria-label="Select" id="select-field" data-placeholder="Choisir type">
+                                            <option value="">Choisir type</option>
+                                            <option value="Commune">Commune</option>
+                                            <option value="Arrondissement">Arrondissement</option>
+                                            <option value="Departement">Departement</option>
+                                            <option value="Region">Région</option>
+                                        </select>
+                                        @error('type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="type_projet" class="form-label">Type projet<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="type_projet"
+                                            class="form-select  @error('type_projet') is-invalid @enderror"
+                                            aria-label="Select" id="select-field" data-placeholder="Choisir type projet">
+                                            <option value="">Choisir type projet</option>
+                                            <option value="Projet">Projet</option>
+                                            <option value="Programme">Programme</option>
+                                        </select>
+                                        @error('type_projet')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="description" class="form-label">Description<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="description" id="description" rows="3"
@@ -304,7 +335,7 @@
                                 @csrf
                                 @method('patch')
                                 <div class="modal-header" id="EditProjetModalLabel{{ $projet->id }}">
-                                    <h5 class="modal-title">Modification du projet {{ $projet?->sigle }}
+                                    <h5 class="modal-title">Modification : {{ $projet?->sigle }}
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
@@ -312,11 +343,13 @@
                                 <div class="modal-body">
                                     <div class="row g-3">
 
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                            <label for="name" class="form-label">Partenaire<span
+
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <label for="name" class="form-label">Projet<span
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="name" id="name" rows="1"
-                                                class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Nom du projet ou programme">{{ $projet->name ?? old('name') }}</textarea>
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                                placeholder="Nom du projet ou programme">{{ $projet->name ?? old('name') }}</textarea>
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -324,7 +357,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="sigle" class="form-label">Sigle<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="sigle"
@@ -338,7 +372,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_signature" class="form-label">Date signature<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_signature"
@@ -352,7 +387,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="duree" class="form-label">Durée</label>
                                             <input type="number" name="duree"
                                                 value="{{ $projet->duree ?? old('duree') }}" min="1"
@@ -366,7 +402,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="budjet" class="form-label">Budjet (F CFA)</label>
                                             <input type="number" name="budjet"
                                                 value="{{ $projet->budjet ?? old('budjet') }}" min="0"
@@ -380,7 +417,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="debut" class="form-label">Date début</label>
                                             <input type="date" name="debut"
                                                 value="{{ $projet->debut?->format('Y-m-d') ?? old('debut') }}"
@@ -393,7 +431,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="fin" class="form-label">Date fin</label>
                                             <input type="date" name="fin"
                                                 value="{{ $projet?->fin?->format('Y-m-d') ?? old('fin') }}"
@@ -406,7 +445,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-4 col-lg-4 mb-0">
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="effectif" class="form-label">Effectif à former</label>
                                             <input type="number" name="effectif"
                                                 value="{{ $projet?->effectif ?? old('effectif') }}" min="0"
@@ -420,7 +460,47 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <label for="type" class="form-label">Type localité<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <select name="type"
+                                                class="form-select  @error('type') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-type"
+                                                data-placeholder="Choisir type">
+                                                <option value="{{ $projet?->type_localite }}">
+                                                    {{ $projet?->type_localite }}</option>
+                                                <option value="Commune">Commune</option>
+                                                <option value="Arrondissement">Arrondissement</option>
+                                                <option value="Departement">Departement</option>
+                                                <option value="Region">Région</option>
+                                            </select>
+                                            @error('type')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <label for="type_projet" class="form-label">Type projet<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <select name="type_projet"
+                                                class="form-select  @error('type_projet') is-invalid @enderror"
+                                                aria-label="Select" id="select-field"
+                                                data-placeholder="Choisir type projet">
+                                                <option value="{{ $projet?->type_projet }}">
+                                                    {{ $projet?->type_projet }}</option>
+                                                <option value="Projet">Projet</option>
+                                                <option value="Programme">Programme</option>
+                                            </select>
+                                            @error('type_projet')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="description" class="form-label">Description<span
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="description" id="description" rows="3"

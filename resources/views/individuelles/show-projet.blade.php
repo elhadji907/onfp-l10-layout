@@ -1,6 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Demande individuelle de ' . Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' .
-    Auth::user()->name)
+@section('title', 'ONFP - ' . $projet?->sigle)
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -34,9 +33,9 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | Profil</p>
                             </span>
-                            <button type="button" class="btn btn-info btn-sm">
-                                <span class="badge bg-white text-info">{{ $individuelle_total }}/3</span>
-                            </button>
+                            {{-- <button type="button" class="btn btn-info btn-sm"> --}}
+                                <p>Statut : <span class="{{ $projet?->statut }} btn-sm">{{ $projet?->statut }}</span></p>
+                            {{-- </button> --}}
                             @isset(Auth::user()->cin)
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
@@ -44,9 +43,13 @@
                                 </button>
                             @endisset
                         </div>
-                        <h5 class="card-title">
-                            Bonjour {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
-                        </h5>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <h5 class="card-title">
+                                Bonjour
+                                {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name . ', Bienvenue à ' . $projet?->sigle }}
+                            </h5>
+                            {{--  <h5 class="card-title">{{ $projet?->sigle }}</h5> --}}
+                        </div>
                         <!-- demande -->
                         {{-- s --}}
                         <table class="table table-bordered table-hover table-borderless">
@@ -65,7 +68,7 @@
                                     <th width="13%" class="text-center">Diplome académique</th>
                                     <th width="13%" class="text-center">Diplome professionnel</th>
                                     {{--  <th width="15%">Projet</th> --}}
-                                    <th width="5%" class="text-center">Projet</th>
+                                    {{-- <th width="5%" class="text-center">Projet</th> --}}
                                     <th width="5%" class="text-center">Statut</th>
                                     <th style="width:5%;"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -88,7 +91,7 @@
                                             <td class="text-center">{{ $individuelle?->niveau_etude }}</td>
                                             <td class="text-center">{{ $individuelle?->diplome_academique }}</td>
                                             <td class="text-center">{{ $individuelle?->diplome_professionnel }}</td>
-                                            <td class="text-center">{{ $individuelle?->projet?->sigle }}</td>
+                                            {{-- <td class="text-center">{{ $individuelle?->projet?->sigle }}</td> --}}
                                             {{-- <td>{{ $individuelle?->projet_poste_formation }}</td> --}}
                                             <td class="text-center">
                                                 <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}
@@ -727,7 +730,7 @@
                 <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
-                            <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('individuellesStore') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
@@ -747,7 +750,7 @@
                                                 id="module_name" placeholder="Nom du module" autofocus>
                                             <div id="countryList"></div>
                                             {{ csrf_field() }} --}}
-
+                                            <input type="hidden" name="idprojet" value="{{ $projet?->id }}">
                                             <select name="module"
                                                 class="form-select  @error('module') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-projetmodule-ind"
@@ -804,8 +807,8 @@
                                                 class="form-select  @error('departement') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-departement-ind"
                                                 data-placeholder="Choisir la localité">
-                                                <option value="{{ $individuelle?->departement?->nom }}">
-                                                    {{ $individuelle?->departement?->nom ?? old('departement') }}</option>
+                                                <option value="{{ old('departement') }}">
+                                                    {{ old('departement') }}</option>
                                                 @foreach ($projetlocalites as $projetlocalite)
                                                     <option value="{{ $projetlocalite->localite }}">
                                                         {{ $projetlocalite->localite }}

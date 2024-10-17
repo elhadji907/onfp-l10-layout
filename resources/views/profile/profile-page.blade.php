@@ -749,10 +749,10 @@
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                 <i class="bi bi-person-plus-fill"></i>
+                                                {{ count($individuelles) }}
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    {{ count(Auth::user()->individuelles) }}
                                                     {{-- @foreach (Auth::user()->individuelles as $individuelle)
                                                     @if (isset($individuelle->numero) && isset($individuelle->modules_id))
                                                         @if ($loop->last)
@@ -782,10 +782,10 @@
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                 <i class="bi bi-person-plus-fill"></i>
+                                                {{ count($collectives) }}
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    {{ count(Auth::user()->collectives) }}
                                                     {{-- @foreach (Auth::user()->collectives as $collective)
                                                     @if (isset($collective->numero))
                                                         @if ($loop->last)
@@ -811,26 +811,20 @@
                                         <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                 class="bi bi-three-dots"></i></a>
                                     </div>
-                                    <a href="{{ route('projetsIndividuelle', ['id' => $projet->id]) }}">
+                                    <a href="{{ route('projetsIndividuelle', ['id' => $projet?->id]) }}">
                                         <div class="card-body">
-                                            <h5 class="card-title">Projet <span>| {{ $projet->sigle }}</span></h5>
+                                            <h5 class="card-title">{{ $projet?->type_projet }} <span>|
+                                                    {{ $projet?->sigle }}</span></h5>
                                             <div class="d-flex align-items-center">
                                                 <div
                                                     class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                     <i class="bi bi-person-plus-fill"></i>
+                                                    <span>{{ count($projet->individuelles->where('projets_id', $projet?->id)) }}</span>
                                                 </div>
                                                 <div class="ps-3">
                                                     <h6>
-                                                        <span class="btn btn-sm {{ $projet->statut }}">{{ $projet->statut }}</span>
-                                                        {{-- @foreach (Auth::user()->individuelles as $individuelle)
-                                                    @if (isset($individuelle->numero) && isset($individuelle->modules_id))
-                                                        @if ($loop->last)
-                                                            {!! $loop->count ?? '0' !!}
-                                                        @endif
-                                                    @else
-                                                        <span class="text-primary">0</span>
-                                                    @endif
-                                                @endforeach --}}
+                                                        <span
+                                                            class="btn btn-sm {{ $projet?->statut }}">{{ $projet?->statut }}</span>
                                                     </h6>
                                                 </div>
                                             </div>
@@ -876,7 +870,6 @@
             </div>
         </section>
     @endif
-
     @can('user-view')
         @can('employe-view')
             <section class="section faq">

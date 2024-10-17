@@ -134,7 +134,8 @@
                                     <form method="post" action="{{ url('projetmodules') }}" enctype="multipart/form-data"
                                         class="row g-3">
                                         @csrf
-                                        <div class="col-12 col-md-12 col-lg-12 mb-0">
+
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <h5 class="card-title">Ajouter nouveau module</h5>
                                             <table class="table table-bordered" id="dynamicAddRemove">
                                                 <tr>
@@ -165,7 +166,8 @@
                                             @endif
                                         </div>
                                     </form><!-- End module -->
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <div class="d-flex justify-content-between align-items-center mt-3">
                                             <h5 class="card-title">Modules</h5>
                                             <h5 class="card-title">Effectif total: {{ $projet?->effectif }}</h5>
@@ -183,7 +185,8 @@
                                                         <th scope="col">Domaines</th>
                                                         <th width="5%" scope="col">Effectif</th>
                                                         @if (auth()->user()->hasRole('super-admin|admin'))
-                                                            <th width="5%" class="col"><i class="bi bi-gear"></i></th>
+                                                            <th width="5%" class="col"><i class="bi bi-gear"></i>
+                                                            </th>
                                                         @endif
                                                     </tr>
                                                 </thead>
@@ -194,7 +197,8 @@
                                                             <td style="text-align: center;">{{ $i++ }}</td>
                                                             <td>{{ $projetmodule?->module }}</td>
                                                             <td>{{ $projetmodule?->domaine }}</td>
-                                                            <td style="text-align: center;">{{ $projetmodule?->effectif }}</td>
+                                                            <td style="text-align: center;">{{ $projetmodule?->effectif }}
+                                                            </td>
                                                             <td>
                                                                 <span class="d-flex align-items-baseline">
                                                                     <a href="{{ route('projetmodules.show', $projetmodule?->id) }}"
@@ -240,12 +244,14 @@
                                 </div>
 
                                 <div class="tab-pane fade profile-overview" id="localites-overview">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <div class="d-flex justify-content-between align-items-center mt-3">
                                             <h5 class="card-title">Localités</h5>
                                             @if (auth()->user()->hasRole('super-admin|admin'))
                                                 <div class="pt-1">
-                                                    <button type="button" class="btn btn-primary float-end btn-rounded"
+                                                    <button type="button"
+                                                        class="btn btn-primary btn-sm float-end btn-rounded"
                                                         data-bs-toggle="modal" data-bs-target="#AddprojetlocaliteModal">
                                                         <i class="bi bi-person-plus" title="Ajouter"></i>
                                                     </button>
@@ -262,6 +268,7 @@
                                                     <th width="5%" class="text-center" scope="col">N°</th>
                                                     <th>Localité</th>
                                                     <th class="text-center" scope="col">Effectif</th>
+                                                    <th class="text-center" scope="col">Type localité</th>
                                                     <th width="5%" class="text-center" scope="col">#</th>
                                                 </tr>
                                             </thead>
@@ -271,7 +278,11 @@
                                                     <tr>
                                                         <td style="text-align: center;">{{ $i++ }}</td>
                                                         <td>{{ $projetlocalite?->localite }}</td>
-                                                        <td style="text-align: center;">{{ $projetlocalite?->effectif }}
+                                                        <td style="text-align: center;">
+                                                            {{ $projetlocalite?->effectif }}
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            {{ $projetlocalite?->projet?->type_localite }}
                                                         </td>
                                                         <td style="text-align: center;">
                                                             <span class="d-flex mt-2 align-items-baseline"><a
@@ -327,8 +338,9 @@
         </div>
     </div>
     @foreach ($projet?->projetmodules as $projetmodule)
-        <div class="modal fade" id="EditprojetmoduleModal{{ $projetmodule?->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="EditprojetmoduleModalLabel{{ $projetmodule?->id }}" aria-hidden="true">
+        <div class="modal fade" id="EditprojetmoduleModal{{ $projetmodule?->id }}" tabindex="-1"
+            role="dialog" aria-labelledby="EditprojetmoduleModalLabel{{ $projetmodule?->id }}"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     {{-- <form method="POST" action="#">
@@ -411,19 +423,24 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-floating mb-3">
+                    <input name="projet" value="{{ $projet?->id }}" type="hidden">
+
+                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                        <label for="localite" class="form-label">Localité<span
+                                class="text-danger mx-1">*</span></label>
                         <input type="text" name="localite" value="{{ old('localite') }}"
                             class="form-control form-control-sm @error('localite') is-invalid @enderror"
-                            id="localite" placeholder="Localité" autofocus>
+                            id="localite" placeholder="localite">
                         @error('localite')
                             <span class="invalid-feedback" role="alert">
                                 <div>{{ $message }}</div>
                             </span>
                         @enderror
-                        <label for="floatingInput">Localité</label>
                     </div>
-                    <input name="projet" value="{{ $projet?->id }}" type="hidden">
-                    <div class="form-floating mb-3">
+
+                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                        <label for="effectif" class="form-label">Effectif<span
+                                class="text-danger mx-1">*</span></label>
                         <input type="number" min="0" name="effectif" value="{{ old('effectif') }}"
                             class="form-control form-control-sm @error('effectif') is-invalid @enderror"
                             id="effectif" placeholder="Effectif">
@@ -432,12 +449,31 @@
                                 <div>{{ $message }}</div>
                             </span>
                         @enderror
-                        <label for="floatingInput">Effectif</label>
                     </div>
+
+                    {{-- <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                        <label for="type" class="form-label">Type<span
+                                class="text-danger mx-1">*</span></label>
+                        <select name="type" class="form-select  @error('type') is-invalid @enderror"
+                            aria-label="Select" id="select-field" data-placeholder="Choisir type">
+                            <option value="">Choisir type</option>
+                            <option value="Commune">Commune</option>
+                            <option value="Arrondissement">Arrondissement</option>
+                            <option value="Departement">Departement</option>
+                            <option value="Region">Région</option>
+                        </select>
+                        @error('type')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
+                    </div> --}}
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                    <button type="button" class="btn btn-secondary btn-sm"
+                        data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
                         Enregistrer</button>
                 </div>
             </form>
@@ -446,8 +482,9 @@
 </div>
 <!-- End Add projetlocalite-->
 @foreach ($projetlocalites as $projetlocalite)
-    <div class="modal fade" id="EditprojetlocaliteModal{{ $projetlocalite?->id }}" tabindex="-1" role="dialog"
-        aria-labelledby="EditprojetlocaliteModalLabel{{ $projetlocalite?->id }}" aria-hidden="true">
+    <div class="modal fade" id="EditprojetlocaliteModal{{ $projetlocalite?->id }}" tabindex="-1"
+        role="dialog" aria-labelledby="EditprojetlocaliteModalLabel{{ $projetlocalite?->id }}"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 {{-- <form method="POST" action="{{ route('updateprojetlocalite') }}">
@@ -464,7 +501,7 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" value="{{ $projetlocalite?->projet->id }}">
-                        <div class="form-floating mb-3">
+                        {{-- <div class="form-floating mb-3">
                             <input type="text" name="localite"
                                 value="{{ $projetlocalite?->localite ?? old('localite') }}"
                                 class="form-control form-control-sm @error('localite') is-invalid @enderror"
@@ -475,8 +512,8 @@
                                 </span>
                             @enderror
                             <label for="floatingInput">Localité</label>
-                        </div>
-                        <div class="form-floating mb-3">
+                        </div> --}}
+                        {{-- <div class="form-floating mb-3">
                             <input type="text" name="effectif"
                                 value="{{ $projetlocalite?->effectif ?? old('effectif') }}"
                                 class="form-control form-control-sm @error('effectif') is-invalid @enderror"
@@ -487,7 +524,53 @@
                                 </span>
                             @enderror
                             <label for="floatingInput">Effectif </label>
+                        </div> --}}
+                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                            <label for="localite" class="form-label">Localité<span
+                                    class="text-danger mx-1">*</span></label>
+                            <input type="text" name="localite"
+                                value="{{ $projetlocalite?->localite ?? old('localite') }}"
+                                class="form-control form-control-sm @error('localite') is-invalid @enderror"
+                                id="localite" placeholder="localite">
+                            @error('localite')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
                         </div>
+
+                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                            <label for="effectif" class="form-label">Effectif<span
+                                    class="text-danger mx-1">*</span></label>
+                            <input type="number" min="0" name="effectif"
+                                value="{{ $projetlocalite?->effectif ?? old('effectif') }}"
+                                class="form-control form-control-sm @error('effectif') is-invalid @enderror"
+                                id="effectif" placeholder="Effectif">
+                            @error('effectif')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+{{-- 
+                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                            <label for="type" class="form-label">Type<span
+                                    class="text-danger mx-1">*</span></label>
+                            <select name="type" class="form-select  @error('type') is-invalid @enderror"
+                                aria-label="Select" id="select-field" data-placeholder="Choisir type">
+                                <option value="{{ $projetlocalite?->type_localite }}">
+                                    {{ $projetlocalite?->type_localite }}</option>
+                                <option value="Commune">Commune</option>
+                                <option value="Arrondissement">Arrondissement</option>
+                                <option value="Departement">Departement</option>
+                                <option value="Region">Région</option>
+                            </select>
+                            @error('type')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

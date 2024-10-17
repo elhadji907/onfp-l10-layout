@@ -27,14 +27,18 @@ class CreateProjetsTable extends Migration
             $table->char('uuid', 36);
             $table->string('name', 200)->nullable();
             $table->string('sigle', 200)->nullable();
+            $table->string('type_projet')->nullable();
             $table->longText('description')->nullable();
             $table->timestamp('debut')->nullable();
             $table->dateTime('fin')->nullable();
+            $table->timestamp('date_ouverture')->nullable();
+            $table->timestamp('date_fermeture')->nullable();
             $table->double('budjet')->nullable();
             $table->longText('budjet_lettre')->nullable();
             $table->string('duree', 200)->nullable();
             $table->string('effectif', 200)->nullable();
             $table->string('statut', 200)->nullable();//ouvert, fermer
+            $table->string('type_localite')->nullable();
             $table->timestamp('date_signature')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
             $table->nullableTimestamps();
