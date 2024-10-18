@@ -50,13 +50,13 @@ class CreateFormationsTable extends Migration
             $table->double('frais_evaluateur')->nullable();
             $table->double('frais_evaluation')->nullable();
             $table->string('niveau_qualification', 200)->nullable();
-            $table->string('type_formation', 200)->nullable();
             $table->integer('effectif_prevu')->nullable();
             $table->integer('prevue_h')->nullable();
             $table->integer('prevue_f')->nullable();
             $table->integer('forme_h')->nullable();
             $table->integer('forme_f')->nullable();
             $table->integer('total')->nullable();
+            $table->string('nbre_admis', 200)->nullable();
             $table->string('statut')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('lettre_mission', 200)->nullable();

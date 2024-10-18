@@ -56,11 +56,11 @@
                                 <i class="bi bi-plus" title="Ajouter une nouvelle demande"></i>
                             </button> --}}
                             <div class="d-flex justify-content-between align-items-center">
-                                @can('rapport-operateur-view')
+                                @can('individuelle-create')
                                     <h5 class="card-title">{{ $title }}</h5>
                                     <span class="d-flex align-items-baseline">
                                         <a href="#" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
-                                            data-bs-target="#AddIndividuelModal" title="Générer rapports">Ajouter</a>
+                                            data-bs-target="#AddIndividuelModal" title="Ajouter">Ajouter</a>
                                         <div class="filter">
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                     class="bi bi-three-dots"></i></a>

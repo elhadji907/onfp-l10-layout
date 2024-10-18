@@ -215,7 +215,7 @@ class Formation extends Model
 		'total',
 		'statut',
 		'categorie_professionnelle',
-		'type_formation',
+		'nbre_admis',
 		'evaluateur_onfp',
 		'numero_convention',
 		'initiale_evaluateur_onfp',

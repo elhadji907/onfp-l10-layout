@@ -119,6 +119,14 @@ class FormationController extends Controller
             }
         }
 
+        $title = 'Liste des formations de ' . $anneeEnCours;
+
+        $formations_annee = Formation::distinct()
+            ->get('annee');
+
+        $formations_statut = Formation::distinct()
+            ->get('statut');
+
         return view(
             "formations.index",
             compact(
@@ -135,7 +143,10 @@ class FormationController extends Controller
                 'projets',
                 'programmes',
                 'numFormation',
-                'choixoperateurs'
+                'choixoperateurs',
+                'title',
+                'formations_annee',
+                'formations_statut',
             )
         );
     }
@@ -245,7 +256,7 @@ class FormationController extends Controller
 
         /* $rand = $fic . '' . $mois . $annee . $rand; */
 
-      /*   $this->validate($request, [
+        /*   $this->validate($request, [
             "name"                  =>   "required|string|unique:formations,name,except,id",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
@@ -327,11 +338,12 @@ class FormationController extends Controller
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
             "lettre_mission"        =>   "nullable|string",
+            "annee"                 =>   "nullable|numeric",
         ]);
 
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
 
-        $projet = Projet::where('sigle',$request->input('projet'))->first();
+        $projet = Projet::where('sigle', $request->input('projet'))->first();
 
         $formation->update([
             "code"                  =>   $request->input('code'),
@@ -355,6 +367,7 @@ class FormationController extends Controller
             "lettre_mission"        =>   $request->input('lettre_mission'),
             "programmes_id"         =>   $request->input('programme'),
             "choixoperateurs_id"    =>   $request->input('choixoperateur'),
+            "annee"                 =>   $request->input('annee'),
 
         ]);
 
@@ -999,17 +1012,74 @@ class FormationController extends Controller
         if ($count == '0' || empty($formation->operateur)) {
             Alert::warning('Désolez !', 'action non autorisée');
         } else {
-            if ($formation->statut == 'terminer') {
+
+            /* if ($formation->statut == 'terminer') {
                 Alert::warning('Désolez !', 'formation déjà exécutée');
-            } elseif ($formation->statut == 'annuler') {
+            } else */
+
+            if ($formation->statut == 'annuler') {
                 Alert::warning('Désolez !', 'formation déjà annulée');
             } elseif ($formation->statut == 'attente') {
                 Alert::warning('Désolez !', 'la formation n\'a pas encore démarrée');
             } else {
 
+                if ($formation->types_formation?->name == 'collective') {
+
+                    $admis = Listecollective::where('formations_id', $formation->id)
+                        ->where('note_obtenue', '>=', '12')
+                        ->count();
+
+                    $formes_h_count = Listecollective::where('formations_id', $formation->id)
+                        ->count();
+
+                    $formes_f_count = $formes_h_count;
+
+                } else {
+
+                    $admis = Individuelle::where('formations_id', $formation->id)
+                        ->where('note_obtenue', '>=', '12')
+                        ->count();
+
+                    $formes_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                        ->select('individuelles.*')
+                        ->where('formations_id', $formation->id)
+                        ->where('users.civilite', "M.")
+                        ->count();
+
+                    $formes_f_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                        ->select('individuelles.*')
+                        ->where('formations_id', $formation->id)
+                        ->where('users.civilite', "Mme")
+                        ->count();
+                }
+
+                /* $recales = Individuelle::where('formations_id', $formation->id)
+                    ->where('note_obtenue', '<', '12')
+                    ->get();
+
+                $admis_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                    ->select('individuelles.*')
+                    ->where('formations_id', $formation->id)
+                    ->where('users.civilite', "M.")
+                    ->where('note_obtenue', '>=', '12')
+                    ->count();
+
+                $admis_f_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                    ->select('individuelles.*')
+                    ->where('formations_id', $formation->id)
+                    ->where('users.civilite', "Mme")
+                    ->where('note_obtenue', '>=', '12')
+                    ->count(); */
+
+                $formes_total = $formes_h_count + $formes_f_count;
+
                 $formation->update([
-                    'statut'             => 'terminer',
-                    'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+                    'statut'              => 'terminer',
+                    'forme_h'             => $formes_h_count,
+                    'forme_f'             => $formes_f_count,
+                    'total'               => $formes_total,
+                    'nbre_admis'          => $admis,
+                    'validated_by'        =>  Auth::user()->firstname . ' ' . Auth::user()->name,
                 ]);
 
                 $formation->save();
@@ -2027,5 +2097,31 @@ class FormationController extends Controller
         Alert::success('Enregistrement effectué !');
 
         return redirect()->back();
+    }
+
+    /*     public function reports(Request $request)
+    {
+        $title = 'rapports formations';
+        return view('formations.rapports', compact(
+            'title'
+        ));
+    } */
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
+            'annee'     => 'required|numeric',
+            'statut'    => 'required|string',
+        ]);
+
+        $formations = Formation::where('annee', $request->annee)
+            ->where('statut', $request->statut)
+            ->get();
+
+        $title = 'SUIVI CONVENTIONS  ' . $request->annee;
+
+        return view('formations.reports', compact(
+            'formations',
+            'title'
+        ));
     }
 }

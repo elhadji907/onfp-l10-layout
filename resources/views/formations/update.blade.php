@@ -345,7 +345,18 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="annee" class="form-label">Année</label>
+                                    <input type="number" name="annee" min="2024" step="1"
+                                        value="{{ $formation?->annee ?? old('annee') }}"
+                                        class="form-control form-control-sm @error('annee') is-invalid @enderror"
+                                        id="annee" placeholder="Année">
+                                    @error('annee')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                                {{--  <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="programme" class="form-label">Programme</label>
                                     <select name="programme"

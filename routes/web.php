@@ -366,6 +366,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/individuellesStore', [IndividuelleController::class, 'individuellesStore'])->name('individuellesStore');
 
+    Route::get('/showprojetProgramme', [ProjetController::class, 'showprojetProgramme'])->name('showprojetProgramme');
+
+    Route::get('formations/reports',[FormationController::class,'reports'])->name('formations.reports');
+    Route::post('formations/reports',[FormationController::class,'generateReport']);
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);

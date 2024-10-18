@@ -89,6 +89,14 @@ class ProjetController extends Controller
             )
         );
     }
+
+    public function edit(Request $request, $id)
+    {
+        $projet = Projet::findOrFail($id);
+
+        return view('projets.update', compact('projet'));
+    }
+
     public function update(Request $request, $id)
     {
         $projet = Projet::find($id);
@@ -110,6 +118,8 @@ class ProjetController extends Controller
             "fin"               => ["nullable", "date"],
             "type"              => ["required", "string"],
             "type_projet"       => ["required", "string"],
+            "date_ouverture"    => ["required", "string"],
+            "date_fermeture"    => ["required", "string"],
         ]);
 
         $projet->update([
@@ -124,6 +134,8 @@ class ProjetController extends Controller
             'effectif'              =>  $request->input('effectif'),
             'type_localite'         =>  $request->input('type'),
             'type_projet'           =>  $request->input('type_projet'),
+            'date_ouverture'        =>  $request->input('date_ouverture'),
+            'date_fermeture'        =>  $request->input('date_fermeture'),
         ]);
 
         $projet->save();
@@ -154,7 +166,7 @@ class ProjetController extends Controller
         $projetmodules = Projetmodule::where('projets_id', $id)
             ->orderBy("created_at", "desc")
             ->get();
-            
+
         $individuelle = Individuelle::where('users_id', $user->id)
             ->where('projets_id', $id)
             ->where('numero', '!=', null)
@@ -220,5 +232,26 @@ class ProjetController extends Controller
         Alert::success('Merci !', $projet->sigle . ' est fermé');
 
         return redirect()->back();
+    }
+
+    public function showprojetProgramme(Request $request)
+    {
+        $user = Auth::user();
+
+        $projets = Projet::join('individuelles', 'projets.id', 'individuelles.projets_id')
+            ->select('projets.*')
+            ->where('individuelles.users_id',  $user->id)
+            ->where('individuelles.projets_id', '!=', null)
+            ->where('projets.statut', 'ouvert')
+            ->orwhere('projets.statut', 'fermer')
+            ->distinct()
+            ->get();
+
+        return view(
+            "individuelles.show-projetprogramme",
+            compact(
+                "projets"
+            )
+        );
     }
 }

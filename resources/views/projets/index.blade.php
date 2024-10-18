@@ -90,14 +90,13 @@
                                                                 class="bi bi-three-dots"></i></a>
                                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                             <li>
-                                                                {{-- <a class="dropdown-item btn btn-sm"
+                                                                <a class="dropdown-item btn btn-sm"
                                                                 href="{{ route('projets.edit', $projet->id) }}"
-                                                                class="mx-1" title="Modifier"><i
-                                                                    class="bi bi-pencil"></i>Modifier</a> --}}
-                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                class="mx-1" title="Modifier">Modifier</a>
+                                                                {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#EditProjetModal{{ $projet->id }}">Modifier
-                                                                </button>
+                                                                </button> --}}
                                                             </li>
                                                             <li>
                                                                 <form action="{{ route('projets.destroy', $projet->id) }}"
@@ -263,7 +262,7 @@
                                         <label for="type" class="form-label">Type localité<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="type" class="form-select  @error('type') is-invalid @enderror"
-                                            aria-label="Select" id="select-field" data-placeholder="Choisir type">
+                                            aria-label="Select" id="select-field-typelocalite" data-placeholder="Choisir type">
                                             <option value="">Choisir type</option>
                                             <option value="Commune">Commune</option>
                                             <option value="Arrondissement">Arrondissement</option>
@@ -282,7 +281,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="type_projet"
                                             class="form-select  @error('type_projet') is-invalid @enderror"
-                                            aria-label="Select" id="select-field" data-placeholder="Choisir type projet">
+                                            aria-label="Select" id="select-field-projetprogramme" data-placeholder="Choisir type projet">
                                             <option value="">Choisir type projet</option>
                                             <option value="Projet">Projet</option>
                                             <option value="Programme">Programme</option>
@@ -322,14 +321,12 @@
         </div>
 
         <!-- Edit Projet -->
-        @foreach ($projets as $projet)
+        {{-- @foreach ($projets as $projet)
             <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                 <div class="modal fade" id="EditProjetModal{{ $projet->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="EditProjetModalLabel{{ $projet->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
-                            {{-- <form method="POST" action="{{ route('updateRegion') }}">
-                         @csrf --}}
                             <form method="post" action="{{ route('projets.update', $projet->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
@@ -526,7 +523,7 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @endforeach --}}
     </section>
 
 @endsection

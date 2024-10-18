@@ -804,6 +804,41 @@
                                 </a>
                             </div>
                         </div>
+
+                        <!-- Sales Card -->
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="card info-card sales-card">
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                </div>
+                                <a href="{{ route('showprojetProgramme') }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Projets <span>| Programmes</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-person-plus-fill"></i>
+                                                {{ count($count_projets) }}
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>
+                                                    {{-- @foreach (Auth::user()->individuelles as $individuelle)
+                                                    @if (isset($individuelle->numero) && isset($individuelle->modules_id))
+                                                        @if ($loop->last)
+                                                            {!! $loop->count ?? '0' !!}
+                                                        @endif
+                                                    @else
+                                                        <span class="text-primary">0</span>
+                                                    @endif
+                                                @endforeach --}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                         @foreach ($projets as $projet)
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="card info-card sales-card">
@@ -826,6 +861,8 @@
                                                         <span
                                                             class="btn btn-sm {{ $projet?->statut }}">{{ $projet?->statut }}</span>
                                                     </h6>
+                                                    <span
+                                                        class="text-muted small pt-2 ps-1">{{ 'Clôture ' . date_format(date_create($projet?->date_fermeture), 'd/m/Y') . ' à 17h' }}</span>
                                                 </div>
                                             </div>
                                         </div>

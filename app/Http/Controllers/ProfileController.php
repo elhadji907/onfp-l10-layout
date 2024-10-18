@@ -24,7 +24,15 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $projets = Projet::where('statut', 'ouvert')
-            ->orwhere('statut', 'fermer')
+            ->get();
+
+        $count_projets = Projet::join('individuelles', 'projets.id', 'individuelles.projets_id')
+            ->select('projets.*')
+            ->where('individuelles.users_id',  $user->id)
+            ->where('individuelles.projets_id', '!=', null)
+            ->where('projets.statut', 'ouvert')
+            ->orwhere('projets.statut', 'fermer')
+            ->distinct()
             ->get();
 
         $individuelles = Individuelle::where('users_id', $user->id)
@@ -39,11 +47,13 @@ class ProfileController extends Controller
                 return view('profile.profile-operateur-page', [
                     'user' => $request->user(),
                     'projets' => $projets,
+                    'count_projets' => $count_projets,
                 ]);
             } else {
                 return view('profile.profile-page', [
                     'user' => $request->user(),
                     'projets' => $projets,
+                    'count_projets' => $count_projets,
                     'individuelles' => $individuelles,
                     'collectives' => $collectives,
                 ]);
@@ -53,6 +63,7 @@ class ProfileController extends Controller
         return view('profile.profile-page', [
             'user' => $request->user(),
             'projets' => $projets,
+            'count_projets' => $count_projets,
         ]);
     }
 

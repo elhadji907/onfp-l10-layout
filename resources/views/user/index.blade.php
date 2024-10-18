@@ -44,11 +44,11 @@
                         </div> --}}
 
                         <div class="d-flex justify-content-between align-items-center">
-                            @can('rapport-operateur-view')
+                            @can('user-create')
                                 <h5 class="card-title">{{ $title }}</h5>
                                 <span class="d-flex align-items-baseline">
                                     <a href="#" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
-                                        data-bs-target="#AddUserModal" title="Générer rapports">Ajouter</a>
+                                        data-bs-target="#AddUserModal" title="Ajouter">Ajouter</a>
                                     <div class="filter">
                                         <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                 class="bi bi-three-dots"></i></a>
