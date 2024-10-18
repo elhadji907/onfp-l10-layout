@@ -661,6 +661,14 @@ class IndividuelleController extends Controller
 
         $demandeur_ind  = Individuelle::where('users_id', $user->id)->get();
 
+        $projet = Projet::where('sigle', $request->input("projet"))->first();
+
+        if (!empty($projet)) {
+            $projetid = $projet?->id;
+        } else {
+            $projetid = null;
+        }
+
         if (isset($module_find)) {
             if (isset($individuelle->module) && ($individuelle->module->name == $module_find->name)) {
                 $individuelle->update([
@@ -680,7 +688,7 @@ class IndividuelleController extends Controller
                     'adresse'                           =>  $request->input('adresse'),
                     'experience'                        =>  $request->input('experience'),
                     "departements_id"                   =>  $departement->id,
-                    "projets_id"                        =>  $request->input("projet"),
+                    "projets_id"                        =>  $projetid,
                     "regions_id"                        =>  $regionid,
                     'users_id'                          =>  $user_id,
                 ]);
@@ -708,7 +716,7 @@ class IndividuelleController extends Controller
                     'adresse'                           =>  $request->input('adresse'),
                     'experience'                        =>  $request->input('experience'),
                     "departements_id"                   =>  $departement->id,
-                    "projets_id"                        =>  $request->input("projet"),
+                    "projets_id"                        =>  $projetid,
                     "regions_id"                        =>  $regionid,
                     "modules_id"                        =>  $module_find->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
@@ -739,7 +747,7 @@ class IndividuelleController extends Controller
                     'adresse'                           =>  $request->input('adresse'),
                     'experience'                        =>  $request->input('experience'),
                     "departements_id"                   =>  $departement->id,
-                    "projets_id"                        =>  $request->input("projet"),
+                    "projets_id"                        =>  $projetid,
                     "regions_id"                        =>  $regionid,
                     "modules_id"                        =>  $module->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
@@ -774,7 +782,7 @@ class IndividuelleController extends Controller
                 'adresse'                           =>  $request->input('adresse'),
                 'experience'                        =>  $request->input('experience'),
                 "departements_id"                   =>  $departement->id,
-                "projets_id"                        =>  $request->input("projet"),
+                "projets_id"                        =>  $projetid,
                 "regions_id"                        =>  $regionid,
                 "modules_id"                        =>  $module->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */

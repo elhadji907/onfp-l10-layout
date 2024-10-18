@@ -569,6 +569,29 @@
                                     @enderror
                                 </div>
 
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="projet" class="form-label">Projet</label>
+                                    <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
+                                        <option>
+                                            {{ $individuelle?->projet?->sigle ?? old('projet') }}
+                                        </option>
+                                        <option value="null">
+                                            Aucun
+                                        </option>
+                                        @foreach ($projets as $projet)
+                                            <option value="{{ $projet?->sigle }}">
+                                                {{ $projet?->name . ' (' . $projet?->sigle . ')' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('projet')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="qualification" class="form-label">Qualification et autres diplômes</label>
                                     <textarea name="qualification" id="qualification" rows="2"
@@ -581,25 +604,6 @@
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="projet" class="form-label">Projet</label>
-                                    <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
-                                        <option>
-                                            {{ $individuelle?->projet?->sigle ?? old('projet') }}
-                                        </option>
-                                        @foreach ($projets as $projet)
-                                            <option value="{{ $projet?->id }}">
-                                                {{ $projet?->sigle }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('projet')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div> --}}
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="experience" class="form-label">Expériences et stages</label>
                                     <textarea name="experience" id="experience" rows="2"

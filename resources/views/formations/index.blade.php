@@ -913,6 +913,7 @@
                                                     <option value="{{ old('statut') }}">
                                                         {{ old('statut') }}
                                                     </option>
+                                                    <option value="Tous">Tous</option>
                                                     @foreach ($formations_statut as $statutformation)
                                                         <option value="{{ $statutformation->statut }}">
                                                             {{ $statutformation->statut }}

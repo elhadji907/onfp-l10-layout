@@ -403,7 +403,9 @@ class FormationController extends Controller
         $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
             ->select('collectivemodules.*')
             ->where('collectives.statut_demande', 'attente')
-            ->whereBetween('collectivemodules.statut', ['attente', 'retenu', 'retirer', 'former'])
+            ->orwhere('collectivemodules.statut', ['retenu'])
+            ->orwhere('collectivemodules.statut', ['retirer'])
+            ->orwhere('collectivemodules.statut', ['former'])
             ->get();
 
         $collectiveModule = DB::table('collectivemodules')
@@ -524,13 +526,17 @@ class FormationController extends Controller
             ->orWhere('statut', 'programmer')
             ->get(); */
         /* dd($localite->nom); */
+
         $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
             ->join('regions', 'regions.id', 'individuelles.regions_id')
             ->select('individuelles.*')
+            ->where('individuelles.projets_id', $formation?->projets_id)
             ->where('modules.name', 'LIKE', "%{$module->name}%")
             ->where('regions.nom', $region->nom)
             ->where('modules.name', 'LIKE', "%{$module->name}%")
-            ->whereBetween('statut', ['attente', 'retirer', 'retenu'])
+            ->where('statut', 'attente')
+            ->orwhere('statut', 'retirer')
+            ->orwhere('statut', 'retenu')
             ->get();
 
         /* dd($individuelles); */
@@ -1033,7 +1039,6 @@ class FormationController extends Controller
                         ->count();
 
                     $formes_f_count = $formes_h_count;
-
                 } else {
 
                     $admis = Individuelle::where('formations_id', $formation->id)
@@ -2113,9 +2118,14 @@ class FormationController extends Controller
             'statut'    => 'required|string',
         ]);
 
-        $formations = Formation::where('annee', $request->annee)
-            ->where('statut', $request->statut)
-            ->get();
+        if ($request->statut == 'Tous') {
+            $formations = Formation::where('annee', $request->annee)
+                ->get();
+        } else {
+            $formations = Formation::where('annee', $request->annee)
+                ->where('statut', $request->statut)
+                ->get();
+        }
 
         $title = 'SUIVI CONVENTIONS  ' . $request->annee;
 

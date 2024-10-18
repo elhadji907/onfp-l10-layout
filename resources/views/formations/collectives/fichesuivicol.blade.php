@@ -107,7 +107,7 @@
                 </tr>
                 <tr class="heading">
                     <td colspan="4">{{ __('Code formation : ') }}
-                        {{ $formation->code }}
+                        {{ $formation?->code . '(C)' }}
                     </td>
                     <td colspan="4"><b>{{ __('Suivi : ') }}</b>
                         @isset($formation?->date_suivi)
@@ -120,7 +120,7 @@
                         {{ $formation?->collectivemodule?->module }}
                     </td>
                     <td colspan="4"><b>{{ __('Opérateur : ') }}</b>
-                        {{ $formation?->operateur?->name . ' (' . $formation?->operateur?->sigle . ')' }}
+                        {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
                     </td>
                 </tr>
                 <tr class="heading">
@@ -128,7 +128,10 @@
                         {{ $formation?->lieu }}
                     </td>
                     <td colspan="4"><b>{{ __('Contact : ') }}</b>
-                        {{ $formation?->operateur?->telephone1 }}
+                        {{ $formation?->operateur?->user?->fixe }}
+                        @isset($formation?->operateur?->user?->telephone)
+                            {{ ' / ' . $formation?->operateur?->user?->telephone }}
+                        @endisset
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">

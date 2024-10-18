@@ -160,13 +160,21 @@
                                 <h2 style="text-align: center;">LETTRE DE MISSION</h2>
 
                                 <p style="text-align : justify;">
-                                    <b>{{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }},</b>
-                                    tel n° {{ $formation?->evaluateur?->telephone }}, est sollicité
+                                    <b>{{ $formation?->onfpevaluateur?->name . ', ' . $formation->onfpevaluateur?->fonction }},</b>
+                                    tel n° {{ $formation?->onfpevaluateur?->telephone }}, est sollicité
                                     pour être membre du jury de certification selon les procédures de l'ONFP pour la
                                     formation ci-après:
                                 </p>
 
-                                <p><b>Intitulé de la formation </b>: {{ $formation?->module?->name }} </p>
+                                <p><b>Intitulé de la formation </b>:
+                                    @if (!empty($formation?->module?->name))
+                                        {{ $formation?->module?->name }}
+                                    @elseif (!empty($formation?->collectivemodule?->module))
+                                        {{ $formation?->collectivemodule?->module }}
+                                    @else
+                                    @endif
+                                    {{ $formation?->module?->name }}
+                                </p>
                                 <p><b>Niveau de qualification </b>: {{ $formation?->titre }} </p>
                                 <p><b>Nombre de bénéficiaires </b>:
                                     {{ ' H: ' . str_pad($formation->prevue_h, 2, '0', STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -203,7 +211,7 @@
                                 </ol>
                                 </p>
                                 <p><b>Date de l'évaluation </b>:
-                                    {{ 'Le ' . $formation?->date_pv->translatedFormat('l d F Y') }} </p>
+                                    {{ 'Le ' . $formation?->date_pv?->translatedFormat('l d F Y') }} </p>
                                 <p><b>Montant indemnité de membre </b> :
                                     {{ number_format($formation?->frais_evaluateur, 0, ',', ' ') }} F CFA versé sur
                                     présentation d'une demande de paiement

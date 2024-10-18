@@ -40,6 +40,8 @@
                                             <th rowspan="2" style="vertical-align: middle;">Region</th>
                                             <th rowspan="2" style="vertical-align: middle;">Lieux</th>
                                             <th rowspan="2" style="vertical-align: middle;">Modules</th>
+                                            {{-- <th rowspan="2" style="vertical-align: middle;">Domaine</th>
+                                            <th rowspan="2" style="vertical-align: middle;">secteur</th> --}}
                                             <th rowspan="2" style="vertical-align: middle;">Bénéficiaires</th>
                                             <th rowspan="2" style="vertical-align: middle;">N° LM et DATE</th>
                                             <th colspan="3" class="text-center">Effectif prévus</th>
@@ -71,14 +73,28 @@
                                                 <tr>
                                                     <td>{{ $formation?->departement?->region?->nom }}</td>
                                                     <td>{{ $formation?->lieu }}</td>
-                                                    <td>
-                                                        @isset($formation?->module?->name)
+                                                    @isset($formation?->module?->name)
+                                                        <td>
                                                             {{ $formation?->module?->name }}
-                                                        @endisset
-                                                        @isset($formation?->collectivemodule?->module)
+                                                        </td>
+                                                       {{--  <td>
+                                                            {{ $formation?->module?->domaine?->name }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $formation?->module?->domaine?->secteur?->name }}
+                                                        </td> --}}
+                                                    @endisset
+                                                    @isset($formation?->collectivemodule?->module)
+                                                        <td>
                                                             {{ $formation?->collectivemodule?->module }}
-                                                        @endisset
-                                                    </td>
+                                                        </td>
+                                                        {{-- <td>
+                                                            {{ $formation?->collectivemodule?->domaine }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $formation?->collectivemodule?->secteur }}
+                                                        </td> --}}
+                                                    @endisset
                                                     <td>{{ $formation?->name }}</td>
                                                     <td>{{ $formation?->lettre_mission }}</td>
                                                     <td>{{ $formation?->prevue_h }}</td>

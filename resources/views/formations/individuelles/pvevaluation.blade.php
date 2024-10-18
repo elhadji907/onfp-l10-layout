@@ -232,12 +232,12 @@
         <h4 valign="top">
             <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : @isset($formation?->date_pv)
                 <span
-                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
+                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->departement?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
             @endisset
             <br>
             <?php $i = 1; ?>
-            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br>
-            {{ $formation?->evaluateur_onfp . ', évaluateur ONFP' }}<br>
+            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}<br>
+            {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}<br>
             @isset($membres_jury)
                 @foreach ($membres_jury as $item)
                     {{ $item }} <br>

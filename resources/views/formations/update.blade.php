@@ -40,13 +40,12 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="code" class="form-label">Code<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
-                                        <input type="text" name="code"
-                                            value="{{$formation?->code ?? old('code') }}"
+                                        <input type="text" name="code" value="{{ $formation?->code ?? old('code') }}"
                                             class="form-control form-control-sm @error('code') is-invalid @enderror"
                                             id="code" placeholder="Numéro de correspondance">
                                         @error('code')
@@ -214,7 +213,8 @@
 
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="titre" class="form-label">Titre (convention)</label>
-                                    <input type="text" name="titre" value="{{ $formation?->titre ?? old('titre') }}"
+                                    <input type="text" name="titre"
+                                        value="{{ $formation?->titre ?? old('titre') }}"
                                         class="form-control form-control-sm @error('titre') is-invalid @enderror"
                                         id="titre" placeholder="Ex: 4ème catégorie de la convention collective ...">
                                     @error('titre')
@@ -223,10 +223,11 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="lettre_mission" class="form-label">N° lettre de mission</label>
-                                    <input type="text" name="lettre_mission" value="{{  $formation?->lettre_mission ?? old('lettre_mission') }}"
+                                    <input type="text" name="lettre_mission"
+                                        value="{{ $formation?->lettre_mission ?? old('lettre_mission') }}"
                                         class="form-control form-control-sm @error('lettre_mission') is-invalid @enderror"
                                         id="lettre_mission" placeholder="N°000875 du 05/08/2024">
                                     @error('lettre_mission')
@@ -238,7 +239,8 @@
 
                                 <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="numero_convention" class="form-label">Numéro convention</label>
-                                    <input type="text" name="numero_convention" value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
+                                    <input type="text" name="numero_convention"
+                                        value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
                                         class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
                                         id="numero_convention"
                                         placeholder="Ex: 000743/ONFP/DG/DIOF/mb du 14 juillet 2023">
@@ -333,6 +335,9 @@
                                         <option>
                                             {{ $formation?->projet?->sigle ?? old('projet') }}
                                         </option>
+                                        <option value="null">
+                                            Aucun
+                                        </option>
                                         @foreach ($projets as $projet)
                                             <option value="{{ $projet?->sigle }}">
                                                 {{ $projet?->sigle }}
@@ -357,7 +362,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                               {{--  <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                {{--  <div class="col-12 col-md-4 col-lg-4 mb-0">
                                     <label for="programme" class="form-label">Programme</label>
                                     <select name="programme"
                                         class="form-select  @error('programme') is-invalid @enderror" aria-label="Select"

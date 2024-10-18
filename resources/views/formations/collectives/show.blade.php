@@ -1209,7 +1209,8 @@
                         @csrf
                         @method('patch')
                         <div class="modal-header" id="EditMembresJuryModalLabel{{ $formation->id }}">
-                            <h5 class="modal-title">Evaluation</h5>
+                            <h5 class="modal-title text-center">Evaluation formation <br>
+                                {{ $formation?->module?->name }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -1248,11 +1249,13 @@
                                 <select name="evaluateur" class="form-select @error('evaluateur') is-invalid @enderror"
                                     aria-label="Select" id="select-field" data-placeholder="Choisir evaluateur">
                                     <option value="{{ $formation?->evaluateur?->id }}">
-                                        {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
+                                        @if (!empty($formation?->evaluateur?->name))
+                                            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
+                                        @endif
                                     </option>
                                     @foreach ($evaluateurs as $evaluateur)
                                         <option value="{{ $evaluateur->id }}">
-                                            {{ $evaluateur?->name . ', ' . $evaluateur?->fonction . ' [NE : ' . $evaluateur?->formations->count() . ']' ?? old('evaluateur') }}
+                                            {{ $evaluateur?->name . ', ' . $evaluateur?->fonction ?? old('evaluateur') }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -1276,7 +1279,7 @@
                                 @enderror
                             </div>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-12 col-md-9 col-lg-9 mb-3">
                                     <label>Evaluateur ONFP<span class="text-danger mx-1">*</span></label>
                                     <input type="text" name="nom_evaluateur_onfp"
@@ -1289,7 +1292,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-12 col-md-3 col-lg-3 mb-4">
+                                <div class="col-12 col-md-3 col-lg-3 mb-3">
                                     <label>Initiale<span class="text-danger mx-1">*</span></label>
                                     <input type="text" name="initiale_evaluateur_onfp"
                                         value="{{ $formation?->initiale_evaluateur_onfp ?? old('initiale_evaluateur_onfp') }}"
@@ -1301,8 +1304,32 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
 
+
+                            <div class="mb-3">
+                                <label for="evaluateur" class="form-label">Evaluateur ONFP<span
+                                        class="text-danger mx-1">*</span></label>
+                                <select name="onfpevaluateur"
+                                    class="form-select @error('onfpevaluateur') is-invalid @enderror" aria-label="Select"
+                                    id="select-field-onfp" data-placeholder="Choisir evaluateur ONFP">
+                                    <option value="{{ $formation->onfpevaluateur?->id }}">
+                                        @if (!empty($formation?->onfpevaluateur?->name))
+                                            {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}
+                                        @endif
+                                    </option>
+                                    @foreach ($onfpevaluateurs as $onfpevaluateur)
+                                        <option value="{{ $onfpevaluateur->id }}">
+                                            {{ $onfpevaluateur?->name . ', ' . $onfpevaluateur?->fonction ?? old('onfpevaluateur') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('onfpevaluateur')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
 
                             <div class="mb-3">
                                 <label>Type de certificat délivré<span class="text-danger mx-1">*</span></label>
@@ -1317,16 +1344,17 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="membres_jury">Membres du jury</label>
+
+                                <label for="membres_jury">Autre membres du jury</label>
 
                                 <textarea name="membres_jury" id="membres_jury" cols="30" rows="3"
                                     class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
-                                    placeholder="Membre 1; Membre 2; Membre 3 " autofocus>{{ $formation?->membres_jury ?? old('membres_jury') }}</textarea>
+                                    placeholder="Membre 1; Membre 2; Membre 3 " autofocus>{{ $formation->membres_jury ?? old('membres_jury') }}</textarea>
 
                                 {{-- <input type="text" name="membres_jury"
-                            value="{{ $formation?->membres_jury ?? old('membres_jury') }}"
-                            class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
-                            id="membres_jury" placeholder="Ajouter membres du jury" autofocus> --}}
+                                    value="{{ $formation?->membres_jury ?? old('membres_jury') }}"
+                                    class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
+                                    id="membres_jury" placeholder="Ajouter membres du jury" autofocus> --}}
                                 @error('membres_jury')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -1337,7 +1365,7 @@
 
                                 <label for="recommandations">Recommandations</label>
 
-                                <textarea name="recommandations" id="recommandations" cols="30" rows="3"
+                                <textarea name="recommandations" id="recommandations" cols="30" rows="3s"
                                     class="form-control form-control-sm @error('recommandations') is-invalid @enderror" placeholder="Recommandations"
                                     autofocus>{{ $formation?->recommandations ?? old('recommandations') }}</textarea>
                                 @error('recommandations')

@@ -143,7 +143,7 @@
 
 <body>
     <h6 valign="top" style="text-align: center;">
-      {{--   <b>REPUBLIQUE DU SENEGAL<br></b>
+        {{--   <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
             MINISTERE DE LA FORMATION PROFESSIONNELLE<br>
@@ -152,7 +152,7 @@
                 style="width: 100%; max-width: 300px" />
         </b> --}}
         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete_lettre_mission.png'))) }}"
-        style="width: 100%; max-width: 300px" />
+            style="width: 100%; max-width: 300px" />
     </h6>
     <div class="invoice-box">
         <table class="table table-responsive">
@@ -170,18 +170,19 @@
                             {{ ' au ' . $formation?->date_fin?->format('d/m/Y') }}
                         @endisset
                     </td>
-                    <td colspan="5"><b>{{ __('Intitulé formation : ') }}</b> {{ $formation?->module?->name }}
+                    <td colspan="5"><b>{{ __('Intitulé formation : ') }}</b>
+                        {{ $formation?->collectivemodule?->module }}
                     </td>
                 </tr>
                 <tr class="heading">
                     <td colspan="5"><b>{{ __('Lieu : ') }}</b> {{ $formation?->lieu }}
                     </td>
                     <td colspan="5"><b>{{ __('Opérateur : ') }}</b>
-                        {{ $formation?->operateur?->name . ' (' . $formation?->operateur?->sigle . ')' }}
+                        {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="2"><b>{{ __('Code formation : ') }}</b> {{ $formation?->code }}
+                    <td colspan="2"><b>{{ __('Code formation : ') }}</b> {{ $formation?->code . '(C)' }}
                     </td>
                     <td colspan="3"><b>{{ __('Niveau de qualification : ') }}</b>
                         {{ $formation?->niveau_qualification }}
@@ -190,7 +191,7 @@
                     </td>
                 </tr>
                 <tr class="heading">
-                   {{--  <td colspan="7">
+                    {{--  <td colspan="7">
                         <b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name . '(' . $formation?->ingenieur?->initiale . ')' }}
                     </td> --}}
                     <td rowspan="2" class="item" style="text-align: center;"><b>N° CIN</b></td>
@@ -226,18 +227,19 @@
                 @endforeach
             </tbody>
         </table>
+
         <h4 valign="top">
             <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : @isset($formation?->date_pv)
                 <span
-                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
+                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->departement?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
             @endisset
-            <br><br>
+            <br>
             <?php $i = 1; ?>
-            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction . ', évaluateur' }}<br><br>
-            {{ $formation?->evaluateur_onfp . ', évaluateur ONFP' }}<br><br>
+            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}<br>
+            {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}<br>
             @isset($membres_jury)
                 @foreach ($membres_jury as $item)
-                    {{ $item }} <br><br>
+                    {{ $item }} <br>
                     {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
                 @endforeach
             @endisset

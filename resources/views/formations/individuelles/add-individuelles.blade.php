@@ -59,6 +59,9 @@
                                                 <th>Département</th>
                                                 <th>Module</th>
                                                 <th>Statut</th>
+                                                @if (!empty($formation->projets_id))
+                                                    <th>Projet</th>
+                                                @endif
                                                 <th><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
@@ -93,6 +96,9 @@
                                                         <td><span
                                                                 class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                                         </td>
+                                                        @if (!empty($formation->projets_id))
+                                                            <td>{{ $individuelle?->projet?->sigle }}</td>
+                                                        @endif
                                                         <td>
                                                             <span class="d-flex align-items-baseline"><a
                                                                     href="{{ route('individuelles.show', $individuelle->id) }}"
@@ -130,7 +136,7 @@
                                         </tbody>
                                     </table>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-outline-primary"><i
+                                        <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                 class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                     </div>
                                 </div>
