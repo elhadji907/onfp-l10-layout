@@ -31,6 +31,17 @@ class ProfileController extends Controller
             ->where('file', null)
             ->get();
 
+        $usercin = File::where('users_id', $user->id)
+            ->where('file', '!=', null)
+            ->where('sigle', 'CIN')
+            ->count();
+
+        if (!empty($usercin) && $usercin > '0') {
+            $user_cin = $usercin;
+        } else {
+            $user_cin = null;
+        }
+
         $files = File::where('users_id', $user->id)
             ->where('file', '!=', null)
             ->get();
@@ -59,6 +70,7 @@ class ProfileController extends Controller
                     'count_projets' => $count_projets,
                     'files' => $files,
                     'user_files' => $user_files,
+                    'user_cin' => $user_cin,
                 ]);
             } else {
                 return view('profile.profile-page', [
@@ -69,6 +81,7 @@ class ProfileController extends Controller
                     'collectives' => $collectives,
                     'files' => $files,
                     'user_files' => $user_files,
+                    'user_cin' => $user_cin,
                 ]);
             }
         }
@@ -79,6 +92,7 @@ class ProfileController extends Controller
             'count_projets' => $count_projets,
             'files' => $files,
             'user_files' => $user_files,
+            'user_cin' => $user_cin,
         ]);
     }
 

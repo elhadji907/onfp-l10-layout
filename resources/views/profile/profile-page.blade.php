@@ -199,15 +199,53 @@
                                             jamais modifié
                                         @endif --}}
                                     </p>
-                                    <h5 class="card-title">Informations personnelles :
-                                        @if (isset(Auth::user()->cin))
-                                            <span class="badge bg-success text-white">Complètes</span>
-                                        @else
-                                            <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
-                                            modifier profil pour complèter
-                                        @endif
-                                    </h5>
 
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                            Informations personnelles
+                                        </div>
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                            @if (isset(Auth::user()->cin))
+                                                <span class="badge bg-success text-white">Complètes</span>
+                                            @else
+                                                <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
+                                                l'onglet modifier profil pour complèter
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                            Fichiers joints
+                                        </div>
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                            @if (!empty($user_cin))
+                                                <span class="badge bg-primary text-white">Valide</span>
+                                            @else
+                                                <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
+                                                l'onglet fichier pour télécharger
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">Informations personnelles :
+                                            @if (isset(Auth::user()->cin))
+                                                <span class="badge bg-success text-white">Complètes</span>
+                                            @else
+                                                <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
+                                                modifier profil pour complèter
+                                            @endif
+                                        </h5>
+
+                                        <h5 class="card-title">Joindre fichier :
+                                            @if (!empty($user_cin))
+                                                <span class="badge bg-primary text-white">Valide</span>
+                                            @else
+                                                <span class="badge bg-warning text-white">Invalide</span>, cliquez sur
+                                                fichier pour télécharger
+                                            @endif
+                                        </h5>
+                                    </div> --}}
                                     @isset(Auth::user()->cin)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN</div>
@@ -813,8 +851,8 @@
                                                                     <input type="hidden" name="idFile"
                                                                         value="{{ $file->id }}">
                                                                     <button type="submit"
-                                                                        class="btn btn-danger btn-sm show_confirm"
-                                                                        title="retirer"><i
+                                                                        style="background:none;border:0px;"
+                                                                        class="show_confirm" title="retirer"><i
                                                                             class="bi bi-trash"></i></button>
                                                                 </form>
                                                             </td>
@@ -1021,15 +1059,15 @@
                                                 <div
                                                     class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                     <i class="bi bi-person-plus-fill"></i>
-                                                    <span>{{ count($projet->individuelles->where('projets_id', $projet?->id)) }}</span>
+                                                    <span>{{ count($projet?->individuelles?->where('projets_id', $projet?->id)?->where('users_id', $user?->id)) }}</span>
                                                 </div>
                                                 <div class="ps-3">
-                                                    <h6>
+                                                    <span>
                                                         <span
-                                                            class="btn btn-sm {{ $projet?->statut }}">{{ $projet?->statut }}</span>
-                                                    </h6>
-                                                    <span
-                                                        class="text-muted small pt-2 ps-1">{{ 'Clôture ' . date_format(date_create($projet?->date_fermeture), 'd/m/Y') . ' à 17h' }}</span>
+                                                            class="btn btn-sm {{ $projet?->statut }}">{{ $projet?->statut }}</span><br>
+                                                        <span
+                                                            class="text-muted small pt-2 ps-1">{{ 'Clôture, le ' . date_format(date_create($projet?->date_fermeture), 'd/m/Y') }}</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

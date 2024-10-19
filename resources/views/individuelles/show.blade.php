@@ -160,165 +160,178 @@
                                     enctype="multipart/form-data" class="row g-3">
                                     @csrf
                                     @method('PUT')
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Numéro</div>
-                                        <div>{{ $individuelle?->numero }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Civilité</div>
-                                        <div>{{ $individuelle?->user?->civilite }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">N° CIN</div>
-                                        <div>{{ $individuelle?->user?->cin }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Prénom</div>
-                                        <div>{{ $individuelle?->user->firstname }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Nom</div>
-                                        <div>{{ $individuelle?->user->name }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div for="date_naissance" class="label">Date naissance</div>
-                                        <div>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Lieu naissance</div>
-                                        <div>{{ $individuelle?->user->lieu_naissance }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Adresse</div>
-                                        <div>{{ $individuelle?->user->adresse }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Email</div>
-                                        <div>{{ $individuelle?->user->email }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Téléphone personnel</div>
-                                        <div>{{ $individuelle?->user->telephone }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Téléphone secondaire</div>
-                                        <div>{{ $individuelle?->fixe }}</div>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Formation sollicitée</div>
                                         <div>{{ $individuelle?->module?->name }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Si autre formation ? précisez</div>
-                                        <div>{{ $individuelle?->autre_module }}</div>
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Numéro</div>
+                                        <div>{{ $individuelle?->numero }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Civilité</div>
+                                        <div>{{ $individuelle?->user?->civilite }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">N° CIN</div>
+                                        <div>{{ $individuelle?->user?->cin }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Prénom</div>
+                                        <div>{{ $individuelle?->user->firstname }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Nom</div>
+                                        <div>{{ $individuelle?->user->name }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div for="date_naissance" class="label">Date naissance</div>
+                                        <div>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Lieu naissance</div>
+                                        <div>{{ $individuelle?->user->lieu_naissance }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Adresse</div>
+                                        <div>{{ $individuelle?->user->adresse }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Email</div>
+                                        <div>{{ $individuelle?->user->email }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Téléphone personnel</div>
+                                        <div>{{ $individuelle?->user->telephone }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <div class="label">Téléphone secondaire</div>
+                                        <div>{{ $individuelle?->user?->telephone_secondaire }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Lieu de formation</div>
                                         <div>{{ $individuelle?->departement?->nom }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Situation familiale</div>
                                         <div>{{ $individuelle?->user->situation_familiale }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Situation professionnelle</div>
                                         <div>{{ $individuelle?->user->situation_professionnelle }}</div>
                                     </div>
 
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Niveau étude</div>
                                         <div>{{ $individuelle?->niveau_etude }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Diplôme académique</div>
                                         <div>{{ $individuelle?->diplome_academique }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Si autre ? précisez</div>
                                         <div>{{ $individuelle?->autre_diplome_academique }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Option du diplôme</div>
-                                        <div>{{ $individuelle?->option_diplome_academique }}</div>
-                                    </div>
+                                    @if (!empty($individuelle?->option_diplome_academique))
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                            <div class="label">Option du diplôme</div>
+                                            <div>{{ $individuelle?->option_diplome_academique }}</div>
+                                        </div>
+                                    @endif
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Etablissement académique</div>
                                         <div>{{ $individuelle?->etablissement_academique }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Diplôme professionnel</div>
                                         <div>{{ $individuelle?->diplome_professionnel }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Si autre ? précisez</div>
-                                        <div>{{ $individuelle?->autre_diplome_professionnel }}</div>
-                                    </div>
+                                    @if (!empty($individuelle?->autre_diplome_professionnel))
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                            <div class="label">Si autre ? précisez</div>
+                                            <div>{{ $individuelle?->autre_diplome_professionnel }}</div>
+                                        </div>
+                                    @endif
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Etablissement professionnel</div>
                                         <div>{{ $individuelle?->etablissement_professionnel }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                        <div class="label">Spécialité</div>
-                                        <div>{{ $individuelle?->specialite_diplome_professionnel }}</div>
-                                    </div>
+                                    @if (!empty($individuelle?->specialite_diplome_professionnel))
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                            <div class="label">Spécialité</div>
+                                            <div>{{ $individuelle?->specialite_diplome_professionnel }}</div>
+                                        </div>
+                                    @endif
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Votre projet après la formation</div>
                                         <div>{{ $individuelle?->projet_poste_formation }}</div>
                                     </div>
 
-                                    <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Qualification et autres diplômes</div>
                                         <div>{{ $individuelle?->qualification }}</div>
                                     </div>
 
-                                    @isset($individuelle?->formations_id)
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                    @isset($individuelle?->note_obtenue)
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                             <div class="label">Note</div>
                                             <div>{{ $individuelle?->note_obtenue }}</div>
                                         </div>
 
-                                        <div class="col-12 col-md-3 col-lg-3 mb-0">
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                             <div class="label">Appréciation</div>
                                             <div>{{ $individuelle?->appreciation }}</div>
                                         </div>
                                     @endisset
 
-                                    <div class="col-12 col-md-9 col-lg-9 mb-0">
-                                        <div class="label">Expériences et stages</div>
-                                        <div>{{ $individuelle?->experience }}</div>
-                                    </div>
+                                    @if (!empty($individuelle?->experience))
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                            <div class="label">Expériences et stages</div>
+                                            <div>{{ $individuelle?->experience }}</div>
+                                        </div>
+                                    @endif
 
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <div class="label">Informations complémentaires sur
                                             le projet
                                             professionnel</div>
                                         <div>{{ $individuelle?->projetprofessionnel }}</div>
                                     </div>
+
+                                    @if (!empty($individuelle?->projets_id))
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="label">Projet</div>
+                                            <div>
+                                                {{ $individuelle?->projet?->name . ' (' . $individuelle?->projet?->sigle . ')' }}
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div class="text-center">
                                         <a href="{{ route('individuelles.edit', $individuelle?->id) }}"
