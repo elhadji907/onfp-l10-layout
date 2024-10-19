@@ -61,6 +61,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'situation_professionnelle',
         'situation_familiale',
         'cin',
+        'file_cin',
+        'file_diplome',
 
         'operateur',
         'web',
@@ -241,4 +243,8 @@ class User extends Authenticatable implements MustVerifyEmail
 			->withTimestamps();
 	}
 
+    public function files()
+    {
+        return $this->hasMany(File::class, 'users_id')->latest();
+    }
 }

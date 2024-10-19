@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Collective;
+use App\Models\File;
 use App\Models\Individuelle;
 use App\Models\Projet;
 use Illuminate\Http\RedirectResponse;
@@ -24,6 +25,14 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $projets = Projet::where('statut', 'ouvert')
+            ->get();
+
+        $user_files = File::where('users_id', $user->id)
+            ->where('file', null)
+            ->get();
+
+        $files = File::where('users_id', $user->id)
+            ->where('file', '!=', null)
             ->get();
 
         $count_projets = Projet::join('individuelles', 'projets.id', 'individuelles.projets_id')
@@ -48,6 +57,8 @@ class ProfileController extends Controller
                     'user' => $request->user(),
                     'projets' => $projets,
                     'count_projets' => $count_projets,
+                    'files' => $files,
+                    'user_files' => $user_files,
                 ]);
             } else {
                 return view('profile.profile-page', [
@@ -56,6 +67,8 @@ class ProfileController extends Controller
                     'count_projets' => $count_projets,
                     'individuelles' => $individuelles,
                     'collectives' => $collectives,
+                    'files' => $files,
+                    'user_files' => $user_files,
                 ]);
             }
         }
@@ -64,6 +77,8 @@ class ProfileController extends Controller
             'user' => $request->user(),
             'projets' => $projets,
             'count_projets' => $count_projets,
+            'files' => $files,
+            'user_files' => $user_files,
         ]);
     }
 

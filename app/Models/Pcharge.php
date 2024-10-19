@@ -76,8 +76,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Pcharge extends Model
 {
-	
-    use HasFactory;
+
+	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'pcharges';
@@ -208,5 +208,10 @@ class Pcharge extends Model
 	public function renouvellements()
 	{
 		return $this->hasMany(Renouvellement::class, 'pcharges_id');
+	}
+
+	public function files()
+	{
+		return $this->hasMany(File::class, 'users_id')->latest();
 	}
 }

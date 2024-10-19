@@ -15,8 +15,8 @@
     <section class="section profile">
         <div class="row justify-content-center">
             {{-- Début Photo de profil --}}
-            <div class="col-12 col-md-4 col-lg-4">
-                <div class="col-12 col-md-12 col-lg-12">
+            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-12 col-lg-12">
+                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="card">
 
                         <div class="card-body pb-0">
@@ -130,7 +130,7 @@
             {{-- Fin Photo de profil --}}
 
             {{-- Début aperçu --}}
-            <div class="col-12 col-md-8 col-lg-8">
+            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                 <div class="flex items-center gap-4">
                     <div class="card">
                         @if ($message = Session::get('status'))
@@ -183,6 +183,10 @@
                                         data-bs-target="#profile-change-password">Changer le mot de passe</button>
                                 </li>
 
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                </li>
+
                             </ul>
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -206,36 +210,43 @@
 
                                     @isset(Auth::user()->cin)
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">CIN</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->cin }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->cin }}</div>
                                         </div>
                                     @endisset
 
                                     @isset(Auth::user()->username)
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Username</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->username }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Username
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->username }}</div>
                                         </div>
                                     @endisset
 
                                     @isset(Auth::user()->firstname)
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Prénom</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->firstname }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Prénom
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->firstname }}</div>
                                         </div>
                                     @endisset
 
                                     @isset(Auth::user()->name)
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Nom</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->name }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Nom</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->name }}</div>
                                         </div>
                                     @endisset
 
                                     @isset(Auth::user()->email)
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Email</div>
-                                            <div class="col-lg-9 col-md-8"><a
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Email
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a
                                                     href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a>
                                             </div>
                                         </div>
@@ -243,8 +254,9 @@
 
                                     @isset(Auth::user()->telephone)
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                                            <div class="col-lg-9 col-md-8"><a
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Téléphone
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a
                                                     href="tel:+221{{ Auth::user()->telephone }}">{{ Auth::user()->telephone }}</a>
                                             </div>
                                         </div>
@@ -252,8 +264,10 @@
 
                                     @isset(Auth::user()->adresse)
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Adresse</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()->adresse }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Adresse
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->adresse }}</div>
                                         </div>
                                     @endisset
                                 </div>
@@ -270,10 +284,12 @@
                                         <!-- Profile Edit Form -->
 
                                         <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Image
+                                            <label for="profileImage"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Image
                                                 de
                                                 profil</label>
-                                            <div class="col-md-8 col-lg-9">
+                                            {{-- <div class="col-md-8 col-lg-9"> --}}
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <img class="rounded-circle w-25" alt="Profil"
                                                     src="{{ asset(Auth::user()->getImage()) }}" width="50"
                                                     height="auto">
@@ -298,10 +314,11 @@
 
                                         {{-- CIN --}}
                                         <div class="row mb-3">
-                                            <label for="cin" class="col-md-4 col-lg-3 col-form-label">CIN<span
+                                            <label for="cin"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">CIN<span
                                                     class="text-danger mx-1">*</span>
                                             </label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <div class="pt-2">
                                                     <input name="cin" type="text"
                                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
@@ -316,10 +333,11 @@
 
                                         {{-- Username --}}
                                         <div class="row mb-3">
-                                            <label for="username" class="col-md-4 col-lg-3 col-form-label">Username<span
+                                            <label for="username"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Username<span
                                                     class="text-danger mx-1">*</span>
                                             </label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <div class="pt-2">
                                                     <input name="username" type="text"
                                                         class="form-control form-control-sm @error('username') is-invalid @enderror"
@@ -334,10 +352,11 @@
 
                                         {{-- Civilité --}}
                                         <div class="row mb-3">
-                                            <label for="Civilité" class="col-md-4 col-lg-3 col-form-label">Civilité<span
+                                            <label for="Civilité"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Civilité<span
                                                     class="text-danger mx-1">*</span>
                                             </label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <div class="pt-2">
                                                     <select name="civilite"
                                                         class="form-select form-select-sm @error('civilite') is-invalid @enderror"
@@ -361,10 +380,11 @@
                                         </div>
                                         {{-- Prénom --}}
                                         <div class="row mb-3">
-                                            <label for="firstname" class="col-md-4 col-lg-3 col-form-label">Prénom<span
+                                            <label for="firstname"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Prénom<span
                                                     class="text-danger mx-1">*</span>
                                             </label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <div class="pt-2">
                                                     <input name="firstname" type="text"
                                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
@@ -378,9 +398,10 @@
                                         </div>
                                         {{-- Nom --}}
                                         <div class="row mb-3">
-                                            <label for="name" class="col-md-4 col-lg-3 col-form-label">Nom<span
+                                            <label for="name"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Nom<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="name" type="text"
                                                     class="form-control form-control-sm @error('name') is-invalid @enderror"
                                                     id="name" value="{{ $user->name ?? old('name') }}"
@@ -394,9 +415,10 @@
                                         </div>
                                         {{-- Date de naissance --}}
                                         <div class="row mb-3">
-                                            <label for="date_naissance" class="col-md-4 col-lg-3 col-form-label">Date
+                                            <label for="date_naissance"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Date
                                                 naissance<span class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input type="date" name="date_naissance"
                                                     value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
                                                     class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
@@ -410,9 +432,10 @@
                                         </div>
                                         {{-- Lieu naissance --}}
                                         <div class="row mb-3">
-                                            <label for="lieu naissance" class="col-md-4 col-lg-3 col-form-label">Lieu
+                                            <label for="lieu naissance"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Lieu
                                                 naissance<span class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="lieu_naissance" type="text"
                                                     class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
                                                     id="lieu_naissance"
@@ -427,9 +450,10 @@
                                         </div>
                                         {{-- Email --}}
                                         <div class="row mb-3">
-                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email<span
+                                            <label for="Email"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Email<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="email" type="email"
                                                     class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                     id="Email" value="{{ $user->email ?? old('email') }}"
@@ -443,9 +467,10 @@
                                         </div>
                                         {{-- Telephone --}}
                                         <div class="row mb-3">
-                                            <label for="telephone" class="col-md-4 col-lg-3 col-form-label">Téléphone<span
+                                            <label for="telephone"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="telephone" type="telephone"
                                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                                     id="telephone" value="{{ $user->telephone ?? old('telephone') }}"
@@ -459,9 +484,10 @@
                                         </div>
                                         {{-- Adresse --}}
                                         <div class="row mb-3">
-                                            <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Adresse<span
+                                            <label for="adresse"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Adresse<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="adresse" type="adresse"
                                                     class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                                     id="adresse" value="{{ $user->adresse ?? old('adresse') }}"
@@ -475,9 +501,10 @@
                                         </div>
                                         {{-- Situation familiale --}}
                                         <div class="row mb-3">
-                                            <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
+                                            <label for="adresse"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Situation
                                                 familiale<span class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <select name="situation_familiale"
                                                     class="form-select form-select-sm @error('situation_familiale') is-invalid @enderror"
                                                     aria-label="Select" id="select-field-familiale"
@@ -508,9 +535,10 @@
                                         </div>
                                         {{-- Situation professionnelle --}}
                                         <div class="row mb-3">
-                                            <label for="adresse" class="col-md-4 col-lg-3 col-form-label">Situation
+                                            <label for="adresse"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Situation
                                                 professionnelle<span class="text-danger mx-1">*</span></label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <select name="situation_professionnelle"
                                                     class="form-select  @error('situation_professionnelle') is-invalid @enderror"
                                                     aria-label="Select" id="select-field-professionnelle"
@@ -547,9 +575,10 @@
                                         </div>
                                         {{-- facebook --}}
                                         <div class="row mb-3">
-                                            <label for="facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
+                                            <label for="facebook"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Facebook
                                                 profil</label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="facebook" type="facebook"
                                                     class="form-control form-control-sm @error('facebook') is-invalid @enderror"
                                                     id="facebook" value="{{ $user->facebook ?? old('facebook') }}"
@@ -563,9 +592,11 @@
                                         </div>
                                         {{-- twitter --}}
                                         <div class="row mb-3">
-                                            <label for="twitter" class="col-md-4 col-lg-3 col-form-label">X profil (ex
+                                            <label for="twitter"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">X
+                                                profil (ex
                                                 twitter)</label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="twitter" type="twitter"
                                                     class="form-control form-control-sm @error('twitter') is-invalid @enderror"
                                                     id="twitter" value="{{ $user->twitter ?? old('twitter') }}"
@@ -580,9 +611,10 @@
                                         </div>
                                         {{-- instagram --}}
                                         <div class="row mb-3">
-                                            <label for="instagram" class="col-md-4 col-lg-3 col-form-label">Instagram
+                                            <label for="instagram"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Instagram
                                                 profil</label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="instagram" type="instagram"
                                                     class="form-control form-control-sm @error('instagram') is-invalid @enderror"
                                                     id="instagram" value="{{ $user->instagram ?? old('instagram') }}"
@@ -596,9 +628,10 @@
                                         </div>
                                         {{-- linkedin --}}
                                         <div class="row mb-3">
-                                            <label for="linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin
+                                            <label for="linkedin"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Linkedin
                                                 profil</label>
-                                            <div class="col-md-8 col-lg-9">
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <input name="linkedin" type="linkedin"
                                                     class="form-control form-control-sm @error('linkedin') is-invalid @enderror"
                                                     id="linkedin" value="{{ $user->linkedin ?? old('linkedin') }}"
@@ -610,8 +643,27 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        {{-- Scan CIN --}}
+                                        {{-- <div class="row mb-3">
+                                            <label for="scan_cin"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">SCAN
+                                                CIN Recto/Verso
+                                                profil<span class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                <input type="file" name="scan_cin" id="scan_cin"
+                                                    class="form-control @error('scan_cin') is-invalid @enderror btn btn-primary btn-sm">
+                                                @error('scan_cin')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                @error('scan_cin')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div> --}}
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Sauvegarder les
+                                            <button type="submit" class="btn btn-info">Sauvegarder les
                                                 modifications</button>
                                         </div>
                                         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
@@ -722,6 +774,118 @@
                                     </form><!-- End Change Password Form -->
                                 </div>
                             </div><!-- End Bordered Tabs -->
+
+
+                            <div class="tab-content pt-2">
+                                {{-- Début Edition --}}
+                                <div class="tab-pane fade files" id="files">
+                                    <div class="row mb-3">
+                                        <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            {{ __('Fichiers téléchargés') }}</h5>
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                            <table class="table table-bordered table-hover datatables" id="table-iles">
+                                                <thead>
+                                                    <tr>
+                                                        {{-- <th width="5%" class="text-center">N°</th> --}}
+                                                        <th>Légende</th>
+                                                        <th width="10%" class="text-center">File</th>
+                                                        <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 1; ?>
+                                                    @foreach ($files as $file)
+                                                        <tr>
+                                                            {{-- <td class="text-center">{{ $i++ }}</td> --}}
+                                                            <td>{{ $file?->legende }}</td>
+                                                            <td class="text-center">
+                                                                <a class="btn btn-default btn-sm"
+                                                                    title="télécharger le fichier joint" target="_blank"
+                                                                    href="{{ asset($file->getFichier()) }}">
+                                                                    <i class="bi bi-download"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <form action="{{ route('fileDestroy') }}" method="post">
+                                                                    @csrf
+                                                                    @method('put')
+                                                                    <input type="hidden" name="idFile"
+                                                                        value="{{ $file->id }}">
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger btn-sm show_confirm" title="retirer"><i
+                                                                            class="bi bi-trash"></i></button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <form method="post" action="{{ route('files.update', $user->id) }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('patch')
+
+                                        <h5 class="card-title">{{ __("Ajouter d'autres fichiers") }}</h5>
+                                        <!-- Profile Edit Form -->
+
+                                        <div class="row mb-3">
+                                            <label for="legende"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Légende<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{-- <input name="legende" type="text"
+                                                    class="form-control form-control-sm @error('legende') is-invalid @enderror"
+                                                    id="legende" value="{{ old('legende') }}" autocomplete="legende"
+                                                    placeholder="Légende"> --}}
+                                                <select name="legende"
+                                                    class="form-select  @error('legende') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-file"
+                                                    data-placeholder="Choisir">
+                                                    <option value="{{ old('legende') }}">
+                                                        {{ old('legende') }}
+                                                    </option>
+                                                    @foreach ($user_files as $file)
+                                                        <option value="{{ $file?->id }}">
+                                                            {{ $file?->legende }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('legende')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="file"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Fichier<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                <div class="pt-2">
+                                                    <input type="file" name="file" id="file"
+                                                        class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                                    @error('file')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center mt-2">
+                                            <button type="submit" class="btn btn-info btn-sm">Ajouter</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

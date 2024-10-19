@@ -22,6 +22,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmailFormationController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\EvaluateurController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\IndemniteController;
@@ -54,13 +55,14 @@ use App\Http\Controllers\SecteurController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationcollectiveController;
 use App\Http\Controllers\ValidationformationController;
-use App\Http\Controllers\ValidationIndividuelleController;
 
+use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -371,6 +373,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('formations/reports',[FormationController::class,'reports'])->name('formations.reports');
     Route::post('formations/reports',[FormationController::class,'generateReport']);
 
+    Route::put('fileDestroy',[FileController::class,'fileDestroy'])->name('fileDestroy');
+
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -424,6 +428,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('/commissionagrements', CommissionagrementController::class);
     Route::resource('/evaluateurs', EvaluateurController::class);
     Route::resource('/onfpevaluateurs', OnfpevaluateurController::class);
+    Route::resource('/files', FileController::class);
 });
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Collective;
 use App\Models\Demandeur;
+use App\Models\File;
 use App\Models\Individuelle;
 use App\Models\Pcharge;
 use App\Models\User;
@@ -56,6 +57,16 @@ class RegisteredUserController extends Controller
             'lieu_naissance' => $request->lieu_naissance, */
             'password' => Hash::make($request->password),
         ]);
+
+        $files = File::distinct()->get();
+
+        foreach ($files as $key => $file) {
+            $file = File::create([
+                'legende'   => $file->legende,
+                'sigle'     => $file->sigle,
+                'users_id'  => $user->id
+            ]);
+        }
 
         /*     $demandeur = Demandeur::create([
             'users_id' => $user->id,

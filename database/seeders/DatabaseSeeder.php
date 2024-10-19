@@ -271,6 +271,7 @@ class DatabaseSeeder extends Seeder
             IngenieurSeeder::class,
             EvaluateurSeeder::class,
             OnfpevaluateurSeeder::class,
+            FileSeeder::class,
             IndividuelleSeeder::class,
         ]);
     }

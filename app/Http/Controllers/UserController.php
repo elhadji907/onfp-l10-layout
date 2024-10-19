@@ -293,7 +293,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'civilite'         => ['nullable', 'string', 'max:10'],
                 'username'         => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
-                "cin"              => ["required", "string", "min:13", "max:15", Rule::unique(User::class)->ignore($id)],
+                "cin"              => ["required", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
                 'firstname'        => ['required', 'string', 'max:150'],
                 'name'             => ['required', 'string', 'max:50'],
                 'date_naissance'   => ['string', 'nullable'],

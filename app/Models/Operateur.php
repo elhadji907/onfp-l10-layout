@@ -159,10 +159,10 @@ class Operateur extends Model
 	];
 
 	public function getQuitus()
-    {
-        $quitusPath = $this->quitus;
-        return "/storage/" . $quitusPath;
-    }
+	{
+		$quitusPath = $this->quitus;
+		return "/storage/" . $quitusPath;
+	}
 
 	public function historiqueagrements()
 	{
@@ -288,9 +288,13 @@ class Operateur extends Model
 			->withPivot('id', 'deleted_at')
 			->withTimestamps();
 	}
-
 	public function traitements()
 	{
 		return $this->hasMany(Traitement::class, 'operateurs_id');
+	}
+
+	public function files()
+	{
+		return $this->hasMany(File::class, 'users_id')->latest();
 	}
 }

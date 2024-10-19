@@ -39,6 +39,8 @@ class CreateUsersTable extends Migration
             $table->longText('adresse')->nullable(true);
             $table->string('bp', 200)->nullable(true);
             $table->string('fax', 200)->nullable(true);
+            $table->string('file_cin', 200)->nullable(true);
+            $table->string('file_diplome', 200)->nullable(true);
             $table->timestamp('email_verified_at')->nullable(true);
             $table->string('password')->nullable(true);
             $table->string('image', 200)->nullable(true);
