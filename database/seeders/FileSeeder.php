@@ -70,7 +70,7 @@ class FileSeeder extends Seeder
         ]);
 
         DB::table('files')->insert([
-            "legende" => "CV",
+            "legende" => "Curriculum vitæ (CV)",
             "sigle" => "CV",
             "users_id" => "1",
             'created_at' => now(),

@@ -813,7 +813,8 @@
                                                                     <input type="hidden" name="idFile"
                                                                         value="{{ $file->id }}">
                                                                     <button type="submit"
-                                                                        class="btn btn-danger btn-sm show_confirm" title="retirer"><i
+                                                                        class="btn btn-danger btn-sm show_confirm"
+                                                                        title="retirer"><i
                                                                             class="bi bi-trash"></i></button>
                                                                 </form>
                                                             </td>
@@ -830,9 +831,11 @@
                                         @method('patch')
 
                                         <h5 class="card-title">{{ __("Ajouter d'autres fichiers") }}</h5>
+                                        <span style="color:red;">NB:</span> <span>Seule la Carte nationale d'identité
+                                            (Recto/Verso)</span> <span style="color:red;"> est obligatoire</span>
                                         <!-- Profile Edit Form -->
 
-                                        <div class="row mb-3">
+                                        <div class="row mb-3 mt-3">
                                             <label for="legende"
                                                 class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Légende<span
                                                     class="text-danger mx-1">*</span></label>
