@@ -351,6 +351,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('arrives/index', [ArriveController::class, 'index'])->name('arrives.report');
     Route::post('arrives/index', [ArriveController::class, 'generateReport']);
 
+    Route::get('internes/index', [InterneController::class, 'index'])->name('internes.report');
+    Route::post('internes/index', [InterneController::class, 'generateReport']);
+
     Route::get('formes/rapportsformes', [FormationController::class, 'rapportsformes'])->name('formes.rapport');
     Route::post('formes/rapportsformes', [FormationController::class, 'generateRapportFormes']);
 

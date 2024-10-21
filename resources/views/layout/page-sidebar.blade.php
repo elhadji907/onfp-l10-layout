@@ -177,7 +177,7 @@
                     @can('arrive-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('arrives') }}">
-                                <span>Arrivé</span>
+                                <span>Arrivés</span>
                             </a>
                         </li><!-- End arrives Nav -->
                     @endcan
@@ -185,15 +185,15 @@
                     @can('depart-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('departs') }}">
-                                <span>Départ</span>
+                                <span>Départs</span>
                             </a>
                         </li><!-- End departs Nav -->
                     @endcan
 
                     @can('interne-view')
                         <li class="nav-item">
-                            <a class="nav-link collapsed" href="#">
-                                <span>Interne</span>
+                            <a class="nav-link collapsed" href="{{ url('internes') }}">
+                                <span>Internes</span>
                             </a>
                         </li><!-- End internes Nav -->
                     @endcan
@@ -540,7 +540,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('projets') }}">
                     <i class="bi bi-layers-half"></i>
-                    <span>Gestion projets</span>
+                    <span>Gestion des projets</span>
                 </a>
             </li>
         @endcan
@@ -559,7 +559,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#suivi-formes-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-diagram-3-fill"></i><span>{{ __('Suivi formés') }}</span><i
+                    <i class="bi bi-diagram-3-fill"></i><span>{{ __('Suivi des formés') }}</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="suivi-formes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">

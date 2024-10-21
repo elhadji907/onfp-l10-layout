@@ -459,7 +459,7 @@ class IndividuelleController extends Controller
             'telephone'                     => ['required', 'string', 'min:9', 'max:9'],
             'telephone_secondaire'          => ['required', 'string', 'min:9', 'max:9'],
             'date_naissance'                => ['required', 'date'],
-            'lieu_naissance'                => ['string', 'required'],
+            'lieu_naissance'                => ['required', 'string'],
             'adresse'                       => ['required', 'string', 'max:255'],
             'departement'                   => ['required', 'string', 'max:255'],
             'module'                        => ['required', 'string', 'max:255'],

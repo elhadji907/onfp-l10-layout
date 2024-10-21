@@ -131,8 +131,18 @@ class ArriveController extends Controller
         return view("courriers.arrives.create", compact('anneeEnCours', 'numCourrier'));
     }
 
-    public function store(ArriveStoreRequest $request): RedirectResponse
+    public function store(Request $request)
     {
+        $this->validate($request, [
+            'date_arrivee'              =>  ["required", "date"],
+            'date_correspondance'       =>  ["required", "date"],
+            'numero_arrive'             =>  ["required", "string", "min:4", "max:6", "unique:arrives,numero,Null,id,deleted_at,NULL"],
+            'numero_correspondance'     =>  ["required", "string", "min:4", "max:6", "unique:courriers,numero,Null,id,deleted_at,NULL"],
+            'annee'                     =>  ['required', 'numeric', 'min:2022'],
+            'expediteur'                =>  ['required', 'string', 'max:200'],
+            'objet'                     =>  ['required', 'string', 'max:200'],
+        ]);
+
         $courrier = new Courrier([
             'date_recep'            =>      $request->input('date_arrivee'),
             'date_cores'            =>      $request->input('date_correspondance'),
@@ -159,8 +169,6 @@ class ArriveController extends Controller
 
         $arrive->save();
         Alert::success("Félicitations !", "Courrier ajouté avec succès");
-        /* $status = "Enregistrement effectué avec succès"; */
-        /* return redirect()->back()->with("status", $status); */
         return redirect()->back();
     }
 
