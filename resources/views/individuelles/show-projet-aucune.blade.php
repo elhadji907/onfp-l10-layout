@@ -35,19 +35,20 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | Profil</p>
                             </span>
-                            @isset(Auth::user()->cin)
+                            @if (!empty(Auth::user()->cin) && !empty($statut))
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
                                     <i class="bi bi-plus" title="Ajouter"></i>
                                 </button>
-                            @endisset
+                            @endif
                         </div>
-                        @if (isset(Auth::user()->cin))
+                        @if (!empty(Auth::user()->cin))
                             <h5 class="card-title">Aucune demande individuelle pour le moment !!</h5>
-                        @else
+                        @elseif(!empty($statut))
                             <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
                                         class="badge bg-warning text-white">Incomplètes</span></a>, cliquez <a
                                     href="{{ route('profil') }}">ici</a> pour modifier votre profil</h5>
+                        @else
                         @endif
                     </div>
                 </div>

@@ -332,9 +332,37 @@ class IndividuelleController extends Controller
 
             $numero_individuelle = strtoupper($numero_individuelle);
 
-            $departement = Departement::where('nom', $request->input("departement"))->first();
-
-            $regionid = $departement->region->id;
+            if (!empty($request->input("departement")) && $projet?->type_localite == 'Commune') {
+                $commune = Commune::where('nom', $request->input("departement"))->first();
+                $communeid = $commune?->id;
+                $arrondissement = $commune?->arrondissement;
+                $arrondissementid = $commune?->arrondissement?->id;
+                $departement = $commune?->arrondissement?->departement;
+                $departementid = $commune?->arrondissement?->departement?->id;
+                $regionid = $commune?->arrondissement?->departement?->region?->id;
+            } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Arrondissement') {
+                $communeid = null;
+                $arrondissement = Arrondissement::where('nom', $request->input("departement"))->first();
+                $arrondissementid = $arrondissement?->id;
+                $departement = $arrondissement?->departement;
+                $departementid = $arrondissement?->departement?->id;
+                $regionid = $arrondissement?->departement?->region?->id;
+            } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Departement') {
+                $communeid = null;
+                $arrondissementid = null;
+                $departement = Departement::where('nom', $request->input("departement"))->first();
+                $departementid = $departement?->id;
+                $regionid = $departement?->region?->id;
+            } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Region') {
+                $communeid = null;
+                $arrondissementid = null;
+                $departementid = null;
+                $region = Region::where('nom', $request->input("departement"))->first();
+                $regionid = $region?->id;
+            } else {
+                $departement = Departement::where('nom', $request->input("departement"))->first();
+                $regionid = $departement?->region?->id;
+            }
 
             $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
 
@@ -365,8 +393,10 @@ class IndividuelleController extends Controller
                     'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                     'qualification'                     =>  $request->input('qualification'),
                     'experience'                        =>  $request->input('experience'),
-                    "departements_id"                   =>  $departement->id,
+                    "departements_id"                   =>  $departementid,
                     "regions_id"                        =>  $regionid,
+                    "communes_id"                       =>  $communeid,
+                    "arrondissements_id"                =>  $arrondissementid,
                     "modules_id"                        =>  $module_find->id,
                     "projets_id"                        =>  $request?->idprojet,
                     'autre_module'                      =>  $request->input('module'),
@@ -398,8 +428,10 @@ class IndividuelleController extends Controller
                     'projetprofessionnel'               =>  $request->input('projetprofessionnel'),
                     'qualification'                     =>  $request->input('qualification'),
                     'experience'                        =>  $request->input('experience'),
-                    "departements_id"                   =>  $departement->id,
+                    "departements_id"                   =>  $departementid,
                     "regions_id"                        =>  $regionid,
+                    "communes_id"                       =>  $communeid,
+                    "arrondissements_id"                =>  $arrondissementid,
                     "modules_id"                        =>  $module->id,
                     "projets_id"                        =>  $request?->idprojet,
                     'autre_module'                      =>  $request->input('module'),
@@ -652,16 +684,47 @@ class IndividuelleController extends Controller
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ]);
 
-        $departement        = Departement::where('nom', $request->input("departement"))->first();
+       
+        $projet = Projet::where('sigle', $request->input("projet"))->first();
 
-        $regionid           = $departement->region->id;
+        if (!empty($request->input("departement")) && $projet?->type_localite == 'Commune') {
+            $commune = Commune::where('nom', $request->input("departement"))->first();
+            $communeid = $commune?->id;
+            $arrondissement = $commune?->arrondissement;
+            $arrondissementid = $commune?->arrondissement?->id;
+            $departement = $commune?->arrondissement?->departement;
+            $departementid = $commune?->arrondissement?->departement?->id;
+            $regionid = $commune?->arrondissement?->departement?->region?->id;
+        } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Arrondissement') {
+            $communeid = null;
+            $arrondissement = Arrondissement::where('nom', $request->input("departement"))->first();
+            $arrondissementid = $arrondissement?->id;
+            $departement = $arrondissement?->departement;
+            $departementid = $arrondissement?->departement?->id;
+            $regionid = $arrondissement?->departement?->region?->id;
+        } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Departement') {
+            $communeid = null;
+            $arrondissementid = null;
+            $departement = Departement::where('nom', $request->input("departement"))->first();
+            $departementid = $departement?->id;
+            $regionid = $departement?->region?->id;
+        } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Region') {
+            $communeid = null;
+            $arrondissementid = null;
+            $departementid = null;
+            $region = Region::where('nom', $request->input("departement"))->first();
+            $regionid = $region?->id;
+        } else {
+            $departement = Departement::where('nom', $request->input("departement"))->first();
+            $regionid = $departement?->region?->id;
+        }
+
         $user               = Auth::user();
 
         $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
 
         $demandeur_ind  = Individuelle::where('users_id', $user->id)->get();
 
-        $projet = Projet::where('sigle', $request->input("projet"))->first();
 
         if (!empty($projet)) {
             $projetid = $projet?->id;
@@ -687,9 +750,11 @@ class IndividuelleController extends Controller
                     'qualification'                     =>  $request->input('qualification'),
                     'adresse'                           =>  $request->input('adresse'),
                     'experience'                        =>  $request->input('experience'),
-                    "departements_id"                   =>  $departement->id,
-                    "projets_id"                        =>  $projetid,
+                    "departements_id"                   =>  $departementid,
                     "regions_id"                        =>  $regionid,
+                    "communes_id"                       =>  $communeid,
+                    "arrondissements_id"                =>  $arrondissementid,
+                    "projets_id"                        =>  $projetid,
                     'users_id'                          =>  $user_id,
                 ]);
             } elseif (isset($module_find)) {
@@ -715,9 +780,11 @@ class IndividuelleController extends Controller
                     'qualification'                     =>  $request->input('qualification'),
                     'adresse'                           =>  $request->input('adresse'),
                     'experience'                        =>  $request->input('experience'),
-                    "departements_id"                   =>  $departement->id,
-                    "projets_id"                        =>  $projetid,
+                    "departements_id"                   =>  $departementid,
                     "regions_id"                        =>  $regionid,
+                    "communes_id"                       =>  $communeid,
+                    "arrondissements_id"                =>  $arrondissementid,
+                    "projets_id"                        =>  $projetid,
                     "modules_id"                        =>  $module_find->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
                     'users_id'                          =>  $user_id,
@@ -746,9 +813,11 @@ class IndividuelleController extends Controller
                     'qualification'                     =>  $request->input('qualification'),
                     'adresse'                           =>  $request->input('adresse'),
                     'experience'                        =>  $request->input('experience'),
-                    "departements_id"                   =>  $departement->id,
-                    "projets_id"                        =>  $projetid,
+                    "departements_id"                   =>  $departementid,
                     "regions_id"                        =>  $regionid,
+                    "communes_id"                       =>  $communeid,
+                    "arrondissements_id"                =>  $arrondissementid,
+                    "projets_id"                        =>  $projetid,
                     "modules_id"                        =>  $module->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
                     'users_id'                          =>  $user_id,
@@ -781,9 +850,11 @@ class IndividuelleController extends Controller
                 'qualification'                     =>  $request->input('qualification'),
                 'adresse'                           =>  $request->input('adresse'),
                 'experience'                        =>  $request->input('experience'),
-                "departements_id"                   =>  $departement->id,
-                "projets_id"                        =>  $projetid,
+                "departements_id"                   =>  $departementid,
                 "regions_id"                        =>  $regionid,
+                "communes_id"                       =>  $communeid,
+                "arrondissements_id"                =>  $arrondissementid,
+                "projets_id"                        =>  $projetid,
                 "modules_id"                        =>  $module->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
                 'users_id'                          =>  $user_id,

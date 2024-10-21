@@ -70,7 +70,8 @@
                                         <td class="text-center"><span
                                                 class="badge bg-success">{{ count($projet?->projetmodules) }}</span></td>
                                         <td class="text-center">
-                                            <span class="badge bg-info">{{ count($projet?->individuelles) }}</span>
+                                            <a href="{{ route('projetsBeneficiaire', $projet->id) }}" class="badge bg-info"
+                                                title="afficher">{{ count($projet?->individuelles) }}</a>
                                             {{-- @foreach ($projet?->individuelles as $individuelle)
                                                 @if ($loop->last)
                                                     <a href="#"><span
@@ -91,8 +92,8 @@
                                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                             <li>
                                                                 <a class="dropdown-item btn btn-sm"
-                                                                href="{{ route('projets.edit', $projet->id) }}"
-                                                                class="mx-1" title="Modifier">Modifier</a>
+                                                                    href="{{ route('projets.edit', $projet->id) }}"
+                                                                    class="mx-1" title="Modifier">Modifier</a>
                                                                 {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#EditProjetModal{{ $projet->id }}">Modifier
@@ -262,7 +263,8 @@
                                         <label for="type" class="form-label">Type localité<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="type" class="form-select  @error('type') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-typelocalite" data-placeholder="Choisir type">
+                                            aria-label="Select" id="select-field-typelocalite"
+                                            data-placeholder="Choisir type">
                                             <option value="">Choisir type</option>
                                             <option value="Commune">Commune</option>
                                             <option value="Arrondissement">Arrondissement</option>
@@ -281,7 +283,8 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="type_projet"
                                             class="form-select  @error('type_projet') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-projetprogramme" data-placeholder="Choisir type projet">
+                                            aria-label="Select" id="select-field-projetprogramme"
+                                            data-placeholder="Choisir type projet">
                                             <option value="">Choisir type projet</option>
                                             <option value="Projet">Projet</option>
                                             <option value="Programme">Programme</option>

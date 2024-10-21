@@ -203,7 +203,7 @@
                                                 <div>{{ $formation?->choixoperateur?->description }}</div>
                                             </div>
                                         @endisset
-                                        @if(!empty($formation?->attestation))
+                                        @if (!empty($formation?->attestation))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Titres - Attestations</div>
                                                 <div>{{ $formation?->attestation }}</div>
@@ -453,7 +453,11 @@
                                                             {{-- @endisset --}}
                                                             {{-- <th>Appréciation</th> --}}
                                                             {{-- <th class="col"><i class="bi bi-backspace-reverse"></i></th> --}}
-                                                            <th class="col"><i class="bi bi-gear"></i></th>
+                                                            @can('rapport-suivi-formes-view')
+                                                                <th width='3%' class="text-center">Suivi</th>
+                                                            @endcan
+                                                            <th width='2%' class="text-center"><i class="bi bi-gear"></i>
+                                                            </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -473,12 +477,25 @@
                                                                 </td>
                                                                 <td class="text-center">
                                                                     {{ $individuelle?->user?->lieu_naissance }}</td>
-                                                                {{-- <td>{{ $individuelle?->user->adresse }}</td> --}}
-                                                                {{-- @isset($individuelle?->note_obtenue) --}}
                                                                 <td class="text-center">
                                                                     {{ $individuelle?->note_obtenue ?? ' ' }}</td>
-                                                                {{-- @endisset --}}
-                                                                {{-- <td>{{ $individuelle?->appreciation }}</td> --}}
+                                                                @can('rapport-suivi-formes-view')
+                                                                    <td>
+                                                                        @if (empty($individuelle?->suivi))
+                                                                            <form
+                                                                                action="{{ route('SuivreFormes', $individuelle?->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <button
+                                                                                    class="show_confirm_suivi btn btn-dark rounded-pill btn-sm float-center">Suivre</button>
+                                                                            </form>
+                                                                        @else
+                                                                            <button type="button"
+                                                                                class="btn btn-success rounded-pill btn-sm float-center">Suivi</button>
+                                                                        @endif
+                                                                    </td>
+                                                                @endcan
                                                                 <td>
                                                                     <span class="d-flex align-items-baseline"><a
                                                                             href="{{ route('individuelles.show', $individuelle?->id) }}"
@@ -490,30 +507,10 @@
                                                                                     class="bi bi-three-dots"></i></a>
                                                                             <ul
                                                                                 class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                {{-- <li>
-                                                                                    <a class="btn btn-danger btn-sm"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#indiponibleModal{{ $individuelle->id }}"
-                                                                                        title="retirer">Retirer de cette
-                                                                                        formation
-                                                                                    </a>
-                                                                                </li> --}}
                                                                                 <button class="btn btn-sm mx-1"
                                                                                     data-bs-toggle="modal"
                                                                                     data-bs-target="#indiponibleModal{{ $individuelle->id }}">Retirer
                                                                                 </button>
-                                                                                {{-- <li>
-                                                                                    <form
-                                                                                        action="{{ route('individuelles.destroy', $individuelle->id) }}"
-                                                                                        method="post">
-                                                                                        @csrf
-                                                                                        @method('DELETE')
-                                                                                        <button type="submit"
-                                                                                            class="dropdown-item show_confirm"
-                                                                                            title="Supprimer"><i
-                                                                                                class="bi bi-trash"></i>Supprimer</button>
-                                                                                    </form>
-                                                                                </li> --}}
                                                                             </ul>
                                                                         </div>
                                                                     </span>
@@ -885,9 +882,9 @@
                                                                 <td>{{ $individuelle?->user?->cin }}</td>
                                                                 <td>{{ $individuelle?->user?->firstname }}</td>
                                                                 <td>{{ $individuelle?->user?->name }}</td>
-                                                                <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                                <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}
                                                                 </td>
-                                                                <td>{{ $individuelle?->user->lieu_naissance }}</td>
+                                                                <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                                 <td style="text-align: center">
                                                                     {{-- <input type="number"
                                                                             value="{{ $individuelle?->note_obtenue }}"
@@ -902,7 +899,7 @@
                                                                         <button type="button"
                                                                             class="btn btn-outline-success btn-sm"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#EditShowModal{{ $individuelle->id }}">
+                                                                            data-bs-target="#EditShowModal{{ $individuelle?->id }}">
                                                                             <i class="bi bi-eye" title="Attestation"></i>
                                                                         </button>
                                                                         {{-- @else
@@ -1017,7 +1014,8 @@
                                     class="text-danger mx-1">*</span></label>
                             <select name="statut"
                                 class="form-select form-select-sm @error('statut') is-invalid @enderror"
-                                aria-label="Select" id="select-field-statut-attestations" data-placeholder="Choisir statut">
+                                aria-label="Select" id="select-field-statut-attestations"
+                                data-placeholder="Choisir statut">
                                 <option value="{{ old('statut') }}">
                                     {{ old('statut') }}
                                 </option>
@@ -1506,12 +1504,12 @@
         </div>
     </section>
 @endsection
-@push('scripts')
+{{-- @push('scripts')
     <script>
         new DataTable('#table-operateurModules', {
             layout: {
                 topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    buttons: ['excel', 'pdf', 'print'],
                 }
             },
             "order": [
@@ -1548,4 +1546,4 @@
             }
         });
     </script>
-@endpush
+@endpush --}}

@@ -46,51 +46,48 @@
                                 <table class="table datatables align-middle" id="table-formes">
                                     <thead>
                                         <tr>
-                                            {{-- <th class="text-center">N°</th> --}}
-                                            <th class="text-center">CIN</th>
-                                            <th>Prénom</th>
-                                            <th>NOM</th>
-                                            <th>Date naissance</th>
-                                            <th>Lieu naissance</th>
-                                            <th width="20%">Module</th>
-                                            {{-- <th class="text-center">Statut</th> --}}
-                                            <th>Région</th>
-                                            <th class="text-center">Appréciation</th>
+                                            {{-- <th scope="col" class="text-center">N°</th>
+                                            <th scope="col" class="text-center">CIN</th> --}}
+                                            <th scope="col">Civilité</th>
+                                            <th scope="col">Prénom</th>
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Date naissance</th>
+                                            <th scope="col">Lieu naissance</th>
+                                            <th scope="col" width="5%">Téléphone</th>
+                                            <th scope="col">Module</th>
+                                            <th scope="col">Niveau étude</th>
+                                            {{-- <th scope="col" class="text-center">Statut</th> --}}
+                                            <th scope="col" class="text-center">Informations</th>
                                             <th class="text-center">#</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        @foreach ($formes as $individuelle)
-                                            @if (!empty($individuelle?->user?->cin))
+                                        @foreach ($formes as $listecollective)
+                                            @if (!empty($listecollective?->cin))
                                                 <tr>
-                                                    {{-- <td style="text-align: center">{{ $i++ }}</td> --}}
-                                                    <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
-                                                    <td>{{ $individuelle?->user?->firstname }}</td>
-                                                    <td>{{ $individuelle?->user?->name }}</td>
-                                                    <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                                                    <td>{{ $individuelle?->user?->lieu_naissance }}</td>
-                                                    <td>{{ $individuelle?->module?->name }}</td>
-                                                    <td>{{ $individuelle?->region?->nom }}</td>
-                                                    <td style="text-align: center"><span
-                                                            class="badge bg-info">{{ $individuelle?->appreciation }}</span>
+                                                    {{-- <td class="text-center">{{ $i++ }}</td>
+                                                    <td class="text-center">{{ $listecollective?->cin }}</td> --}}
+                                                    <td>{{ $listecollective?->civilite }}</td>
+                                                    <td>{{ $listecollective?->prenom }}</td>
+                                                    <td>{{ $listecollective?->nom }}</td>
+                                                    <td>{{ $listecollective?->date_naissance->format('d/m/Y') }}
                                                     </td>
-                                                    {{--  <td>
-                                                        <span class="{{ $individuelle->statut }}">
-                                                            {{ $individuelle->statut }}
-                                                        </span>
+                                                    <td>{{ $listecollective?->lieu_naissance }}</td>
+                                                    <td>{{ $listecollective?->telephone }}</td>
+                                                    <td>{{ $listecollective?->collectivemodule?->module }}</td>
+                                                    <td>{{ $listecollective?->niveau_etude }}</td>
+                                                    {{-- <td class="text-center">
+                                                        <span
+                                                            class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
                                                     </td> --}}
-                                                    {{-- <td style="text-align: center">
-                                                        {{ date_format(date_create($individuelle?->formation?->date_debut), 'd/m/Y') }}
-                                                    </td> --}}
-                                                    {{-- <td style="text-align: center">
-                                                        {{ date_format(date_create($individuelle?->formation?->date_fin), 'd/m/Y') }}
-                                                    </td> --}}
+                                                    <td class="text-center">{{ $listecollective?->informations_suivi }}
+                                                    </td>
                                                     <td>
                                                         <button type="button"
                                                             class="btn btn-outline-primary btn-sm float-center"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#generate_suivi{{ $individuelle?->id }}"><i
+                                                            data-bs-target="#generate_suivi{{ $listecollective?->id }}"><i
                                                                 class="bi bi-pencil-square"></i></button>
                                                     </td>
                                                 </tr>
@@ -104,18 +101,18 @@
                 @endif
             </div>
         </div>
-        @foreach ($formes as $individuelle)
-            <div class="modal fade" id="generate_suivi{{ $individuelle?->id }}" tabindex="-1" role="dialog"
+        @foreach ($formes as $listecollective)
+            <div class="modal fade" id="generate_suivi{{ $listecollective?->id }}" tabindex="-1" role="dialog"
                 aria-labelledby="generate_suiviLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">
-                                {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                {{ $listecollective?->civilite . ' ' . $listecollective?->prenom . ' ' . $listecollective?->nom }}
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="post" action="{{ route('FormeSuivi') }}">
+                        <form method="post" action="{{ route('FormeColSuivi') }}">
                             @csrf
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -123,11 +120,11 @@
                                         <div class="row">
                                             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                                 <div class="form-group">
-                                                    <input type="hidden" name="id" value="{{ $individuelle?->id }}">
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $listecollective?->id }}">
                                                     {{-- <label for="informations_suivi" class="form-label">Documenter</label> --}}
                                                     <textarea name="informations_suivi" id="informations_suivi" rows="5"
-                                                        class="form-control form-control-sm @error('informations_suivi') is-invalid @enderror"
-                                                        placeholder="Ecrire ici......">{{ $individuelle?->informations_suivi ?? old('informations_suivi') }}</textarea>
+                                                        class="form-control form-control-sm @error('informations_suivi') is-invalid @enderror" placeholder="Ecrire ici...">{{ $listecollective?->informations_suivi ?? old('informations_suivi') }}</textarea>
                                                     @error('informations_suivi')
                                                         <span class="invalid-feedback" role="alert">
                                                             <div>{{ $message }}</div>
@@ -160,7 +157,7 @@
         new DataTable('#table-formes', {
             layout: {
                 topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    buttons: ['excel'],
                 }
             },
             /* "order": [

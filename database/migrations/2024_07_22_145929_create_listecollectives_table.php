@@ -34,6 +34,8 @@ return new class extends Migration
             $table->longText('observations')->nullable();
             $table->string('appreciation', 200)->nullable();
             $table->longText('motif_rejet')->nullable();
+            $table->longText('retrait_diplome')->nullable();
+            $table->longText('diplome_retirer_by')->nullable();
             $table->unsignedInteger('collectives_id')->nullable();
             $table->unsignedInteger('collectivemodules_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();

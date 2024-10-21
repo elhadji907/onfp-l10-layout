@@ -46,7 +46,7 @@ class ProfileController extends Controller
             ->where('file', '!=', null)
             ->get();
 
-        $count_projets = Projet::join('individuelles', 'projets.id', 'individuelles.projets_id')
+        $count_projets = Individuelle::join('projets', 'projets.id', 'individuelles.projets_id')
             ->select('projets.*')
             ->where('individuelles.users_id',  $user->id)
             ->where('individuelles.projets_id', '!=', null)

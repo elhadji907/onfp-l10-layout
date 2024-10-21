@@ -31,6 +31,10 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string|null $observations
  * @property string|null $appreciation
  * @property string|null $motif_rejet
+ * @property string|null $suivi
+ * @property string|null $informations_suivi
+ * @property string|null $retrait_diplome
+ * @property string|null $diplome_retirer_by
  * @property int|null $collectives_id
  * @property int|null $collectivemodules_id
  * @property int|null $formations_id
@@ -83,10 +87,14 @@ class Listecollective extends Model
 		'niveau_maitrise',
 		'observations',
 		'appreciation',
+		'suivi',
+		'informations_suivi',
 		'motif_rejet',
         'collectives_id',
         'collectivemodules_id',
         'formations_id',
+        'retrait_diplome',
+        'diplome_retirer_by',
         'modules_id'
     ];
 

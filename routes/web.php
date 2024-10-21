@@ -268,6 +268,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::patch('/updateMembresJury', [FormationController::class, 'updateMembresJury'])->name('formations.updateMembresJury');
     Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
     Route::patch('/updateAttestations', [FormationController::class, 'updateAttestations'])->name('individuelles.updateAttestations');
+    Route::patch('/updateAttestationsCol', [FormationController::class, 'updateAttestationsCol'])->name('individuelles.updateAttestationsCol');
 
     Route::post('/addProjet', [ProjetController::class, 'addProjet'])->name('addProjet');
 
@@ -296,7 +297,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/devenirOperateurs', [OperateurController::class, 'devenirOperateur'])->name('devenirOperateur');
     Route::post('/addOperateur', [OperateurController::class, 'addOperateur'])->name('addOperateur');
-    
+
     Route::post('/renewOperateur', [OperateurController::class, 'renewOperateur'])->name('renewOperateur');
 
     Route::put('/Validatelistecollective/{id}', [ListecollectiveController::class, 'Validatelistecollective'])->name('Validatelistecollective');
@@ -317,50 +318,54 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/addCourrierOperateur', [ArriveController::class, 'addCourrierOperateur'])->name('addCourrierOperateur');
 
-    Route::get('individuelles/rapports',[IndividuelleController::class,'rapports'])->name('individuelles.rapport');
-    Route::post('individuelles/rapports',[IndividuelleController::class,'generateRapport']);
+    Route::get('individuelles/rapports', [IndividuelleController::class, 'rapports'])->name('individuelles.rapport');
+    Route::post('individuelles/rapports', [IndividuelleController::class, 'generateRapport']);
 
-    Route::get('collectives/rapports',[CollectiveController::class,'rapports'])->name('collectives.rapport');
-    Route::post('collectives/rapports',[CollectiveController::class,'generateRapport']);
+    Route::get('collectives/rapports', [CollectiveController::class, 'rapports'])->name('collectives.rapport');
+    Route::post('collectives/rapports', [CollectiveController::class, 'generateRapport']);
 
-    Route::get('arrives/rapports',[ArriveController::class,'rapports'])->name('arrives.rapport');
-    Route::post('arrives/rapports',[ArriveController::class,'generateRapport']);
+    Route::get('arrives/rapports', [ArriveController::class, 'rapports'])->name('arrives.rapport');
+    Route::post('arrives/rapports', [ArriveController::class, 'generateRapport']);
 
-    Route::get('departs/rapports',[DepartController::class,'rapports'])->name('departs.rapport');
-    Route::post('departs/rapports',[DepartController::class,'generateRapport']);
+    Route::get('departs/rapports', [DepartController::class, 'rapports'])->name('departs.rapport');
+    Route::post('departs/rapports', [DepartController::class, 'generateRapport']);
 
-    Route::get('operateurs/rapports',[OperateurController::class,'rapports'])->name('operateurs.rapport');
-    Route::post('operateurs/rapports',[OperateurController::class,'generateRapport']);
+    Route::get('operateurs/rapports', [OperateurController::class, 'rapports'])->name('operateurs.rapport');
+    Route::post('operateurs/rapports', [OperateurController::class, 'generateRapport']);
 
-    Route::get('modules/rapports',[ModuleController::class,'rapports'])->name('modules.rapport');
-    Route::post('modules/rapports',[ModuleController::class,'generateRapport']);
+    Route::get('modules/rapports', [ModuleController::class, 'rapports'])->name('modules.rapport');
+    Route::post('modules/rapports', [ModuleController::class, 'generateRapport']);
 
-    Route::get('formations/rapports',[FormationController::class,'rapports'])->name('formations.rapport');
-    Route::post('formations/rapports',[FormationController::class,'generateRapport']);
+    Route::get('formations/rapports', [FormationController::class, 'rapports'])->name('formations.rapport');
+    Route::post('formations/rapports', [FormationController::class, 'generateRapport']);
 
-    Route::get('users/rapports',[UserController::class,'rapports'])->name('users.rapport');
-    Route::post('users/rapports',[UserController::class,'generateRapport']);
-    
-    Route::get('individuelles/index',[IndividuelleController::class,'index'])->name('individuelles.report');
-    Route::post('individuelles/index',[IndividuelleController::class,'generateReport']);
-    
-    Route::get('users/index',[UserController::class,'index'])->name('users.report');
-    Route::post('users/index',[UserController::class,'generateReport']);
-    
-    Route::get('arrives/index',[ArriveController::class,'index'])->name('arrives.report');
-    Route::post('arrives/index',[ArriveController::class,'generateReport']);
+    Route::get('users/rapports', [UserController::class, 'rapports'])->name('users.rapport');
+    Route::post('users/rapports', [UserController::class, 'generateRapport']);
 
-    Route::get('formes/rapportsformes',[FormationController::class,'rapportsformes'])->name('formes.rapport');
-    Route::post('formes/rapportsformes',[FormationController::class,'generateRapportFormes']);
+    Route::get('individuelles/index', [IndividuelleController::class, 'index'])->name('individuelles.report');
+    Route::post('individuelles/index', [IndividuelleController::class, 'generateReport']);
 
-    Route::get('suivi/suiviformes',[FormationController::class,'suiviformes'])->name('suiviformes.suivi');
-    Route::post('suivi/suiviformes',[FormationController::class,'generateSuiviFormes']);
+    Route::get('users/index', [UserController::class, 'index'])->name('users.report');
+    Route::post('users/index', [UserController::class, 'generateReport']);
 
-    Route::put('suivreformes/{id}',[FormationController::class,'SuivreFormes'])->name('SuivreFormes');
-    Route::post('formesuivi',[FormationController::class,'FormeSuivi'])->name('FormeSuivi');
+    Route::get('arrives/index', [ArriveController::class, 'index'])->name('arrives.report');
+    Route::post('arrives/index', [ArriveController::class, 'generateReport']);
 
-    Route::get('regions/rapports',[RegionController::class,'rapports'])->name('regions.rapports');
-    Route::post('regions/rapports',[RegionController::class,'generateRapport']);
+    Route::get('formes/rapportsformes', [FormationController::class, 'rapportsformes'])->name('formes.rapport');
+    Route::post('formes/rapportsformes', [FormationController::class, 'generateRapportFormes']);
+
+    Route::get('suivi/suiviformes', [FormationController::class, 'suiviformes'])->name('suiviformes.suivi-individuelle');
+    Route::get('suivi/suiviformesCol', [FormationController::class, 'suiviformesCol'])->name('suiviformes.suivi-collective');
+    Route::post('suivi/suiviformes', [FormationController::class, 'generateSuiviFormes']);
+
+    Route::put('suivreformes/{id}', [FormationController::class, 'SuivreFormes'])->name('SuivreFormes');
+    Route::post('formesuivi', [FormationController::class, 'FormeSuivi'])->name('FormeSuivi');
+
+    Route::put('suivreformesCol/{id}', [FormationController::class, 'SuivreFormesCol'])->name('SuivreFormesCol');
+    Route::post('formeColsuivi', [FormationController::class, 'FormeColSuivi'])->name('FormeColSuivi');
+
+    Route::get('regions/rapports', [RegionController::class, 'rapports'])->name('regions.rapports');
+    Route::post('regions/rapports', [RegionController::class, 'generateRapport']);
 
     Route::put('/validerModuleCollective', [CollectivemoduleController::class, 'validerModuleCollective'])->name('validerModuleCollective');
     Route::put('/rejeterModuleCollective', [CollectivemoduleController::class, 'rejeterModuleCollective'])->name('rejeterModuleCollective');
@@ -370,10 +375,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/showprojetProgramme', [ProjetController::class, 'showprojetProgramme'])->name('showprojetProgramme');
 
-    Route::get('formations/reports',[FormationController::class,'reports'])->name('formations.reports');
-    Route::post('formations/reports',[FormationController::class,'generateReport']);
+    Route::get('formations/reports', [FormationController::class, 'reports'])->name('formations.reports');
+    Route::post('formations/reports', [FormationController::class, 'generateReport']);
 
-    Route::put('fileDestroy',[FileController::class,'fileDestroy'])->name('fileDestroy');
+    Route::put('fileDestroy', [FileController::class, 'fileDestroy'])->name('fileDestroy');
+    Route::get('projetsBeneficiaire/{id}', [ProjetController::class, 'projetsBeneficiaire'])->name('projetsBeneficiaire');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);

@@ -34,14 +34,14 @@
                                 <p> | Profil</p>
                             </span>
                             {{-- <button type="button" class="btn btn-info btn-sm"> --}}
-                                <p>Statut : <span class="{{ $projet?->statut }} btn-sm">{{ $projet?->statut }}</span></p>
+                            <p>Statut : <span class="{{ $projet?->statut }} btn-sm">{{ $projet?->statut }}</span></p>
                             {{-- </button> --}}
-                            @isset(Auth::user()->cin)
+                            @if (!empty(Auth::user()->cin) && !empty($statut))
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
                                     <i class="bi bi-plus" title="Ajouter"></i>
                                 </button>
-                            @endisset
+                            @endif
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <h5 class="card-title">

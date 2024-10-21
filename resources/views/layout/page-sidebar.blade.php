@@ -557,11 +557,24 @@
         @endcan
         @can('rapport-suivi-formes-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('suiviformes.suivi') }}">
-                    <i class="bi bi-file-earmark-person"></i>
-                    <span>Suivi formés</span>
+                <a class="nav-link collapsed" data-bs-target="#suivi-formes-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-diagram-3-fill"></i><span>{{ __('Suivi formés') }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
-            </li>
+                <ul id="suivi-formes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('suiviformes.suivi-individuelle') }}">
+                            <span>Individuelles</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('suiviformes.suivi-collective') }}">
+                            <span>Collectives</span>
+                        </a>
+                    </li><!-- End Permissions Nav -->
+                </ul>
+            </li><!-- End Courriers Nav -->
         @endcan
         {{-- <li class="nav-heading">{{ __("Contrôle d'accès") }}</li> --}}
         @can('role-view')
@@ -667,7 +680,7 @@
                 </ul>
             </li><!-- End Courriers Nav -->
         @endcan
-        
+
         {{-- @endif --}}
         {{-- <li class="nav-heading">Pages</li> --}}
 

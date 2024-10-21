@@ -1401,6 +1401,51 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
+    public function updateAttestationsCol(Request $request)
+    {
+        $date_retrait = date_format(date_create($request->date_retrait), 'd/m/Y');
+
+        $request->validate([
+            'date_retrait' => 'required',
+            'date',
+        ]);
+        if ($request->input('moi') == 'moi') {
+            $retrait_diplome = 'retiré par son propriétaire le ' . $date_retrait;
+        } else {
+            $request->validate([
+                'cin' => 'required',
+                'string',
+                'max:15',
+                'min:12',
+                'name' => 'required',
+                'string',
+                'observations' => 'nullable',
+                'string',
+                'max:50'
+            ]);
+            $retrait_diplome = 'retiré par ' . $request->input('name') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
+        }
+
+        $commentaires = $request->input('commentaires');
+
+        if (isset($commentaires)) {
+            $retrait_diplome = $retrait_diplome . '; ' . $commentaires;
+        }
+
+
+        $listecollective = Listecollective::findOrFail($request->input('id'));
+
+        $listecollective->update([
+            "retrait_diplome"       =>  $retrait_diplome,
+        ]);
+
+        $listecollective->save();
+
+        Alert::success('Merci et à bientôt !', 'Bonne chance pour la suite');
+
+        return redirect()->back();
+    }
+
     public function ficheSuivi(Request $request)
     {
 
@@ -1979,11 +2024,25 @@ class FormationController extends Controller
     public function suiviformes(Request $request)
     {
         $regions = Region::get();
-        $title = 'Base de données des formés suivis';
+        $title = 'Base de données des formés individuels suivis';
 
         $formes = Individuelle::where('suivi', 'suivi')->get();
 
-        return view('formes.suivi', compact(
+        return view('formes.suivi-individuelle', compact(
+            'regions',
+            'formes',
+            'title'
+        ));
+    }
+
+    public function suiviformesCol(Request $request)
+    {
+        $regions = Region::get();
+        $title = 'Base de données des formés collectifs suivis';
+
+        $formes = Listecollective::where('suivi', 'suivi')->get();
+
+        return view('formes.suivi-collective', compact(
             'regions',
             'formes',
             'title'
@@ -2092,6 +2151,40 @@ class FormationController extends Controller
         ]);
 
         $individuelle = Individuelle::findOrFail($request->id);
+
+        $individuelle->update([
+            'informations_suivi' => $request->informations_suivi
+        ]);
+
+        $individuelle->save();
+
+        Alert::success('Enregistrement effectué !');
+
+        return redirect()->back();
+    }
+
+    public function SuivreFormesCol(Request $request, $id)
+    {
+        $listecollective = Listecollective::findOrFail($id);
+
+        $listecollective->update([
+            'suivi' => 'suivi'
+        ]);
+
+        $listecollective->save();
+
+        Alert::success($listecollective?->civilite . ' ' . $listecollective?->prenom . ' ' . $listecollective?->nom . ' suivi !');
+
+        return redirect()->back();
+    }
+
+    public function FormeColSuivi(Request $request)
+    {
+        $this->validate($request, [
+            'informations_suivi' => 'required|string',
+        ]);
+
+        $individuelle = Listecollective::findOrFail($request->id);
 
         $individuelle->update([
             'informations_suivi' => $request->informations_suivi
