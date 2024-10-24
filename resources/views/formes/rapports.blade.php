@@ -24,9 +24,9 @@
                 title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
             <p> | Tableau de bord</p>
         </span>
-        @isset($formes)
-            <span class="page-title badge bg-warning">{{ $title }}</span>
-        @endisset
+        @if (!empty($formes))
+            <span class="page-title badge bg-primary">{{ $title }}</span>
+        @endif
         @can('rapport-formes-view')
             <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                 data-bs-target="#generate_rapport_module_region"></i>Générer rapport</button>
@@ -35,7 +35,7 @@
     <section class="section">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                @isset($formes)
+                @if (!empty($formes))
                     {{-- <div class="pb-2">
                         <span class="page-title badge bg-info">{{ $title }}</span>
                     </div> --}}
@@ -106,7 +106,12 @@
                                                                 </form>
                                                             @else
                                                                 <button type="button"
-                                                                    class="btn btn-success rounded-pill btn-sm float-center">Suivi</button>
+                                                                    class="btn btn-success rounded-pill btn-sm float-center"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#generate_suivi{{ $individuelle?->id }}">Suivi</button>
+
+                                                                {{-- <button type="button"
+                                                                    class="btn btn-success rounded-pill btn-sm float-center">Suivi</button> --}}
                                                             @endif
                                                         </td>
                                                     @endcan
@@ -119,7 +124,7 @@
                         </div>
                     </div>
                     <!-- / Rapport des ventes -->
-                @endisset
+                @endif
             </div>
         </div>
         <div class="modal fade" id="generate_rapport_module_region" tabindex="-1" role="dialog"
@@ -214,6 +219,56 @@
                 </div>
             </div>
         </div>
+        @if (!empty($formes))
+            @foreach ($formes as $individuelle)
+                <div class="modal fade" id="generate_suivi{{ $individuelle?->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="generate_suiviLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form method="post" action="#">
+                                @csrf
+                                <div class="modal-body">
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                    <div class="form-group">
+                                                        @if (!empty($individuelle?->informations_suivi))
+                                                            <h5><u><b>Informations</b></u>:</h5>
+                                                            <label for="informations_suivi" class="form-label">
+                                                                {{ $individuelle?->informations_suivi }}
+                                                            </label>
+                                                        @else
+                                                            <div class="alert alert-info">Aucune
+                                                                réponse à ce commentaire</div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    {{-- <div class="text-center">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-block submit_rapport btn-sm">Enregistrer</button>
+                                </div> --}}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif
     </section>
 @endsection
 

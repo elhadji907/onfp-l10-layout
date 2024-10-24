@@ -1934,6 +1934,7 @@ class FormationController extends Controller
     {
         $regions = Region::get();
         $title = 'rapports formés';
+        
         return view('formes.rapports', compact(
             'regions',
             'title'

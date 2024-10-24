@@ -92,6 +92,7 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('localites_id')->nullable();
             $table->unsignedInteger('zones_id')->nullable();
             $table->unsignedInteger('evaluateurs_id')->nullable();
+            $table->unsignedInteger('referentiels_id')->nullable();
 
             $table->index(["agents_id"], 'fk_consommations_agents1_idx');
 

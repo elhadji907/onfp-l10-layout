@@ -356,9 +356,9 @@ class IndividuelleController extends Controller
             } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Region') {
                 $communeid = null;
                 $arrondissementid = null;
-                $departementid = null;
-                $region = Region::where('nom', $request->input("departement"))->first();
-                $regionid = $region?->id;
+                $departement = Departement::where('nom', $request->input("departement"))->first();
+                $departementid = $departement?->id;
+                $regionid = $departement?->region?->id;
             } else {
                 $departement = Departement::where('nom', $request->input("departement"))->first();
                 $regionid = $departement?->region?->id;
@@ -660,7 +660,7 @@ class IndividuelleController extends Controller
         if ($individuelle->projet && $individuelle->projet->statut != 'ouvert') {
             Alert::warning('Attention ! ', 'impossible de modifier');
             return redirect()->back();
-        } elseif ($individuelle->statut != 'nouvelle' && $individuelle->statut != 'attente') {
+        } elseif ($individuelle->statut != 'nouvelle') {
             Alert::warning('Attention ! ', 'action impossible demande déjà traitée');
             return redirect()->back();
         } else {
@@ -684,7 +684,6 @@ class IndividuelleController extends Controller
             'projet_poste_formation'        => ['required', 'string', 'max:255'],
         ]);
 
-       
         $projet = Projet::where('sigle', $request->input("projet"))->first();
 
         if (!empty($request->input("departement")) && $projet?->type_localite == 'Commune') {
@@ -711,12 +710,15 @@ class IndividuelleController extends Controller
         } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Region') {
             $communeid = null;
             $arrondissementid = null;
-            $departementid = null;
-            $region = Region::where('nom', $request->input("departement"))->first();
-            $regionid = $region?->id;
+            $departement = Departement::where('nom', $request->input("departement"))->first();
+            $departementid = $departement->id;
+            $regionid = $departement?->region?->id;
         } else {
             $departement = Departement::where('nom', $request->input("departement"))->first();
+            $departementid = $departement->id;
             $regionid = $departement?->region?->id;
+            $communeid = null;
+            $arrondissementid = null;
         }
 
         $user               = Auth::user();
@@ -724,7 +726,6 @@ class IndividuelleController extends Controller
         $module_find    = DB::table('modules')->where('name', $request->input("module"))->first();
 
         $demandeur_ind  = Individuelle::where('users_id', $user->id)->get();
-
 
         if (!empty($projet)) {
             $projetid = $projet?->id;
@@ -1131,9 +1132,9 @@ class IndividuelleController extends Controller
             } elseif (!empty($request->input("departement")) && $projet?->type_localite == 'Region') {
                 $communeid = null;
                 $arrondissementid = null;
-                $departementid = null;
-                $region = Region::where('nom', $request->input("departement"))->first();
-                $regionid = $region?->id;
+                $departement = Departement::where('nom', $request->input("departement"))->first();
+                $departementid = $departement?->id;
+                $regionid = $departement?->region?->id;
             } else {
                 $departement = Departement::where('nom', $request->input("departement"))->first();
                 $regionid = $departement?->region?->id;

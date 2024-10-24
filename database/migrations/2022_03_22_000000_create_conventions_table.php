@@ -24,8 +24,8 @@ class CreateConventionsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('numero', 200);
-            $table->string('name', 200)->nullable();
+            $table->string('numero', 200)->nullable();
+            $table->longText('name')->nullable();
             $table->string('sigle', 45)->nullable();
             $table->timestamp('date')->nullable();
             $table->string('items1', 200)->nullable();

@@ -8,6 +8,12 @@ use App\Models\File;
 
 class FileController extends Controller
 {
+    public function index()
+    {
+        $files = File::get();
+
+        return view('files.index', compact('files'));
+    }
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -43,6 +49,15 @@ class FileController extends Controller
         ]);
 
         Alert::success($file->legende, 'a été retiré');
+        return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        $_FILES = File::find($id);
+        $_FILES->delete();
+
+        Alert::success('Fait', 'fichier supprimé avec succès');
         return redirect()->back();
     }
 }

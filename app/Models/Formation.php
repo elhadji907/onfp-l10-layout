@@ -55,6 +55,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $agents_id
  * @property int|null $detfs_id
  * @property int|null $conventions_id
+ * @property int|null $referentiels_id
  * @property int|null $programmes_id
  * @property int|null $operateurs_id
  * @property int|null $traitements_id
@@ -86,6 +87,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Choixoperateur|null $choixoperateur
  * @property Commune|null $commune
  * @property Convention|null $convention
+ * @property Referentiel|null $referentiel
  * @property Courrier|null $courrier
  * @property Departement|null $departement
  * @property Detf|null $detf
@@ -146,6 +148,7 @@ class Formation extends Model
 		'agents_id' => 'int',
 		'detfs_id' => 'int',
 		'conventions_id' => 'int',
+		'referentiels_id' => 'int',
 		'programmes_id' => 'int',
 		'operateurs_id' => 'int',
 		'traitements_id' => 'int',
@@ -228,6 +231,7 @@ class Formation extends Model
 		'agents_id',
 		'detfs_id',
 		'conventions_id',
+		'referentiels_id',
 		'programmes_id',
 		'operateurs_id',
 		'traitements_id',
@@ -289,6 +293,10 @@ class Formation extends Model
 	public function convention()
 	{
 		return $this->belongsTo(Convention::class, 'conventions_id');
+	}
+	public function referentiel()
+	{
+		return $this->belongsTo(Referentiel::class, 'referentiels_id');
 	}
 
 	public function courrier()

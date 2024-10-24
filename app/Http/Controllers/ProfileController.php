@@ -27,10 +27,6 @@ class ProfileController extends Controller
         $projets = Projet::where('statut', 'ouvert')
             ->get();
 
-        $user_files = File::where('users_id', $user->id)
-            ->where('file', null)
-            ->get();
-
         $usercin = File::where('users_id', $user->id)
             ->where('file', '!=', null)
             ->where('sigle', 'CIN')
@@ -44,6 +40,12 @@ class ProfileController extends Controller
 
         $files = File::where('users_id', $user->id)
             ->where('file', '!=', null)
+            ->distinct()
+            ->get();
+
+        $user_files = File::where('users_id', $user->id)
+            ->where('file', null)
+            ->distinct()
             ->get();
 
         $count_projets = Individuelle::join('projets', 'projets.id', 'individuelles.projets_id')
@@ -64,6 +66,31 @@ class ProfileController extends Controller
 
         foreach (Auth::user()->roles as $role) {
             if ($role->name == 'Operateur') {
+
+                $files = File::where('users_id', $user->id)
+                    ->where('file', '!=', null)
+                    ->distinct()
+                    ->get();
+
+                $user_files = File::where('users_id', $user->id)
+                    ->where('file', null)
+                    ->where('sigle', 'AC')
+                    ->orwhere('sigle', 'Ninea/RC')
+                    ->distinct()
+                    ->get()
+                    ->unique('sigle');
+
+                $usercin = File::where('users_id', $user->id)
+                    ->where('file', '!=', null)
+                    ->where('sigle', 'AC')
+                    ->count();
+
+                if (!empty($usercin) && $usercin > '0') {
+                    $user_cin = $usercin;
+                } else {
+                    $user_cin = null;
+                }
+
                 return view('profile.profile-operateur-page', [
                     'user' => $request->user(),
                     'projets' => $projets,
@@ -109,6 +136,10 @@ class ProfileController extends Controller
     public function registerPage(Request $request): View
     {
         return view('user.register-page');
+    }
+    public function registerOperateur(Request $request): View
+    {
+        return view('user.register-operateur');
     }
 
     /**

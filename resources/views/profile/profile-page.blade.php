@@ -824,7 +824,7 @@
                                             <table class="table table-bordered table-hover datatables" id="table-iles">
                                                 <thead>
                                                     <tr>
-                                                        {{-- <th width="5%" class="text-center">N°</th> --}}
+                                                        <th width="5%" class="text-center">N°</th>
                                                         <th>Légende</th>
                                                         <th width="10%" class="text-center">File</th>
                                                         <th width="5%" class="text-center"><i class="bi bi-gear"></i>
@@ -835,7 +835,7 @@
                                                     <?php $i = 1; ?>
                                                     @foreach ($files as $file)
                                                         <tr>
-                                                            {{-- <td class="text-center">{{ $i++ }}</td> --}}
+                                                            <td class="text-center">{{ $i++ }}</td>
                                                             <td>{{ $file?->legende }}</td>
                                                             <td class="text-center">
                                                                 <a class="btn btn-default btn-sm"

@@ -151,6 +151,10 @@
                                         data-bs-target="#profile-change-password">Changer le mot de passe</button>
                                 </li>
 
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                </li>
+
                             </ul>
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -158,20 +162,41 @@
                                     <p class="small fst-italic">
                                         créé, {{ Auth::user()?->created_at->diffForHumans() }}
                                     </p>
-                                    <h5 class="card-title">Informations personnelles :
-                                        @if (isset(Auth::user()?->operateur) &&
-                                                isset(Auth::user()?->username) &&
-                                                isset(Auth::user()?->ninea) &&
-                                                isset(Auth::user()?->rccm) &&
-                                                isset(Auth::user()?->email_responsable) &&
-                                                isset(Auth::user()?->fonction_responsable) &&
-                                                isset(Auth::user()?->email))
-                                            <span class="badge bg-success text-white">Complètes</span>
-                                        @else
-                                            <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
-                                            modifier profil pour complèter
-                                        @endif
-                                    </h5>
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3 label">
+                                            Informations personnelles
+                                        </div>
+                                        <div class="col-12 col-md-9 col-lg-9 col-sm-12 col-xs-12 col-xxl-9">
+                                            @if (isset(Auth::user()?->operateur) &&
+                                                    isset(Auth::user()?->username) &&
+                                                    isset(Auth::user()?->ninea) &&
+                                                    isset(Auth::user()?->rccm) &&
+                                                    isset(Auth::user()?->email_responsable) &&
+                                                    isset(Auth::user()?->fonction_responsable) &&
+                                                    isset(Auth::user()?->email))
+                                                <span class="badge bg-success text-white">Complètes</span>
+                                            @else
+                                                <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
+                                                modifier profil pour complèter
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3 label">
+                                            Fichiers joints
+                                        </div>
+                                        <div class="col-12 col-md-9 col-lg-9 col-sm-12 col-xs-12 col-xxl-9">
+                                            @if (!empty($user_cin))
+                                                <span class="badge bg-primary text-white">Valide</span>
+                                            @else
+                                                <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
+                                                l'onglet fichier pour télécharger
+                                            @endif
+                                        </div>
+                                    </div>
+
 
                                     @isset(Auth::user()?->username)
                                         <div class="row">
@@ -911,6 +936,119 @@
                                     </form><!-- End Change Password Form -->
                                 </div>
                             </div><!-- End Bordered Tabs -->
+
+                            <div class="tab-content pt-2">
+                                {{-- Début Edition --}}
+                                <div class="tab-pane fade files" id="files">
+                                    <div class="row mb-3">
+                                        <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            {{ __('Fichiers téléchargés') }}</h5>
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                            <table class="table table-bordered table-hover datatables" id="table-iles">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="5%" class="text-center">N°</th>
+                                                        <th>Légende</th>
+                                                        <th width="10%" class="text-center">File</th>
+                                                        <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 1; ?>
+                                                    @foreach ($files as $file)
+                                                        <tr>
+                                                            <td class="text-center">{{ $i++ }}</td>
+                                                            <td>{{ $file?->legende }}</td>
+                                                            <td class="text-center">
+                                                                <a class="btn btn-default btn-sm"
+                                                                    title="télécharger le fichier joint" target="_blank"
+                                                                    href="{{ asset($file->getFichier()) }}">
+                                                                    <i class="bi bi-download"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <form action="{{ route('fileDestroy') }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('put')
+                                                                    <input type="hidden" name="idFile"
+                                                                        value="{{ $file->id }}">
+                                                                    <button type="submit"
+                                                                        style="background:none;border:0px;"
+                                                                        class="show_confirm" title="retirer"><i
+                                                                            class="bi bi-trash"></i></button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <form method="post" action="{{ route('files.update', $user->id) }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('patch')
+
+                                        <h5 class="card-title">{{ __("Ajouter d'autres fichiers") }}</h5>
+                                        <span style="color:red;">NB:</span> <span>Seule l'acte de création</span> <span
+                                            style="color:red;"> est obligatoire</span>
+                                        <!-- Profile Edit Form -->
+
+                                        <div class="row mb-3 mt-3">
+                                            <label for="legende"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Légende<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{-- <input name="legende" type="text"
+                                                    class="form-control form-control-sm @error('legende') is-invalid @enderror"
+                                                    id="legende" value="{{ old('legende') }}" autocomplete="legende"
+                                                    placeholder="Légende"> --}}
+                                                <select name="legende"
+                                                    class="form-select  @error('legende') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-file"
+                                                    data-placeholder="Choisir">
+                                                    <option value="{{ old('legende') }}">
+                                                        {{ old('legende') }}
+                                                    </option>
+                                                    @foreach ($user_files as $file)
+                                                        <option value="{{ $file?->id }}">
+                                                            {{ $file?->legende }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('legende')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="file"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Fichier<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                <div class="pt-2">
+                                                    <input type="file" name="file" id="file"
+                                                        class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                                    @error('file')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center mt-2">
+                                            <button type="submit" class="btn btn-info btn-sm">Ajouter</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

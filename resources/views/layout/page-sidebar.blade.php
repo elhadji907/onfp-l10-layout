@@ -677,8 +677,30 @@
                             </a>
                         </li>
                     @endcan
+
                 </ul>
             </li><!-- End Courriers Nav -->
+        @endcan
+        @can('file-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('files.index') }}">
+                    <i class="bi bi-files"></i> <span>Files</span>
+                </a>
+            </li>
+        @endcan
+        @can('convention-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('conventions.index') }}">
+                    <i class="bi bi-journal"></i> <span>Conventions</span>
+                </a>
+            </li>
+        @endcan
+        @can('referentiel-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('referentiels.index') }}">
+                    <i class="bi bi-journals"></i> <span>Référentiels</span>
+                </a>
+            </li>
         @endcan
 
         {{-- @endif --}}

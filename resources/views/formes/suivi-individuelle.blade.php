@@ -8,7 +8,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Accueil</a></li>
                 @endcan
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Suivi des formé</li>
+                <li class="breadcrumb-item active">Suivi des formés</li>
             </ol>
         </nav>
     </div>

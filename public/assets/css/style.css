@@ -629,6 +629,8 @@ h6 {
   background-color: #aab7cf;
 }
 
+/* margin-left: 300px; */
+
 @media (min-width: 1200px) {
 
   #main,
@@ -1212,9 +1214,10 @@ h6 {
 
 /*--------------------------------------------------------------
 # Footer
+# padding: 20px 0;
 --------------------------------------------------------------*/
 .footer {
-  padding: 20px 0;
+  padding: 0px;
   font-size: 14px;
   transition: all 0.3s;
   border-top: 1px solid #cddfff;

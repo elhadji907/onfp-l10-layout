@@ -217,6 +217,21 @@ class DatabaseSeeder extends Seeder
         'projet-show',
         'projet-update',
         'projet-delete',
+        'file-create',
+        'file-view',
+        'file-show',
+        'file-update',
+        'file-delete',
+        'convention-create',
+        'convention-view',
+        'convention-show',
+        'convention-update',
+        'convention-delete',
+        'referentiel-create',
+        'referentiel-view',
+        'referentiel-show',
+        'referentiel-update',
+        'referentiel-delete',
     ];
 
     public function run(): void
@@ -272,6 +287,8 @@ class DatabaseSeeder extends Seeder
             EvaluateurSeeder::class,
             OnfpevaluateurSeeder::class,
             FileSeeder::class,
+            ConventionSeeder::class,
+            ReferentielSeeder::class,
             IndividuelleSeeder::class,
         ]);
     }

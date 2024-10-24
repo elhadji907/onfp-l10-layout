@@ -27,6 +27,7 @@ class CollectiveController extends Controller
         // examples:
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF']);
+        $this->middleware("permission:user-view", ["only" => ["index"]]);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */
@@ -128,7 +129,7 @@ class CollectiveController extends Controller
 
             $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
                 ->select('collectives.*')
-                ->where('date_depot',  "LIKE",  "{$anneeEnCours}%")
+                ->where('collectives.date_depot',  "LIKE",  "{$anneeEnCours}%")
                 ->get()->last();
 
             if (isset($numero_collective)) {
@@ -482,14 +483,14 @@ class CollectiveController extends Controller
     public function show($id)
     {
         $collective = Collective::findOrFail($id);
-        
+
         $listecollective = Listecollective::where('collectives_id', $id)->first();
 
         $listemodulescollective = Collectivemodule::where("collectives_id", $id)->first();
         $collectivemodules = Collectivemodule::where("collectives_id", $id)->get();
 
         $formation = Formation::where('collectives_id', $id)->first();
-        
+
         $collectives    = Collective::where('users_id', $collective?->users_id)->get();
 
         return view(

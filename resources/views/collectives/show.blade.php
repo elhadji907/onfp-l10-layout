@@ -455,7 +455,7 @@
                                     <h5 class="card-title">Formations </h5>
                                     @foreach ($collective->collectivemodules as $collectivemodule)
                                     @endforeach
-                                    @if (!empty($collectivemodule))
+                                    @if (!empty($collectivemodule?->formation))
                                         <table class="table datatables" id="table-formations">
                                             <thead>
                                                 <tr>
@@ -472,9 +472,9 @@
                                                 @foreach ($collective->collectivemodules as $collectivemodule)
                                                     <tr>
                                                         <td>{{ $collectivemodule?->formation?->code }}</td>
-                                                        <td><a>{{ $collectivemodule?->formation->types_formation?->name }}</a>
+                                                        <td><a>{{ $collectivemodule?->formation?->types_formation?->name }}</a>
                                                         </td>
-                                                        <td>{{ $collectivemodule?->formation->departement?->region?->nom }}
+                                                        <td>{{ $collectivemodule?->formation?->departement?->region?->nom }}
                                                         </td>
                                                         <td>{{ $collectivemodule?->module }}
                                                         </td>
