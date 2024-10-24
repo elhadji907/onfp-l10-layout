@@ -24,8 +24,8 @@ class ReferentielController extends Controller
         $this->validate($request, [
             "intitule"      => "required|string|unique:referentiels,intitule,except,id",
             "titre"         => "required|string|unique:referentiels,titre,except,id",
-            "categorie"     => "required|string",
-            "reference"     => "required|string",
+            "categorie"     => "nullable|string",
+            "reference"     => "nullable|string",
         ]);
 
         $convention = Convention::where('name', $request?->convention)->first();
@@ -61,8 +61,8 @@ class ReferentielController extends Controller
         $this->validate($request, [
             "intitule"      => ['required', 'string', 'max:250', Rule::unique(Referentiel::class)->ignore($id)],
             "titre"         => ['required', 'string', 'max:250', Rule::unique(Referentiel::class)->ignore($id)],
-            "categorie"     => ['required', 'string'],
-            "reference"     => ['required', 'string'],
+            "categorie"     => ['nullable', 'string'],
+            "reference"     => ['nullable', 'string'],
         ]);
 
         $convention = Convention::where('name', $request?->convention)->first();

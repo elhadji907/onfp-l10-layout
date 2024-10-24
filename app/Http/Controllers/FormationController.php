@@ -165,7 +165,7 @@ class FormationController extends Controller
             "name"                  =>   "required|string|unique:formations,name",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
-            "niveau_qualification"  =>   "required|string",
+            "type_certification"  =>   "required|string",
             "types_formation"       =>   "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
@@ -261,7 +261,7 @@ class FormationController extends Controller
             "name"                  =>   "required|string|unique:formations,name,except,id",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
-            "niveau_qualification"  =>   "required|string",
+            "type_certification"  =>   "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
@@ -278,7 +278,7 @@ class FormationController extends Controller
             /* "modules_id"            =>   $request->input('module'), */
             "operateurs_id"         =>   $request->input('operateur'),
             "types_formations_id"   =>   $types_formation->id,
-            "niveau_qualification"  =>   $request->input('niveau_qualification'),
+            "type_certification"  =>   $request->input('type_certification'),
             "numero_convention"     =>   $request->input('numero_convention'),
             "titre"                 =>   $request->input('titre'),
             "date_debut"            =>   $request->input('date_debut'),
@@ -346,7 +346,7 @@ class FormationController extends Controller
             "name"                  =>   "required|string|unique:formations,name,{$formation->id}",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
-            "niveau_qualification"  =>   "required|string",
+            "type_certification"  =>   "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
             "date_convention"       =>   "nullable|date",
@@ -362,15 +362,18 @@ class FormationController extends Controller
 
         $referentiel = Referentiel::where('titre', $request->titre)->first();
 
-        if (!empty($referentiel) && $request->titre != 'Attestation') {
+        if (!empty($referentiel) && $request->titre != 'Renforcement de capacités') {
             $referentiel_id = $referentiel?->id;
             $titre = null;
-        } elseif ($request->titre == 'Attestation') {
+            $type = 'Titre';
+        } elseif ($request->titre == 'Renforcement de capacités') {
             $referentiel_id = null;
-            $titre = 'Attestation';
+            $titre = 'Renforcement de capacités';
+            $type = 'Attestation';
         } else {
             $referentiel_id = null;
             $titre = null;
+            $type = null;
         }
 
         $formation->update([
@@ -380,10 +383,10 @@ class FormationController extends Controller
             "departements_id"       =>   $request->input('departement'),
             "lieu"                  =>   $request->input('lieu'),
             "types_formations_id"   =>   $request->input('types_formation'),
-            "niveau_qualification"  =>   $request->input('niveau_qualification'),
+            "type_certification"    =>   $request->input('type_certification'),
             "numero_convention"     =>   $request->input('numero_convention'),
             "titre"                 =>   $titre,
-            "type_certificat"       =>   $titre,
+            "type_certificat"       =>   $type,
             "date_debut"            =>   $request->input('date_debut'),
             "date_convention"       =>   $request->input('date_convention'),
             "date_lettre"           =>   $request->input('date_lettre'),
@@ -1337,22 +1340,26 @@ class FormationController extends Controller
 
         $referentiel = Referentiel::where('titre', $request->titre)->first();
 
-        if (!empty($referentiel) && $request->titre != 'Attestation') {
+        if (!empty($referentiel) && $request->titre != 'Renforcement de capacités') {
             $referentiel_id = $referentiel?->id;
             $titre = null;
-        } elseif ($request->titre == 'Attestation') {
+            $type = 'Titre';
+        } elseif ($request->titre == 'Renforcement de capacités') {
             $referentiel_id = null;
-            $titre = 'Attestation';
+            $titre = 'Renforcement de capacités';
+            $type = 'Attestation';
         } else {
             $referentiel_id = null;
             $titre = null;
+            $type = null;
         }
 
         $formation->update([
             "membres_jury"                  =>  $request->input('membres_jury'),
             "numero_convention"             =>  $request->input('numero_convention'),
             "frais_evaluateur"              =>  $request->input('frais_evaluateur'),
-            "type_certificat"               =>  $titre,
+            "type_certification"            =>   $request->input('type_certification'),
+            "type_certificat"               =>  $type,
             "titre"                         =>  $titre,
             "recommandations"               =>  $request->input('recommandations'),
             "date_pv"                       =>  $request->input('date_pv'),

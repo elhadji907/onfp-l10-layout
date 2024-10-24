@@ -77,6 +77,9 @@
                                         data-placeholder="Choisir la localité">
                                         <option value="{{ $referentiel?->convention?->name ?? old('convention') }}">
                                             {{ $referentiel?->convention?->name ?? old('convention') }}</option>
+                                        <option value="null">
+                                            Aucun
+                                        </option>
                                         @foreach ($conventions as $convention)
                                             <option value="{{ $convention->name }}">
                                                 {{ $convention->name }}

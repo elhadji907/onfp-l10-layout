@@ -43,7 +43,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $lettre_mission
  * @property string|null $membres_jury
  * @property string|null $type_formation
- * @property string|null $niveau_qualification
+ * @property string|null $type_certification
  * @property int|null $effectif_prevu
  * @property int|null $prevue_h
  * @property int|null $prevue_f
@@ -213,7 +213,7 @@ class Formation extends Model
 		'beneficiaires',
 		'membres_jury',
 		'lettre_mission',
-		'niveau_qualification',
+		'type_certification',
 		'effectif_prevu',
 		'prevue_h',
 		'prevue_f',

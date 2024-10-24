@@ -17,8 +17,8 @@ class ReferentielSeeder extends Seeder
         DB::table('referentiels')->insert([
             "Intitule" => "Attestation",
             "titre" => "Attestation",
-            "reference" => "Attestation",
-            "categorie" => "Attestation",
+            "reference" => "",
+            "categorie" => "",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid" => Str::uuid(),

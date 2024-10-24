@@ -1475,7 +1475,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
                                         <label>Titre (convention)<span class="text-danger mx-1">*</span></label>
                                         {{-- <input type="text" name="type_certificat" min="0" step="0.001"
@@ -1486,7 +1486,7 @@
                                         <select name="titre" class="form-select  @error('titre') is-invalid @enderror"
                                             aria-label="Select" id="select-field-titre" data-placeholder="Choisir titre">
                                             <option>
-                                                {{ $formation?->titre ?? $formation?->referentiel?->titre ?? old('titre') }}
+                                                {{ $formation?->titre ?? ($formation?->referentiel?->titre ?? old('titre')) }}
                                             </option>
                                             <option value="null">
                                                 Aucun
@@ -1504,6 +1504,35 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>Type certification<span class="text-danger mx-1">*</span></label>
+                                        <select name="type_certification"
+                                            class="form-select  @error('type_certification') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-type_certification_update"
+                                            data-placeholder="Choisir type certification">
+                                            <option value="{{ $formation?->type_certification }}">
+                                                {{ $formation?->type_certification ?? old('type_certification') }}
+                                            </option>
+                                            <option value="{{ old('c') }}">
+                                                {{ old('type_certification') }}
+                                            </option>
+                                            <option value="Titre">
+                                                Titre
+                                            </option>
+                                            <option value="Attestation">
+                                                Attestation
+                                            </option>
+                                        </select>
+                                        @error('type_certification')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
                             </div>
                             <div class="mb-3">
 
@@ -1538,7 +1567,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-secondary btn btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-primary btn btn-sm"><i class="bi bi-printer"></i>
                                 Vavilider</button>
                         </div>

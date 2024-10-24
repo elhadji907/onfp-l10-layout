@@ -49,7 +49,7 @@ class CreateFormationsTable extends Migration
             $table->longText('recommandations')->nullable();
             $table->double('frais_evaluateur')->nullable();
             $table->double('frais_evaluation')->nullable();
-            $table->string('niveau_qualification', 200)->nullable();
+            $table->string('type_certification', 200)->nullable();
             $table->integer('effectif_prevu')->nullable();
             $table->integer('prevue_h')->nullable();
             $table->integer('prevue_f')->nullable();

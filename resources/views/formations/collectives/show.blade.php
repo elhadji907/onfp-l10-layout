@@ -1462,7 +1462,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
                                         <label>Titre (convention)<span class="text-danger mx-1">*</span></label>
                                         {{-- <input type="text" name="type_certificat" min="0" step="0.001"
@@ -1473,7 +1473,7 @@
                                         <select name="titre" class="form-select  @error('titre') is-invalid @enderror"
                                             aria-label="Select" id="select-field-titre" data-placeholder="Choisir titre">
                                             <option>
-                                                {{ $formation?->titre ?? $formation?->referentiel?->titre ?? old('titre') }}
+                                                {{ $formation?->titre ?? ($formation?->referentiel?->titre ?? old('titre')) }}
                                             </option>
                                             <option value="null">
                                                 Aucun
@@ -1491,6 +1491,35 @@
                                         @enderror
                                     </div>
                                 </div>
+                                
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>Type certification<span class="text-danger mx-1">*</span></label>
+                                        <select name="type_certification"
+                                            class="form-select  @error('type_certification') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-type_certification_update"
+                                            data-placeholder="Choisir type certification">
+                                            <option value="{{ $formation?->type_certification }}">
+                                                {{ $formation?->type_certification ?? old('type_certification') }}
+                                            </option>
+                                            <option value="{{ old('c') }}">
+                                                {{ old('type_certification') }}
+                                            </option>
+                                            <option value="Titre">
+                                                Titre
+                                            </option>
+                                            <option value="Attestation">
+                                                Attestation
+                                            </option>
+                                        </select>
+                                        @error('type_certification')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="mb-3">
 
@@ -1525,7 +1554,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-secondary btn btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-primary btn btn-sm"><i class="bi bi-printer"></i>
                                 Vavilider</button>
                         </div>
@@ -1724,6 +1754,55 @@
                 </div>
             </div>
         @endforeach
+
+        <!-- Remise attestation-->
+        <div class="modal fade" id="EditRemiseAttestationsModal{{ $formation->id }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{{ url('remiseAttestations', ['$idformation' => $formation->id]) }}"
+                        enctype="multipart/form-data" class="row">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Situation des attestations
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="formationid" value="{{ $formation->id }}">
+                            <label for="region" class="form-label">Statut<span
+                                    class="text-danger mx-1">*</span></label>
+                            <select name="statut"
+                                class="form-select form-select-sm @error('statut') is-invalid @enderror"
+                                aria-label="Select" id="select-field-statut-attestations"
+                                data-placeholder="Choisir statut">
+                                <option value="{{ old('statut') }}">
+                                    {{ old('statut') }}
+                                </option>
+                                <option value="disponibles">
+                                    disponible
+                                </option>
+                                <option value="retirés">
+                                    retirer
+                                </option>
+                            </select>
+                            @error('statut')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn-sm"><i
+                                    class="bi bi-arrow-right-circle"></i>
+                                Valider</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 @push('scripts')

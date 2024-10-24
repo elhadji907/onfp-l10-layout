@@ -443,23 +443,23 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="niveau_qualification" class="form-label">Niveau qualification<span
+                                        <label for="type_certification" class="form-label">Type certification<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <select name="niveau_qualification"
-                                            class="form-select  @error('niveau_qualification') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-niveau_qualification"
+                                        <select name="type_certification"
+                                            class="form-select  @error('type_certification') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-type_certification"
                                             data-placeholder="Choisir niveau de qualification">
-                                            <option value="{{ old('niveau_qualification') }}">
-                                                {{ old('niveau_qualification') }}
+                                            <option value="{{ old('type_certification') }}">
+                                                {{ old('type_certification') }}
                                             </option>
-                                            <option value="Titre qualification">
-                                                Titre qualification
+                                            <option value="Titre">
+                                                Titre
                                             </option>
-                                            <option value="Renforcement capacité">
-                                                Renforcement capacité
+                                            <option value="Attestation">
+                                                Attestation
                                             </option>
                                         </select>
-                                        @error('niveau_qualification')
+                                        @error('type_certification')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

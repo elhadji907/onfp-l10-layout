@@ -46,7 +46,7 @@
                             <thead>
                                 <tr>
                                     {{-- <th width="5%" class="text-center">N°</th> --}}
-                                    <th>Intitulé</th>
+                                    <th width="18%">Niveau de qualification</th>
                                     <th>Titre</th>
                                     <th>Catégorie</th>
                                     <th>Convention</th>
