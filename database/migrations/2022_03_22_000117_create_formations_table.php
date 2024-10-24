@@ -66,6 +66,8 @@ class CreateFormationsTable extends Migration
             $table->string('evaluateur_onfp', 200)->nullable();
             $table->string('initiale_evaluateur_onfp', 200)->nullable();
             $table->string('appreciations', 200)->nullable();
+            $table->timestamp('date_convention')->nullable();
+            $table->dateTime('date_lettre')->nullable();
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('agents_id')->nullable();
             $table->unsignedInteger('detfs_id')->nullable();

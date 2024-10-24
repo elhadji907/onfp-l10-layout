@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $date_pv
  * @property Carbon|null $date_suivi
  * @property Carbon|null $date_debut
+ * @property Carbon|null $date_lettre
+ * @property Carbon|null $date_convention
  * @property Carbon|null $date_fin
  * @property string|null $adresse
  * @property string|null $titre
@@ -173,6 +175,8 @@ class Formation extends Model
 		'date_suivi' => 'datetime',
 		'date_debut' => 'datetime',
 		'date_fin' => 'datetime',
+		'date_convention' => 'datetime',
+		'date_lettre' => 'datetime',
 	];
 
 	protected $dates = [
@@ -252,6 +256,8 @@ class Formation extends Model
 		'arrondissements_id',
 		'localites_id',
 		'zones_id',
+		'date_convention',
+		'date_lettre',
 	];
 
 	

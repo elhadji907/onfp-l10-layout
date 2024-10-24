@@ -175,15 +175,22 @@
                                             {{ $formation?->collectivemodule?->module }}
                                         @endisset
                                     </span>
-                                    <span style="text-align: right;">
+                                    <br>
+                                </p>
+                                <p style="text-align : justify;">
+                                    <span>
                                         <b>NIVEAU DE QUALIFICATION VISE </b> :
-                                        {{ $formation?->niveau_qualification }}
+                                        @if (!empty($formation?->referentiel?->titre))
+                                            {{ $formation?->referentiel?->titre . ', ' . $formation?->referentiel?->categorie . ' de la ' . $formation?->referentiel?->convention?->name }}
+                                        @else
+                                        {{ $formation?->titre }}
+                                        @endif
                                     </span>
                                 </p>
                                 <p>
                                     <span>
                                         <b>REF CONVENTION D'ASSISTANCE </b> :
-                                        {{ $formation?->numero_convention }}
+                                        {{ $formation?->numero_convention . '/ONFP/DG/DIOF/' . $formation->ingenieur->initiale . ' du ' . $formation?->date_convention?->format('d/m/Y') }}
                                     </span>
                                 </p>
                                 <p>
@@ -226,7 +233,7 @@
                                 <p>
                                     <span>
                                         <b>TYPE DE CERTIFICATION DÉLIVRÉE </b> :
-                                        {{ $formation?->type_certificat }}
+                                        {{ $formation?->niveau_qualification }}
                                     </span>
                                 </p>
 

@@ -20,6 +20,7 @@ use App\Models\Operateur;
 use App\Models\Operateurmodule;
 use App\Models\Programme;
 use App\Models\Projet;
+use App\Models\Referentiel;
 use App\Models\Region;
 use App\Models\Statut;
 use App\Models\TypesFormation;
@@ -321,7 +322,19 @@ class FormationController extends Controller
         $projets = Projet::orderBy("created_at", "desc")->get();
         $programmes = Programme::orderBy("created_at", "desc")->get();
         $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
-        return view("formations.update", compact("formation", "departements", "types_formations", 'projets', 'programmes', 'choixoperateurs'));
+        $referentiels = Referentiel::get();
+        return view(
+            "formations.update",
+            compact(
+                "formation",
+                "departements",
+                "types_formations",
+                'projets',
+                'programmes',
+                'referentiels',
+                'choixoperateurs'
+            )
+        );
     }
 
     public function update(Request $request, $id)
@@ -336,6 +349,8 @@ class FormationController extends Controller
             "niveau_qualification"  =>   "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
+            "date_convention"       =>   "nullable|date",
+            "date_lettre"           =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
             "lettre_mission"        =>   "nullable|string",
             "annee"                 =>   "nullable|numeric",
@@ -344,6 +359,19 @@ class FormationController extends Controller
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
 
         $projet = Projet::where('sigle', $request->input('projet'))->first();
+
+        $referentiel = Referentiel::where('titre', $request->titre)->first();
+
+        if (!empty($referentiel) && $request->titre != 'Attestation') {
+            $referentiel_id = $referentiel?->id;
+            $titre = null;
+        } elseif ($request->titre == 'Attestation') {
+            $referentiel_id = null;
+            $titre = 'Attestation';
+        } else {
+            $referentiel_id = null;
+            $titre = null;
+        }
 
         $formation->update([
             "code"                  =>   $request->input('code'),
@@ -354,8 +382,11 @@ class FormationController extends Controller
             "types_formations_id"   =>   $request->input('types_formation'),
             "niveau_qualification"  =>   $request->input('niveau_qualification'),
             "numero_convention"     =>   $request->input('numero_convention'),
-            "titre"                 =>   $request->input('titre'),
+            "titre"                 =>   $titre,
+            "type_certificat"       =>   $titre,
             "date_debut"            =>   $request->input('date_debut'),
+            "date_convention"       =>   $request->input('date_convention'),
+            "date_lettre"           =>   $request->input('date_lettre'),
             "date_fin"              =>   $request->input('date_fin'),
             "effectif_prevu"        =>   $effectif_prevu,
             "prevue_h"              =>   $request->input('prevue_h'),
@@ -367,6 +398,7 @@ class FormationController extends Controller
             "lettre_mission"        =>   $request->input('lettre_mission'),
             "programmes_id"         =>   $request->input('programme'),
             "choixoperateurs_id"    =>   $request->input('choixoperateur'),
+            "referentiels_id"       =>   $referentiel_id,
             "annee"                 =>   $request->input('annee'),
 
         ]);
@@ -394,6 +426,7 @@ class FormationController extends Controller
         $onfpevaluateurs = Onfpevaluateur::orderBy("created_at", "desc")->get();
 
         $collectivemodule = Collectivemodule::where('collectives_id', $formation->collectives_id)->get();
+        $referentiels = Referentiel::get();
 
         $collectiveFormation = DB::table('formations')
             ->where('collectivemodules_id', $formation->collectivemodules_id)
@@ -436,6 +469,7 @@ class FormationController extends Controller
                 "collectivemodules",
                 "collectiveModule",
                 "collectiveModuleCheck",
+                "referentiels",
             )
         );
     }
@@ -1292,22 +1326,39 @@ class FormationController extends Controller
             'evaluateur'                => ['required', 'string'],
             'numero_convention'         => ['required', 'string'],
             'frais_evaluateur'          => ['required', 'string'],
-            'type_certificat'           => ['required', 'string'],
+            'type_certificat'           => ['nullable', 'string'],
             'recommandations'           => ['nullable', 'string'],
+            'titre'                     => ['nullable', 'string'],
             'date_pv'                   => ['required', 'date'],
+            'date_convention'           => ['required', 'date'],
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
+
+        $referentiel = Referentiel::where('titre', $request->titre)->first();
+
+        if (!empty($referentiel) && $request->titre != 'Attestation') {
+            $referentiel_id = $referentiel?->id;
+            $titre = null;
+        } elseif ($request->titre == 'Attestation') {
+            $referentiel_id = null;
+            $titre = 'Attestation';
+        } else {
+            $referentiel_id = null;
+            $titre = null;
+        }
 
         $formation->update([
             "membres_jury"                  =>  $request->input('membres_jury'),
             "numero_convention"             =>  $request->input('numero_convention'),
             "frais_evaluateur"              =>  $request->input('frais_evaluateur'),
-            "type_certificat"               =>  $request->input('type_certificat'),
+            "type_certificat"               =>  $titre,
+            "titre"                         =>  $titre,
             "recommandations"               =>  $request->input('recommandations'),
             "date_pv"                       =>  $request->input('date_pv'),
-            "evaluateurs_id"                => $request->input('evaluateur'),
-            "onfpevaluateurs_id"            => $request->input('onfpevaluateur'),
+            "evaluateurs_id"                =>  $request->input('evaluateur'),
+            "onfpevaluateurs_id"            =>  $request->input('onfpevaluateur'),
+            "referentiels_id"               =>  $referentiel_id,
         ]);
 
         $formation->save();
@@ -1934,7 +1985,7 @@ class FormationController extends Controller
     {
         $regions = Region::get();
         $title = 'rapports formés';
-        
+
         return view('formes.rapports', compact(
             'regions',
             'title'

@@ -172,10 +172,10 @@
                                     @elseif (!empty($formation?->collectivemodule?->module))
                                         {{ $formation?->collectivemodule?->module }}
                                     @else
+                                        {{ $formation?->module?->name }}
                                     @endif
-                                    {{ $formation?->module?->name }}
                                 </p>
-                                <p><b>Niveau de qualification </b>: {{ $formation?->titre }} </p>
+                                <p><b>Niveau de qualification </b>: {{ $formation?->niveau_qualification }} </p>
                                 <p><b>Nombre de bénéficiaires </b>:
                                     {{ ' H: ' . str_pad($formation->prevue_h, 2, '0', STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     {{ ' F: ' . str_pad($formation->prevue_f, 2, '0', STR_PAD_LEFT) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -200,7 +200,8 @@
                                 <p><b>Documents de référence </b>:
                                 <ol>
                                     <span>
-                                        Convention d'assistance n° {{ $formation?->numero_convention }}<br />
+                                        Convention d'assistance n°
+                                        {{ $formation?->numero_convention . ' du ' . $formation?->date_convention?->format('d/m/Y') }}<br />
                                     </span>
                                     <span>
                                         DETF<br />

@@ -15,6 +15,26 @@ class ReferentielSeeder extends Seeder
     public function run(): void
     {
         DB::table('referentiels')->insert([
+            "Intitule" => "Attestation",
+            "titre" => "Attestation",
+            "reference" => "Attestation",
+            "categorie" => "Attestation",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid" => Str::uuid(),
+        ]);
+
+        DB::table('referentiels')->insert([
+            "Intitule" => "Maraichage",
+            "titre" => "Agent pépiniériste",
+            "reference" => "Arrêté fixant les conditions de travail dans les professions agricoles et assimilées du 06 sept 1961",
+            "categorie" => "5ième catégorie",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid" => Str::uuid(),
+        ]);
+        
+        DB::table('referentiels')->insert([
             "Intitule" => "Maraichage",
             "titre" => "Agent pépiniériste",
             "reference" => "Arrêté fixant les conditions de travail dans les professions agricoles et assimilées du 06 sept 1961",

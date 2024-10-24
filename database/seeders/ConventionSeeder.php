@@ -15,12 +15,18 @@ class ConventionSeeder extends Seeder
     public function run(): void
     {
         DB::table('conventions')->insert([
-            "name" => "Convention Collective des Transports Aériens",
+            "name" => "Attestation",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid" => Str::uuid(),
         ]);
 
+        DB::table('conventions')->insert([
+            "name" => "Convention Collective des Transports Aériens",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid" => Str::uuid(),
+        ]);
         DB::table('conventions')->insert([
             "name" => "Convention Collective Professionnelle Des Transports Routiers",
             'created_at' => now(),

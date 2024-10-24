@@ -1335,69 +1335,92 @@
                         <div class="modal-body">
                             <input type="hidden" name="id" value="{{ $formation->id }}">
 
-                            <div class="mb-3">
-                                <label>N° convention<span class="text-danger mx-1">*</span></label>
-                                <input type="text" name="numero_convention"
-                                    value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
-                                    class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
-                                    id="numero_convention" placeholder="n° convention">
-                                @error('numero_convention')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>N° convention<span class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="numero_convention"
+                                            value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
+                                            class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
+                                            id="numero_convention" placeholder="n° convention">
+                                        @error('numero_convention')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>Date convention<span class="text-danger mx-1">*</span></label>
+                                        <input type="date" name="date_convention"
+                                            value="{{ $formation?->date_convention?->format('Y-m-d') ?? old('date_convention') }}"
+                                            class="form-control form-control-sm @error('date_convention') is-invalid @enderror"
+                                            id="date_convention" placeholder="date_convention">
+                                        @error('date_convention')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>Date évaluation<span class="text-danger mx-1">*</span></label>
+                                        <input type="date" name="date_pv"
+                                            value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
+                                            class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
+                                            id="date_pv" placeholder="date_pv">
+                                        @error('date_pv')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="mb-3">
-                                <label>Date évaluation<span class="text-danger mx-1">*</span></label>
-                                <input type="date" name="date_pv"
-                                    value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
-                                    class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
-                                    id="date_pv" placeholder="date_pv">
-                                @error('date_pv')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>Montant indemnité de membre <span class="text-danger mx-1">*</span></label>
+                                        <input type="number" name="frais_evaluateur" min="0" step="0.001"
+                                            value="{{ $formation?->frais_evaluateur ?? old('frais_evaluateur') }}"
+                                            class="form-control form-control-sm @error('frais_evaluateur') is-invalid @enderror"
+                                            id="frais_evaluateur" placeholder="Montant indemnité de membre ">
+                                        @error('frais_evaluateur')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="evaluateur" class="form-label">Evaluateur<span
-                                        class="text-danger mx-1">*</span></label>
-                                <select name="evaluateur" class="form-select @error('evaluateur') is-invalid @enderror"
-                                    aria-label="Select" id="select-field" data-placeholder="Choisir evaluateur">
-                                    <option value="{{ $formation?->evaluateur?->id }}">
-                                        @if (!empty($formation?->evaluateur?->name))
-                                            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
-                                        @endif
-                                    </option>
-                                    @foreach ($evaluateurs as $evaluateur)
-                                        <option value="{{ $evaluateur->id }}">
-                                            {{ $evaluateur?->name . ', ' . $evaluateur?->fonction ?? old('evaluateur') }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('evaluateur')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label for="evaluateur" class="form-label">Evaluateur<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="evaluateur"
+                                            class="form-select @error('evaluateur') is-invalid @enderror"
+                                            aria-label="Select" id="select-field" data-placeholder="Choisir evaluateur">
+                                            <option value="{{ $formation?->evaluateur?->id }}">
+                                                @if (!empty($formation?->evaluateur?->name))
+                                                    {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
+                                                @endif
+                                            </option>
+                                            @foreach ($evaluateurs as $evaluateur)
+                                                <option value="{{ $evaluateur->id }}">
+                                                    {{ $evaluateur?->name . ', ' . $evaluateur?->fonction ?? old('evaluateur') }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('evaluateur')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="mb-3">
-                                <label>Montant indemnité de membre <span class="text-danger mx-1">*</span></label>
-                                <input type="number" name="frais_evaluateur" min="0" step="0.001"
-                                    value="{{ $formation?->frais_evaluateur ?? old('frais_evaluateur') }}"
-                                    class="form-control form-control-sm @error('frais_evaluateur') is-invalid @enderror"
-                                    id="frais_evaluateur" placeholder="Montant indemnité de membre ">
-                                @error('frais_evaluateur')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            {{-- <div class="row">
+                                {{-- <div class="row">
                                 <div class="col-12 col-md-9 col-lg-9 mb-3">
                                     <label>Evaluateur ONFP<span class="text-danger mx-1">*</span></label>
                                     <input type="text" name="nom_evaluateur_onfp"
@@ -1425,41 +1448,62 @@
                             </div> --}}
 
 
-                            <div class="mb-3">
-                                <label for="evaluateur" class="form-label">Evaluateur ONFP<span
-                                        class="text-danger mx-1">*</span></label>
-                                <select name="onfpevaluateur"
-                                    class="form-select @error('onfpevaluateur') is-invalid @enderror" aria-label="Select"
-                                    id="select-field-onfp" data-placeholder="Choisir evaluateur ONFP">
-                                    <option value="{{ $formation->onfpevaluateur?->id }}">
-                                        @if (!empty($formation?->onfpevaluateur?->name))
-                                            {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}
-                                        @endif
-                                    </option>
-                                    @foreach ($onfpevaluateurs as $onfpevaluateur)
-                                        <option value="{{ $onfpevaluateur->id }}">
-                                            {{ $onfpevaluateur?->name . ', ' . $onfpevaluateur?->fonction ?? old('onfpevaluateur') }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('onfpevaluateur')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label for="evaluateur" class="form-label">Evaluateur ONFP<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="onfpevaluateur"
+                                            class="form-select @error('onfpevaluateur') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-onfp"
+                                            data-placeholder="Choisir evaluateur ONFP">
+                                            <option value="{{ $formation->onfpevaluateur?->id }}">
+                                                @if (!empty($formation?->onfpevaluateur?->name))
+                                                    {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}
+                                                @endif
+                                            </option>
+                                            @foreach ($onfpevaluateurs as $onfpevaluateur)
+                                                <option value="{{ $onfpevaluateur->id }}">
+                                                    {{ $onfpevaluateur?->name . ', ' . $onfpevaluateur?->fonction ?? old('onfpevaluateur') }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('onfpevaluateur')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="mb-3">
-                                <label>Type de certificat délivré<span class="text-danger mx-1">*</span></label>
-                                <input type="text" name="type_certificat" min="0" step="0.001"
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="mb-3">
+                                        <label>Titre (convention)<span class="text-danger mx-1">*</span></label>
+                                        {{-- <input type="text" name="type_certificat" min="0" step="0.001"
                                     value="{{ $formation?->type_certificat ?? old('type_certificat') }}"
                                     class="form-control form-control-sm @error('type_certificat') is-invalid @enderror"
-                                    id="type_certificat" placeholder="Attestation ou Titre ">
-                                @error('type_certificat')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
+                                    id="type_certificat" placeholder="Attestation ou Titre "> --}}
+
+                                        <select name="titre" class="form-select  @error('titre') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-titre" data-placeholder="Choisir titre">
+                                            <option>
+                                                {{ $formation?->titre ?? $formation?->referentiel?->titre ?? old('titre') }}
+                                            </option>
+                                            <option value="null">
+                                                Aucun
+                                            </option>
+                                            @foreach ($referentiels as $referentiel)
+                                                <option value="{{ $referentiel?->titre }}">
+                                                    {{ $referentiel?->titre }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('titre')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
 
@@ -1494,8 +1538,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                            <button type="button" class="btn btn-secondary btn btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn btn-sm"><i class="bi bi-printer"></i>
                                 Vavilider</button>
                         </div>
                     </form>

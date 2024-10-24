@@ -211,12 +211,28 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="titre" class="form-label">Titre (convention)</label>
-                                    <input type="text" name="titre"
+                                    
+                                    <select name="titre" class="form-select  @error('titre') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-titre" data-placeholder="Choisir titre">
+                                        <option>
+                                            {{ $formation?->titre ?? $formation?->referentiel?->titre ?? old('titre') }}
+                                        </option>
+                                        <option value="null">
+                                            Aucun
+                                        </option>
+                                        @foreach ($referentiels as $referentiel)
+                                            <option value="{{ $referentiel?->titre }}">
+                                                {{ $referentiel?->titre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    {{-- <input type="text" name="titre"
                                         value="{{ $formation?->titre ?? old('titre') }}"
                                         class="form-control form-control-sm @error('titre') is-invalid @enderror"
-                                        id="titre" placeholder="Ex: 4ème catégorie de la convention collective ...">
+                                        id="titre" placeholder="Ex: 4ème catégorie de la convention collective ..."> --}}
                                     @error('titre')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -224,13 +240,26 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="lettre_mission" class="form-label">N° lettre de mission</label>
                                     <input type="text" name="lettre_mission"
                                         value="{{ $formation?->lettre_mission ?? old('lettre_mission') }}"
                                         class="form-control form-control-sm @error('lettre_mission') is-invalid @enderror"
-                                        id="lettre_mission" placeholder="N°000875 du 05/08/2024">
+                                        id="lettre_mission" placeholder="Ex: 000875">
                                     @error('lettre_mission')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="date_lettre" class="form-label">Date lettre</label>
+                                    <input type="date" name="date_lettre"
+                                        value="{{ $formation?->date_lettre?->format('Y-m-d') ?? old('date_lettre') }}"
+                                        class="form-control form-control-sm @error('date_lettre') is-invalid @enderror"
+                                        id="date_lettre" placeholder="Date lettre">
+                                    @error('date_lettre')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -243,8 +272,20 @@
                                         value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
                                         class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
                                         id="numero_convention"
-                                        placeholder="Ex: 000743/ONFP/DG/DIOF/mb du 14 juillet 2023">
+                                        placeholder="Ex: 000743">
                                     @error('numero_convention')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="date_convention" class="form-label">Date convention</label>
+                                    <input type="date" name="date_convention"
+                                        value="{{ $formation?->date_convention?->format('Y-m-d') ?? old('date_convention') }}"
+                                        class="form-control form-control-sm @error('date_convention') is-invalid @enderror"
+                                        id="date_convention" placeholder="Date convention">
+                                    @error('date_convention')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
