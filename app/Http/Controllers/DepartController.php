@@ -47,7 +47,7 @@ class DepartController extends Controller
             $numCourrier = $an . "0001";
 
             $longueur = strlen($numCourrier);
-    
+
             if ($longueur <= 1) {
                 $numCourrier   =   strtolower("00000" . $numCourrier);
             } elseif ($longueur >= 2 && $longueur < 3) {
@@ -61,13 +61,28 @@ class DepartController extends Controller
             } else {
                 $numCourrier   =   strtolower($numCourrier);
             }
-    
+        }
+
+        $total_count = Depart::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $departs = Depart::take(100)
+            ->latest()
+            ->get();
+        $count_courrier = number_format($departs?->count(), 0, ',', ' ');
+
+        if ($count_courrier < "1") {
+            $title = 'Aucun courrier';
+        } elseif ($count_courrier == "1") {
+            $title = $count_courrier . ' courrier sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_courrier . ' derniers courriers sur un total de ' . $total_count;
         }
 
         $today = date('Y-m-d');
         $count_today = Depart::where("created_at", "LIKE",  "{$today}%")->count();
 
-        return view("courriers.departs.index", compact("departs", "numCourrier", "anneeEnCours", "today", "count_today"));
+        return view("courriers.departs.index", compact("departs", "numCourrier", "anneeEnCours", "today", "count_today", "title"));
     }
     public function create()
     {
@@ -86,7 +101,7 @@ class DepartController extends Controller
             $numCourrier = $an . "0001";
 
             $longueur = strlen($numCourrier);
-    
+
             if ($longueur <= 1) {
                 $numCourrier   =   strtolower("00000" . $numCourrier);
             } elseif ($longueur >= 2 && $longueur < 3) {
@@ -420,6 +435,47 @@ class DepartController extends Controller
             'departs',
             'from_date',
             'to_date',
+            'title'
+        ));
+    }
+
+
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
+            'numero'             => 'nullable|string',
+            'objet'              => 'nullable|string',
+            'expediteur'         => 'nullable|string',
+        ]);
+
+        if ($request?->numero == null && $request->objet == null && $request->expediteur == null && $request->destinataire == null) {
+            Alert::warning('Attention ', 'Renseigner au moins un champ pour rechercher');
+            return redirect()->back();
+        }
+
+        $departs = Depart::join('courriers', 'courriers.id', 'departs.courriers_id')
+            ->select('departs.*')
+            ->where('departs.numero', 'LIKE', "%{$request?->numero}%")
+            ->where('departs.destinataire', 'LIKE', "%{$request?->destinataire}%")
+            ->where('courriers.objet', 'LIKE', "%{$request?->objet}%")
+            ->where('courriers.reference', 'LIKE', "%{$request?->expediteur}%")
+            ->distinct()
+            ->get();
+
+        $count = $departs?->count();
+
+        if (isset($count) && $count < "1") {
+            $title = 'aucun courrier trouvé';
+        } elseif (isset($count) && $count == "1") {
+            $title = $count . ' courrier trouvé';
+        } else {
+            $title = $count . ' courriers trouvés';
+        }
+
+        /* $modules = Module::orderBy("created_at", "desc")->get(); */
+
+        return view('courriers.departs.index', compact(
+            'departs',
             'title'
         ));
     }

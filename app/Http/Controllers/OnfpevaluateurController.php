@@ -18,7 +18,8 @@ class OnfpevaluateurController extends Controller
     {
         // examples:
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|Ingenieur']);
+        $this->middleware(['role:super-admin|admin|DIOF|ADIOF|Evaluateur']);
+        $this->middleware("permission:onfpevaluateur-view", ["only" => ["index"]]);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */

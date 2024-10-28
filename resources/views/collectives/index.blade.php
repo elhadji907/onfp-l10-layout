@@ -1,7 +1,7 @@
 @extends('layout.user-layout')
 @section('title', 'ONFP - demandes collectives')
 @section('space-work')
-    @can('user-view')
+    @can('collective-view')
         <div class="pagetitle">
             {{-- <h1>Data Tables</h1> --}}
             <nav>
@@ -100,12 +100,14 @@
                     @endif
                     <div class="card">
                         <div class="card-body">
-                            <div class="pt-1">
-                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
-                                    data-bs-toggle="modal" data-bs-target="#AddCollectiveModal">
-                                    <i class="bi bi-plus" title="Ajouter"></i>
-                                </button>
-                            </div>
+                            @can('collective-create')
+                                <div class="pt-1">
+                                    <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
+                                        data-bs-toggle="modal" data-bs-target="#AddCollectiveModal">
+                                        <i class="bi bi-plus" title="Ajouter"></i>
+                                    </button>
+                                </div>
+                            @endcan
                             <h5 class="card-title">Liste demandes collectives</h5>
                             <table class="table datatables align-middle" id="table-collectives">
                                 <thead>

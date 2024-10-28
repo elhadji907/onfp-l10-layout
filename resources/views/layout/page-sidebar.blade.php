@@ -7,163 +7,10 @@
                     <i class="bi bi-grid"></i>
                     <span>Tableau de bord</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li>
         @endcan
 
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="components-alerts.html">
-                        <i class="bi bi-circle"></i><span>Alerts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-accordion.html">
-                        <i class="bi bi-circle"></i><span>Accordion</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-badges.html">
-                        <i class="bi bi-circle"></i><span>Badges</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-breadcrumbs.html">
-                        <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-buttons.html">
-                        <i class="bi bi-circle"></i><span>Buttons</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-cards.html">
-                        <i class="bi bi-circle"></i><span>Cards</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-carousel.html">
-                        <i class="bi bi-circle"></i><span>Carousel</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-list-group.html">
-                        <i class="bi bi-circle"></i><span>List group</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-modal.html">
-                        <i class="bi bi-circle"></i><span>Modal</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-tabs.html">
-                        <i class="bi bi-circle"></i><span>Tabs</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-pagination.html">
-                        <i class="bi bi-circle"></i><span>Pagination</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-progress.html">
-                        <i class="bi bi-circle"></i><span>Progress</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-spinners.html">
-                        <i class="bi bi-circle"></i><span>Spinners</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-tooltips.html">
-                        <i class="bi bi-circle"></i><span>Tooltips</span>
-                    </a>
-                </li>
-            </ul>
-        </li> --}}
-        <!-- End Components Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="forms-elements.html">
-                        <i class="bi bi-circle"></i><span>Form Elements</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="forms-layouts.html">
-                        <i class="bi bi-circle"></i><span>Form Layouts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="forms-editors.html">
-                        <i class="bi bi-circle"></i><span>Form Editors</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="forms-validation.html">
-                        <i class="bi bi-circle"></i><span>Form Validation</span>
-                    </a>
-                </li>
-            </ul>
-        </li> --}}
-        <!-- End Forms Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
-                    class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="tables-general.html">
-                        <i class="bi bi-circle"></i><span>General Tables</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="tables-data.html">
-                        <i class="bi bi-circle"></i><span>Data Tables</span>
-                    </a>
-                </li>
-            </ul>
-        </li> --}}
-        <!-- End Tables Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="charts-chartjs.html">
-                        <i class="bi bi-circle"></i><span>Chart.js</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-apexcharts.html">
-                        <i class="bi bi-circle"></i><span>ApexCharts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-echarts.html">
-                        <i class="bi bi-circle"></i><span>ECharts</span>
-                    </a>
-                </li>
-            </ul>
-        </li> --}}
-        <!-- End Charts Nav -->
-        {{-- @if (auth()->user()->hasRole('super-admin|courrier|a-courrier')) --}}
         @can('courrier-view')
-            {{-- <li class="nav-heading">Gestion courrier</li> --}}
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-envelope"></i><span>Gestion courrier</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -173,13 +20,13 @@
                         <a class="nav-link collapsed" href="{{ url('courriers') }}">
                             <span>Courriers</span>
                         </a>
-                    </li><!-- End arrives Nav -->
+                    </li>
                     @can('arrive-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('arrives') }}">
                                 <span>Arrivés</span>
                             </a>
-                        </li><!-- End arrives Nav -->
+                        </li>
                     @endcan
 
                     @can('depart-view')
@@ -187,7 +34,7 @@
                             <a class="nav-link collapsed" href="{{ url('departs') }}">
                                 <span>Départs</span>
                             </a>
-                        </li><!-- End departs Nav -->
+                        </li>
                     @endcan
 
                     @can('interne-view')
@@ -195,14 +42,11 @@
                             <a class="nav-link collapsed" href="{{ url('internes') }}">
                                 <span>Internes</span>
                             </a>
-                        </li><!-- End internes Nav -->
+                        </li>
                     @endcan
                 </ul>
-            </li><!-- End Courriers Nav -->
+            </li>
         @endcan
-        {{-- @endif --}}
-        {{-- <li class="nav-heading">Gestion demandeurs</li> --}}
-        {{-- @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF')) --}}
         @can('demande-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
@@ -215,7 +59,7 @@
                             <a class="nav-link collapsed" href="{{ url('individuelles') }}">
                                 <span>Demandes individuelles</span>
                             </a>
-                        </li><!-- End individuelles Nav -->
+                        </li>
                     @endcan
 
                     @can('collective-view')
@@ -223,7 +67,7 @@
                             <a class="nav-link collapsed" href="{{ url('collectives') }}">
                                 <span>Demandes collectives</span>
                             </a>
-                        </li><!-- End collectives Nav -->
+                        </li>
                     @endcan
 
                     @can('pcharge-view')
@@ -231,14 +75,12 @@
                             <a class="nav-link collapsed" href="#">
                                 <span>Demandes prise en charge</span>
                             </a>
-                        </li><!-- End Prise en charges Nav -->
+                        </li>
                     @endcan
 
                 </ul>
-            </li><!-- End demandes Nav -->
+            </li>
         @endcan
-        {{-- @endif --}}
-        {{-- @if (auth()->user()->hasRole('Demandeur')) --}}
         @can('demandeur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demandeurs-nav" data-bs-toggle="collapse" href="#">
@@ -249,24 +91,16 @@
                         <a class="nav-link collapsed" href="{{ route('demandesIndividuelle') }}">
                             <span>Individuelles</span>
                         </a>
-                    </li><!-- End individuelles Nav -->
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ route('demandesCollective') }}">
                             <span>Collectives</span>
                         </a>
-                    </li><!-- End collectives Nav -->
-                    {{-- <li class="nav-item">
-                        <a class="nav-link collapsed" href="#">
-                            <span>Prise en charge</span>
-                        </a>
-                    </li> --}}
-                    <!-- End Prise en charges Nav -->
+                    </li>
                 </ul>
-            </li><!-- End demandes Nav -->
+            </li>
         @endcan
-        {{--  @endif --}}
-        {{-- @if (auth()->user()->hasRole('Operateur')) --}}
         @can('operateur-demande-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demandeurs-operateur-nav" data-bs-toggle="collapse"
@@ -279,15 +113,10 @@
                         <a class="nav-link collapsed" href="{{ route('devenirOperateur') }}">
                             <span>Agrément</span>
                         </a>
-                    </li><!-- End collectives Nav -->
+                    </li>
                 </ul>
-            </li><!-- End demandes Nav -->
+            </li>
         @endcan
-        {{-- @endif --}}
-
-        {{-- @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF|DEC')) --}}
-        {{-- <li class="nav-heading">Gestion opérateurs</li> --}}
-        {{-- Formations --}}
         @can('operateur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse" href="#">
@@ -299,13 +128,13 @@
                         <a class="nav-link collapsed" href="{{ url('operateurs') }}">
                             <span>Opérateurs</span>
                         </a>
-                    </li><!-- End operateurs Nav -->
+                    </li>
                     @can('agrement-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('agrement') }}">
                                 <span>Traitement agréments</span>
                             </a>
-                        </li><!-- End operateurs Nav -->
+                        </li>
                     @endcan
 
                     @can('agrement-commission')
@@ -313,7 +142,7 @@
                             <a class="nav-link collapsed" href="{{ route('commissionagrements.index') }}">
                                 <span>Commission agrément</span>
                             </a>
-                        </li><!-- End operateurs Nav -->
+                        </li>
                     @endcan
 
                     @can('agrement-module')
@@ -321,11 +150,11 @@
                             <a class="nav-link collapsed" href="{{ url('operateurmodules') }}">
                                 <span>Modules</span>
                             </a>
-                        </li><!-- End operateurmodules Nav -->
+                        </li>
                     @endcan
 
                 </ul>
-            </li><!-- End Formations Nav -->
+            </li>
         @endcan
         @can('formation-view')
             <li class="nav-item">
@@ -339,32 +168,31 @@
                         <a class="nav-link collapsed" href="{{ url('formations') }}">
                             <span>Formations</span>
                         </a>
-                    </li><!-- End Formations Nav -->
+                    </li>
                     @can('ingenieur-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('ingenieurs') }}">
                                 <span>Ingénieurs</span>
                             </a>
-                        </li><!-- End Formations Nav -->
+                        </li>
                     @endcan
                     @can('evaluateur-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('evaluateurs') }}">
                                 <span>Evaluateurs</span>
                             </a>
-                        </li><!-- End Formations Nav -->
+                        </li>
                     @endcan
                     @can('evaluateur-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('onfpevaluateurs') }}">
                                 <span>Evaluateurs ONFP</span>
                             </a>
-                        </li><!-- End Formations Nav -->
+                        </li>
                     @endcan
                 </ul>
             </li>
         @endcan
-        {{-- <li class="nav-heading">Gestion localités</li> --}}
 
         @can('localite-view')
             <li class="nav-item">
@@ -376,13 +204,13 @@
                         <a class="nav-link collapsed" href="{{ url('localites') }}">
                             <span>Localités</span>
                         </a>
-                    </li><!-- End localites Nav -->
+                    </li>
                     @can('region-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('regions') }}">
                                 <span>Régions</span>
                             </a>
-                        </li><!-- End regions Nav -->
+                        </li>
                     @endcan
 
                     <li class="nav-item">
@@ -390,29 +218,21 @@
                             <span>Départements</span>
                         </a>
                     </li>
-                    <!-- End departements Nav -->
 
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('arrondissements') }}">
                             <span>Arrondissement</span>
                         </a>
                     </li>
-                    <!-- End arrondissements Nav -->
 
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('communes') }}">
                             <span>Commune</span>
                         </a>
                     </li>
-                    <!-- End communes Nav -->
                 </ul>
-            </li><!-- End Courriers Nav -->
+            </li>
         @endcan
-
-        {{-- <li class="nav-heading">EMPLOYES</li> --}}
-        {{-- @endif --}}
-
-        {{-- @if (auth()->user()->hasRole('super-admin|DRH')) --}}
         @can('employe-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse" href="#">
@@ -422,90 +242,76 @@
 
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('/employes') }}">
-                            {{-- <i class="bi bi-person"></i> --}}
                             <span>Employés</span>
                         </a>
-                    </li><!-- End employes Page Nav -->
-                    {{-- <li class="nav-heading">PARAMETRES</li> --}}
+                    </li>
                     @can('direction-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/directions') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Directions</span>
                             </a>
-                        </li><!-- End directions Page Nav -->
+                        </li>
                     @endcan
                     @can('categorie-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/categories') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Catégories</span>
                             </a>
-                        </li><!-- End categories Page Nav -->
+                        </li>
                     @endcan
                     @can('fonction-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/fonctions') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Fonction</span>
                             </a>
-                        </li><!-- End fonction Page Nav -->
+                        </li>
                     @endcan
                     @can('loi-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/lois') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Lois</span>
                             </a>
-                        </li><!-- End loi Page Nav -->
+                        </li>
                     @endcan
                     @can('decret-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/decrets') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Decret</span>
                             </a>
-                        </li><!-- End loi Page Nav -->
+                        </li>
                     @endcan
                     @can('pv-recrutement-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/procesverbals') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>PV</span>
                             </a>
-                        </li><!-- End PV Page Nav -->
+                        </li>
                     @endcan
                     @can('decision')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/decisions') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Décisions</span>
                             </a>
-                        </li><!-- End Décisions Page Nav -->
+                        </li>
                     @endcan
                     @can('article-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/articles') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Articles</span>
                             </a>
-                        </li><!-- End nomminations Page Nav -->
+                        </li>
                     @endcan
                     @can('nommination-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/nomminations') }}">
-                                {{-- <i class="bi bi-stack"></i> --}}
                                 <span>Nomminations</span>
                             </a>
-                        </li><!-- End nomminations Page Nav -->
+                        </li>
                     @endcan
 
                 </ul>
             </li>
         @endcan
-        {{-- @endif --}}
-
-        {{-- @if (auth()->user()->hasRole('super-admin|DIOF|ADIOF')) --}}
         @can('module-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#modules-nav" data-bs-toggle="collapse" href="#">
@@ -544,9 +350,6 @@
                 </a>
             </li>
         @endcan
-        {{-- @endif --}}
-
-        {{--  @if (auth()->user()->hasRole('super-admin')) --}}
         @can('user-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('user') }}">
@@ -572,11 +375,10 @@
                         <a class="nav-link collapsed" href="{{ route('suiviformes.suivi-collective') }}">
                             <span>Collectives</span>
                         </a>
-                    </li><!-- End Permissions Nav -->
+                    </li>
                 </ul>
-            </li><!-- End Courriers Nav -->
+            </li>
         @endcan
-        {{-- <li class="nav-heading">{{ __("Contrôle d'accès") }}</li> --}}
         @can('role-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse"
@@ -589,16 +391,16 @@
                         <a class="nav-link collapsed" href="{{ url('roles') }}">
                             <span>Roles</span>
                         </a>
-                    </li><!-- End roles Nav -->
+                    </li>
                     @can('permission-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('permissions') }}">
                                 <span>Permissions</span>
                             </a>
-                        </li><!-- End Permissions Nav -->
+                        </li>
                     @endcan
                 </ul>
-            </li><!-- End Courriers Nav -->
+            </li>
         @endcan
         @can('rapport-view')
             <li class="nav-item">
@@ -646,7 +448,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('rapport-arrive-view')
+                    @can('rapport-depart-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('departs.rapport') }}">
                                 <span>Courriers départs</span>
@@ -679,7 +481,7 @@
                     @endcan
 
                 </ul>
-            </li><!-- End Courriers Nav -->
+            </li>
         @endcan
         @can('file-view')
             <li class="nav-item">
@@ -702,57 +504,6 @@
                 </a>
             </li>
         @endcan
-
-        {{-- @endif --}}
-        {{-- <li class="nav-heading">Pages</li> --}}
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>F.A.Q</span>
-            </a>
-        </li> --}}
-        <!-- End F.A.Q Page Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
-                <i class="bi bi-envelope"></i>
-                <span>Contact</span>
-            </a>
-        </li> --}}
-        <!-- End Contact Page Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-register.html">
-                <i class="bi bi-card-list"></i>
-                <span>Register</span>
-            </a>
-        </li> --}}
-        <!-- End Register Page Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('/page-login') }}">
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>Login</span>
-            </a>
-        </li> --}}
-        <!-- End Login Page Nav -->
-
-        {{--  <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-error-404.html">
-                <i class="bi bi-dash-circle"></i>
-                <span>Error 404</span>
-            </a>
-        </li> --}}
-        <!-- End Error 404 Page Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-blank.html">
-                <i class="bi bi-file-earmark"></i>
-                <span>Blank</span>
-            </a>
-        </li> --}}
-        <!-- End Blank Page Nav -->
 
     </ul>
 

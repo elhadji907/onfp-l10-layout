@@ -79,6 +79,7 @@
                                                     href="tel:+221{{ $individuelle?->user->telephone }}">{{ $individuelle?->user->telephone }}</a>
                                             </td>
                                             <td>
+                                                @can('individuelle-show')
                                                 <span class="d-flex align-items-baseline"><a
                                                         href="{{ route('individuelles.show', $individuelle->id) }}"
                                                         class="btn btn-primary btn-sm" title="voir détails"><i
@@ -87,11 +88,15 @@
                                                         <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                 class="bi bi-three-dots"></i></a>
                                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            @can('individuelle-update')
                                                             <li><a class="dropdown-item btn btn-sm"
                                                                     href="{{ route('individuelles.edit', $individuelle->id) }}"
                                                                     class="mx-1" title="Modifier"><i
                                                                         class="bi bi-pencil"></i>Modifier</a>
                                                             </li>
+                                                            @endcan
+
+                                                            @can('individuelle-delete')
                                                             <li>
                                                                 <form
                                                                     action="{{ route('individuelles.destroy', $individuelle->id) }}"
@@ -103,9 +108,12 @@
                                                                             class="bi bi-trash"></i>Supprimer</button>
                                                                 </form>
                                                             </li>
+                                                            @endcan
+
                                                         </ul>
                                                     </div>
                                                 </span>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endisset

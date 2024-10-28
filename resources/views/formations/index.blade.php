@@ -162,22 +162,24 @@
                         <div class="d-flex justify-content-between align-items-center">
                             @can('formation-create')
                                 <h5 class="card-title">{{ $title }}</h5>
-                                <span class="d-flex align-items-baseline">
-                                    <a href="#" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
-                                        data-bs-target="#AddFormationModal" title="Ajouter">Ajouter</a>
-                                    <div class="filter">
-                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                class="bi bi-three-dots"></i></a>
-                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                            <li>
-                                                <button type="button" class="dropdown-item btn btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#generate_rapportFormation"></i>Rechercher
-                                                    plus</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </span>
+                                @can('formation-create')
+                                    <span class="d-flex align-items-baseline">
+                                        <a href="#" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal"
+                                            data-bs-target="#AddFormationModal" title="Ajouter">Ajouter</a>
+                                        <div class="filter">
+                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                    class="bi bi-three-dots"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                <li>
+                                                    <button type="button" class="dropdown-item btn btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#generate_rapportFormation"></i>Rechercher
+                                                        plus</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </span>
+                                @endcan
                             @endcan
                         </div>
                         {{-- <h5 class="card-title">Liste des formations</h5> --}}
@@ -186,22 +188,23 @@
                         <table class="table datatables" id="table-formations">
                             <thead>
                                 <tr>
-                                    <th>Code</th>
-                                    <th>Type</th>
+                                    <th width='6%' class="text-center">Code</th>
+                                    <th width='15%'>Type formation</th>
                                     <th>Bénéficiaires</th>
-                                    <th>Localité</th>
-                                    <th>Modules</th>
+                                    <th width='15%'>Localité</th>
+                                    <th width='5%'>Modules</th>
+                                    <th width='15%'>Type certification</th>
                                     {{-- <th>Niveau qualification</th> --}}
                                     {{-- <th>Effectif</th> --}}
-                                    <th class="text-center">Statut</th>
-                                    <th><i class="bi bi-gear"></i></th>
+                                    <th width='5%' class="text-center">Statut</th>
+                                    <th width='5%'><i class="bi bi-gear"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($formations as $formation)
                                     <tr>
-                                        <td>{{ $formation?->code }}</td>
+                                        <td style="text-align: center">{{ $formation?->code }}</td>
                                         <td><a>{{ $formation->types_formation?->name }}</a></td>
                                         <td>{{ $formation?->name }}</td>
                                         <td>{{ $formation->departement?->region?->nom }}</td>
@@ -213,6 +216,7 @@
                                                 {{ $formation?->collectivemodule?->module }}
                                             @endisset
                                         </td>
+                                        <td>{{ $formation->type_certification }}</td>
                                         {{-- <td>{{ $formation->niveau_qualification }}</td> --}}
                                         {{--   <td class="text-center">
                                             @foreach ($formation->individuelles as $individuelle)
@@ -226,39 +230,45 @@
                                                     class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
                                         </td>
                                         <td>
-                                            <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('formations.show', $formation->id) }}"
-                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li>
-                                                            <a class="dropdown-item btn btn-sm"
-                                                                href="{{ route('formations.edit', $formation->id) }}"
-                                                                class="mx-1" title="Modifier"><i
-                                                                    class="bi bi-pencil"></i>Modifier</a>
-                                                            {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                            @can('formation-show')
+                                                <span class="d-flex align-items-baseline"><a
+                                                        href="{{ route('formations.show', $formation->id) }}"
+                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            @can('formation-update')
+                                                                <li>
+                                                                    <a class="dropdown-item btn btn-sm"
+                                                                        href="{{ route('formations.edit', $formation->id) }}"
+                                                                        class="mx-1" title="Modifier"><i
+                                                                            class="bi bi-pencil"></i>Modifier</a>
+                                                                    {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#EditFormationModal{{ $formation->id }}">
                                                                 <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                             </button> --}}
-                                                        </li>
-                                                        <li>
-                                                            <form
-                                                                action="{{ route('formations.destroy', $formation->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"
-                                                                    title="Supprimer"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </span>
+                                                                </li>
+                                                            @endcan
+                                                            @can('formation-delete')
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('formations.destroy', $formation->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="dropdown-item show_confirm"
+                                                                            title="Supprimer"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

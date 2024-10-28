@@ -42,11 +42,12 @@
                                 {{-- <a href="{{ route('ingenieurs.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
-
-                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddingenieurModal">
-                                    <i class="bi bi-person-plus" title="Ajouter"></i>
-                                </button>
+                                @can('ingenieur-create')
+                                    <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                        data-bs-target="#AddingenieurModal">
+                                        <i class="bi bi-person-plus" title="Ajouter"></i>
+                                    </button>
+                                @endcan
                             </div>
                             {{-- @endcan --}}
                             <h5 class="card-title">Ingénieurs</h5>
@@ -89,33 +90,39 @@
                                             </td>
 
                                             <td style="text-align: center;">
-                                                <span class="d-flex mt-2 align-items-baseline"><a
-                                                        href="{{ route('ingenieurs.show', $ingenieur->id) }}"
-                                                        class="btn btn-warning btn-sm mx-1" title="Voir détails">
-                                                        <i class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li>
-                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
-                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <form action="{{ url('ingenieurs', $ingenieur->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
+                                                @can('ingenieur-show')
+                                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                                            href="{{ route('ingenieurs.show', $ingenieur->id) }}"
+                                                            class="btn btn-warning btn-sm mx-1" title="Voir détails">
+                                                            <i class="bi bi-eye"></i></a>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                @can('ingenieur-update')
+                                                                    <li>
+                                                                        <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
+                                                                            <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                                        </button>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('ingenieur-delete')
+                                                                    <li>
+                                                                        <form action="{{ url('ingenieurs', $ingenieur->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit" class="dropdown-item show_confirm"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                @endcan
                                             </td>
 
                                         </tr>

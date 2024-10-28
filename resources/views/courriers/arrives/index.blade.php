@@ -6,12 +6,13 @@
         {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
                 <li class="breadcrumb-item">Tables</li>
                 <li class="breadcrumb-item active">Liste des courriers arrivés</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
+
     <section class="section dashboard">
         <div class="row">
             <!-- Left side columns -->
@@ -101,47 +102,18 @@
     <section class="section">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                {{-- @if ($message = Session::get('status'))
-                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                        role="alert">
-                        <strong>{{ $message }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                @if ($message = Session::get('danger'))
-                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
-                        role="alert">
-                        <strong>{{ $message }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif --}}
                 <div class="card">
                     <div class="card-body">
-                        {{-- <div class="pt-1">
-                            <a href="{{ route('arrives.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                        </div> --}}
-                        <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
-                                class="btn btn-success btn-sm" title="retour"><i
-                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                        </span>
                         <div class="d-flex justify-content-between align-items-center mt-0">
-                            {{-- <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
+                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
-                                        class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                            </span> --}}
-                            <h5 class="card-title">{{ $title }}</h5>
+                                        class="bi bi-arrow-counterclockwise"></i></a>&nbsp;Liste des courriers
+                            </span>
                             @can('courrier-operateur-view')
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                                     data-bs-target="#addCourrierOperateur"><i class="bi bi-plus"
                                         title="ajouter courrier opérateurs"></i>&nbsp;ajouter courrier opérateurs</button>
                             @endcan
-                            {{-- <button type="button" class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal"
-                                data-bs-target="#addCourrierArrive">
-                                <i class="bi bi-plus" title="ajouter courrier arrivé"></i>&nbsp;ajouter courrier arrivé
-                            </button> --}}
-
                             <span class="d-flex align-items-baseline">
                                 <a href="#" class="btn btn-success btn-sm float-end" data-bs-toggle="modal"
                                     data-bs-target="#addCourrierArrive" title="Ajouter">Ajouter</a>
@@ -158,9 +130,10 @@
                                 </div>
                             </span>
                         </div>
-                        {{-- <p>Le tableau des courriers arrivés</p> --}}
-                        <!-- Table with stripped rows -->
-                        @isset($arrives)
+                        @foreach ($arrives as $arrive)
+                        @endforeach
+                        @if (!empty($arrive))
+                            <h5 class="card-title">{{ $title }}</h5>
                             <table class="table datatables align-middle" id="table-arrives">
                                 <thead>
                                     <tr>
@@ -198,7 +171,8 @@
                                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                             <li><a class="dropdown-item btn btn-sm"
                                                                     href="{{ route('arrives.edit', $arrive?->id) }}"
-                                                                    class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
+                                                                    class="mx-1"><i class="bi bi-pencil"></i>
+                                                                    Modifier</a>
                                                             </li>
                                                             {{-- <li><a class="dropdown-item btn btn-sm"
                                                                 href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
@@ -210,7 +184,8 @@
                                                         </li> --}}
                                                             @can('arrive-delete')
                                                                 <li>
-                                                                    <form action="{{ route('arrives.destroy', $arrive?->id) }}"
+                                                                    <form
+                                                                        action="{{ route('arrives.destroy', $arrive?->id) }}"
                                                                         method="post">
                                                                         @csrf
                                                                         @method('DELETE')
@@ -228,7 +203,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        @endisset
+                        @else
+                            <div class="alert alert-info mt-3">Aucun courrier arrivé enregistré pour le moment !!!</div>
+                        @endif
+                        {{-- <p>Le tableau des courriers arrivés</p> --}}
+                        <!-- Table with stripped rows -->
+
                         <!-- End Table with stripped rows -->
                     </div>
                 </div>

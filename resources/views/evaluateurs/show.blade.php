@@ -6,7 +6,7 @@
         {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
                 <li class="breadcrumb-item">Tables</li>
                 <li class="breadcrumb-item active">Données</li>
             </ol>
@@ -38,18 +38,12 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-0">
-                            {{-- <a href="#" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-plus" title="Ajouter"></i> Ajouter</a> --}}
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddFormationModal">
-                                <i class="bi bi-folder-plus" title="Ajouter"></i>
-                            </button>
-                        </div>
+                        <span class="d-flex align-items-baseline"><a href="{{ route('evaluateurs.index') }}"
+                                class="btn btn-success btn-sm" title="retour"><i
+                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                            <p> | retour</p>
+                        </span>
                         <h5 class="card-title">Liste des formations de {{ $evaluateur->name }}</h5>
-                        {{-- <p>Le tableau des demandes formations</p> --}}
-                        <!-- Table with stripped rows -->
                         <table class="table datatables" id="table-formations">
                             <thead>
                                 <tr>

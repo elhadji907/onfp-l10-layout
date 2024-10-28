@@ -9,6 +9,16 @@ use Illuminate\Validation\Rule;
 
 class ConventionController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF']);
+        $this->middleware("permission:collective-view", ["only" => ["index"]]);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
     public function index()
     {
         $conventions = Convention::get();

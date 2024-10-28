@@ -47,7 +47,7 @@
                         <table class="table datatables align-middle justify-content-center" id="table-modules">
                             <thead>
                                 <tr>
-                                   {{--  <th class="text-center">N°</th> --}}
+                                    {{--  <th class="text-center">N°</th> --}}
                                     <th class="text-center">CIN</th>
                                     <th>Prénom</th>
                                     <th>NOM</th>
@@ -64,7 +64,7 @@
                                 @foreach ($individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                           {{--  <td>{{ $individuelle?->numero }}
+                                            {{--  <td>{{ $individuelle?->numero }}
                                             </td> --}}
                                             <td>{{ $individuelle?->user?->cin }}</td>
                                             <td>{{ $individuelle?->user?->firstname }}</td>
@@ -94,33 +94,40 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('individuelles.show', $individuelle->id) }}"
-                                                        class="btn btn-primary btn-sm" title="voir détails"><i
-                                                            class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li><a class="dropdown-item btn btn-sm"
-                                                                    href="{{ route('individuelles.edit', $individuelle->id) }}"
-                                                                    class="mx-1" title="Modifier"><i
-                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                            </li>
-                                                            <li>
-                                                                <form
-                                                                    action="{{ route('individuelles.destroy', $individuelle->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"
-                                                                        title="Supprimer"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
+                                                @can('individuelle-show')
+                                                    <span class="d-flex align-items-baseline"><a
+                                                            href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                            class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                class="bi bi-eye"></i></a>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                @can('individuelle-update')
+                                                                    <li><a class="dropdown-item btn btn-sm"
+                                                                            href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                            class="mx-1" title="Modifier"><i
+                                                                                class="bi bi-pencil"></i>Modifier</a>
+                                                                    </li>
+                                                                @endcan
+
+                                                                @can('individuelle-delete')
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit" class="dropdown-item show_confirm"
+                                                                                title="Supprimer"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endisset

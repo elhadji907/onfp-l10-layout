@@ -34,7 +34,8 @@
                     @foreach ($errors->all() as $error)
                     @endforeach
                     <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
-                        <strong>{{ $error }}</strong></div>
+                        <strong>{{ $error }}</strong>
+                    </div>
                 @endif
                 <div class="row">
                     <!-- Sales Card -->
@@ -114,90 +115,103 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        {{-- <div class="pt-1">
-                            <a href="{{ route('departs.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                        </div> --}}
-
-                        <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('departs.index') }}"
-                                class="btn btn-success btn-sm" title="retour"><i
-                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                            <p> | Liste des courriers départs</p>
-                        </span>
-                        <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
-                            data-bs-target="#addCourrierDepart">
-                            <i class="bi bi-plus" title="Ajouter un nouveau courrier"></i>
-                        </button>
-                        {{-- <p>Le tableau des courriers départs</p> --}}
-                        <!-- Table with stripped rows -->
-                        <table class="table datatables align-middle" id="table-departs">
-                            <thead>
-                                <tr>
-                                    <th>Date et n° départ</th>
-                                    <th>Date et n° correspondance</th>
-                                    <th>Destinataire</th>
-                                    <th>Objet</th>
-                                    <th>Service expéditeur</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1; ?>
-                                @foreach ($departs as $depart)
+                        <div class="d-flex justify-content-between align-items-center mt-0">
+                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('courriers.index') }}"
+                                    class="btn btn-success btn-sm" title="retour"><i
+                                        class="bi bi-arrow-counterclockwise"></i></a>&nbsp;Liste des courriers
+                            </span>
+                            <span class="d-flex align-items-baseline">
+                                <a href="#" class="btn btn-success btn-sm float-end" data-bs-toggle="modal"
+                                    data-bs-target="#addCourrierDepart" title="Ajouter">Ajouter</a>
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li>
+                                            <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#generate_rapport"></i>Rechercher
+                                                plus</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                        @foreach ($departs as $depart)
+                        @endforeach
+                        @if (!empty($depart))
+                        <h5 class="card-title">{{ $title }}</h5>
+                            <table class="table datatables align-middle" id="table-departs">
+                                <thead>
                                     <tr>
-                                        <td>{{ $depart->courrier->date_depart?->format('d/m/Y') }} <br>
-                                            <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->numero }}</span>
-                                        </td>
-                                        <td>{{ $depart->courrier->date_cores?->format('d/m/Y') }} <br>
-                                            <span
-                                                style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->courrier->numero }}</span>
-                                        </td>
-                                        <td>{{ $depart?->destinataire }}</td>
-                                        <td>{{ $depart->courrier?->objet }}</td>
-                                        <td>{{ $depart->courrier?->reference }}</td>
-                                        <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('departs.show', $depart->id) }}"
-                                                    class="btn btn-success btn-sm mx-1" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        <li><a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ route('departs.edit', $depart->id) }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a>
-                                                        </li>
-                                                        {{-- <li><a class="dropdown-item btn btn-sm mx-1"
+                                        <th>Date et n° départ</th>
+                                        <th>Date et n° correspondance</th>
+                                        <th>Destinataire</th>
+                                        <th>Objet</th>
+                                        <th>Service expéditeur</th>
+                                        <th>#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; ?>
+                                    @foreach ($departs as $depart)
+                                        <tr>
+                                            <td>{{ $depart->courrier->date_depart?->format('d/m/Y') }} <br>
+                                                <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->numero }}</span>
+                                            </td>
+                                            <td>{{ $depart->courrier->date_cores?->format('d/m/Y') }} <br>
+                                                <span
+                                                    style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->courrier->numero }}</span>
+                                            </td>
+                                            <td>{{ $depart?->destinataire }}</td>
+                                            <td>{{ $depart->courrier?->objet }}</td>
+                                            <td>{{ $depart->courrier?->reference }}</td>
+                                            <td>
+                                                <span class="d-flex mt-2 align-items-baseline"><a
+                                                        href="{{ route('departs.show', $depart->id) }}"
+                                                        class="btn btn-success btn-sm mx-1" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <li><a class="dropdown-item btn btn-sm mx-1"
+                                                                    href="{{ route('departs.edit', $depart->id) }}"
+                                                                    class="mx-1"><i class="bi bi-pencil"></i>
+                                                                    Modifier</a>
+                                                            </li>
+                                                            {{-- <li><a class="dropdown-item btn btn-sm mx-1"
                                                                 href="{{ url('depart-imputations', ['id' => $depart->id]) }}"
                                                                 class="mx-1"><i class="bi bi-recycle"></i> Imputer</a>
                                                         </li> --}}
-                                                        {{-- <li><a class="dropdown-item btn btn-sm mx-1"
+                                                            {{-- <li><a class="dropdown-item btn btn-sm mx-1"
                                                                 href="{!! url('coupon-depart', ['$id' => $depart->id]) !!}" class="mx-1"
                                                                 target="_blank"><i
                                                                     class="bi bi-file-earmark-arrow-down"></i> Coupon</a>
                                                         </li> --}}
-                                                        @can('depart-delete')
-                                                        <li>
-                                                            <form action="{{ route('departs.destroy', $depart->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item show_confirm"><i
-                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                            </form>
-                                                        </li>
-                                                        @endcan
-                                                    </ul>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                            @can('depart-delete')
+                                                                <li>
+                                                                    <form action="{{ route('departs.destroy', $depart->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="dropdown-item show_confirm"><i
+                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="alert alert-info mt-3">Aucun courrier départ enregistré pour le moment !!!</div>
+                        @endif
                         <!-- End Table with stripped rows -->
 
                     </div>
@@ -383,6 +397,100 @@
                                         data-bs-dismiss="modal">Fermer</button>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="generate_rapport" tabindex="-1" role="dialog"
+            aria-labelledby="generate_rapportLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Générer une recherche<span class="text-danger mx-1">*</span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="{{ route('departs.report') }}">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="numero" class="form-label">Numero</label>
+                                                <input type="text" name="numero" value="{{ old('numero') }}"
+                                                    class="form-control form-control-sm @error('numero') is-invalid @enderror"
+                                                    id="numero" placeholder="Numero">
+                                                @error('numero')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="objet" class="form-label">Objet</label>
+                                                <input type="text" name="objet" value="{{ old('objet') }}"
+                                                    class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                                    id="objet" placeholder="Objet">
+                                                @error('objet')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="expediteur" class="form-label">Service expéditeur</label>
+                                                <input type="text" name="expediteur" value="{{ old('expediteur') }}"
+                                                    class="form-control form-control-sm @error('expediteur') is-invalid @enderror"
+                                                    id="expediteur" placeholder="Expéditeur">
+                                                @error('expediteur')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="destinataire" class="form-label">Destinataire</label>
+                                                <input type="text" name="destinataire" value="{{ old('destinataire') }}"
+                                                    class="form-control form-control-sm @error('destinataire') is-invalid @enderror"
+                                                    id="destinataire" placeholder="Destinataire">
+                                                @error('destinataire')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                            class="btn btn-primary btn-block submit_rapport btn-sm">Rechercher</button>
                                     </div>
                                 </div>
                             </div>

@@ -26,20 +26,19 @@
                                 {{-- @endif --}}
                                 {{-- @if (auth()->user()->hasRole('super-admin|admin')) --}}
 
-                                @can('user-view')
-                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('individuelles.index') }}"
-                                            class="btn btn-secondary btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                @if (auth()->user()->hasRole('super-admin|admin|DIOF|DEC'))
+                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                            href="{{ route('individuelles.index') }}" class="btn btn-secondary btn-sm"
+                                            title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | retour</p>
                                     </span>
-                                @endcan
-                                @can('demandeur-view')
-                                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('demandesIndividuelle') }}"
-                                            class="btn btn-info btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                @else
+                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                            href="{{ route('demandesIndividuelle') }}" class="btn btn-info btn-sm"
+                                            title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                         <p> | retour</p>
                                     </span>
-                                @endcan
+                                @endif
                                 {{-- @endif --}}
 
                                 <span>
@@ -160,7 +159,7 @@
                                     enctype="multipart/form-data" class="row g-3">
                                     @csrf
                                     @method('PUT')
-                                    
+
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Formation sollicitée</div>
                                         <div>{{ $individuelle?->module?->name }}</div>

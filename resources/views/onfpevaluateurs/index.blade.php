@@ -9,7 +9,7 @@
                         {{-- <h1>Data Tables</h1> --}}
                         <nav>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
                                 <li class="breadcrumb-item">Tables</li>
                                 <li class="breadcrumb-item active">Données</li>
                             </ol>
@@ -42,14 +42,15 @@
                                 {{-- <a href="{{ route('onfpevaluateurs.create') }}" class="btn btn-primary float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
-
-                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddonfpevaluateurModal">
-                                    <i class="bi bi-person-plus" title="Ajouter"></i>
-                                </button>
+                                @can('onfpevaluateur-create')
+                                    <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                        data-bs-target="#AddonfpevaluateurModal">
+                                        <i class="bi bi-person-plus" title="Ajouter"></i>
+                                    </button>
+                                @endcan
                             </div>
                             {{-- @endcan --}}
-                            <h5 class="card-title">Evaluateurs</h5>
+                            <h5 class="card-title">Evaluateurs ONFP</h5>
                             <!-- Table with stripped rows -->
                             <table class="table datatables align-middle justify-content-center" id="table-onfpevaluateurs">
                                 <thead>
@@ -76,8 +77,10 @@
                                             <td>{{ $onfpevaluateur->initiale }}</td>
                                             <td>{{ $onfpevaluateur->fonction }}</td>
                                             {{-- <td>{{ $onfpevaluateur->specialite }}</td> --}}
-                                            <td><a href="mailto:{{ $onfpevaluateur->email }}">{{ $onfpevaluateur->email }}</a></td>
-                                            <td><a href="tel:+221{{ $onfpevaluateur->telephone }}">{{ $onfpevaluateur->telephone }}</a>
+                                            <td><a href="mailto:{{ $onfpevaluateur->email }}">{{ $onfpevaluateur->email }}</a>
+                                            </td>
+                                            <td><a
+                                                    href="tel:+221{{ $onfpevaluateur->telephone }}">{{ $onfpevaluateur->telephone }}</a>
                                             </td>
                                             <td style="text-align: center;">
                                                 @foreach ($onfpevaluateur->formations as $formation)
@@ -89,33 +92,40 @@
                                             </td>
 
                                             <td style="text-align: center;">
-                                                <span class="d-flex mt-2 align-items-baseline"><a
-                                                        href="{{ route('onfpevaluateurs.show', $onfpevaluateur->id) }}"
-                                                        class="btn btn-warning btn-sm mx-1" title="Voir détails">
-                                                        <i class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li>
-                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#EditonfpevaluateurModal{{ $onfpevaluateur->id }}">
-                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <form action="{{ url('onfpevaluateurs', $onfpevaluateur->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
+                                                @can('onfpevaluateur-show')
+                                                    <span class="d-flex mt-2 align-items-baseline"><a
+                                                            href="{{ route('onfpevaluateurs.show', $onfpevaluateur->id) }}"
+                                                            class="btn btn-warning btn-sm mx-1" title="Voir détails">
+                                                            <i class="bi bi-eye"></i></a>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                @can('onfpevaluateur-update')
+                                                                    <li>
+                                                                        <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditonfpevaluateurModal{{ $onfpevaluateur->id }}">
+                                                                            <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                                        </button>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('onfpevaluateur-delete')
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ url('onfpevaluateurs', $onfpevaluateur->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit" class="dropdown-item show_confirm"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                @endcan
                                             </td>
 
                                         </tr>
@@ -134,7 +144,8 @@
                     <div class="modal-content">
                         {{-- <form method="POST" action="{{ route('addonfpevaluateur') }}">
                         @csrf --}}
-                        <form method="post" action="{{ url('onfpevaluateurs') }}" enctype="multipart/form-data" class="row g-3">
+                        <form method="post" action="{{ url('onfpevaluateurs') }}" enctype="multipart/form-data"
+                            class="row g-3">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter un évaluateur</h5>
@@ -261,7 +272,8 @@
                                     <label for="floatingInput">Matricule</label>
                                 </div> --}}
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="name" value="{{ $onfpevaluateur->name ?? old('name') }}"
+                                        <input type="text" name="name"
+                                            value="{{ $onfpevaluateur->name ?? old('name') }}"
                                             class="form-control form-control-sm @error('name') is-invalid @enderror"
                                             id="name" placeholder="Ingénieur" autofocus>
                                         @error('name')
@@ -308,7 +320,8 @@
                                         <label for="floatingInput">Fonction<span class="text-danger mx-1">*</span></label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="email" value="{{ $onfpevaluateur->email ?? old('email') }}"
+                                        <input type="text" name="email"
+                                            value="{{ $onfpevaluateur->email ?? old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
                                         @error('email')
