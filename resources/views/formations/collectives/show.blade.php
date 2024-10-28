@@ -474,7 +474,7 @@
                                                                 <td style="text-align: center;">
                                                                     {{ $listecollective?->appreciation }}</td>
                                                                 @can('rapport-suivi-formes-view')
-                                                                    <td>
+                                                                    <td style="text-align: center;">
                                                                         @if (empty($listecollective?->suivi))
                                                                             <form
                                                                                 action="{{ route('SuivreFormesCol', $listecollective?->id) }}"
@@ -1325,7 +1325,8 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
-                                        <label>N° convention<span class="text-danger mx-1">*</span></label>
+                                        <label class="form-label">N° convention<span
+                                                class="text-danger mx-1">*</span></label>
                                         <input type="text" name="numero_convention"
                                             value="{{ $formation?->numero_convention ?? old('numero_convention') }}"
                                             class="form-control form-control-sm @error('numero_convention') is-invalid @enderror"
@@ -1339,7 +1340,8 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
-                                        <label>Date convention<span class="text-danger mx-1">*</span></label>
+                                        <label class="form-label">Date convention<span
+                                                class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_convention"
                                             value="{{ $formation?->date_convention?->format('Y-m-d') ?? old('date_convention') }}"
                                             class="form-control form-control-sm @error('date_convention') is-invalid @enderror"
@@ -1353,7 +1355,8 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
-                                        <label>Date évaluation<span class="text-danger mx-1">*</span></label>
+                                        <label class="form-label">Date évaluation<span
+                                                class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_pv"
                                             value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
                                             class="form-control form-control-sm @error('date_pv') is-invalid @enderror"
@@ -1368,7 +1371,8 @@
 
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
-                                        <label>Montant indemnité de membre <span class="text-danger mx-1">*</span></label>
+                                        <label class="form-label">Montant indemnité de membre <span
+                                                class="text-danger mx-1">*</span></label>
                                         <input type="number" name="frais_evaluateur" min="0" step="0.001"
                                             value="{{ $formation?->frais_evaluateur ?? old('frais_evaluateur') }}"
                                             class="form-control form-control-sm @error('frais_evaluateur') is-invalid @enderror"
@@ -1464,7 +1468,8 @@
 
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
-                                        <label>Titre (convention)<span class="text-danger mx-1">*</span></label>
+                                        <label class="form-label">Titre (convention)<span
+                                                class="text-danger mx-1">*</span></label>
                                         {{-- <input type="text" name="type_certificat" min="0" step="0.001"
                                     value="{{ $formation?->type_certificat ?? old('type_certificat') }}"
                                     class="form-control form-control-sm @error('type_certificat') is-invalid @enderror"
@@ -1491,10 +1496,11 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
-                                        <label>Type certification<span class="text-danger mx-1">*</span></label>
+                                        <label class="form-label">Type certification<span
+                                                class="text-danger mx-1">*</span></label>
                                         <select name="type_certification"
                                             class="form-select  @error('type_certification') is-invalid @enderror"
                                             aria-label="Select" id="select-field-type_certification_update"
@@ -1523,7 +1529,7 @@
                             </div>
                             <div class="mb-3">
 
-                                <label for="membres_jury">Autre membres du jury</label>
+                                <label for="membres_jury" class="form-label">Autre membres du jury</label>
 
                                 <textarea name="membres_jury" id="membres_jury" cols="30" rows="3"
                                     class="form-control form-control-sm @error('membres_jury') is-invalid @enderror"
@@ -1541,7 +1547,7 @@
                             </div>
                             <div class="mb-3">
 
-                                <label for="recommandations">Recommandations</label>
+                                <label for="recommandations" class="form-label">Recommandations</label>
 
                                 <textarea name="recommandations" id="recommandations" cols="30" rows="3s"
                                     class="form-control form-control-sm @error('recommandations') is-invalid @enderror" placeholder="Recommandations"
@@ -1771,20 +1777,23 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="formationid" value="{{ $formation->id }}">
-                            <label for="region" class="form-label">Statut<span
+                            <label for="region" class="form-label">Statut attestations<span
                                     class="text-danger mx-1">*</span></label>
                             <select name="statut"
                                 class="form-select form-select-sm @error('statut') is-invalid @enderror"
                                 aria-label="Select" id="select-field-statut-attestations"
-                                data-placeholder="Choisir statut">
-                                <option value="{{ old('statut') }}">
-                                    {{ old('statut') }}
+                                data-placeholder="Choisir statut attestations">
+                                <option value="{{ $formation?->attestation ?? old('statut') }}">
+                                    {{ $formation?->attestation ?? old('statut') }}
                                 </option>
                                 <option value="disponibles">
-                                    disponible
+                                    disponibles
+                                </option>
+                                <option value="En cours">
+                                    En cours
                                 </option>
                                 <option value="retirés">
-                                    retirer
+                                    retirers
                                 </option>
                             </select>
                             @error('statut')
@@ -1803,11 +1812,12 @@
                 </div>
             </div>
         </div>
+
     </section>
 @endsection
 @push('scripts')
     <script>
-        new DataTable('#table-operateurModules', {
+        new DataTable('#table-operateurModule', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

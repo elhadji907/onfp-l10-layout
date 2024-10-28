@@ -27,13 +27,15 @@
                     @endforeach
                 @endif
                 <div class="card">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">{{ strtoupper($projet?->sigle) }}</h1>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $projet?->sigle }}</h5>
-                        <div class="d-flex justify-content-between align-items-center mt-1">
-                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
+                        <div class="d-flex justify-content-between align-items-center mt-0">
+                            <span class="d-flex align-items-baseline"><a href="{{ url('/profil') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Profil</p>
+                                <p> | retour</p>
                             </span>
                             @if (!empty(Auth::user()->cin) && !empty($statut))
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
@@ -42,8 +44,15 @@
                                 </button>
                             @endif
                         </div>
+                        @if (!empty(Auth::user()->civilite))
+                            <h5 class="card-title">
+                                Bonjour
+                                {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
+                            </h5>
+                        @endif
                         @if (!empty(Auth::user()->cin))
-                            <h5 class="card-title">Aucune demande individuelle pour le moment !!</h5>
+                            <div class="alert alert-info">Vous n'avez aucune demande projet ou programme pour le moment !!
+                            </div>
                         @elseif(!empty($statut))
                             <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
                                         class="badge bg-warning text-white">Incomplètes</span></a>, cliquez <a

@@ -26,9 +26,12 @@
                     @endforeach
                 @endif
                 <div class="card">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">{{ strtoupper($projet?->type_projet . ' ' . $projet?->sigle) }}</h1>
+                    </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
+                        <div class="d-flex justify-content-between align-items-center mt-0">
+                            <span class="d-flex align-items-baseline"><a href="{{ url('/profil') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | Profil</p>
@@ -43,10 +46,10 @@
                                 </button>
                             @endif
                         </div>
-                        <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="d-flex justify-content-between align-items-center mt-0">
                             <h5 class="card-title">
                                 Bonjour
-                                {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name . ', Bienvenue à ' . $projet?->sigle }}
+                                {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
                             </h5>
                             {{--  <h5 class="card-title">{{ $projet?->sigle }}</h5> --}}
                         </div>
@@ -56,7 +59,7 @@
                             <thead>
                                 <tr>
                                     <th width="2%" class="text-center">N°</th>
-                                    <th width="8%" class="text-center">Code</th>
+                                    <th width="8%" class="text-center">Numéro</th>
                                     {{-- <th>CIN</th>
                                     <th>Prénom</th>
                                     <th>Nom</th>

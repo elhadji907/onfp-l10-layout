@@ -21,7 +21,18 @@ class IndividuelleFactory extends Factory
     public function definition(): array
     {
 
-        $modules_id        =   Module::all()->random()->id;
+        $modules_id        =   Module::where('name', 'Mécanique')
+            ->orwhere('name', "Conduite d'engins de TP")
+            ->orwhere('name', "Bétonnage")
+            ->orwhere('name', "Topographie")
+            ->orwhere('name', "Ferraillage")
+            ->orwhere('name', "Plomberie (Installations sanitaires)")
+            ->orwhere('name', "Electricité")
+            ->orwhere('name', "Techniques de pose de pavés")
+            ->get()
+            ->random()
+            ->id;
+
         $departements_id   =   Departement::all()->random()->id;
         $departement       =   Departement::findOrFail($departements_id);
         $regions_id        =   $departement->region->id;
@@ -31,7 +42,7 @@ class IndividuelleFactory extends Factory
         $rand = rand(0, 999);
         $letter1 = chr(rand(65, 90));
         $letter2 = chr(rand(65, 90));
-        $random = $letter1.''.$rand . '' . $letter2;
+        $random = $letter1 . '' . $rand . '' . $letter2;
         $longueur = strlen($random);
 
         if ($longueur == 1) {

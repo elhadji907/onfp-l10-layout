@@ -54,6 +54,7 @@
                                             <th width="20%">Module</th>
                                             {{-- <th class="text-center">Statut</th> --}}
                                             <th>Région</th>
+                                            <th>Projet</th>
                                             <th class="text-center">Appréciation</th>
                                             <th class="text-center">Date</th>
                                             @can('rapport-suivi-formes-view')
@@ -74,8 +75,8 @@
                                                     <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                     <td>{{ $individuelle?->module?->name }}</td>
                                                     <td>{{ $individuelle?->region?->nom }}</td>
-                                                    <td style="text-align: center"><span
-                                                            class="badge bg-info">{{ $individuelle?->appreciation }}</span>
+                                                    <td>{{ $individuelle?->projet?->sigle }}</td>
+                                                    <td style="text-align: center">{{ $individuelle?->appreciation }}
                                                     </td>
                                                     {{--  <td>
                                                         <span class="{{ $individuelle->statut }}">
@@ -197,6 +198,27 @@
                                                     @endforeach
                                                 </select>
                                                 @error('region')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="form-group">
+                                                <label for="projet" class="form-label">Projet</label>
+                                                <select name="projet"
+                                                    class="form-select  @error('projet') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-projet-module-rapport"
+                                                    data-placeholder="Choisir projet">
+                                                    <option value="">Toutes</option>
+                                                    @foreach ($projets as $projet)
+                                                        <option value="{{ $projet->sigle }}">
+                                                            {{ $projet->sigle }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('projet')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>

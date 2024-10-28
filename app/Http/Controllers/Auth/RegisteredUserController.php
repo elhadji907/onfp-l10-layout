@@ -58,7 +58,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $files = File::distinct()->get();
+        $files = File::where('users_id', null)->distinct()->get();
 
         foreach ($files as $key => $file) {
             $file = File::create([

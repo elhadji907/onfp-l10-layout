@@ -99,7 +99,8 @@
                                         <h5 class="card-title">Création de compte personnel</h5>
                                     </a>
                                 </div>
-
+                                <p class="d-flex justify-content-center small">Vous voulez un compte opérateur ? <a
+                                        href="{{ route('register-operateur') }}">&nbsp;Cliquez-ici</a></p>
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                         <form class="row g-3 needs-validation" novalidate method="POST"
@@ -200,9 +201,6 @@
                                                 class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12 justify-content-center">
                                                 <p class="small">Vous avez déjà un compte ? <a
                                                         href="{{ url('/login-page') }}">Se connecter</a></p>
-
-                                                <p class="small">Vous voulez un compte opérateur ? <a
-                                                        href="{{ route('register-operateur') }}">Créer</a></p>
                                             </div>
                                         </form>
                                     </div>
@@ -211,15 +209,19 @@
                         </div>
                     </div>
                 </div>
-
                 @include('user.termes')
-
+                <div class="copyright">
+                    &copy; Copyright <strong><span>ONFP</span></strong>. Tous droits réservés
+                </div>
+                <div class="credits">
+                    Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
+                </div>
             </section>
 
         </div>
     </main>
 
-    @include('layout.footer')
+    {{-- @include('layout.footer') --}}
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>

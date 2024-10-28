@@ -40,13 +40,14 @@
                     <div class="card">
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-tabs-bordered">
-
-                                <li class="nav-item">
-                                    <span class="nav-link"><a href="{{ route('operateurs.index', $operateur?->id) }}"
-                                            class="btn btn-secondary btn-sm" title="retour"><i
-                                                class="bi bi-arrow-counterclockwise"></i></a>
-                                    </span>
-                                </li>
+                                @can('operateur-view')
+                                    <li class="nav-item">
+                                        <span class="nav-link"><a href="{{ route('operateurs.index', $operateur?->id) }}"
+                                                class="btn btn-secondary btn-sm" title="retour"><i
+                                                    class="bi bi-arrow-counterclockwise"></i></a>
+                                        </span>
+                                    </li>
+                                @endcan
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Opérateur</button>

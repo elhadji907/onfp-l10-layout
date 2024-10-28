@@ -43,9 +43,8 @@
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
 
-                            <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddFileModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
+                            <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
+                                data-bs-toggle="modal" data-bs-target="#AddFileModal">Ajouter
                             </button>
                         </div>
                         {{-- @endcan --}}
@@ -58,7 +57,7 @@
                                     <th>Légende</th>
                                     <th>Sigle</th>
                                     <th>File</th>
-                                    {{-- <th>Users_id</th> --}}
+                                    <th>User</th>
                                     <th width="2%" class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
@@ -77,7 +76,11 @@
                                                 </a>
                                             @endif
                                         </td>
-                                        {{-- <td>{{ $file->users_id }}</td> --}}
+                                        <td>{{ $file?->user?->firstname . ' ' . $file?->user?->name }}
+                                            @if (!empty($file?->user?->cin))
+                                                {{ ' (' . $file?->user?->cin . ')' }}
+                                            @endif
+                                        </td>
                                         <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a href="#"
                                                     class="btn btn-warning btn-sm mx-1" title="Voir détails">
@@ -118,7 +121,7 @@
         </div>
         <!-- Add file -->
         <div class="modal fade" id="AddFileModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form method="post" action="{{ url('files') }}" enctype="multipart/form-data" class="row g-3">
                         @csrf
@@ -127,16 +130,46 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="file" value="{{ old('file') }}"
-                                    class="form-control form-control-sm @error('file') is-invalid @enderror" id="file"
-                                    placeholder="Nom file" autofocus>
-                                @error('file')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">file</label>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="legende" class="form-label">Légende<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="legende" class="form-select  @error('legende') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-legende-add" data-placeholder="Choisir">
+                                        <option value="{{ old('legende') }}">{{ old('legende') }}</option>
+                                        @foreach ($files as $file)
+                                            <option value="{{ $file?->legende }}">
+                                                {{ $file?->legende }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('legende')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="user" class="form-label">Utilisateur<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="user" class="form-select  @error('user') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-user-add" data-placeholder="Choisir">
+                                        <option value="{{ old('user') }}">{{ old('user') }}</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user?->id }}">
+                                                {{ $user?->firstname . ' ' . $user?->name }}
+                                                @if (!@empty($user?->cin))
+                                                    {{ ' (' . $user?->cin . ')' }}
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('user')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

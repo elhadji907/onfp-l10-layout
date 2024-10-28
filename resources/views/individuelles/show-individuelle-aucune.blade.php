@@ -27,22 +27,32 @@
                     @endforeach
                 @endif
                 <div class="card">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">DEMANDE INDIVIDUELLE</h1>
+                    </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
+                        <div class="d-flex justify-content-between align-items-center mt-0">
+                            <span class="d-flex align-items-baseline"><a href="{{ url('/profil') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Profil</p>
+                                <p> | retour</p>
                             </span>
-                            @isset(Auth::user()->cin)
+                            @if (!empty(Auth::user()->cin))
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
                                     <i class="bi bi-plus" title="Ajouter"></i>
                                 </button>
-                            @endisset
+                            @endif
                         </div>
+                        @if (!empty(Auth::user()->civilite))
+                            <h5 class="card-title">
+                                Bonjour
+                                {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
+                            </h5>
+                        @endif
                         @if (isset(Auth::user()->cin))
-                            <h5 class="card-title">Aucune demande individuelle pour le moment !!</h5>
+                            <div class="alert alert-info">Vous n'avez aucune demande individuelle pour le moment !!
+                            </div>
                         @else
                             <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
                                         class="badge bg-warning text-white">Incomplètes</span></a>, cliquez <a
@@ -52,7 +62,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+        <div
+            class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">

@@ -190,12 +190,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="copyright">
+                    &copy; Copyright <strong><span>ONFP</span></strong>. Tous droits réservés
+                </div>
+                <div class="credits">
+                    Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
+                </div>
             </section>
             @include('sweetalert::alert')
         </div>
     </main><!-- End #main -->
-
-    @include('layout.footer')
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>

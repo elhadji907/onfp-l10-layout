@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\File;
+use App\Models\User;
 
 class FileController extends Controller
 {
     public function index()
     {
         $files = File::get();
+        $users = User::get();
 
-        return view('files.index', compact('files'));
+        return view('files.index', compact('files', 'users'));
     }
     public function update(Request $request, $id)
     {
@@ -58,6 +60,29 @@ class FileController extends Controller
         $_FILES->delete();
 
         Alert::success('Fait', 'fichier supprimé avec succès');
+        return redirect()->back();
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'legende'       => 'required|string',
+            'user'          => 'required|string',
+        ]);
+
+        $file = File::where('legende', $request?->legende)?->first();
+
+        $sigle = $file?->sigle;
+
+        $file =  File::create([
+            'legende'   => $request?->legende,
+            'sigle'     => $sigle,
+            'users_id'  => $request?->user,
+        ]);
+
+        $file?->save();
+        
+        Alert::success('Félicitations !!!', 'fichier ajouté avec succès');
         return redirect()->back();
     }
 }

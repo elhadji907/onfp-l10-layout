@@ -18,7 +18,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Carte nationale d'identité (Recto/Verso)",
             "sigle" => "CIN",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -27,7 +27,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Diplome académique",
             "sigle" => "DAC",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -36,7 +36,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Diplome professionnel",
             "sigle" => "DP",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -45,7 +45,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Certificat résidence",
             "sigle" => "CR",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -54,7 +54,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Autres diplomes",
             "sigle" => "AD",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -63,7 +63,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Attestation",
             "sigle" => "Attestation",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -72,7 +72,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Curriculum vitæ (CV)",
             "sigle" => "CV",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -81,7 +81,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Acte création",
             "sigle" => "AC",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -90,7 +90,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Bulletins",
             "sigle" => "Bulletins",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -99,7 +99,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Autres",
             "sigle" => "Autres",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -108,7 +108,7 @@ class FileSeeder extends Seeder
         DB::table('files')->insert([
             "legende" => "Ninea ou registre de commerce",
             "sigle" => "Ninea/RC",
-            "users_id" => "1",
+            "users_id" => null,
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),

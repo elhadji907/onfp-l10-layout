@@ -47,13 +47,13 @@
                         <table class="table datatables align-middle justify-content-center" id="table-modules">
                             <thead>
                                 <tr>
-                                    <th class="text-center">N°</th>
+                                   {{--  <th class="text-center">N°</th> --}}
                                     <th class="text-center">CIN</th>
                                     <th>Prénom</th>
                                     <th>NOM</th>
                                     <th>Date naissance</th>
                                     <th>Lieu naissance</th>
-                                    <th>Adresse</th>
+                                    <th>Département</th>
                                     <th>Telephone</th>
                                     <th class="text-center">Statut</th>
                                     <th class="text-center">#</th>
@@ -64,14 +64,14 @@
                                 @foreach ($individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                            <td>{{ $individuelle?->numero }}
-                                            </td>
+                                           {{--  <td>{{ $individuelle?->numero }}
+                                            </td> --}}
                                             <td>{{ $individuelle?->user?->cin }}</td>
                                             <td>{{ $individuelle?->user?->firstname }}</td>
                                             <td>{{ $individuelle?->user?->name }}</td>
                                             <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</td>
                                             <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                            <td>{{ $individuelle?->user?->adresse }}</td>
+                                            <td>{{ $individuelle?->departement?->nom }}</td>
                                             <td><a
                                                     href="tel:+221{{ $individuelle?->user->telephone }}">{{ $individuelle?->user->telephone }}</a>
                                             </td>

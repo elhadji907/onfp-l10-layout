@@ -59,12 +59,13 @@
                                         <th class="text-center" width="2%">Info</th>
                                         <th width="12%">N° agrément</th>
                                         {{-- <th width="45%">Opérateurs</th> --}}
-                                        <th width="35%">Opérateur</th>
+                                        {{-- <th width="35%">Opérateur</th> --}}
                                         <th width="10%" class="text-center">Sigle</th>
                                         <th width="10%" class="text-center">Téléphone</th>
                                         <th width="15%" class="text-center">Type demande</th>
                                         {{-- <th width="5%" class="text-center">Modules</th> --}}
                                         {{-- <th width="5%" class="text-center">Formations</th> --}}
+                                        <th width="10%" class="text-center">Etat</th>
                                         <th width="10%" class="text-center">Statut</th>
                                         <th width="5%" class="text-center">Quitus</th>
                                         <th width="5%" class="text-center"><i class="bi bi-gear"></i></th>
@@ -82,8 +83,8 @@
                                             </td>
                                             <td>{{ $operateur?->numero_agrement }}</td>
                                             {{--  <td>{{ $operateur?->name }}</td> --}}
-                                            <td>{{ $operateur?->user?->operateur }}
-                                            </td>
+                                            {{-- <td>{{ $operateur?->user?->operateur }}
+                                            </td> --}}
                                             <td style="text-align: center;">{{ $operateur?->user?->username }}</td>
                                             <td style="text-align: center;"><a
                                                     href="tel:+221{{ $operateur?->user?->fixe }}">{{ $operateur?->user?->fixe }}</a>
@@ -107,6 +108,11 @@
                                                         {{ $operateur?->statut_agrement }}</span> --}}
                                                 <span class="{{ $statut_demande }} mb-2">
                                                     {{ $statut_demande }}
+                                                </span>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <span class="{{ $operateur?->statut_agrement }} mb-2">
+                                                    {{ $operateur?->statut_agrement }}
                                                 </span>
                                             </td>
                                             <td style="text-align: center;">

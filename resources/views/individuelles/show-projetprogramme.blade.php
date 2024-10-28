@@ -26,57 +26,66 @@
                     @endforeach
                 @endif
                 <div class="card">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">PROJETS - PROGRAMMES</h1>
+                    </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
+                        <div class="d-flex justify-content-between align-items-center mt-0">
+                            <span class="d-flex align-items-baseline"><a href="{{ url('/profil') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Profil</p>
+                                <p> | retour</p>
                             </span>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="d-flex justify-content-between align-items-center mt-0">
                             <h5 class="card-title">
                                 Bonjour
                                 {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
                             </h5>
                         </div>
-                        <table class="table table-bordered table-hover table-borderless">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" width="3%">N°</th>
-                                    <th>Name</th>
-                                    <th class="text-center">Sigle</th>
-                                    <th class="text-center">Type</th>
-                                    <th class="text-center">Statut</th>
-                                    <th class="text-center">#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1; ?>
-                                @foreach ($projets as $projet)
+                        @foreach ($projets as $projet)
+                        @endforeach
+                        @if (!empty($projet))
+                            <table class="table table-bordered table-hover table-borderless">
+                                <thead>
                                     <tr>
-                                        <td class="text-center">{{ $i++ }}</td>
-                                        <td>{{ $projet?->name }}</td>
-                                        <td class="text-center">{{ $projet?->sigle }}</td>
-                                        <td class="text-center">{{ $projet?->type_projet }}</td>
-                                        <td class="text-center">
-                                            <span class="{{ $projet?->statut }}">{{ $projet?->statut }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="d-flex align-items-baseline"><a
-                                                    href="{{ route('projetsIndividuelle', ['id' => $projet?->id]) }}"
-                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                        class="bi bi-eye"></i></a>
-                                            </span>
-                                        </td>
+                                        <th class="text-center" width="3%">N°</th>
+                                        <th>Name</th>
+                                        <th class="text-center">Sigle</th>
+                                        <th class="text-center">Type</th>
+                                        <th class="text-center">Statut</th>
+                                        <th class="text-center">#</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; ?>
+                                    @foreach ($projets as $projet)
+                                        <tr>
+                                            <td class="text-center">{{ $i++ }}</td>
+                                            <td>{{ $projet?->name }}</td>
+                                            <td class="text-center">{{ $projet?->sigle }}</td>
+                                            <td class="text-center">{{ $projet?->type_projet }}</td>
+                                            <td class="text-center">
+                                                <span class="{{ $projet?->statut }}">{{ $projet?->statut }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="d-flex align-items-baseline"><a
+                                                        href="{{ route('projetsIndividuelle', ['id' => $projet?->id]) }}"
+                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                            class="bi bi-eye"></i></a>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="alert alert-info">Vous n'avez aucune demande projet ou programme pour le moment !!!
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
 @endsection

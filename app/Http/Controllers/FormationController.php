@@ -323,6 +323,9 @@ class FormationController extends Controller
         $programmes = Programme::orderBy("created_at", "desc")->get();
         $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
         $referentiels = Referentiel::get();
+        $evaluateurs = Evaluateur::get();
+        $onfpevaluateurs  = Onfpevaluateur::get();
+
         return view(
             "formations.update",
             compact(
@@ -332,7 +335,9 @@ class FormationController extends Controller
                 'projets',
                 'programmes',
                 'referentiels',
-                'choixoperateurs'
+                'choixoperateurs',
+                'evaluateurs',
+                'onfpevaluateurs',
             )
         );
     }
@@ -403,6 +408,13 @@ class FormationController extends Controller
             "choixoperateurs_id"    =>   $request->input('choixoperateur'),
             "referentiels_id"       =>   $referentiel_id,
             "annee"                 =>   $request->input('annee'),
+            "membres_jury"          =>   $request->input('membres_jury'),
+            "frais_evaluateur"      =>   $request->input('frais_evaluateur'),
+            "recommandations"       =>   $request->input('recommandations'),
+            "date_pv"               =>   $request->input('date_pv'),
+            "evaluateurs_id"        =>   $request->input('evaluateur'),
+            "onfpevaluateurs_id"    =>   $request->input('onfpevaluateur'),
+            "attestation"           =>   $request->statut,
 
         ]);
 
@@ -1358,7 +1370,7 @@ class FormationController extends Controller
             "membres_jury"                  =>  $request->input('membres_jury'),
             "numero_convention"             =>  $request->input('numero_convention'),
             "frais_evaluateur"              =>  $request->input('frais_evaluateur'),
-            "type_certification"            =>   $request->input('type_certification'),
+            "type_certification"            =>  $request->input('type_certification'),
             "type_certificat"               =>  $type,
             "titre"                         =>  $titre,
             "recommandations"               =>  $request->input('recommandations'),
@@ -1991,10 +2003,12 @@ class FormationController extends Controller
     public function rapportsformes(Request $request)
     {
         $regions = Region::get();
+        $projets = Projet::get();
         $title = 'rapports formés';
 
         return view('formes.rapports', compact(
             'regions',
+            'projets',
             'title'
         ));
     }
@@ -2011,16 +2025,18 @@ class FormationController extends Controller
 
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-        if (isset($request->module) && isset($request->region)) {
+        if (isset($request->module) && isset($request->region) && isset($request->projet)) {
             $module = Module::where('name', $request->module)->first();
             $region = Region::where('nom', $request->region)->first();
-            $title_region_module = ' dans la région de ' . $request->region .  ' en ' . $request->module;
+            $projet = Projet::where('nom', $request->projet)->first();
+            $title_region_module = ' dans la région de ' . $request->region .  ' en ' . $request->module . ', ' . $projet?->type_projet . ' ' . $projet?->sigle;
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
                 ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
                 ->where('individuelles.regions_id',  $region?->id)
+                ->where('individuelles.projets_id',  $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } elseif (isset($request->region)) {
@@ -2031,6 +2047,16 @@ class FormationController extends Controller
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
                 ->where('individuelles.regions_id',  $region?->id)
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } elseif (isset($request->projet)) {
+            $projet = Projet::where('sigle', $request->projet)->first();
+            $title_region_module = $projet?->type_projet . ' ' . $projet?->sigle;
+
+            $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+                ->select('individuelles.*')
+                ->where('individuelles.statut', 'former')
+                ->where('individuelles.projets_id',  $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } elseif (isset($request->module)) {
@@ -2073,9 +2099,12 @@ class FormationController extends Controller
         }
 
         $regions = Region::get();
+        $projets = Projet::get();
+
         return view('formes.rapports', compact(
             'formes',
             'regions',
+            'projets',
             'title'
         ));
     }

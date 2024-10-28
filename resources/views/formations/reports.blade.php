@@ -37,15 +37,15 @@
                                 <table class="table datatables align-middle" id="table-formations">
                                     <thead>
                                         <tr>
-                                            <th rowspan="2" style="vertical-align: middle;">Region</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Lieux</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Modules</th>
+                                            <th rowspan="2" style="vertical-align: middle;">REGIONS</th>
+                                            <th rowspan="2" style="vertical-align: middle;">LIEUX</th>
+                                            <th rowspan="2" style="vertical-align: middle;">MODULES</th>
                                             {{-- <th rowspan="2" style="vertical-align: middle;">Domaine</th>
                                             <th rowspan="2" style="vertical-align: middle;">secteur</th> --}}
-                                            <th rowspan="2" style="vertical-align: middle;">Bénéficiaires</th>
-                                            <th rowspan="2" style="vertical-align: middle;">N° LM et DATE</th>
-                                            <th colspan="3" class="text-center">Effectif prévus</th>
-                                            <th colspan="6" class="text-center">Effectif formés</th>
+                                            <th rowspan="2" style="vertical-align: middle;">BENEFICIAIRES</th>
+                                            <th rowspan="2" style="vertical-align: middle;">N° LM ET DATE</th>
+                                            <th colspan="3" class="text-center">PREVUS</th>
+                                            <th colspan="6" class="text-center">FORMES</th>
                                             <th rowspan="2" style="vertical-align: middle;">REF CONV.</th>
                                             <th rowspan="2" style="vertical-align: middle;">FRAIS OPERA.</th>
                                             <th rowspan="2" style="vertical-align: middle;">FRAIS ADDIT.</th>
@@ -56,15 +56,15 @@
                                             <th rowspan="2" style="vertical-align: middle;">SUIVI DOSSIER</th>
                                         </tr>
                                         <tr>
-                                            <th>H</th>
-                                            <th>F</th>
-                                            <th>T</th>
-                                            <th>H</th>
-                                            <th>F</th>
-                                            <th>J</th>
-                                            <th>T</th>
-                                            <th>Début</th>
-                                            <th>Fin</th>
+                                            <th>HOMMES</th>
+                                            <th>FEMMES</th>
+                                            <th>TOTAL</th>
+                                            <th>HOMMES</th>
+                                            <th>FEMMES</th>
+                                            <th>JEUNES</th>
+                                            <th>TOTAL</th>
+                                            <th>DEBUT</th>
+                                            <th>FIN</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,7 +77,7 @@
                                                         <td>
                                                             {{ $formation?->module?->name }}
                                                         </td>
-                                                       {{--  <td>
+                                                        {{--  <td>
                                                             {{ $formation?->module?->domaine?->name }}
                                                         </td>
                                                         <td>
@@ -96,7 +96,7 @@
                                                         </td> --}}
                                                     @endisset
                                                     <td>{{ $formation?->name }}</td>
-                                                    <td>{{ $formation?->lettre_mission }}</td>
+                                                    <td>{{ $formation?->lettre_mission . ' du ' . $formation?->date_lettre?->format('d/m/Y') }}</td>
                                                     <td>{{ $formation?->prevue_h }}</td>
                                                     <td>{{ $formation?->prevue_f }}</td>
                                                     <td>{{ $formation?->effectif_prevu }}</td>
@@ -106,15 +106,24 @@
                                                     <td>{{ $formation?->total }}</td>
                                                     <td>{{ date_format(date_create($formation?->date_debut), 'd/m/Y') }}</td>
                                                     <td>{{ date_format(date_create($formation?->date_fin), 'd/m/Y') }}</td>
-                                                    <td>{{ $formation?->numero_convention }}</td>
+                                                    <td>{{ $formation?->numero_convention . ' du ' . $formation?->date_convention?->format('d/m/Y') }}
+                                                    </td>
                                                     <td>{{ $formation?->frais_operateurs }}</td>
                                                     <td>{{ $formation?->frais_add }}</td>
                                                     <td>{{ $formation?->autes_frais }}</td>
                                                     <td>{{ $formation?->frais_operateurs + $formation?->frais_add + $formation?->autes_frais }}
                                                     </td>
-                                                    <td>{{ $formation?->niveau_qualification }}</td>
+                                                    <td>
+                                                        @if (!empty($formation?->referentiel?->titre))
+                                                            {{ $formation?->referentiel?->titre }}
+                                                            {{-- . ', ' . $formation?->referentiel?->categorie . ' de la ' . $formation?->referentiel?->convention?->name  --}}
+                                                        @else
+                                                            {{ $formation?->titre }}
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $formation?->operateur?->user?->username }}</td>
-                                                    <td>{{ $formation?->ingenieur?->initiale }}</td>
+                                                    <td>{{ $formation?->ingenieur?->name . ' (' . $formation?->ingenieur?->initiale . ')' }}
+                                                    </td>
                                                 </tr>
                                             @endif
                                         @endforeach
@@ -189,7 +198,7 @@
         new DataTable('#table-formations', {
             layout: {
                 topStart: {
-                    buttons: ['csv', 'excel'],
+                    buttons: ['csv', 'excel', 'print'],
                 }
             },
             "order": [

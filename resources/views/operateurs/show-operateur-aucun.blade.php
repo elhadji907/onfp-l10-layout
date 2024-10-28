@@ -26,8 +26,11 @@
                     @endforeach
                 @endif
                 <div class="card">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">DEMANDE AGREMENT</h1>
+                    </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="d-flex justify-content-between align-items-center mt-0">
                             <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;

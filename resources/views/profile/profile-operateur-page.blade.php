@@ -65,7 +65,7 @@
                                 </div>
                                 <a href="{{ route('devenirOperateur') }}">
                                     <div class="card-body">
-                                        <h5 class="card-title">Demandes <span>| opérateur</span></h5>
+                                        <h5 class="card-title">Agréments <span>| opérateur</span></h5>
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">

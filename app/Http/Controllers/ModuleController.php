@@ -110,10 +110,10 @@ class ModuleController extends Controller
 
     public function modulestatutlocalite($idlocalite, $idmodule, $statut)
     {
-        $localite = Departement::findOrFail($idlocalite);
+        $localite = Region::findOrFail($idlocalite);
         $module = Module::findOrFail($idmodule);
 
-        $individuelles = Individuelle::where('departements_id', $idlocalite)
+        $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
             ->where('statut', $statut)->get();
 

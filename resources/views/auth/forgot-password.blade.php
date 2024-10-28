@@ -120,8 +120,7 @@
                                     <div class="d-flex justify-content-center py-1">
                                         <a href="{{ url('/login-page') }}"
                                             class="logo d-flex align-items-center w-auto">
-                                            <h5 class="card-title">ONFP - La référence de la formation professionnelle
-                                            </h5>
+                                            <h5 class="card-title">ONFP</h5>
                                         </a>
                                     </div>
 

@@ -51,15 +51,16 @@
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
-                                    <th class="text-center">N°</th>
+                                    {{-- <th class="text-center">N°</th> --}}
                                     <th class="text-center">CIN</th>
                                     <th>Prénom</th>
                                     <th>NOM</th>
                                     <th>Date naissance</th>
                                     <th>Lieu naissance</th>
-                                    <th>Adresse</th>
+                                    {{-- <th>Adresse</th> --}}
                                     <th>Telephone</th>
-                                    <th>Localité</th>
+                                    <th>Département</th>
+                                    <th>Région</th>
                                     <th class="text-center">#</th>
                                 </tr>
                             </thead>
@@ -68,23 +69,24 @@
                                 @foreach ($individuelles as $individuelle)
                                     @isset($individuelle?->numero)
                                         <tr>
-                                            <td>{{ $individuelle?->numero }}
-                                            </td>
+                                            {{-- <td>{{ $individuelle?->numero }}
+                                            </td> --}}
                                             <td>{{ $individuelle?->user?->cin }}</td>
                                             <td>{{ $individuelle?->user?->firstname }}</td>
                                             <td>{{ $individuelle?->user?->name }}</td>
-                                            <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</td>
-                                            <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                            <td>{{ $individuelle?->user?->adresse }}</td>
+                                            <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
+                                            <td>{{ $individuelle?->user?->lieu_naissance }}</td>
+                                            {{-- <td>{{ $individuelle?->user?->adresse }}</td> --}}
                                             <td><a
-                                                    href="tel:+221{{ $individuelle?->user->telephone }}">{{ $individuelle?->user->telephone }}</a>
+                                                    href="tel:+221{{ $individuelle?->user?->telephone }}">{{ $individuelle?->user?->telephone }}</a>
                                             </td>
+                                            <td>{{ $individuelle?->departement?->nom }}</td>
                                             <td><a
-                                                    href="{{ url('modulestatutlocalite', ['$idlocalite' => $individuelle->departement->id, '$idmodule' => $module?->id, '$statut' => $statut]) }}">{{ $individuelle->departement->nom }}</a>
+                                                    href="{{ url('modulestatutlocalite', ['$idlocalite' => $individuelle?->departement?->region?->id, '$idmodule' => $module?->id, '$statut' => $statut]) }}">{{ $individuelle?->departement?->region?->nom }}</a>
                                             </td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('individuelles.show', $individuelle->id) }}"
+                                                        href="{{ route('individuelles.show', $individuelle?->id) }}"
                                                         class="btn btn-primary btn-sm" title="voir détails"><i
                                                             class="bi bi-eye"></i></a>
                                                     <div class="filter">
@@ -92,13 +94,13 @@
                                                                 class="bi bi-three-dots"></i></a>
                                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                             <li><a class="dropdown-item btn btn-sm"
-                                                                    href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                    href="{{ route('individuelles.edit', $individuelle?->id) }}"
                                                                     class="mx-1" title="Modifier"><i
                                                                         class="bi bi-pencil"></i>Modifier</a>
                                                             </li>
                                                             <li>
                                                                 <form
-                                                                    action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                    action="{{ route('individuelles.destroy', $individuelle?->id) }}"
                                                                     method="post">
                                                                     @csrf
                                                                     @method('DELETE')

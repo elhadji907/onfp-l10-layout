@@ -26,12 +26,15 @@
                     @endforeach
                 @endif
                 <div class="card">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">DEMANDES COLLECTIVES</h1>
+                    </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('/profil') }}"
+                        <div class="d-flex justify-content-between align-items-center mt-0">
+                            <span class="d-flex align-items-baseline"><a href="{{ url('/profil') }}"
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                <p> | Profil</p>
+                                <p> | retour</p>
                             </span>
                             <button type="button" class="btn btn-info btn-sm">
                                 <span class="badge bg-white text-info">{{ $collective_total }}/1</span>

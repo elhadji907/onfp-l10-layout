@@ -480,7 +480,7 @@
                                                                 <td class="text-center">
                                                                     {{ $individuelle?->note_obtenue ?? ' ' }}</td>
                                                                 @can('rapport-suivi-formes-view')
-                                                                    <td>
+                                                                    <td style="text-align: center;">
                                                                         @if (empty($individuelle?->suivi))
                                                                             <form
                                                                                 action="{{ route('SuivreFormes', $individuelle?->id) }}"
@@ -1010,20 +1010,23 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="formationid" value="{{ $formation->id }}">
-                            <label for="region" class="form-label">Statut<span
+                            <label for="region" class="form-label">Statut attestations<span
                                     class="text-danger mx-1">*</span></label>
                             <select name="statut"
                                 class="form-select form-select-sm @error('statut') is-invalid @enderror"
                                 aria-label="Select" id="select-field-statut-attestations"
-                                data-placeholder="Choisir statut">
-                                <option value="{{ old('statut') }}">
-                                    {{ old('statut') }}
+                                data-placeholder="Choisir statut attestations">
+                                <option value="{{ $formation?->attestation ?? old('statut') }}">
+                                    {{ $formation?->attestation ?? old('statut') }}
                                 </option>
                                 <option value="disponibles">
-                                    disponible
+                                    disponibles
+                                </option>
+                                <option value="En cours">
+                                    En cours
                                 </option>
                                 <option value="retirés">
-                                    retirer
+                                    retirers
                                 </option>
                             </select>
                             @error('statut')
