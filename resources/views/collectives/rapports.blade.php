@@ -24,7 +24,7 @@
                 title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
             <p> | Tableau de bord</p>
         </span>
-       {{--  @isset($collectives)
+        {{--  @isset($collectives)
             <span class="page-title">{{ $title }}</span>
         @endisset --}}
         @can('rapport-collective-view')
@@ -52,6 +52,7 @@
                                             <th>Téléphone</th>
                                             <th>Localité</th>
                                             <th class="text-center">Modules</th>
+                                            <th class="text-center">Statut juridique</th>
                                             <th class="text-center">Effectif</th>
                                             <th class="text-center">Statut</th>
                                             <th>Date</th>
@@ -74,8 +75,9 @@
                                                             href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
                                                     </td>
                                                     <td>{{ $collective->departement?->region?->nom }}</td>
-                                                    <td class="text-center">{{ count($collective->collectivemodules) }}</td>
-                                                    <td class="text-center">{{ count($collective->listecollectives) }}</td>
+                                                    <td class="text-center">{{ count($collective?->collectivemodules) }}</td>
+                                                    <td class="text-center">{{ $collective?->statut_juridique }}</td>
+                                                    <td class="text-center">{{ count($collective?->listecollectives) }}</td>
                                                     <td>
                                                         <span
                                                             class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
@@ -127,6 +129,42 @@
                                                     class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
                                             </div>
                                             @error('to_date')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <label for="statut" class="form-label">Statut juridique<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <select name="statut"
+                                                class="form-select  @error('statut') is-invalid @enderror"
+                                                aria-label="Select" id="select-field-statut-collective"
+                                                data-placeholder="Choisir statut">
+                                                <option value="{{ old('statut') }}">
+                                                    {{ old('statut') }}
+                                                </option>
+                                                <option value="GIE">
+                                                    GIE
+                                                </option>
+                                                <option value="Association">
+                                                    Association
+                                                </option>
+                                                <option value="Entreprise">
+                                                    Entreprise
+                                                </option>
+                                                <option value="Institution publique">
+                                                    Institution publique
+                                                </option>
+                                                <option value="Institution privée">
+                                                    Institution privée
+                                                </option>
+                                                <option value="Autre">
+                                                    Autre
+                                                </option>
+                                            </select>
+                                            @error('statut')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>

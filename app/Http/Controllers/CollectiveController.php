@@ -554,6 +554,7 @@ class CollectiveController extends Controller
     public function rapports(Request $request)
     {
         $title = 'rapports demandes collectives';
+
         return view('collectives.rapports', compact(
             'title'
         ));
@@ -571,7 +572,11 @@ class CollectiveController extends Controller
 
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-        $collectives = Collective::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
+        if (!empty($request?->statut)) {
+            $collectives = Collective::where('statut_juridique', $request?->statut)?->whereBetween(DB::raw('DATE(created_at)'), array($request?->from_date, $request?->to_date))?->get();
+        } else {
+            $collectives = Collective::whereBetween(DB::raw('DATE(created_at)'), array($request?->from_date, $request?->to_date))?->get();
+        }
 
         $count = $collectives->count();
 
