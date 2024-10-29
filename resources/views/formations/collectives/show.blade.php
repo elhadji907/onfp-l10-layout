@@ -221,12 +221,14 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
                                                 {{ $formation?->operateur?->user?->operateur . '(' . $formation?->operateur?->user?->username . ')' }}
-                                                <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('operateurs.show', $formation?->operateur?->id) }}"><i
-                                                        class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationcollectiveoperateurs', ['$idformation' => $formation->id, '$idcollectivemodule' => $formation->collectivemodule->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer opérateur"></i> </a>
+                                                @can('operateur-check')
+                                                    <a class="btn btn-info btn-sm" title=""
+                                                        href="{{ route('operateurs.show', $formation?->operateur?->id) }}"><i
+                                                            class="bi bi-eye"></i></a>&nbsp;
+                                                    <a href="{{ url('formationcollectiveoperateurs', ['$idformation' => $formation->id, '$idcollectivemodule' => $formation->collectivemodule->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                        class="btn btn-primary float-end btn-sm">
+                                                        <i class="bi bi-pencil" title="Changer opérateur"></i> </a>
+                                                @endcan
                                             </h5>
                                         </div>
                                     @elseif(!empty($formation->collectivemodule->module))
@@ -341,7 +343,7 @@
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
                                     <h1 class="card-title">
-                                        {{ __('Bénéficiaires') }}
+                                        {{ __('Liste des bénéficiaires') }}
                                     </h1>
                                     @if (!empty($formation?->collectivemodule))
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
@@ -350,7 +352,7 @@
                                                     <span class="badge bg-info text-white">
                                                         {{ $formation?->code }}</span>
                                                 </span>
-                                                @can('user-view')
+                                                @can('formation-show')
                                                     {{-- @if (auth()->user()->hasRole('super-admin')) --}}
                                                     <span class="card-title d-flex align-items-baseline">Statut formation
                                                         :&nbsp;
@@ -360,27 +362,34 @@
                                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                     class="bi bi-three-dots"></i></a>
                                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                <form action="{{ route('formationcollectiveTerminer') }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button
-                                                                        class="show_confirm_valider btn btn-sm mx-1">Démarrer</button>
-                                                                </form>
-                                                                <form action="{{ route('formationTerminer') }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button
-                                                                        class="show_confirm_valider btn btn-sm mx-1">Terminer</button>
-                                                                </form>
-                                                                <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                                    data-bs-target="#RejetDemandeModal">Annuler
-                                                                </button>
+                                                                @can('demarrer-formation')
+                                                                    <form action="{{ route('formationcollectiveTerminer') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Démarrer</button>
+                                                                    </form>
+                                                                @endcan
+                                                                @can('terminer-formation')
+                                                                    <form action="{{ route('formationTerminer') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Terminer</button>
+                                                                    </form>
+                                                                @endcan
+
+                                                                @can('annuler-formation')
+                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                        data-bs-target="#RejetDemandeModal">Annuler
+                                                                    </button>
+                                                                @endcan
                                                                 <hr>
                                                                 <form action="{{ route('ficheSuiviCol') }}" method="post"
                                                                     target="_blank">
@@ -390,39 +399,45 @@
                                                                         value="{{ $formation->id }}">
                                                                     <button class="btn btn-sm mx-1">Fiche de suivi</button>
                                                                 </form>
-                                                                <form action="{{ route('pvEvaluationCol') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">PV Evaluation</button>
-                                                                </form>
-                                                                <hr>
-                                                                <form action="{{ route('lettreEvaluation') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">Lettre mission</button>
-                                                                </form>
-                                                                <form action="{{ route('abeEvaluation') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">A B E</button>
-                                                                </form>
+                                                                @can('pv-formation')
+                                                                    <form action="{{ route('pvEvaluationCol') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">PV Evaluation</button>
+                                                                    </form>
+                                                                @endcan
+                                                                @can('lettre-formation')
+                                                                    <hr>
+                                                                    <form action="{{ route('lettreEvaluation') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">Lettre mission</button>
+                                                                    </form>
+                                                                @endcan
+                                                                @can('abe-formation')
+                                                                    <form action="{{ route('abeEvaluation') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">A B E</button>
+                                                                    </form>
+                                                                @endcan
                                                             </ul>
                                                         </div>
                                                     </span>
                                                 @endcan
                                                 <div class="float-end">
                                                     <a href="{{ url('formationdemandeurscollectives', ['$idformation' => $formation->id, '$idcollectivemodule' => $formation?->collectivemodule?->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                        class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i>
-                                                        <i class="bi bi-person-plus" title="Ajouter bénéficiaires"></i>
+                                                        class="btn btn-primary btn-sm btn-rounded"
+                                                        title="Ajouter bénéficiaires">Ajouter
                                                     </a>
                                                 </div>
 
@@ -731,10 +746,12 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary"><i
-                                                            class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
-                                                </div>
+                                                @can('module-check')
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-outline-primary"><i
+                                                                class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
+                                                    </div>
+                                                @endcan
                                         </form>
                                     @else
                                         <div class="alert alert-info">Aucun module pour le moment
@@ -753,23 +770,27 @@
                                     @if (empty($ingenieur))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h1 class="card-title">Ingénieur </h1>
-                                            <div class="pt-1">
-                                                <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
-                                            </div>
+                                            @can('ingenieur-check')
+                                                <div class="pt-1">
+                                                    <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                                        class="btn btn-primary float-end btn-sm">
+                                                        <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
+                                                </div>
+                                            @endcan
                                         </div>
                                     @endif
                                     @if (!empty($ingenieur))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
                                                 {{ $ingenieur?->name }}
-                                                <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
-                                                        class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
+                                                @can('ingenieur-check')
+                                                    <a class="btn btn-info btn-sm" title=""
+                                                        href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
+                                                            class="bi bi-eye"></i></a>&nbsp;
+                                                    <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                                        class="btn btn-primary float-end btn-sm">
+                                                        <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
+                                                @endcan
                                             </h5>
                                             <h5 class="card-title">
                                                 Agent de suivi
@@ -926,17 +947,19 @@
                                             enctype="multipart/form-data" class="row g-3">
                                             @csrf
                                             @method('PUT')
-                                            @isset($operateur)
+                                            @if (!empty($operateur))
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h1 class="card-title"> Liste des bénéficiaires :
                                                         {{ $formation->listecollectives->count() }}</h1>
                                                     <h5 class="card-title">
-                                                        Membres du jury
-                                                        <button type="button" class="btn btn-outline-primary btn-sm"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
-                                                            <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
-                                                        </button>
+                                                        @can('jury-formation')
+                                                            Membres du jury
+                                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
+                                                                <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                            </button>
+                                                        @endcan
                                                     </h5>
                                                 </div>
                                                 <div class="row g-3">
@@ -972,18 +995,22 @@
                                                                     <td>{{ $listecollective?->lieu_naissance }}</td>
                                                                     <td><input type="number"
                                                                             value="{{ $listecollective?->note_obtenue }}"
-                                                                            name="notes[]" placeholder="note" step="0.01"
-                                                                            min="0" max="20">
+                                                                            name="notes[]" placeholder="note"
+                                                                            step="0.01" min="0" max="20">
                                                                         <input type="hidden" name="listecollectives[]"
                                                                             value="{{ $listecollective?->id }}">
                                                                     </td>
-                                                                    <td style="text-align: center; vertical-align: middle;">
-                                                                        <button type="button"
-                                                                            class="btn btn-outline-primary btn-sm"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#EditDemandeurModal{{ $listecollective->id }}">
-                                                                            <i class="bi bi-plus" title="Observations"></i>
-                                                                        </button>
+                                                                    <td
+                                                                        style="text-align: center; vertical-align: middle;">
+                                                                        @can('evaluer-formation')
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-primary btn-sm"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditDemandeurModal{{ $listecollective->id }}">
+                                                                                <i class="bi bi-plus"
+                                                                                    title="Observations"></i>
+                                                                            </button>
+                                                                        @endcan
                                                                     </td>
                                                                     {{-- <td>
                                                                 <span class="d-flex align-items-baseline"><a
@@ -1014,11 +1041,13 @@
                                                     </table>
                                                     </table>
                                                 </div>
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary"><i
-                                                            class="bi bi-check2-circle"></i>&nbsp;Save</button>
-                                                </div>
-                                            @endisset
+                                                @can('evaluer-formation')
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-outline-primary"><i
+                                                                class="bi bi-check2-circle"></i>&nbsp;Save</button>
+                                                    </div>
+                                                @endcan
+                                            @endif
                                         </form>
                                     </div>
 
@@ -1037,12 +1066,14 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h1 class="card-title">Retrait des attestations</h1>
                                             <h5 class="card-title">
-                                                Informer
-                                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#EditRemiseAttestationsModal{{ $formation->id }}">
-                                                    <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
-                                                </button>
+                                                @can('attestation-formation')
+                                                    Informer
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#EditRemiseAttestationsModal{{ $formation->id }}">
+                                                        <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                    </button>
+                                                @endcan
                                             </h5>
                                         </div>
                                         <div class="row g-3">
@@ -1087,12 +1118,14 @@
                                                                 @endif
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
-                                                                <button type="button"
-                                                                    class="btn btn-outline-primary btn-sm"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#EditAttestationsModal{{ $listecollective->id }}">
-                                                                    <i class="bi bi-plus" title="Attestation"></i>
-                                                                </button>
+                                                                @can('attestation-formation')
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-primary btn-sm"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#EditAttestationsModal{{ $listecollective->id }}">
+                                                                        <i class="bi bi-plus" title="Attestation"></i>
+                                                                    </button>
+                                                                @endcan
                                                             </td>
                                                         </tr>
                                                     @endforeach

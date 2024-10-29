@@ -193,7 +193,7 @@
                                     <th>Bénéficiaires</th>
                                     <th width='15%'>Localité</th>
                                     <th width='5%'>Modules</th>
-                                    <th width='15%'>Type certification</th>
+                                    <th width='17%'>Type certification</th>
                                     {{-- <th>Niveau qualification</th> --}}
                                     {{-- <th>Effectif</th> --}}
                                     <th width='5%' class="text-center">Statut</th>
@@ -500,7 +500,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                   {{--  <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="titre" class="form-label">Titre (convention)</label>
                                         <input type="text" name="titre" value="{{ old('titre') }}"
                                             class="form-control form-control-sm @error('titre') is-invalid @enderror"
@@ -511,9 +511,9 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="lettre_mission" class="form-label">N° lettre de mission</label>
                                         <input type="text" name="lettre_mission" value="{{ old('lettre_mission') }}"
                                             class="form-control form-control-sm @error('lettre_mission') is-invalid @enderror"
@@ -523,8 +523,9 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
-                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    </div> --}}
+
+                                    {{-- <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="numero_convention" class="form-label">Référence convention</label>
                                         <input type="text" name="numero_convention"
                                             value="{{ old('numero_convention') }}"
@@ -536,7 +537,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="effectif_prevu" class="form-label">Effectif prévu</label>

@@ -220,28 +220,32 @@
                             {{-- Détail --}}
                             <div class="tab-content">
                                 <div class="tab-pane fade profile-overview" id="responsable-overview">
-                                    @if (isset($operateur))
+                                    @if (!empty($operateur))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
                                                 {{ $formation?->operateur?->user?->operateur . '(' . $formation?->operateur?->user?->username . ')' }}
-                                                <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('operateurs.show', $formation?->operateur?->id) }}"><i
-                                                        class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer opérateur"></i> </a>
+                                                @can('operateur-check')
+                                                    <a class="btn btn-info btn-sm" title=""
+                                                        href="{{ route('operateurs.show', $formation?->operateur?->id) }}"><i
+                                                            class="bi bi-eye"></i></a>&nbsp;
+                                                    <a href="{{ url('formationoperateurs', ['$idformation' => $formation->id, '$idmodule' => $formation->module->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                        class="btn btn-primary float-end btn-sm">
+                                                        <i class="bi bi-pencil" title="Changer opérateur"></i> </a>
+                                                @endcan
                                             </h5>
                                         </div>
-                                    @elseif(isset($module))
-                                        <div class="pt-1">
-                                            <a href="{{ url('formationoperateurs', ['$idformation' => $formation?->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation?->departement?->region?->id]) }}"
-                                                class="btn btn-primary float-end btn-sm">
-                                                <i class="bi bi-person-plus-fill" title="Ajouter opérateur"></i> </a>
+                                    @elseif(!empty($module))
+                                        <div class="pt-2">
+                                            @can('operateur-check')
+                                                <a href="{{ url('formationoperateurs', ['$idformation' => $formation?->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation?->departement?->region?->id]) }}"
+                                                    class="btn btn-primary float-end btn-sm">
+                                                    <i class="bi bi-person-plus-fill" title="Ajouter opérateur"></i> </a>
+                                            @endcan
                                         </div>
                                     @else
                                     @endif
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        @isset($operateur)
+                                        @if (!empty($operateur))
                                             <h1 class="card-title">
                                                 Liste des formations
                                             </h1>
@@ -270,7 +274,8 @@
                                                                         href="#">{{ $operateurformation->types_formation?->name }}</a>
                                                                 </td>
                                                                 <td>{{ $operateurformation?->name }}</td>
-                                                                <td>{{ $operateurformation->departement?->region?->nom }}</td>
+                                                                <td>{{ $operateurformation->departement?->region?->nom }}
+                                                                </td>
                                                                 {{-- <td>{{ $operateurformation->module?->name }}</td> --}}
                                                                 {{-- <td>{{ $operateurformation->niveau_qualification }}</td> --}}
                                                                 <td class="text-center">
@@ -285,57 +290,66 @@
                                                                             class="{{ $operateurformation?->statut }}">{{ $operateurformation?->statut }}</span></a>
                                                                 </td>
                                                                 <td>
-                                                                    <span class="d-flex align-items-baseline"><a
-                                                                            href="{{ route('formations.show', $operateurformation->id) }}"
-                                                                            class="btn btn-primary btn-sm"
-                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                        <div class="filter">
-                                                                            <a class="icon" href="#"
-                                                                                data-bs-toggle="dropdown"><i
-                                                                                    class="bi bi-three-dots"></i></a>
-                                                                            <ul
-                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                <li><a class="dropdown-item btn btn-sm"
-                                                                                        href="{{ route('formations.edit', $operateurformation->id) }}"
-                                                                                        class="mx-1" title="Modifier"><i
-                                                                                            class="bi bi-pencil"></i>Modifier</a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <form
-                                                                                        action="{{ route('formations.destroy', $operateurformation->id) }}"
-                                                                                        method="post">
-                                                                                        @csrf
-                                                                                        @method('DELETE')
-                                                                                        <button type="submit"
-                                                                                            class="dropdown-item show_confirm"
-                                                                                            title="Supprimer"><i
-                                                                                                class="bi bi-trash"></i>Supprimer</button>
-                                                                                    </form>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </span>
+                                                                    @can('formation-show')
+                                                                        <span class="d-flex align-items-baseline"><a
+                                                                                href="{{ route('formations.show', $operateurformation->id) }}"
+                                                                                class="btn btn-primary btn-sm"
+                                                                                title="voir détails"><i
+                                                                                    class="bi bi-eye"></i></a>
+                                                                            <div class="filter">
+                                                                                <a class="icon" href="#"
+                                                                                    data-bs-toggle="dropdown"><i
+                                                                                        class="bi bi-three-dots"></i></a>
+                                                                                <ul
+                                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                    @can('formation-update')
+                                                                                        <li><a class="dropdown-item btn btn-sm"
+                                                                                                href="{{ route('formations.edit', $operateurformation->id) }}"
+                                                                                                class="mx-1" title="Modifier"><i
+                                                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                                                        </li>
+                                                                                    @endcan
+
+                                                                                    @can('formation-delete')
+                                                                                        <li>
+                                                                                            <form
+                                                                                                action="{{ route('formations.destroy', $operateurformation->id) }}"
+                                                                                                method="post">
+                                                                                                @csrf
+                                                                                                @method('DELETE')
+                                                                                                <button type="submit"
+                                                                                                    class="dropdown-item show_confirm"
+                                                                                                    title="Supprimer"><i
+                                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                                            </form>
+                                                                                        </li>
+                                                                                    @endcan
+                                                                                </ul>
+                                                                            </div>
+                                                                        </span>
+                                                                    @endcan
                                                                 </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-                                                </table>
                                             </div>
-                                        @endisset
+                                        @else
+                                            <div class="alert alert-info mt-5">Aucun opérateur pour le moment !!!</div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="beneficiaires-overview">
-                                    @isset($module)
+                                    @if (!empty($module))
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="d-flex justify-content-between align-items-center mt-3">
                                                 <span class="card-title d-flex align-items-baseline">Code formation :&nbsp;
                                                     <span class="badge bg-info text-white">
                                                         {{ $formation?->code }}</span>
                                                 </span>
-                                                @if (auth()->user()->hasRole('super-admin'))
+                                                @can('formation-show')
                                                     <span class="card-title d-flex align-items-baseline">Statut formation
                                                         :&nbsp;
                                                         <span class="{{ $formation?->statut }} text-white">
@@ -344,26 +358,33 @@
                                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                     class="bi bi-three-dots"></i></a>
                                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                <form
-                                                                    action="{{ route('validation-formations.update', $formation?->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <button
-                                                                        class="show_confirm_valider btn btn-sm mx-1">Démarrer</button>
-                                                                </form>
-                                                                <form action="{{ route('formationTerminer') }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button
-                                                                        class="show_confirm_valider btn btn-sm mx-1">Terminer</button>
-                                                                </form>
-                                                                <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                                    data-bs-target="#RejetDemandeModal">Annuler
-                                                                </button>
+                                                                @can('demarrer-formation')
+                                                                    <form
+                                                                        action="{{ route('validation-formations.update', $formation?->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Démarrer</button>
+                                                                    </form>
+                                                                @endcan
+                                                                @can('terminer-formation')
+                                                                    <form action="{{ route('formationTerminer') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Terminer</button>
+                                                                    </form>
+                                                                @endcan
+
+                                                                @can('annuler-formation')
+                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                        data-bs-target="#RejetDemandeModal">Annuler
+                                                                    </button>
+                                                                @endcan
                                                                 <hr>
                                                                 <form action="{{ route('ficheSuivi') }}" method="post"
                                                                     target="_blank">
@@ -373,60 +394,70 @@
                                                                         value="{{ $formation->id }}">
                                                                     <button class="btn btn-sm mx-1">Fiche de suivi</button>
                                                                 </form>
-                                                                <form action="{{ route('pvVierge') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">PV (vierge)</button>
-                                                                </form>
-                                                                <form action="{{ route('pvEvaluation') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">PV (finale)</button>
-                                                                </form>
-                                                                <hr>
-                                                                <form action="{{ route('lettreEvaluation') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">Lettre mission</button>
-                                                                </form>
-                                                                <form action="{{ route('abeEvaluation') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">A B E</button>
-                                                                </form>
-                                                                <hr>
-                                                                <form action="{{ route('sendFormationEmail') }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">Démarrage (e-mail)</button>
-                                                                </form>
-                                                                <form action="{{ route('sendWelcomeEmail') }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    {{-- @method('PUT') --}}
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $formation->id }}">
-                                                                    <button class="btn btn-sm mx-1">Résultats (e-mail)</button>
-                                                                </form>
+                                                                @can('pv-formation')
+                                                                    <form action="{{ route('pvVierge') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">PV (vierge)</button>
+                                                                    </form>
+                                                                    <form action="{{ route('pvEvaluation') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">PV (finale)</button>
+                                                                    </form>
+                                                                @endcan
+                                                                @can('lettre-formation')
+                                                                    <hr>
+                                                                    <form action="{{ route('lettreEvaluation') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">Lettre mission</button>
+                                                                    </form>
+                                                                @endcan
+                                                                @can('lettre-formation')
+                                                                    <form action="{{ route('abeEvaluation') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">A B E</button>
+                                                                    </form>
+                                                                @endcan
+                                                                @can('email-formation')
+                                                                    <hr>
+                                                                    <form action="{{ route('sendFormationEmail') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">Démarrage
+                                                                            (e-mail)</button>
+                                                                    </form>
+                                                                    <form action="{{ route('sendWelcomeEmail') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">Résultats
+                                                                            (e-mail)</button>
+                                                                    </form>
+                                                                @endcan
                                                             </ul>
                                                         </div>
                                                     </span>
-                                                @endif
+                                                @endcan
                                                 <div class="float-end">
                                                     <a href="{{ url('formationdemandeurs', ['$idformation' => $formation->id, '$idmodule' => $formation?->module?->id, '$idlocalite' => $formation->departement->region->id]) }}"
                                                         class="btn btn-outline-primary btn-rounded btn-sm">
@@ -456,7 +487,8 @@
                                                             @can('rapport-suivi-formes-view')
                                                                 <th width='3%' class="text-center">Suivi</th>
                                                             @endcan
-                                                            <th width='2%' class="text-center"><i class="bi bi-gear"></i>
+                                                            <th width='2%' class="text-center"><i
+                                                                    class="bi bi-gear"></i>
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -466,7 +498,8 @@
                                                             <tr>
                                                                 <td class="text-center">{{ $i++ }}</td>
                                                                 <td class="text-center">{{ $individuelle?->numero }}</td>
-                                                                <td class="text-center">{{ $individuelle?->user?->civilite }}
+                                                                <td class="text-center">
+                                                                    {{ $individuelle?->user?->civilite }}
                                                                 </td>
                                                                 <td style="text-align: center;">
                                                                     {{ $individuelle?->user?->cin }}</td>
@@ -500,17 +533,20 @@
                                                                     <span class="d-flex align-items-baseline"><a
                                                                             href="{{ route('individuelles.show', $individuelle?->id) }}"
                                                                             class="btn btn-primary btn-sm"
-                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                            title="voir détails"><i
+                                                                                class="bi bi-eye"></i></a>
                                                                         <div class="filter">
                                                                             <a class="icon" href="#"
                                                                                 data-bs-toggle="dropdown"><i
                                                                                     class="bi bi-three-dots"></i></a>
                                                                             <ul
                                                                                 class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                <button class="btn btn-sm mx-1"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#indiponibleModal{{ $individuelle->id }}">Retirer
-                                                                                </button>
+                                                                                @can('retirer-demandeur-formation')
+                                                                                    <button class="btn btn-sm mx-1"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#indiponibleModal{{ $individuelle->id }}">Retirer
+                                                                                    </button>
+                                                                                @endcan
                                                                             </ul>
                                                                         </div>
                                                                     </span>
@@ -521,30 +557,37 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    @endisset
+                                    @else
+                                        <div class="alert alert-info mt-3">Aucun bénéficiaire pour le moment !!!</div>
+                                    @endif
                                 </div>
                             </div>
                             {{-- Détail Modules --}}
                             <div class="tab-content pt-2">
                                 <div class="tab-pane fade module-overview pt-3" id="module-overview">
-                                    @if (isset($module))
+                                    @if (!empty($module))
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h5 class="card-title">
                                                 {{ $module?->name }}
-                                                <a class="btn btn-info btn-sm" title=""
-                                                    href="{{ route('modules.show', $module?->id) }}"><i
-                                                        class="bi bi-eye"></i></a>&nbsp;
-                                                <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer module"></i> </a>
+                                                @can('module-check')
+                                                    <a class="btn btn-info btn-sm" title=""
+                                                        href="{{ route('modules.show', $module?->id) }}"><i
+                                                            class="bi bi-eye"></i></a>&nbsp;
+                                                    <a href="{{ url('formationmodules', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                        class="btn btn-primary float-end btn-sm">
+                                                        <i class="bi bi-pencil" title="Changer module"></i></a>
+                                                @endcan
                                             </h5>
                                         </div>
                                     @else
-                                        <div class="pt-1">
-                                            <a href="{{ url('moduleformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                class="btn btn-primary float-end btn-sm">
-                                                <i class="bi bi-plus" title="Ajouter module"></i> </a>
+                                        <div>
+                                            @can('module-check')
+                                                <a href="{{ url('moduleformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                    class="btn btn-primary float-end btn-sm">
+                                                    <i class="bi bi-plus" title="Ajouter module"></i> </a>
+                                            @endcan
                                         </div>
+                                        <div class="alert alert-info mt-5">Aucun module pour le moment !!!</div>
                                     @endif
                                     {{-- <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($operateur)
@@ -601,41 +644,38 @@
                             {{-- Détail ingenieur --}}
                             <div class="tab-content">
                                 <div class="tab-pane fade ingenieur-overview" id="ingenieur-overview">
-                                    @isset($module)
-                                        @if (isset($ingenieur))
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h5 class="card-title">
-                                                    {{ $ingenieur?->name }}
+                                    @if (!empty($ingenieur))
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">
+                                                {{ $ingenieur?->name }}
+                                                @can('ingenieur-check')
                                                     <a class="btn btn-info btn-sm" title=""
                                                         href="{{ route('ingenieurs.show', $ingenieur?->id) }}"><i
                                                             class="bi bi-eye"></i></a>&nbsp;
                                                     <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
                                                         class="btn btn-primary float-end btn-sm">
                                                         <i class="bi bi-pencil" title="Changer ingenieur"></i> </a>
-                                                </h5>
-                                                <h5 class="card-title">
-                                                    Agent de suivi
+                                                @endcan
+                                            </h5>
+                                            <h5 class="card-title">
+                                                Agent de suivi
+                                                @can('ingenieur-check')
                                                     <button type="button" class="btn btn-outline-primary btn-sm"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#EditAgentSuiviModal{{ $formation->id }}">
                                                         <i class="bi bi-plus" title="Ajouter un agent de suivi"></i>
                                                     </button>
-                                                </h5>
-                                            </div>
-                                        @else
-                                            <div class="pt-1">
-                                                <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
-                                                    class="btn btn-primary float-end btn-sm">
-                                                    <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
-
-                                                {{--  <form action="{{ route('ingenieurformations') }}" method="post" target="_blank">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $formation->id }}">
-                                                <button class="btn btn-primary float-end btn-sm">Ajouter</button>
-                                            </form> --}}
-                                            </div>
-                                        @endif
-                                    @endisset
+                                                @endcan
+                                            </h5>
+                                        </div>
+                                    @else
+                                        <div class="pb-2">
+                                            <a href="{{ url('formationingenieurs', ['$idformation' => $formation->id]) }}"
+                                                class="btn btn-primary float-end btn-sm">
+                                                <i class="bi bi-plus" title="Ajouter ingenieur"></i> </a>
+                                        </div>
+                                        <div class="alert alert-info mt-5">Aucun ingénieur pour le moment !!!</div>
+                                    @endif
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         @isset($ingenieur)
                                             <h1 class="card-title">
@@ -740,12 +780,14 @@
                                                     <h1 class="card-title"> Liste des bénéficiaires :
                                                         {{ $count_demandes }}</h1>
                                                     <h5 class="card-title">
-                                                        Membres du jury
-                                                        <button type="button" class="btn btn-outline-primary btn-sm"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
-                                                            <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
-                                                        </button>
+                                                        @can('jury-formation')
+                                                            Membres du jury
+                                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#EditMembresJuryModal{{ $formation->id }}">
+                                                                <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                            </button>
+                                                        @endcan
                                                     </h5>
                                                 </div>
                                                 <div class="row g-3">
@@ -787,12 +829,14 @@
                                                                             value="{{ $individuelle?->id }}">
                                                                     </td>
                                                                     <td style="text-align: center; vertical-align: middle;">
-                                                                        <button type="button"
-                                                                            class="btn btn-outline-primary btn-sm"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#EditDemandeurModal{{ $individuelle->id }}">
-                                                                            <i class="bi bi-plus" title="Observations"></i>
-                                                                        </button>
+                                                                        @can('evaluer-formation')
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-primary btn-sm"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditDemandeurModal{{ $individuelle->id }}">
+                                                                                <i class="bi bi-plus" title="Observations"></i>
+                                                                            </button>
+                                                                        @endcan
                                                                     </td>
                                                                     {{-- <td>
                                                                     <span class="d-flex align-items-baseline"><a
@@ -823,10 +867,12 @@
                                                     </table>
                                                     </table>
                                                 </div>
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary"><i
-                                                            class="bi bi-check2-circle"></i>&nbsp;Save</button>
-                                                </div>
+                                                @can('evaluation-formation')
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-outline-primary"><i
+                                                                class="bi bi-check2-circle"></i>&nbsp;Save</button>
+                                                    </div>
+                                                @endcan
                                             </form>
                                         </div>
                                     @endisset
@@ -845,12 +891,14 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h1 class="card-title">Retrait des attestations</h1>
                                                 <h5 class="card-title">
-                                                    Informer
-                                                    <button type="button" class="btn btn-outline-primary btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#EditRemiseAttestationsModal{{ $formation->id }}">
-                                                        <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
-                                                    </button>
+                                                    @can('attestation-formation')
+                                                        Informer
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#EditRemiseAttestationsModal{{ $formation->id }}">
+                                                            <i class="bi bi-plus" title="Ajouter les membres du jury"></i>
+                                                        </button>
+                                                    @endcan
                                                 </h5>
                                             </div>
                                             <div class="row g-3">
@@ -907,12 +955,14 @@
                                                                     @endif
                                                                 </td>
                                                                 <td style="text-align: center; vertical-align: middle;">
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-primary btn-sm"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#EditAttestationsModal{{ $individuelle->id }}">
-                                                                        <i class="bi bi-plus" title="Attestation"></i>
-                                                                    </button>
+                                                                    @can('attestation-formation')
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-primary btn-sm"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditAttestationsModal{{ $individuelle->id }}">
+                                                                            <i class="bi bi-plus" title="Attestation"></i>
+                                                                        </button>
+                                                                    @endcan
                                                                 </td>
                                                                 {{-- <td>
                                                                     <span class="d-flex align-items-baseline"><a
@@ -1535,7 +1585,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="mb-3">
 

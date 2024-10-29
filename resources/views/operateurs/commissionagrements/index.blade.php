@@ -37,19 +37,14 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        {{-- @can('role-create') --}}
-                        @if (auth()->user()->hasRole('super-admin|admin'))
+                        @can('commission-create')
                             <div class="pt-1">
-                                {{-- <a href="{{ route('agrements.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
-
-                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddagrementModal">
-                                    <i class="bi bi-person-plus" title="Ajouter"></i>
+                                <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
+                                    data-bs-toggle="modal" data-bs-target="#AddagrementModal">
+                                    Ajouter
                                 </button>
                             </div>
-                        @endif
+                        @endcan
                         {{-- @endcan --}}
                         <h5 class="card-title">COMMISIONS AGREMENTS</h5>
                         <!-- Table with stripped rows -->
@@ -62,10 +57,8 @@
                                     <th width="5%" class="text-center">Date</th>
                                     <th width="22%">Lieu</th>
                                     <th width="5%" class="text-center">Operateurs</th>
-                                    @if (auth()->user()->hasRole('super-admin|admin'))
-                                        <th width="3%" class="text-center" scope="col"><i class="bi bi-gear"></i>
-                                        </th>
-                                    @endif
+                                    <th width="3%" class="text-center" scope="col"><i class="bi bi-gear"></i>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,37 +79,43 @@
                                             @endforeach
                                         </td>
                                         <td style="text-align: center;">
-                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                    href="{{ route('commissionagrements.show', $commissionagrement->id) }}"
-                                                    class="btn btn-warning btn-sm mx-1" title="Voir détails">
-                                                    <i class="bi bi-eye"></i></a>
-                                                @if (auth()->user()->hasRole('super-admin|admin'))
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li>
-                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#EditagrementModal{{ $commissionagrement->id }}">
-                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                                </button>
-                                                            </li>
-                                                            <li>
-                                                                <form
-                                                                    action="{{ url('commissionagrements', $commissionagrement->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="dropdown-item show_confirm"><i
-                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                @endif
-                                            </span>
+                                            @can('commission-show')
+                                                <span class="d-flex mt-2 align-items-baseline"><a
+                                                        href="{{ route('commissionagrements.show', $commissionagrement->id) }}"
+                                                        class="btn btn-warning btn-sm mx-1" title="Voir détails">
+                                                        <i class="bi bi-eye"></i></a>
+                                                    @if (auth()->user()->hasRole('super-admin|admin'))
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                @can('commission-update')
+                                                                    <li>
+                                                                        <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditagrementModal{{ $commissionagrement->id }}">
+                                                                            <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                                        </button>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('commission-delete')
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ url('commissionagrements', $commissionagrement->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                </span>
+                                            @endcan
                                         </td>
 
                                     </tr>

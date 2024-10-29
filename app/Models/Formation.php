@@ -51,6 +51,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $forme_f
  * @property int|null $total
  * @property string|null $appreciations
+ * @property string|null $file_convention
+ * @property string|null $detf_file
  * @property int|null $ingenieurs_id
  * @property int|null $onfpevaluateurs_id
  * @property int|null $evaluateurs_id
@@ -223,8 +225,11 @@ class Formation extends Model
 		'statut',
 		'categorie_professionnelle',
 		'nbre_admis',
+		'file1',
 		'evaluateur_onfp',
 		'numero_convention',
+		'file_convention',
+		'detf_file',
 		'initiale_evaluateur_onfp',
 		'type_certificat',
 		'recommandations',
@@ -261,6 +266,16 @@ class Formation extends Model
 	];
 
 	
+	public function getFileConvention(){
+		$filePath = $this->file_convention ?? '';
+		return "/storage/" . $filePath;
+	}
+	
+	public function getFileDetf(){
+		$filePath = $this->detf_file ?? '';
+		return "/storage/" . $filePath;
+	}
+
 	public function statuts()
 	{
 		return $this->hasMany(Statut::class, 'formations_id')->latest();

@@ -283,7 +283,7 @@
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                             class="bi bi-three-dots"></i></a>
                                 </div>
-                                <a href="#">
+                                <a href="{{ route('showMasculin') }}">
                                     <div class="card-body">
                                         <h5 class="card-title">Individuelles <span>| hommes</span></h5>
                                         <div class="d-flex align-items-center">
@@ -311,7 +311,7 @@
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                             class="bi bi-three-dots"></i></a>
                                 </div>
-                                <a href="#">
+                                <a href="{{ route('showFeminin') }}">
                                     <div class="card-body">
                                         <h5 class="card-title">Individuelles <span>| femmes</span></h5>
                                         <div class="d-flex align-items-center">
@@ -321,8 +321,7 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    <span
-                                                        class="text-primary">{{ number_format($feminin, 0, '', ' ') }}</span>
+                                                    <span class="text-primary">{{ number_format($feminin, 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span
                                                     class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes, 2, ',', ' ') . '%' }}</span>

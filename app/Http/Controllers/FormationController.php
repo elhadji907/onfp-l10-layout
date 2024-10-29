@@ -42,7 +42,7 @@ class FormationController extends Controller
     {
         // examples:
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|DIOF|ADIOF']);
+        $this->middleware(['role:super-admin|admin|DIOF|ADIOF|DEC']);
         $this->middleware("permission:formation-view", ["only" => ["index"]]);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
@@ -166,12 +166,10 @@ class FormationController extends Controller
             "name"                  =>   "required|string|unique:formations,name",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
-            "type_certification"  =>   "required|string",
+            "type_certification"    =>   "required|string",
             "types_formation"       =>   "required|string",
-            "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
             "date_fin"              =>   "nullable|date",
-            "lettre_mission"        =>   "nullable|string",
         ]);
 
         /* $mois = date('m');
@@ -280,15 +278,15 @@ class FormationController extends Controller
             "operateurs_id"         =>   $request->input('operateur'),
             "types_formations_id"   =>   $types_formation->id,
             "type_certification"  =>   $request->input('type_certification'),
-            "numero_convention"     =>   $request->input('numero_convention'),
-            "titre"                 =>   $request->input('titre'),
+            /* "numero_convention"     =>   $request->input('numero_convention'), */
+            /* "titre"                 =>   $request->input('titre'), */
             "date_debut"            =>   $request->input('date_debut'),
             "date_fin"              =>   $request->input('date_fin'),
             "effectif_prevu"        =>   $effectif_prevu,
             "prevue_h"              =>   $request->input('prevue_h'),
             "prevue_f"              =>   $request->input('prevue_f'),
             "frais_operateurs"      =>   $request->input('frais_operateurs'),
-            "lettre_mission"        =>   $request->input('lettre_mission'),
+            /* "lettre_mission"        =>   $request->input('lettre_mission'), */
             "frais_add"             =>   $request->input('frais_add'),
             "autes_frais"           =>   $request->input('autes_frais'),
             "projets_id"            =>   $request->input('projet'),
@@ -352,7 +350,7 @@ class FormationController extends Controller
             "name"                  =>   "required|string|unique:formations,name,{$formation->id}",
             "departement"           =>   "required|string",
             "lieu"                  =>   "required|string",
-            "type_certification"  =>   "required|string",
+            "type_certification"   =>    "required|string",
             "titre"                 =>   "nullable|string",
             "date_debut"            =>   "nullable|date",
             "date_convention"       =>   "nullable|date",
@@ -360,6 +358,8 @@ class FormationController extends Controller
             "date_fin"              =>   "nullable|date",
             "lettre_mission"        =>   "nullable|string",
             "annee"                 =>   "nullable|numeric",
+            "file_convention"       =>  ['sometimes', 'file', 'mimes:pdf', 'max:2048'],
+            "detf-file"             =>  ['sometimes', 'file', 'mimes:pdf', 'max:2048']
         ]);
 
         $effectif_prevu = $request->input('prevue_h') + $request->input('prevue_f');
@@ -380,6 +380,59 @@ class FormationController extends Controller
             $referentiel_id = null;
             $titre = null;
             $type = null;
+        }
+
+
+        if (request('file_convention')) {
+
+
+            $filePath = request('file_convention')->store('conventions', 'public');
+
+            /* dd($filePath); */
+
+            $file = $request->file('file_convention');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'conventions/' . $filename . '' . time() . '.' . $extension;
+
+            $formation->update([                
+                'file_convention'             =>      $filePath,
+            ]);
+
+            $formation->save();
+        }
+
+        if (request('detf_file')) {
+
+
+            $filePath = request('detf_file')->store('detfs', 'public');
+
+            /* dd($filePath); */
+
+            $file = $request->file('detf_file');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'detfs/' . $filename . '' . time() . '.' . $extension;
+
+            $formation->update([                
+                'detf_file'             =>      $filePath,
+            ]);
+
+            $formation->save();
         }
 
         $formation->update([
@@ -2315,5 +2368,12 @@ class FormationController extends Controller
             'formations',
             'title'
         ));
+    }
+
+    public function showConventions()
+    {
+        $conventions = Formation::where('numero_convention', '!=', null)->get();
+
+        return view('formations.convention', compact('conventions'));
     }
 }

@@ -1226,4 +1226,66 @@ class IndividuelleController extends Controller
 
         return Redirect::back();
     }
+
+    public function showMasculin()
+    {
+        $individuelles = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('users.civilite', 'M.')
+            ->limit(500)
+            ->latest()
+            ->get();
+            
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'Aucune demande individuelle masculine';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle masculine sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_demandeur . ' dernières demandes individuelles masculines sur un total de ' . $total_count;
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+
+        return view(
+            "individuelles.masculin",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function showFeminin()
+    {
+        $individuelles = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->select('individuelles.*')
+            ->where('users.civilite', 'Mme')
+            ->limit(500)
+            ->latest()
+            ->get();
+            
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'Aucune demande individuelle féminine';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle féminine sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_demandeur . ' dernières demandes individuelles féminines sur un total de ' . $total_count;
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+
+        return view(
+            "individuelles.feminin",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
 }

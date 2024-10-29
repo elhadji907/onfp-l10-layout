@@ -63,6 +63,8 @@ class CreateFormationsTable extends Migration
             $table->string('type_certificat', 200)->nullable();
             $table->string('categorie_professionnelle', 200)->nullable();
             $table->string('numero_convention', 200)->nullable();
+            $table->string('file_convention', 200)->nullable();
+            $table->string('detf_file', 200)->nullable();
             $table->string('evaluateur_onfp', 200)->nullable();
             $table->string('initiale_evaluateur_onfp', 200)->nullable();
             $table->string('appreciations', 200)->nullable();

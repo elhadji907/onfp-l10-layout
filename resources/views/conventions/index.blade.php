@@ -43,7 +43,7 @@
                                     </button>
                                 </div>
                             @endcan
-                            <h5 class="card-title">Conventions</h5>
+                            <h5 class="card-title">Conventions collectives des branches professionnelles</h5>
                             <table class="table datatables align-middle justify-content-center" id="table-files">
                                 <thead>
                                     <tr>

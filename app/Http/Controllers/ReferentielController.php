@@ -10,6 +10,16 @@ use Illuminate\Validation\Rule;
 
 class ReferentielController extends Controller
 {
+    public function __construct()
+    {
+        // examples:
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF|DEC']);
+        $this->middleware("permission:referentiel-view", ["only" => ["index"]]);
+        /* $this->middleware(['permission:arrive-show']); */
+        // or with specific guard
+        /* $this->middleware(['role_or_permission:super-admin']); */
+    }
     public function index()
     {
         $referentiels = Referentiel::get();

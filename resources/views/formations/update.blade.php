@@ -244,6 +244,29 @@
                                         @enderror
                                     </div>
 
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <label for="file_convention" class="form-label">Joindre scan convention</label>
+                                        <input type="file" name="file_convention" id="file_convention"
+                                            class="form-control @error('file_convention') is-invalid @enderror btn btn-outline-primary btn-sm">
+                                        @error('file_convention')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                        <label for="file_convention" class="form-label">Fichier</label>
+                                        @if (!empty($formation?->file_convention))
+                                            <div>
+                                                <a class="btn btn-outline-secondary btn-sm" title="Convention"
+                                                    target="_blank" href="{{ asset($formation->getFileConvention()) }}">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="badge bg-warning">Aucun</div>
+                                        @endif
+                                    </div>
+
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="prevue_h" class="form-label">Effectif homme</label>
                                         <input type="number" name="prevue_h" min="0" max="25"
@@ -345,6 +368,28 @@
                                         @enderror
                                     </div>
 
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <label for="detf_file" class="form-label">Joindre scan DETF</label>
+                                        <input type="file" name="detf_file" id="detf_file"
+                                            class="form-control @error('detf_file') is-invalid @enderror btn btn-outline-primary btn-sm">
+                                        @error('detf_file')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                        <label for="detf_file" class="form-label">Fichier</label>
+                                        @if (!empty($formation?->detf_file))
+                                            <div>
+                                                <a class="btn btn-outline-secondary btn-sm" title="DETF"
+                                                    target="_blank" href="{{ asset($formation->getFileDetf()) }}">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="badge bg-warning">Aucun</div>
+                                        @endif
+                                    </div>
                                     <hr>
                                     {{-- <h5 class="card-title text-center pb-0 fs-4">Evaluation</h5> --}}
 

@@ -13,8 +13,8 @@ class ConventionController extends Controller
     {
         // examples:
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF']);
-        $this->middleware("permission:collective-view", ["only" => ["index"]]);
+        $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF|DEC']);
+        $this->middleware("permission:convention-view", ["only" => ["index"]]);
         /* $this->middleware(['permission:arrive-show']); */
         // or with specific guard
         /* $this->middleware(['role_or_permission:super-admin']); */

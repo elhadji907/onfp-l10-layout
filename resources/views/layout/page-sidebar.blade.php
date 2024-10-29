@@ -190,6 +190,13 @@
                             </a>
                         </li>
                     @endcan
+                    @can('formation-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('showConventions') }}">
+                                <span>Conventions & DETF</span>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         @endcan
@@ -405,7 +412,7 @@
         @can('rapport-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#rapport-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-files"></i><span>{{ __('Rapports') }}</span><i
+                    <i class="bi bi-files"></i><span>{{ __('Générer rapports') }}</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="rapport-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -493,14 +500,14 @@
         @can('convention-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('conventions.index') }}">
-                    <i class="bi bi-journal"></i> <span>Conventions</span>
+                    <i class="bi bi-journal"></i> <span>Conventions collectives</span>
                 </a>
             </li>
         @endcan
         @can('referentiel-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('referentiels.index') }}">
-                    <i class="bi bi-journals"></i> <span>Référentiels</span>
+                    <i class="bi bi-journals"></i> <span>Référentiels formations</span>
                 </a>
             </li>
         @endcan

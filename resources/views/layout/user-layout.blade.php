@@ -312,12 +312,12 @@
             @if (auth()->user()->hasRole('super-admin|admin|DIOF|DEC'))
                 <a href="{{ url('/home') }}" class="logo d-flex align-items-center">
                     {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
-                    <span class="d-none d-lg-block">ONFP V²</span>
+                    <span class="d-none d-lg-block">SIGF V²</span>
                 </a>
             @else
                 <a href="{{ url('/profil') }}" class="logo d-flex align-items-center">
                     {{-- <img src="{{ asset('assets/img/onfp.png') }}" alt=""> --}}
-                    <span class="d-none d-lg-block">ONFP V²</span>
+                    <span class="d-none d-lg-block">SIGF V²</span>
                 </a>
             @endif
             <i class="bi bi-list toggle-sidebar-btn"></i>

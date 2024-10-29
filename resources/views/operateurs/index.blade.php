@@ -190,10 +190,8 @@
                     <div class="card-body">
                         @if (auth()->user()->hasRole('super-admin|admin|DEC'))
                             <div class="pt-1">
-                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddOperateurModal">
-                                    <i class="bi bi-person-plus" title="Ajouter"></i>
-                                </button>
+                                <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
+                                    data-bs-toggle="modal" data-bs-target="#AddOperateurModal">Ajouter</button>
                             </div>
                         @endif
                         <h5 class="card-title">Liste des opérateurs</h5>
@@ -207,11 +205,9 @@
                                         <th width="5%" class="text-center">Modules</th>
                                         <th width="5%" class="text-center">Formations</th>
                                         <th width="15%" class="text-center">Statut</th>
-                                        {{-- @if (auth()->user()->hasRole('super-admin|admin')) --}}
-                                        @can('user-view')
+                                        @can('operateur-show')
                                             <th width="5%"><i class="bi bi-gear"></i></th>
                                         @endcan
-                                        {{-- @endif --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -241,41 +237,38 @@
                                             <td style="text-align: center;"><span
                                                     class="{{ $operateur->statut_agrement }}">
                                                     {{ $operateur?->statut_agrement }}</span></td>
-                                            @can('user-view')
+                                            @can('operateur-show')
                                                 <td>
                                                     <span class="d-flex align-items-baseline"><a
                                                             href="{{ route('operateurs.show', $operateur->id) }}"
                                                             class="btn btn-primary btn-sm" title="voir détails"><i
                                                                 class="bi bi-eye"></i></a>
-                                                        {{-- @if (auth()->user()->hasRole('super-admin|admin')) --}}
                                                         <div class="filter">
                                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                                     class="bi bi-three-dots"></i></a>
                                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                <li>
-                                                                    <a class="dropdown-item btn btn-sm"
-                                                                        href="{{ route('operateurs.edit', $operateur->id) }}"
-                                                                        class="mx-1" title="Modifier"><i
-                                                                            class="bi bi-pencil"></i>Modifier</a>
-
-                                                                    {{-- <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#EditOperateurModal{{ $operateur->id }}">
-                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                                </button> --}}
-                                                                </li>
-                                                                <li>
-                                                                    <form
-                                                                        action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                        method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="dropdown-item show_confirm"
-                                                                            title="Supprimer"><i
-                                                                                class="bi bi-trash"></i>Supprimer</button>
-                                                                    </form>
-                                                                </li>
+                                                                @can('operateur-update')
+                                                                    <li>
+                                                                        <a class="dropdown-item btn btn-sm"
+                                                                            href="{{ route('operateurs.edit', $operateur->id) }}"
+                                                                            class="mx-1" title="Modifier"><i
+                                                                                class="bi bi-pencil"></i>Modifier</a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('operateur-delete')
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"
+                                                                                title="Supprimer"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
                                                             </ul>
                                                         </div>
                                                         {{-- @endif --}}

@@ -392,6 +392,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::put('fileDestroy', [FileController::class, 'fileDestroy'])->name('fileDestroy');
     Route::get('projetsBeneficiaire/{id}', [ProjetController::class, 'projetsBeneficiaire'])->name('projetsBeneficiaire');
+    Route::get('showConventions', [FormationController::class, 'showConventions'])->name('showConventions');
+    Route::get('showMasculin', [IndividuelleController::class, 'showMasculin'])->name('showMasculin');
+    Route::get('showFeminin', [IndividuelleController::class, 'showFeminin'])->name('showFeminin');
 
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
