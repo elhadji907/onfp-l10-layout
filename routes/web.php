@@ -366,6 +366,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('formes/rapportsformes', [FormationController::class, 'rapportsformes'])->name('formes.rapport');
     Route::post('formes/rapportsformes', [FormationController::class, 'generateRapportFormes']);
 
+    Route::get('formes/formesCollective', [FormationController::class, 'formesCollective'])->name('formesCollective.rapport');
+    Route::post('formes/formesCollective', [FormationController::class, 'generateRapportFormesCollective']);
+
     Route::get('suivi/suiviformes', [FormationController::class, 'suiviformes'])->name('suiviformes.suivi-individuelle');
     Route::get('suivi/suiviformesCol', [FormationController::class, 'suiviformesCol'])->name('suiviformes.suivi-collective');
     Route::post('suivi/suiviformes', [FormationController::class, 'generateSuiviFormes']);

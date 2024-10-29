@@ -482,7 +482,15 @@
                     @can('rapport-formes-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('formes.rapport') }}">
-                                <span>Formés</span>
+                                <span>Formés individuelles</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('rapport-formes-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('formesCollective.rapport') }}">
+                                <span>Formés collectives</span>
                             </a>
                         </li>
                     @endcan

@@ -402,7 +402,7 @@ class FormationController extends Controller
             // Create unique file name
             $fileNameToStore = 'conventions/' . $filename . '' . time() . '.' . $extension;
 
-            $formation->update([                
+            $formation->update([
                 'file_convention'             =>      $filePath,
             ]);
 
@@ -428,7 +428,7 @@ class FormationController extends Controller
             // Create unique file name
             $fileNameToStore = 'detfs/' . $filename . '' . time() . '.' . $extension;
 
-            $formation->update([                
+            $formation->update([
                 'detf_file'             =>      $filePath,
             ]);
 
@@ -2058,9 +2058,22 @@ class FormationController extends Controller
     {
         $regions = Region::get();
         $projets = Projet::get();
-        $title = 'rapports formés';
+        $title = 'rapports formés individuelles';
 
         return view('formes.rapports', compact(
+            'regions',
+            'projets',
+            'title'
+        ));
+    }
+
+    public function formesCollective(Request $request)
+    {
+        $regions = Region::get();
+        $projets = Projet::get();
+        $title = 'rapports formés collectives';
+
+        return view('formes.rapport-collective', compact(
             'regions',
             'projets',
             'title'
@@ -2156,6 +2169,65 @@ class FormationController extends Controller
         $projets = Projet::get();
 
         return view('formes.rapports', compact(
+            'formes',
+            'regions',
+            'projets',
+            'title'
+        ));
+    }
+    public function generateRapportFormesCollective(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required|date',
+            'to_date' => 'required|date',
+        ]);
+
+        $now =  Carbon::now()->format('H:i:s');
+
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+
+        if (isset($request->module)) {
+            $module = Collectivemodule::where('module', $request->module)->first();
+            $formes = Listecollective::join('formations', 'formations.id', 'listecollectives.formations_id')
+                ->select('listecollectives.*')
+                ->where('listecollectives.statut', 'former')
+                ->where('listecollectives.collectivemodules_id', 'LIKE', "%{$module?->id}%")
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        } else {
+            $formes = Listecollective::join('formations', 'formations.id', 'listecollectives.formations_id')
+                ->select('listecollectives.*')
+                ->where('listecollectives.statut', 'former')
+                ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
+                ->get();
+        }
+
+        $count = $formes->count();
+
+        if ($from_date == $to_date) {
+            if (isset($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé le ' . $from_date;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé le ' . $from_date;
+            } else {
+                $title = $count . ' bénéficiaires formé le ' . $from_date;
+            }
+        } else {
+            if (isset($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date;
+            } elseif (isset($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date;
+            } else {
+                $title = $count . ' bénéficiaires formés entre entre le ' . $from_date . ' et le ' . $to_date;
+            }
+        }
+
+        $regions = Region::get();
+        $projets = Projet::get();
+
+        return view('formes.rapport-collective', compact(
             'formes',
             'regions',
             'projets',

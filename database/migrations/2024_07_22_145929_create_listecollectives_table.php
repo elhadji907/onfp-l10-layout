@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('experience')->nullable();
             $table->string('autre_experience')->nullable();
             $table->longText('details')->nullable();
+            $table->longText('suivi')->nullable();
+            $table->longText('informations_suivi')->nullable();
             $table->string('statut')->nullable();
             $table->integer('nbre_pieces')->nullable();
             $table->integer('nbre_enfants')->nullable();
