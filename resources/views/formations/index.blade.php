@@ -205,7 +205,7 @@
                                 @foreach ($formations as $formation)
                                     <tr>
                                         <td style="text-align: center">{{ $formation?->code }}</td>
-                                        <td><a>{{ $formation->types_formation?->name }}</a></td>
+                                        <td>{{ $formation->types_formation?->name }}</td>
                                         <td>{{ $formation?->name }}</td>
                                         <td>{{ $formation->departement?->region?->nom }}</td>
                                         <td>

@@ -287,9 +287,17 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+        .invalide {
+            background-color: #DC3545;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
 
         .valide {
-            background-color: #198754;
+            background-color: #46a579;
             color: white;
             padding: 4px 8px;
             text-align: center;

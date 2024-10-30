@@ -11,7 +11,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+                <div
+                    class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
 
                         <div class="card-body">
@@ -200,7 +201,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="reference" class="form-label">Scan courrier</label>
                                     <input type="file" name="file" id="file"
-                                        class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                        class="form-control @error('file') is-invalid @enderror btn btn-outline-primary btn-sm">
                                     @error('file')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -211,12 +212,17 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="reference" class="form-label">Fichier</label><br>
                                     @if (isset($arrive->courrier->file))
-                                    <label for="reference" class="form-label">Cliquer ici pour télécharger</label><br>
-                                        <a class="btn btn-outline-secondary btn-sm" title="télécharger le fichier joint"
-                                            target="_blank" href="{{ asset($arrive->courrier->getFile()) }}">
-                                            <i class="bi bi-download">&nbsp;Cliquer ici pour télécharger le courrier scanné</i>
-                                        </a>
+                                        <div>
+                                            <a class="btn btn-outline-secondary btn-sm"
+                                                title="télécharger le fichier joint" target="_blank"
+                                                href="{{ asset($arrive->courrier->getFile()) }}">
+                                                <i class="bi bi-file-earmark-pdf"></i>
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="badge bg-warning">Aucun</div>
                                     @endif
                                     {{-- <img class="w-25" alt="courrier"
                                     src="{{ asset($arrive->courrier->getFile()) }}" width="50"
@@ -224,7 +230,8 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-outline-success btn-sm">Modifier</button>
+                                    <button type="submit" class="btn btn-success btn-sm">Enregistrer les
+                                        modifications</button>
                                 </div>
                             </form>
 

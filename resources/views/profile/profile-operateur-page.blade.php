@@ -308,6 +308,33 @@
                                             </div>
                                         </div>
                                     @endisset
+
+                                    @isset(Auth::user()?->telephone)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Téléphone</div>
+                                            <div class="col-lg-9 col-md-8"><a
+                                                    href="tel:+221{{ Auth::user()?->telephone }}">{{ Auth::user()?->telephone }}</a>
+                                            </div>
+                                        </div>
+                                    @endisset
+
+                                    @isset(Auth::user()?->email_responsable)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Email</div>
+                                            <div class="col-lg-9 col-md-8"><a
+                                                    href="mailto:{{ Auth::user()?->email_responsable }}">{{ Auth::user()?->email_responsable }}</a>
+                                            </div>
+                                        </div>
+                                    @endisset
+
+                                    @isset(Auth::user()?->fonction_responsable)
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label">Fonction</div>
+                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->fonction_responsable }}
+                                            </div>
+                                        </div>
+                                    @endisset
+
                                 </div>
                             </div>
                             {{-- Fin aperçu --}}

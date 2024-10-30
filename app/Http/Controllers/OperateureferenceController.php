@@ -44,7 +44,10 @@ class OperateureferenceController extends Controller
         ]);
 
         $operateureference = Operateureference::findOrFail($id);
-
+        if ($operateureference->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } 
         $operateureference->update([
             "organisme"        => $request->input("organisme"),
             "contact"          => $request->input("contact"),
@@ -69,9 +72,14 @@ class OperateureferenceController extends Controller
     public function destroy($id)
     {
         $operateureference = Operateureference::find($id);
-        $operateureference->delete();
 
-        Alert::success("Fait ! ", 'la référence a été supprimée avec succès');
-        return redirect()->back();
+        if ($operateureference->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } else {
+            $operateureference->delete();
+            Alert::success("Fait ! ", 'la référence a été supprimée avec succès');
+            return redirect()->back();
+        }
     }
 }

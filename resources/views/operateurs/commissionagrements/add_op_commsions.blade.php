@@ -62,7 +62,7 @@
                                         <tbody>
                                             <?php $i = 1; ?>
                                             @foreach ($operateurs as $operateur)
-                                                @isset($operateur?->numero_agrement)
+                                                {{-- @isset($operateur?->numero_agrement) --}}
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="operateurs[]"
@@ -133,7 +133,7 @@
                                                             </span>
                                                         </td>
                                                     </tr>
-                                                @endisset
+                                               {{--  @endisset --}}
                                             @endforeach
                                         </tbody>
                                     </table>

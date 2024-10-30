@@ -54,10 +54,9 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
-                                    <label for="cin" class="form-label">CIN<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="cin" class="form-label">CIN</label>
                                     <input type="text" name="cin" value="{{ $user->cin ?? old('cin') }}"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         id="cin" placeholder="cin">
@@ -84,7 +83,8 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="firstname" class="form-label">Prénom<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="firstname" value="{{ $user->firstname ?? old('firstname') }}"
+                                    <input type="text" name="firstname"
+                                        value="{{ $user->firstname ?? old('firstname') }}"
                                         class="form-control form-control-sm @error('firstname') is-invalid @enderror"
                                         id="firstname" placeholder="prénom">
                                     @error('firstname')
@@ -122,7 +122,8 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="lieu_naissance" class="form-label">Lieu naissance</label>
-                                    <input type="text" name="lieu_naissance" value="{{ $user->lieu_naissance ?? old('lieu_naissance') }}"
+                                    <input type="text" name="lieu_naissance"
+                                        value="{{ $user->lieu_naissance ?? old('lieu_naissance') }}"
                                         class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
                                         id="lieu_naissance" placeholder="Lieu de naissance">
                                     @error('lieu_naissance')
@@ -151,7 +152,8 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="0" minlength="9" maxlength="9" name="telephone" value="{{ $user->telephone ?? old('telephone') }}"
+                                    <input type="number" min="0" minlength="9" maxlength="9" name="telephone"
+                                        value="{{ $user->telephone ?? old('telephone') }}"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" placeholder="7xxxxxxxx">
                                     @error('telephone')
@@ -175,8 +177,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
-                                    <label for="situation_familiale" class="form-label">Situation familiale<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="situation_familiale" class="form-label">Situation familiale</label>
                                     <select name="situation_familiale"
                                         class="form-select  @error('situation_familiale') is-invalid @enderror"
                                         aria-label="Select" id="select-field-familiale"
@@ -205,46 +206,47 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
-                                    <label for="situation_profesionnelle" class="form-label">Situation profesionnelle<span
-                                            class="text-danger mx-1">*</span></label>
-                                            <select name="situation_professionnelle"
-                                                class="form-select  @error('situation_professionnelle') is-invalid @enderror"
-                                                aria-label="Select" id="select-field-professionnelle"
-                                                data-placeholder="Choisir situation professionnelle">
-                                                <option value="{{ $user->situation_professionnelle ?? old('situation_professionnelle') }}">
-                                                    {{ $user->situation_professionnelle ?? old('situation_professionnelle') }}
-                                                </option>
-                                                <option value="Employé(e)">
-                                                    Employé(e)
-                                                </option>
-                                                <option value="Informel">
-                                                    Informel
-                                                </option>
-                                                <option value="Elève ou étudiant">
-                                                    Elève ou étudiant
-                                                </option>
-                                                <option value="chercheur emploi">
-                                                    chercheur emploi
-                                                </option>
-                                                <option value="Stage ou période essai">
-                                                    Stage ou période essai
-                                                </option>
-                                                <option value="Entrepreneur ou freelance">
-                                                    Entrepreneur ou freelance
-                                                </option>
-                                            </select>
-                                            @error('situation_professionnelle')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
+                                    <label for="situation_profesionnelle" class="form-label">Situation
+                                        profesionnelle</label>
+                                    <select name="situation_professionnelle"
+                                        class="form-select  @error('situation_professionnelle') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-professionnelle"
+                                        data-placeholder="Choisir situation professionnelle">
+                                        <option
+                                            value="{{ $user->situation_professionnelle ?? old('situation_professionnelle') }}">
+                                            {{ $user->situation_professionnelle ?? old('situation_professionnelle') }}
+                                        </option>
+                                        <option value="Employé(e)">
+                                            Employé(e)
+                                        </option>
+                                        <option value="Informel">
+                                            Informel
+                                        </option>
+                                        <option value="Elève ou étudiant">
+                                            Elève ou étudiant
+                                        </option>
+                                        <option value="chercheur emploi">
+                                            chercheur emploi
+                                        </option>
+                                        <option value="Stage ou période essai">
+                                            Stage ou période essai
+                                        </option>
+                                        <option value="Entrepreneur ou freelance">
+                                            Entrepreneur ou freelance
+                                        </option>
+                                    </select>
+                                    @error('situation_professionnelle')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="password" class="form-label">Modifier mot de passe</label>
                                     <input type="password" name="password"
-                                        class="form-control form-control-sm @error('password') is-invalid @enderror" id="password"
-                                        placeholder="Votre mot de passe">
+                                        class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                        id="password" placeholder="Votre mot de passe">
                                     <div class="invalid-feedback">
                                         @error('password')
                                             {{ $message }}

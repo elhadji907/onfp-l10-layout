@@ -278,12 +278,12 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-6 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                             <label for="quitus" class="form-label">N° quitus fiscal<span
                                                     class="text-danger mx-1">*</span></label>
 
                                             <input type="file" name="quitus" id="quitus"
-                                                class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                                class="form-control @error('quitus') is-invalid @enderror btn btn-outline-primary btn-sm">
                                             @error('quitus')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -296,14 +296,19 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror --}}
-                                            @isset($operateur?->quitus)
-                                                <div class="pt-2">
-                                                    <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                            <label for="file_convention" class="form-label">Fichier</label>
+                                            @if(!empty($operateur?->quitus))
+                                                <div>
+                                                    <a class="btn btn-outline-secondary btn-sm" title="Convention"
                                                         target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
-                                                        <i class="bi bi-file-image"></i>
+                                                        <i class="bi bi-file-earmark-image"></i>
                                                     </a>
                                                 </div>
-                                            @endisset
+                                            @else
+                                                <div class="badge bg-warning">Aucun</div>
+                                            @endif
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_quitus" class="form-label">Date délivrance<span

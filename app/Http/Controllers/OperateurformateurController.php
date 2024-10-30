@@ -32,7 +32,7 @@ class OperateurformateurController extends Controller
 
         return redirect()->back();
     }
-    
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -43,7 +43,10 @@ class OperateurformateurController extends Controller
         ]);
 
         $operateurformateur = Operateurformateur::findOrFail($id);
-
+        if ($operateurformateur->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } 
         $operateurformateur->update([
             "name"                      => $request->input("name"),
             "domaine"                   => $request->input("domaine"),
@@ -68,9 +71,15 @@ class OperateurformateurController extends Controller
     public function destroy($id)
     {
         $operateurformateur = Operateurformateur::find($id);
-        $operateurformateur->delete();
+        if ($operateurformateur->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } else {
 
-        Alert::success("Fait ! ", 'supprimé avec succès');
-        return redirect()->back();
+            $operateurformateur->delete();
+
+            Alert::success("Fait ! ", 'supprimé avec succès');
+            return redirect()->back();
+        }
     }
 }

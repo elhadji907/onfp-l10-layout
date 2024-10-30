@@ -63,6 +63,7 @@ class OperateurController extends Controller
         $operateur_new      = Operateur::where('type_demande', 'Nouvelle')->count();
         $operateur_renew    = Operateur::where('type_demande', 'Renouvellement')->count();
         $operateur_total    = Operateur::where('type_demande', 'Nouvelle')->orwhere('type_demande', 'Renouvellement')->count();
+
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_new = ((($operateur_new) / ($operateur_total)) * 100);
             $pourcentage_renew = ((($operateur_renew) / ($operateur_total)) * 100);
@@ -80,6 +81,11 @@ class OperateurController extends Controller
         $operateur = Operateur::findOrFail($id);
         $operateurs = Operateur::get();
         $operateureferences = Operateureference::get();
+        foreach (Auth::user()->roles as $key => $role) {
+            if (!empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+                $this->authorize('view', $operateur);
+            }
+        }
         return view("operateurs.agrement", compact("operateurs", "operateur", "operateureferences"));
     }
     public function store(Request $request)
@@ -281,6 +287,12 @@ class OperateurController extends Controller
             "date_quitus"           =>      "required|string",
         ]);
 
+        foreach (Auth::user()->roles as $key => $role) {
+            if (!empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+                $this->authorize('view', $operateur);
+            }
+        }
+
         $op = Operateur::create([
             "numero_agrement"      =>       null,
             "categorie"            =>       $operateur?->categorie,
@@ -288,6 +300,7 @@ class OperateurController extends Controller
             "statut_agrement"      =>       'nouveau',
             "autre_statut"         =>       $operateur?->autre_statut,
             "type_demande"         =>       'Renouvellement',
+            "annee_agrement"       =>       date('Y-m-d'),
             "rccm"                 =>       $operateur?->registre_commerce, /* choisir ninea ou rccm */
             "ninea"                =>       $operateur?->ninea, /* enregistrer le numero de la valeur choisi (ninea ou rccm) */
             /* "quitus"               =>       $request->input("quitus"), */
@@ -379,6 +392,11 @@ class OperateurController extends Controller
         $operateur = Operateur::findOrFail($id);
         $user      = $operateur->user;
         $departement = Departement::findOrFail($request->input("departement"));
+        foreach (Auth::user()->roles as $key => $role) {
+            if (!empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+                $this->authorize('update', $operateur);
+            }
+        }
 
         $this->validate($request, [
             "operateur"             =>      ['required', 'string', Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
@@ -447,6 +465,11 @@ class OperateurController extends Controller
     {
         $operateur = Operateur::findOrFail($id);
         $departements = Departement::orderBy("created_at", "desc")->get();
+        foreach (Auth::user()->roles as $key => $role) {
+            if (!empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+                $this->authorize('view', $operateur);
+            }
+        }
         return view("operateurs.update", compact("operateur", "departements"));
     }
 
@@ -455,6 +478,14 @@ class OperateurController extends Controller
         $operateur = Operateur::findOrFail($id);
         $operateurs = Operateur::get();
         $operateureferences = Operateureference::get();
+        $user = $operateur->user;
+
+        foreach (Auth::user()->roles as $key => $role) {
+            if (!empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+                $this->authorize('view', $operateur);
+            }
+        }
+
         return view("operateurs.show", compact("operateur", "operateureferences", "operateurs"));
     }
 
@@ -469,8 +500,16 @@ class OperateurController extends Controller
     public function destroy($id)
     {
         $operateur = Operateur::find($id);
+        if ($operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } 
+        foreach (Auth::user()->roles as $key => $role) {
+            if (!empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+                $this->authorize('delete', $operateur);
+            }
+        }
         $operateur->delete();
-
         Alert::success("Fait " . $operateur?->user?->username, 'a été supprimé');
         return redirect()->back();
     }
@@ -742,7 +781,7 @@ class OperateurController extends Controller
             if ($operateur_module_count > 0) {
                 $module_count = "valide";
             } else {
-                $module_count = "incomplète";
+                $module_count = "invalide";
             }
 
             $operateur_reference_count = Operateureference::where('operateurs_id', $operateur_module?->id)->count();
@@ -750,7 +789,7 @@ class OperateurController extends Controller
             if ($operateur_reference_count > 0) {
                 $reference_count = "valide";
             } else {
-                $reference_count = "incomplète";
+                $reference_count = "invalide";
             }
 
             $operateur_equipement_count = Operateurequipement::where('operateurs_id', $operateur_module?->id)->count();
@@ -758,7 +797,7 @@ class OperateurController extends Controller
             if ($operateur_equipement_count > 0) {
                 $equipement_count = "valide";
             } else {
-                $equipement_count = "incomplète";
+                $equipement_count = "invalide";
             }
 
             $operateur_formateur_count = Operateurformateur::where('operateurs_id', $operateur_module?->id)->count();
@@ -766,7 +805,7 @@ class OperateurController extends Controller
             if ($operateur_formateur_count > 0) {
                 $formateur_count = "valide";
             } else {
-                $formateur_count = "incomplète";
+                $formateur_count = "invalide";
             }
 
             $operateur_localite_count = Operateurlocalite::where('operateurs_id', $operateur_module?->id)->count();
@@ -774,7 +813,7 @@ class OperateurController extends Controller
             if ($operateur_localite_count > 0) {
                 $localite_count = "valide";
             } else {
-                $localite_count = "incomplète";
+                $localite_count = "invalide";
             }
 
             if (
@@ -786,7 +825,7 @@ class OperateurController extends Controller
             ) {
                 $statut_demande = "valide";
             } else {
-                $statut_demande = "incomplète";
+                $statut_demande = "invalide";
             }
 
             return view(
@@ -801,7 +840,7 @@ class OperateurController extends Controller
                     "reference_count",
                     "equipement_count",
                     "formateur_count",
-                    "localite_count"
+                    "localite_count",
                 )
             );
         } else {

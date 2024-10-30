@@ -40,7 +40,7 @@
                                 <table class="table datatables align-middle" id="table-formes">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="text-center">N°</th>
+                                            {{-- <th scope="col" class="text-center">N°</th> --}}
                                             <th scope="col" class="text-center">CIN</th>
                                             <th scope="col">Civilité</th>
                                             <th scope="col">Prénom</th>
@@ -61,7 +61,7 @@
                                         <?php $i = 1; ?>
                                         @foreach ($formes as $listecollective)
                                             <tr>
-                                                <td class="text-center">{{ $i++ }}</td>
+                                                {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                                 <td class="text-center">{{ $listecollective?->cin }}</td>
                                                 <td>{{ $listecollective?->civilite }}</td>
                                                 <td>{{ $listecollective?->prenom }}</td>

@@ -1,17 +1,17 @@
 @extends('layout.user-layout')
-@section('title', $operateur?->sigle)
+@section('title', $operateur?->user?->username)
 @section('space-work')
     @can('operateur-show')
         <section
             class="section profile min-vh-0 d-flex flex-column align-items-center justify-content-center py-0 section profile">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="pagetitle">
                     {{-- <h1>Data Tables</h1> --}}
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                             <li class="breadcrumb-item">Tables</li>
-                            <li class="breadcrumb-item active">{{ $operateur?->name }}</li>
+                            <li class="breadcrumb-item active">{{ $operateur?->user?->username }}</li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
@@ -185,9 +185,20 @@
                                                 <div>{{ $operateur?->user?->name }}</div>
                                             </div>
                                             <div class="col-12 col-md-4 col-lg-4 mb-2">
+                                                <div class="label">Email</div>
+                                                <div><a
+                                                        href="mailto:{{ $operateur?->user?->email_responsable }}">{{ $operateur?->user?->email_responsable }}</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4 mb-2">
                                                 <div class="label">Téléphone</div>
                                                 <div><a
-                                                        href="tel:+221{{ $operateur?->telephone }}">{{ $operateur?->telephone }}</a>
+                                                        href="tel:+221{{ $operateur?->user?->telephone }}">{{ $operateur?->user?->telephone }}</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4 mb-2">
+                                                <div class="label">Fonction</div>
+                                                <div>{{ $operateur?->user?->fonction_responsable }}
                                                 </div>
                                             </div>
                                         </form>
@@ -202,16 +213,18 @@
 
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
-                                                <h5 class="card-title">
-                                                    <a href="{{ route('showReference', ['id' => $operateur?->id]) }}"
-                                                        class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                    {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                @can('devenir-operateur-agrement-ouvert')
+                                                    <h5 class="card-title">
+                                                        <a href="{{ route('showReference', ['id' => $operateur?->id]) }}"
+                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                            target="_blank">
+                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#AddRefModal">
                                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                                 </button> --}}
-                                                </h5>
+                                                    </h5>
+                                                @endcan
                                             </div>
 
                                             <table
@@ -272,16 +285,18 @@
                                             @method('PUT')
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
-                                                <h5 class="card-title">
-                                                    <a href="{{ route('showEquipement', ['id' => $operateur?->id]) }}"
-                                                        class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                    {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                @can('devenir-operateur-agrement-ouvert')
+                                                    <h5 class="card-title">
+                                                        <a href="{{ route('showEquipement', ['id' => $operateur?->id]) }}"
+                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                            target="_blank">
+                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#AddRefModal">
                                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                                 </button> --}}
-                                                </h5>
+                                                    </h5>
+                                                @endcan
                                             </div>
                                             <table
                                                 class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
@@ -347,16 +362,18 @@
                                             @method('PUT')
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">FORMATEURS</h5>
-                                                <h5 class="card-title">
-                                                    <a href="{{ route('showFormateur', ['id' => $operateur?->id]) }}"
-                                                        class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                    {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                @can('devenir-operateur-agrement-ouvert')
+                                                    <h5 class="card-title">
+                                                        <a href="{{ route('showFormateur', ['id' => $operateur?->id]) }}"
+                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                            target="_blank">
+                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#AddRefModal">
                                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                                 </button> --}}
-                                                </h5>
+                                                    </h5>
+                                                @endcan
                                             </div>
                                             <table
                                                 class="table table-bordered table-hover datatables align-middle justify-content-center">
@@ -420,16 +437,18 @@
                                             @method('PUT')
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">LOCALITES</h5>
-                                                <h5 class="card-title">
-                                                    <a href="{{ route('showLocalite', ['id' => $operateur?->id]) }}"
-                                                        class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                    {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                @can('devenir-operateur-agrement-ouvert')
+                                                    <h5 class="card-title">
+                                                        <a href="{{ route('showLocalite', ['id' => $operateur?->id]) }}"
+                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                            target="_blank">
+                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#AddRefModal">
                                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                                 </button> --}}
-                                                </h5>
+                                                    </h5>
+                                                @endcan
                                             </div>
                                             <table
                                                 class="table table-bordered table-hover datatables align-middle justify-content-center">
@@ -461,75 +480,77 @@
                                         <form method="post" action="{{ url('operateurmodules') }}"
                                             enctype="multipart/form-data" class="row g-3">
                                             @csrf
-                                            <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                                <table class="table table-bordered table-hover" id="dynamicAddRemove">
+                                            @can('devenir-operateur-agrement-ouvert')
+                                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                                    <table class="table table-bordered table-hover" id="dynamicAddRemove">
 
-                                                    <tr>
-                                                        <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
-                                                        <th>NIVEAU QUALIFICATION<span class="text-danger mx-1">*</span>
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <input type="hidden" name="operateur"
-                                                            value="{{ $operateur?->id }}">
-                                                        <td>
-                                                            <input type="text" name="module" id="module_operateur"
-                                                                class="form-control form-control-sm"
-                                                                placeholder="Module ou spécialité" />
-                                                            <div id="moduleList"></div>
-                                                            {{ csrf_field() }}
-                                                            <p class="small fst-italic">
-                                                                <small>{{ __('Le nombre de modules est limité à deux') }}</small>
-                                                                <small>
-                                                                    {{ __(' sauf pour les établissements publics ') }}</small>
-                                                            </p>
-                                                        </td>
-                                                        <td><input type="text" name="categorie"
-                                                                placeholder="Niveau de qualification"
-                                                                class="form-control form-control-sm" />
-                                                            <p class="small fst-italic">
-                                                                <small>{{ __("Préciser le niveau de qualification,l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
-                                                                <small>{{ __("d'une pré-qualification ou qualification") }}</small>
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>DOMAINE<span class="text-danger mx-1">*</span></th>
-                                                        <th>QUALIFICATION CORRESPONDANTE
-                                                            <span class="text-danger mx-1">*</span>
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input type="text" name="domaine"
-                                                                placeholder="Domaine d'intervention"
-                                                                class="form-control form-control-sm" />
-                                                        </td>
-                                                        <td>
-                                                            <select name="niveau_qualification"
-                                                                class="form-select form-select-sm @error('niveau_qualification') is-invalid @enderror"
-                                                                aria-label="Select" id="select-field-civilite"
-                                                                data-placeholder="Choisir qualification">
-                                                                <option value="">
-                                                                    {{ old('niveau_qualification') }}
-                                                                </option>
-                                                                <option value="Initiation">
-                                                                    Initiation
-                                                                </option>
-                                                                <option value="Pré-qualification">
-                                                                    Pré-qualification
-                                                                </option>
-                                                                <option value="Qualification">
-                                                                    Qualification
-                                                                </option>
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-success btn-sm"><i
-                                                            class="bi bi-printer"></i> Enregistrer</button>
+                                                        <tr>
+                                                            <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
+                                                            <th>NIVEAU QUALIFICATION<span class="text-danger mx-1">*</span>
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <input type="hidden" name="operateur"
+                                                                value="{{ $operateur?->id }}">
+                                                            <td>
+                                                                <input type="text" name="module" id="module_operateur"
+                                                                    class="form-control form-control-sm"
+                                                                    placeholder="Module ou spécialité" />
+                                                                <div id="moduleList"></div>
+                                                                {{ csrf_field() }}
+                                                                <p class="small fst-italic">
+                                                                    <small>{{ __('Le nombre de modules est limité à deux') }}</small>
+                                                                    <small>
+                                                                        {{ __(' sauf pour les établissements publics ') }}</small>
+                                                                </p>
+                                                            </td>
+                                                            <td><input type="text" name="categorie"
+                                                                    placeholder="Niveau de qualification"
+                                                                    class="form-control form-control-sm" />
+                                                                <p class="small fst-italic">
+                                                                    <small>{{ __("Préciser le niveau de qualification,l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
+                                                                    <small>{{ __("d'une pré-qualification ou qualification") }}</small>
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>DOMAINE<span class="text-danger mx-1">*</span></th>
+                                                            <th>QUALIFICATION CORRESPONDANTE
+                                                                <span class="text-danger mx-1">*</span>
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" name="domaine"
+                                                                    placeholder="Domaine d'intervention"
+                                                                    class="form-control form-control-sm" />
+                                                            </td>
+                                                            <td>
+                                                                <select name="niveau_qualification"
+                                                                    class="form-select form-select-sm @error('niveau_qualification') is-invalid @enderror"
+                                                                    aria-label="Select" id="select-field-civilite"
+                                                                    data-placeholder="Choisir qualification">
+                                                                    <option value="">
+                                                                        {{ old('niveau_qualification') }}
+                                                                    </option>
+                                                                    <option value="Initiation">
+                                                                        Initiation
+                                                                    </option>
+                                                                    <option value="Pré-qualification">
+                                                                        Pré-qualification
+                                                                    </option>
+                                                                    <option value="Qualification">
+                                                                        Qualification
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-outline-success btn-sm"><i
+                                                                class="bi bi-printer"></i> Enregistrer</button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endcan
 
                                         </form><!-- End module -->
 
@@ -613,18 +634,19 @@
                                                                         class="{{ $operateurmodule?->statut }}">{{ $operateurmodule?->statut }}</span>
                                                                 </td>
                                                                 <td style="text-align: center;">
-                                                                    <span
-                                                                        class="d-flex align-items-baseline justify-content-center">
-                                                                        <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
-                                                                            class="btn btn-primary btn-sm"
-                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                        <div class="filter">
-                                                                            <a class="icon" href="#"
-                                                                                data-bs-toggle="dropdown"><i
-                                                                                    class="bi bi-three-dots"></i></a>
-                                                                            <ul
-                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                {{--  <form
+                                                                    @can('devenir-operateur-agrement-show')
+                                                                        <span
+                                                                            class="d-flex align-items-baseline justify-content-center">
+                                                                            <a href="{{ route('operateurmodules.show', $operateurmodule->id) }}"
+                                                                                class="btn btn-primary btn-sm"
+                                                                                title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                            <div class="filter">
+                                                                                <a class="icon" href="#"
+                                                                                    data-bs-toggle="dropdown"><i
+                                                                                        class="bi bi-three-dots"></i></a>
+                                                                                <ul
+                                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                                    {{--  <form
                                                                                 action="{{ route('validation-operateur-modules.update', $operateurmodule->id) }}"
                                                                                 method="post">
                                                                                 @csrf
@@ -632,26 +654,31 @@
                                                                                 <button
                                                                                     class="show_confirm_valider dropdown-item btn btn-sm mx-1">Agréer</button>
                                                                             </form> --}}
-                                                                                {{-- <button class="dropdown-item btn btn-sm mx-1"
+                                                                                    {{-- <button class="dropdown-item btn btn-sm mx-1"
                                                                                 data-bs-toggle="modal"
                                                                                 data-bs-target="#AddRegionModal{{ $operateurmodule->id }}">Rejeter
                                                                             </button> --}}
-                                                                                <button class="dropdown-item btn btn-sm mx-1"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
-                                                                                </button>
-                                                                                <form
-                                                                                    action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item show_confirm"
-                                                                                        title="Supprimer">Supprimer</button>
-                                                                                </form>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </span>
+                                                                                    @can('devenir-operateur-agrement-update')
+                                                                                        <button class="dropdown-item btn btn-sm mx-1"
+                                                                                            data-bs-toggle="modal"
+                                                                                            data-bs-target="#EditOperateurmoduleModal{{ $operateurmodule->id }}">Modifier
+                                                                                        </button>
+                                                                                    @endcan
+                                                                                    @can('devenir-operateur-agrement-delete')
+                                                                                        <form
+                                                                                            action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}"
+                                                                                            method="post">
+                                                                                            @csrf
+                                                                                            @method('DELETE')
+                                                                                            <button type="submit"
+                                                                                                class="dropdown-item show_confirm"
+                                                                                                title="Supprimer">Supprimer</button>
+                                                                                        </form>
+                                                                                    @endcan
+                                                                                </ul>
+                                                                            </div>
+                                                                        </span>
+                                                                    @endcan
                                                                 </td>
                                                             </tr>
                                                         @endforeach

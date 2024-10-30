@@ -31,7 +31,6 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        // examples:
         $this->middleware('auth');
         $this->middleware(['role:super-admin|admin|DIOF|DEC|DPP']);
         $this->middleware("permission:role-view", ["only" => ["index"]]);
@@ -40,9 +39,6 @@ class UserController extends Controller
         $this->middleware("permission:role-show", ["only" => ["show"]]);
         $this->middleware("permission:role-delete", ["only" => ["destroy"]]);
         $this->middleware("permission:give-role-permissions", ["only" => ["givePermissionsToRole"]]);
-        /* $this->middleware(['permission:arrive-show']); */
-        // or with specific guard
-        /* $this->middleware(['role_or_permission:super-admin']); */
     }
 
     public function homePage()
@@ -293,7 +289,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'civilite'         => ['nullable', 'string', 'max:10'],
                 'username'         => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
-                "cin"              => ["required", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
+                "cin"              => ["nullable", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
                 'firstname'        => ['required', 'string', 'max:150'],
                 'name'             => ['required', 'string', 'max:50'],
                 'date_naissance'   => ['string', 'nullable'],

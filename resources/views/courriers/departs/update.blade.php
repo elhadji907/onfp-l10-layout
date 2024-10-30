@@ -11,7 +11,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+                <div
+                    class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
 
                         <div class="card-body">
@@ -35,7 +36,8 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_depart" class="form-label">Date départ<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="date" name="date_depart" value="{{ $depart->courrier->date_depart?->format('Y-m-d') ?? old('date_depart') }}"
+                                    <input type="date" name="date_depart"
+                                        value="{{ $depart->courrier->date_depart?->format('Y-m-d') ?? old('date_depart') }}"
                                         class="form-control form-control-sm @error('date_depart') is-invalid @enderror"
                                         id="date_depart" placeholder="Date départ">
                                     @error('date_depart')
@@ -94,7 +96,8 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="annee" class="form-label">Année<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="2024" name="annee" value="{{ $depart->courrier->annee ?? old('annee') }}"
+                                    <input type="number" min="2024" name="annee"
+                                        value="{{ $depart->courrier->annee ?? old('annee') }}"
                                         class="form-control form-control-sm @error('annee') is-invalid @enderror"
                                         id="annee" placeholder="Année">
                                     @error('annee')
@@ -107,7 +110,8 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="destinataire" class="form-label">Destinataire<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="destinataire" value="{{ $depart->destinataire ?? old('destinataire') }}"
+                                    <input type="text" name="destinataire"
+                                        value="{{ $depart->destinataire ?? old('destinataire') }}"
                                         class="form-control form-control-sm @error('destinataire') is-invalid @enderror"
                                         id="destinataire" placeholder="Destinataire">
                                     @error('destinataire')
@@ -120,7 +124,8 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="objet" value="{{ $depart->courrier->objet ?? old('objet') }}"
+                                    <input type="text" name="objet"
+                                        value="{{ $depart->courrier->objet ?? old('objet') }}"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror"
                                         id="objet" placeholder="Objet">
                                     @error('objet')
@@ -132,7 +137,8 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="service_expediteur" class="form-label">Service expéditeur</label>
-                                    <input type="text" name="service_expediteur" value="{{ $depart->courrier->reference ?? old('service_expediteur') }}"
+                                    <input type="text" name="service_expediteur"
+                                        value="{{ $depart->courrier->reference ?? old('service_expediteur') }}"
                                         class="form-control form-control-sm @error('service_expediteur') is-invalid @enderror"
                                         id="service_expediteur" placeholder="Service expéditeur">
                                     @error('service_expediteur')
@@ -207,19 +213,25 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="reference" class="form-label">Fichier</label><br>
                                     @if (isset($depart->courrier->file))
-                                    <label for="reference" class="form-label">Cliquer ici pour télécharger</label><br>
-                                        <a class="btn btn-outline-secondary btn-sm" title="télécharger le fichier joint"
-                                            target="_blank" href="{{ asset($depart->courrier->getFile()) }}">
-                                            <i class="bi bi-download">&nbsp;Cliquer ici pour télécharger le courrier scanné</i>
-                                        </a>
+                                        <div>
+                                            <a class="btn btn-outline-secondary btn-sm"
+                                                title="télécharger le fichier joint" target="_blank"
+                                                href="{{ asset($depart->courrier->getFile()) }}">
+                                                <i class="bi bi-file-earmark-pdf"></i>
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="badge bg-warning">Aucun</div>
                                     @endif
                                     {{-- <img class="w-25" alt="courrier"
                                     src="{{ asset($depart->courrier->getFile()) }}" width="50"
                                     height="auto"> --}}
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
+                                    <button type="submit" class="btn btn-success btn-sm">Enregistrer les
+                                        modifications</button>
                                 </div>
                             </form>
 

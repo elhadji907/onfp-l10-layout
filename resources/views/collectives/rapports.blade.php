@@ -112,7 +112,8 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label>De</label>
+                                                <label for="from_date" class="form-label">De<span
+                                                        class="text-danger mx-1">*</span></label>
                                                 <input type="date" name="from_date"
                                                     class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
                                             </div>
@@ -124,7 +125,8 @@
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label>À</label>
+                                                <label for="to_date" class="form-label">À<span
+                                                        class="text-danger mx-1">*</span></label>
                                                 <input type="date" name="to_date"
                                                     class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
                                             </div>
@@ -136,34 +138,35 @@
                                         </div>
 
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <label for="statut" class="form-label">Statut juridique<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <select name="statut"
-                                                class="form-select  @error('statut') is-invalid @enderror"
-                                                aria-label="Select" id="select-field-statut-collective"
-                                                data-placeholder="Choisir statut">
-                                                <option value="{{ old('statut') }}">
-                                                    {{ old('statut') }}
-                                                </option>
-                                                <option value="GIE">
-                                                    GIE
-                                                </option>
-                                                <option value="Association">
-                                                    Association
-                                                </option>
-                                                <option value="Entreprise">
-                                                    Entreprise
-                                                </option>
-                                                <option value="Institution publique">
-                                                    Institution publique
-                                                </option>
-                                                <option value="Institution privée">
-                                                    Institution privée
-                                                </option>
-                                                <option value="Autre">
-                                                    Autre
-                                                </option>
-                                            </select>
+                                            <label for="statut" class="form-label">Statut juridique</label>
+                                            <div class="form-group">
+                                                <select name="statut"
+                                                    class="form-select  @error('statut') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-statut-collective"
+                                                    data-placeholder="Choisir statut">
+                                                    <option value="{{ old('statut') }}">
+                                                        {{ old('statut') }}
+                                                    </option>
+                                                    <option value="GIE">
+                                                        GIE
+                                                    </option>
+                                                    <option value="Association">
+                                                        Association
+                                                    </option>
+                                                    <option value="Entreprise">
+                                                        Entreprise
+                                                    </option>
+                                                    <option value="Institution publique">
+                                                        Institution publique
+                                                    </option>
+                                                    <option value="Institution privée">
+                                                        Institution privée
+                                                    </option>
+                                                    <option value="Autre">
+                                                        Autre
+                                                    </option>
+                                                </select>
+                                            </div>
                                             @error('statut')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>

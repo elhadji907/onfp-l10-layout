@@ -32,7 +32,7 @@ class OperateurequipementController extends Controller
 
         return redirect()->back();
     }
-    
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -43,7 +43,10 @@ class OperateurequipementController extends Controller
         ]);
 
         $operateurequipement = Operateurequipement::findOrFail($id);
-
+        if ($operateurequipement->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } 
         $operateurequipement->update([
             "designation"       => $request->input("designation"),
             "quantite"          => $request->input("quantite"),
@@ -68,9 +71,16 @@ class OperateurequipementController extends Controller
     public function destroy($id)
     {
         $operateurequipement = Operateurequipement::find($id);
-        $operateurequipement->delete();
+        if ($operateurequipement->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } else {
 
-        Alert::success("Fait ! ", 'supprimé avec succès');
-        return redirect()->back();
+            $operateurequipement->delete();
+
+            Alert::success("Fait ! ", 'supprimé avec succès');
+            return redirect()->back();
+            
+        }
     }
 }

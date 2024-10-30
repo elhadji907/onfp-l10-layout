@@ -35,7 +35,10 @@ class OperateurlocaliteController extends Controller
         ]);
 
         $operateurlocalite = Operateurlocalite::findOrFail($id);
-
+        if ($operateurlocalite->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } 
         $operateurlocalite->update([
             "name"              => $request->input("name"),
             "region"            => $request->input("region"),
@@ -48,13 +51,18 @@ class OperateurlocaliteController extends Controller
 
         return redirect()->back();
     }
-    
+
     public function destroy($id)
     {
         $operateurlocalite = Operateurlocalite::find($id);
-        $operateurlocalite->delete();
+        if ($operateurlocalite->operateur->statut_agrement != 'nouveau') {
+            Alert::warning('Attention ! ', 'action impossible');
+            return redirect()->back();
+        } else {
+            $operateurlocalite->delete();
 
-        Alert::success("Fait ! ", 'la localité a été supprimée avec succès');
-        return redirect()->back();
+            Alert::success("Fait ! ", 'la localité a été supprimée avec succès');
+            return redirect()->back();
+        }
     }
 }

@@ -101,7 +101,7 @@
                 </ul>
             </li>
         @endcan
-        @can('operateur-demande-view')
+        @can('devenir-operateur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demandeurs-operateur-nav" data-bs-toggle="collapse"
                     href="#">
@@ -501,7 +501,7 @@
         @can('file-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('files.index') }}">
-                    <i class="bi bi-files"></i> <span>Files</span>
+                    <i class="bi bi-files"></i> <span>Fichiers utilisateurs</span>
                 </a>
             </li>
         @endcan

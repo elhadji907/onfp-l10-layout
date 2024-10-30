@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
         'operateur-demande-create',
         'operateur-demande-update',
         'operateur-demande-show',
-        'operateur-demande-view',
+        'devenir-operateur-view',
         'operateur-demande-delete',
         'agrement-create',
         'agrement-update',
@@ -265,6 +265,12 @@ class DatabaseSeeder extends Seeder
         'abe-formation',
         'jury-formation',
         'retirer-demandeur-formation',
+        'devenir-operateur-agrement-create',
+        'devenir-operateur-agrement-update',
+        'devenir-operateur-agrement-show',
+        'devenir-operateur-agrement-view',
+        'devenir-operateur-agrement-delete',
+        'devenir-operateur-agrement-ouvert',
     ];
 
     public function run(): void

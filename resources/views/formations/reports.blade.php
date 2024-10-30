@@ -40,8 +40,7 @@
                                             <th rowspan="2" style="vertical-align: middle;">REGIONS</th>
                                             <th rowspan="2" style="vertical-align: middle;">LIEUX</th>
                                             <th rowspan="2" style="vertical-align: middle;">MODULES</th>
-                                            {{-- <th rowspan="2" style="vertical-align: middle;">Domaine</th>
-                                            <th rowspan="2" style="vertical-align: middle;">secteur</th> --}}
+                                            <th rowspan="2" style="vertical-align: middle;">TYPE FORMATION</th>
                                             <th rowspan="2" style="vertical-align: middle;">BENEFICIAIRES</th>
                                             <th rowspan="2" style="vertical-align: middle;">N° LM ET DATE</th>
                                             <th colspan="3" class="text-center">PREVUS</th>
@@ -54,6 +53,7 @@
                                             <th rowspan="2" style="vertical-align: middle;">NIVEAU QUALIF.</th>
                                             <th rowspan="2" style="vertical-align: middle;">OPERATEUR</th>
                                             <th rowspan="2" style="vertical-align: middle;">SUIVI DOSSIER</th>
+                                            <th rowspan="2" style="vertical-align: middle;">STATUT</th>
                                         </tr>
                                         <tr>
                                             <th>HOMMES</th>
@@ -73,30 +73,21 @@
                                                 <tr>
                                                     <td>{{ $formation?->departement?->region?->nom }}</td>
                                                     <td>{{ $formation?->lieu }}</td>
-                                                    @isset($formation?->module?->name)
-                                                        <td>
+                                                    <td>
+                                                        @if (!empty($formation?->module?->name))
                                                             {{ $formation?->module?->name }}
-                                                        </td>
-                                                        {{--  <td>
-                                                            {{ $formation?->module?->domaine?->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $formation?->module?->domaine?->secteur?->name }}
-                                                        </td> --}}
-                                                    @endisset
-                                                    @isset($formation?->collectivemodule?->module)
-                                                        <td>
+                                                        @elseif (!empty($formation?->collectivemodule?->module))
                                                             {{ $formation?->collectivemodule?->module }}
-                                                        </td>
-                                                        {{-- <td>
-                                                            {{ $formation?->collectivemodule?->domaine }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $formation?->collectivemodule?->secteur }}
-                                                        </td> --}}
-                                                    @endisset
+                                                        @else
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $formation->types_formation?->name }}</td>
                                                     <td>{{ $formation?->name }}</td>
-                                                    <td>{{ $formation?->lettre_mission . ' du ' . $formation?->date_lettre?->format('d/m/Y') }}</td>
+                                                    <td>
+                                                        @if (!empty($formation?->lettre_mission))
+                                                            {{ $formation?->lettre_mission . ' du ' . $formation?->date_lettre?->format('d/m/Y') }}
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $formation?->prevue_h }}</td>
                                                     <td>{{ $formation?->prevue_f }}</td>
                                                     <td>{{ $formation?->effectif_prevu }}</td>
@@ -106,7 +97,10 @@
                                                     <td>{{ $formation?->total }}</td>
                                                     <td>{{ date_format(date_create($formation?->date_debut), 'd/m/Y') }}</td>
                                                     <td>{{ date_format(date_create($formation?->date_fin), 'd/m/Y') }}</td>
-                                                    <td>{{ $formation?->numero_convention . ' du ' . $formation?->date_convention?->format('d/m/Y') }}
+                                                    <td>
+                                                        @if (!empty($formation?->numero_convention))
+                                                            {{ $formation?->numero_convention . ' du ' . $formation?->date_convention?->format('d/m/Y') }}
+                                                        @endif
                                                     </td>
                                                     <td>{{ $formation?->frais_operateurs }}</td>
                                                     <td>{{ $formation?->frais_add }}</td>
@@ -122,8 +116,12 @@
                                                         @endif
                                                     </td>
                                                     <td>{{ $formation?->operateur?->user?->username }}</td>
-                                                    <td>{{ $formation?->ingenieur?->name . ' (' . $formation?->ingenieur?->initiale . ')' }}
+                                                    <td>
+                                                        @if (!empty($formation?->ingenieur?->initiale))
+                                                            {{ $formation?->ingenieur?->name . ' (' . $formation?->ingenieur?->initiale . ')' }}
+                                                        @endif
                                                     </td>
+                                                    <td>{{ $formation?->statut }}</td>
                                                 </tr>
                                             @endif
                                         @endforeach
