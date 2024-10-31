@@ -66,30 +66,14 @@
 </head>
 
 <body>
-    <main>
-        <div class="container">
+    @include('navbar')
+    <main id="main" class="main">
+        <div class="container-fluid">
             <section
-                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                class="section dashboard register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="row col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-center py-0">
-                                    <a href="{{ url('/register-page') }}"
-                                        class="logo d-flex align-items-center w-auto">
-                                        <h5 class="card-title">ONFP</h5>
-                                    </a>
-                                </div>
 
-                                <!-- Slides with captions -->
-                                @include('user.slide-image')
-                                <!-- End Slides with captions -->
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card mb-0">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center py-0">
@@ -98,9 +82,6 @@
                                         <h5 class="card-title">Création de compte opérateur</h5>
                                     </a>
                                 </div>
-                                <p class="d-flex justify-content-center small">Vous voulez un compte personnel ? <a
-                                    href="{{ route('register-page') }}">&nbsp;Cliquez-ici</a></p>
-
                                 <div class="tab-content">
                                     <form class="row g-3 needs-validation" novalidate method="POST"
                                         action="{{ route('register') }}">
@@ -170,11 +151,9 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" name="terms" type="checkbox"
                                                     value="" id="acceptTerms" required>
-                                                <label class="form-check-label" for="acceptTerms">Je suis d'accord
-                                                    et
-                                                    j'accepte les
+                                                <label class="form-check-label" for="acceptTerms">J'accepte les
                                                     <button style="color: blue" type="button"
-                                                        class="btn btn-default" data-bs-toggle="modal"
+                                                        class="btn btn-default btn-sm" data-bs-toggle="modal"
                                                         data-bs-target="#largeModal">
                                                         termes et conditions
                                                     </button>
@@ -199,16 +178,25 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                        @include('user.slide-image')
+                    </div>
+                    
+                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                        @include('actualite')
+                    </div>
+
                 </div>
                 @include('user.termes')
                 <div class="copyright">
-                    &copy; Copyright <strong><span>ONFP</span></strong>. Tous droits réservés
+                    &copy; Copyright <strong><span><a href="https://www.onfp.sn/"
+                                target="_blank">ONFP</a></span></strong>
                 </div>
-                <div class="credits">
+                {{-- <div class="credits">
                     Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
-                </div>
+                </div> --}}
             </section>
         </div>
     </main>

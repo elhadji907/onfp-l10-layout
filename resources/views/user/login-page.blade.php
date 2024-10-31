@@ -53,65 +53,19 @@
     <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Jan 29 2024 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
-
-    <main>
-        <div class="container">
-            {{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
-            {{-- @if ($message = Session::get('status'))
-                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                    role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif --}}
-            {{--  @if ($message = Session::get('message'))
-                <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
-                    role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif --}}
+    @include('navbar')
+    <main id="main" class="main">
+        <div class="container-fluid">
             <section
-                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                class="section dashboard register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="row col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-center py-0">
-                                    <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
-                                        {{-- <span class="d-none d-lg-block">ONFP</span> --}}
-                                        <h6 class="card-title">ONFP</h6>
-                                    </a>
-                                </div>
 
-                                <!-- Slides with captions -->
-                                @include('user.slide-image')
-                                <!-- End Slides with captions -->
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                        {{-- <div class="d-flex justify-content-center py-4">
-                                <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
-                                    <span class="d-none d-lg-block">ONFP</span>
-                                </a>
-                            </div> --}}
-                        <!-- End Logo -->
-
+                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card">
                             <div class="card-body">
                                 @if ($message = Session::get('status'))
@@ -126,8 +80,6 @@
                                     <a href="{{ url('/login-page') }}" class="logo d-flex align-items-center w-auto">
                                         <h6 class="card-title">Connectez-vous !</h6>
                                     </a>
-                                    {{-- <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de
-                                            passe pour vous connecter</p> --}}
                                 </div>
                                 <form class="row g-3 needs-validation" novalidate method="POST"
                                     action="{{ route('login') }}">
@@ -137,11 +89,10 @@
                                         <label for="email" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
                                             <input type="email" name="email"
-                                                class="form-control @error('email') is-invalid @enderror" id="email"
-                                                required placeholder="Votre adresse e-mail" value="{{ old('email') }}"
-                                                autofocus>
+                                                class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                                id="email" required placeholder="Votre adresse e-mail"
+                                                value="{{ old('email') }}" autofocus>
                                             <div class="invalid-feedback">
                                                 @error('email')
                                                     {{ $message }}
@@ -154,8 +105,8 @@
                                         <label for="password" class="form-label">Mot de passe<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="password" name="password"
-                                            class="form-control  @error('password') is-invalid @enderror" id="password"
-                                            required placeholder="Votre mot de passe">
+                                            class="form-control form-control-sm  @error('password') is-invalid @enderror"
+                                            id="password" required placeholder="Votre mot de passe">
                                         <div class="invalid-feedback">
                                             @error('password')
                                                 {{ $message }}
@@ -189,19 +140,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                        @include('user.slide-image')
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                        @include('actualite')
+                    </div>
+                    
                 </div>
                 <div class="copyright">
-                    &copy; Copyright <strong><span>ONFP</span></strong>. Tous droits réservés
-                </div>
-                <div class="credits">
-                    Conçu par <a href="https://www.onfp.sn/" target="_blank">Lamine BADJI</a>
+                    &copy; Copyright <strong><span><a href="https://www.onfp.sn/"
+                                target="_blank">ONFP</a></span></strong>
                 </div>
             </section>
+
             @include('sweetalert::alert')
         </div>
-    </main><!-- End #main -->
-
-    <!-- Vendor JS Files -->
+    </main>
     <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
@@ -211,7 +168,6 @@
     <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
-    <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
 </body>
