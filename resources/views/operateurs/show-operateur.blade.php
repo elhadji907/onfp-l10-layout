@@ -308,11 +308,8 @@
                     <div class="modal-content">
                         <form method="post" action="{{ route('renewOperateur') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Demande de
-                                    renouvellement agrément</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">RENOUVELLEMENT AGREMENT OPERATEUR</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -360,11 +357,8 @@
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Modification opérateur
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">MODIFICATION OPERATEUR</h1>
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="id" value="{{ $operateur->id }}">
@@ -599,16 +593,19 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
 
                                         <input type="file" name="quitus" id="quitus"
-                                            class="form-control @error('quitus') is-invalid @enderror btn btn-primary btn-sm">
+                                            class="form-control @error('quitus') is-invalid @enderror btn btn-outline-primary btn-sm">
                                         @error('quitus')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                        <div class="pt-2">
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                        <label for="quitus" class="form-label">Fichier</label>
+                                        <div>
                                             <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
                                                 target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
                                                 <i class="bi bi-file-image"></i>
@@ -653,10 +650,10 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer mt-3">
-                                    <button type="button" class="btn btn-secondary"
+                                    <button type="button" class="btn btn-secondary btn-sm"
                                         data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Enregistrer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
+                                        Enregistrer modifications</button>
                                 </div>
                             </div>
                         </form>

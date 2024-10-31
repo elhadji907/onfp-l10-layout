@@ -47,7 +47,8 @@
                             </h5>
                         </div>
                         <!-- Table with stripped rows -->
-                        <table class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
+                        <table
+                            class="table table-bordered table-hover datatables align-middle justify-content-center table-borderless">
                             <thead>
                                 <tr>
                                     <th>DENOMINATION L'ORGANISME</th>
@@ -66,8 +67,9 @@
                                         <td>{{ $operateureference?->periode }}</td>
                                         <td>{{ $operateureference?->description }}</td>
                                         <td style="text-align: center;">
-                                            <span class="d-flex align-items-baseline justify-content-center"><a href=""
-                                                    class="btn btn-outline-info btn-sm mx-1" title="Voir détails">
+                                            <span class="d-flex align-items-baseline justify-content-center"><a
+                                                    href="" class="btn btn-outline-info btn-sm mx-1"
+                                                    title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
                                                 <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -112,9 +114,8 @@
                     <form method="post" action="{{ route('operateureferences.store') }}" enctype="multipart/form-data"
                         class="row g-3">
                         @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h1>
                         </div>
                         <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                         <div class="modal-body">
@@ -187,10 +188,8 @@
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="modal-header">
-                                <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">MODIFICATION</h1>
                             </div>
                             <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                             <div class="modal-body">

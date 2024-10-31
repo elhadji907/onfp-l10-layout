@@ -114,9 +114,8 @@
                     <form method="post" action="{{ route('operateurequipements.store') }}" enctype="multipart/form-data"
                         class="row g-3">
                         @csrf
-                        <div class="modal-header">
-                            <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">INFRASTRUCTURES / EQUIPEMENTS</h1>
                         </div>
                         <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                         <div class="modal-body">
@@ -212,10 +211,8 @@
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="modal-header">
-                                <h5 class="modal-title"> EXPERIENCES ET REFERENCES PROFESSIONNELLES </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">MODIFICATION</h1>
                             </div>
                             <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                             <div class="modal-body">

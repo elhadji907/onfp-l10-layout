@@ -198,12 +198,10 @@
                             <h4 class="modal-title">Confirmation</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-
                         <!-- Modal body -->
                         <div class="modal-body">
                             Êtes-vous sûre de bien vouloir supprimer ?
                         </div>
-
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <form method="post" action="{{ route('operateurmodules.destroy', $operateurmodule->id) }}">
