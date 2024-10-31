@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
+ * @property string|null $name
  * @property string|null $legende
  * @property string|null $image
  * @property int $users_id
@@ -41,13 +42,19 @@ class Poste extends Model
 
 	protected $fillable = [
 		'uuid',
+		'name',
 		'legende',
 		'image',
 		'users_id'
 	];
 
+    public function getPoste()
+    {
+        $imagePath = $this->image ?? 'postes/default.png';
+        return "/storage/" . $imagePath;
+    }
 	public function user()
 	{
-		return $this->belongsTo(User::class, 'users_id');
+		return $this->belongsTo(User::class, 'users_id')->latest();
 	}
 }

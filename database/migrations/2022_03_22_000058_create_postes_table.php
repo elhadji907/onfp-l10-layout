@@ -24,6 +24,7 @@ class CreatePostesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
+            $table->longText('name')->nullable();
             $table->string('legende', 200)->nullable();
             $table->string('image', 200)->nullable();
             $table->unsignedInteger('users_id');

@@ -1118,6 +1118,7 @@
                 </div>
             @endforeach --}}
             <!-- End Edit Operateur-->
+        </div>
     </section>
 
 @endsection

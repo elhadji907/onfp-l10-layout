@@ -213,7 +213,7 @@ class User extends Authenticatable
 
     public function postes()
     {
-        return $this->hasMany(Poste::class, 'users_id')->latest();
+        return $this->hasMany(Poste::class, 'users_id');
     }
 
     public function profile()

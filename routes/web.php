@@ -44,6 +44,7 @@ use App\Http\Controllers\OperateurlocaliteController;
 use App\Http\Controllers\OperateurmoduleController;
 use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PosteController;
 use App\Http\Controllers\ProcesverbalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileOperateurController;
@@ -54,8 +55,8 @@ use App\Http\Controllers\ReferentielController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
-use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationcollectiveController;
 use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
@@ -64,6 +65,7 @@ use App\Http\Controllers\ValidationoperateurController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -399,6 +401,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('showMasculin', [IndividuelleController::class, 'showMasculin'])->name('showMasculin');
     Route::get('showFeminin', [IndividuelleController::class, 'showFeminin'])->name('showFeminin');
 
+    Route::get('/postes/create', [PosteController::class, 'create'])->name('postes.create');
+    Route::post('/postes', [PosteController::class, 'store'])->name('postes.store');
+    Route::get('/postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
     /* Vues ressouces */
     Route::resource('/users', UserController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -455,6 +460,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('/files', FileController::class);
     Route::resource('/referentiels', ReferentielController::class);
     Route::resource('/conventions', ConventionController::class);
+    Route::resource('/postes', PosteController::class);
 });
 
 
